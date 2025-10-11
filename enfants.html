@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DzNet1 - بوابة الأطفال</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Toggle Language -->
+    <div class="lang-toggle" onclick="toggleLanguage()">
+        <span id="langText">🇩🇿 Français</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon"></span>
+                <span class="logo-text">
+                    <span class="dz">Dz</span><span class="net">Net1</span><span class="com">.com</span>
+                </span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link" data-ar="الرئيسية" data-fr="Accueil">الرئيسية</a></li>
+                <li><a href="filtres.html" class="nav-link" data-ar="الفلاتر المجتمعية" data-fr="Filtres Communautaires">الفلاتر المجتمعية</a></li>
+                <li><a href="enfants.html" class="nav-link active" data-ar="بوابة الأطفال" data-fr="Portail Enfants">بوابة الأطفال</a></li>
+                <li><a href="faq.html" class="nav-link" data-ar="الأسئلة الشائعة" data-fr="FAQ">الأسئلة الشائعة</a></li>
+                <li><a href="categorisation.html" class="nav-link" data-ar="التصنيف" data-fr="Catégorisation">التصنيف</a></li>
+                <li><a href="contact.html" class="nav-link" data-ar="اتصل بنا" data-fr="Contact">اتصل بنا</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>
+            <span class="hero-icon" style="font-size: 48px;">👶</span>
+            <span data-ar="بوابة الأطفال" data-fr="Portail Enfants">بوابة الأطفال</span>
+        </h1>
+        <p data-ar="إنترنت آمن ومناسب لكل عمر - مع نظام التعلم الذكي" data-fr="Internet sûr et adapté à chaque âge - avec système d'apprentissage intelligent">إنترنت آمن ومناسب لكل عمر - مع نظام التعلم الذكي</p>
+    </div>
+
+    <div class="container">
+        <!-- How it works -->
+        <div class="service-intro">
+            <h2 style="text-align: center; color: #667eea; font-size: 36px; margin-bottom: 30px;" data-ar="🚀 كيف يعمل؟" data-fr="🚀 Comment ça marche ?">🚀 كيف يعمل؟</h2>
+            
+            <p style="text-align: center; font-size: 18px; color: #666; line-height: 1.8; margin-bottom: 40px;" data-ar="عندما يتصل طفلك بشبكة واي فاي الأطفال، يفتح البوابة الخاصة بعمره تلقائيًا - بدون أي تطبيق أو إعدادات! فقط مواقع آمنة ومناسبة لعمره." data-fr="Quand votre enfant se connecte au WiFi enfants, le portail de son âge s'ouvre automatiquement - sans application ni paramétrage ! Uniquement des sites sûrs et adaptés à son âge.">
+                عندما يتصل طفلك بشبكة واي فاي "الأطفال"، يفتح البوابة الخاصة بعمره تلقائيًا - بدون أي تطبيق أو إعدادات! فقط مواقع آمنة ومناسبة لعمره.
+            </p>
+        </div>
+
+        <!-- Smart Learning System -->
+        <div style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%); color: white; padding: 50px 40px; border-radius: 20px; margin: 40px 0; text-align: center;">
+            <h2 style="color: white; font-size: 32px; margin-bottom: 25px;" data-ar="🧠 نظام التعلم الذكي" data-fr="🧠 Système d'apprentissage intelligent">🧠 نظام التعلم الذكي</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0;">
+                <div style="background: rgba(255,255,255,0.2); padding: 25px; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 48px; margin-bottom: 15px;">❓</div>
+                    <h4 style="color: white; margin-bottom: 15px; font-size: 18px;" data-ar="أسئلة ثقافة عامة" data-fr="Questions de culture générale">أسئلة ثقافة عامة</h4>
+                    <p style="opacity: 0.9; font-size: 14px;" data-ar="طفلك يجيب على أسئلة مناسبة لعمره" data-fr="Votre enfant répond à des questions adaptées à son âge">طفلك يجيب على أسئلة مناسبة لعمره</p>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.2); padding: 25px; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 48px; margin-bottom: 15px;">📚</div>
+                    <h4 style="color: white; margin-bottom: 15px; font-size: 18px;" data-ar="تعلم تفاعلي" data-fr="Apprentissage interactif">تعلم تفاعلي</h4>
+                    <p style="opacity: 0.9; font-size: 14px;" data-ar="إذا لم يعرف الجواب، يساعده النظام على التعلم" data-fr="S'il ne connaît pas la réponse, le système l'aide à apprendre">إذا لم يعرف الجواب، يساعده النظام على التعلم</p>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.2); padding: 25px; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 48px; margin-bottom: 15px;">🔓</div>
+                    <h4 style="color: white; margin-bottom: 15px; font-size: 18px;" data-ar="إنترنت مكافأة" data-fr="Internet récompense">إنترنت مكافأة</h4>
+                    <p style="opacity: 0.9; font-size: 14px;" data-ar="بعد التعلم، يُفتح الإنترنت كمكافأة" data-fr="Après avoir appris, internet s'ouvre en récompense">بعد التعلم، يُفتح الإنترنت كمكافأة</p>
+                </div>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; margin-top: 30px;">
+                <h4 style="color: white; margin-bottom: 15px;" data-ar="مثال على الأسئلة:" data-fr="Exemple de questions :">مثال على الأسئلة:</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                        <span style="font-size: 14px;" data-ar="ما عاصمة الجزائر؟" data-fr="Quelle est la capitale de l'Algérie ?">ما عاصمة الجزائر؟</span>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                        <span style="font-size: 14px;" data-ar="كم يوماً في الأسبوع؟" data-fr="Combien de jours dans la semaine ?">كم يوماً في الأسبوع؟</span>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                        <span style="font-size: 14px;" data-ar="ما لون الشمس؟" data-fr="Quelle couleur a le soleil ?">ما لون الشمس؟</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Age Groups -->
+        <h2 style="text-align: center; color: #333; margin: 60px 0 40px; font-size: 36px;" data-ar="البوابات حسب الفئة العمرية" data-fr="Portails par tranche d'âge">البوابات حسب الفئة العمرية</h2>
+
+        <!-- Age Group 1: 3-6 years -->
+        <div style="background: white; border-radius: 20px; padding: 40px; margin: 30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-top: 5px solid #ff9800;">
+            <div style="display: flex; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;">
+                <div style="font-size: 80px;">👶</div>
+                <div>
+                    <h3 style="color: #ff9800; font-size: 28px; margin-bottom: 10px;" data-ar="أطفال صغار" data-fr="Petits enfants">أطفال صغار</h3>
+                    <div style="background: #fff3e0; padding: 10px 20px; border-radius: 20px; display: inline-block;">
+                        <span style="color: #ff9800; font-weight: 700;" data-ar="3-6 سنوات" data-fr="3-6 ans">3-6 سنوات</span>
+                    </div>
+                </div>
+            </div>
+
+            <h4 style="color: #333; font-size: 20px; margin-bottom: 20px;" data-ar="📺 المواقع المتاحة:" data-fr="📺 Sites disponibles :">📺 المواقع المتاحة:</h4>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="Spacetoon Go" data-fr="Spacetoon Go">Spacetoon Go</strong>
+                </div>
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="YouTube Kids" data-fr="YouTube Kids">YouTube Kids</strong>
+                </div>
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="قناة طيور الجنة" data-fr="Toyor Al Janah">قناة طيور الجنة</strong>
+                </div>
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="ألعاب تعليمية بسيطة" data-fr="Jeux éducatifs simples">ألعاب تعليمية بسيطة</strong>
+                </div>
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="قصص مصورة" data-fr="Histoires illustrées">قصص مصورة</strong>
+                </div>
+            </div>
+
+            <ul style="list-style: none; padding: 0; background: #f8f9fa; padding: 25px; border-radius: 12px;">
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="رسوم متحركة آمنة ومناسبة للعمر" data-fr="Dessins animés sûrs et adaptés à l'âge">رسوم متحركة آمنة ومناسبة للعمر</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="ألعاب تعليمية بسيطة (ألوان، أشكال، أرقام)" data-fr="Jeux éducatifs simples (couleurs, formes, chiffres)">ألعاب تعليمية بسيطة (ألوان، أشكال، أرقام)</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="قصص مصورة للأطفال" data-fr="Histoires illustrées pour enfants">قصص مصورة للأطفال</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="فيديوهات تعليمية قصيرة" data-fr="Vidéos éducatives courtes">فيديوهات تعليمية قصيرة</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #ffc107; font-size: 16px;">⏰</span>
+                    <span data-ar="حد أقصى 1 ساعة/يوم (قابل للتخصيص)" data-fr="Maximum 1h/jour (personnalisable)">حد أقصى 1 ساعة/يوم (قابل للتخصيص)</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Age Group 2: 7-11 years -->
+        <div style="background: white; border-radius: 20px; padding: 40px; margin: 30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-top: 5px solid #2196f3;">
+            <div style="display: flex; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;">
+                <div style="font-size: 80px;">🎮</div>
+                <div>
+                    <h3 style="color: #2196f3; font-size: 28px; margin-bottom: 10px;" data-ar="أطفال" data-fr="Enfants">أطفال</h3>
+                    <div style="background: #e3f2fd; padding: 10px 20px; border-radius: 20px; display: inline-block;">
+                        <span style="color: #2196f3; font-weight: 700;" data-ar="7-11 سنة" data-fr="7-11 ans">7-11 سنة</span>
+                    </div>
+                </div>
+            </div>
+
+            <h4 style="color: #333; font-size: 20px; margin-bottom: 20px;" data-ar="📺 المواقع المتاحة:" data-fr="📺 Sites disponibles :">📺 المواقع المتاحة:</h4>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="National Geographic Kids" data-fr="National Geographic Kids">National Geographic Kids</strong>
+                </div>
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="Khan Academy Kids" data-fr="Khan Academy Kids">Khan Academy Kids</strong>
+                </div>
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="Scratch (برمجة)" data-fr="Scratch (programmation)">Scratch (برمجة)</strong>
+                </div>
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="ويكيبيديا (محتوى آمن)" data-fr="Wikipédia (contenu sûr)">ويكيبيديا (محتوى آمن)</strong>
+                </div>
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="ألعاب تعليمية" data-fr="Jeux éducatifs">ألعاب تعليمية</strong>
+                </div>
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="موقع وزارة التربية" data-fr="Site Ministère Éducation">موقع وزارة التربية</strong>
+                </div>
+            </div>
+
+            <ul style="list-style: none; padding: 0; background: #f8f9fa; padding: 25px; border-radius: 12px;">
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="موارد تعليمية للمدرسة الابتدائية" data-fr="Ressources éducatives pour école primaire">موارد تعليمية للمدرسة الابتدائية</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="مقاطع فيديو علمية مبسطة" data-fr="Vidéos scientifiques simplifiées">مقاطع فيديو علمية مبسطة</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="برمجة للأطفال (Scratch)" data-fr="Programmation pour enfants (Scratch)">برمجة للأطفال (Scratch)</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="ألعاب تعليمية متقدمة" data-fr="Jeux éducatifs avancés">ألعاب تعليمية متقدمة</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="موسوعات آمنة (بدون محتوى حساس)" data-fr="Encyclopédies sûres (sans contenu sensible)">موسوعات آمنة (بدون محتوى حساس)</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #ffc107; font-size: 16px;">⏰</span>
+                    <span data-ar="حد أقصى 2 ساعة/يوم" data-fr="Maximum 2h/jour">حد أقصى 2 ساعة/يوم</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Age Group 3: 12-15 years -->
+        <div style="background: white; border-radius: 20px; padding: 40px; margin: 30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-top: 5px solid #9c27b0;">
+            <div style="display: flex; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;">
+                <div style="font-size: 80px;">📚</div>
+                <div>
+                    <h3 style="color: #9c27b0; font-size: 28px; margin-bottom: 10px;" data-ar="مراهقين" data-fr="Adolescents">مراهقين</h3>
+                    <div style="background: #f3e5f5; padding: 10px 20px; border-radius: 20px; display: inline-block;">
+                        <span style="color: #9c27b0; font-weight: 700;" data-ar="12-15 سنة" data-fr="12-15 ans">12-15 سنة</span>
+                    </div>
+                </div>
+            </div>
+
+            <h4 style="color: #333; font-size: 20px; margin-bottom: 20px;" data-ar="📺 المواقع المتاحة:" data-fr="📺 Sites disponibles :">📺 المواقع المتاحة:</h4>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="Coursera (دروس)" data-fr="Coursera (cours)">Coursera (دروس)</strong>
+                </div>
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="Khan Academy" data-fr="Khan Academy">Khan Academy</strong>
+                </div>
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="Code.org" data-fr="Code.org">Code.org</strong>
+                </div>
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="يوتيوب (قنوات تعليمية)" data-fr="YouTube (chaînes éducatives)">يوتيوب (قنوات تعليمية)</strong>
+                </div>
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="ويكيبيديا كاملة" data-fr="Wikipédia complète">ويكيبيديا كاملة</strong>
+                </div>
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="GitHub" data-fr="GitHub">GitHub</strong>
+                </div>
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="Stack Overflow" data-fr="Stack Overflow">Stack Overflow</strong>
+                </div>
+            </div>
+
+            <ul style="list-style: none; padding: 0; background: #f8f9fa; padding: 25px; border-radius: 12px;">
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="منصات التعلم عبر الإنترنت" data-fr="Plateformes d'apprentissage en ligne">منصات التعلم عبر الإنترنت</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="يوتيوب مع فلترة ذكية" data-fr="YouTube avec filtrage intelligent">يوتيوب مع فلترة ذكية</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="برمجة متقدمة" data-fr="Programmation avancée">برمجة متقدمة</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="موارد البكالوريا والمتوسط" data-fr="Ressources Bac et collège">موارد البكالوريا والمتوسط</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="محتوى علمي متقدم" data-fr="Contenu scientifique avancé">محتوى علمي متقدم</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="شبكات مهنية (LinkedIn للطلاب)" data-fr="Réseaux professionnels (LinkedIn étudiants)">شبكات مهنية (LinkedIn للطلاب)</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Age Group 4: 16+ years -->
+        <div style="background: white; border-radius: 20px; padding: 40px; margin: 30px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-top: 5px solid #4caf50;">
+            <div style="display: flex; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;">
+                <div style="font-size: 80px;">🎓</div>
+                <div>
+                    <h3 style="color: #4caf50; font-size: 28px; margin-bottom: 10px;" data-ar="شباب" data-fr="Jeunes">شباب</h3>
+                    <div style="background: #e8f5e8; padding: 10px 20px; border-radius: 20px; display: inline-block;">
+                        <span style="color: #4caf50; font-weight: 700;" data-ar="16+ سنة" data-fr="16+ ans">16+ سنة</span>
+                    </div>
+                </div>
+            </div>
+
+            <h4 style="color: #333; font-size: 20px; margin-bottom: 20px;" data-ar="📺 المواقع المتاحة:" data-fr="📺 Sites disponibles :">📺 المواقع المتاحة:</h4>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="إنترنت شبه كامل" data-fr="Internet quasi-complet">إنترنت شبه كامل</strong>
+                </div>
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="شبكات مهنية" data-fr="Réseaux professionnels">شبكات مهنية</strong>
+                </div>
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="منصات جامعية" data-fr="Plateformes universitaires">منصات جامعية</strong>
+                </div>
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; text-align: center;">
+                    <strong data-ar="موارد البحث" data-fr="Ressources de recherche">موارد البحث</strong>
+                </div>
+            </div>
+
+            <ul style="list-style: none; padding: 0; background: #f8f9fa; padding: 25px; border-radius: 12px;">
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="وصول شبه كامل للإنترنت" data-fr="Accès quasi-complet à internet">وصول شبه كامل للإنترنت</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #dc3545; font-size: 16px;">🚫</span>
+                    <span data-ar="حظر فقط: محتوى للبالغين، مخدرات، عنف شديد" data-fr="Blocage uniquement : contenu adulte, drogues, violence extrême">حظر فقط: محتوى للبالغين، مخدرات، عنف شديد</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="منصات التواصل الاجتماعي مسموحة" data-fr="Réseaux sociaux autorisés">منصات التواصل الاجتماعي مسموحة</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="موارد جامعية كاملة" data-fr="Ressources universitaires complètes">موارد جامعية كاملة</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #28a745; font-size: 16px;">✓</span>
+                    <span data-ar="أدوات البحث والتطوير" data-fr="Outils de recherche et développement">أدوات البحث والتطوير</span>
+                </li>
+                <li style="padding: 8px 0; display: flex; align-items: center; gap: 10px;">
+                    <span style="color: #ffc107; font-size: 16px;">⏰</span>
+                    <span data-ar="بدون حد زمني (حسب رغبة الوالدين)" data-fr="Sans limite de temps (selon les parents)">بدون حد زمني (حسب رغبة الوالدين)</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Setup Guide -->
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 50px 40px; border-radius: 20px; margin: 60px 0; text-align: center;">
+            <h2 style="color: white; font-size: 32px; margin-bottom: 40px;" data-ar="⚙️ كيفية الإعداد" data-fr="⚙️ Comment configurer">⚙️ كيفية الإعداد</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 40px 0;">
+                <div style="background: rgba(255,255,255,0.15); padding: 30px; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 60px; margin-bottom: 20px;">1️⃣</div>
+                    <h4 style="color: white; margin-bottom: 15px; font-size: 20px;" data-ar="إضافة طفل" data-fr="Ajouter un enfant">إضافة طفل</h4>
+                    <p style="opacity: 0.9; line-height: 1.6;" data-ar="في تطبيق DzNet1 أو واجهة الويب، أضف اسم الطفل وتاريخ ميلاده. يتم اختيار البوابة المناسبة تلقائياً." data-fr="Dans l'app DzNet1 ou l'interface web, ajoutez le nom de l'enfant et sa date de naissance. Le portail approprié est sélectionné automatiquement.">
+                        في تطبيق DzNet1 أو واجهة الويب، أضف اسم الطفل وتاريخ ميلاده. يتم اختيار البوابة المناسبة تلقائياً.
+                    </p>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.15); padding: 30px; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 60px; margin-bottom: 20px;">2️⃣</div>
+                    <h4 style="color: white; margin-bottom: 15px; font-size: 20px;" data-ar="ربط الجهاز" data-fr="Connecter l'appareil">ربط الجهاز</h4>
+                    <p style="opacity: 0.9; line-height: 1.6;" data-ar="اربط جهاز طفلك (تابلت، هاتف) بملفه الشخصي. الراوتر يتعرف عليه تلقائياً." data-fr="Connectez l'appareil de votre enfant (tablette, téléphone) à son profil. Le routeur le reconnaît automatiquement.">
+                        اربط جهاز طفلك (تابلت، هاتف) بملفه الشخصي. الراوتر يتعرف عليه تلقائياً.
+                    </p>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.15); padding: 30px; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 60px; margin-bottom: 20px;">3️⃣</div>
+                    <h4 style="color: white; margin-bottom: 15px; font-size: 20px;" data-ar="انتهى!" data-fr="Terminé !">انتهى!</h4>
+                    <p style="opacity: 0.9; line-height: 1.6;" data-ar="عندما يتصل طفلك بواي فاي الأطفال، يفتح متصفحه على البوابة الخاصة به مباشرة - بدون أي تدخل!" data-fr="Quand votre enfant se connecte au WiFi enfants, son navigateur s'ouvre directement sur son portail - sans intervention !">
+                        عندما يتصل طفلك بواي فاي "الأطفال"، يفتح متصفحه على البوابة الخاصة به مباشرة - بدون أي تدخل!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Info -->
+        <div style="background: #f8f9fa; padding: 40px; border-radius: 20px; margin: 40px 0;">
+            <h3 style="color: #333; font-size: 24px; margin-bottom: 20px; text-align: center;" data-ar="💡 معلومات تقنية" data-fr="💡 Informations techniques">💡 معلومات تقنية</h3>
+            <p style="line-height: 1.8; color: #666; text-align: center;" data-ar="يستخدم النظام تقنية Captive Portal الذكية مع التعرف على الجهاز (MAC Address). عندما يتصل جهاز معروف بواي فاي الأطفال، يُعاد توجيهه تلقائياً إلى البوابة المخصصة لعمره. كل شيء محلي في الراوتر - خصوصية وأمان 100%." data-fr="Le système utilise la technologie Captive Portal intelligente avec reconnaissance d'appareil (adresse MAC). Quand un appareil connu se connecte au WiFi enfants, il est automatiquement redirigé vers le portail de son âge. Tout est local dans le routeur - confidentialité et sécurité 100%.">
+                يستخدم النظام تقنية <strong>Captive Portal</strong> الذكية مع التعرف على الجهاز (MAC Address). عندما يتصل جهاز معروف بواي فاي "الأطفال"، يُعاد توجيهه تلقائياً إلى البوابة المخصصة لعمره. كل شيء محلي في الراوتر - <strong>خصوصية وأمان 100%</strong>.
+            </p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

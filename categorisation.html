@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DzNet1 - أداة التصنيف</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Toggle Language -->
+    <div class="lang-toggle" onclick="toggleLanguage()">
+        <span id="langText">🇩🇿 Français</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon"></span>
+                <span class="logo-text">
+                    <span class="dz">Dz</span><span class="net">Net1</span><span class="com">.com</span>
+                </span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link" data-ar="الرئيسية" data-fr="Accueil">الرئيسية</a></li>
+                <li><a href="filtres.html" class="nav-link" data-ar="الفلاتر المجتمعية" data-fr="Filtres Communautaires">الفلاتر المجتمعية</a></li>
+                <li><a href="enfants.html" class="nav-link" data-ar="بوابة الأطفال" data-fr="Portail Enfants">بوابة الأطفال</a></li>
+                <li><a href="faq.html" class="nav-link" data-ar="الأسئلة الشائعة" data-fr="FAQ">الأسئلة الشائعة</a></li>
+                <li><a href="categorisation.html" class="nav-link active" data-ar="التصنيف" data-fr="Catégorisation">التصنيف</a></li>
+                <li><a href="contact.html" class="nav-link" data-ar="اتصل بنا" data-fr="Contact">اتصل بنا</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>
+            <span class="hero-icon" style="font-size: 48px;">🔍</span>
+            <span data-ar="أداة التصنيف" data-fr="Outil de Catégorisation">أداة التصنيف</span>
+        </h1>
+        <p data-ar="ساعد المجتمع في تصنيف المواقع في الفئات الصحيحة" data-fr="Aidez la communauté à classer les sites web dans les bonnes catégories">ساعد المجتمع في تصنيف المواقع في الفئات الصحيحة</p>
+    </div>
+
+    <div class="container">
+        <!-- Statistics Dashboard -->
+        <div class="stats-dashboard" style="margin-bottom: 60px;">
+            <h3 style="text-align: center; font-size: 28px; margin-bottom: 30px;" data-ar="📊 إحصائيات المجتمع" data-fr="📊 Statistiques de la communauté">📊 إحصائيات المجتمع</h3>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-icon">🌐</div>
+                    <div class="stat-number">247,832</div>
+                    <div class="stat-label" data-ar="مواقع مصنفة" data-fr="Sites catégorisés">مواقع مصنفة</div>
+                </div>
+                
+                <div class="stat-box">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-number">1,456</div>
+                    <div class="stat-label" data-ar="متطوعين نشطين" data-fr="Contributeurs actifs">متطوعين نشطين</div>
+                </div>
+                
+                <div class="stat-box">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-number">89</div>
+                    <div class="stat-label" data-ar="مواقع اليوم" data-fr="Sites aujourd'hui">مواقع اليوم</div>
+                </div>
+                
+                <div class="stat-box">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-number">23</div>
+                    <div class="stat-label" data-ar="في انتظار التحقق" data-fr="En attente validation">في انتظار التحقق</div>
+                </div>
+            </div>
+
+            <!-- Real-time metrics -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px;">
+                <div class="stat-box">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-number">12</div>
+                    <div class="stat-label" data-ar="طلبات/ساعة" data-fr="Demandes/heure">طلبات/ساعة</div>
+                </div>
+                
+                <div class="stat-box">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-number">2.3</div>
+                    <div class="stat-label" data-ar="دقائق متوسط التحليل" data-fr="Minutes analyse moyenne">دقائق متوسط التحليل</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categorization Tool -->
+        <div class="categorization-tool" style="margin-bottom: 40px;">
+            <h2 style="text-align: center; color: #667eea; font-size: 32px; margin-bottom: 30px;" data-ar="🔍 تصنيف موقع جديد" data-fr="🔍 Catégoriser un nouveau site">🔍 تصنيف موقع جديد</h2>
+            
+            <form style="max-width: 800px; margin: 0 auto;">
+                <div class="form-group">
+                    <label data-ar="رابط الموقع" data-fr="URL du site">رابط الموقع</label>
+                    <input type="url" placeholder="https://exemple.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label data-ar="الفئة المقترحة" data-fr="Catégorie suggérée">الفئة المقترحة</label>
+                    <select id="categorySelect" onchange="showCategoryDescription()">
+                        <option data-ar="اختر الفئة" data-fr="Choisir la catégorie">اختر الفئة</option>
+                        <option value="education" data-ar="تعليمي" data-fr="Éducatif">تعليمي</option>
+                        <option value="kids" data-ar="أطفال" data-fr="Enfants">أطفال</option>
+                        <option value="news" data-ar="أخبار" data-fr="Actualités">أخبار</option>
+                        <option value="social" data-ar="شبكات اجتماعية" data-fr="Réseaux sociaux">شبكات اجتماعية</option>
+                        <option value="gaming" data-ar="ألعاب" data-fr="Jeux">ألعاب</option>
+                        <option value="adult" data-ar="محتوى بالغين" data-fr="Contenu adulte">محتوى بالغين</option>
+                        <option value="violence" data-ar="عنف" data-fr="Violence">عنف</option>
+                        <option value="gambling" data-ar="قمار" data-fr="Jeux d'argent">قمار</option>
+                        <option value="drugs" data-ar="مخدرات/كحول" data-fr="Drogues/Alcool">مخدرات/كحول</option>
+                        <option value="shopping" data-ar="تسوق" data-fr="Shopping">تسوق</option>
+                        <option value="streaming" data-ar="بث مباشر" data-fr="Streaming">بث مباشر</option>
+                        <option value="government" data-ar="حكومي" data-fr="Gouvernemental">حكومي</option>
+                        <option value="banking" data-ar="بنوك" data-fr="Banques">بنوك</option>
+                        <option value="religion" data-ar="ديني" data-fr="Religieux">ديني</option>
+                        <option value="health" data-ar="صحة" data-fr="Santé">صحة</option>
+                    </select>
+                </div>
+
+                <!-- Category Description -->
+                <div id="categoryDescription" style="display: none; background: #f0f4ff; padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #667eea;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;" data-ar="وصف الفئة:" data-fr="Description de la catégorie :">وصف الفئة:</h4>
+                    <p id="descriptionText" style="color: #444; line-height: 1.6;"></p>
+                </div>
+
+                <div class="form-group">
+                    <label data-ar="سبب التصنيف" data-fr="Raison de la catégorisation">سبب التصنيف</label>
+                    <textarea style="width: 100%; padding: 12px 16px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; min-height: 100px; font-family: inherit;" placeholder="لماذا تعتقد أن هذا الموقع ينتمي لهذه الفئة؟" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label data-ar="اسمك المستعار (اختياري)" data-fr="Votre pseudonyme (optionnel)">اسمك المستعار (اختياري)</label>
+                    <input type="text" placeholder="للظهور في قائمة المتطوعين">
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <span data-ar="🔍 إرسال للمراجعة" data-fr="🔍 Envoyer pour révision">🔍 إرسال للمراجعة</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Sites in Review -->
+        <div style="background: white; border-radius: 20px; padding: 40px; margin: 40px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+            <h2 style="text-align: center; color: #667eea; font-size: 28px; margin-bottom: 30px;" data-ar="📋 المواقع قيد المراجعة" data-fr="📋 Sites en cours de révision">📋 المواقع قيد المراجعة</h2>
+            
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                    <thead>
+                        <tr style="background: #f8f9fa;">
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="الموقع" data-fr="Site">الموقع</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="الفئة الحالية" data-fr="Catégorie actuelle">الفئة الحالية</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="الفئة المطلوبة" data-fr="Catégorie demandée">الفئة المطلوبة</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="التاريخ والوقت" data-fr="Date et heure">التاريخ والوقت</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="المتطوع" data-fr="Bénévole">المتطوع</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">youtube.com/kids</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
+                                <span style="background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="غير مصنف" data-fr="Non classé">غير مصنف</span>
+                            </td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
+                                <span style="background: #d1ecf1; color: #0c5460; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="أطفال" data-fr="Enfants">أطفال</span>
+                            </td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center; font-size: 14px;">2025-01-15 14:23</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">Ahmed_DZ</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">education.gov.dz</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
+                                <span style="background: #d4edda; color: #155724; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="حكومي" data-fr="Gouvernemental">حكومي</span>
+                            </td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
+                                <span style="background: #d1ecf1; color: #0c5460; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="تعليمي" data-fr="Éducatif">تعليمي</span>
+                            </td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center; font-size: 14px;">2025-01-15 13:45</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">Fatima_Tech</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">example-game.com</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
+                                <span style="background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="غير مصنف" data-fr="Non classé">غير مصنف</span>
+                            </td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
+                                <span style="background: #f8d7da; color: #721c24; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="ألعاب" data-fr="Jeux">ألعاب</span>
+                            </td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center; font-size: 14px;">2025-01-15 12:15</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">Omar_Security</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Top Contributors -->
+        <div style="background: white; border-radius: 20px; padding: 40px; margin: 40px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+            <h2 style="text-align: center; color: #667eea; font-size: 28px; margin-bottom: 30px;" data-ar="🏆 أفضل المتطوعين" data-fr="🏆 Top des bénévoles">🏆 أفضل المتطوعين</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;">
+                <div style="background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); padding: 25px; border-radius: 12px; text-align: center; color: #333;">
+                    <div style="font-size: 48px; margin-bottom: 15px;">🥇</div>
+                    <h3 style="margin-bottom: 10px; color: #333;">TechGuard_DZ</h3>
+                    <div style="font-size: 24px; font-weight: 700; margin-bottom: 5px;">2,847</div>
+                    <div style="font-size: 14px;" data-ar="مواقع مصنفة" data-fr="sites catégorisés">مواقع مصنفة</div>
+                    <div style="margin-top: 10px; background: rgba(255,255,255,0.3); padding: 8px; border-radius: 8px;">
+                        <span style="font-weight: 700;" data-ar="دقة: 96.3%" data-fr="Précision : 96.3%">دقة: 96.3%</span>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #c0c0c0 0%, #dcdcdc 100%); padding: 25px; border-radius: 12px; text-align: center; color: #333;">
+                    <div style="font-size: 48px; margin-bottom: 15px;">🥈</div>
+                    <h3 style="margin-bottom: 10px; color: #333;">SafeNet_Algeria</h3>
+                    <div style="font-size: 24px; font-weight: 700; margin-bottom: 5px;">2,156</div>
+                    <div style="font-size: 14px;" data-ar="مواقع مصنفة" data-fr="sites catégorisés">مواقع مصنفة</div>
+                    <div style="margin-top: 10px; background: rgba(255,255,255,0.3); padding: 8px; border-radius: 8px;">
+                        <span style="font-weight: 700;" data-ar="دقة: 94.8%" data-fr="Précision : 94.8%">دقة: 94.8%</span>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #cd7f32 0%, #daa520 100%); padding: 25px; border-radius: 12px; text-align: center; color: white;">
+                    <div style="font-size: 48px; margin-bottom: 15px;">🥉</div>
+                    <h3 style="margin-bottom: 10px; color: white;">FamilyProtector</h3>
+                    <div style="font-size: 24px; font-weight: 700; margin-bottom: 5px;">1,923</div>
+                    <div style="font-size: 14px;" data-ar="مواقع مصنفة" data-fr="sites catégorisés">مواقع مصنفة</div>
+                    <div style="margin-top: 10px; background: rgba(255,255,255,0.2); padding: 8px; border-radius: 8px;">
+                        <span style="font-weight: 700;" data-ar="دقة: 93.1%" data-fr="Précision : 93.1%">دقة: 93.1%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly ranking -->
+            <div style="margin-top: 40px; background: #f8f9fa; padding: 25px; border-radius: 12px;">
+                <h3 style="text-align: center; color: #333; margin-bottom: 20px;" data-ar="📊 تصنيف هذا الأسبوع" data-fr="📊 Classement de cette semaine">📊 تصنيف هذا الأسبوع</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-weight: 700; color: #667eea;">Ahmed_Validator</div>
+                        <div style="font-size: 20px; font-weight: 700; color: #28a745;">156</div>
+                        <div style="font-size: 12px; color: #666;" data-ar="مواقع" data-fr="sites">مواقع</div>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-weight: 700; color: #667eea;">Sarah_Guardian</div>
+                        <div style="font-size: 20px; font-weight: 700; color: #28a745;">142</div>
+                        <div style="font-size: 12px; color: #666;" data-ar="مواقع" data-fr="sites">مواقع</div>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-weight: 700; color: #667eea;">Youcef_Filter</div>
+                        <div style="font-size: 20px; font-weight: 700; color: #28a745;">128</div>
+                        <div style="font-size: 12px; color: #666;" data-ar="مواقع" data-fr="sites">مواقع</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How it works -->
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 50px 40px; border-radius: 20px; text-align: center; margin: 60px 0;">
+            <h2 style="color: white; font-size: 32px; margin-bottom: 25px;" data-ar="🔄 كيف يعمل النظام؟" data-fr="🔄 Comment fonctionne le système ?">🔄 كيف يعمل النظام؟</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0;">
+                <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 48px; margin-bottom: 15px;">📝</div>
+                    <h4 style="color: white; margin-bottom: 10px;" data-ar="إرسال الطلب" data-fr="Soumettre la demande">إرسال الطلب</h4>
+                    <p style="opacity: 0.9; font-size: 14px;" data-ar="أرسل رابط الموقع مع الفئة المقترحة" data-fr="Envoyez l'URL avec la catégorie suggérée">أرسل رابط الموقع مع الفئة المقترحة</p>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 48px; margin-bottom: 15px;">👥</div>
+                    <h4 style="color: white; margin-bottom: 10px;" data-ar="مراجعة المجتمع" data-fr="Révision communautaire">مراجعة المجتمع</h4>
+                    <p style="opacity: 0.9; font-size: 14px;" data-ar="متطوعون خبراء يراجعون ويصوتون" data-fr="Bénévoles experts examinent et votent">متطوعون خبراء يراجعون ويصوتون</p>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; backdrop-filter: blur(10px);">
+                    <div style="font-size: 48px; margin-bottom: 15px;">✅</div>
+                    <h4 style="color: white; margin-bottom: 10px;" data-ar="التطبيق الفوري" data-fr="Application immédiate">التطبيق الفوري</h4>
+                    <p style="opacity: 0.9; font-size: 14px;" data-ar="يطبق التصنيف على جميع أجهزة DzNet1" data-fr="Classification appliquée sur tous les appareils DzNet1">يطبق التصنيف على جميع أجهزة DzNet1</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Category descriptions
+        const categoryDescriptions = {
+            ar: {
+                education: "مواقع تعليمية تحتوي على دروس، محاضرات، كتب إلكترونية، أو أي محتوى تعليمي أكاديمي.",
+                kids: "مواقع مخصصة للأطفال مع محتوى آمن ومناسب للأعمار الصغيرة، مثل الألعاب التعليمية والرسوم المتحركة.",
+                news: "مواقع الأخبار والصحافة التي تنشر الأخبار المحلية والدولية والتقارير الإخبارية.",
+                social: "شبكات التواصل الاجتماعي مثل فيسبوك، تويتر، إنستغرام، تيك توك وغيرها.",
+                gaming: "مواقع الألعاب الإلكترونية سواء كانت ألعاب أونلاين أو تحميل الألعاب أو منتديات الألعاب.",
+                adult: "محتوى للبالغين فقط يحتوي على مواد إباحية أو محتوى جنسي صريح.",
+                violence: "مواقع تحتوي على مشاهد عنف، دماء، أو محتوى قد يكون مؤذياً نفسياً.",
+                gambling: "مواقع القمار والمراهنات سواء كانت كازينوهات أونلاين أو مواقع المراهنات الرياضية.",
+                drugs: "مواقع تروج للمخدرات أو الكحول أو تحتوي على محتوى متعلق بالمواد المخدرة.",
+                shopping: "مواقع التسوق الإلكتروني والمتاجر أونلاين لبيع المنتجات والخدمات.",
+                streaming: "مواقع البث المباشر للفيديو مثل نتفليكس، يوتيوب، أو منصات البث الأخرى.",
+                government: "مواقع حكومية رسمية تابعة للدولة أو المؤسسات الحكومية.",
+                banking: "مواقع البنوك والمؤسسات المالية والخدمات المصرفية الإلكترونية.",
+                religion: "مواقع دينية تحتوي على نصوص دينية، فتاوى، أو محتوى ديني تعليمي.",
+                health: "مواقع طبية وصحية تقدم معلومات طبية، نصائح صحية، أو خدمات طبية."
+            },
+            fr: {
+                education: "Sites éducatifs contenant des cours, conférences, livres électroniques ou tout contenu éducatif académique.",
+                kids: "Sites dédiés aux enfants avec du contenu sûr et adapté aux jeunes âges, comme les jeux éducatifs et dessins animés.",
+                news: "Sites d'actualités et de journalisme qui publient des nouvelles locales et internationales et des reportages.",
+                social: "Réseaux sociaux comme Facebook, Twitter, Instagram, TikTok et autres.",
+                gaming: "Sites de jeux vidéo qu'il s'agisse de jeux en ligne, téléchargement de jeux ou forums de jeux.",
+                adult: "Contenu pour adultes uniquement contenant du matériel pornographique ou du contenu sexuel explicite.",
+                violence: "Sites contenant des scènes de violence, sang ou contenu pouvant être psychologiquement nuisible.",
+                gambling: "Sites de jeux d'argent et paris qu'il s'agisse de casinos en ligne ou sites de paris sportifs.",
+                drugs: "Sites faisant la promotion de drogues ou d'alcool ou contenant du contenu lié aux substances illicites.",
+                shopping: "Sites de commerce électronique et boutiques en ligne pour la vente de produits et services.",
+                streaming: "Sites de diffusion vidéo en direct comme Netflix, YouTube ou autres plateformes de streaming.",
+                government: "Sites gouvernementaux officiels appartenant à l'État ou aux institutions gouvernementales.",
+                banking: "Sites de banques et institutions financières et services bancaires électroniques.",
+                religion: "Sites religieux contenant des textes religieux, fatwas ou contenu religieux éducatif.",
+                health: "Sites médicaux et de santé fournissant des informations médicales, conseils santé ou services médicaux."
+            }
+        };
+
+        function showCategoryDescription() {
+            const select = document.getElementById('categorySelect');
+            const descriptionDiv = document.getElementById('categoryDescription');
+            const descriptionText = document.getElementById('descriptionText');
+            
+            if (select.value && select.value !== '') {
+                const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+                const description = categoryDescriptions[currentLang][select.value];
+                
+                descriptionText.textContent = description;
+                descriptionDiv.style.display = 'block';
+            } else {
+                descriptionDiv.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

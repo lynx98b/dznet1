@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DzNet1 - الأسئلة الشائعة</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .wizard-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .wizard-step {
+            display: none;
+        }
+        
+        .wizard-step.active {
+            display: block;
+        }
+        
+        .wizard-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        
+        .wizard-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+            min-width: 200px;
+        }
+        
+        .wizard-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .search-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 20px;
+        }
+        
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: white;
+            margin: 15px 0;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            transition: background 0.3s;
+        }
+        
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+        
+        .faq-question h3 {
+            color: #333;
+            font-size: 18px;
+            margin: 0;
+            flex: 1;
+        }
+        
+        .faq-toggle {
+            font-size: 24px;
+            color: #667eea;
+            transition: transform 0.3s;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 500px;
+        }
+        
+        .faq-answer p {
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .faq-category {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .quick-links {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .quick-links h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .quick-link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .quick-link {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .quick-link:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Toggle Language -->
+    <div class="lang-toggle" onclick="toggleLanguage()">
+        <span id="langText">🇩🇿 Français</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon"></span>
+                <span class="logo-text">
+                    <span class="dz">Dz</span><span class="net">Net1</span><span class="com">.com</span>
+                </span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link" data-ar="الرئيسية" data-fr="Accueil">الرئيسية</a></li>
+                <li><a href="filtres.html" class="nav-link" data-ar="الفلاتر المجتمعية" data-fr="Filtres Communautaires">الفلاتر المجتمعية</a></li>
+                <li><a href="enfants.html" class="nav-link" data-ar="بوابة الأطفال" data-fr="Portail Enfants">بوابة الأطفال</a></li>
+                <li><a href="faq.html" class="nav-link active" data-ar="الأسئلة الشائعة" data-fr="FAQ">الأسئلة الشائعة</a></li>
+                <li><a href="categorisation.html" class="nav-link" data-ar="التصنيف" data-fr="Catégorisation">التصنيف</a></li>
+                <li><a href="contact.html" class="nav-link" data-ar="اتصل بنا" data-fr="Contact">اتصل بنا</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>
+            <span class="hero-icon" style="font-size: 48px;">❓</span>
+            <span data-ar="الأسئلة الشائعة" data-fr="Questions Fréquentes">الأسئلة الشائعة</span>
+        </h1>
+        <p data-ar="ابحث عن إجابات سريعة لجميع أسئلتك حول DzNet1" data-fr="Trouvez des réponses rapides à toutes vos questions sur DzNet1">ابحث عن إجابات سريعة لجميع أسئلتك حول DzNet1</p>
+    </div>
+
+    <div class="container">
+        <!-- Interactive Wizard -->
+        <div class="wizard-container">
+            <div class="wizard-step active" id="step1">
+                <h2 style="color: white; margin-bottom: 20px;" data-ar="🧙‍♂️ ما الذي تبحث عنه؟" data-fr="🧙‍♂️ Que cherchez-vous ?">🧙‍♂️ ما الذي تبحث عنه؟</h2>
+                <div class="wizard-buttons">
+                    <button class="wizard-btn" onclick="showStep(2, 'installation')" data-ar="كيفية التثبيت والإعداد" data-fr="Installation et configuration">كيفية التثبيت والإعداد</button>
+                    <button class="wizard-btn" onclick="showStep(2, 'technical')" data-ar="مشكلة تقنية" data-fr="Problème technique">مشكلة تقنية</button>
+                    <button class="wizard-btn" onclick="showStep(2, 'pricing')" data-ar="معلومات عن الأسعار" data-fr="Informations tarifaires">معلومات عن الأسعار</button>
+                    <button class="wizard-btn" onclick="showStep(2, 'features')" data-ar="كيف تعمل الميزات" data-fr="Comment fonctionnent les fonctionnalités">كيف تعمل الميزات</button>
+                </div>
+            </div>
+
+            <div class="wizard-step" id="step2">
+                <h2 style="color: white; margin-bottom: 20px;" data-ar="🎯 كن أكثر تحديداً" data-fr="🎯 Soyez plus précis">🎯 كن أكثر تحديداً</h2>
+                <div id="step2-content"></div>
+                <button onclick="showStep(1)" style="background: rgba(255,255,255,0.3); color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 20px; cursor: pointer;" data-ar="← العودة" data-fr="← Retour">← العودة</button>
+            </div>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="ابحث في الأسئلة..." data-ar-placeholder="ابحث في الأسئلة..." data-fr-placeholder="Rechercher dans les questions...">
+                <span class="search-icon">🔍</span>
+            </div>
+            
+            <div class="category-filters">
+                <button class="filter-btn active" data-category="all" data-ar="الكل" data-fr="Tout">الكل</button>
+                <button class="filter-btn" data-category="installation" data-ar="التثبيت" data-fr="Installation">التثبيت</button>
+                <button class="filter-btn" data-category="technical" data-ar="تقني" data-fr="Technique">تقني</button>
+                <button class="filter-btn" data-category="pricing" data-ar="الأسعار" data-fr="Prix">الأسعار</button>
+                <button class="filter-btn" data-category="features" data-ar="الميزات" data-fr="Fonctionnalités">الميزات</button>
+                <button class="filter-btn" data-category="security" data-ar="الأمان" data-fr="Sécurité">الأمان</button>
+            </div>
+        </div>
+
+        <!-- FAQ Items -->
+        <div class="faq-container">
+            <!-- Installation Category -->
+            <div class="faq-item" data-category="installation">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div>
+                        <div class="faq-category" data-ar="التثبيت" data-fr="Installation">التثبيت</div>
+                        <h3 data-ar="كيف أثبت جهاز DzNet1 في منزلي؟" data-fr="Comment installer l'appareil DzNet1 chez moi ?">كيف أثبت جهاز DzNet1 في منزلي؟</h3>
+                    </div>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-ar="التثبيت بسيط جداً: 1) افصل الراوتر القديم 2) اربط راوتر DzNet1 بخط الإنترنت 3) اتصل بشبكة DzNet1-Setup 4) اتبع التعليمات على الشاشة. يستغرق الأمر 5-10 دقائق فقط." data-fr="L'installation est très simple : 1) Débranchez l'ancien routeur 2) Connectez le routeur DzNet1 à la ligne internet 3) Connectez-vous au réseau DzNet1-Setup 4) Suivez les instructions à l'écran. Cela prend seulement 5-10 minutes.">التثبيت بسيط جداً: 1) افصل الراوتر القديم 2) اربط راوتر DzNet1 بخط الإنترنت 3) اتصل بشبكة DzNet1-Setup 4) اتبع التعليمات على الشاشة. يستغرق الأمر 5-10 دقائق فقط.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="installation">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div>
+                        <div class="faq-category" data-ar="التثبيت" data-fr="Installation">التثبيت</div>
+                        <h3 data-ar="هل يمكنني استخدام راوتر DzNet1 مع أي مزود إنترنت؟" data-fr="Puis-je utiliser le routeur DzNet1 avec n'importe quel fournisseur internet ?">هل يمكنني استخدام راوتر DzNet1 مع أي مزود إنترنت؟</h3>
+                    </div>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-ar="نعم، راوتر DzNet1 متوافق مع جميع مزودي الإنترنت في الجزائر (اتصالات الجزائر، أوريدو، موبيليس). يعمل مع ADSL، الألياف البصرية، و 4G/5G." data-fr="Oui, le routeur DzNet1 est compatible avec tous les fournisseurs internet en Algérie (Algérie Télécom, Ooredoo, Mobilis). Il fonctionne avec ADSL, fibre optique, et 4G/5G.">نعم، راوتر DzNet1 متوافق مع جميع مزودي الإنترنت في الجزائر (اتصالات الجزائر، أوريدو، موبيليس). يعمل مع ADSL، الألياف البصرية، و 4G/5G.</p>
+                </div>
+            </div>
+
+            <!-- Technical Category -->
+            <div class="faq-item" data-category="technical">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div>
+                        <div class="faq-category" data-ar="تقني" data-fr="Technique">تقني</div>
+                        <h3 data-ar="الإنترنت بطيء، ما الحل؟" data-fr="Internet lent, quelle solution ?">الإنترنت بطيء، ما الحل؟</h3>
+                    </div>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-ar="تحقق من: 1) موقع الراوتر (يجب أن يكون مركزياً) 2) عدد الأجهزة المتصلة 3) إعادة تشغيل الراوتر. إذا استمرت المشكلة، اتصل بـ 070 708 060 للدعم المجاني." data-fr="Vérifiez : 1) Position du routeur (doit être centrale) 2) Nombre d'appareils connectés 3) Redémarrage du routeur. Si le problème persiste, appelez 070 708 060 pour un support gratuit.">تحقق من: 1) موقع الراوتر (يجب أن يكون مركزياً) 2) عدد الأجهزة المتصلة 3) إعادة تشغيل الراوتر. إذا استمرت المشكلة، اتصل بـ 070 708 060 للدعم المجاني.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="technical">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div>
+                        <div class="faq-category" data-ar="تقني" data-fr="Technique">تقني</div>
+                        <h3 data-ar="لا أستطيع الوصول لموقع معين، هل هو محجوب؟" data-fr="Je ne peux pas accéder à un site, est-il bloqué ?">لا أستطيع الوصول لموقع معين، هل هو محجوب؟</h3>
+                    </div>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-ar="ادخل إلى لوحة التحكم عبر تطبيق DzNet1 واذهب لقسم 'المواقع المحجوبة'. يمكنك رؤية سبب الحجب وطلب إلغاء الحجب إذا كان الموقع آمناً." data-fr="Entrez dans le panneau de contrôle via l'app DzNet1 et allez à la section 'Sites bloqués'. Vous pouvez voir la raison du blocage et demander le déblocage si le site est sûr.">ادخل إلى لوحة التحكم عبر تطبيق DzNet1 واذهب لقسم "المواقع المحجوبة". يمكنك رؤية سبب الحجب وطلب إلغاء الحجب إذا كان الموقع آمناً.</p>
+                </div>
+            </div>
+
+            <!-- Pricing Category -->
+            <div class="faq-item" data-category="pricing">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div>
+                        <div class="faq-category" data-ar="الأسعار" data-fr="Prix">الأسعار</div>
+                        <h3 data-ar="كم يكلف راوتر DzNet1؟" data-fr="Combien coûte le routeur DzNet1 ?">كم يكلف راوتر DzNet1؟</h3>
+                    </div>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-ar="الراوتر يكلف 8,500 دج (دفعة واحدة) + اشتراك شهري من 600 دج. الراوتر ملكك للأبد! باقة الأمان (6 أشهر) توفر 600 دج، وباقة بريميوم (12 شهر) توفر 3,000 دج." data-fr="Le routeur coûte 8,500 DA (paiement unique) + abonnement mensuel à partir de 600 DA. Le routeur est à vous pour toujours ! Le pack Sécurité (6 mois) économise 600 DA, et le pack Premium (12 mois) économise 3,000 DA.">الراوتر يكلف 8,500 دج (دفعة واحدة) + اشتراك شهري من 600 دج. الراوتر ملكك للأبد! باقة الأمان (6 أشهر) توفر 600 دج، وباقة بريميوم (12 شهر) توفر 3,000 دج.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="pricing">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div>
+                        <div class="faq-category" data-ar="الأسعار" data-fr="Prix">الأسعار</div>
+                        <h3 data-ar="هل يمكنني إلغاء الاشتراك في أي وقت؟" data-fr="Puis-je annuler l'abonnement à tout moment ?">هل يمكنني إلغاء الاشتراك في أي وقت؟</h3>
+                    </div>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-ar="يمكنك إلغاء الاشتراك في أي وقت بدون غرامات. إذا ألغيت قبل انتهاء المدة المتفق عليها، لن تسترد الفرق، لكن الراوتر يبقى ملكك ويعمل كراوتر عادي." data-fr="Vous pouvez annuler l'abonnement à tout moment sans pénalités. Si vous annulez avant la fin de la période convenue, vous ne récupérez pas la différence, mais le routeur reste vôtre et fonctionne comme un routeur normal.">يمكنك إلغاء الاشتراك في أي وقت بدون غرامات. إذا ألغيت قبل انتهاء المدة المتفق عليها، لن تسترد الفرق، لكن الراوتر يبقى ملكك ويعمل كراوتر عادي.</p>
+                </div>
+            </div>
+
+            <!-- Features Category -->
+            <div class="faq-item" data-category="features">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div>
+                        <div class="faq-category" data-ar="الميزات" data-fr="Fonctionnalités">الميزات</div>
+                        <h3 data-ar="كيف أضبط أوقات استخدام الإنترنت للأطفال؟" data-fr="Comment régler les heures d'utilisation internet pour les enfants ?">كيف أضبط أوقات استخدام الإنترنت للأطفال؟</h3>
+                    </div>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-ar="في تطبيق DzNet1، اذهب لـ 'إدارة الأطفال' ← اختر الطفل ← 'أوقات الاستخدام'. يمكنك تحديد ساعات الدراسة، النوم، واللعب. النظام يطبق القواعد تلقائياً." data-fr="Dans l'app DzNet1, allez à 'Gestion Enfants' → Choisir l'enfant → 'Heures d'utilisation'. Vous pouvez définir les heures d'étude, sommeil et jeu. Le système applique les règles automatiquement.">في تطبيق DzNet1، اذهب لـ "إدارة الأطفال" ← اختر الطفل ← "أوقات الاستخدام". يمكنك تحديد ساعات الدراسة، النوم، واللعب. النظام يطبق القواعد تلقائياً.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="features">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div>
+                        <div class="faq-category" data-ar="الميزات" data-fr="Fonctionnalités">الميزات</div>
+                        <h3 data-ar="ما هو نظام التعلم الذكي للأطفال؟" data-fr="Qu'est-ce que le système d'apprentissage intelligent pour enfants ?">ما هو نظام التعلم الذكي للأطفال؟</h3>
+                    </div>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-ar="قبل فتح الإنترنت، يُطرح على طفلك أسئلة ثقافة عامة مناسبة لعمره. إذا لم يعرف الجواب، يعلمه النظام. هذا يحول وقت الإنترنت إلى فرصة تعليمية ممتعة!" data-fr="Avant d'ouvrir internet, votre enfant reçoit des questions de culture générale adaptées à son âge. S'il ne connaît pas la réponse, le système lui enseigne. Cela transforme le temps internet en opportunité d'apprentissage amusante !">قبل فتح الإنترنت، يُطرح على طفلك أسئلة ثقافة عامة مناسبة لعمره. إذا لم يعرف الجواب، يعلمه النظام. هذا يحول وقت الإنترنت إلى فرصة تعليمية ممتعة!</p>
+                </div>
+            </div>
+
+            <!-- Security Category -->
+            <div class="faq-item" data-category="security">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div>
+                        <div class="faq-category" data-ar="الأمان" data-fr="Sécurité">الأمان</div>
+                        <h3 data-ar="هل بياناتنا آمنة مع DzNet1؟" data-fr="Nos données sont-elles sécurisées avec DzNet1 ?">هل بياناتنا آمنة مع DzNet1؟</h3>
+                    </div>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-ar="أمان 100%! كل شيء يعمل محلياً في الراوتر. لا نسجل مواقعك أو بياناتك الشخصية. فقط نحظر المواقع الضارة. خصوصيتك محمية تماماً." data-fr="Sécurité 100% ! Tout fonctionne localement dans le routeur. Nous n'enregistrons pas vos sites ou données personnelles. Nous bloquons seulement les sites nuisibles. Votre vie privée est totalement protégée.">أمان 100%! كل شيء يعمل محلياً في الراوتر. لا نسجل مواقعك أو بياناتك الشخصية. فقط نحظر المواقع الضارة. خصوصيتك محمية تماماً.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="security">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div>
+                        <div class="faq-category" data-ar="الأمان" data-fr="Sécurité">الأمان</div>
+                        <h3 data-ar="ماذا لو اخترق أحدهم الراوتر؟" data-fr="Que se passe-t-il si quelqu'un pirate le routeur ?">ماذا لو اخترق أحدهم الراوتر؟</h3>
+                    </div>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-ar="راوتر DzNet1 محمي بـ WPA3 (أقوى تشفير) + جدار حماية متقدم + تحديثات أمنية تلقائية. احتمال الاختراق شبه مستحيل، وحتى لو حدث، لا توجد بيانات حساسة مخزنة." data-fr="Le routeur DzNet1 est protégé par WPA3 (chiffrement le plus fort) + pare-feu avancé + mises à jour de sécurité automatiques. Le piratage est quasi impossible, et même s'il arrive, aucune donnée sensible n'est stockée.">راوتر DzNet1 محمي بـ WPA3 (أقوى تشفير) + جدار حماية متقدم + تحديثات أمنية تلقائية. احتمال الاختراق شبه مستحيل، وحتى لو حدث، لا توجد بيانات حساسة مخزنة.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="noResults">
+            <h3 data-ar="لم نجد إجابة لسؤالك" data-fr="Nous n'avons pas trouvé de réponse à votre question">لم نجد إجابة لسؤالك</h3>
+            <p data-ar="اتصل بنا على 070 400 369 أو أرسل إيميل لـ contact@dznet1.com" data-fr="Contactez-nous au 070 400 369 ou envoyez un email à contact@dznet1.com">اتصل بنا على 070 400 369 أو أرسل إيميل لـ contact@dznet1.com</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="quick-links">
+            <h3 data-ar="🔗 روابط مفيدة" data-fr="🔗 Liens utiles">🔗 روابط مفيدة</h3>
+            <div class="quick-link-grid">
+                <a href="contact.html" class="quick-link">
+                    <div style="font-size: 24px; margin-bottom: 10px;">📞</div>
+                    <strong data-ar="اتصل بالدعم" data-fr="Support technique">اتصل بالدعم</strong>
+                </a>
+                <a href="index.html#pricing" class="quick-link">
+                    <div style="font-size: 24px; margin-bottom: 10px;">💰</div>
+                    <strong data-ar="الأسعار والباقات" data-fr="Prix et forfaits">الأسعار والباقات</strong>
+                </a>
+                <a href="filtres.html" class="quick-link">
+                    <div style="font-size: 24px; margin-bottom: 10px;">🛡️</div>
+                    <strong data-ar="الفلاتر المتاحة" data-fr="Filtres disponibles">الفلاتر المتاحة</strong>
+                </a>
+                <a href="enfants.html" class="quick-link">
+                    <div style="font-size: 24px; margin-bottom: 10px;">👶</div>
+                    <strong data-ar="حماية الأطفال" data-fr="Protection enfants">حماية الأطفال</strong>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // FAQ functionality
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Toggle current item
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            let visibleCount = 0;
+
+            faqItems.forEach(item => {
+                const question = item.querySelector('h3').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer p').textContent.toLowerCase();
+                const isVisible = question.includes(searchTerm) || answer.includes(searchTerm);
+                
+                item.style.display = isVisible ? 'block' : 'none';
+                if (isVisible) visibleCount++;
+            });
+
+            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+        });
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter FAQ items
+                const faqItems = document.querySelectorAll('.faq-item');
+                let visibleCount = 0;
+                
+                faqItems.forEach(item => {
+                    const itemCategory = item.getAttribute('data-category');
+                    const isVisible = category === 'all' || itemCategory === category;
+                    
+                    item.style.display = isVisible ? 'block' : 'none';
+                    if (isVisible) visibleCount++;
+                });
+
+                document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+                
+                // Clear search
+                document.getElementById('searchInput').value = '';
+            });
+        });
+
+        // Wizard functionality
+        function showStep(stepNumber, category = null) {
+            document.querySelectorAll('.wizard-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            document.getElementById('step' + stepNumber).classList.add('active');
+            
+            if (stepNumber === 2 && category) {
+                const step2Content = document.getElementById('step2-content');
+                const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+                
+                let content = '';
+                switch(category) {
+                    case 'installation':
+                        content = `
+                            <div class="wizard-buttons">
+                                <button class="wizard-btn" onclick="filterAndJump('installation')" data-ar="كيفية توصيل الراوتر" data-fr="Comment connecter le routeur">كيفية توصيل الراوتر</button>
+                                <button class="wizard-btn" onclick="filterAndJump('installation')" data-ar="مشاكل الإعداد الأولي" data-fr="Problèmes de configuration initiale">مشاكل الإعداد الأولي</button>
+                            </div>
+                        `;
+                        break;
+                    case 'technical':
+                        content = `
+                            <div class="wizard-buttons">
+                                <button class="wizard-btn" onclick="filterAndJump('technical')" data-ar="الإنترنت بطيء" data-fr="Internet lent">الإنترنت بطيء</button>
+                                <button class="wizard-btn" onclick="filterAndJump('technical')" data-ar="موقع محجوب خطأ" data-fr="Site bloqué par erreur">موقع محجوب خطأ</button>
+                            </div>
+                        `;
+                        break;
+                    case 'pricing':
+                        content = `
+                            <div class="wizard-buttons">
+                                <button class="wizard-btn" onclick="filterAndJump('pricing')" data-ar="سعر الراوتر والاشتراك" data-fr="Prix routeur et abonnement">سعر الراوتر والاشتراك</button>
+                                <button class="wizard-btn" onclick="filterAndJump('pricing')" data-ar="إلغاء الاشتراك" data-fr="Annulation abonnement">إلغاء الاشتراك</button>
+                            </div>
+                        `;
+                        break;
+                    case 'features':
+                        content = `
+                            <div class="wizard-buttons">
+                                <button class="wizard-btn" onclick="filterAndJump('features')" data-ar="ضبط أوقات الأطفال" data-fr="Régler horaires enfants">ضبط أوقات الأطفال</button>
+                                <button class="wizard-btn" onclick="filterAndJump('features')" data-ar="نظام التعلم الذكي" data-fr="Système apprentissage intelligent">نظام التعلم الذكي</button>
+                            </div>
+                        `;
+                        break;
+                }
+                step2Content.innerHTML = content;
+            }
+        }
+
+        function filterAndJump(category) {
+            // Hide wizard
+            document.querySelector('.wizard-container').style.display = 'none';
+            
+            // Filter by category
+            document.querySelector(`[data-category="${category}"]`).click();
+            
+            // Scroll to FAQ section
+            document.querySelector('.faq-container').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

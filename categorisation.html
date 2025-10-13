@@ -5,79 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DzNet1 - أداة التصنيف</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .url-helper {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .url-preview {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #4caf50;
+        }
+        .url-examples {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .granularity-option {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        .granularity-option:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+        .granularity-option.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+    </style>
 </head>
-    <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector(".categorization-tool form");
-
-  // Crée dynamiquement un conteneur pour le résultat sous le formulaire
-  const resultContainer = document.createElement("div");
-  resultContainer.id = "resultCard";
-  resultContainer.style.display = "none";
-  resultContainer.style.marginTop = "30px";
-  resultContainer.style.background = "#f9f9f9";
-  resultContainer.style.borderRadius = "15px";
-  resultContainer.style.padding = "25px";
-  resultContainer.style.boxShadow = "0 0 10px rgba(0,0,0,0.1)";
-  form.parentNode.insertBefore(resultContainer, form.nextSibling);
-
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const urlInput = form.querySelector('input[type="url"]');
-    const categorySelect = document.getElementById("categorySelect");
-    const reasonTextarea = form.querySelector("textarea");
-    const contributorInput = form.querySelector('input[type="text"]');
-
-    const domain = urlInput.value.trim();
-    if (!domain) {
-      alert("⚠️ يرجى إدخال رابط موقع صالح.");
-      return;
-    }
-
-    resultContainer.style.display = "block";
-    resultContainer.innerHTML = "<b>⏳ جاري التحقق من الموقع...</b>";
-
-    try {
-      const response = await fetch("https://dznet-cat.anvil.app/_/api/verifier_site", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          domain: domain,
-          category: categorySelect.value || "",
-          reason: reasonTextarea.value || "",
-          contributor: contributorInput.value || ""
-        })
-      });
-
-      const data = await response.json();
-
-      if (data.error) {
-        resultContainer.innerHTML = `<div style="color:red;">❌ ${data.error}</div>`;
-        return;
-      }
-
-      // ✅ Affichage stylé du résultat
-      resultContainer.innerHTML = `
-        <div style="background:white; border-radius:12px; padding:20px; text-align:right; direction:rtl;">
-          <h3 style="color:#004080; text-align:center;">🌐 ${data.domain}</h3>
-          <table style="width:100%; border-collapse:collapse; font-size:15px;">
-            <tr><td><b>📁 الفئة:</b></td><td>${data.category_ar || data.category || '—'}</td></tr>
-            <tr><td><b>📊 الحالة:</b></td><td>${data.status_ar || data.status || 'قيد المراجعة'}</td></tr>
-            <tr><td><b>📝 الوصف:</b></td><td>${data.description || '—'}</td></tr>
-            <tr><td><b>🛡️ مستوى الثقة:</b></td><td>${data.trust_score || 0}%</td></tr>
-            <tr><td><b>👤 المبلّغ:</b></td><td>${data.reported_by || 'مجهول'}</td></tr>
-            <tr><td><b>📅 آخر تحديث:</b></td><td>${data.last_updated || '—'}</td></tr>
-          </table>
-        </div>`;
-    } catch (err) {
-      console.error(err);
-      resultContainer.innerHTML = `<div style="color:red;">⚠️ خطأ أثناء الاتصال بخادم التصنيف.</div>`;
-    }
-  });
-});
-</script>
-
 <body>
     <!-- Toggle Language -->
     <div class="lang-toggle" onclick="toggleLanguage()">
@@ -143,37 +117,77 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="stat-label" data-ar="في انتظار التحقق" data-fr="En attente validation">في انتظار التحقق</div>
                 </div>
             </div>
-
-            <!-- Real-time metrics -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px;">
-                <div class="stat-box">
-                    <div class="stat-icon">⚡</div>
-                    <div class="stat-number">12</div>
-                    <div class="stat-label" data-ar="طلبات/ساعة" data-fr="Demandes/heure">طلبات/ساعة</div>
-                </div>
-                
-                <div class="stat-box">
-                    <div class="stat-icon">⏱️</div>
-                    <div class="stat-number">2.3</div>
-                    <div class="stat-label" data-ar="دقائق متوسط التحليل" data-fr="Minutes analyse moyenne">دقائق متوسط التحليل</div>
-                </div>
-            </div>
         </div>
 
         <!-- Categorization Tool -->
         <div class="categorization-tool" style="margin-bottom: 40px;">
             <h2 style="text-align: center; color: #667eea; font-size: 32px; margin-bottom: 30px;" data-ar="🔍 تصنيف موقع جديد" data-fr="🔍 Catégoriser un nouveau site">🔍 تصنيف موقع جديد</h2>
             
-            <form style="max-width: 800px; margin: 0 auto;">
+            <form id="siteForm" style="max-width: 800px; margin: 0 auto;">
+                
+                <!-- ✨ NOUVEAU : Aide URL -->
+                <div class="url-helper">
+                    <h3 style="color: #1976d2; margin-bottom: 10px;">
+                        💡 <span data-ar="كيف تدخل الرابط الصحيح؟" data-fr="Comment entrer l'URL correctement ?">كيف تدخل الرابط الصحيح؟</span>
+                    </h3>
+                    <div class="url-examples">
+                        <strong>✅ <span data-ar="أمثلة صحيحة:" data-fr="Exemples corrects :">أمثلة صحيحة:</span></strong><br>
+                        • <code>facebook.com</code> - <span data-ar="الموقع كامل" data-fr="Site complet">الموقع كامل</span><br>
+                        • <code>ads.facebook.com</code> - <span data-ar="نطاق فرعي محدد" data-fr="Sous-domaine spécifique">نطاق فرعي محدد</span><br>
+                        • <code>https://example.com/page</code> - <span data-ar="رابط كامل (سنستخرج الدومين)" data-fr="URL complète (on extrait le domaine)">رابط كامل (سنستخرج الدومين)</span><br>
+                        • <code>www.site.com</code> - <span data-ar="مع www (سنحذفها تلقائياً)" data-fr="Avec www (on l'enlève auto)">مع www (سنحذفها تلقائياً)</span><br><br>
+                        
+                        <strong>⚠️ <span data-ar="تنبيه مهم:" data-fr="Attention importante :">تنبيه مهم:</span></strong><br>
+                        <span data-ar="• حذار من حظر مواقع كاملة بسبب صفحة واحدة سيئة!" data-fr="• Attention à ne pas bloquer des sites entiers pour une seule page !">• حذار من حظر مواقع كاملة بسبب صفحة واحدة سيئة!</span><br>
+                        <span data-ar="• استخدم النطاق الفرعي إذا كانت المشكلة محددة" data-fr="• Utilisez le sous-domaine si le problème est localisé">• استخدم النطاق الفرعي إذا كانت المشكلة محددة</span>
+                    </div>
+                </div>
+
                 <div class="form-group">
-                    <label data-ar="رابط الموقع" data-fr="URL du site">رابط الموقع</label>
-                    <input type="url" placeholder="https://exemple.com" required>
+                    <label data-ar="رابط الموقع" data-fr="URL du site">🌐 رابط الموقع أو اسم النطاق</label>
+                    <input type="text" id="domainInput" placeholder="https://exemple.com" required>
+                    <small style="color: #666; display: block; margin-top: 5px;">
+                        <span data-ar="يمكنك إدخال رابط كامل، وسنستخرج اسم النطاق تلقائياً" data-fr="Vous pouvez entrer une URL complète, on extrait le domaine">يمكنك إدخال رابط كامل، وسنستخرج اسم النطاق تلقائياً</span>
+                    </small>
+                </div>
+
+                <!-- ✨ NOUVEAU : Prévisualisation URL -->
+                <div id="urlPreview" style="display: none;" class="url-preview">
+                    <h4 style="color: #2e7d32; margin-bottom: 10px;">
+                        ✓ <span data-ar="تم اكتشاف المعلومات التالية:" data-fr="Informations détectées :">تم اكتشاف المعلومات التالية:</span>
+                    </h4>
+                    <div style="background: #f5f5f5; padding: 12px; border-radius: 6px; margin: 10px 0;">
+                        <div style="margin: 5px 0;">
+                            <strong><span data-ar="النطاق الرئيسي:" data-fr="Domaine principal :">النطاق الرئيسي:</span></strong> 
+                            <span id="mainDomain" style="color: #1976d2; font-family: monospace;"></span>
+                        </div>
+                        <div style="margin: 5px 0;">
+                            <strong><span data-ar="النطاق الفرعي:" data-fr="Sous-domaine :">النطاق الفرعي:</span></strong> 
+                            <span id="subdomain" style="color: #f57c00; font-family: monospace;"></span>
+                        </div>
+                        <div style="margin: 5px 0;">
+                            <strong><span data-ar="المسار:" data-fr="Chemin :">المسار:</span></strong> 
+                            <span id="urlPath" style="color: #7b1fa2; font-family: monospace;"></span>
+                        </div>
+                    </div>
+
+                    <!-- ✨ NOUVEAU : Choix du niveau -->
+                    <h4 style="color: #d32f2f; margin: 15px 0 10px 0;">
+                        ⚠️ <span data-ar="ما الذي تريد تصنيفه بالضبط؟" data-fr="Que voulez-vous catégoriser exactement ?">ما الذي تريد تصنيفه بالضبط؟</span>
+                    </h4>
+                    
+                    <div id="granularityOptions"></div>
+
+                    <div class="warning-box" id="warningBox" style="display: none;">
+                        <strong>⚠️ <span data-ar="تحذير:" data-fr="Avertissement :">تحذير:</span></strong>
+                        <span id="warningText"></span>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label data-ar="الفئة المقترحة" data-fr="Catégorie suggérée">الفئة المقترحة</label>
-                    <select id="categorySelect" onchange="showCategoryDescription()">
-                        <option data-ar="اختر الفئة" data-fr="Choisir la catégorie">اختر الفئة</option>
+                    <select id="categorySelect" required>
+                        <option value="" data-ar="اختر الفئة" data-fr="Choisir la catégorie">اختر الفئة</option>
                         <option value="education" data-ar="تعليمي" data-fr="Éducatif">تعليمي</option>
                         <option value="kids" data-ar="أطفال" data-fr="Enfants">أطفال</option>
                         <option value="news" data-ar="أخبار" data-fr="Actualités">أخبار</option>
@@ -200,12 +214,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 <div class="form-group">
                     <label data-ar="سبب التصنيف" data-fr="Raison de la catégorisation">سبب التصنيف</label>
-                    <textarea style="width: 100%; padding: 12px 16px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; min-height: 100px; font-family: inherit;" placeholder="لماذا تعتقد أن هذا الموقع ينتمي لهذه الفئة؟" required></textarea>
+                    <textarea id="reasonInput" style="width: 100%; padding: 12px 16px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; min-height: 100px; font-family: inherit;" placeholder="لماذا تعتقد أن هذا الموقع ينتمي لهذه الفئة؟" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label data-ar="اسمك المستعار (اختياري)" data-fr="Votre pseudonyme (optionnel)">اسمك المستعار (اختياري)</label>
-                    <input type="text" placeholder="للظهور في قائمة المتطوعين">
+                    <input type="text" id="contributorInput" placeholder="للظهور في قائمة المتطوعين">
                 </div>
 
                 <button type="submit" class="submit-btn">
@@ -213,6 +227,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 </button>
             </form>
         </div>
+
+        <!-- Result Container -->
+        <div id="resultCard" style="display: none; margin-top: 30px; background: #f9f9f9; border-radius: 15px; padding: 25px; box-shadow: 0 0 10px rgba(0,0,0,0.1);"></div>
 
         <!-- Sites in Review -->
         <div style="background: white; border-radius: 20px; padding: 40px; margin: 40px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
@@ -224,8 +241,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         <tr style="background: #f8f9fa;">
                             <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="الموقع" data-fr="Site">الموقع</th>
                             <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="الفئة الحالية" data-fr="Catégorie actuelle">الفئة الحالية</th>
-                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="الفئة المطلوبة" data-fr="Catégorie demandée">الفئة المطلوبة</th>
-                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="التاريخ والوقت" data-fr="Date et heure">التاريخ والوقت</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="الحالة" data-fr="Statut">الحالة</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="التاريخ" data-fr="Date">التاريخ</th>
                             <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="المتطوع" data-fr="Bénévole">المتطوع</th>
                         </tr>
                     </thead>
@@ -233,35 +250,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         <tr>
                             <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">youtube.com/kids</td>
                             <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
-                                <span style="background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="غير مصنف" data-fr="Non classé">غير مصنف</span>
+                                <span style="background: #d1ecf1; color: #0c5460; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="أطفال" data-fr="Enfants">أطفال</span>
                             </td>
                             <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
-                                <span style="background: #d1ecf1; color: #0c5460; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="أطفال" data-fr="Enfants">أطفال</span>
+                                <span style="background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="قيد المراجعة" data-fr="En révision">قيد المراجعة</span>
                             </td>
                             <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center; font-size: 14px;">2025-01-15 14:23</td>
                             <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">Ahmed_DZ</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">education.gov.dz</td>
-                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
-                                <span style="background: #d4edda; color: #155724; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="حكومي" data-fr="Gouvernemental">حكومي</span>
-                            </td>
-                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
-                                <span style="background: #d1ecf1; color: #0c5460; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="تعليمي" data-fr="Éducatif">تعليمي</span>
-                            </td>
-                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center; font-size: 14px;">2025-01-15 13:45</td>
-                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">Fatima_Tech</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">example-game.com</td>
-                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
-                                <span style="background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="غير مصنف" data-fr="Non classé">غير مصنف</span>
-                            </td>
-                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
-                                <span style="background: #f8d7da; color: #721c24; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="ألعاب" data-fr="Jeux">ألعاب</span>
-                            </td>
-                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center; font-size: 14px;">2025-01-15 12:15</td>
-                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">Omar_Security</td>
                         </tr>
                     </tbody>
                 </table>
@@ -303,28 +298,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 </div>
             </div>
-
-            <!-- Weekly ranking -->
-            <div style="margin-top: 40px; background: #f8f9fa; padding: 25px; border-radius: 12px;">
-                <h3 style="text-align: center; color: #333; margin-bottom: 20px;" data-ar="📊 تصنيف هذا الأسبوع" data-fr="📊 Classement de cette semaine">📊 تصنيف هذا الأسبوع</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
-                        <div style="font-weight: 700; color: #667eea;">Ahmed_Validator</div>
-                        <div style="font-size: 20px; font-weight: 700; color: #28a745;">156</div>
-                        <div style="font-size: 12px; color: #666;" data-ar="مواقع" data-fr="sites">مواقع</div>
-                    </div>
-                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
-                        <div style="font-weight: 700; color: #667eea;">Sarah_Guardian</div>
-                        <div style="font-size: 20px; font-weight: 700; color: #28a745;">142</div>
-                        <div style="font-size: 12px; color: #666;" data-ar="مواقع" data-fr="sites">مواقع</div>
-                    </div>
-                    <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
-                        <div style="font-weight: 700; color: #667eea;">Youcef_Filter</div>
-                        <div style="font-size: 20px; font-weight: 700; color: #28a745;">128</div>
-                        <div style="font-size: 12px; color: #666;" data-ar="مواقع" data-fr="sites">مواقع</div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- How it works -->
@@ -353,61 +326,419 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     </div>
 
+        <!-- Sites in Review -->
+        <div style="background: white; border-radius: 20px; padding: 40px; margin: 40px 0; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+            <h2 style="text-align: center; color: #667eea; font-size: 28px; margin-bottom: 30px;" data-ar="📋 المواقع قيد المراجعة" data-fr="📋 Sites en cours de révision">📋 المواقع قيد المراجعة</h2>
+            
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                    <thead>
+                        <tr style="background: #f8f9fa;">
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="الموقع" data-fr="Site">الموقع</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="الفئة الحالية" data-fr="Catégorie actuelle">الفئة الحالية</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="الحالة" data-fr="Statut">الحالة</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="التاريخ" data-fr="Date">التاريخ</th>
+                            <th style="padding: 15px; text-align: center; border-bottom: 2px solid #dee2e6;" data-ar="المتطوع" data-fr="Bénévole">المتطوع</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">youtube.com/kids</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
+                                <span style="background: #d1ecf1; color: #0c5460; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="أطفال" data-fr="Enfants">أطفال</span>
+                            </td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">
+                                <span style="background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-size: 12px;" data-ar="قيد المراجعة" data-fr="En révision">قيد المراجعة</span>
+                            </td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center; font-size: 14px;">2025-01-15 14:23</td>
+                            <td style="padding: 12px; border-bottom: 1px solid #dee2e6; text-align: center;">Ahmed_DZ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
     <script>
-        // Category descriptions
-        const categoryDescriptions = {
+        // ==================== DICTIONNAIRES DE TRADUCTION ====================
+        
+        const translations = {
             ar: {
-                education: "مواقع تعليمية تحتوي على دروس، محاضرات، كتب إلكترونية، أو أي محتوى تعليمي أكاديمي.",
-                kids: "مواقع مخصصة للأطفال مع محتوى آمن ومناسب للأعمار الصغيرة، مثل الألعاب التعليمية والرسوم المتحركة.",
-                news: "مواقع الأخبار والصحافة التي تنشر الأخبار المحلية والدولية والتقارير الإخبارية.",
-                social: "شبكات التواصل الاجتماعي مثل فيسبوك، تويتر، إنستغرام، تيك توك وغيرها.",
-                gaming: "مواقع الألعاب الإلكترونية سواء كانت ألعاب أونلاين أو تحميل الألعاب أو منتديات الألعاب.",
-                adult: "محتوى للبالغين فقط يحتوي على مواد إباحية أو محتوى جنسي صريح.",
-                violence: "مواقع تحتوي على مشاهد عنف، دماء، أو محتوى قد يكون مؤذياً نفسياً.",
-                gambling: "مواقع القمار والمراهنات سواء كانت كازينوهات أونلاين أو مواقع المراهنات الرياضية.",
-                drugs: "مواقع تروج للمخدرات أو الكحول أو تحتوي على محتوى متعلق بالمواد المخدرة.",
-                shopping: "مواقع التسوق الإلكتروني والمتاجر أونلاين لبيع المنتجات والخدمات.",
-                streaming: "مواقع البث المباشر للفيديو مثل نتفليكس، يوتيوب، أو منصات البث الأخرى.",
-                government: "مواقع حكومية رسمية تابعة للدولة أو المؤسسات الحكومية.",
-                banking: "مواقع البنوك والمؤسسات المالية والخدمات المصرفية الإلكترونية.",
-                religion: "مواقع دينية تحتوي على نصوص دينية، فتاوى، أو محتوى ديني تعليمي.",
-                health: "مواقع طبية وصحية تقدم معلومات طبية، نصائح صحية، أو خدمات طبية."
+                categories: {
+                    safe: 'آمن', education: 'تعليمي', kids: 'أطفال',
+                    news: 'أخبار', social: 'شبكات اجتماعية', gaming: 'ألعاب',
+                    shopping: 'تسوق', streaming: 'بث مباشر', government: 'حكومي',
+                    banking: 'بنوك', religion: 'ديني', health: 'صحة',
+                    sports: 'رياضة', entertainment: 'ترفيه', adult: 'محتوى بالغين',
+                    violence: 'عنف', gambling: 'قمار', drugs: 'مخدرات',
+                    malware: 'برمجيات خبيثة', phishing: 'احتيال',
+                    hate: 'خطاب كراهية', weapons: 'أسلحة'
+                },
+                statuses: {
+                    safe: 'آمن', warning: 'تحذير', danger: 'خطير',
+                    pending: 'قيد المراجعة', validated: 'تم التحقق', rejected: 'مرفوض'
+                },
+                descriptions: {
+                    education: "مواقع تعليمية تحتوي على دروس، محاضرات، كتب إلكترونية.",
+                    kids: "مواقع مخصصة للأطفال مع محتوى آمن ومناسب للأعمار الصغيرة.",
+                    news: "مواقع الأخبار والصحافة.",
+                    social: "شبكات التواصل الاجتماعي.",
+                    gaming: "مواقع الألعاب الإلكترونية.",
+                    adult: "محتوى للبالغين فقط.",
+                    violence: "مواقع تحتوي على مشاهد عنف.",
+                    gambling: "مواقع القمار والمراهنات.",
+                    drugs: "مواقع تروج للمخدرات أو الكحول.",
+                    shopping: "مواقع التسوق الإلكتروني.",
+                    streaming: "مواقع البث المباشر للفيديو.",
+                    government: "مواقع حكومية رسمية.",
+                    banking: "مواقع البنوك والمؤسسات المالية.",
+                    religion: "مواقع دينية.",
+                    health: "مواقع طبية وصحية."
+                }
             },
             fr: {
-                education: "Sites éducatifs contenant des cours, conférences, livres électroniques ou tout contenu éducatif académique.",
-                kids: "Sites dédiés aux enfants avec du contenu sûr et adapté aux jeunes âges, comme les jeux éducatifs et dessins animés.",
-                news: "Sites d'actualités et de journalisme qui publient des nouvelles locales et internationales et des reportages.",
-                social: "Réseaux sociaux comme Facebook, Twitter, Instagram, TikTok et autres.",
-                gaming: "Sites de jeux vidéo qu'il s'agisse de jeux en ligne, téléchargement de jeux ou forums de jeux.",
-                adult: "Contenu pour adultes uniquement contenant du matériel pornographique ou du contenu sexuel explicite.",
-                violence: "Sites contenant des scènes de violence, sang ou contenu pouvant être psychologiquement nuisible.",
-                gambling: "Sites de jeux d'argent et paris qu'il s'agisse de casinos en ligne ou sites de paris sportifs.",
-                drugs: "Sites faisant la promotion de drogues ou d'alcool ou contenant du contenu lié aux substances illicites.",
-                shopping: "Sites de commerce électronique et boutiques en ligne pour la vente de produits et services.",
-                streaming: "Sites de diffusion vidéo en direct comme Netflix, YouTube ou autres plateformes de streaming.",
-                government: "Sites gouvernementaux officiels appartenant à l'État ou aux institutions gouvernementales.",
-                banking: "Sites de banques et institutions financières et services bancaires électroniques.",
-                religion: "Sites religieux contenant des textes religieux, fatwas ou contenu religieux éducatif.",
-                health: "Sites médicaux et de santé fournissant des informations médicales, conseils santé ou services médicaux."
+                categories: {
+                    safe: 'Sûr', education: 'Éducatif', kids: 'Enfants',
+                    news: 'Actualités', social: 'Réseaux sociaux', gaming: 'Jeux',
+                    shopping: 'Shopping', streaming: 'Streaming', government: 'Gouvernemental',
+                    banking: 'Banques', religion: 'Religieux', health: 'Santé',
+                    sports: 'Sports', entertainment: 'Divertissement', adult: 'Contenu adulte',
+                    violence: 'Violence', gambling: "Jeux d'argent", drugs: 'Drogues',
+                    malware: 'Malware', phishing: 'Hameçonnage',
+                    hate: 'Discours haineux', weapons: 'Armes'
+                },
+                statuses: {
+                    safe: 'Sûr', warning: 'Attention', danger: 'Dangereux',
+                    pending: 'En révision', validated: 'Validé', rejected: 'Rejeté'
+                },
+                descriptions: {
+                    education: "Sites éducatifs avec cours, conférences, livres.",
+                    kids: "Sites pour enfants avec contenu adapté.",
+                    news: "Sites d'actualités et journalisme.",
+                    social: "Réseaux sociaux.",
+                    gaming: "Sites de jeux vidéo.",
+                    adult: "Contenu pour adultes.",
+                    violence: "Sites avec violence.",
+                    gambling: "Sites de jeux d'argent.",
+                    drugs: "Sites faisant la promotion de drogues.",
+                    shopping: "Sites de commerce électronique.",
+                    streaming: "Sites de diffusion vidéo.",
+                    government: "Sites gouvernementaux.",
+                    banking: "Sites bancaires.",
+                    religion: "Sites religieux.",
+                    health: "Sites médicaux."
+                }
             }
         };
 
-        function showCategoryDescription() {
-            const select = document.getElementById('categorySelect');
-            const descriptionDiv = document.getElementById('categoryDescription');
-            const descriptionText = document.getElementById('descriptionText');
-            
-            if (select.value && select.value !== '') {
-                const currentLang = document.documentElement.getAttribute('lang') || 'ar';
-                const description = categoryDescriptions[currentLang][select.value];
+        let selectedTarget = null;
+
+        // ==================== ANALYSE INTELLIGENTE D'URL ====================
+        
+        function parseURL(input) {
+            try {
+                input = input.trim().toLowerCase();
                 
-                descriptionText.textContent = description;
-                descriptionDiv.style.display = 'block';
-            } else {
-                descriptionDiv.style.display = 'none';
+                if (!input.match(/^https?:\/\//)) {
+                    input = 'https://' + input;
+                }
+                
+                const url = new URL(input);
+                const hostname = url.hostname.replace(/^www\./, '');
+                const parts = hostname.split('.');
+                
+                let mainDomain, subdomain;
+                
+                if (parts.length >= 2) {
+                    mainDomain = parts.slice(-2).join('.');
+                    if (parts.length > 2) {
+                        subdomain = parts.slice(0, -2).join('.');
+                    } else {
+                        subdomain = null;
+                    }
+                } else {
+                    mainDomain = hostname;
+                    subdomain = null;
+                }
+                
+                const path = url.pathname !== '/' ? url.pathname : null;
+                
+                return {
+                    full: hostname,
+                    mainDomain: mainDomain,
+                    subdomain: subdomain,
+                    fullSubdomain: subdomain ? `${subdomain}.${mainDomain}` : null,
+                    path: path,
+                    original: input
+                };
+            } catch (e) {
+                return null;
             }
         }
+
+        // ==================== ÉCOUTER LES CHANGEMENTS D'URL ====================
+        
+        document.getElementById('domainInput').addEventListener('input', function(e) {
+            const parsed = parseURL(e.target.value);
+            
+            if (!parsed) {
+                document.getElementById('urlPreview').style.display = 'none';
+                return;
+            }
+            
+            document.getElementById('urlPreview').style.display = 'block';
+            document.getElementById('mainDomain').textContent = parsed.mainDomain;
+            document.getElementById('subdomain').textContent = parsed.subdomain || '(لا يوجد)';
+            document.getElementById('urlPath').textContent = parsed.path || '(لا يوجد)';
+            
+            const optionsHTML = generateGranularityOptions(parsed);
+            document.getElementById('granularityOptions').innerHTML = optionsHTML;
+            
+            selectDefaultOption(parsed);
+        });
+
+        function generateGranularityOptions(parsed) {
+            const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+            let html = '';
+            
+            // Option 1 : Domaine complet
+            html += `
+                <div class="granularity-option" data-target="${parsed.mainDomain}" data-level="domain">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <strong style="color: #d32f2f;">🌐 ${currentLang === 'ar' ? 'الموقع الكامل' : 'Site complet'}: ${parsed.mainDomain}</strong><br>
+                            <small style="color: #666;">${currentLang === 'ar' ? 'سيحظر جميع الصفحات والنطاقات الفرعية' : 'Bloque tout le site'}</small>
+                        </div>
+                        <div style="background: #ffebee; padding: 8px 12px; border-radius: 6px; color: #c62828; font-weight: bold;">
+                            ${currentLang === 'ar' ? 'عريض جداً' : 'Trop large'}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Option 2 : Sous-domaine
+            if (parsed.fullSubdomain) {
+                html += `
+                    <div class="granularity-option" data-target="${parsed.fullSubdomain}" data-level="subdomain">
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <div>
+                                <strong style="color: #f57c00;">📍 ${currentLang === 'ar' ? 'النطاق الفرعي' : 'Sous-domaine'}: ${parsed.fullSubdomain}</strong><br>
+                                <small style="color: #666;">${currentLang === 'ar' ? 'سيحظر هذا النطاق الفرعي فقط' : 'Bloque seulement ce sous-domaine'}</small>
+                            </div>
+                            <div style="background: #fff3e0; padding: 8px 12px; border-radius: 6px; color: #e65100; font-weight: bold;">
+                                ${currentLang === 'ar' ? 'موصى به' : 'Recommandé'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Option 3 : Chemin
+            if (parsed.path) {
+                html += `
+                    <div class="granularity-option" data-target="${parsed.full}${parsed.path}" data-level="path">
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <div>
+                                <strong style="color: #7b1fa2;">🎯 ${currentLang === 'ar' ? 'صفحة محددة' : 'Page spécifique'}: ${parsed.full}${parsed.path}</strong><br>
+                                <small style="color: #666;">${currentLang === 'ar' ? 'سيحظر هذه الصفحة بالتحديد' : 'Bloque seulement cette page'}</small>
+                            </div>
+                            <div style="background: #f3e5f5; padding: 8px 12px; border-radius: 6px; color: #6a1b9a; font-weight: bold;">
+                                ${currentLang === 'ar' ? 'دقيق جداً' : 'Très précis'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            return html;
+        }
+
+        function selectDefaultOption(parsed) {
+            let defaultTarget;
+            
+            if (parsed.path) {
+                defaultTarget = `${parsed.full}${parsed.path}`;
+            } else if (parsed.fullSubdomain) {
+                defaultTarget = parsed.fullSubdomain;
+            } else {
+                defaultTarget = parsed.mainDomain;
+            }
+            
+            setTimeout(() => {
+                const option = document.querySelector(`[data-target="${defaultTarget}"]`);
+                if (option) option.click();
+            }, 100);
+        }
+
+        // ==================== GESTION DES OPTIONS ====================
+        
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.granularity-option')) {
+                const option = e.target.closest('.granularity-option');
+                const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+                
+                document.querySelectorAll('.granularity-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                option.classList.add('selected');
+                selectedTarget = option.dataset.target;
+                
+                const warningBox = document.getElementById('warningBox');
+                const warningText = document.getElementById('warningText');
+                
+                if (option.dataset.level === 'domain') {
+                    warningBox.style.display = 'block';
+                    warningText.textContent = currentLang === 'ar' ? 
+                        `تحظير ${selectedTarget} سيمنع الوصول لكل الموقع! تأكد أن هذا ما تريده.` :
+                        `Bloquer ${selectedTarget} empêchera l'accès à tout le site !`;
+                } else {
+                    warningBox.style.display = 'none';
+                }
+            }
+        });
+
+        // ==================== DESCRIPTION CATÉGORIE ====================
+        
+        document.getElementById('categorySelect').addEventListener('change', function() {
+            const category = this.value;
+            const descDiv = document.getElementById('categoryDescription');
+            const descText = document.getElementById('descriptionText');
+            const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+            
+            if (category && translations[currentLang].descriptions[category]) {
+                descText.textContent = translations[currentLang].descriptions[category];
+                descDiv.style.display = 'block';
+            } else {
+                descDiv.style.display = 'none';
+            }
+        });
+
+        // ==================== SOUMISSION DU FORMULAIRE ====================
+        
+        document.getElementById('siteForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+            
+            if (!selectedTarget) {
+                alert(currentLang === 'ar' ? 
+                    '⚠️ يرجى اختيار ما تريد تصنيفه بالضبط' : 
+                    '⚠️ Veuillez choisir ce que vous voulez catégoriser');
+                return;
+            }
+            
+            const category = document.getElementById('categorySelect').value;
+            const reason = document.getElementById('reasonInput').value;
+            const contributor = document.getElementById('contributorInput').value;
+            const resultCard = document.getElementById('resultCard');
+            
+            resultCard.style.display = 'block';
+            resultCard.innerHTML = '<div style="text-align: center; padding: 20px;"><b>⏳ ' + 
+                (currentLang === 'ar' ? 'جاري الإرسال...' : 'Envoi en cours...') + 
+                '</b></div>';
+            
+            try {
+                const response = await fetch('https://dznet-cat.anvil.app/_/api/check_or_submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        domain: selectedTarget,
+                        category: category,
+                        reason: reason,
+                        contributor: contributor
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!data.success) {
+                    resultCard.innerHTML = `
+                        <div style="background: #ffebee; padding: 20px; border-radius: 12px; color: #c62828;">
+                            ❌ ${data.message || data.error}
+                        </div>
+                    `;
+                    return;
+                }
+                
+                displayResult(data);
+                
+            } catch (error) {
+                console.error(error);
+                resultCard.innerHTML = `
+                    <div style="background: #ffebee; padding: 20px; border-radius: 12px; color: #c62828;">
+                        ⚠️ ${currentLang === 'ar' ? 'خطأ في الاتصال بالخادم' : 'Erreur de connexion au serveur'}
+                    </div>
+                `;
+            }
+        });
+
+        function displayResult(data) {
+            const resultCard = document.getElementById('resultCard');
+            const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+            const t = translations[currentLang];
+            
+            const categoryName = t.categories[data.category] || data.category;
+            const statusName = t.statuses[data.status] || data.status;
+            const validationStatusName = t.statuses[data.validation_status] || data.validation_status;
+            
+            let message = '';
+            if (data.action === 'found') {
+                message = currentLang === 'ar' ? 
+                    '✅ الموقع موجود في قاعدة البيانات' : 
+                    '✅ Site trouvé dans la base de données';
+            } else if (data.action === 'created') {
+                message = currentLang === 'ar' ? 
+                    '🎉 تم إضافة الموقع بنجاح! قيد المراجعة.' : 
+                    '🎉 Site ajouté avec succès ! En cours de révision.';
+            }
+            
+            resultCard.innerHTML = `
+                <div style="background: white; border-radius: 12px; padding: 20px; text-align: right; direction: rtl;">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h3 style="color: #004080;">🌐 ${data.domain}</h3>
+                        <p style="color: #28a745; font-weight: bold;">${message}</p>
+                    </div>
+                    
+                    <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">📁 ${currentLang === 'ar' ? 'الفئة' : 'Catégorie'}:</td>
+                            <td style="padding: 8px;">${categoryName}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">📊 ${currentLang === 'ar' ? 'الحالة' : 'Statut'}:</td>
+                            <td style="padding: 8px;">${statusName}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">✅ ${currentLang === 'ar' ? 'حالة التحقق' : 'Validation'}:</td>
+                            <td style="padding: 8px;">${validationStatusName}</td>
+                        </tr>
+                        ${data.description ? `
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">📝 ${currentLang === 'ar' ? 'الوصف' : 'Description'}:</td>
+                            <td style="padding: 8px;">${data.description}</td>
+                        </tr>
+                        ` : ''}
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">🛡️ ${currentLang === 'ar' ? 'مستوى الثقة' : 'Score'}:</td>
+                            <td style="padding: 8px;">${data.trust_score}%</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">👤 ${currentLang === 'ar' ? 'المبلّغ' : 'Rapporté par'}:</td>
+                            <td style="padding: 8px;">${data.reported_by || 'مجهول'}</td>
+                        </tr>
+                        ${data.created_date ? `
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">📅 ${currentLang === 'ar' ? 'تاريخ الإضافة' : 'Date'}:</td>
+                            <td style="padding: 8px;">${new Date(data.created_date).toLocaleString(currentLang === 'ar' ? 'ar-DZ' : 'fr-FR')}</td>
+                        </tr>
+                        ` : ''}
+                    </table>
+                </div>
+            `;
+        }
+    </script>
     </script>
 </body>
 </html>

@@ -556,6 +556,15 @@
             margin-bottom: 10px;
             border-left: 4px solid #ffc107;
         }
+        
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #667eea;
+        }
     </style>
 </head>
 <body>
@@ -630,11 +639,31 @@
         </div>
 
         <div class="page" id="rulesPage">
-            <div class="logo">📜</div>
+            <div class="logo">🦁</div>
             <h1 data-ar="مرحباً أمين! 👋" data-fr="Bienvenue Amine ! 👋">مرحباً أمين! 👋</h1>
             <p style="text-align: center; color: #28a745; font-weight: bold; margin-bottom: 30px;" data-ar="✅ ممتاز! أجبت بشكل صحيح" data-fr="✅ Excellent ! Tu as répondu correctement">
                 ✅ ممتاز! أجبت بشكل صحيح
             </p>
+            
+            <!-- Animal Avatar -->
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div style="font-size: 100px; animation: bounce 2s infinite;">🦁</div>
+                <div style="background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%); padding: 20px; border-radius: 15px; border: 3px solid #ffc107; margin-top: 20px;">
+                    <h3 style="color: #856404; margin-bottom: 15px;" data-ar="أنا الأسد الحكيم! 🦁" data-fr="Je suis le Lion Sage ! 🦁">
+                        أنا الأسد الحكيم! 🦁
+                    </h3>
+                    <p style="color: #856404; line-height: 1.8;" data-ar="سأساعدك على استخدام الإنترنت بطريقة آمنة وذكية. لكن أولاً، يجب أن تعدني بقبول هذه القواعد المهمة!" data-fr="Je vais t'aider à utiliser Internet de façon sûre et intelligente. Mais d'abord, tu dois me promettre d'accepter ces règles importantes !">
+                        سأساعدك على استخدام الإنترنت بطريقة آمنة وذكية. لكن أولاً، يجب أن تعدني بقبول هذه القواعد المهمة!
+                    </p>
+                </div>
+            </div>
+
+            <style>
+                @keyframes bounce {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-20px); }
+                }
+            </style>
             
             <div class="rules">
                 <h3 data-ar="🛡️ قواعد استخدام الإنترنت الآمن" data-fr="🛡️ Règles d'utilisation sûre d'Internet">🛡️ قواعد استخدام الإنترنت الآمن</h3>
@@ -758,6 +787,28 @@
         let sessionStartTime = new Date();
         let quizAnswers = [];
         let learnedTopics = [];
+        let visitedSites = [];
+        
+        const siteDatabase = {
+            math: {
+                name: {ar: 'موقع دروس الرياضيات التفاعلية', fr: 'Site de cours de mathématiques interactifs'},
+                url: 'www.mathfun-dz.com',
+                category: {ar: 'تعليمي', fr: 'Éducatif'},
+                safe: true
+            },
+            games: {
+                name: {ar: 'موقع الألعاب الإلكترونية', fr: 'Site de jeux vidéo en ligne'},
+                url: 'www.games-online.com',
+                category: {ar: 'ترفيهي', fr: 'Divertissement'},
+                safe: 'warning'
+            },
+            drugs: {
+                name: {ar: 'موقع محتوى خطير (مخدرات)', fr: 'Site de contenu dangereux (drogues)'},
+                url: 'www.dangerous-content.com',
+                category: {ar: 'خطير', fr: 'Dangereux'},
+                safe: false
+            }
+        };
         
         const questionPool = [
             {
@@ -883,18 +934,27 @@
             });
             document.getElementById('quizResults').innerHTML = quizHtml;
             
-            // Sites visited
-            const sitesHtml = `
-                <div class="report-item">
-                    <strong>📚 ${currentLang === 'ar' ? 'دروس الرياضيات' : 'Cours de maths'}:</strong> ${visits.math} ${currentLang === 'ar' ? 'مرة' : 'fois'} ✅
-                </div>
-                <div class="report-item">
-                    <strong>🎮 ${currentLang === 'ar' ? 'الألعاب' : 'Jeux'}:</strong> ${visits.games} ${currentLang === 'ar' ? 'مرة' : 'fois'} ⚠️
-                </div>
-                <div class="report-item">
-                    <strong>🚫 ${currentLang === 'ar' ? 'مواقع خطيرة' : 'Sites dangereux'}:</strong> ${visits.drugs} ${currentLang === 'ar' ? 'مرة' : 'fois'} ${visits.drugs > 0 ? '❌' : ''}
-                </div>
-            `;
+            // Sites visited with details
+            let sitesHtml = '';
+            visitedSites.forEach((visit, index) => {
+                const safeIcon = visit.safe === true ? '✅' : visit.safe === 'warning' ? '⚠️' : '❌';
+                const safeColor = visit.safe === true ? '#28a745' : visit.safe === 'warning' ? '#ffc107' : '#dc3545';
+                
+                sitesHtml += `
+                    <div class="report-item" style="border-left: 4px solid ${safeColor}">
+                        <strong>${safeIcon} ${currentLang === 'ar' ? 'الزيارة' : 'Visite'} ${index + 1}:</strong><br>
+                        <strong>${currentLang === 'ar' ? 'الموقع:' : 'Site :'}</strong> ${visit.name[currentLang]}<br>
+                        <strong>${currentLang === 'ar' ? 'الرابط:' : 'URL :'}</strong> <code>${visit.url}</code><br>
+                        <strong>${currentLang === 'ar' ? 'الفئة:' : 'Catégorie :'}</strong> ${visit.category[currentLang]}<br>
+                        <strong>${currentLang === 'ar' ? 'الوقت:' : 'Heure :'}</strong> ${visit.time.toLocaleTimeString(currentLang === 'ar' ? 'ar-DZ' : 'fr-FR')}
+                    </div>
+                `;
+            });
+            
+            if (visitedSites.length === 0) {
+                sitesHtml = `<div class="report-item">${currentLang === 'ar' ? 'لم يتم زيارة أي موقع' : 'Aucun site visité'}</div>`;
+            }
+            
             document.getElementById('sitesVisited').innerHTML = sitesHtml;
             
             // Learning
@@ -1080,24 +1140,115 @@
 
         function visitSite(site) {
             visits[site]++;
+            
+            // Record visit with timestamp
+            visitedSites.push({
+                site: site,
+                name: siteDatabase[site].name,
+                url: siteDatabase[site].url,
+                category: siteDatabase[site].category,
+                safe: siteDatabase[site].safe,
+                time: new Date()
+            });
+            
             updateVisitCounter();
             
-            const messages = {
+            const siteInfo = {
                 math: {
-                    ar: 'ممتاز! هذا موقع تعليمي رائع. استمر في التعلم!',
-                    fr: 'Excellent ! C\'est un super site éducatif. Continue à apprendre !'
+                    name: {ar: 'موقع دروس الرياضيات التفاعلية', fr: 'Site de cours de mathématiques interactifs'},
+                    url: 'www.mathfun-dz.com',
+                    icon: '✅',
+                    title: {ar: 'موقع آمن وتعليمي!', fr: 'Site sûr et éducatif !'},
+                    message: {
+                        ar: 'ممتاز يا أمين! 🎉\n\nهذا موقع تعليمي رائع سيساعدك على:\n✅ تعلم الرياضيات بطريقة ممتعة\n✅ تحسين مستواك الدراسي\n✅ الاستعداد للامتحانات\n\nالمواقع التعليمية مثل هذا مفيدة جداً لمستقبلك. استمر في التعلم والاستكشاف!',
+                        fr: 'Excellent Amine ! 🎉\n\nC\'est un super site éducatif qui va t\'aider à :\n✅ Apprendre les maths de façon amusante\n✅ Améliorer ton niveau scolaire\n✅ Te préparer aux examens\n\nLes sites éducatifs comme celui-ci sont très utiles pour ton avenir. Continue à apprendre et à explorer !'
+                    },
+                    email: false
                 },
                 games: {
-                    ar: 'الألعاب ممتعة، لكن لا تنسى دروسك!',
-                    fr: 'Les jeux sont amusants, mais n\'oublie pas tes devoirs !'
+                    name: {ar: 'موقع الألعاب الإلكترونية', fr: 'Site de jeux vidéo en ligne'},
+                    url: 'www.games-online.com',
+                    icon: '⚠️',
+                    title: {ar: 'انتبه! استخدم بحذر', fr: 'Attention ! Utilise avec précaution'},
+                    message: visits.games === 1 ? {
+                        ar: 'مرحباً أمين! ⚠️\n\nالألعاب ممتعة، لكن هناك بعض الأشياء المهمة:\n\n⏰ لا تقضِ وقتاً طويلاً في اللعب\n📚 الدراسة أهم من الألعاب\n👀 الألعاب الكثيرة تتعب العينين\n🧠 عقلك يحتاج وقت راحة\n\nالتوازن مهم جداً! العب قليلاً، وركز على دروسك أكثر.',
+                        fr: 'Salut Amine ! ⚠️\n\nLes jeux sont amusants, mais il y a des choses importantes :\n\n⏰ Ne passe pas trop de temps à jouer\n📚 Les études sont plus importantes\n👀 Trop de jeux fatigue tes yeux\n🧠 Ton cerveau a besoin de repos\n\nL\'équilibre est très important ! Joue un peu, concentre-toi plus sur tes devoirs.'
+                    } : {
+                        ar: 'أمين، هذه المرة الثانية! ⚠️\n\nلقد زرت موقع الألعاب مرتين. نذكرك:\n\n❌ الإفراط في الألعاب يضر بدراستك\n❌ يمكن أن يسبب إدماناً\n❌ يقلل من تركيزك\n\n💡 نصيحة: اذهب إلى موقع الرياضيات بدلاً من ذلك!\n\nسنراقب استخدامك عن كثب.',
+                        fr: 'Amine, c\'est la deuxième fois ! ⚠️\n\nTu as visité le site de jeux deux fois. Rappel :\n\n❌ Trop de jeux nuit à tes études\n❌ Peut créer une dépendance\n❌ Réduit ta concentration\n\n💡 Conseil : Va sur le site de maths plutôt !\n\nNous surveillons ton utilisation de près.'
+                    },
+                    email: visits.games > 1
                 },
                 drugs: {
-                    ar: 'هذا الموقع خطير جداً! المخدرات تدمر الصحة والمستقبل.',
-                    fr: 'Ce site est très dangereux ! La drogue détruit la santé et l\'avenir.'
+                    name: {ar: 'موقع محتوى خطير (مخدرات)', fr: 'Site de contenu dangereux (drogues)'},
+                    url: 'www.dangerous-content.com',
+                    icon: '🚫',
+                    title: {ar: 'موقع خطير جداً!', fr: 'Site très dangereux !'},
+                    message: visits.drugs === 1 ? {
+                        ar: 'توقف فوراً يا أمين! 🚫\n\nهذا الموقع خطير جداً ويتحدث عن المخدرات!\n\n❌ المخدرات تدمر الصحة والعقل\n❌ تسبب الإدمان والموت\n❌ تدمر مستقبلك ودراستك\n❌ تؤذي عائلتك وأصدقاءك\n\n⚠️ تحذير نهائي:\nإذا حاولت الدخول مرة أخرى، سيتم حظرك لمدة 15 دقيقة وسنخبر والديك فوراً!\n\nالمخدرات ليست لعبة. ابتعد عن هذه المواقع!',
+                        fr: 'Arrête immédiatement Amine ! 🚫\n\nCe site est très dangereux et parle de drogues !\n\n❌ La drogue détruit la santé et le cerveau\n❌ Crée une dépendance et tue\n❌ Détruit ton avenir et tes études\n❌ Fait du mal à ta famille et tes amis\n\n⚠️ Avertissement final :\nSi tu essaies d\'y accéder à nouveau, tu seras banni 15 minutes et tes parents seront immédiatement informés !\n\nLa drogue n\'est pas un jeu. Éloigne-toi de ces sites !'
+                    } : {
+                        ar: 'تم حظرك! 🚫\n\nلقد تجاهلت التحذير وحاولت زيارة الموقع الخطير مرة أخرى.\n\n⛔ تم حظرك لمدة 15 دقيقة\n📧 تم إرسال إشعار لوالديك\n⏰ ستزداد المدة في كل مرة\n\nالمخدرات خطيرة! يجب أن تفهم خطورة هذا الموضوع.',
+                        fr: 'Tu es banni ! 🚫\n\nTu as ignoré l\'avertissement et tenté d\'accéder au site dangereux à nouveau.\n\n⛔ Tu es banni pour 15 minutes\n📧 Tes parents ont été notifiés\n⏰ La durée augmente à chaque fois\n\nLa drogue est dangereuse ! Tu dois comprendre la gravité de ce sujet.'
+                    },
+                    email: true
                 }
             };
             
-            alert(messages[site][currentLang]);
+            const info = siteInfo[site];
+            
+            if (site === 'drugs' && visits[site] >= 2) {
+                banUser(info);
+            } else {
+                showBeautifulModal(info.icon, info.title[currentLang], info.message[currentLang], info.email, info.name[currentLang], info.url);
+            }
+        }
+
+        function showBeautifulModal(icon, title, text, showEmail, siteName, siteUrl) {
+            document.getElementById('modalIcon').textContent = icon;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalText').innerHTML = text.replace(/\n/g, '<br>');
+            
+            const emailDiv = document.getElementById('emailNotif');
+            if (showEmail) {
+                emailDiv.innerHTML = `
+                    <div class="email-notification">
+                        <h4>📧 ${currentLang === 'ar' ? 'تم إرسال إشعار للوالدين' : 'Notification envoyée aux parents'}</h4>
+                        <p>
+                            <strong>${currentLang === 'ar' ? 'إلى:' : 'À :'}</strong> parent@example.com<br>
+                            <strong>${currentLang === 'ar' ? 'الموضوع:' : 'Sujet :'}</strong> ${currentLang === 'ar' ? 'تنبيه: نشاط مشبوه' : 'Alerte : Activité suspecte'}<br>
+                            <strong>${currentLang === 'ar' ? 'الموقع:' : 'Site :'}</strong> ${siteName} (${siteUrl})<br>
+                            <strong>${currentLang === 'ar' ? 'الوقت:' : 'Heure :'}</strong> ${new Date().toLocaleString(currentLang === 'ar' ? 'ar-DZ' : 'fr-FR')}
+                        </p>
+                    </div>
+                `;
+            } else {
+                emailDiv.innerHTML = '';
+            }
+            
+            document.getElementById('warningModal').classList.add('active');
+        }
+
+        function banUser(siteInfo) {
+            banTime = 15;
+            banEndTime = Date.now() + (15 * 60000);
+            
+            showBeautifulModal(
+                siteInfo.icon,
+                currentLang === 'ar' ? '⛔ تم حظرك لمدة 15 دقيقة!' : '⛔ Tu es banni pour 15 minutes !',
+                siteInfo.message[currentLang],
+                true,
+                siteInfo.name[currentLang],
+                siteInfo.url
+            );
+            
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+        }
+
+        function closeModal() {
+            document.getElementById('warningModal').classList.remove('active');
         }
 
         function updateVisitCounter() {

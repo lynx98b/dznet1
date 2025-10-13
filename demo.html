@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DzNet1 - Démo Interactive WiFi Enfant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        h1, h2 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            text-align: center;
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .credentials-display {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 2px solid #2196f3;
+        }
+        
+        .credentials-display h3 {
+            color: #1565c0;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .cred-item {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cred-label {
+            color: #666;
+            font-weight: bold;
+        }
+        
+        .cred-value {
+            color: #1565c0;
+            font-family: monospace;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .question {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .question h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 12px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .option.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+        
+        .option.correct {
+            border-color: #28a745;
+            background: #28a745;
+            color: white;
+        }
+        
+        .option.wrong {
+            border-color: #dc3545;
+            background: #dc3545;
+            color: white;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #ffc107;
+            display: none;
+        }
+        
+        .explanation.show {
+            display: block;
+        }
+        
+        .explanation h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        
+        .checkbox-group {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+        
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .rules {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ffc107;
+        }
+        
+        .rules h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .link-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .link-card.safe {
+            border-color: #28a745;
+        }
+        
+        .link-card.warning {
+            border-color: #ffc107;
+        }
+        
+        .link-card.danger {
+            border-color: #dc3545;
+        }
+        
+        .link-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .link-card p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            text-align: center;
+            animation: slideUp 0.3s;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-content h2 {
+            margin-bottom: 20px;
+        }
+        
+        .modal-content p {
+            margin-bottom: 25px;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .modal-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+        
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #dc3545;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffc107;
+        }
+        
+        .ban-notice {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 3px solid #dc3545;
+            margin-bottom: 20px;
+        }
+        
+        .ban-notice h3 {
+            color: #721c24;
+            margin-bottom: 15px;
+        }
+        
+        .ban-timer {
+            font-size: 32px;
+            color: #dc3545;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .visit-counter {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.95);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+        
+        .visit-counter h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .visit-item {
+            font-size: 12px;
+            margin: 5px 0;
+            color: #555;
+        }
+        
+        .email-notification {
+            background: #d1ecf1;
+            border: 2px solid #0c5460;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .email-notification h4 {
+            color: #0c5460;
+            margin-bottom: 10px;
+        }
+        
+        .email-notification p {
+            color: #0c5460;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="visit-counter" id="visitCounter" style="display: none;">
+        <h4>📊 سجل الزيارات</h4>
+        <div id="visitList"></div>
+    </div>
+
+    <div class="container">
+        <!-- Page 1: Login -->
+        <div class="page active" id="loginPage">
+            <div class="logo">🔐</div>
+            <h1>مرحباً بك في DzNet1</h1>
+            <p style="text-align: center; color: #666; margin-bottom: 20px;">
+                واي فاي محمي للأطفال - DzNet1_Kids_10
+            </p>
+            
+            <div class="credentials-display">
+                <h3>🎯 معلومات الدخول للتجربة</h3>
+                <div class="cred-item">
+                    <span class="cred-label">اسم المستخدم:</span>
+                    <span class="cred-value">amine</span>
+                </div>
+                <div class="cred-item">
+                    <span class="cred-label">كلمة المرور:</span>
+                    <span class="cred-value">dznet1</span>
+                </div>
+            </div>
+
+            <div id="banNotice" style="display: none;"></div>
+            
+            <div class="form-group">
+                <label>اسم المستخدم</label>
+                <input type="text" id="username" placeholder="أدخل اسم المستخدم">
+            </div>
+            
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="password" placeholder="أدخل كلمة المرور">
+            </div>
+            
+            <div id="loginError" class="alert alert-danger" style="display: none;">
+                ❌ اسم المستخدم أو كلمة المرور خاطئة!
+            </div>
+            
+            <button onclick="login()" id="loginBtn">دخول</button>
+        </div>
+
+        <!-- Page 2: Quiz -->
+        <div class="page" id="quizPage">
+            <div class="logo">🎯</div>
+            <h1>أجب على الأسئلة للدخول</h1>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                هذا اختبار بسيط للتأكد من أنك جاهز للإنترنت
+            </p>
+            
+            <div id="questionsContainer"></div>
+            
+            <div id="quizResult" style="display: none;"></div>
+            
+            <button id="submitQuiz" onclick="submitQuiz()" disabled>إرسال الإجابات</button>
+        </div>
+
+        <!-- Page 3: Rules & Welcome -->
+        <div class="page" id="rulesPage">
+            <div class="logo">📜</div>
+            <h1>مرحباً أمين! 👋</h1>
+            <p style="text-align: center; color: #28a745; font-weight: bold; margin-bottom: 30px;">
+                ✅ ممتاز! أجبت بشكل صحيح
+            </p>
+            
+            <div class="rules">
+                <h3>🛡️ قواعد استخدام الإنترنت الآمن</h3>
+                <p style="margin-bottom: 15px; font-weight: bold;">اقرأ هذه النصائح جيداً:</p>
+            </div>
+            
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="rule1" onchange="checkRules()">
+                    <label for="rule1">✅ أتعهد بعدم زيارة المواقع الخطيرة أو غير اللائقة</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="rule2" onchange="checkRules()">
+                    <label for="rule2">⏰ أتعهد بعدم قضاء وقت طويل على الإنترنت</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="rule3" onchange="checkRules()">
+                    <label for="rule3">👨‍👩‍👧 أتعهد بإخبار والديّ إذا شاهدت شيئاً غريباً</label>
+                </div>
+                
+                <div class="checkbox-item">
+                    <input type="checkbox" id="rule4" onchange="checkRules()">
+                    <label for="rule4">🎯 أتعهد باستخدام الإنترنت للتعلم واللعب الآمن فقط</label>
+                </div>
+            </div>
+            
+            <button id="acceptRules" onclick="acceptRules()" disabled>قبلت القواعد - ابدأ التصفح</button>
+        </div>
+
+        <!-- Page 4: Internet Main Page -->
+        <div class="page" id="internetPage">
+            <div class="logo">🌐</div>
+            <h1>أهلاً وسهلاً في الإنترنت الآمن</h1>
+            <p style="text-align: center; color: #28a745; font-weight: bold; margin-bottom: 30px;">
+                مرحباً أمين! اختر ما تريد زيارته
+            </p>
+            
+            <div class="link-card safe" onclick="visitSite('math')">
+                <h3>📚 موقع دروس الرياضيات</h3>
+                <p>تعلم الرياضيات بطريقة ممتعة وسهلة</p>
+                <p style="color: #28a745; font-weight: bold;">✅ موقع آمن ومفيد</p>
+            </div>
+            
+            <div class="link-card warning" onclick="visitSite('games')">
+                <h3>🎮 موقع الألعاب</h3>
+                <p>العاب مسلية وممتعة</p>
+                <p style="color: #ffc107; font-weight: bold;">⚠️ استخدم بحذر - لا تقضي وقتاً طويلاً</p>
+            </div>
+            
+            <div class="link-card danger" onclick="visitSite('drugs')">
+                <h3>⚠️ موقع غير معروف</h3>
+                <p>محتوى غير مناسب للأطفال</p>
+                <p style="color: #dc3545; font-weight: bold;">🚫 موقع خطير</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Warnings -->
+    <div class="modal" id="warningModal">
+        <div class="modal-content">
+            <div class="modal-icon" id="modalIcon">⚠️</div>
+            <h2 id="modalTitle">تحذير!</h2>
+            <p id="modalText"></p>
+            <div id="emailNotif"></div>
+            <button onclick="closeModal()">فهمت</button>
+        </div>
+    </div>
+
+    <script>
+        // Question Pool
+        const questionPool = [
+            {
+                question: "ما هي عاصمة الجزائر؟",
+                options: ["الجزائر العاصمة", "وهران", "قسنطينة"],
+                correct: 0,
+                explanation: "الجزائر العاصمة هي عاصمة الدولة الجزائرية وأكبر مدنها. تقع على ساحل البحر الأبيض المتوسط وتُعرف بـ 'البهجة' أو 'الجزائر البيضاء'."
+            },
+            {
+                question: "كم عدد أركان الإسلام؟",
+                options: ["ثلاثة", "خمسة", "سبعة"],
+                correct: 1,
+                explanation: "أركان الإسلام خمسة: الشهادتان، الصلاة، الزكاة، الصوم، والحج لمن استطاع إليه سبيلاً. هذه هي الأسس التي يقوم عليها الدين الإسلامي."
+            },
+            {
+                question: "ما هو ناتج 5 × 6؟",
+                options: ["25", "30", "35"],
+                correct: 1,
+                explanation: "عندما نضرب 5 في 6، نجمع الرقم 5 ستة مرات: 5+5+5+5+5+5 = 30. الضرب هو عملية جمع متكررة للرقم نفسه."
+            },
+            {
+                question: "في أي سنة استقلت الجزائر؟",
+                options: ["1954", "1962", "1970"],
+                correct: 1,
+                explanation: "استقلت الجزائر في 5 يوليو 1962 بعد 132 سنة من الاحتلال الفرنسي. كانت ثورة التحرير قد بدأت في 1 نوفمبر 1954."
+            },
+            {
+                question: "كم عدد كواكب المجموعة الشمسية؟",
+                options: ["7 كواكب", "8 كواكب", "9 كواكب"],
+                correct: 1,
+                explanation: "المجموعة الشمسية تحتوي على 8 كواكب: عطارد، الزهرة، الأرض، المريخ، المشتري، زحل، أورانوس، ونبتون. بلوتو لم يعد يُعتبر كوكباً منذ 2006."
+            },
+            {
+                question: "ما هو ناتج 12 ÷ 3؟",
+                options: ["3", "4", "5"],
+                correct: 1,
+                explanation: "عندما نقسم 12 على 3، نسأل: كم مرة يوجد الرقم 3 في 12؟ الجواب هو 4 مرات (3+3+3+3=12). القسمة هي عكس عملية الضرب."
+            },
+            {
+                question: "من هو أول خليفة في الإسلام؟",
+                options: ["عمر بن الخطاب", "أبو بكر الصديق", "عثمان بن عفان"],
+                correct: 1,
+                explanation: "أبو بكر الصديق رضي الله عنه هو أول الخلفاء الراشدين. كان صاحب الرسول ﷺ وأول من آمن به من الرجال، وخلفه في قيادة المسلمين."
+            },
+            {
+                question: "كم عدد أيام السنة؟",
+                options: ["360 يوم", "365 يوم", "370 يوم"],
+                correct: 1,
+                explanation: "السنة الميلادية تحتوي على 365 يوماً، وكل 4 سنوات تكون سنة كبيسة بها 366 يوماً. هذا لأن الأرض تدور حول الشمس في 365.25 يوم تقريباً."
+            },
+            {
+                question: "ما هي أطول سورة في القرآن؟",
+                options: ["سورة يوسف", "سورة البقرة", "سورة آل عمران"],
+                correct: 1,
+                explanation: "سورة البقرة هي أطول سورة في القرآن الكريم، وتحتوي على 286 آية. سُميت بالبقرة لورود قصة بقرة بني إسرائيل فيها."
+            },
+            {
+                question: "ما هو ناتج 7 + 8؟",
+                options: ["14", "15", "16"],
+                correct: 1,
+                explanation: "عندما نجمع 7 و 8، نحصل على 15. يمكنك أن تتخيل أن لديك 7 تفاحات وأعطاك صديقك 8 تفاحات أخرى، ستصبح لديك 15 تفاحة."
+            }
+        ];
+
+        let currentQuestions = [];
+        let answers = {};
+        let visits = { math: 0, games: 0, drugs: 0 };
+        let banTime = 0; // in minutes
+        let banEndTime = null;
+        let banAttempts = 0;
+
+        function getRandomQuestions(count = 3) {
+            const shuffled = [...questionPool].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, count);
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function checkBanStatus() {
+            if (banEndTime && Date.now() < banEndTime) {
+                const remainingMs = banEndTime - Date.now();
+                const remainingMinutes = Math.ceil(remainingMs / 60000);
+                return { banned: true, remaining: remainingMinutes };
+            }
+            return { banned: false };
+        }
+
+        function displayBanNotice(remainingMinutes) {
+            const banNotice = document.getElementById('banNotice');
+            banNotice.style.display = 'block';
+            banNotice.className = 'ban-notice';
+            banNotice.innerHTML = `
+                <h3>⛔ أنت محظور مؤقتاً</h3>
+                <p style="color: #721c24; line-height: 1.8;">
+                    لقد حاولت زيارة مواقع خطيرة متعددة المرات.<br>
+                    <strong>السبب:</strong> زيارة مواقع تحتوي على محتوى ضار (مخدرات)<br>
+                    <strong>المدة المتبقية:</strong>
+                </p>
+                <div class="ban-timer">${remainingMinutes} دقيقة</div>
+                <div class="email-notification">
+                    <h4>📧 تم إرسال إشعار للوالدين</h4>
+                    <p>
+                        <strong>إلى:</strong> parent@example.com<br>
+                        <strong>الموضوع:</strong> تنبيه: محاولة الوصول إلى محتوى خطير<br>
+                        <strong>الرسالة:</strong> ابنك أمين حاول زيارة مواقع خطيرة عدة مرات. تم حظره مؤقتاً لمدة ${banTime} دقيقة.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('loginBtn').disabled = true;
+        }
+
+        function login() {
+            const banStatus = checkBanStatus();
+            
+            if (banStatus.banned) {
+                banAttempts++;
+                banTime += 15;
+                banEndTime = Date.now() + (banTime * 60000);
+                displayBanNotice(banTime);
+                sendParentNotification('محاولة دخول أثناء الحظر');
+                return;
+            }
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'amine' && password === 'dznet1') {
+                document.getElementById('loginError').style.display = 'none';
+                loadQuiz();
+                showPage('quizPage');
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        function loadQuiz() {
+            currentQuestions = getRandomQuestions(3);
+            answers = {};
+            
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            currentQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.id = `question-${index}`;
+                
+                let optionsHtml = '';
+                q.options.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <div class="option" onclick="selectAnswer(${index}, ${optIndex}, this)">
+                            ${opt}
+                        </div>
+                    `;
+                });
+                
+                questionDiv.innerHTML = `
+                    <h3>السؤال ${index + 1}️⃣: ${q.question}</h3>
+                    <div class="options">
+                        ${optionsHtml}
+                    </div>
+                    <div class="explanation" id="explanation-${index}">
+                        <h4>💡 شرح الإجابة:</h4>
+                        <p>${q.explanation}</p>
+                    </div>
+                `;
+                
+                container.appendChild(questionDiv);
+            });
+            
+            document.getElementById('submitQuiz').disabled = true;
+        }
+
+        function selectAnswer(questionId, answerId, element) {
+            const question = document.getElementById(`question-${questionId}`);
+            question.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            element.classList.add('selected');
+            answers[questionId] = answerId;
+            
+            if (Object.keys(answers).length === currentQuestions.length) {
+                document.getElementById('submitQuiz').disabled = false;
+            }
+        }
+
+        function submitQuiz() {
+            let allCorrect = true;
+            
+            currentQuestions.forEach((q, index) => {
+                const question = document.getElementById(`question-${index}`);
+                const options = question.querySelectorAll('.option');
+                const explanation = document.getElementById(`explanation-${index}`);
+                
+                options.forEach((opt, optIndex) => {
+                    if (optIndex === q.correct) {
+                        opt.classList.add('correct');
+                    } else if (optIndex === answers[index]) {
+                        opt.classList.add('wrong');
+                        allCorrect = false;
+                        explanation.classList.add('show');
+                    }
+                });
+            });
+            
+            const resultDiv = document.getElementById('quizResult');
+            resultDiv.style.display = 'block';
+            
+            if (allCorrect) {
+                resultDiv.className = 'alert alert-success';
+                resultDiv.innerHTML = '🎉 ممتاز! أجبت على جميع الأسئلة بشكل صحيح!';
+                
+                setTimeout(() => {
+                    showPage('rulesPage');
+                }, 2000);
+            } else {
+                resultDiv.className = 'alert alert-warning';
+                resultDiv.innerHTML = `
+                    ⚠️ بعض الإجابات خاطئة. اقرأ الشرح أدناه لتتعلم، ثم حاول مرة أخرى!
+                `;
+                
+                setTimeout(() => {
+                    resultDiv.innerHTML += `<br><br>سيتم إعادة تحميل الصفحة...`;
+                    setTimeout(() => location.reload(), 3000);
+                }, 3000);
+            }
+            
+            document.getElementById('submitQuiz').disabled = true;
+        }
+
+        function checkRules() {
+            const rule1 = document.getElementById('rule1').checked;
+            const rule2 = document.getElementById('rule2').checked;
+            const rule3 = document.getElementById('rule3').checked;
+            const rule4 = document.getElementById('rule4').checked;
+            
+            document.getElementById('acceptRules').disabled = !(rule1 && rule2 && rule3 && rule4);
+        }
+
+        function acceptRules() {
+            showPage('internetPage');
+            document.getElementById('visitCounter').style.display = 'block';
+            updateVisitCounter();
+        }
+
+        function visitSite(site) {
+            visits[site]++;
+            updateVisitCounter();
+            
+            if (site === 'math') {
+                showModal(
+                    '✅',
+                    'موقع آمن!',
+                    'ممتاز! هذا موقع تعليمي رائع. استمر في التعلم! الرياضيات مهمة جداً لمستقبلك.',
+                    false
+                );
+            } else if (site === 'games') {
+                if (visits[site] === 1) {
+                    showModal(
+                        '⚠️',
+                        'تحذير!',
+                        'الألعاب ممتعة، لكن لا تنسى دروسك! لا تقضِ وقتاً طويلاً في اللعب. الدراسة أهم!',
+                        false
+                    );
+                } else if (visits[site] >= 2) {
+                    showModal(
+                        '⚠️',
+                        'انتباه!',
+                        'هذه المرة الثانية التي تزور فيها موقع الألعاب. ركز على دراستك! سنراقب استخدامك.',
+                        false
+                    );
+                }
+            } else if (site === 'drugs') {
+                if (visits[site] === 1) {
+                    showModal(
+                        '🚫',
+                        'موقع خطير جداً!',
+                        'هذا الموقع يحتوي على محتوى عن المخدرات وهو خطير جداً! المخدرات تدمر الصحة والعقل والمستقبل. تسبب الإدمان والأمراض وتؤدي إلى الموت. لا تحاول زيارة هذا الموقع مرة أخرى وإلا سيتم حظرك!',
+                        false
+                    );
+                    sendParentNotification('محاولة الوصول إلى موقع خطير (المرة الأولى)');
+                } else if (visits[site] >= 2) {
+                    banUser();
+                }
+            }
+        }
+
+        function banUser() {
+            banTime = 15;
+            banEndTime = Date.now() + (15 * 60000);
+            
+            showModal(
+                '🚫',
+                'تم حظرك!',
+                `لقد زرت مواقع خطيرة عدة مرات رغم التحذيرات. تم حظرك لمدة ${banTime} دقيقة. سيتم إرسال إشعار لوالديك الآن.`,
+                true
+            );
+            
+            sendParentNotification('تم حظر الطفل بسبب زيارات متكررة لمواقع خطيرة');
+        }
+
+        function sendParentNotification(reason) {
+            console.log('📧 ====== إشعار للوالدين ======');
+            console.log(`إلى: parent@example.com`);
+            console.log(`الموضوع: تنبيه أمني - حساب الطفل: أمين`);
+            console.log(`الرسالة: ${reason}`);
+            console.log(`الوقت: ${new Date().toLocaleString('ar-DZ')}`);
+            console.log(`المدة: ${banTime} دقيقة`);
+            console.log('================================');
+        }
+
+        function showModal(icon, title, text, showEmail) {
+            document.getElementById('modalIcon').textContent = icon;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalText').textContent = text;
+            
+            const emailDiv = document.getElementById('emailNotif');
+            if (showEmail) {
+                emailDiv.innerHTML = `
+                    <div class="email-notification">
+                        <h4>📧 تم إرسال إشعار للوالدين</h4>
+                        <p>
+                            <strong>إلى:</strong> parent@example.com<br>
+                            <strong>الموضوع:</strong> تنبيه: سلوك خطير على الإنترنت<br>
+                            <strong>الرسالة:</strong> ابنك أمين زار مواقع خطيرة متعددة المرات. تم حظره لمدة ${banTime} دقيقة.
+                        </p>
+                    </div>
+                `;
+            } else {
+                emailDiv.innerHTML = '';
+            }
+            
+            document.getElementById('warningModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('warningModal').classList.remove('active');
+            
+            if (banEndTime) {
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        }
+
+        function updateVisitCounter() {
+            const visitList = document.getElementById('visitList');
+            visitList.innerHTML = `
+                <div class="visit-item">📚 دروس: ${visits.math}</div>
+                <div class="visit-item">🎮 ألعاب: ${visits.games}</div>
+                <div class="visit-item">🚫 خطيرة: ${visits.drugs}</div>
+            `;
+        }
+
+        // Check ban status on page load
+        window.onload = function() {
+            const banStatus = checkBanStatus();
+            if (banStatus.banned) {
+                displayBanNotice(banStatus.remaining);
+            }
+        };
+
+        // Allow Enter key to submit login
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                login();
+            }
+        });
+    </script>
+</body>
+</html>

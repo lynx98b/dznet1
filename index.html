@@ -7,6 +7,29 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Construction Banner -->
+    <div style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); color: white; padding: 15px 20px; text-align: center; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3); position: relative; z-index: 1000;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
+            <div style="font-size: 30px; animation: blink 1.5s infinite;">🚧</div>
+            <div>
+                <div style="font-weight: bold; font-size: 18px; margin-bottom: 5px;" data-ar="⚠️ الموقع قيد الإنشاء" data-fr="⚠️ Site en construction">
+                    ⚠️ الموقع قيد الإنشاء
+                </div>
+                <div style="font-size: 14px; opacity: 0.9;" data-ar="الخدمة غير نشطة حالياً - نعمل على تحسين تجربتك" data-fr="Service pas encore actif - Nous améliorons votre expérience">
+                    الخدمة غير نشطة حالياً - نعمل على تحسين تجربتك
+                </div>
+            </div>
+            <div style="font-size: 30px; animation: blink 1.5s infinite;">🚧</div>
+        </div>
+    </div>
+    
+    <style>
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+    </style>
+
     <!-- Toggle Language -->
     <div class="lang-toggle" onclick="toggleLanguage()">
         <span id="langText">🇩🇿 Français</span>
@@ -78,83 +101,148 @@
             </p>
 
             <!-- Visual Example with WiFi Signals -->
-            <div style="background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%); padding: 35px; border-radius: 15px; margin: 30px 0; border: 3px solid #ffc107; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);">
-                <h4 style="text-align: center; font-size: 24px; margin-bottom: 25px;" data-ar="🎯 مثال بسيط من عائلة جزائرية:" data-fr="🎯 Exemple simple d'une famille algérienne :">
-                    🎯 مثال بسيط من عائلة جزائرية:
+            <div style="background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%); padding: 40px 25px; border-radius: 20px; margin: 40px 0; border: 3px solid #ffc107; box-shadow: 0 8px 30px rgba(255, 193, 7, 0.3);">
+                <h4 style="text-align: center; font-size: 28px; margin-bottom: 35px; color: #333;" data-ar="🎯 مثال من عائلة جزائرية حقيقية" data-fr="🎯 Exemple d'une vraie famille algérienne">
+                    🎯 مثال من عائلة جزائرية حقيقية
                 </h4>
                 
                 <!-- Router Visual -->
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <img src="images/router-icon.png" alt="WiFi Router" style="width: 120px; height: 120px; margin-bottom: 15px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));">
-                    <div style="background: #667eea; color: white; display: inline-block; padding: 10px 25px; border-radius: 10px; font-weight: bold; font-size: 18px;" data-ar="موديم DzNet1 الذكي" data-fr="Modem Intelligent DzNet1">
-                        موديم DzNet1 الذكي
+                <div style="text-align: center; margin-bottom: 40px; position: relative;">
+                    <div style="display: inline-block; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);">
+                        <img src="images/router-icon.png" alt="WiFi Router" style="width: 100px; height: 100px; display: block; margin: 0 auto;">
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; border-radius: 25px; font-weight: bold; font-size: 16px; margin-top: 15px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);" data-ar="موديم DzNet1 الذكي" data-fr="Modem Intelligent DzNet1">
+                            موديم DzNet1 الذكي
+                        </div>
                     </div>
-                    <div style="margin-top: 15px; font-size: 30px; opacity: 0.6;">
-                        ⬇️ ⬇️ ⬇️ ⬇️ ⬇️
+                    
+                    <!-- WiFi Waves Animation -->
+                    <div style="margin-top: 20px; font-size: 32px; color: #667eea; letter-spacing: 8px;">
+                        ◠ ◠ ◠ ◠ ◠
                     </div>
                 </div>
 
                 <!-- Family Members with WiFi Signals -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 25px;">
-                    <!-- Parents -->
-                    <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                        <div style="font-size: 50px; margin-bottom: 10px;">👨</div>
-                        <div style="font-size: 24px; margin-bottom: 8px;">📶</div>
-                        <div style="font-weight: bold; color: #28a745; margin-bottom: 8px;" data-ar="بابا" data-fr="Papa">بابا</div>
-                        <div style="font-size: 13px; color: #666;" data-ar="واي فاي بدون حدود ✅" data-fr="WiFi sans limites ✅">واي فاي بدون حدود ✅</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 30px;">
+                    
+                    <!-- Parents Together -->
+                    <div style="background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); padding: 25px; border-radius: 16px; text-align: center; box-shadow: 0 6px 20px rgba(40, 167, 69, 0.25); border: 3px solid #28a745; flex: 1; min-width: 280px; max-width: 350px; position: relative;">
+                        <div style="position: absolute; top: -15px; right: 15px; background: #28a745; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold;" data-ar="واي فاي مفتوح" data-fr="WiFi Ouvert">
+                            📶 واي فاي مفتوح
+                        </div>
+                        
+                        <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 15px;">
+                            <div style="font-size: 60px;">👨</div>
+                            <div style="font-size: 60px;">👩</div>
+                        </div>
+                        
+                        <div style="font-size: 28px; margin: 10px 0; color: #28a745;">📶 📶</div>
+                        
+                        <div style="font-weight: bold; color: #155724; font-size: 20px; margin-bottom: 10px;" data-ar="بابا و ماما" data-fr="Papa et Maman">
+                            بابا و ماما
+                        </div>
+                        
+                        <!-- WiFi Name -->
+                        <div style="background: #155724; color: #fff; padding: 8px 15px; border-radius: 20px; font-size: 13px; font-family: monospace; margin-bottom: 12px; display: inline-block;">
+                            📡 DzNet1_Parents
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.8); padding: 10px; border-radius: 10px; font-size: 14px; color: #155724;">
+                            <span data-ar="✅ إنترنت كامل بدون حدود" data-fr="✅ Internet complet sans limites">✅ إنترنت كامل بدون حدود</span><br>
+                            <span data-ar="🌐 كل المواقع متاحة" data-fr="🌐 Tous les sites accessibles">🌐 كل المواقع متاحة</span>
+                        </div>
                     </div>
 
-                    <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                        <div style="font-size: 50px; margin-bottom: 10px;">👩</div>
-                        <div style="font-size: 24px; margin-bottom: 8px;">📶</div>
-                        <div style="font-weight: bold; color: #28a745; margin-bottom: 8px;" data-ar="ماما" data-fr="Maman">ماما</div>
-                        <div style="font-size: 13px; color: #666;" data-ar="واي فاي بدون حدود ✅" data-fr="WiFi sans limites ✅">واي فاي بدون حدود ✅</div>
+                    <!-- Kid 1 - Amira -->
+                    <div style="background: linear-gradient(135deg, #ffe8f0 0%, #ffd4e5 100%); padding: 25px; border-radius: 16px; text-align: center; box-shadow: 0 6px 20px rgba(255, 107, 107, 0.25); border: 3px solid #ff6b9d; flex: 1; min-width: 220px; max-width: 280px; position: relative;">
+                        <div style="position: absolute; top: -15px; right: 15px; background: #ff6b9d; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold;" data-ar="محمي" data-fr="Protégé">
+                            🔒 محمي
+                        </div>
+                        
+                        <div style="font-size: 60px; margin-bottom: 10px;">👧</div>
+                        <div style="font-size: 28px; margin: 10px 0; color: #ff6b9d;">📶🔒</div>
+                        
+                        <div style="font-weight: bold; color: #c71585; font-size: 18px; margin-bottom: 10px;" data-ar="أميرة" data-fr="Amira">أميرة</div>
+                        <div style="background: rgba(255,255,255,0.9); padding: 8px; border-radius: 8px; font-size: 13px; color: #c71585; margin-bottom: 8px;" data-ar="5 سنوات" data-fr="5 ans">5 سنوات</div>
+                        
+                        <!-- WiFi Name -->
+                        <div style="background: #c71585; color: #fff; padding: 8px 15px; border-radius: 20px; font-size: 13px; font-family: monospace; margin-bottom: 12px; display: inline-block;">
+                            📡 DzNet1_Kids_5
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.8); padding: 8px; border-radius: 10px; font-size: 13px; color: #c71585;">
+                            <span data-ar="🎨 تعليم + كرتون فقط" data-fr="🎨 Éducation + Dessins animés">🎨 تعليم + كرتون</span>
+                        </div>
                     </div>
 
-                    <!-- Kids -->
-                    <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 2px solid #ff6b6b;">
-                        <div style="font-size: 50px; margin-bottom: 10px;">👧</div>
-                        <div style="font-size: 24px; margin-bottom: 8px;">📶🔒</div>
-                        <div style="font-weight: bold; color: #667eea; margin-bottom: 8px;" data-ar="أميرة (5 سنوات)" data-fr="Amira (5 ans)">أميرة (5 سنوات)</div>
-                        <div style="font-size: 12px; color: #666;" data-ar="تعليم + كرتون فقط 🎨" data-fr="Éducation + Dessins animés 🎨">تعليم + كرتون فقط 🎨</div>
+                    <!-- Kid 2 - Mohamed -->
+                    <div style="background: linear-gradient(135deg, #d4f4dd 0%, #b8e6c3 100%); padding: 25px; border-radius: 16px; text-align: center; box-shadow: 0 6px 20px rgba(78, 205, 196, 0.25); border: 3px solid #4ecdc4; flex: 1; min-width: 220px; max-width: 280px; position: relative;">
+                        <div style="position: absolute; top: -15px; right: 15px; background: #4ecdc4; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold;" data-ar="محمي" data-fr="Protégé">
+                            🔒 محمي
+                        </div>
+                        
+                        <div style="font-size: 60px; margin-bottom: 10px;">👦</div>
+                        <div style="font-size: 28px; margin: 10px 0; color: #4ecdc4;">📶🔒</div>
+                        
+                        <div style="font-weight: bold; color: #2d8b7e; font-size: 18px; margin-bottom: 10px;" data-ar="محمد" data-fr="Mohamed">محمد</div>
+                        <div style="background: rgba(255,255,255,0.9); padding: 8px; border-radius: 8px; font-size: 13px; color: #2d8b7e; margin-bottom: 8px;" data-ar="10 سنوات" data-fr="10 ans">10 سنوات</div>
+                        
+                        <!-- WiFi Name -->
+                        <div style="background: #2d8b7e; color: #fff; padding: 8px 15px; border-radius: 20px; font-size: 13px; font-family: monospace; margin-bottom: 12px; display: inline-block;">
+                            📡 DzNet1_Kids_10
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.8); padding: 8px; border-radius: 10px; font-size: 13px; color: #2d8b7e;">
+                            <span data-ar="🎮 دروس + ألعاب آمنة" data-fr="🎮 Cours + Jeux sûrs">🎮 دروس + ألعاب آمنة</span>
+                        </div>
                     </div>
 
-                    <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 2px solid #4ecdc4;">
-                        <div style="font-size: 50px; margin-bottom: 10px;">👦</div>
-                        <div style="font-size: 24px; margin-bottom: 8px;">📶🔒</div>
-                        <div style="font-weight: bold; color: #667eea; margin-bottom: 8px;" data-ar="محمد (10 سنوات)" data-fr="Mohamed (10 ans)">محمد (10 سنوات)</div>
-                        <div style="font-size: 12px; color: #666;" data-ar="دروس + ألعاب آمنة 🎮" data-fr="Cours + Jeux sûrs 🎮">دروس + ألعاب آمنة 🎮</div>
-                    </div>
-
-                    <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 2px solid #a29bfe;">
-                        <div style="font-size: 50px; margin-bottom: 10px;">👨‍🎓</div>
-                        <div style="font-size: 24px; margin-bottom: 8px;">📶🔒</div>
-                        <div style="font-weight: bold; color: #667eea; margin-bottom: 8px;" data-ar="فاطمة (14 سنة)" data-fr="Fatima (14 ans)">فاطمة (14 سنة)</div>
-                        <div style="font-size: 12px; color: #666;" data-ar="دراسة + برمجة 💻" data-fr="Études + Programmation 💻">دراسة + برمجة 💻</div>
+                    <!-- Kid 3 - Fatima -->
+                    <div style="background: linear-gradient(135deg, #e3d9ff 0%, #d0bfff 100%); padding: 25px; border-radius: 16px; text-align: center; box-shadow: 0 6px 20px rgba(162, 155, 254, 0.25); border: 3px solid #a29bfe; flex: 1; min-width: 220px; max-width: 280px; position: relative;">
+                        <div style="position: absolute; top: -15px; right: 15px; background: #a29bfe; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold;" data-ar="محمي" data-fr="Protégé">
+                            🔒 محمي
+                        </div>
+                        
+                        <div style="font-size: 60px; margin-bottom: 10px;">👩‍🎓</div>
+                        <div style="font-size: 28px; margin: 10px 0; color: #a29bfe;">📶🔒</div>
+                        
+                        <div style="font-weight: bold; color: #6c5ce7; font-size: 18px; margin-bottom: 10px;" data-ar="فاطمة" data-fr="Fatima">فاطمة</div>
+                        <div style="background: rgba(255,255,255,0.9); padding: 8px; border-radius: 8px; font-size: 13px; color: #6c5ce7; margin-bottom: 8px;" data-ar="14 سنة" data-fr="14 ans">14 سنة</div>
+                        
+                        <!-- WiFi Name -->
+                        <div style="background: #6c5ce7; color: #fff; padding: 8px 15px; border-radius: 20px; font-size: 13px; font-family: monospace; margin-bottom: 12px; display: inline-block;">
+                            📡 DzNet1_Teens_14
+                        </div>
+                        
+                        <div style="background: rgba(255,255,255,0.8); padding: 8px; border-radius: 10px; font-size: 13px; color: #6c5ce7;">
+                            <span data-ar="💻 دراسة + برمجة" data-fr="💻 Études + Programmation">💻 دراسة + برمجة</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Legend -->
-                <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.7); border-radius: 10px;">
-                    <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px; text-align: center;">
-                        <div>
-                            <div style="font-size: 30px;">📶</div>
-                            <div style="font-size: 12px; font-weight: bold;" data-ar="واي فاي مفتوح" data-fr="WiFi ouvert">واي فاي مفتوح</div>
+                <div style="margin-top: 40px; padding: 25px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 25px; text-align: center;">
+                        <div style="flex: 1; min-width: 150px;">
+                            <div style="font-size: 40px; margin-bottom: 10px;">📶</div>
+                            <div style="font-size: 14px; font-weight: bold; color: #28a745;" data-ar="واي فاي مفتوح" data-fr="WiFi ouvert">واي فاي مفتوح</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 5px;" data-ar="للوالدين فقط" data-fr="Parents uniquement">للوالدين فقط</div>
                         </div>
-                        <div>
-                            <div style="font-size: 30px;">📶🔒</div>
-                            <div style="font-size: 12px; font-weight: bold;" data-ar="واي فاي محمي ومفلتر" data-fr="WiFi protégé et filtré">واي فاي محمي ومفلتر</div>
+                        <div style="flex: 1; min-width: 150px;">
+                            <div style="font-size: 40px; margin-bottom: 10px;">📶🔒</div>
+                            <div style="font-size: 14px; font-weight: bold; color: #667eea;" data-ar="واي فاي محمي" data-fr="WiFi protégé">واي فاي محمي</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 5px;" data-ar="للأطفال - مفلتر حسب العمر" data-fr="Enfants - Filtré selon l'âge">للأطفال - مفلتر حسب العمر</div>
                         </div>
-                        <div>
-                            <div style="font-size: 30px;">🛡️</div>
-                            <div style="font-size: 12px; font-weight: bold;" data-ar="حماية تلقائية" data-fr="Protection automatique">حماية تلقائية</div>
+                        <div style="flex: 1; min-width: 150px;">
+                            <div style="font-size: 40px; margin-bottom: 10px;">🛡️</div>
+                            <div style="font-size: 14px; font-weight: bold; color: #dc3545;" data-ar="حماية تلقائية" data-fr="Protection automatique">حماية تلقائية</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 5px;" data-ar="24/7 بدون توقف" data-fr="24/7 non-stop">24/7 بدون توقف</div>
                         </div>
                     </div>
                 </div>
 
-                <div style="text-align: center; margin-top: 20px; padding: 15px; background: rgba(102, 126, 234, 0.1); border-radius: 8px;">
-                    <p style="margin: 0; font-weight: bold; color: #667eea;" data-ar="💡 كل واحد يتصل بواي فاي مختلف، كل واحد محمي حسب عمره!" data-fr="💡 Chacun se connecte à un WiFi différent, chacun protégé selon son âge !">
-                        💡 كل واحد يتصل بواي فاي مختلف، كل واحد محمي حسب عمره!
+                <div style="text-align: center; margin-top: 25px; padding: 20px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15)); border-radius: 12px; border: 2px solid rgba(102, 126, 234, 0.3);">
+                    <p style="margin: 0; font-weight: bold; color: #667eea; font-size: 18px; line-height: 1.6;" data-ar="💡 كل واحد عندو واي فاي خاص بيه، والموديم يحمي الكل تلقائياً!" data-fr="💡 Chacun a son propre WiFi, et le modem protège tout le monde automatiquement !">
+                        💡 كل واحد عندو واي فاي خاص بيه، والموديم يحمي الكل تلقائياً!
                     </p>
                 </div>
             </div>

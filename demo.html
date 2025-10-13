@@ -895,63 +895,74 @@
             document.getElementById('reportDuration').textContent = `${duration} ${currentLang === 'ar' ? 'دقيقة' : 'minutes'}`;
             
             // Stats
+            const totalVisits = visits.math + visits.games + visits.drugs;
             const statsHtml = `
                 <div class="stat-card">
                     <div class="icon">✅</div>
-                    <div class="value">${Object.keys(answers).length}</div>
-                    <div class="label" data-ar="أسئلة مجابة" data-fr="Questions répondues">${currentLang === 'ar' ? 'أسئلة مجابة' : 'Questions répondues'}</div>
+                    <div class="value">${quizAnswers.length}</div>
+                    <div class="label">${currentLang === 'ar' ? 'أسئلة مجابة' : 'Questions répondues'}</div>
                 </div>
                 <div class="stat-card">
                     <div class="icon">🌐</div>
-                    <div class="value">${visits.math + visits.games + visits.drugs}</div>
-                    <div class="label" data-ar="مواقع مزارة" data-fr="Sites visités">${currentLang === 'ar' ? 'مواقع مزارة' : 'Sites visités'}</div>
+                    <div class="value">${totalVisits}</div>
+                    <div class="label">${currentLang === 'ar' ? 'مواقع مزارة' : 'Sites visités'}</div>
                 </div>
                 <div class="stat-card">
                     <div class="icon">🚫</div>
                     <div class="value">${visits.drugs}</div>
-                    <div class="label" data-ar="محاولات خطيرة" data-fr="Tentatives dangereuses">${currentLang === 'ar' ? 'محاولات خطيرة' : 'Tentatives dangereuses'}</div>
+                    <div class="label">${currentLang === 'ar' ? 'محاولات خطيرة' : 'Tentatives dangereuses'}</div>
                 </div>
                 <div class="stat-card">
                     <div class="icon">📚</div>
                     <div class="value">${visits.math}</div>
-                    <div class="label" data-ar="زيارات تعليمية" data-fr="Visites éducatives">${currentLang === 'ar' ? 'زيارات تعليمية' : 'Visites éducatives'}</div>
+                    <div class="label">${currentLang === 'ar' ? 'زيارات تعليمية' : 'Visites éducatives'}</div>
                 </div>
             `;
             document.getElementById('statsGrid').innerHTML = statsHtml;
             
             // Quiz results
             let quizHtml = '';
-            currentQuestions.forEach((q, index) => {
-                const isCorrect = answers[index] === q.correct;
-                quizHtml += `
-                    <div class="report-item">
-                        <strong>${currentLang === 'ar' ? 'السؤال' : 'Question'} ${index + 1}:</strong> ${q.question[currentLang]}<br>
-                        <span style="color: ${isCorrect ? '#28a745' : '#dc3545'}">
-                            ${isCorrect ? '✅ ' + (currentLang === 'ar' ? 'صحيح' : 'Correct') : '❌ ' + (currentLang === 'ar' ? 'خطأ' : 'Incorrect')}
-                        </span>
-                    </div>
-                `;
-            });
+            if (quizAnswers.length > 0) {
+                quizAnswers.forEach((answer, index) => {
+                    const icon = answer.correct ? '✅' : '❌';
+                    const color = answer.correct ? '#28a745' : '#dc3545';
+                    const status = answer.correct 
+                        ? (currentLang === 'ar' ? 'صحيح' : 'Correct')
+                        : (currentLang === 'ar' ? 'خطأ' : 'Incorrect');
+                    
+                    quizHtml += `
+                        <div class="report-item">
+                            <strong>${currentLang === 'ar' ? 'السؤال' : 'Question'} ${index + 1}:</strong> ${answer.question}<br>
+                            <strong>${currentLang === 'ar' ? 'الموضوع:' : 'Sujet :'}</strong> ${answer.topic}<br>
+                            <span style="color: ${color}; font-weight: bold;">
+                                ${icon} ${status}
+                            </span>
+                        </div>
+                    `;
+                });
+            } else {
+                quizHtml = `<div class="report-item">${currentLang === 'ar' ? 'لم يتم الإجابة على أي سؤال' : 'Aucune question répondue'}</div>`;
+            }
             document.getElementById('quizResults').innerHTML = quizHtml;
             
             // Sites visited with details
             let sitesHtml = '';
-            visitedSites.forEach((visit, index) => {
-                const safeIcon = visit.safe === true ? '✅' : visit.safe === 'warning' ? '⚠️' : '❌';
-                const safeColor = visit.safe === true ? '#28a745' : visit.safe === 'warning' ? '#ffc107' : '#dc3545';
-                
-                sitesHtml += `
-                    <div class="report-item" style="border-left: 4px solid ${safeColor}">
-                        <strong>${safeIcon} ${currentLang === 'ar' ? 'الزيارة' : 'Visite'} ${index + 1}:</strong><br>
-                        <strong>${currentLang === 'ar' ? 'الموقع:' : 'Site :'}</strong> ${visit.name[currentLang]}<br>
-                        <strong>${currentLang === 'ar' ? 'الرابط:' : 'URL :'}</strong> <code>${visit.url}</code><br>
-                        <strong>${currentLang === 'ar' ? 'الفئة:' : 'Catégorie :'}</strong> ${visit.category[currentLang]}<br>
-                        <strong>${currentLang === 'ar' ? 'الوقت:' : 'Heure :'}</strong> ${visit.time.toLocaleTimeString(currentLang === 'ar' ? 'ar-DZ' : 'fr-FR')}
-                    </div>
-                `;
-            });
-            
-            if (visitedSites.length === 0) {
+            if (visitedSites.length > 0) {
+                visitedSites.forEach((visit, index) => {
+                    const safeIcon = visit.safe === true ? '✅' : visit.safe === 'warning' ? '⚠️' : '❌';
+                    const safeColor = visit.safe === true ? '#28a745' : visit.safe === 'warning' ? '#ffc107' : '#dc3545';
+                    
+                    sitesHtml += `
+                        <div class="report-item" style="border-left: 4px solid ${safeColor}">
+                            <strong>${safeIcon} ${currentLang === 'ar' ? 'الزيارة' : 'Visite'} ${index + 1}:</strong><br>
+                            <strong>${currentLang === 'ar' ? 'الموقع:' : 'Site :'}</strong> ${visit.name[currentLang]}<br>
+                            <strong>${currentLang === 'ar' ? 'الرابط:' : 'URL :'}</strong> <code>${visit.url}</code><br>
+                            <strong>${currentLang === 'ar' ? 'الفئة:' : 'Catégorie :'}</strong> ${visit.category[currentLang]}<br>
+                            <strong>${currentLang === 'ar' ? 'الوقت:' : 'Heure :'}</strong> ${visit.time.toLocaleTimeString(currentLang === 'ar' ? 'ar-DZ' : 'fr-FR')}
+                        </div>
+                    `;
+                });
+            } else {
                 sitesHtml = `<div class="report-item">${currentLang === 'ar' ? 'لم يتم زيارة أي موقع' : 'Aucun site visité'}</div>`;
             }
             
@@ -959,18 +970,17 @@
             
             // Learning
             let learningHtml = '';
-            currentQuestions.forEach(q => {
-                if (!learnedTopics.includes(q.topic[currentLang])) {
-                    learnedTopics.push(q.topic[currentLang]);
-                }
-            });
-            learnedTopics.forEach(topic => {
-                learningHtml += `
-                    <div class="report-item">
-                        ✅ ${topic}
-                    </div>
-                `;
-            });
+            if (learnedTopics.length > 0) {
+                learnedTopics.forEach(topic => {
+                    learningHtml += `
+                        <div class="report-item">
+                            ✅ ${topic}
+                        </div>
+                    `;
+                });
+            } else {
+                learningHtml = `<div class="report-item">${currentLang === 'ar' ? 'لم يتم التعلم بعد' : 'Aucun apprentissage pour le moment'}</div>`;
+            }
             document.getElementById('learningToday').innerHTML = learningHtml;
             
             // Psychology tips
@@ -1080,11 +1090,30 @@
 
         function submitQuiz() {
             let allCorrect = true;
+            let correctCount = 0;
             
             currentQuestions.forEach((q, index) => {
                 const question = document.getElementById(`question-${index}`);
                 const options = question.querySelectorAll('.option');
                 const explanation = document.getElementById(`explanation-${index}`);
+                const isCorrect = answers[index] === q.correct;
+                
+                if (isCorrect) {
+                    correctCount++;
+                }
+                
+                // Store answer
+                quizAnswers.push({
+                    question: q.question[currentLang],
+                    answer: q.options[currentLang][answers[index]],
+                    correct: isCorrect,
+                    topic: q.topic[currentLang]
+                });
+                
+                // Add to learned topics
+                if (!learnedTopics.includes(q.topic[currentLang])) {
+                    learnedTopics.push(q.topic[currentLang]);
+                }
                 
                 options.forEach((opt, optIndex) => {
                     if (optIndex === q.correct) {
@@ -1094,12 +1123,6 @@
                         allCorrect = false;
                         explanation.classList.add('show');
                     }
-                });
-                
-                quizAnswers.push({
-                    question: q.question[currentLang],
-                    correct: answers[index] === q.correct,
-                    topic: q.topic[currentLang]
                 });
             });
             

@@ -425,7 +425,7 @@
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             padding: 40px;
             max-height: 90vh;
@@ -633,6 +633,320 @@
             -webkit-overflow-scrolling: touch;
         }
         
+        /* Charts & Analytics Styles */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .chart-card h4 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bar-label {
+            min-width: 120px;
+            font-size: 13px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .bar-wrapper {
+            flex: 1;
+            background: #f0f0f0;
+            border-radius: 20px;
+            height: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            border-radius: 20px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .bar-fill.safe {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        
+        .bar-fill.warning {
+            background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+        }
+        
+        .bar-fill.danger {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+        
+        .donut-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .donut-visual {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .donut-center {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        
+        .donut-total {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .donut-label {
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .donut-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+        
+        .legend-text {
+            flex: 1;
+            font-size: 13px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-value {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 16px;
+        }
+        
+        /* Verdict Card */
+        .verdict-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 3px solid;
+            text-align: center;
+        }
+        
+        .verdict-card.excellent {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        }
+        
+        .verdict-card.good {
+            border-color: #20c997;
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+        }
+        
+        .verdict-card.warning {
+            border-color: #ffc107;
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+        }
+        
+        .verdict-card.danger {
+            border-color: #dc3545;
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        }
+        
+        .verdict-icon {
+            font-size: 80px;
+            margin-bottom: 15px;
+        }
+        
+        .verdict-score {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .verdict-score.excellent {
+            color: #28a745;
+        }
+        
+        .verdict-score.good {
+            color: #20c997;
+        }
+        
+        .verdict-score.warning {
+            color: #ffc107;
+        }
+        
+        .verdict-score.danger {
+            color: #dc3545;
+        }
+        
+        .verdict-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .verdict-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        .verdict-details {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: right;
+            margin-top: 20px;
+        }
+        
+        .verdict-details ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .verdict-details li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+        
+        .verdict-details li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Time Chart */
+        .time-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .time-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .time-label {
+            min-width: 80px;
+            font-size: 12px;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .time-bar-wrapper {
+            flex: 1;
+            background: #f0f0f0;
+            border-radius: 15px;
+            height: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .time-bar-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            color: white;
+            font-weight: bold;
+            font-size: 11px;
+        }
+        
+        .visit-counter {
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            background: rgba(255,255,255,0.95);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+        
+        .visit-counter h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .visit-item {
+            font-size: 12px;
+            margin: 5px 0;
+            color: #555;
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
             body {
@@ -665,236 +979,21 @@
                 width: auto;
             }
             
-            h1 {
-                font-size: 24px;
-                margin-bottom: 20px;
-            }
-            
-            h2 {
-                font-size: 20px;
-            }
-            
-            .logo {
-                font-size: 40px;
-                margin-bottom: 15px;
-            }
-            
-            .credentials-display {
-                padding: 15px;
-            }
-            
-            .credentials-display h3 {
-                font-size: 16px;
-            }
-            
-            .cred-value {
-                font-size: 14px;
-            }
-            
-            button {
-                padding: 12px;
-                font-size: 16px;
-            }
-            
-            .question {
-                padding: 15px;
-            }
-            
-            .question h3 {
-                font-size: 16px;
-            }
-            
-            .option {
-                padding: 10px;
-                font-size: 14px;
-            }
-            
-            .link-card {
-                padding: 15px;
-            }
-            
-            .link-card h3 {
-                font-size: 18px;
-            }
-            
-            .link-card p {
-                font-size: 13px;
-            }
-            
-            .modal-content {
-                padding: 25px;
-                max-width: 90%;
-                margin: 20px;
-            }
-            
-            .modal-icon {
-                font-size: 60px;
-            }
-            
-            .modal-content h2 {
-                font-size: 20px;
-            }
-            
-            .modal-content p {
-                font-size: 14px;
-            }
-            
-            .report-header {
-                padding: 20px;
-            }
-            
-            .report-header h1 {
-                font-size: 24px;
-            }
-            
-            .report-section {
-                padding: 15px;
-                margin-bottom: 15px;
-            }
-            
-            .report-section h3 {
-                font-size: 18px;
-            }
-            
-            .stat-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            
-            .stat-card {
-                padding: 15px;
-            }
-            
-            .stat-card .icon {
-                font-size: 30px;
-            }
-            
-            .stat-card .value {
-                font-size: 22px;
-            }
-            
-            .stat-card .label {
-                font-size: 11px;
-            }
-            
-            /* Mobile Table Styles */
-            .sites-table {
-                font-size: 12px;
-            }
-            
-            .sites-table th,
-            .sites-table td {
-                padding: 10px 8px;
-            }
-            
-            .sites-table th {
-                font-size: 12px;
-            }
-            
-            .site-name {
-                font-size: 13px;
-            }
-            
-            .site-url {
-                font-size: 10px;
-            }
-            
-            .status-badge,
-            .category-badge {
-                font-size: 10px;
-                padding: 4px 8px;
-            }
-            
-            .psychology-tips {
-                padding: 20px;
-            }
-            
-            .psychology-tips h3 {
-                font-size: 18px;
-            }
-            
-            .psychology-tips li {
-                padding: 12px;
-                font-size: 13px;
-            }
-            
-            .email-notification {
-                padding: 12px;
-            }
-            
-            .email-notification h4 {
-                font-size: 14px;
-            }
-            
-            .email-notification p {
-                font-size: 12px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 20px;
-            }
-            
-            .stat-grid {
+            .analytics-grid {
                 grid-template-columns: 1fr;
             }
             
-            .modal-content {
-                padding: 20px;
+            .verdict-icon {
+                font-size: 60px;
             }
             
-            /* Vertical Table for Very Small Screens */
-            .sites-table thead {
-                display: none;
+            .verdict-score {
+                font-size: 36px;
             }
             
-            .sites-table tr {
-                display: block;
-                margin-bottom: 15px;
-                border: 2px solid #f0f0f0;
-                border-radius: 10px;
-                padding: 10px;
-                background: white;
+            .verdict-title {
+                font-size: 22px;
             }
-            
-            .sites-table td {
-                display: block;
-                text-align: right;
-                padding: 8px 10px;
-                border: none;
-            }
-            
-            .sites-table td:before {
-                content: attr(data-label);
-                font-weight: bold;
-                display: inline-block;
-                margin-left: 10px;
-                color: #667eea;
-            }
-        }
-        
-        .visit-counter {
-            position: fixed;
-            top: 80px;
-            left: 20px;
-            background: rgba(255,255,255,0.95);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 999;
-        }
-        
-        .visit-counter h4 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        
-        .visit-item {
-            font-size: 12px;
-            margin: 5px 0;
-            color: #555;
         }
     </style>
 </head>
@@ -906,7 +1005,7 @@
 
     <!-- Close Demo Button -->
     <a href="#" class="close-demo" onclick="closeDemoWithReport(); return false;">
-        <span id="closeText">❌ إغلاق الديمو</span>
+        <span id="closeText">✖ إغلاق الديمو</span>
     </a>
     
     <div class="visit-counter" id="visitCounter" style="display: none;">
@@ -946,7 +1045,7 @@
             </div>
             
             <div id="loginError" class="alert alert-danger" style="display: none;">
-                ❌ اسم المستخدم أو كلمة المرور خاطئة!
+                ✖ اسم المستخدم أو كلمة المرور خاطئة!
             </div>
             
             <button onclick="login()" id="loginBtn">دخول</button>
@@ -1048,6 +1147,27 @@
             <div style="font-size: 60px; margin-bottom: 15px;">📊</div>
             <h1 style="color: white; margin: 0;" id="reportMainTitle">تقرير نشاط الطفل</h1>
             <p style="margin: 10px 0 0 0; opacity: 0.9;" id="reportSubtitle">جلسة أمين على الإنترنت</p>
+        </div>
+
+        <!-- Verdict Section -->
+        <div id="verdictSection"></div>
+
+        <!-- Analytics Section -->
+        <div class="report-section">
+            <h3 id="analyticsTitle">📈 تحليل مرئي للنشاط</h3>
+            <div class="analytics-grid">
+                <!-- Sites Visit Chart -->
+                <div class="chart-card">
+                    <h4 id="topSitesTitle">🏆 المواقع الأكثر زيارة</h4>
+                    <div class="bar-chart" id="sitesBarChart"></div>
+                </div>
+                
+                <!-- Time Distribution Chart -->
+                <div class="chart-card">
+                    <h4 id="timeDistTitle">⏰ توزيع الأوقات</h4>
+                    <div class="time-chart" id="timeChart"></div>
+                </div>
+            </div>
         </div>
 
         <div class="report-section">
@@ -1226,10 +1346,13 @@
                 drugsSiteTitle: "⚠️ موقع غير معروف",
                 drugsSiteDesc: "محتوى غير مناسب للأطفال",
                 drugsSiteDanger: "🚫 موقع خطير",
-                closeText: "❌ إغلاق الديمو",
+                closeText: "✖ إغلاق الديمو",
                 visitCounterTitle: "📊 سجل الزيارات",
                 reportMainTitle: "تقرير نشاط الطفل",
                 reportSubtitle: "جلسة أمين على الإنترنت",
+                analyticsTitle: "📈 تحليل مرئي للنشاط",
+                topSitesTitle: "🏆 المواقع الأكثر زيارة",
+                timeDistTitle: "⏰ توزيع الأوقات",
                 sessionInfoTitle: "👤 معلومات الجلسة",
                 childLabel: "الطفل:",
                 dateLabel: "التاريخ:",
@@ -1275,10 +1398,13 @@
                 drugsSiteTitle: "⚠️ Site inconnu",
                 drugsSiteDesc: "Contenu inapproprié pour les enfants",
                 drugsSiteDanger: "🚫 Site dangereux",
-                closeText: "❌ Fermer la démo",
+                closeText: "✖ Fermer la démo",
                 visitCounterTitle: "📊 Historique",
                 reportMainTitle: "Rapport d'activité de l'enfant",
                 reportSubtitle: "Session d'Amine sur Internet",
+                analyticsTitle: "📈 Analyse visuelle de l'activité",
+                topSitesTitle: "🏆 Sites les plus visités",
+                timeDistTitle: "⏰ Distribution du temps",
                 sessionInfoTitle: "👤 Informations de session",
                 childLabel: "Enfant :",
                 dateLabel: "Date :",
@@ -1300,7 +1426,6 @@
             document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
             document.getElementById('langText').textContent = currentLang === 'ar' ? '🇩🇿 Français' : '🇩🇿 العربية';
             
-            // Update all text elements
             for (let key in translations[currentLang]) {
                 const element = document.getElementById(key);
                 if (element) {
@@ -1311,7 +1436,6 @@
             }
         }
 
-        // Show Page
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
@@ -1319,14 +1443,12 @@
             document.getElementById(pageId).classList.add('active');
         }
 
-        // Login
         function login() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
             if (username === 'amine' && password === 'dznet1') {
                 document.getElementById('loginError').style.display = 'none';
-                // Initialize session start time
                 sessionStartTime = new Date();
                 saveSessionData();
                 loadQuiz();
@@ -1336,7 +1458,6 @@
             }
         }
 
-        // Load Quiz
         function loadQuiz() {
             currentQuestions = getRandomQuestions(3);
             answers = {};
@@ -1375,13 +1496,11 @@
             document.getElementById('submitQuiz').disabled = true;
         }
 
-        // Get Random Questions
         function getRandomQuestions(count = 3) {
             const shuffled = [...questionPool].sort(() => Math.random() - 0.5);
             return shuffled.slice(0, count);
         }
 
-        // Select Answer
         function selectAnswer(questionId, answerId, element) {
             const question = document.getElementById(`question-${questionId}`);
             question.querySelectorAll('.option').forEach(opt => {
@@ -1396,7 +1515,6 @@
             }
         }
 
-        // Submit Quiz
         function submitQuiz() {
             let allCorrect = true;
             
@@ -1406,7 +1524,6 @@
                 const explanation = document.getElementById(`explanation-${index}`);
                 const isCorrect = answers[index] === q.correct;
                 
-                // Store answer
                 quizAnswers.push({
                     question: q.question[currentLang],
                     answer: q.options[currentLang][answers[index]],
@@ -1414,7 +1531,6 @@
                     topic: q.topic[currentLang]
                 });
                 
-                // Add to learned topics
                 if (!learnedTopics.includes(q.topic[currentLang])) {
                     learnedTopics.push(q.topic[currentLang]);
                 }
@@ -1430,7 +1546,6 @@
                 });
             });
             
-            // Save to localStorage
             saveSessionData();
             
             const resultDiv = document.getElementById('quizResult');
@@ -1455,7 +1570,6 @@
             document.getElementById('submitQuiz').disabled = true;
         }
 
-        // Check Rules
         function checkRules() {
             const allChecked = ['rule1', 'rule2', 'rule3', 'rule4'].every(id => 
                 document.getElementById(id).checked
@@ -1463,20 +1577,16 @@
             document.getElementById('acceptRules').disabled = !allChecked;
         }
 
-        // Accept Rules
         function acceptRules() {
-            // Save that rules were accepted
             saveSessionData();
             showPage('internetPage');
             document.getElementById('visitCounter').style.display = 'block';
             updateVisitCounter();
         }
 
-        // Visit Site
         function visitSite(site) {
             visits[site]++;
             
-            // Record visit with timestamp
             visitedSites.push({
                 site: site,
                 name: siteDatabase[site].name,
@@ -1486,9 +1596,7 @@
                 time: new Date()
             });
             
-            // Save to localStorage
             saveSessionData();
-            
             updateVisitCounter();
             
             const siteInfo = {
@@ -1508,8 +1616,8 @@
                         ar: 'مرحباً أمين! ⚠️\n\nالألعاب ممتعة، لكن هناك بعض الأشياء المهمة:\n\n⏰ لا تقضِ وقتاً طويلاً في اللعب\n📚 الدراسة أهم من الألعاب\n👀 الألعاب الكثيرة تتعب العينين\n🧠 عقلك يحتاج وقت راحة\n\nالتوازن مهم جداً! العب قليلاً، وركز على دروسك أكثر.',
                         fr: 'Salut Amine ! ⚠️\n\nLes jeux sont amusants, mais il y a des choses importantes :\n\n⏰ Ne passe pas trop de temps à jouer\n📚 Les études sont plus importantes\n👀 Trop de jeux fatigue tes yeux\n🧠 Ton cerveau a besoin de repos\n\nL\'équilibre est très important ! Joue un peu, concentre-toi plus sur tes devoirs.'
                     } : {
-                        ar: 'أمين، هذه المرة الثانية! ⚠️\n\nلقد زرت موقع الألعاب مرتين. نذكرك:\n\n❌ الإفراط في الألعاب يضر بدراستك\n❌ يمكن أن يسبب إدماناً\n❌ يقلل من تركيزك\n\n💡 نصيحة: اذهب إلى موقع الرياضيات بدلاً من ذلك!\n\nسنراقب استخدامك عن كثب.',
-                        fr: 'Amine, c\'est la deuxième fois ! ⚠️\n\nTu as visité le site de jeux deux fois. Rappel :\n\n❌ Trop de jeux nuit à tes études\n❌ Peut créer une dépendance\n❌ Réduit ta concentration\n\n💡 Conseil : Va sur le site de maths plutôt !\n\nNous surveillons ton utilisation de près.'
+                        ar: 'أمين، هذه المرة الثانية! ⚠️\n\nلقد زرت موقع الألعاب مرتين. نذكرك:\n\n✖ الإفراط في الألعاب يضر بدراستك\n✖ يمكن أن يسبب إدماناً\n✖ يقلل من تركيزك\n\n💡 نصيحة: اذهب إلى موقع الرياضيات بدلاً من ذلك!\n\nسنراقب استخدامك عن كثب.',
+                        fr: 'Amine, c\'est la deuxième fois ! ⚠️\n\nTu as visité le site de jeux deux fois. Rappel :\n\n✖ Trop de jeux nuit à tes études\n✖ Peut créer une dépendance\n✖ Réduit ta concentration\n\n💡 Conseil : Va sur le site de maths plutôt !\n\nNous surveillons ton utilisation de près.'
                     },
                     email: visits.games > 1
                 },
@@ -1517,8 +1625,8 @@
                     icon: '🚫',
                     title: {ar: 'موقع خطير جداً!', fr: 'Site très dangereux !'},
                     message: visits.drugs === 1 ? {
-                        ar: 'توقف فوراً يا أمين! 🚫\n\nهذا الموقع خطير جداً ويتحدث عن المخدرات!\n\n❌ المخدرات تدمر الصحة والعقل\n❌ تسبب الإدمان والموت\n❌ تدمر مستقبلك ودراستك\n❌ تؤذي عائلتك وأصدقاءك\n\n⚠️ تحذير نهائي:\nإذا حاولت الدخول مرة أخرى، سيتم حظرك لمدة 15 دقيقة وسنخبر والديك فوراً!\n\nالمخدرات ليست لعبة. ابتعد عن هذه المواقع!',
-                        fr: 'Arrête immédiatement Amine ! 🚫\n\nCe site est très dangereux et parle de drogues !\n\n❌ La drogue détruit la santé et le cerveau\n❌ Crée une dépendance et tue\n❌ Détruit ton avenir et tes études\n❌ Fait du mal à ta famille et tes amis\n\n⚠️ Avertissement final :\nSi tu essaies d\'y accéder à nouveau, tu seras banni 15 minutes et tes parents seront immédiatement informés !\n\nLa drogue n\'est pas un jeu. Éloigne-toi de ces sites !'
+                        ar: 'توقف فوراً يا أمين! 🚫\n\nهذا الموقع خطير جداً ويتحدث عن المخدرات!\n\n✖ المخدرات تدمر الصحة والعقل\n✖ تسبب الإدمان والموت\n✖ تدمر مستقبلك ودراستك\n✖ تؤذي عائلتك وأصدقاءك\n\n⚠️ تحذير نهائي:\nإذا حاولت الدخول مرة أخرى، سيتم حظرك لمدة 15 دقيقة وسنخبر والديك فوراً!\n\nالمخدرات ليست لعبة. ابتعد عن هذه المواقع!',
+                        fr: 'Arrête immédiatement Amine ! 🚫\n\nCe site est très dangereux et parle de drogues !\n\n✖ La drogue détruit la santé et le cerveau\n✖ Crée une dépendance et tue\n✖ Détruit ton avenir et tes études\n✖ Fait du mal à ta famille et tes amis\n\n⚠️ Avertissement final :\nSi tu essaies d\'y accéder à nouveau, tu seras banni 15 minutes et tes parents seront immédiatement informés !\n\nLa drogue n\'est pas un jeu. Éloigne-toi de ces sites !'
                     } : {
                         ar: 'تم حظرك! 🚫\n\nلقد تجاهلت التحذير وحاولت زيارة الموقع الخطير مرة أخرى.\n\n⛔ تم حظرك لمدة 15 دقيقة\n📧 تم إرسال إشعار لوالديك\n⏰ ستزداد المدة في كل مرة\n\nالمخدرات خطيرة! يجب أن تفهم خطورة هذا الموضوع.',
                         fr: 'Tu es banni ! 🚫\n\nTu as ignoré l\'avertissement et tenté d\'accéder au site dangereux à nouveau.\n\n⛔ Tu es banni pour 15 minutes\n📧 Tes parents ont été notifiés\n⏰ La durée augmente à chaque fois\n\nLa drogue est dangereuse ! Tu dois comprendre la gravité de ce sujet.'
@@ -1536,7 +1644,6 @@
             }
         }
 
-        // Show Beautiful Modal
         function showBeautifulModal(icon, title, text, showEmail, siteName, siteUrl) {
             document.getElementById('modalIcon').textContent = icon;
             document.getElementById('modalTitle').textContent = title;
@@ -1562,7 +1669,6 @@
             document.getElementById('warningModal').classList.add('active');
         }
 
-        // Ban User
         function banUser(siteInfo) {
             banTime = 15;
             banEndTime = Date.now() + (15 * 60000);
@@ -1581,12 +1687,10 @@
             }, 3000);
         }
 
-        // Close Modal
         function closeModal() {
             document.getElementById('warningModal').classList.remove('active');
         }
 
-        // Update Visit Counter
         function updateVisitCounter() {
             const visitList = document.getElementById('visitList');
             visitList.innerHTML = `
@@ -1596,18 +1700,11 @@
             `;
         }
 
-        // Close Demo With Report
         function closeDemoWithReport() {
-            console.log('Closing demo and showing report...');
-            // Load data from localStorage
             loadSessionData();
-            console.log('Quiz Answers:', quizAnswers);
-            console.log('Visited Sites:', visitedSites);
-            console.log('Learned Topics:', learnedTopics);
             showReport();
         }
 
-        // Save Session Data to localStorage
         function saveSessionData() {
             const sessionData = {
                 startTime: sessionStartTime.toISOString(),
@@ -1620,10 +1717,8 @@
                 visits: visits
             };
             localStorage.setItem('dznet1_session', JSON.stringify(sessionData));
-            console.log('Session data saved:', sessionData);
         }
 
-        // Load Session Data from localStorage
         function loadSessionData() {
             const saved = localStorage.getItem('dznet1_session');
             if (saved) {
@@ -1636,20 +1731,128 @@
                     time: new Date(v.time)
                 }));
                 visits = sessionData.visits || { math: 0, games: 0, drugs: 0 };
-                console.log('Session data loaded:', sessionData);
             }
         }
 
-        // Show Report
+        function calculateVerdict() {
+            let score = 100;
+            const issues = [];
+            
+            // Calculate based on dangerous visits
+            if (visits.drugs > 0) {
+                score -= 40 * visits.drugs;
+                issues.push(currentLang === 'ar' ? 
+                    `🚫 محاولة زيارة مواقع خطيرة (${visits.drugs} مرة)` : 
+                    `🚫 Tentative de visite de sites dangereux (${visits.drugs} fois)`
+                );
+            }
+            
+            // Calculate based on gaming time
+            if (visits.games > 3) {
+                score -= 10 * (visits.games - 3);
+                issues.push(currentLang === 'ar' ? 
+                    `⚠️ وقت طويل على الألعاب (${visits.games} زيارة)` : 
+                    `⚠️ Trop de temps sur les jeux (${visits.games} visites)`
+                );
+            }
+            
+            // Bonus for educational content
+            if (visits.math > visits.games) {
+                score += 10;
+            }
+            
+            score = Math.max(0, Math.min(100, score));
+            
+            let verdict = {
+                score: score,
+                issues: issues,
+                recommendation: ''
+            };
+            
+            if (score >= 90) {
+                verdict.class = 'excellent';
+                verdict.icon = '🏆';
+                verdict.title = currentLang === 'ar' ? 'ممتاز جداً!' : 'Excellent !';
+                verdict.description = currentLang === 'ar' ? 
+                    'سلوك ممتاز على الإنترنت! الطفل يستخدم المواقع التعليمية ويتجنب المحتوى الخطير.' :
+                    'Excellent comportement en ligne ! L\'enfant utilise des sites éducatifs et évite les contenus dangereux.';
+                verdict.recommendation = currentLang === 'ar' ? 
+                    'استمر في تشجيعه وكافئه على هذا السلوك الإيجابي.' :
+                    'Continuez à l\'encourager et récompensez ce comportement positif.';
+            } else if (score >= 70) {
+                verdict.class = 'good';
+                verdict.icon = '👍';
+                verdict.title = currentLang === 'ar' ? 'جيد' : 'Bien';
+                verdict.description = currentLang === 'ar' ? 
+                    'سلوك جيد بشكل عام، مع بعض النقاط التي تحتاج إلى انتباه.' :
+                    'Bon comportement général, avec quelques points nécessitant attention.';
+                verdict.recommendation = currentLang === 'ar' ? 
+                    'راقب استخدامه وشجعه على المزيد من المحتوى التعليمي.' :
+                    'Surveillez son utilisation et encouragez plus de contenu éducatif.';
+            } else if (score >= 50) {
+                verdict.class = 'warning';
+                verdict.icon = '⚠️';
+                verdict.title = currentLang === 'ar' ? 'يحتاج انتباه' : 'Nécessite attention';
+                verdict.description = currentLang === 'ar' ? 
+                    'هناك بعض السلوكيات المقلقة تحتاج إلى معالجة فورية.' :
+                    'Il y a des comportements préoccupants nécessitant une action immédiate.';
+                verdict.recommendation = currentLang === 'ar' ? 
+                    'تحدث مع طفلك عن الاستخدام الآمن للإنترنت وضع قواعد أكثر صرامة.' :
+                    'Parlez à votre enfant de l\'utilisation sûre d\'Internet et imposez des règles plus strictes.';
+            } else {
+                verdict.class = 'danger';
+                verdict.icon = '🚨';
+                verdict.title = currentLang === 'ar' ? 'خطير - تدخل فوري' : 'Dangereux - Action immédiate';
+                verdict.description = currentLang === 'ar' ? 
+                    'سلوك خطير على الإنترنت! يجب التدخل فوراً.' :
+                    'Comportement dangereux en ligne ! Intervention immédiate nécessaire.';
+                verdict.recommendation = currentLang === 'ar' ? 
+                    'اجلس مع طفلك فوراً وناقش خطورة المحتوى الذي حاول الوصول إليه. قد تحتاج إلى استشارة متخصص.' :
+                    'Asseyez-vous immédiatement avec votre enfant et discutez du danger du contenu qu\'il a tenté d\'accéder. Vous pourriez avoir besoin d\'un spécialiste.';
+            }
+            
+            return verdict;
+        }
+
         function showReport() {
             document.getElementById('mainContainer').style.display = 'none';
             document.getElementById('reportContainer').style.display = 'block';
             
-            // Session info
             const now = new Date();
             const duration = Math.round((now - sessionStartTime) / 60000);
             document.getElementById('reportDate').textContent = now.toLocaleString(currentLang === 'ar' ? 'ar-DZ' : 'fr-FR');
             document.getElementById('reportDuration').textContent = `${duration} ${currentLang === 'ar' ? 'دقيقة' : 'minutes'}`;
+            
+            // Generate Verdict
+            const verdict = calculateVerdict();
+            const verdictHtml = `
+                <div class="verdict-card ${verdict.class}">
+                    <div class="verdict-icon">${verdict.icon}</div>
+                    <div class="verdict-score ${verdict.class}">${verdict.score}/100</div>
+                    <div class="verdict-title">${verdict.title}</div>
+                    <div class="verdict-description">${verdict.description}</div>
+                    <div class="verdict-details">
+                        <strong style="display: block; margin-bottom: 10px; color: #667eea;">
+                            ${currentLang === 'ar' ? '📋 تفاصيل التقييم:' : '📋 Détails de l\'évaluation :'}
+                        </strong>
+                        <ul>
+                            ${verdict.issues.length > 0 ? 
+                                verdict.issues.map(issue => `<li>${issue}</li>`).join('') : 
+                                `<li>✅ ${currentLang === 'ar' ? 'لا توجد مشاكل' : 'Aucun problème'}</li>`
+                            }
+                        </ul>
+                        <strong style="display: block; margin: 15px 0 10px 0; color: #667eea;">
+                            ${currentLang === 'ar' ? '💡 التوصية:' : '💡 Recommandation :'}
+                        </strong>
+                        <p style="margin: 0;">${verdict.recommendation}</p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('verdictSection').innerHTML = verdictHtml;
+            
+            // Generate Charts
+            generateSitesBarChart();
+            generateTimeChart();
             
             // Stats
             const totalVisits = visits.math + visits.games + visits.drugs;
@@ -1657,7 +1860,7 @@
                 <div class="stat-card">
                     <div class="icon">✅</div>
                     <div class="value">${quizAnswers.length}</div>
-                    <div class="label">${currentLang === 'ar' ? 'أسئلة مجابة' : 'Questions répondues'}</div>
+                    <div class="label">${currentLang === 'ar' ? 'أسئلة مُجابة' : 'Questions répondues'}</div>
                 </div>
                 <div class="stat-card">
                     <div class="icon">🌐</div>
@@ -1681,7 +1884,7 @@
             let quizHtml = '';
             if (quizAnswers.length > 0) {
                 quizAnswers.forEach((answer, index) => {
-                    const icon = answer.correct ? '✅' : '❌';
+                    const icon = answer.correct ? '✅' : '✖';
                     const color = answer.correct ? '#28a745' : '#dc3545';
                     const status = answer.correct 
                         ? (currentLang === 'ar' ? 'صحيح' : 'Correct')
@@ -1702,7 +1905,7 @@
             }
             document.getElementById('quizResults').innerHTML = quizHtml;
             
-            // Sites visited with beautiful table
+            // Sites visited
             let sitesHtml = '';
             if (visitedSites.length > 0) {
                 const labels = {
@@ -1778,7 +1981,7 @@
                     </div>
                 `;
             } else {
-                sitesHtml = `<div class="no-data">📭 ${currentLang === 'ar' ? 'لم يتم زيارة أي موقع' : 'Aucun site visité'}</div>`;
+                sitesHtml = `<div class="no-data">🔭 ${currentLang === 'ar' ? 'لم يتم زيارة أي موقع' : 'Aucun site visité'}</div>`;
             }
             
             document.getElementById('sitesVisited').innerHTML = sitesHtml;
@@ -1822,23 +2025,107 @@
             document.getElementById('psychologyTips').innerHTML = tipsHtml;
         }
 
-        // Return to Home
+        function generateSitesBarChart() {
+            const total = visits.math + visits.games + visits.drugs;
+            if (total === 0) {
+                document.getElementById('sitesBarChart').innerHTML = `
+                    <div class="no-data">${currentLang === 'ar' ? 'لا توجد بيانات' : 'Aucune donnée'}</div>
+                `;
+                return;
+            }
+            
+            const sites = [
+                { 
+                    label: currentLang === 'ar' ? '📚 تعليمي' : '📚 Éducatif', 
+                    value: visits.math, 
+                    percent: Math.round((visits.math / total) * 100),
+                    class: 'safe'
+                },
+                { 
+                    label: currentLang === 'ar' ? '🎮 ألعاب' : '🎮 Jeux', 
+                    value: visits.games, 
+                    percent: Math.round((visits.games / total) * 100),
+                    class: 'warning'
+                },
+                { 
+                    label: currentLang === 'ar' ? '🚫 خطير' : '🚫 Dangereux', 
+                    value: visits.drugs, 
+                    percent: Math.round((visits.drugs / total) * 100),
+                    class: 'danger'
+                }
+            ];
+            
+            let chartHtml = '';
+            sites.forEach(site => {
+                chartHtml += `
+                    <div class="bar-item">
+                        <div class="bar-label">${site.label}</div>
+                        <div class="bar-wrapper">
+                            <div class="bar-fill ${site.class}" style="width: ${site.percent}%">
+                                ${site.value}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('sitesBarChart').innerHTML = chartHtml;
+        }
+
+        function generateTimeChart() {
+            if (visitedSites.length === 0) {
+                document.getElementById('timeChart').innerHTML = `
+                    <div class="no-data">${currentLang === 'ar' ? 'لا توجد بيانات' : 'Aucune donnée'}</div>
+                `;
+                return;
+            }
+            
+            // Group visits by hour
+            const hourCounts = {};
+            visitedSites.forEach(visit => {
+                const hour = visit.time.getHours();
+                hourCounts[hour] = (hourCounts[hour] || 0) + 1;
+            });
+            
+            // Get top 5 hours
+            const sortedHours = Object.entries(hourCounts)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+            
+            const maxCount = Math.max(...sortedHours.map(h => h[1]));
+            
+            let chartHtml = '';
+            sortedHours.forEach(([hour, count]) => {
+                const percent = Math.round((count / maxCount) * 100);
+                const timeLabel = `${hour.toString().padStart(2, '0')}:00`;
+                
+                chartHtml += `
+                    <div class="time-bar">
+                        <div class="time-label">${timeLabel}</div>
+                        <div class="time-bar-wrapper">
+                            <div class="time-bar-fill" style="width: ${percent}%">
+                                ${count}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('timeChart').innerHTML = chartHtml;
+        }
+
         function returnToHome() {
-            // Clear session data
             localStorage.removeItem('dznet1_session');
             window.location.href = 'index.html';
         }
 
-        // Initialize on page load
         window.onload = function() {
-            // Try to load existing session data
             const saved = localStorage.getItem('dznet1_session');
             if (saved) {
                 console.log('Found existing session data on page load');
             }
         };
 
-        // Allow Enter key to submit login
         document.getElementById('password').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 login();

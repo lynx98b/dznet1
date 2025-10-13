@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DzNet1 - Démo Interactive WiFi Enfant</title>
+    <title>DzNet1 - Démo Interactive</title>
     <style>
         * {
             margin: 0;
@@ -19,6 +19,39 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+        }
+        
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .close-demo {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #dc3545;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(220,53,69,0.4);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        .close-demo:hover {
+            background: #c82333;
+            transform: translateY(-2px);
         }
         
         .container {
@@ -381,7 +414,7 @@
         
         .visit-counter {
             position: fixed;
-            top: 20px;
+            top: 80px;
             left: 20px;
             background: rgba(255,255,255,0.95);
             padding: 15px;
@@ -420,31 +453,144 @@
             font-size: 13px;
             line-height: 1.5;
         }
+        
+        /* Report Styles */
+        .report-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .report-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .report-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .report-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .report-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .report-item strong {
+            color: #333;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-card .label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .psychology-tips {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #ffc107;
+        }
+        
+        .psychology-tips h3 {
+            color: #856404;
+            margin-bottom: 20px;
+        }
+        
+        .psychology-tips ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .psychology-tips li {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ffc107;
+        }
     </style>
 </head>
 <body>
+    <!-- Language Toggle -->
+    <div class="lang-toggle" onclick="toggleLanguage()">
+        <span id="langText">🇩🇿 Français</span>
+    </div>
+
+    <!-- Close Demo Button -->
+    <div class="close-demo" onclick="closeDemoWithReport()">
+        <span data-ar="❌ إغلاق الديمو" data-fr="❌ Fermer la démo">❌ إغلاق الديمو</span>
+    </div>
+    
     <div class="visit-counter" id="visitCounter" style="display: none;">
-        <h4>📊 سجل الزيارات</h4>
+        <h4 data-ar="📊 سجل الزيارات" data-fr="📊 Historique">📊 سجل الزيارات</h4>
         <div id="visitList"></div>
     </div>
 
-    <div class="container">
+    <div class="container" id="mainContainer">
         <!-- Page 1: Login -->
         <div class="page active" id="loginPage">
             <div class="logo">🔐</div>
-            <h1>مرحباً بك في DzNet1</h1>
-            <p style="text-align: center; color: #666; margin-bottom: 20px;">
+            <h1 data-ar="مرحباً بك في DzNet1" data-fr="Bienvenue sur DzNet1">مرحباً بك في DzNet1</h1>
+            <p style="text-align: center; color: #666; margin-bottom: 20px;" data-ar="واي فاي محمي للأطفال - DzNet1_Kids_10" data-fr="WiFi protégé pour enfants - DzNet1_Kids_10">
                 واي فاي محمي للأطفال - DzNet1_Kids_10
             </p>
             
             <div class="credentials-display">
-                <h3>🎯 معلومات الدخول للتجربة</h3>
+                <h3 data-ar="🎯 معلومات الدخول للتجربة" data-fr="🎯 Identifiants de test">🎯 معلومات الدخول للتجربة</h3>
                 <div class="cred-item">
-                    <span class="cred-label">اسم المستخدم:</span>
+                    <span class="cred-label" data-ar="اسم المستخدم:" data-fr="Nom d'utilisateur :">اسم المستخدم:</span>
                     <span class="cred-value">amine</span>
                 </div>
                 <div class="cred-item">
-                    <span class="cred-label">كلمة المرور:</span>
+                    <span class="cred-label" data-ar="كلمة المرور:" data-fr="Mot de passe :">كلمة المرور:</span>
                     <span class="cred-value">dznet1</span>
                 </div>
             </div>
@@ -452,27 +598,27 @@
             <div id="banNotice" style="display: none;"></div>
             
             <div class="form-group">
-                <label>اسم المستخدم</label>
-                <input type="text" id="username" placeholder="أدخل اسم المستخدم">
+                <label data-ar="اسم المستخدم" data-fr="Nom d'utilisateur">اسم المستخدم</label>
+                <input type="text" id="username" placeholder="amine">
             </div>
             
             <div class="form-group">
-                <label>كلمة المرور</label>
-                <input type="password" id="password" placeholder="أدخل كلمة المرور">
+                <label data-ar="كلمة المرور" data-fr="Mot de passe">كلمة المرور</label>
+                <input type="password" id="password" placeholder="dznet1">
             </div>
             
-            <div id="loginError" class="alert alert-danger" style="display: none;">
+            <div id="loginError" class="alert alert-danger" style="display: none;" data-ar="❌ اسم المستخدم أو كلمة المرور خاطئة!" data-fr="❌ Nom d'utilisateur ou mot de passe incorrect !">
                 ❌ اسم المستخدم أو كلمة المرور خاطئة!
             </div>
             
-            <button onclick="login()" id="loginBtn">دخول</button>
+            <button onclick="login()" id="loginBtn" data-ar="دخول" data-fr="Connexion">دخول</button>
         </div>
 
-        <!-- Page 2: Quiz -->
+        <!-- Pages Quiz, Rules, Internet (same as before but with data-ar/data-fr) -->
         <div class="page" id="quizPage">
             <div class="logo">🎯</div>
-            <h1>أجب على الأسئلة للدخول</h1>
-            <p style="text-align: center; color: #666; margin-bottom: 30px;">
+            <h1 data-ar="أجب على الأسئلة للدخول" data-fr="Répondez aux questions pour accéder">أجب على الأسئلة للدخول</h1>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;" data-ar="هذا اختبار بسيط للتأكد من أنك جاهز للإنترنت" data-fr="Un test simple pour vérifier que tu es prêt pour Internet">
                 هذا اختبار بسيط للتأكد من أنك جاهز للإنترنت
             </p>
             
@@ -480,73 +626,119 @@
             
             <div id="quizResult" style="display: none;"></div>
             
-            <button id="submitQuiz" onclick="submitQuiz()" disabled>إرسال الإجابات</button>
+            <button id="submitQuiz" onclick="submitQuiz()" disabled data-ar="إرسال الإجابات" data-fr="Envoyer les réponses">إرسال الإجابات</button>
         </div>
 
-        <!-- Page 3: Rules & Welcome -->
         <div class="page" id="rulesPage">
             <div class="logo">📜</div>
-            <h1>مرحباً أمين! 👋</h1>
-            <p style="text-align: center; color: #28a745; font-weight: bold; margin-bottom: 30px;">
+            <h1 data-ar="مرحباً أمين! 👋" data-fr="Bienvenue Amine ! 👋">مرحباً أمين! 👋</h1>
+            <p style="text-align: center; color: #28a745; font-weight: bold; margin-bottom: 30px;" data-ar="✅ ممتاز! أجبت بشكل صحيح" data-fr="✅ Excellent ! Tu as répondu correctement">
                 ✅ ممتاز! أجبت بشكل صحيح
             </p>
             
             <div class="rules">
-                <h3>🛡️ قواعد استخدام الإنترنت الآمن</h3>
-                <p style="margin-bottom: 15px; font-weight: bold;">اقرأ هذه النصائح جيداً:</p>
+                <h3 data-ar="🛡️ قواعد استخدام الإنترنت الآمن" data-fr="🛡️ Règles d'utilisation sûre d'Internet">🛡️ قواعد استخدام الإنترنت الآمن</h3>
             </div>
             
             <div class="checkbox-group">
                 <div class="checkbox-item">
                     <input type="checkbox" id="rule1" onchange="checkRules()">
-                    <label for="rule1">✅ أتعهد بعدم زيارة المواقع الخطيرة أو غير اللائقة</label>
+                    <label for="rule1" data-ar="✅ أتعهد بعدم زيارة المواقع الخطيرة أو غير اللائقة" data-fr="✅ Je m'engage à ne pas visiter de sites dangereux">✅ أتعهد بعدم زيارة المواقع الخطيرة أو غير اللائقة</label>
                 </div>
                 
                 <div class="checkbox-item">
                     <input type="checkbox" id="rule2" onchange="checkRules()">
-                    <label for="rule2">⏰ أتعهد بعدم قضاء وقت طويل على الإنترنت</label>
+                    <label for="rule2" data-ar="⏰ أتعهد بعدم قضاء وقت طويل على الإنترنت" data-fr="⏰ Je m'engage à ne pas passer trop de temps sur Internet">⏰ أتعهد بعدم قضاء وقت طويل على الإنترنت</label>
                 </div>
                 
                 <div class="checkbox-item">
                     <input type="checkbox" id="rule3" onchange="checkRules()">
-                    <label for="rule3">👨‍👩‍👧 أتعهد بإخبار والديّ إذا شاهدت شيئاً غريباً</label>
+                    <label for="rule3" data-ar="👨‍👩‍👧 أتعهد بإخبار والديّ إذا شاهدت شيئاً غريباً" data-fr="👨‍👩‍👧 Je m'engage à prévenir mes parents si je vois quelque chose d'étrange">👨‍👩‍👧 أتعهد بإخبار والديّ إذا شاهدت شيئاً غريباً</label>
                 </div>
                 
                 <div class="checkbox-item">
                     <input type="checkbox" id="rule4" onchange="checkRules()">
-                    <label for="rule4">🎯 أتعهد باستخدام الإنترنت للتعلم واللعب الآمن فقط</label>
+                    <label for="rule4" data-ar="🎯 أتعهد باستخدام الإنترنت للتعلم واللعب الآمن فقط" data-fr="🎯 Je m'engage à utiliser Internet pour apprendre et jouer en toute sécurité">🎯 أتعهد باستخدام الإنترنت للتعلم واللعب الآمن فقط</label>
                 </div>
             </div>
             
-            <button id="acceptRules" onclick="acceptRules()" disabled>قبلت القواعد - ابدأ التصفح</button>
+            <button id="acceptRules" onclick="acceptRules()" disabled data-ar="قبلت القواعد - ابدأ التصفح" data-fr="J'accepte les règles - Commencer">قبلت القواعد - ابدأ التصفح</button>
         </div>
 
-        <!-- Page 4: Internet Main Page -->
         <div class="page" id="internetPage">
             <div class="logo">🌐</div>
-            <h1>أهلاً وسهلاً في الإنترنت الآمن</h1>
-            <p style="text-align: center; color: #28a745; font-weight: bold; margin-bottom: 30px;">
+            <h1 data-ar="أهلاً وسهلاً في الإنترنت الآمن" data-fr="Bienvenue sur Internet sécurisé">أهلاً وسهلاً في الإنترنت الآمن</h1>
+            <p style="text-align: center; color: #28a745; font-weight: bold; margin-bottom: 30px;" data-ar="مرحباً أمين! اختر ما تريد زيارته" data-fr="Salut Amine ! Choisis ce que tu veux visiter">
                 مرحباً أمين! اختر ما تريد زيارته
             </p>
             
             <div class="link-card safe" onclick="visitSite('math')">
-                <h3>📚 موقع دروس الرياضيات</h3>
-                <p>تعلم الرياضيات بطريقة ممتعة وسهلة</p>
-                <p style="color: #28a745; font-weight: bold;">✅ موقع آمن ومفيد</p>
+                <h3 data-ar="📚 موقع دروس الرياضيات" data-fr="📚 Site de cours de maths">📚 موقع دروس الرياضيات</h3>
+                <p data-ar="تعلم الرياضيات بطريقة ممتعة وسهلة" data-fr="Apprends les maths de manière amusante">تعلم الرياضيات بطريقة ممتعة وسهلة</p>
+                <p style="color: #28a745; font-weight: bold;" data-ar="✅ موقع آمن ومفيد" data-fr="✅ Site sûr et utile">✅ موقع آمن ومفيد</p>
             </div>
             
             <div class="link-card warning" onclick="visitSite('games')">
-                <h3>🎮 موقع الألعاب</h3>
-                <p>العاب مسلية وممتعة</p>
-                <p style="color: #ffc107; font-weight: bold;">⚠️ استخدم بحذر - لا تقضي وقتاً طويلاً</p>
+                <h3 data-ar="🎮 موقع الألعاب" data-fr="🎮 Site de jeux">🎮 موقع الألعاب</h3>
+                <p data-ar="العاب مسلية وممتعة" data-fr="Jeux amusants et divertissants">العاب مسلية وممتعة</p>
+                <p style="color: #ffc107; font-weight: bold;" data-ar="⚠️ استخدم بحذر - لا تقضي وقتاً طويلاً" data-fr="⚠️ Utilise avec précaution">⚠️ استخدم بحذر - لا تقضي وقتاً طويلاً</p>
             </div>
             
             <div class="link-card danger" onclick="visitSite('drugs')">
-                <h3>⚠️ موقع غير معروف</h3>
-                <p>محتوى غير مناسب للأطفال</p>
-                <p style="color: #dc3545; font-weight: bold;">🚫 موقع خطير</p>
+                <h3 data-ar="⚠️ موقع غير معروف" data-fr="⚠️ Site inconnu">⚠️ موقع غير معروف</h3>
+                <p data-ar="محتوى غير مناسب للأطفال" data-fr="Contenu inapproprié pour les enfants">محتوى غير مناسب للأطفال</p>
+                <p style="color: #dc3545; font-weight: bold;" data-ar="🚫 موقع خطير" data-fr="🚫 Site dangereux">🚫 موقع خطير</p>
             </div>
         </div>
+    </div>
+
+    <!-- Parent Report -->
+    <div class="container report-container" id="reportContainer" style="display: none;">
+        <div class="report-header">
+            <div style="font-size: 60px; margin-bottom: 15px;">📊</div>
+            <h1 style="color: white; margin: 0;" data-ar="تقرير نشاط الطفل" data-fr="Rapport d'activité de l'enfant">تقرير نشاط الطفل</h1>
+            <p style="margin: 10px 0 0 0; opacity: 0.9;" data-ar="جلسة أمين على الإنترنت" data-fr="Session d'Amine sur Internet">جلسة أمين على الإنترنت</p>
+        </div>
+
+        <div class="report-section">
+            <h3 data-ar="👤 معلومات الجلسة" data-fr="👤 Informations de session">👤 معلومات الجلسة</h3>
+            <div class="report-item">
+                <strong data-ar="الطفل:" data-fr="Enfant :">الطفل:</strong> <span id="reportChild">أمين / Amine</span>
+            </div>
+            <div class="report-item">
+                <strong data-ar="التاريخ:" data-fr="Date :">التاريخ:</strong> <span id="reportDate"></span>
+            </div>
+            <div class="report-item">
+                <strong data-ar="مدة الجلسة:" data-fr="Durée :">مدة الجلسة:</strong> <span id="reportDuration"></span>
+            </div>
+        </div>
+
+        <div class="report-section">
+            <h3 data-ar="📊 إحصائيات النشاط" data-fr="📊 Statistiques d'activité">📊 إحصائيات النشاط</h3>
+            <div class="stat-grid" id="statsGrid"></div>
+        </div>
+
+        <div class="report-section">
+            <h3 data-ar="📝 نتائج الاختبار" data-fr="📝 Résultats du test">📝 نتائج الاختبار</h3>
+            <div id="quizResults"></div>
+        </div>
+
+        <div class="report-section">
+            <h3 data-ar="🌐 المواقع المزارة" data-fr="🌐 Sites visités">🌐 المواقع المزارة</h3>
+            <div id="sitesVisited"></div>
+        </div>
+
+        <div class="report-section">
+            <h3 data-ar="🎓 ما تعلمه اليوم" data-fr="🎓 Ce qu'il a appris aujourd'hui">🎓 ما تعلمه اليوم</h3>
+            <div id="learningToday"></div>
+        </div>
+
+        <div class="psychology-tips">
+            <h3 data-ar="💡 نصائح نفسية لاستخدام صحي للإنترنت" data-fr="💡 Conseils psychologiques pour une utilisation saine d'Internet">💡 نصائح نفسية لاستخدام صحي للإنترنت</h3>
+            <ul id="psychologyTips"></ul>
+        </div>
+
+        <button onclick="returnToHome()" style="margin-top: 30px;" data-ar="العودة إلى الصفحة الرئيسية" data-fr="Retour à la page d'accueil">العودة إلى الصفحة الرئيسية</button>
     </div>
 
     <!-- Modal for Warnings -->
@@ -560,77 +752,194 @@
         </div>
     </div>
 
+    <script src="demo-script.js"></script>
     <script>
-        // Question Pool
+        let currentLang = 'ar';
+        let sessionStartTime = new Date();
+        let quizAnswers = [];
+        let learnedTopics = [];
+        
         const questionPool = [
             {
-                question: "ما هي عاصمة الجزائر؟",
-                options: ["الجزائر العاصمة", "وهران", "قسنطينة"],
+                question: {ar: "ما هي عاصمة الجزائر؟", fr: "Quelle est la capitale de l'Algérie ?"},
+                options: {ar: ["الجزائر العاصمة", "وهران", "قسنطينة"], fr: ["Alger", "Oran", "Constantine"]},
                 correct: 0,
-                explanation: "الجزائر العاصمة هي عاصمة الدولة الجزائرية وأكبر مدنها. تقع على ساحل البحر الأبيض المتوسط وتُعرف بـ 'البهجة' أو 'الجزائر البيضاء'."
+                explanation: {
+                    ar: "الجزائر العاصمة هي عاصمة الدولة الجزائرية وأكبر مدنها. تقع على ساحل البحر الأبيض المتوسط.",
+                    fr: "Alger est la capitale de l'Algérie et sa plus grande ville. Elle est située sur la côte méditerranéenne."
+                },
+                topic: {ar: "الجغرافيا", fr: "Géographie"}
             },
             {
-                question: "كم عدد أركان الإسلام؟",
-                options: ["ثلاثة", "خمسة", "سبعة"],
+                question: {ar: "كم عدد أركان الإسلام؟", fr: "Combien y a-t-il de piliers de l'Islam ?"},
+                options: {ar: ["ثلاثة", "خمسة", "سبعة"], fr: ["Trois", "Cinq", "Sept"]},
                 correct: 1,
-                explanation: "أركان الإسلام خمسة: الشهادتان، الصلاة، الزكاة، الصوم، والحج لمن استطاع إليه سبيلاً. هذه هي الأسس التي يقوم عليها الدين الإسلامي."
+                explanation: {
+                    ar: "أركان الإسلام خمسة: الشهادتان، الصلاة، الزكاة، الصوم، والحج.",
+                    fr: "Les cinq piliers de l'Islam sont : la profession de foi, la prière, l'aumône, le jeûne et le pèlerinage."
+                },
+                topic: {ar: "الدين", fr: "Religion"}
             },
             {
-                question: "ما هو ناتج 5 × 6؟",
-                options: ["25", "30", "35"],
+                question: {ar: "ما هو ناتج 5 × 6؟", fr: "Combien font 5 × 6 ?"},
+                options: {ar: ["25", "30", "35"], fr: ["25", "30", "35"]},
                 correct: 1,
-                explanation: "عندما نضرب 5 في 6، نجمع الرقم 5 ستة مرات: 5+5+5+5+5+5 = 30. الضرب هو عملية جمع متكررة للرقم نفسه."
+                explanation: {
+                    ar: "عندما نضرب 5 في 6، نجمع الرقم 5 ستة مرات: 5+5+5+5+5+5 = 30.",
+                    fr: "Quand on multiplie 5 par 6, on additionne 5 six fois : 5+5+5+5+5+5 = 30."
+                },
+                topic: {ar: "الرياضيات", fr: "Mathématiques"}
             },
             {
-                question: "في أي سنة استقلت الجزائر؟",
-                options: ["1954", "1962", "1970"],
+                question: {ar: "في أي سنة استقلت الجزائر؟", fr: "En quelle année l'Algérie a-t-elle obtenu son indépendance ?"},
+                options: {ar: ["1954", "1962", "1970"], fr: ["1954", "1962", "1970"]},
                 correct: 1,
-                explanation: "استقلت الجزائر في 5 يوليو 1962 بعد 132 سنة من الاحتلال الفرنسي. كانت ثورة التحرير قد بدأت في 1 نوفمبر 1954."
+                explanation: {
+                    ar: "استقلت الجزائر في 5 يوليو 1962 بعد 132 سنة من الاحتلال الفرنسي.",
+                    fr: "L'Algérie a obtenu son indépendance le 5 juillet 1962 après 132 ans de colonisation française."
+                },
+                topic: {ar: "التاريخ", fr: "Histoire"}
             },
             {
-                question: "كم عدد كواكب المجموعة الشمسية؟",
-                options: ["7 كواكب", "8 كواكب", "9 كواكب"],
+                question: {ar: "كم عدد كواكب المجموعة الشمسية؟", fr: "Combien y a-t-il de planètes dans le système solaire ?"},
+                options: {ar: ["7 كواكب", "8 كواكب", "9 كواكب"], fr: ["7 planètes", "8 planètes", "9 planètes"]},
                 correct: 1,
-                explanation: "المجموعة الشمسية تحتوي على 8 كواكب: عطارد، الزهرة، الأرض، المريخ، المشتري، زحل، أورانوس، ونبتون. بلوتو لم يعد يُعتبر كوكباً منذ 2006."
-            },
-            {
-                question: "ما هو ناتج 12 ÷ 3؟",
-                options: ["3", "4", "5"],
-                correct: 1,
-                explanation: "عندما نقسم 12 على 3، نسأل: كم مرة يوجد الرقم 3 في 12؟ الجواب هو 4 مرات (3+3+3+3=12). القسمة هي عكس عملية الضرب."
-            },
-            {
-                question: "من هو أول خليفة في الإسلام؟",
-                options: ["عمر بن الخطاب", "أبو بكر الصديق", "عثمان بن عفان"],
-                correct: 1,
-                explanation: "أبو بكر الصديق رضي الله عنه هو أول الخلفاء الراشدين. كان صاحب الرسول ﷺ وأول من آمن به من الرجال، وخلفه في قيادة المسلمين."
-            },
-            {
-                question: "كم عدد أيام السنة؟",
-                options: ["360 يوم", "365 يوم", "370 يوم"],
-                correct: 1,
-                explanation: "السنة الميلادية تحتوي على 365 يوماً، وكل 4 سنوات تكون سنة كبيسة بها 366 يوماً. هذا لأن الأرض تدور حول الشمس في 365.25 يوم تقريباً."
-            },
-            {
-                question: "ما هي أطول سورة في القرآن؟",
-                options: ["سورة يوسف", "سورة البقرة", "سورة آل عمران"],
-                correct: 1,
-                explanation: "سورة البقرة هي أطول سورة في القرآن الكريم، وتحتوي على 286 آية. سُميت بالبقرة لورود قصة بقرة بني إسرائيل فيها."
-            },
-            {
-                question: "ما هو ناتج 7 + 8؟",
-                options: ["14", "15", "16"],
-                correct: 1,
-                explanation: "عندما نجمع 7 و 8، نحصل على 15. يمكنك أن تتخيل أن لديك 7 تفاحات وأعطاك صديقك 8 تفاحات أخرى، ستصبح لديك 15 تفاحة."
+                explanation: {
+                    ar: "المجموعة الشمسية تحتوي على 8 كواكب. بلوتو لم يعد يُعتبر كوكباً منذ 2006.",
+                    fr: "Le système solaire contient 8 planètes. Pluton n'est plus considérée comme une planète depuis 2006."
+                },
+                topic: {ar: "العلوم", fr: "Sciences"}
             }
         ];
 
         let currentQuestions = [];
         let answers = {};
         let visits = { math: 0, games: 0, drugs: 0 };
-        let banTime = 0; // in minutes
+        let banTime = 0;
         let banEndTime = null;
-        let banAttempts = 0;
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'fr' : 'ar';
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('langText').textContent = currentLang === 'ar' ? '🇩🇿 Français' : '🇩🇿 العربية';
+            
+            document.querySelectorAll('[data-ar][data-fr]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+        }
+
+        function closeDemoWithReport() {
+            showReport();
+        }
+
+        function showReport() {
+            document.getElementById('mainContainer').style.display = 'none';
+            document.getElementById('reportContainer').style.display = 'block';
+            
+            // Session info
+            const now = new Date();
+            const duration = Math.round((now - sessionStartTime) / 60000);
+            document.getElementById('reportDate').textContent = now.toLocaleString(currentLang === 'ar' ? 'ar-DZ' : 'fr-FR');
+            document.getElementById('reportDuration').textContent = `${duration} ${currentLang === 'ar' ? 'دقيقة' : 'minutes'}`;
+            
+            // Stats
+            const statsHtml = `
+                <div class="stat-card">
+                    <div class="icon">✅</div>
+                    <div class="value">${Object.keys(answers).length}</div>
+                    <div class="label" data-ar="أسئلة مجابة" data-fr="Questions répondues">${currentLang === 'ar' ? 'أسئلة مجابة' : 'Questions répondues'}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">🌐</div>
+                    <div class="value">${visits.math + visits.games + visits.drugs}</div>
+                    <div class="label" data-ar="مواقع مزارة" data-fr="Sites visités">${currentLang === 'ar' ? 'مواقع مزارة' : 'Sites visités'}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">🚫</div>
+                    <div class="value">${visits.drugs}</div>
+                    <div class="label" data-ar="محاولات خطيرة" data-fr="Tentatives dangereuses">${currentLang === 'ar' ? 'محاولات خطيرة' : 'Tentatives dangereuses'}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="icon">📚</div>
+                    <div class="value">${visits.math}</div>
+                    <div class="label" data-ar="زيارات تعليمية" data-fr="Visites éducatives">${currentLang === 'ar' ? 'زيارات تعليمية' : 'Visites éducatives'}</div>
+                </div>
+            `;
+            document.getElementById('statsGrid').innerHTML = statsHtml;
+            
+            // Quiz results
+            let quizHtml = '';
+            currentQuestions.forEach((q, index) => {
+                const isCorrect = answers[index] === q.correct;
+                quizHtml += `
+                    <div class="report-item">
+                        <strong>${currentLang === 'ar' ? 'السؤال' : 'Question'} ${index + 1}:</strong> ${q.question[currentLang]}<br>
+                        <span style="color: ${isCorrect ? '#28a745' : '#dc3545'}">
+                            ${isCorrect ? '✅ ' + (currentLang === 'ar' ? 'صحيح' : 'Correct') : '❌ ' + (currentLang === 'ar' ? 'خطأ' : 'Incorrect')}
+                        </span>
+                    </div>
+                `;
+            });
+            document.getElementById('quizResults').innerHTML = quizHtml;
+            
+            // Sites visited
+            const sitesHtml = `
+                <div class="report-item">
+                    <strong>📚 ${currentLang === 'ar' ? 'دروس الرياضيات' : 'Cours de maths'}:</strong> ${visits.math} ${currentLang === 'ar' ? 'مرة' : 'fois'} ✅
+                </div>
+                <div class="report-item">
+                    <strong>🎮 ${currentLang === 'ar' ? 'الألعاب' : 'Jeux'}:</strong> ${visits.games} ${currentLang === 'ar' ? 'مرة' : 'fois'} ⚠️
+                </div>
+                <div class="report-item">
+                    <strong>🚫 ${currentLang === 'ar' ? 'مواقع خطيرة' : 'Sites dangereux'}:</strong> ${visits.drugs} ${currentLang === 'ar' ? 'مرة' : 'fois'} ${visits.drugs > 0 ? '❌' : ''}
+                </div>
+            `;
+            document.getElementById('sitesVisited').innerHTML = sitesHtml;
+            
+            // Learning
+            let learningHtml = '';
+            currentQuestions.forEach(q => {
+                if (!learnedTopics.includes(q.topic[currentLang])) {
+                    learnedTopics.push(q.topic[currentLang]);
+                }
+            });
+            learnedTopics.forEach(topic => {
+                learningHtml += `
+                    <div class="report-item">
+                        ✅ ${topic}
+                    </div>
+                `;
+            });
+            document.getElementById('learningToday').innerHTML = learningHtml;
+            
+            // Psychology tips
+            const tips = currentLang === 'ar' ? [
+                '⏰ شجع طفلك على أخذ فترات راحة كل 30 دقيقة من استخدام الشاشات',
+                '👨‍👩‍👧 اجلس مع طفلك أثناء تصفح الإنترنت لتعزيز التواصل والثقة',
+                '🎯 حدد أوقات معينة للإنترنت وليس قبل النوم مباشرة',
+                '📚 شجع المحتوى التعليمي وكافئ طفلك على الاهتمام بالتعلم',
+                '🗣️ تحدث مع طفلك عن مخاطر الإنترنت بطريقة إيجابية دون تخويف',
+                '✅ امدح السلوك الإيجابي عند احترام القواعد'
+            ] : [
+                '⏰ Encouragez votre enfant à faire des pauses toutes les 30 minutes d\'utilisation d\'écrans',
+                '👨‍👩‍👧 Asseyez-vous avec votre enfant pendant sa navigation pour renforcer la communication et la confiance',
+                '🎯 Définissez des horaires spécifiques pour Internet, pas juste avant le coucher',
+                '📚 Encouragez le contenu éducatif et récompensez l\'intérêt pour l\'apprentissage',
+                '🗣️ Parlez des dangers d\'Internet de manière positive sans effrayer',
+                '✅ Félicitez les comportements positifs lorsque les règles sont respectées'
+            ];
+            
+            let tipsHtml = '';
+            tips.forEach(tip => {
+                tipsHtml += `<li>${tip}</li>`;
+            });
+            document.getElementById('psychologyTips').innerHTML = tipsHtml;
+        }
+
+        function returnToHome() {
+            window.location.href = 'index.html';
+        }
 
         function getRandomQuestions(count = 3) {
             const shuffled = [...questionPool].sort(() => Math.random() - 0.5);
@@ -644,52 +953,7 @@
             document.getElementById(pageId).classList.add('active');
         }
 
-        function checkBanStatus() {
-            if (banEndTime && Date.now() < banEndTime) {
-                const remainingMs = banEndTime - Date.now();
-                const remainingMinutes = Math.ceil(remainingMs / 60000);
-                return { banned: true, remaining: remainingMinutes };
-            }
-            return { banned: false };
-        }
-
-        function displayBanNotice(remainingMinutes) {
-            const banNotice = document.getElementById('banNotice');
-            banNotice.style.display = 'block';
-            banNotice.className = 'ban-notice';
-            banNotice.innerHTML = `
-                <h3>⛔ أنت محظور مؤقتاً</h3>
-                <p style="color: #721c24; line-height: 1.8;">
-                    لقد حاولت زيارة مواقع خطيرة متعددة المرات.<br>
-                    <strong>السبب:</strong> زيارة مواقع تحتوي على محتوى ضار (مخدرات)<br>
-                    <strong>المدة المتبقية:</strong>
-                </p>
-                <div class="ban-timer">${remainingMinutes} دقيقة</div>
-                <div class="email-notification">
-                    <h4>📧 تم إرسال إشعار للوالدين</h4>
-                    <p>
-                        <strong>إلى:</strong> parent@example.com<br>
-                        <strong>الموضوع:</strong> تنبيه: محاولة الوصول إلى محتوى خطير<br>
-                        <strong>الرسالة:</strong> ابنك أمين حاول زيارة مواقع خطيرة عدة مرات. تم حظره مؤقتاً لمدة ${banTime} دقيقة.
-                    </p>
-                </div>
-            `;
-            
-            document.getElementById('loginBtn').disabled = true;
-        }
-
         function login() {
-            const banStatus = checkBanStatus();
-            
-            if (banStatus.banned) {
-                banAttempts++;
-                banTime += 15;
-                banEndTime = Date.now() + (banTime * 60000);
-                displayBanNotice(banTime);
-                sendParentNotification('محاولة دخول أثناء الحظر');
-                return;
-            }
-            
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
@@ -715,7 +979,7 @@
                 questionDiv.id = `question-${index}`;
                 
                 let optionsHtml = '';
-                q.options.forEach((opt, optIndex) => {
+                q.options[currentLang].forEach((opt, optIndex) => {
                     optionsHtml += `
                         <div class="option" onclick="selectAnswer(${index}, ${optIndex}, this)">
                             ${opt}
@@ -724,13 +988,13 @@
                 });
                 
                 questionDiv.innerHTML = `
-                    <h3>السؤال ${index + 1}️⃣: ${q.question}</h3>
+                    <h3>${currentLang === 'ar' ? 'السؤال' : 'Question'} ${index + 1}️⃣: ${q.question[currentLang]}</h3>
                     <div class="options">
                         ${optionsHtml}
                     </div>
                     <div class="explanation" id="explanation-${index}">
-                        <h4>💡 شرح الإجابة:</h4>
-                        <p>${q.explanation}</p>
+                        <h4>💡 ${currentLang === 'ar' ? 'شرح الإجابة:' : 'Explication :'}</h4>
+                        <p>${q.explanation[currentLang]}</p>
                     </div>
                 `;
                 
@@ -771,6 +1035,12 @@
                         explanation.classList.add('show');
                     }
                 });
+                
+                quizAnswers.push({
+                    question: q.question[currentLang],
+                    correct: answers[index] === q.correct,
+                    topic: q.topic[currentLang]
+                });
             });
             
             const resultDiv = document.getElementById('quizResult');
@@ -778,33 +1048,28 @@
             
             if (allCorrect) {
                 resultDiv.className = 'alert alert-success';
-                resultDiv.innerHTML = '🎉 ممتاز! أجبت على جميع الأسئلة بشكل صحيح!';
+                resultDiv.textContent = currentLang === 'ar' ? '🎉 ممتاز! أجبت على جميع الأسئلة بشكل صحيح!' : '🎉 Excellent ! Tu as répondu correctement à toutes les questions !';
                 
                 setTimeout(() => {
                     showPage('rulesPage');
                 }, 2000);
             } else {
                 resultDiv.className = 'alert alert-warning';
-                resultDiv.innerHTML = `
-                    ⚠️ بعض الإجابات خاطئة. اقرأ الشرح أدناه لتتعلم، ثم حاول مرة أخرى!
-                `;
+                resultDiv.textContent = currentLang === 'ar' ? '⚠️ بعض الإجابات خاطئة. اقرأ الشرح أدناه لتتعلم!' : '⚠️ Certaines réponses sont incorrectes. Lis les explications ci-dessous !';
                 
                 setTimeout(() => {
-                    resultDiv.innerHTML += `<br><br>سيتم إعادة تحميل الصفحة...`;
-                    setTimeout(() => location.reload(), 3000);
-                }, 3000);
+                    location.reload();
+                }, 5000);
             }
             
             document.getElementById('submitQuiz').disabled = true;
         }
 
         function checkRules() {
-            const rule1 = document.getElementById('rule1').checked;
-            const rule2 = document.getElementById('rule2').checked;
-            const rule3 = document.getElementById('rule3').checked;
-            const rule4 = document.getElementById('rule4').checked;
-            
-            document.getElementById('acceptRules').disabled = !(rule1 && rule2 && rule3 && rule4);
+            const allChecked = ['rule1', 'rule2', 'rule3', 'rule4'].every(id => 
+                document.getElementById(id).checked
+            );
+            document.getElementById('acceptRules').disabled = !allChecked;
         }
 
         function acceptRules() {
@@ -817,124 +1082,35 @@
             visits[site]++;
             updateVisitCounter();
             
-            if (site === 'math') {
-                showModal(
-                    '✅',
-                    'موقع آمن!',
-                    'ممتاز! هذا موقع تعليمي رائع. استمر في التعلم! الرياضيات مهمة جداً لمستقبلك.',
-                    false
-                );
-            } else if (site === 'games') {
-                if (visits[site] === 1) {
-                    showModal(
-                        '⚠️',
-                        'تحذير!',
-                        'الألعاب ممتعة، لكن لا تنسى دروسك! لا تقضِ وقتاً طويلاً في اللعب. الدراسة أهم!',
-                        false
-                    );
-                } else if (visits[site] >= 2) {
-                    showModal(
-                        '⚠️',
-                        'انتباه!',
-                        'هذه المرة الثانية التي تزور فيها موقع الألعاب. ركز على دراستك! سنراقب استخدامك.',
-                        false
-                    );
+            const messages = {
+                math: {
+                    ar: 'ممتاز! هذا موقع تعليمي رائع. استمر في التعلم!',
+                    fr: 'Excellent ! C\'est un super site éducatif. Continue à apprendre !'
+                },
+                games: {
+                    ar: 'الألعاب ممتعة، لكن لا تنسى دروسك!',
+                    fr: 'Les jeux sont amusants, mais n\'oublie pas tes devoirs !'
+                },
+                drugs: {
+                    ar: 'هذا الموقع خطير جداً! المخدرات تدمر الصحة والمستقبل.',
+                    fr: 'Ce site est très dangereux ! La drogue détruit la santé et l\'avenir.'
                 }
-            } else if (site === 'drugs') {
-                if (visits[site] === 1) {
-                    showModal(
-                        '🚫',
-                        'موقع خطير جداً!',
-                        'هذا الموقع يحتوي على محتوى عن المخدرات وهو خطير جداً! المخدرات تدمر الصحة والعقل والمستقبل. تسبب الإدمان والأمراض وتؤدي إلى الموت. لا تحاول زيارة هذا الموقع مرة أخرى وإلا سيتم حظرك!',
-                        false
-                    );
-                    sendParentNotification('محاولة الوصول إلى موقع خطير (المرة الأولى)');
-                } else if (visits[site] >= 2) {
-                    banUser();
-                }
-            }
-        }
-
-        function banUser() {
-            banTime = 15;
-            banEndTime = Date.now() + (15 * 60000);
+            };
             
-            showModal(
-                '🚫',
-                'تم حظرك!',
-                `لقد زرت مواقع خطيرة عدة مرات رغم التحذيرات. تم حظرك لمدة ${banTime} دقيقة. سيتم إرسال إشعار لوالديك الآن.`,
-                true
-            );
-            
-            sendParentNotification('تم حظر الطفل بسبب زيارات متكررة لمواقع خطيرة');
-        }
-
-        function sendParentNotification(reason) {
-            console.log('📧 ====== إشعار للوالدين ======');
-            console.log(`إلى: parent@example.com`);
-            console.log(`الموضوع: تنبيه أمني - حساب الطفل: أمين`);
-            console.log(`الرسالة: ${reason}`);
-            console.log(`الوقت: ${new Date().toLocaleString('ar-DZ')}`);
-            console.log(`المدة: ${banTime} دقيقة`);
-            console.log('================================');
-        }
-
-        function showModal(icon, title, text, showEmail) {
-            document.getElementById('modalIcon').textContent = icon;
-            document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalText').textContent = text;
-            
-            const emailDiv = document.getElementById('emailNotif');
-            if (showEmail) {
-                emailDiv.innerHTML = `
-                    <div class="email-notification">
-                        <h4>📧 تم إرسال إشعار للوالدين</h4>
-                        <p>
-                            <strong>إلى:</strong> parent@example.com<br>
-                            <strong>الموضوع:</strong> تنبيه: سلوك خطير على الإنترنت<br>
-                            <strong>الرسالة:</strong> ابنك أمين زار مواقع خطيرة متعددة المرات. تم حظره لمدة ${banTime} دقيقة.
-                        </p>
-                    </div>
-                `;
-            } else {
-                emailDiv.innerHTML = '';
-            }
-            
-            document.getElementById('warningModal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('warningModal').classList.remove('active');
-            
-            if (banEndTime) {
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
-            }
+            alert(messages[site][currentLang]);
         }
 
         function updateVisitCounter() {
             const visitList = document.getElementById('visitList');
             visitList.innerHTML = `
-                <div class="visit-item">📚 دروس: ${visits.math}</div>
-                <div class="visit-item">🎮 ألعاب: ${visits.games}</div>
-                <div class="visit-item">🚫 خطيرة: ${visits.drugs}</div>
+                <div class="visit-item">📚 ${currentLang === 'ar' ? 'دروس' : 'Cours'}: ${visits.math}</div>
+                <div class="visit-item">🎮 ${currentLang === 'ar' ? 'ألعاب' : 'Jeux'}: ${visits.games}</div>
+                <div class="visit-item">🚫 ${currentLang === 'ar' ? 'خطيرة' : 'Dangereux'}: ${visits.drugs}</div>
             `;
         }
 
-        // Check ban status on page load
-        window.onload = function() {
-            const banStatus = checkBanStatus();
-            if (banStatus.banned) {
-                displayBanNotice(banStatus.remaining);
-            }
-        };
-
-        // Allow Enter key to submit login
-        document.getElementById('password').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                login();
-            }
+        document.getElementById('password')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') login();
         });
     </script>
 </body>

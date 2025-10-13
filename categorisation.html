@@ -6,6 +6,78 @@
     <title>DzNet1 - أداة التصنيف</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.querySelector(".categorization-tool form");
+
+  // Crée dynamiquement un conteneur pour le résultat sous le formulaire
+  const resultContainer = document.createElement("div");
+  resultContainer.id = "resultCard";
+  resultContainer.style.display = "none";
+  resultContainer.style.marginTop = "30px";
+  resultContainer.style.background = "#f9f9f9";
+  resultContainer.style.borderRadius = "15px";
+  resultContainer.style.padding = "25px";
+  resultContainer.style.boxShadow = "0 0 10px rgba(0,0,0,0.1)";
+  form.parentNode.insertBefore(resultContainer, form.nextSibling);
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const urlInput = form.querySelector('input[type="url"]');
+    const categorySelect = document.getElementById("categorySelect");
+    const reasonTextarea = form.querySelector("textarea");
+    const contributorInput = form.querySelector('input[type="text"]');
+
+    const domain = urlInput.value.trim();
+    if (!domain) {
+      alert("⚠️ يرجى إدخال رابط موقع صالح.");
+      return;
+    }
+
+    resultContainer.style.display = "block";
+    resultContainer.innerHTML = "<b>⏳ جاري التحقق من الموقع...</b>";
+
+    try {
+      const response = await fetch("https://dznet-cat.anvil.app/_/api/verifier_site", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          domain: domain,
+          category: categorySelect.value || "",
+          reason: reasonTextarea.value || "",
+          contributor: contributorInput.value || ""
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        resultContainer.innerHTML = `<div style="color:red;">❌ ${data.error}</div>`;
+        return;
+      }
+
+      // ✅ Affichage stylé du résultat
+      resultContainer.innerHTML = `
+        <div style="background:white; border-radius:12px; padding:20px; text-align:right; direction:rtl;">
+          <h3 style="color:#004080; text-align:center;">🌐 ${data.domain}</h3>
+          <table style="width:100%; border-collapse:collapse; font-size:15px;">
+            <tr><td><b>📁 الفئة:</b></td><td>${data.category_ar || data.category || '—'}</td></tr>
+            <tr><td><b>📊 الحالة:</b></td><td>${data.status_ar || data.status || 'قيد المراجعة'}</td></tr>
+            <tr><td><b>📝 الوصف:</b></td><td>${data.description || '—'}</td></tr>
+            <tr><td><b>🛡️ مستوى الثقة:</b></td><td>${data.trust_score || 0}%</td></tr>
+            <tr><td><b>👤 المبلّغ:</b></td><td>${data.reported_by || 'مجهول'}</td></tr>
+            <tr><td><b>📅 آخر تحديث:</b></td><td>${data.last_updated || '—'}</td></tr>
+          </table>
+        </div>`;
+    } catch (err) {
+      console.error(err);
+      resultContainer.innerHTML = `<div style="color:red;">⚠️ خطأ أثناء الاتصال بخادم التصنيف.</div>`;
+    }
+  });
+});
+</script>
+
 <body>
     <!-- Toggle Language -->
     <div class="lang-toggle" onclick="toggleLanguage()">

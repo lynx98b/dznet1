@@ -366,7 +366,7 @@
         // Charger les statistiques
         async function loadStatistics() {
             try {
-                const response = await fetch('https://api.dznet.com/_/api/stats');
+                const response = await fetch('https://api.dznet1.com/_/api/stats');
                 const data = await response.json();
                 
                 if (data.success) {
@@ -387,7 +387,7 @@
             const t = translations[currentLang];
             
             try {
-                const response = await fetch('https://api.dznet.com/_/api/recent_sites');
+                const response = await fetch('https://api.dznet1.com/_/api/recent_sites');
                 const data = await response.json();
                 
                 const tbody = document.getElementById('recentSitesTable');
@@ -756,7 +756,7 @@
                 '</b></div>';
             
             try {
-                const response = await fetch('https://api.dznet.com/_/api/check_or_submit', {
+                const response = await fetch('https://api.dznet1.com/_/api/check_or_submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

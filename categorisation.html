@@ -1,218 +1,149 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DzNet1 - Catégorisation</title>
-  <style>
-    body {
-      font-family: "Cairo", sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f7f8fc;
-      color: #333;
-    }
-
-    nav {
-      background: linear-gradient(90deg, #667eea, #764ba2);
-      color: white;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-
-    nav .logo {
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    nav ul li a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    nav ul li a.active {
-      text-decoration: underline;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 40px 10px;
-      background: #f0f2ff;
-    }
-
-    .hero h1 {
-      color: #667eea;
-      font-size: 30px;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      font-size: 16px;
-      color: #555;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 10px 20px;
-    }
-
-    /* Bloc explicatif */
-    .url-helper {
-      background: #e3f2fd;
-      border: 2px solid #2196f3;
-      border-radius: 12px;
-      padding: 20px;
-      margin: 30px 0;
-    }
-
-    .url-helper code {
-      background: #fff;
-      padding: 2px 5px;
-      border-radius: 4px;
-    }
-
-    /* === IFRAME === */
-    .anvil-wrapper {
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      border: none;
-      margin: 0;
-      padding: 0;
-      display: block;
-      transition: height 0.3s ease;
-    }
-
-    iframe#anvilFrame {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-
-    /* === TOP BÉNÉVOLES === */
-    .volunteers {
-      background: #fff;
-      border-radius: 10px;
-      padding: 20px;
-      margin: 30px auto;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      max-width: 600px;
-    }
-
-    .volunteers h2 {
-      color: #667eea;
-      text-align: center;
-    }
-
-    .volunteer {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid #eee;
-    }
-
-    .rank { font-weight: bold; font-size: 18px; }
-    .gold { color: #fbc02d; }
-    .silver { color: #9e9e9e; }
-    .bronze { color: #cd7f32; }
-
-    @media (max-width: 768px) {
-      nav ul { justify-content: center; }
-      .hero h1 { font-size: 24px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DzNet1 - أداة التصنيف</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .url-helper {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .url-preview {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #4caf50;
+        }
+        .url-examples {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .granularity-option {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        .granularity-option:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+        .granularity-option.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 
 <body>
-
-  <!-- Navbar -->
-  <nav>
-    <div class="logo"><span style="color:#ffd700;">Dz</span> Net1 <span style="font-size:14px;">.com</span></div>
-    <ul>
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="filtres.html">Filtres</a></li>
-      <li><a href="categorisation.html" class="active">Catégorisation</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
-
-  <!-- Hero -->
-  <div class="hero">
-    <h1>🔍 Catégoriser un nouveau site</h1>
-    <p>Participez à l’amélioration du filtrage communautaire DzNet1.</p>
-  </div>
-
-  <div class="container">
-    <div class="url-helper">
-      <h3>💡 Comment entrer l'URL correctement ?</h3>
-      <p>
-        ✅ <code>facebook.com</code> — Site complet<br>
-        ✅ <code>ads.facebook.com</code> — Sous-domaine spécifique<br>
-        ✅ <code>https://example.com/page</code> — URL complète (on extrait le domaine)<br>
-        ✅ <code>www.site.com</code> — Avec www (on l’enlève auto)
-      </p>
-      <p style="color:#b45309;font-weight:bold;">⚠️ Attention importante :</p>
-      <ul>
-        <li>Ne bloquez pas tout un site pour une seule page !</li>
-        <li>Utilisez le sous-domaine si le problème est localisé.</li>
-      </ul>
+    <!-- 🌐 Lang toggle -->
+    <div class="lang-toggle" onclick="toggleLanguage()">
+        <span id="langText">🇩🇿 Français</span>
     </div>
-  </div>
 
-  <!-- Application Anvil -->
-  <div class="anvil-wrapper" id="anvilWrapper">
-    <iframe
-      id="anvilFrame"
-      src="https://catdznet1.anvil.app/"
-      allowfullscreen
-      sandbox="allow-scripts allow-same-origin allow-forms">
-    </iframe>
-  </div>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon"></span>
+                <span class="logo-text">
+                    <span class="dz">Dz</span><span class="net">Net1</span><span class="com">.com</span>
+                </span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link" data-ar="الرئيسية" data-fr="Accueil">الرئيسية</a></li>
+                <li><a href="filtres.html" class="nav-link" data-ar="الفلاتر المجتمعية" data-fr="Filtres Communautaires">الفلاتر المجتمعية</a></li>
+                <li><a href="enfants.html" class="nav-link" data-ar="بوابة الأطفال" data-fr="Portail Enfants">بوابة الأطفال</a></li>
+                <li><a href="faq.html" class="nav-link" data-ar="الأسئلة الشائعة" data-fr="FAQ">الأسئلة الشائعة</a></li>
+                <li><a href="categorisation.html" class="nav-link active" data-ar="التصنيف" data-fr="Catégorisation">التصنيف</a></li>
+                <li><a href="contact.html" class="nav-link" data-ar="اتصل بنا" data-fr="Contact">اتصل بنا</a></li>
+            </ul>
+        </div>
+    </nav>
 
-  <!-- Top bénévoles -->
-  <div class="volunteers">
-    <h2>🏆 Top des bénévoles</h2>
-    <div class="volunteer"><span class="rank gold">🥇 TechGuard_DZ</span><span>2 847 | 96.3%</span></div>
-    <div class="volunteer"><span class="rank silver">🥈 SafeNet_Algeria</span><span>2 156 | 94.8%</span></div>
-    <div class="volunteer"><span class="rank bronze">🥉 FamilyProtector</span><span>1 923 | 93.1%</span></div>
-  </div>
+    <!-- Hero -->
+    <div class="hero">
+        <h1>
+            <span class="hero-icon" style="font-size: 48px;">🔍</span>
+            <span data-ar="أداة التصنيف" data-fr="Outil de Catégorisation">أداة التصنيف</span>
+        </h1>
+        <p data-ar="ساعد المجتمع في تصنيف المواقع في الفئات الصحيحة" data-fr="Aidez la communauté à classer les sites web dans les bonnes catégories">
+            ساعد المجتمع في تصنيف المواقع في الفئات الصحيحة
+        </p>
+    </div>
 
-  <script>
-    // 🔧 Ajustement automatique de la hauteur pour Android / iOS / Desktop
-    function adjustIframeHeight() {
-      const wrapper = document.getElementById('anvilWrapper');
-      const height = window.innerHeight;
+    <!-- Section explicative -->
+    <div class="container">
+        <div class="url-helper">
+            <h3>💡 Comment entrer l'URL correctement ?</h3>
+            <p>
+                ✅ <b>facebook.com</b> — Site complet<br>
+                ✅ <b>ads.facebook.com</b> — Sous-domaine spécifique<br>
+                ✅ <b>https://example.com/page</b> — URL complète (on extrait le domaine)<br>
+                ✅ <b>www.site.com</b> — Avec www (on l’enlève auto)
+            </p>
+            <p style="color:#b45309;font-weight:bold;">⚠️ Attention importante :</p>
+            <ul>
+                <li>Ne bloquez pas tout un site pour une seule page !</li>
+                <li>Utilisez le sous-domaine si le problème est localisé.</li>
+            </ul>
+        </div>
+    </div>
 
-      // Cas spécifiques : iPhone et Android
-      const ua = navigator.userAgent.toLowerCase();
-      if (/iphone|ipad|ipod/.test(ua)) {
-        wrapper.style.height = (height - 110) + "px";
-      } else if (/android/.test(ua)) {
-        wrapper.style.height = (height - 90) + "px";
-      } else {
-        wrapper.style.height = (height - 140) + "px";
+    <!-- ✅ Application Anvil plein écran sans scroll -->
+    <div class="container">
+        <div id="anvilAppContainer" style="text-align:center; margin:30px 0;">
+            <iframe
+                id="anvilFrame"
+                src="https://catdznet1.anvil.app/"
+                style="width:100%; height:100dvh; border:none; border-radius:15px; box-shadow:0 0 20px rgba(0,0,0,0.15); overflow:visible !important;"
+                allowfullscreen
+                sandbox="allow-scripts allow-same-origin allow-forms">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Top bénévoles -->
+    <div class="container" style="margin-bottom: 60px;">
+        <h2 style="text-align:center;">🏆 Top des bénévoles</h2>
+        <div class="url-helper" style="background:#fff;">
+            <p>🥇 <b>TechGuard_DZ</b> — 2 847 sites catégorisés | Précision : 96.3%</p>
+            <p>🥈 <b>SafeNet_Algeria</b> — 2 156 sites catégorisés | Précision : 94.8%</p>
+            <p>🥉 <b>FamilyProtector</b> — 1 923 sites catégorisés | Précision : 93.1%</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+
+    <script>
+      // ✅ Ajuste dynamiquement la hauteur de l’iframe pour supprimer le scroll interne
+      function ajusterHauteurIframe() {
+        const iframe = document.getElementById("anvilFrame");
+        iframe.style.height = window.innerHeight + "px";
       }
-    }
 
-    window.addEventListener("resize", adjustIframeHeight);
-    window.addEventListener("orientationchange", adjustIframeHeight);
-    document.addEventListener("DOMContentLoaded", adjustIframeHeight);
-  </script>
-
+      window.addEventListener("load", ajusterHauteurIframe);
+      window.addEventListener("resize", ajusterHauteurIframe);
+      window.addEventListener("orientationchange", ajusterHauteurIframe);
+    </script>
 </body>
 </html>

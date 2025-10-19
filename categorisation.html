@@ -88,12 +88,13 @@
     /* === IFRAME === */
     .anvil-wrapper {
       width: 100%;
-      height: 100vh; /* Plein écran */
+      height: 100vh;
       overflow: hidden;
       border: none;
       margin: 0;
       padding: 0;
       display: block;
+      transition: height 0.3s ease;
     }
 
     iframe#anvilFrame {
@@ -131,13 +132,8 @@
     .bronze { color: #cd7f32; }
 
     @media (max-width: 768px) {
-      nav ul {
-        justify-content: center;
-      }
+      nav ul { justify-content: center; }
       .hero h1 { font-size: 24px; }
-      .anvil-wrapper {
-        height: calc(100vh - 60px);
-      }
     }
   </style>
 </head>
@@ -178,8 +174,8 @@
     </div>
   </div>
 
-  <!-- Application Anvil plein écran -->
-  <div class="anvil-wrapper">
+  <!-- Application Anvil -->
+  <div class="anvil-wrapper" id="anvilWrapper">
     <iframe
       id="anvilFrame"
       src="https://catdznet1.anvil.app/"
@@ -195,6 +191,28 @@
     <div class="volunteer"><span class="rank silver">🥈 SafeNet_Algeria</span><span>2 156 | 94.8%</span></div>
     <div class="volunteer"><span class="rank bronze">🥉 FamilyProtector</span><span>1 923 | 93.1%</span></div>
   </div>
+
+  <script>
+    // 🔧 Ajustement automatique de la hauteur pour Android / iOS / Desktop
+    function adjustIframeHeight() {
+      const wrapper = document.getElementById('anvilWrapper');
+      const height = window.innerHeight;
+
+      // Cas spécifiques : iPhone et Android
+      const ua = navigator.userAgent.toLowerCase();
+      if (/iphone|ipad|ipod/.test(ua)) {
+        wrapper.style.height = (height - 110) + "px";
+      } else if (/android/.test(ua)) {
+        wrapper.style.height = (height - 90) + "px";
+      } else {
+        wrapper.style.height = (height - 140) + "px";
+      }
+    }
+
+    window.addEventListener("resize", adjustIframeHeight);
+    window.addEventListener("orientationchange", adjustIframeHeight);
+    document.addEventListener("DOMContentLoaded", adjustIframeHeight);
+  </script>
 
 </body>
 </html>

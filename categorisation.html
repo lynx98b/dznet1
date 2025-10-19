@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DzNet1 - Outil de Catégorisation</title>
-  <link rel="stylesheet" href="styles.css">
-
+  <title>DzNet1 - Catégorisation</title>
   <style>
     body {
       font-family: "Cairo", sans-serif;
@@ -18,7 +16,7 @@
     nav {
       background: linear-gradient(90deg, #667eea, #764ba2);
       color: white;
-      padding: 15px 30px;
+      padding: 15px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -30,47 +28,49 @@
       font-weight: bold;
     }
 
-    nav .nav-menu {
+    nav ul {
       list-style: none;
+      margin: 0;
       padding: 0;
       display: flex;
-      flex-wrap: wrap;
       gap: 15px;
+      flex-wrap: wrap;
     }
 
-    nav .nav-menu li a {
+    nav ul li a {
       color: white;
       text-decoration: none;
       font-weight: 500;
     }
 
-    nav .nav-menu li a.active {
+    nav ul li a.active {
       text-decoration: underline;
     }
 
     .hero {
       text-align: center;
-      padding: 60px 20px;
+      padding: 40px 10px;
+      background: #f0f2ff;
     }
 
     .hero h1 {
       color: #667eea;
-      font-size: 36px;
+      font-size: 30px;
       margin-bottom: 10px;
     }
 
     .hero p {
-      font-size: 18px;
+      font-size: 16px;
       color: #555;
     }
 
     .container {
       max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px;
+      margin: auto;
+      padding: 10px 20px;
     }
 
-    /* === URL Helper === */
+    /* Bloc explicatif */
     .url-helper {
       background: #e3f2fd;
       border: 2px solid #2196f3;
@@ -79,105 +79,75 @@
       margin: 30px 0;
     }
 
-    .url-examples {
-      background: #fff3e0;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 10px;
-    }
-
-    .url-examples code {
+    .url-helper code {
       background: #fff;
-      padding: 2px 6px;
+      padding: 2px 5px;
       border-radius: 4px;
     }
 
-    /* === Anvil Frame === */
+    /* === IFRAME === */
     .anvil-wrapper {
       width: 100%;
-      height: calc(100vh - 180px);
-      margin: 30px 0;
-      border-radius: 15px;
+      height: 100vh; /* Plein écran */
       overflow: hidden;
-      box-shadow: 0 0 25px rgba(0,0,0,0.15);
-      background: white;
+      border: none;
+      margin: 0;
+      padding: 0;
+      display: block;
     }
 
-    #anvilFrame {
+    iframe#anvilFrame {
       width: 100%;
       height: 100%;
       border: none;
       display: block;
     }
 
-    @media (max-width: 768px) {
-      .anvil-wrapper {
-        height: calc(100vh - 120px);
-        margin: 15px 0;
-        border-radius: 0;
-        box-shadow: none;
-      }
+    /* === TOP BÉNÉVOLES === */
+    .volunteers {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 30px auto;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 600px;
     }
 
-    /* === Sections === */
-    h2.section-title {
-      text-align: center;
+    .volunteers h2 {
       color: #667eea;
-      font-size: 28px;
-      margin-bottom: 25px;
-    }
-
-    /* === Top Bénévoles === */
-    .contributors {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-      margin-top: 30px;
-    }
-
-    .contributor {
-      padding: 25px;
-      border-radius: 12px;
       text-align: center;
-      color: #333;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     }
 
-    .gold { background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); }
-    .silver { background: linear-gradient(135deg, #c0c0c0 0%, #dcdcdc 100%); }
-    .bronze { background: linear-gradient(135deg, #cd7f32 0%, #daa520 100%); color: white; }
-
-    /* === Comment fonctionne le système === */
-    .how-it-works {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 60px 30px;
-      border-radius: 20px;
-      text-align: center;
-      margin: 60px 0;
+    .volunteer {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
     }
 
-    .how-it-works-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      margin-top: 40px;
-    }
+    .rank { font-weight: bold; font-size: 18px; }
+    .gold { color: #fbc02d; }
+    .silver { color: #9e9e9e; }
+    .bronze { color: #cd7f32; }
 
-    .how-step {
-      background: rgba(255,255,255,0.15);
-      padding: 25px;
-      border-radius: 12px;
-      backdrop-filter: blur(8px);
+    @media (max-width: 768px) {
+      nav ul {
+        justify-content: center;
+      }
+      .hero h1 { font-size: 24px; }
+      .anvil-wrapper {
+        height: calc(100vh - 60px);
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- Navigation -->
+  <!-- Navbar -->
   <nav>
-    <div class="logo"><span style="color:#ffd700;">Dz</span>Net1<span style="font-size:16px;">.com</span></div>
-    <ul class="nav-menu">
+    <div class="logo"><span style="color:#ffd700;">Dz</span> Net1 <span style="font-size:14px;">.com</span></div>
+    <ul>
       <li><a href="index.html">Accueil</a></li>
       <li><a href="filtres.html">Filtres</a></li>
       <li><a href="categorisation.html" class="active">Catégorisation</a></li>
@@ -187,81 +157,44 @@
 
   <!-- Hero -->
   <div class="hero">
-    <h1>🔍 Outil de Catégorisation</h1>
-    <p>Aidez la communauté à classer les sites web dans les bonnes catégories.</p>
+    <h1>🔍 Catégoriser un nouveau site</h1>
+    <p>Participez à l’amélioration du filtrage communautaire DzNet1.</p>
   </div>
 
   <div class="container">
-    <!-- Section aide URL -->
-    <h2 class="section-title">💡 Comment entrer l'URL correctement ?</h2>
     <div class="url-helper">
-      <div class="url-examples">
-        <strong>✅ Exemples corrects :</strong><br>
-        • <code>facebook.com</code> - Site complet<br>
-        • <code>ads.facebook.com</code> - Sous-domaine spécifique<br>
-        • <code>https://example.com/page</code> - URL complète (on extrait le domaine)<br>
-        • <code>www.site.com</code> - Avec www (on l'enlève auto)<br><br>
-
-        <strong>⚠️ Attention importante :</strong><br>
-        • Attention à ne pas bloquer des sites entiers pour une seule page !<br>
-        • Utilisez le sous-domaine si le problème est localisé.
-      </div>
-    </div>
-
-    <!-- 🚀 Application Anvil -->
-    <div class="anvil-wrapper">
-      <iframe
-        src="https://catdznet1.anvil.app/"
-        allowfullscreen
-        sandbox="allow-scripts allow-same-origin allow-forms"
-        id="anvilFrame">
-      </iframe>
-    </div>
-
-    <!-- 🏆 Top Bénévoles -->
-    <h2 class="section-title">🏆 Top des bénévoles</h2>
-    <div class="contributors">
-      <div class="contributor gold">
-        <div style="font-size:48px;">🥇</div>
-        <h3>TechGuard_DZ</h3>
-        <p><b>2 847</b> sites catégorisés</p>
-        <p>Précision : <b>96.3%</b></p>
-      </div>
-      <div class="contributor silver">
-        <div style="font-size:48px;">🥈</div>
-        <h3>SafeNet_Algeria</h3>
-        <p><b>2 156</b> sites catégorisés</p>
-        <p>Précision : <b>94.8%</b></p>
-      </div>
-      <div class="contributor bronze">
-        <div style="font-size:48px;">🥉</div>
-        <h3>FamilyProtector</h3>
-        <p><b>1 923</b> sites catégorisés</p>
-        <p>Précision : <b>93.1%</b></p>
-      </div>
-    </div>
-
-    <!-- 🔄 Comment fonctionne le système -->
-    <div class="how-it-works">
-      <h2>🔄 Comment fonctionne le système ?</h2>
-      <div class="how-it-works-grid">
-        <div class="how-step">
-          <div style="font-size:48px;">📝</div>
-          <h4>Soumettre la demande</h4>
-          <p>Envoyez l'URL avec la catégorie suggérée</p>
-        </div>
-        <div class="how-step">
-          <div style="font-size:48px;">👥</div>
-          <h4>Révision communautaire</h4>
-          <p>Bénévoles experts examinent et votent</p>
-        </div>
-        <div class="how-step">
-          <div style="font-size:48px;">✅</div>
-          <h4>Application immédiate</h4>
-          <p>Classification appliquée sur tous les appareils DzNet1</p>
-        </div>
-      </div>
+      <h3>💡 Comment entrer l'URL correctement ?</h3>
+      <p>
+        ✅ <code>facebook.com</code> — Site complet<br>
+        ✅ <code>ads.facebook.com</code> — Sous-domaine spécifique<br>
+        ✅ <code>https://example.com/page</code> — URL complète (on extrait le domaine)<br>
+        ✅ <code>www.site.com</code> — Avec www (on l’enlève auto)
+      </p>
+      <p style="color:#b45309;font-weight:bold;">⚠️ Attention importante :</p>
+      <ul>
+        <li>Ne bloquez pas tout un site pour une seule page !</li>
+        <li>Utilisez le sous-domaine si le problème est localisé.</li>
+      </ul>
     </div>
   </div>
+
+  <!-- Application Anvil plein écran -->
+  <div class="anvil-wrapper">
+    <iframe
+      id="anvilFrame"
+      src="https://catdznet1.anvil.app/"
+      allowfullscreen
+      sandbox="allow-scripts allow-same-origin allow-forms">
+    </iframe>
+  </div>
+
+  <!-- Top bénévoles -->
+  <div class="volunteers">
+    <h2>🏆 Top des bénévoles</h2>
+    <div class="volunteer"><span class="rank gold">🥇 TechGuard_DZ</span><span>2 847 | 96.3%</span></div>
+    <div class="volunteer"><span class="rank silver">🥈 SafeNet_Algeria</span><span>2 156 | 94.8%</span></div>
+    <div class="volunteer"><span class="rank bronze">🥉 FamilyProtector</span><span>1 923 | 93.1%</span></div>
+  </div>
+
 </body>
 </html>

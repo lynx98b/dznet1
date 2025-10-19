@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DzNet1 - أداة التصنيف</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 
   <style>
     body {
@@ -12,6 +12,15 @@
       font-family: "Cairo", sans-serif;
       margin: 0;
       padding: 0;
+    }
+
+    nav {
+      background: #667eea;
+      color: white;
+      padding: 15px 0;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .hero {
@@ -22,28 +31,102 @@
       border-bottom: 4px solid #667eea;
     }
 
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
     iframe {
       width: 100%;
       height: 90vh;
       border: none;
       border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      opacity: 0;
+      transition: opacity 0.8s ease;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
+    iframe.loaded {
+      opacity: 1;
+    }
+
+    .info-box, .volunteers {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin: 30px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .info-box h2, .volunteers h2 {
+      color: #444;
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .info-list {
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .warning {
+      background: #fff3cd;
+      padding: 15px;
+      border-left: 5px solid #ffc107;
+      border-radius: 8px;
+      margin-top: 10px;
+      color: #856404;
+    }
+
+    .steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: space-around;
+      margin-top: 15px;
       text-align: center;
     }
 
-    nav {
-      background: #667eea;
-      color: white;
-      padding: 15px 0;
-      font-size: 20px;
+    .step {
+      flex: 1 1 250px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+
+    .step h3 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .volunteer {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 15px;
+      border-bottom: 1px solid #eee;
+      font-size: 15px;
+    }
+
+    .volunteer:last-child {
+      border-bottom: none;
+    }
+
+    .rank {
       font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      font-size: 20px;
+    }
+
+    .gold { color: #fbc02d; }
+    .silver { color: #9e9e9e; }
+    .bronze { color: #cd7f32; }
+
+    @media (max-width: 768px) {
+      .steps {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -63,35 +146,82 @@
         </span>
       </div>
       <ul class="nav-menu">
-        <li><a href="index.html" data-ar="الرئيسية" data-fr="Accueil">الرئيسية</a></li>
-        <li><a href="filtres.html" data-ar="الفلاتر المجتمعية" data-fr="Filtres Communautaires">الفلاتر المجتمعية</a></li>
-        <li><a href="enfants.html" data-ar="بوابة الأطفال" data-fr="Portail Enfants">بوابة الأطفال</a></li>
-        <li><a href="faq.html" data-ar="الأسئلة الشائعة" data-fr="FAQ">الأسئلة الشائعة</a></li>
-        <li><a href="categorisation.html" class="active" data-ar="التصنيف" data-fr="Catégorisation">التصنيف</a></li>
-        <li><a href="contact.html" data-ar="اتصل بنا" data-fr="Contact">اتصل بنا</a></li>
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="filtres.html">الفلاتر المجتمعية</a></li>
+        <li><a href="enfants.html">بوابة الأطفال</a></li>
+        <li><a href="faq.html">الأسئلة الشائعة</a></li>
+        <li><a href="categorisation.html" class="active">التصنيف</a></li>
+        <li><a href="contact.html">اتصل بنا</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- Hero -->
   <div class="hero">
-    <h1>🔍 <span data-ar="أداة التصنيف" data-fr="Outil de Catégorisation">أداة التصنيف</span></h1>
-    <p data-ar="ساعد المجتمع في تصنيف المواقع في الفئات الصحيحة"
-       data-fr="Aidez la communauté à classer les sites web dans les bonnes catégories">
-       ساعد المجتمع في تصنيف المواقع في الفئات الصحيحة
-    </p>
+    <h1>🔍 <span>أداة التصنيف</span></h1>
+    <p>ساعد المجتمع في تصنيف المواقع في الفئات الصحيحة</p>
   </div>
 
-  <!-- Application Anvil intégrée -->
   <div class="container">
-    <iframe
-      src="https://catdznet1.anvil.app/"
-      allowfullscreen
-      sandbox="allow-scripts allow-same-origin allow-forms"
-    ></iframe>
+    <!-- 📘 Guide d’aide -->
+    <div class="info-box">
+      <h2>🌐 Catégoriser un nouveau site</h2>
+      <div class="info-list">
+        <p><strong>💡 Comment entrer l'URL correctement ?</strong></p>
+        <ul>
+          <li>✅ facebook.com — <em>Site complet</em></li>
+          <li>✅ ads.facebook.com — <em>Sous-domaine spécifique</em></li>
+          <li>✅ https://example.com/page — <em>URL complète (on extrait le domaine)</em></li>
+          <li>✅ www.site.com — <em>Avec www (on l'enlève auto)</em></li>
+        </ul>
+
+        <div class="warning">
+          ⚠️ <strong>Attention importante :</strong><br>
+          • Ne bloquez pas tout un site pour une seule page !<br>
+          • Utilisez le sous-domaine si le problème est localisé.
+        </div>
+      </div>
+    </div>
+
+    <!-- 🧭 Processus -->
+    <div class="info-box">
+      <h2>⚙️ Comment fonctionne le système ?</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>📝 Soumettre la demande</h3>
+          <p>Envoyez l'URL avec la catégorie suggérée.</p>
+        </div>
+        <div class="step">
+          <h3>👥 Révision communautaire</h3>
+          <p>Bénévoles experts examinent et votent.</p>
+        </div>
+        <div class="step">
+          <h3>✅ Application immédiate</h3>
+          <p>Classification appliquée sur tous les appareils DzNet1.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🚀 Application Anvil -->
+    <div class="info-box">
+      <h2>🔗 Interface de catégorisation</h2>
+      <iframe
+        src="https://catdznet1.anvil.app/"
+        allowfullscreen
+        sandbox="allow-scripts allow-same-origin allow-forms"
+        onload="this.classList.add('loaded');"
+      ></iframe>
+    </div>
+
+    <!-- 🏆 Top bénévoles -->
+    <div class="volunteers">
+      <h2>🏆 Top des bénévoles</h2>
+      <div class="volunteer"><span class="rank gold">🥇 TechGuard_DZ</span><span>2 847 sites | Précision : 96.3 %</span></div>
+      <div class="volunteer"><span class="rank silver">🥈 SafeNet_Algeria</span><span>2 156 sites | Précision : 94.8 %</span></div>
+      <div class="volunteer"><span class="rank bronze">🥉 FamilyProtector</span><span>1 923 sites | Précision : 93.1 %</span></div>
+    </div>
   </div>
 
-  <!-- Script de langue (si tu veux garder la bascule) -->
   <script src="script.js"></script>
 </body>
 </html>

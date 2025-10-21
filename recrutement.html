@@ -231,40 +231,80 @@ footer a:hover { text-decoration: underline; }
 </div>
 
 <script>
+
 const jobs = [
-  {poste:"👩‍🏫 Professeur d’anglais",desc:"Aider les enfants en difficulté, révisions et soutien scolaire en ligne.",langues:"Français / Anglais",type:"Temps partiel",
-    profil:["Bonne prononciation","Pédagogie","Motivation à enseigner"],
-    conditions:["Télétravail","Connexion stable","3-4 sessions/sem"],
-    avantages:["Horaires flexibles","Formation interne"]},
-  {poste:"🌐 Web marketing",desc:"Créer du contenu et animer nos réseaux sociaux.",langues:"Français / Arabe",type:"Temps partiel",
-    profil:["Créatif(ve)","À l’aise réseaux sociaux","Bases en SEO"],
-    conditions:["Télétravail possible","Reporting hebdo"],
-    avantages:["Projets variés","Équipe jeune"]},
-  {poste:"🎧 Centre d’appel — Kabyle",desc:"Assister nos utilisateurs kabylophones.",langues:"Kabyle / Français / Arabe",type:"Temps plein",
-    profil:["Bonne communication","Maîtrise du kabyle","Empathie"],
-    conditions:["Télétravail possible","Formation fournie"],
-    avantages:["Salaire fixe + prime","Ambiance d’équipe"]},
-  {poste:"🎧 Centre d’appel — Arabe",desc:"Réception et assistance clients arabophones.",langues:"Arabe / Français",type:"Temps plein",
-    profil:["Clarté de communication","Patience","Respect des procédures"],
-    conditions:["Télétravail ou bureau","Formation complète"],
-    avantages:["Prime de performance","Cadre professionnel"]},
-  {poste:"🎧 Centre d’appel — Français",desc:"Suivi client francophone et gestion des demandes.",langues:"Français",type:"Temps plein",
-    profil:["Bonne élocution","Sens du service","Organisation"],
-    conditions:["Horaires fixes","Encadrement régulier"],
-    avantages:["Prime d’assiduité","Environnement bienveillant"]},
-  {poste:"💻 Support technique N1",desc:"Assistance technique à distance sur nos outils.",langues:"Français / Arabe",type:"Temps plein",
-    profil:["Compétences informatiques de base","Bonne communication","Autonomie"],
-    conditions:["Télétravail","Formation technique initiale"],
-    avantages:["Évolution vers N2","Ambiance jeune"]},
-  {poste:"💻 Support technique N2",desc:"Diagnostic avancé et accompagnement utilisateurs.",langues:"Français / Arabe",type:"Temps plein",
-    profil:["Notions réseaux / systèmes","Esprit logique","Bon relationnel"],
-    conditions:["Télétravail partiel","Collaboration avec devs"],
-    avantages:["Expérience valorisée","Bonus trimestriels"]},
-  {poste:"🏢 Chef d’équipe — Succursale Draria",desc:"Encadrer les opérations et le suivi RH sur site Draria.",langues:"Français / Arabe",type:"Présentiel",
-    profil:["Leadership","Organisation","Gestion du personnel"],
-    conditions:["Présence sur site","Reporting au siège"],
-    avantages:["Poste évolutif","Équipe soudée"]}
+  {poste:"👩‍🏫 Professeur d’anglais",
+   desc:"Aider les enfants en difficulté, révisions et soutien scolaire en ligne.",
+   langues:"Français / Anglais",type:"Temps partiel",
+   profil:["Bonne prononciation","Pédagogie","Motivation à enseigner"],
+   conditions:["Télétravail","Connexion stable","3-4 sessions/sem"],
+   avantages:["Horaires flexibles","Formation interne"]},
+
+  {poste:"🧮 Professeur de mathématiques et physique",
+   desc:"Accompagner les élèves dans la compréhension des notions de base, les exercices et la préparation aux examens.",
+   langues:"Français / Arabe",type:"Temps partiel",
+   profil:["Excellente maîtrise des programmes scolaires","Pédagogie claire","Patience et rigueur"],
+   conditions:["Télétravail","Connexion stable","Possibilité d’horaires adaptés"],
+   avantages:["Travail à distance","Suivi pédagogique par l’équipe DzNet1","Ambiance motivante"]},
+
+  {poste:"💡 Professeur d’informatique pour enfants",
+   desc:"Initier les enfants à l’informatique, la logique, la bureautique et la programmation ludique (Scratch, Python...).",
+   langues:"Français / Arabe",type:"Temps partiel",
+   profil:["Passionné(e) d’informatique","Pédagogie adaptée aux enfants","Créativité et patience"],
+   conditions:["Télétravail","Cours en ligne interactifs","Matériel basique requis (PC, micro, caméra)"],
+   avantages:["Programme innovant","Formation aux outils éducatifs","Travail d’équipe dynamique"]},
+
+  {poste:"🌐 Web marketing",
+   desc:"Créer du contenu et animer nos réseaux sociaux.",
+   langues:"Français / Arabe",type:"Temps partiel",
+   profil:["Créatif(ve)","À l’aise sur les réseaux sociaux","Bases en SEO"],
+   conditions:["Télétravail possible","Reporting hebdo"],
+   avantages:["Projets variés","Équipe jeune"]},
+
+  {poste:"🎧 Centre d’appel — Kabyle",
+   desc:"Assister nos utilisateurs kabylophones.",
+   langues:"Kabyle / Français / Arabe",type:"Temps plein",
+   profil:["Bonne communication","Maîtrise du kabyle","Empathie"],
+   conditions:["Télétravail possible","Formation fournie"],
+   avantages:["Salaire fixe + prime","Ambiance d’équipe"]},
+
+  {poste:"🎧 Centre d’appel — Arabe",
+   desc:"Réception et assistance clients arabophones.",
+   langues:"Arabe / Français",type:"Temps plein",
+   profil:["Clarté de communication","Patience","Respect des procédures"],
+   conditions:["Télétravail ou bureau","Formation complète"],
+   avantages:["Prime de performance","Cadre professionnel"]},
+
+  {poste:"🎧 Centre d’appel — Français",
+   desc:"Suivi client francophone et gestion des demandes.",
+   langues:"Français",type:"Temps plein",
+   profil:["Bonne élocution","Sens du service","Organisation"],
+   conditions:["Horaires fixes","Encadrement régulier"],
+   avantages:["Prime d’assiduité","Environnement bienveillant"]},
+
+  {poste:"💻 Support technique N1",
+   desc:"Assistance technique à distance sur nos outils.",
+   langues:"Français / Arabe",type:"Temps plein",
+   profil:["Compétences informatiques de base","Bonne communication","Autonomie"],
+   conditions:["Télétravail","Formation technique initiale"],
+   avantages:["Évolution vers N2","Ambiance jeune"]},
+
+  {poste:"💻 Support technique N2",
+   desc:"Diagnostic avancé et accompagnement utilisateurs.",
+   langues:"Français / Arabe",type:"Temps plein",
+   profil:["Notions réseaux / systèmes","Esprit logique","Bon relationnel"],
+   conditions:["Télétravail partiel","Collaboration avec devs"],
+   avantages:["Expérience valorisée","Bonus trimestriels"]},
+
+  {poste:"🏢 Chef d’équipe — Succursale Draria",
+   desc:"Encadrer les opérations et le suivi RH sur site Draria.",
+   langues:"Français / Arabe",type:"Présentiel",
+   profil:["Leadership","Organisation","Gestion du personnel"],
+   conditions:["Présence sur site","Reporting au siège"],
+   avantages:["Poste évolutif","Équipe soudée"]}
 ];
+
+
 
 const jobList=document.getElementById("job-list");
 jobs.forEach((j,i)=>{

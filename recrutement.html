@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -17,13 +16,12 @@
     header {
       background-color: #004c99;
       color: white;
-      padding: 20px;
       text-align: center;
-      border-bottom: 5px solid #0099cc;
+      padding: 20px;
     }
 
     .container {
-      max-width: 700px;
+      max-width: 800px;
       margin: 40px auto;
       background: white;
       padding: 30px;
@@ -32,66 +30,80 @@
     }
 
     h2 {
+      color: #004c99;
       text-align: center;
+    }
+
+    .job {
+      border-bottom: 1px solid #ddd;
+      padding: 20px 0;
+      cursor: pointer;
+    }
+
+    .job:last-child {
+      border-bottom: none;
+    }
+
+    .job h3 {
+      margin: 0;
       color: #004c99;
     }
 
-    p.intro {
-      text-align: center;
+    .job p {
+      margin: 5px 0 10px 0;
       color: #555;
-      font-size: 16px;
     }
 
-    form {
-      margin-top: 20px;
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
     }
 
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 15px;
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .close {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .close:hover {
       color: #004c99;
     }
 
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-    }
-
-    input[type="file"] {
-      border: none;
-    }
-
-    button {
+    .apply-btn {
       background-color: #004c99;
       color: white;
       border: none;
       padding: 12px 20px;
       border-radius: 8px;
-      font-size: 16px;
       cursor: pointer;
-      margin-top: 20px;
-      width: 100%;
+      font-size: 16px;
+      display: block;
+      margin: 20px auto 0;
     }
 
-    button:hover {
+    .apply-btn:hover {
       background-color: #0073e6;
-    }
-
-    .conditions {
-      margin-top: 25px;
-      background-color: #f0f8ff;
-      padding: 15px;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    .conditions ul {
-      margin: 10px 0 0 20px;
     }
 
     footer {
@@ -100,89 +112,121 @@
       color: #777;
       font-size: 13px;
     }
-
-    /* Version arabe (RTL) */
-    .arabic {
-      direction: rtl;
-      text-align: right;
-      font-family: "Amiri", "Scheherazade", serif;
-      font-size: 15px;
-      color: #222;
-      margin-top: 25px;
-      background-color: #f9f9f9;
-      padding: 15px;
-      border-radius: 10px;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        margin: 20px;
-        padding: 20px;
-      }
-    }
   </style>
 </head>
 <body>
 
   <header>
     <h1>📘 Recrutement DzNet1</h1>
+    <p>Découvrez nos postes disponibles et postulez facilement</p>
   </header>
 
   <div class="container">
-    <h2>Postulez dès maintenant</h2>
-    <p class="intro">Rejoignez notre équipe et participez à l’éducation numérique en Algérie.</p>
+    <h2>Postes à pourvoir</h2>
 
-    <form id="formCV" enctype="multipart/form-data" method="POST" action="mailto:RH@dznet1.com" onsubmit="return validateForm()">
-      <label for="nom">Nom complet :</label>
-      <input type="text" id="nom" name="nom" placeholder="Entrez votre nom complet" required>
-
-      <label for="email">Adresse e-mail :</label>
-      <input type="email" id="email" name="email" placeholder="exemple@dznet1.com" required>
-
-      <label for="poste">Poste souhaité :</label>
-      <select id="poste" name="poste" required>
-        <option value="">-- Sélectionnez un poste --</option>
-        <option>Professeur d'anglais (primaire & secondaire)</option>
-        <option>Professeur de mathématiques (primaire & secondaire)</option>
-        <option>Web marketing</option>
-        <option>Support client</option>
-      </select>
-
-      <label for="contrat">Type de contrat :</label>
-      <select id="contrat" name="contrat" required>
-        <option value="">-- Choisissez --</option>
-        <option>Temps plein</option>
-        <option>Temps partiel (universitaire accepté)</option>
-      </select>
-
-      <label for="cv">Téléverser votre CV (PDF ou Word) :</label>
-      <input type="file" id="cv" name="cv" accept=".pdf, .doc, .docx" required>
-
-      <button type="submit">📤 Envoyer la candidature</button>
-    </form>
-
-    <div class="conditions">
-      <h3>📋 Conditions de recrutement :</h3>
-      <ul>
-        <li>Familiarité avec Internet et les sites web obligatoire.</li>
-        <li>Travail en ligne sur la plateforme DzNet1.</li>
-        <li>Aide aux enfants en difficulté scolaire et sessions de révision.</li>
-        <li>Salaire : 30 000 DA / mois.</li>
-        <li>Internet et carte SIM Djezzy fournis.</li>
-        <li>Temps partiel accepté pour les universitaires.</li>
-      </ul>
+    <div class="job" onclick="ouvrirFiche('anglais')">
+      <h3>👩‍🏫 Professeur d’anglais (primaire & secondaire)</h3>
+      <p>Aidez les élèves à progresser dans la langue anglaise à travers des cours en ligne.</p>
     </div>
 
-    <div class="arabic">
-      <h3>📘 التوظيف في منصة DzNet1</h3>
-      <p>نحن نبحث عن أساتذة لغة إنجليزية ورياضيات، وأشخاص في التسويق الإلكتروني ودعم العملاء.  
-      العمل يتم عبر الإنترنت لمساعدة الأطفال الذين يواجهون صعوبات في الدراسة والمراجعة.</p>
-      <ul>
-        <li>يجب أن تكون على دراية بالإنترنت والمواقع الإلكترونية.</li>
-        <li>الراتب الشهري: 30,000 دج.</li>
-        <li>بطاقة SIM من Djezzy والإنترنت متوفران.</li>
-        <li>نقبل الطلبة الجامعيين بدوام جزئي.</li>
-      </ul>
+    <div class="job" onclick="ouvrirFiche('math')">
+      <h3>👨‍🏫 Professeur de mathématiques (primaire & secondaire)</h3>
+      <p>Participez à la réussite scolaire des enfants en difficulté via notre plateforme.</p>
+    </div>
+
+    <div class="job" onclick="ouvrirFiche('marketing')">
+      <h3>🌐 Web marketing</h3>
+      <p>Contribuez à la visibilité de DzNet1 sur le web et les réseaux sociaux.</p>
+    </div>
+
+    <div class="job" onclick="ouvrirFiche('support')">
+      <h3>💬 Support client</h3>
+      <p>Accompagnez les élèves et parents dans l’utilisation de notre plateforme.</p>
+    </div>
+
+  </div>
+
+  <!-- Modals (fiches de poste) -->
+  <div id="anglais" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fermerFiche('anglais')">&times;</span>
+      <h2>👩‍🏫 Professeur d’anglais</h2>
+      <p>
+        <strong>Missions :</strong><br>
+        - Donner des cours d’anglais en ligne aux élèves du primaire et du secondaire.<br>
+        - Aider les enfants à surmonter leurs difficultés linguistiques.<br>
+        - Participer aux révisions et aux suivis personnalisés.
+      </p>
+      <p>
+        <strong>Conditions :</strong><br>
+        - Familiarité avec Internet et les sites web.<br>
+        - Travail à distance via la plateforme DzNet1.<br>
+        - Temps plein ou partiel (universitaires acceptés).<br>
+        - Salaire : 30 000 DA/mois.<br>
+        - SIM Djezzy + Internet fournis.
+      </p>
+      <button class="apply-btn" onclick="postuler('Professeur d’anglais')">📤 Postuler maintenant</button>
+    </div>
+  </div>
+
+  <div id="math" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fermerFiche('math')">&times;</span>
+      <h2>👨‍🏫 Professeur de mathématiques</h2>
+      <p>
+        <strong>Missions :</strong><br>
+        - Enseigner les mathématiques en ligne aux élèves du primaire et du secondaire.<br>
+        - Réaliser des révisions et exercices interactifs.<br>
+        - Suivre la progression individuelle des élèves.
+      </p>
+      <p>
+        <strong>Conditions :</strong><br>
+        - À l’aise avec Internet et les plateformes éducatives.<br>
+        - Travail à distance, flexible.<br>
+        - Temps partiel possible pour universitaires.<br>
+        - Salaire : 30 000 DA/mois + Internet fourni.
+      </p>
+      <button class="apply-btn" onclick="postuler('Professeur de mathématiques')">📤 Postuler maintenant</button>
+    </div>
+  </div>
+
+  <div id="marketing" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fermerFiche('marketing')">&times;</span>
+      <h2>🌐 Web marketing</h2>
+      <p>
+        <strong>Missions :</strong><br>
+        - Promouvoir la plateforme DzNet1.<br>
+        - Gérer les campagnes digitales et les réseaux sociaux.<br>
+        - Analyser la performance des actions marketing.
+      </p>
+      <p>
+        <strong>Conditions :</strong><br>
+        - Maîtrise des outils web et réseaux sociaux.<br>
+        - Travail à distance.<br>
+        - Salaire fixe + bonus de performance.
+      </p>
+      <button class="apply-btn" onclick="postuler('Web marketing')">📤 Postuler maintenant</button>
+    </div>
+  </div>
+
+  <div id="support" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fermerFiche('support')">&times;</span>
+      <h2>💬 Support client</h2>
+      <p>
+        <strong>Missions :</strong><br>
+        - Aider les utilisateurs à naviguer sur la plateforme DzNet1.<br>
+        - Répondre aux questions et résoudre les problèmes techniques simples.<br>
+        - Maintenir un contact positif et professionnel.
+      </p>
+      <p>
+        <strong>Conditions :</strong><br>
+        - Bonne communication écrite et orale.<br>
+        - Travail à domicile, horaire flexible.<br>
+        - Familiarité avec Internet requise.
+      </p>
+      <button class="apply-btn" onclick="postuler('Support client')">📤 Postuler maintenant</button>
     </div>
   </div>
 
@@ -191,21 +235,31 @@
   </footer>
 
   <script>
-    // Vérification du format du CV avant envoi
-    function validateForm() {
-      const fileInput = document.getElementById("cv");
-      const filePath = fileInput.value;
-      const allowedExtensions = /(\.pdf|\.doc|\.docx)$/i;
-
-      if (!allowedExtensions.exec(filePath)) {
-        alert("Veuillez télécharger un fichier PDF ou Word uniquement.");
-        fileInput.value = "";
-        return false;
-      }
-
-      alert("✅ Merci ! Votre candidature sera transmise à l’équipe RH DzNet1.");
-      return true;
+    function ouvrirFiche(id) {
+      document.getElementById(id).style.display = 'block';
     }
+
+    function fermerFiche(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function postuler(poste) {
+      const mail = "RH@dznet1.com";
+      const sujet = encodeURIComponent("Candidature - " + poste);
+      const corps = encodeURIComponent(
+        "Bonjour,\n\nJe souhaite postuler pour le poste de " + poste + 
+        " au sein de DzNet1.\n\nVeuillez trouver ci-joint mon CV.\n\nCordialement,\n[Votre nom]"
+      );
+      window.location.href = `mailto:${mail}?subject=${sujet}&body=${corps}`;
+    }
+
+    // Fermer la modale en cliquant à l’extérieur
+    window.onclick = function(event) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(m => {
+        if (event.target === m) m.style.display = 'none';
+      });
+    };
   </script>
 
 </body>

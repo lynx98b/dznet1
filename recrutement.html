@@ -1,4 +1,4 @@
-<!-- DzNet1 RH - Vitrine Pro - v2.000 -->
+<!-- DzNet1 RH - Vitrine Pro - v3.000 -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,7 +8,6 @@
   <meta name="description" content="On recrute — postes disponibles. Télétravail, horaires après-midi/ajustables, équipe jeune, techno au max. Rejoignez DzNet1."/>
   <style>
     :root{
-      /* Palette DzNet1 */
       --primary:#004c99;      /* Bleu DzNet1 */
       --primary-2:#0073e6;    /* Bleu clair action */
       --accent:#20c997;       /* Vert accent */
@@ -22,17 +21,13 @@
       --radius:14px;
       --radius-sm:10px;
     }
-
-    /* Reset & typographie pro (style Indeed/LinkedIn) */
     *{box-sizing:border-box}
     body{
       margin:0; background:var(--bg); color:var(--text);
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
       line-height:1.55;
     }
-    img{max-width:100%; display:block}
-
-    /* Header pro */
+    /* HERO */
     .hero{
       background:linear-gradient(160deg, var(--primary) 0%, #003a78 50%, #002a5e 100%);
       color:#fff; padding:54px 16px 36px; text-align:center; position:relative; overflow:hidden;
@@ -40,79 +35,53 @@
     }
     .hero h1{margin:0 0 8px; font-size:40px; letter-spacing:.2px}
     .hero p{margin:0; opacity:.95; font-size:18px}
-    .hero-chips{
-      margin:18px auto 0; display:flex; gap:10px; flex-wrap:wrap; justify-content:center; max-width:1050px
-    }
+    .hero-chips{margin:18px auto 0; display:flex; gap:10px; flex-wrap:wrap; justify-content:center; max-width:1050px}
     .chip{
       display:inline-flex; align-items:center; gap:8px;
       background:rgba(255,255,255,.12); color:#fff;
       border:1px solid rgba(255,255,255,.25);
-      padding:8px 12px; border-radius:999px; font-size:14px;
-      backdrop-filter: blur(2px);
+      padding:8px 12px; border-radius:999px; font-size:14px; backdrop-filter: blur(2px);
     }
-    .chip b{font-weight:600}
-
-    /* Conteneur */
     .container{max-width:1100px; margin:-26px auto 40px; padding:0 16px}
-
-    /* Blocs cartes */
-    .card{
-      background:var(--card); border:1px solid var(--line);
-      border-radius:var(--radius); box-shadow:var(--shadow); padding:22px;
-    }
-    .section-title{
-      margin:0 0 6px; color:var(--primary); letter-spacing:.2px;
-      font-weight:800; font-size:22px
-    }
+    .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px;}
+    .section-title{margin:0 0 6px; color:var(--primary); letter-spacing:.2px; font-weight:800; font-size:22px}
     .subtle{color:var(--muted); font-size:14.5px}
-
-    /* Valeurs */
-    .values{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; margin-top:16px}
-    .value{
-      background:var(--chip); border:1px solid #d7e6ff; border-radius:12px; padding:14px;
+    /* Bloc culture unique */
+    .culture{
+      background:linear-gradient(180deg,#ffffff 0%,#f9fbff 100%);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:18px 18px 14px;
     }
-    .value b{color:var(--primary)}
-    .ribbon{
-      margin-top:16px; background:#fff4f8; border:1px solid #ffd6e5; color:#a80752;
-      padding:12px 14px; border-radius:10px; font-size:14px
+    .culture p{margin:10px 0; color:#2a3a4a}
+    .culture .lead{
+      font-weight:600; color:#0f4d95; margin-bottom:6px
     }
-    .equal{margin-top:8px; color:#7a8699; font-size:12.5px}
-
-    /* Barre filtre + listing style Indeed */
+    .culture .bullets{
+      margin:8px 0 12px; color:#124b86;
+      font-size:15.5px; line-height:1.7;
+    }
+    .culture .bullets span{
+      background:#e9f2ff; border:1px solid #cfe2ff; color:#0f4d95;
+      padding:6px 10px; border-radius:999px; margin:4px 6px 0 0; display:inline-block
+    }
+    .ribbon{margin-top:10px; background:#fff4f8; border:1px solid #ffd6e5; color:#a80752; padding:10px 12px; border-radius:10px; font-size:14px}
+    .equal{margin-top:6px; color:#7a8699; font-size:12.5px}
+    /* Offres + filtre */
     .jobs-wrap{margin-top:16px}
-    .filterbar{
-      display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:2px 0 8px;
-    }
-    .search{
-      flex:1; min-width:240px; position:relative;
-    }
+    .filterbar{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:2px 0 8px;}
+    .search{flex:1; min-width:240px; position:relative;}
     .search input{
-      width:100%; padding:12px 42px 12px 42px; border:1px solid var(--line); border-radius:999px; outline:none;
-      box-shadow:inset 0 1px 0 rgba(0,0,0,.02); background:#fff;
-      transition:border .2s ease, box-shadow .2s ease;
-      font-size:15px;
+      width:100%; padding:12px 42px; border:1px solid var(--line); border-radius:999px; outline:none;
+      box-shadow:inset 0 1px 0 rgba(0,0,0,.02); background:#fff; transition:border .2s ease, box-shadow .2s ease; font-size:15px;
     }
-    .search input:focus{
-      border-color:#c9ddff; box-shadow:0 0 0 4px rgba(0,115,230,.12);
-    }
-    .search .icon{
-      position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:18px; color:#8da0b6
-    }
-    .search .clear{
-      position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:12px;
-      background:#eff3f9; border:1px solid var(--line); color:#49617f;
-      padding:4px 8px; border-radius:999px; cursor:pointer;
-    }
-    .hint{color:var(--muted); font-size:13px}
-
-    .jobs{
-      margin-top:14px; display:grid; grid-template-columns:repeat(12,1fr); gap:14px;
-    }
+    .search input:focus{border-color:#c9ddff; box-shadow:0 0 0 4px rgba(0,115,230,.12);}
+    .search .icon{position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:18px; color:#8da0b6}
+    .search .clear{position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:12px; background:#eff3f9; border:1px solid var(--line); color:#49617f; padding:4px 8px; border-radius:999px; cursor:pointer;}
+    .jobs{margin-top:14px; display:grid; grid-template-columns:repeat(12,1fr); gap:14px;}
     .job{
-      grid-column: span 4; min-height:210px;
-      background:var(--card); border:1px solid var(--line);
-      border-radius:var(--radius-sm); box-shadow:var(--shadow);
-      padding:18px; display:flex; flex-direction:column; gap:10px;
+      grid-column: span 4; min-height:210px; background:var(--card); border:1px solid var(--line);
+      border-radius:var(--radius-sm); box-shadow:var(--shadow); padding:18px; display:flex; flex-direction:column; gap:10px;
       transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
     .job:hover{ transform:translateY(-2px); border-color:#cfe2ff; box-shadow:0 14px 32px rgba(0,0,0,.12);}
@@ -120,56 +89,29 @@
     .job p{margin:0; color:var(--muted)}
     .badge-row{display:flex; gap:8px; flex-wrap:wrap}
     .badge{
-      display:inline-flex; align-items:center; gap:6px;
-      background:#edf7f3; color:#0a6b52; border:1px solid #bfe8d9;
-      padding:4px 10px; border-radius:999px; font-size:12px;
+      display:inline-flex; align-items:center; gap:6px; background:#edf7f3; color:#0a6b52; border:1px solid #bfe8d9; padding:4px 10px; border-radius:999px; font-size:12px;
     }
     .btn{
-      align-self:flex-start;
-      background:var(--primary); color:#fff; border:none; border-radius:10px;
-      padding:10px 14px; font-size:14.5px; cursor:pointer;
-      box-shadow:0 6px 14px rgba(0,76,153,.18);
-      transition:filter .18s ease, transform .08s ease;
+      align-self:flex-start; background:var(--primary); color:#fff; border:none; border-radius:10px; padding:10px 14px; font-size:14.5px; cursor:pointer;
+      box-shadow:0 6px 14px rgba(0,76,153,.18); transition:filter .18s ease, transform .08s ease;
     }
-    .btn:hover{ filter:brightness(1.05) }
-    .btn:active{ transform:translateY(1px) }
-
-    /* Modales pro */
+    .btn:hover{ filter:brightness(1.05) } .btn:active{ transform:translateY(1px) }
+    /* Modales */
     .modal{display:none; position:fixed; inset:0; z-index:999; background:rgba(15,23,42,.5)}
-    .modal-box{
-      background:#fff; width:92%; max-width:720px; margin:7vh auto; border-radius:16px; overflow:hidden;
-      box-shadow:0 24px 60px rgba(0,0,0,.35); position:relative;
-    }
-    .modal-head{
-      background:linear-gradient(135deg,var(--primary), #0a60b5);
-      color:#fff; padding:16px 18px; display:flex; align-items:center; justify-content:space-between;
-    }
+    .modal-box{background:#fff; width:92%; max-width:720px; margin:7vh auto; border-radius:16px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,.35); position:relative;}
+    .modal-head{background:linear-gradient(135deg,var(--primary), #0a60b5); color:#fff; padding:16px 18px; display:flex; align-items:center; justify-content:space-between;}
     .modal-title{margin:0; font-size:20px; font-weight:700}
     .close{background:transparent; border:none; color:#fff; font-size:26px; cursor:pointer; opacity:.9}
     .modal-body{padding:20px}
     .modal-body h4{margin:10px 0 6px; color:var(--text)}
     .modal-body ul{margin:8px 0 0 20px}
-    .modal-footer{
-      padding:16px 20px; display:flex; gap:10px; align-items:center; justify-content:space-between; border-top:1px solid var(--line);
-      background:#fbfdff;
-    }
-    .apply{
-      background:var(--accent); color:#083d35; border:none; border-radius:10px; padding:12px 16px; font-weight:700; cursor:pointer;
-      box-shadow:0 8px 18px rgba(32,201,151,.22);
-    }
+    .modal-footer{padding:16px 20px; display:flex; gap:10px; align-items:center; justify-content:space-between; border-top:1px solid var(--line); background:#fbfdff;}
+    .apply{background:var(--accent); color:#083d35; border:none; border-radius:10px; padding:12px 16px; font-weight:700; cursor:pointer; box-shadow:0 8px 18px rgba(32,201,151,.22);}
     .apply:hover{ filter:brightness(1.05) }
     .soft{font-size:12.5px; color:#6e7b8f}
-
     footer{padding:28px; text-align:center; color:#7f8aa3; font-size:13px}
-
-    /* Responsive */
-    @media (max-width:1024px){
-      .job{grid-column: span 6;}
-    }
-    @media (max-width:640px){
-      .hero h1{font-size:32px}
-      .job{grid-column:span 12}
-    }
+    @media (max-width:1024px){ .job{grid-column: span 6;} }
+    @media (max-width:640px){ .hero h1{font-size:32px} .job{grid-column:span 12} }
   </style>
 </head>
 <body>
@@ -187,39 +129,48 @@
   </section>
 
   <main class="container">
-    <!-- Valeurs & culture -->
-    <section class="card" aria-labelledby="titre-culture">
+    <!-- CULTURE : bloc unique -->
+    <section class="card culture" aria-labelledby="titre-culture">
       <h2 id="titre-culture" class="section-title">Notre culture RH</h2>
-      <div class="subtle">Sérieux • Travail d’équipe • Confiance • Idées neuves • Exécution rapide</div>
-
-      <div class="values" role="list">
-        <div class="value" role="listitem"><b>Sérieux.</b> On tient nos engagements et on respecte les délais, même à distance.</div>
-        <div class="value" role="listitem"><b>Équipe.</b> On s’entraide, on partage et on apprend vite ensemble.</div>
-        <div class="value" role="listitem"><b>Confiance.</b> Transparence, feedback honnête, responsabilité individuelle.</div>
-        <div class="value" role="listitem"><b>Idées neuves.</b> On aime tester, améliorer, optimiser en continu.</div>
-        <div class="value" role="listitem"><b>Tech au max.</b> Outils modernes, automatisation, data, IA quand c’est utile.</div>
-        <div class="value" role="listitem"><b>Esprit jeune.</b> DzNet1 est nouveau, dynamique, ambitieux, bienveillant.</div>
+      <p class="lead">
+        Sérieux • Travail d’équipe • Confiance • Idées neuves • Exécution rapide
+      </p>
+      <p>
+        Chez DzNet1, on est nouveaux, dynamiques et ambitieux. On tient nos engagements et on respecte les délais — même à distance.
+        On fonctionne en équipe, on s’entraide et on apprend vite ensemble. La confiance compte : transparence, feedback honnête,
+        responsabilité individuelle. On adore tester, améliorer et optimiser en continu. On utilise la technologie au maximum
+        (automatisation, data, IA quand c’est utile) pour aller droit au résultat.
+      </p>
+      <p>
+        <b>Esprit d’initiative :</b> on aime les personnes qui se débrouillent, qui avancent et trouvent des solutions — pas celles qui attendent
+        qu’on leur dise quoi faire. Le télétravail te permet de contribuer depuis n’importe où en Algérie, avec un vrai impact.
+      </p>
+      <div class="bullets" aria-label="valeurs clés">
+        <span>Sérieux</span>
+        <span>Équipe</span>
+        <span>Confiance</span>
+        <span>Idées neuves</span>
+        <span>Tech au max</span>
+        <span>Esprit jeune</span>
       </div>
-
-      <!-- formulation inclusive & discrète -->
       <div class="ribbon">💡 <b>Candidatures féminines fortement encouragées.</b> (Nous valorisons la diversité des profils.)</div>
       <div class="equal">DzNet1 applique une politique d’égalité des chances et d’accès à l’emploi.</div>
     </section>
 
-    <!-- Offres -->
+    <!-- OFFRES -->
     <section class="card jobs-wrap" aria-labelledby="titre-offres" style="margin-top:16px;">
       <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap">
         <div>
           <h2 id="titre-offres" class="section-title">Offres en cours</h2>
           <div class="subtle">Clique sur « Voir la fiche » pour lire le détail avant de postuler.</div>
         </div>
-        <div class="subtle">Tape “math”, “anglais”, “marketing”… pour filtrer.</div>
+        <div class="subtle">Tape “math”, “anglais”, “marketing”, “kabyle”, “arabe”, “français”… pour filtrer.</div>
       </div>
 
       <div class="filterbar" role="search">
         <div class="search">
           <span class="icon">🔎</span>
-          <input id="q" type="text" placeholder="Rechercher un poste (ex. anglais, web, support…)" oninput="filtrer()" aria-label="Rechercher un poste"/>
+          <input id="q" type="text" placeholder="Rechercher un poste (ex. anglais, web, support, kabyle…)" oninput="filtrer()" aria-label="Rechercher un poste"/>
           <button class="clear" type="button" onclick="effacerRecherche()">Effacer</button>
         </div>
       </div>
@@ -229,9 +180,7 @@
         <article class="job" data-keywords="anglais prof primaire secondaire révision soutien langue cours en ligne" role="listitem">
           <h3>👩‍🏫 Professeur d’anglais (primaire & secondaire)</h3>
           <p>Accompagner en ligne des élèves en difficulté : révisions, ateliers pratiques, progression simple.</p>
-          <div class="badge-row">
-            <span class="badge">Télétravail</span><span class="badge">Après-midi</span><span class="badge">Part-time OK</span>
-          </div>
+          <div class="badge-row"><span class="badge">Télétravail</span><span class="badge">Après-midi</span><span class="badge">Part-time OK</span></div>
           <button class="btn" onclick="openModal('m-english')">Voir la fiche</button>
         </article>
 
@@ -239,9 +188,7 @@
         <article class="job" data-keywords="math maths prof primaire secondaire exercices soutien révisions" role="listitem">
           <h3>👨‍🏫 Professeur de mathématiques (primaire & secondaire)</h3>
           <p>Faire progresser à distance : révisions ciblées, exercices guidés, méthode claire et rassurante.</p>
-          <div class="badge-row">
-            <span class="badge">Télétravail</span><span class="badge">Horaires ajustables</span><span class="badge">Part-time OK</span>
-          </div>
+          <div class="badge-row"><span class="badge">Télétravail</span><span class="badge">Horaires ajustables</span><span class="badge">Part-time OK</span></div>
           <button class="btn" onclick="openModal('m-math')">Voir la fiche</button>
         </article>
 
@@ -249,26 +196,46 @@
         <article class="job" data-keywords="marketing web réseaux sociaux contenu campagne social media" role="listitem">
           <h3>🌐 Web marketing</h3>
           <p>Booster la visibilité DzNet1 : contenu simple & authentique, réseaux sociaux, mini-campagnes ciblées.</p>
-          <div class="badge-row">
-            <span class="badge">Télétravail</span><span class="badge">Jeune équipe</span><span class="badge">Tech-friendly</span>
-          </div>
+          <div class="badge-row"><span class="badge">Télétravail</span><span class="badge">Jeune équipe</span><span class="badge">Tech-friendly</span></div>
           <button class="btn" onclick="openModal('m-marketing')">Voir la fiche</button>
         </article>
 
-        <!-- Support -->
+        <!-- Support client -->
         <article class="job" data-keywords="support client assistance plateforme parents élèves aide" role="listitem">
           <h3>💬 Support client</h3>
           <p>Aider parents & élèves sur la plateforme : réponses simples, suivi, esprit positif.</p>
-          <div class="badge-row">
-            <span class="badge">Télétravail</span><span class="badge">Après-midi</span><span class="badge">Formation assurée</span>
-          </div>
+          <div class="badge-row"><span class="badge">Télétravail</span><span class="badge">Après-midi</span><span class="badge">Formation assurée</span></div>
           <button class="btn" onclick="openModal('m-support')">Voir la fiche</button>
+        </article>
+
+        <!-- CALL CENTER KABYLE -->
+        <article class="job" data-keywords="centre d'appel call center kabyle amazigh tamazight support téléphone algérie régions" role="listitem">
+          <h3>📞 Centre d’appel — Support (Kabyle)</h3>
+          <p>Accueillir et accompagner en <b>kabyle</b> les parents et élèves à distance. Ciblage régions kabyles.</p>
+          <div class="badge-row"><span class="badge">Kabyle</span><span class="badge">Télétravail</span><span class="badge">Horaires ajustables</span></div>
+          <button class="btn" onclick="openModal('m-call-kabyle')">Voir la fiche</button>
+        </article>
+
+        <!-- CALL CENTER ARABE -->
+        <article class="job" data-keywords="centre d'appel call center arabe darija support téléphone algérie régions" role="listitem">
+          <h3>📞 Centre d’appel — Support (Arabe)</h3>
+          <p>Accompagner en <b>arabe</b> (dz/darija) les familles partout en Algérie. Ton calme et positif.</p>
+          <div class="badge-row"><span class="badge">Arabe</span><span class="badge">Télétravail</span><span class="badge">Après-midi</span></div>
+          <button class="btn" onclick="openModal('m-call-arab')">Voir la fiche</button>
+        </article>
+
+        <!-- CALL CENTER FRANÇAIS -->
+        <article class="job" data-keywords="centre d'appel call center français support téléphone algérie régions francophone" role="listitem">
+          <h3>📞 Centre d’appel — Support (Français)</h3>
+          <p>Assister en <b>français</b> les parents/élèves : réponses claires, suivi, remontée d’infos.</p>
+          <div class="badge-row"><span class="badge">Français</span><span class="badge">Télétravail</span><span class="badge">Formation assurée</span></div>
+          <button class="btn" onclick="openModal('m-call-fr')">Voir la fiche</button>
         </article>
       </div>
     </section>
   </main>
 
-  <!-- MODALES -->
+  <!-- MODALES EXISTANTES -->
   <div id="m-english" class="modal" onclick="backdropClose(event)" aria-hidden="true">
     <div class="modal-box" role="dialog" aria-labelledby="t-english" aria-modal="true">
       <div class="modal-head">
@@ -286,8 +253,7 @@
         <ul>
           <li>À l’aise avec Internet et les sites web.</li>
           <li>Horaires après-midi / ajustables. Part-time universitaire accepté.</li>
-          <li>Rémunération : 30 000 DA / mois.</li>
-          <li>📶 SIM Djezzy + Internet pris en charge.</li>
+          <li>Rémunération : 30 000 DA / mois. 📶 SIM Djezzy + Internet pris en charge.</li>
           <li>Équipe jeune, bienveillante, ouverte aux idées.</li>
         </ul>
       </div>
@@ -382,47 +348,112 @@
     </div>
   </div>
 
+  <!-- MODALES : CALL CENTER -->
+  <div id="m-call-kabyle" class="modal" onclick="backdropClose(event)" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-labelledby="t-call-kab" aria-modal="true">
+      <div class="modal-head">
+        <h3 id="t-call-kab" class="modal-title">📞 Centre d’appel — Support (Kabyle)</h3>
+        <button class="close" aria-label="Fermer" onclick="closeModal('m-call-kabyle')">×</button>
+      </div>
+      <div class="modal-body">
+        <h4>Missions</h4>
+        <ul>
+          <li>Recevoir les appels et accompagner en <b>kabyle</b> les parents et élèves.</li>
+          <li>Réponses simples, orientation, suivi des cas et remontée des retours.</li>
+          <li>Participer aux scripts d’appels et aux améliorations.</li>
+        </ul>
+        <h4>Conditions & atouts</h4>
+        <ul>
+          <li>Parler kabyle couramment ; français/arabe bienvenus.</li>
+          <li>Télétravail, horaires ajustables (ciblage régions kabyles).</li>
+          <li>SIM Djezzy + Internet pris en charge.</li>
+          <li>Équipe jeune, formation assurée, esprit d’initiative apprécié.</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button class="apply" onclick="postuler('Centre d’appel — Support (Kabyle)')">📤 Postuler maintenant</button>
+        <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances.</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="m-call-arab" class="modal" onclick="backdropClose(event)" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-labelledby="t-call-ar" aria-modal="true">
+      <div class="modal-head">
+        <h3 id="t-call-ar" class="modal-title">📞 Centre d’appel — Support (Arabe)</h3>
+        <button class="close" aria-label="Fermer" onclick="closeModal('m-call-arab')">×</button>
+      </div>
+      <div class="modal-body">
+        <h4>Missions</h4>
+        <ul>
+          <li>Assurer l’accueil et l’assistance en <b>arabe</b> (dz/darija).</li>
+          <li>Suivi des dossiers, remontée d’informations utiles à l’équipe.</li>
+          <li>Contribution aux FAQ et scripts d’appels.</li>
+        </ul>
+        <h4>Conditions & atouts</h4>
+        <ul>
+          <li>Arabe courant ; kabyle/français sont un plus.</li>
+          <li>Télétravail, après-midi / flex ; SIM + Internet pris en charge.</li>
+          <li>Équipe jeune, bienveillante, montée en compétences rapide.</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button class="apply" onclick="postuler('Centre d’appel — Support (Arabe)')">📤 Postuler maintenant</button>
+        <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances.</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="m-call-fr" class="modal" onclick="backdropClose(event)" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-labelledby="t-call-fr" aria-modal="true">
+      <div class="modal-head">
+        <h3 id="t-call-fr" class="modal-title">📞 Centre d’appel — Support (Français)</h3>
+        <button class="close" aria-label="Fermer" onclick="closeModal('m-call-fr')">×</button>
+      </div>
+      <div class="modal-body">
+        <h4>Missions</h4>
+        <ul>
+          <li>Répondre en <b>français</b>, guider et rassurer les familles.</li>
+          <li>Suivi des demandes, mise à jour des retours dans nos outils.</li>
+          <li>Proposer des améliorations (scripts, réponses types).</li>
+        </ul>
+        <h4>Conditions & atouts</h4>
+        <ul>
+          <li>Français courant ; kabyle/arabe appréciés.</li>
+          <li>Télétravail, horaires ajustables ; SIM + Internet pris en charge.</li>
+          <li>Ambiance jeune, formation + autonomie.</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button class="apply" onclick="postuler('Centre d’appel — Support (Français)')">📤 Postuler maintenant</button>
+        <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances.</span>
+      </div>
+    </div>
+  </div>
+
   <footer>
     © 2025 DzNet1 — RH • On recrute en continu (télétravail, équipe jeune, techno au max).
   </footer>
 
   <script>
-    /* --- Recherche / filtre --- */
+    /* Recherche / filtre */
     function filtrer(){
       const q = (document.getElementById('q').value || '').toLowerCase().trim();
       const items = document.querySelectorAll('#jobs .job');
-      let any = false;
       items.forEach(it=>{
         const k = (it.dataset.keywords + ' ' + it.textContent).toLowerCase();
-        const show = k.includes(q);
-        it.style.display = show ? '' : 'none';
-        if(show) any = true;
+        it.style.display = k.includes(q) ? '' : 'none';
       });
     }
-    function effacerRecherche(){
-      const i = document.getElementById('q');
-      i.value=''; i.focus(); filtrer();
-    }
+    function effacerRecherche(){ const i = document.getElementById('q'); i.value=''; i.focus(); filtrer(); }
 
-    /* --- Modales --- */
-    function openModal(id){
-      const m = document.getElementById(id);
-      m.style.display = 'block';
-      m.setAttribute('aria-hidden','false');
-    }
-    function closeModal(id){
-      const m = document.getElementById(id);
-      m.style.display = 'none';
-      m.setAttribute('aria-hidden','true');
-    }
-    function backdropClose(e){
-      if(e.target.classList.contains('modal')){ e.target.style.display='none'; e.target.setAttribute('aria-hidden','true'); }
-    }
-    window.addEventListener('keydown',(e)=>{
-      if(e.key==='Escape'){ document.querySelectorAll('.modal').forEach(m=>{m.style.display='none'; m.setAttribute('aria-hidden','true');}); }
-    });
+    /* Modales */
+    function openModal(id){ const m=document.getElementById(id); m.style.display='block'; m.setAttribute('aria-hidden','false'); }
+    function closeModal(id){ const m=document.getElementById(id); m.style.display='none'; m.setAttribute('aria-hidden','true'); }
+    function backdropClose(e){ if(e.target.classList.contains('modal')){ e.target.style.display='none'; e.target.setAttribute('aria-hidden','true'); } }
+    window.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ document.querySelectorAll('.modal').forEach(m=>{m.style.display='none'; m.setAttribute('aria-hidden','true');}); } });
 
-    /* --- Mailto RH --- */
+    /* Mailto RH */
     function postuler(poste){
       const mail = "RH@dznet1.com";
       const sujet = encodeURIComponent("Candidature - " + poste);

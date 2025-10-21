@@ -26,16 +26,17 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
   flex-wrap: wrap;
+  gap: 20px;
 }
 header img { height: 64px; }
-header h1 { font-size: 36px; margin: 0; }
+header h1 { font-size: 30px; margin: 0; }
+
 main {
   max-width: 1100px;
-  margin: 40px auto;
+  margin: 30px auto;
   background: #fff;
-  padding: 40px;
+  padding: 30px;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
@@ -44,14 +45,14 @@ h2 {
   border-left: 5px solid var(--accent);
   padding-left: 10px;
 }
-section { margin-bottom: 60px; }
+section { margin-bottom: 50px; }
 
-/* Bloc culture RH */
+/* Bloc culture */
 .culture {
   background: #f9fbfe;
   border: 1px solid #dde6f5;
   border-radius: 10px;
-  padding: 28px;
+  padding: 25px;
   line-height: 1.7;
   box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
@@ -64,24 +65,22 @@ section { margin-bottom: 60px; }
   font-size: 14.5px;
 }
 
-/* Tableau des offres */
+/* Tableau offres */
 .jobs-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 18px;
+  margin-top: 15px;
 }
 .jobs-table th {
   background: var(--primary);
   color: #fff;
   padding: 12px;
-  text-align: left;
 }
 .jobs-table td {
   padding: 12px;
   border-bottom: 1px solid #e5e9f0;
 }
 .jobs-table tr:nth-child(even) { background: #f9fbfe; }
-.jobs-table tr:hover { background: #eef6ff; }
 .jobs-table button {
   background: var(--accent);
   color: #fff;
@@ -89,11 +88,25 @@ section { margin-bottom: 60px; }
   border-radius: 6px;
   padding: 8px 14px;
   cursor: pointer;
-  font-size: 14px;
 }
 .jobs-table button:hover { background: #17b185; }
 
-/* Modale */
+/* Responsive table */
+@media (max-width: 700px) {
+  .jobs-table thead { display: none; }
+  .jobs-table, .jobs-table tbody, .jobs-table tr, .jobs-table td { display: block; width: 100%; }
+  .jobs-table tr { margin-bottom: 15px; background: #fff; border-radius: 8px; box-shadow: 0 3px 6px rgba(0,0,0,0.05); }
+  .jobs-table td { padding: 10px; border: none; }
+  .jobs-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: block;
+    color: var(--primary);
+    margin-bottom: 3px;
+  }
+}
+
+/* Modal */
 .modal {
   display: none;
   position: fixed;
@@ -105,7 +118,7 @@ section { margin-bottom: 60px; }
 .modal-content {
   background: #fff;
   margin: 6% auto;
-  padding: 30px;
+  padding: 25px;
   border-radius: 10px;
   width: 90%;
   max-width: 700px;
@@ -121,15 +134,8 @@ section { margin-bottom: 60px; }
 }
 .close:hover { color: var(--secondary); }
 .modal h3 { color: var(--primary); margin-top: 0; }
-.modal section {
-  margin-top: 18px;
-  border-top: 1px solid #e5e9f0;
-  padding-top: 10px;
-}
-.modal section h4 {
-  color: var(--secondary);
-  margin-bottom: 8px;
-}
+.modal section { margin-top: 15px; border-top: 1px solid #e5e9f0; padding-top: 10px; }
+.modal section h4 { color: var(--secondary); margin-bottom: 8px; }
 .modal ul { margin: 0; padding-left: 20px; line-height: 1.6; }
 .modal button {
   background: var(--accent);
@@ -148,7 +154,6 @@ footer {
   color: #fff;
   padding: 30px 20px;
   text-align: center;
-  line-height: 1.6;
 }
 .footer-grid {
   display: grid;
@@ -165,21 +170,21 @@ footer a:hover { text-decoration: underline; }
 
 <header>
   <img src="https://dznet1.com/images/logo.png" alt="DzNet1 logo">
-  <h1>On recrute — Télétravail</h1>
+  <h1>On recrute — Télétravail & Succursales</h1>
 </header>
 
 <main>
   <section class="culture">
     <h2>Notre culture RH</h2>
     <p>
-      Chez <b>DzNet1</b>, on aime les personnes qui avancent, qui se débrouillent, et qui trouvent des solutions sans attendre qu’on leur dise quoi faire.<br><br>
-      <b>Sérieux</b> — on tient nos engagements et on respecte les délais, même à distance.<br>
+      Chez <b>DzNet1</b>, on aime les personnes qui avancent, se débrouillent, et trouvent des solutions sans attendre qu’on leur dise quoi faire.<br><br>
+      <b>Sérieux</b> — on tient nos engagements et on respecte les délais.<br>
       <b>Travail d’équipe</b> — on s’entraide, on partage, et on apprend vite ensemble.<br>
       <b>Confiance</b> — transparence, feedback honnête, responsabilité individuelle.<br>
       <b>Idées neuves</b> — on aime tester, améliorer et optimiser en continu.<br>
-      <b>Tech au max</b> — outils modernes, automatisation, data, IA quand c’est utile.<br>
-      <b>Esprit jeune</b> — DzNet1 est nouveau, dynamique, ambitieux et bienveillant.<br><br>
-      Les personnes motivées, curieuses et connectées trouveront ici un vrai espace pour progresser et évoluer au sein d’une équipe qui valorise l’autonomie, la créativité et la rigueur.
+      <b>Tech au max</b> — outils modernes, automatisation, IA, data.<br>
+      <b>Esprit jeune</b> — DzNet1 est nouveau, ambitieux, et bienveillant.<br><br>
+      Les personnes motivées, curieuses et connectées trouveront ici un vrai espace pour progresser.
     </p>
     <div class="note">
       💡 <b>Candidatures féminines fortement encouragées.</b><br>
@@ -205,11 +210,10 @@ footer a:hover { text-decoration: underline; }
     <div>🧑‍💼 <a href="mailto:support_technique@dznet1.com">support_technique@dznet1.com</a></div>
     <div>📈 <a href="mailto:marketing_commercial@dznet1.com">marketing_commercial@dznet1.com</a></div>
   </div>
-  <p>Des questions ? Notre équipe RH et support vous répond sous 24 h.</p>
   <div class="copy">© 2025 DzNet1 — Tous droits réservés</div>
 </footer>
 
-<!-- MODALE -->
+<!-- Modale -->
 <div id="jobModal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
@@ -218,18 +222,9 @@ footer a:hover { text-decoration: underline; }
     <p><b>Langues :</b> <span id="modalLangues"></span></p>
     <p><b>Type :</b> <span id="modalType"></span></p>
 
-    <section>
-      <h4>Profil recherché</h4>
-      <ul id="modalProfil"></ul>
-    </section>
-    <section>
-      <h4>Conditions</h4>
-      <ul id="modalConditions"></ul>
-    </section>
-    <section>
-      <h4>Avantages</h4>
-      <ul id="modalAvantages"></ul>
-    </section>
+    <section><h4>Profil recherché</h4><ul id="modalProfil"></ul></section>
+    <section><h4>Conditions</h4><ul id="modalConditions"></ul></section>
+    <section><h4>Avantages</h4><ul id="modalAvantages"></ul></section>
 
     <button id="applyBtn">✅ Postuler</button>
   </div>
@@ -237,40 +232,48 @@ footer a:hover { text-decoration: underline; }
 
 <script>
 const jobs = [
-  {
-    poste:"👩‍🏫 Professeur d’anglais",
-    desc:"Aider les enfants en difficulté, faire des révisions et ateliers en ligne.",
-    langues:"Français / Anglais",
-    type:"Temps partiel",
-    profil:["Bonne prononciation et pédagogie","Patience et bienveillance","Motivation à enseigner en ligne"],
-    conditions:["Télétravail à domicile","Connexion internet stable","Sessions 3-4 fois par semaine"],
-    avantages:["Horaires flexibles","Formation interne","Ambiance jeune et dynamique"]
-  },
-  {
-    poste:"🌐 Web marketing",
-    desc:"Créer du contenu, animer nos réseaux et booster notre visibilité.",
-    langues:"Français / Arabe",
-    type:"Temps plein",
-    profil:["Créatif(ve) et curieux(se)","À l’aise avec les réseaux sociaux","Connaissances en SEO / Canva / IA"],
-    conditions:["Télétravail possible","Briefs hebdomadaires","Reporting hebdo"],
-    avantages:["Autonomie","Projets variés","Équipe jeune et motivée"]
-  },
-  {
-    poste:"🎧 Centre d’appel — Kabyle",
-    desc:"Assister nos utilisateurs kabylophones et orienter les familles.",
-    langues:"Kabyle / Français / Arabe",
-    type:"Temps plein",
-    profil:["Bonne communication","Empathie et écoute active","Maîtrise du kabyle et du français"],
-    conditions:["Télétravail depuis n’importe quelle wilaya","Formation assurée"],
-    avantages:["Salaire fixe + prime","Encadrement constant","Progression possible"]
-  }
+  {poste:"👩‍🏫 Professeur d’anglais",desc:"Aider les enfants en difficulté, révisions et soutien scolaire en ligne.",langues:"Français / Anglais",type:"Temps partiel",
+    profil:["Bonne prononciation","Pédagogie","Motivation à enseigner"],
+    conditions:["Télétravail","Connexion stable","3-4 sessions/sem"],
+    avantages:["Horaires flexibles","Formation interne"]},
+  {poste:"🌐 Web marketing",desc:"Créer du contenu et animer nos réseaux sociaux.",langues:"Français / Arabe",type:"Temps plein",
+    profil:["Créatif(ve)","À l’aise réseaux sociaux","Bases en SEO"],
+    conditions:["Télétravail possible","Reporting hebdo"],
+    avantages:["Projets variés","Équipe jeune"]},
+  {poste:"🎧 Centre d’appel — Kabyle",desc:"Assister nos utilisateurs kabylophones.",langues:"Kabyle / Français / Arabe",type:"Temps plein",
+    profil:["Bonne communication","Maîtrise du kabyle","Empathie"],
+    conditions:["Télétravail possible","Formation fournie"],
+    avantages:["Salaire fixe + prime","Ambiance d’équipe"]},
+  {poste:"🎧 Centre d’appel — Arabe",desc:"Réception et assistance clients arabophones.",langues:"Arabe / Français",type:"Temps plein",
+    profil:["Clarté de communication","Patience","Respect des procédures"],
+    conditions:["Télétravail ou bureau","Formation complète"],
+    avantages:["Prime de performance","Cadre professionnel"]},
+  {poste:"🎧 Centre d’appel — Français",desc:"Suivi client francophone et gestion des demandes.",langues:"Français",type:"Temps plein",
+    profil:["Bonne élocution","Sens du service","Organisation"],
+    conditions:["Horaires fixes","Encadrement régulier"],
+    avantages:["Prime d’assiduité","Environnement bienveillant"]},
+  {poste:"💻 Support technique N1",desc:"Assistance technique à distance sur nos outils.",langues:"Français / Arabe",type:"Temps plein",
+    profil:["Compétences informatiques de base","Bonne communication","Autonomie"],
+    conditions:["Télétravail","Formation technique initiale"],
+    avantages:["Évolution vers N2","Ambiance jeune"]},
+  {poste:"💻 Support technique N2",desc:"Diagnostic avancé et accompagnement utilisateurs.",langues:"Français / Arabe",type:"Temps plein",
+    profil:["Notions réseaux / systèmes","Esprit logique","Bon relationnel"],
+    conditions:["Télétravail partiel","Collaboration avec devs"],
+    avantages:["Expérience valorisée","Bonus trimestriels"]},
+  {poste:"🏢 Chef d’équipe — Succursale Draria",desc:"Encadrer les opérations et le suivi RH sur site Draria.",langues:"Français / Arabe",type:"Présentiel",
+    profil:["Leadership","Organisation","Gestion du personnel"],
+    conditions:["Présence sur site","Reporting au siège"],
+    avantages:["Poste évolutif","Équipe soudée"]}
 ];
 
 const jobList=document.getElementById("job-list");
 jobs.forEach((j,i)=>{
   const tr=document.createElement("tr");
-  tr.innerHTML=`<td>${j.poste}</td><td>${j.desc}</td><td>${j.langues}</td><td>${j.type}</td>
-  <td><button onclick="openModal(${i})">📄 Lire le poste</button></td>`;
+  tr.innerHTML=`<td data-label="Poste">${j.poste}</td>
+                <td data-label="Description">${j.desc}</td>
+                <td data-label="Langues">${j.langues}</td>
+                <td data-label="Type">${j.type}</td>
+                <td><button onclick="openModal(${i})">📄 Lire le poste</button></td>`;
   jobList.appendChild(tr);
 });
 
@@ -282,22 +285,17 @@ function openModal(i){
   document.getElementById("modalLangues").innerText=j.langues;
   document.getElementById("modalType").innerText=j.type;
 
-  // Listes dynamiques
-  const ulProfil=document.getElementById("modalProfil");
-  const ulCond=document.getElementById("modalConditions");
-  const ulAv=document.getElementById("modalAvantages");
-  [ulProfil,ulCond,ulAv].forEach(ul=>ul.innerHTML="");
-  j.profil.forEach(p=>ulProfil.innerHTML+=`<li>${p}</li>`);
-  j.conditions.forEach(c=>ulCond.innerHTML+=`<li>${c}</li>`);
-  j.avantages.forEach(a=>ulAv.innerHTML+=`<li>${a}</li>`);
+  const lists=[["modalProfil",j.profil],["modalConditions",j.conditions],["modalAvantages",j.avantages]];
+  lists.forEach(([id,arr])=>{
+    const ul=document.getElementById(id); ul.innerHTML="";
+    arr.forEach(item=>ul.innerHTML+=`<li>${item}</li>`);
+  });
 
   const mail="rh@dznet1.com";
   const sujet=encodeURIComponent("Candidature - "+j.poste);
-  const corps=encodeURIComponent(
-    "Bonjour,\n\nJe souhaite postuler pour le poste de "+j.poste+" chez DzNet1 (télétravail).\n\n"+
-    "Veuillez trouver ci-joint mon CV.\n\nCordialement,\n[Votre nom]\n[Téléphone]"
-  );
+  const corps=encodeURIComponent("Bonjour,\n\nJe souhaite postuler pour le poste de "+j.poste+" chez DzNet1.\n\nVeuillez trouver ci-joint mon CV.\n\nCordialement,\n[Votre nom]");
   document.getElementById("applyBtn").onclick=()=>{window.location.href=`mailto:${mail}?subject=${sujet}&body=${corps}`};
+
   modal.style.display="block";
 }
 function closeModal(){ modal.style.display="none"; }

@@ -1,324 +1,428 @@
+<!-- DzNet1 RH - Vitrine Pro - v2.000 -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DzNet1 — On recrute (Télétravail)</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>DzNet1 — On recrute (Télétravail) • RH</title>
+  <meta name="description" content="On recrute — postes disponibles. Télétravail, horaires après-midi/ajustables, équipe jeune, techno au max. Rejoignez DzNet1."/>
   <style>
     :root{
-      --primary:#004c99;
-      --primary-2:#0073e6;
-      --accent:#20c997;
-      --bg:#f4f6f8;
-      --card:#ffffff;
-      --text:#333;
-      --muted:#666;
-      --chip:#eef6ff;
-      --shadow:0 6px 18px rgba(0,0,0,.08);
+      /* Palette DzNet1 */
+      --primary:#004c99;      /* Bleu DzNet1 */
+      --primary-2:#0073e6;    /* Bleu clair action */
+      --accent:#20c997;       /* Vert accent */
+      --bg:#f6f8fb;           /* Fond doux */
+      --card:#ffffff;         /* Carte blanche */
+      --line:#e5ecf5;         /* Bordure soft */
+      --text:#1f2a37;         /* Titre */
+      --muted:#5b6675;        /* Texte secondaire */
+      --chip:#eef6ff;         /* Pastille info */
+      --shadow:0 10px 30px rgba(3,36,77,.08);
       --radius:14px;
+      --radius-sm:10px;
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:"Segoe UI",Roboto,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-    a{text-decoration:none;color:inherit}
-    header{
-      background:linear-gradient(135deg,var(--primary),#002a5e);
-      color:#fff; padding:48px 16px; text-align:center; position:relative; overflow:hidden
-    }
-    header h1{margin:0 0 10px;font-size:40px;letter-spacing:.3px}
-    header p{margin:0;opacity:.95}
-    .chips{margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
-    .chip{background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); color:#fff; padding:8px 12px; border-radius:999px; font-size:14px}
 
-    .container{max-width:1100px;margin:-30px auto 40px; padding:0 16px}
-    .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px}
-    .headline{
-      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px
+    /* Reset & typographie pro (style Indeed/LinkedIn) */
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      line-height:1.55;
     }
-    .headline h2{margin:0; color:var(--primary)}
-    .tagline{color:var(--muted)}
-    .values{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:12px}
-    .value{background:var(--chip); border-radius:12px; padding:14px; border:1px solid #dbe9ff}
+    img{max-width:100%; display:block}
+
+    /* Header pro */
+    .hero{
+      background:linear-gradient(160deg, var(--primary) 0%, #003a78 50%, #002a5e 100%);
+      color:#fff; padding:54px 16px 36px; text-align:center; position:relative; overflow:hidden;
+      box-shadow:0 4px 20px rgba(0,0,0,.15);
+    }
+    .hero h1{margin:0 0 8px; font-size:40px; letter-spacing:.2px}
+    .hero p{margin:0; opacity:.95; font-size:18px}
+    .hero-chips{
+      margin:18px auto 0; display:flex; gap:10px; flex-wrap:wrap; justify-content:center; max-width:1050px
+    }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(255,255,255,.12); color:#fff;
+      border:1px solid rgba(255,255,255,.25);
+      padding:8px 12px; border-radius:999px; font-size:14px;
+      backdrop-filter: blur(2px);
+    }
+    .chip b{font-weight:600}
+
+    /* Conteneur */
+    .container{max-width:1100px; margin:-26px auto 40px; padding:0 16px}
+
+    /* Blocs cartes */
+    .card{
+      background:var(--card); border:1px solid var(--line);
+      border-radius:var(--radius); box-shadow:var(--shadow); padding:22px;
+    }
+    .section-title{
+      margin:0 0 6px; color:var(--primary); letter-spacing:.2px;
+      font-weight:800; font-size:22px
+    }
+    .subtle{color:var(--muted); font-size:14.5px}
+
+    /* Valeurs */
+    .values{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; margin-top:16px}
+    .value{
+      background:var(--chip); border:1px solid #d7e6ff; border-radius:12px; padding:14px;
+    }
     .value b{color:var(--primary)}
     .ribbon{
-      margin-top:16px; background:#fff4f8; border:1px solid #ffd6e5; color:#b40054;
+      margin-top:16px; background:#fff4f8; border:1px solid #ffd6e5; color:#a80752;
       padding:12px 14px; border-radius:10px; font-size:14px
     }
-    .equal{margin-top:10px; font-size:12.5px; color:#8a8a8a}
+    .equal{margin-top:8px; color:#7a8699; font-size:12.5px}
 
-    .filter-bar{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    .filter-bar input{
-      flex:1; min-width:220px; padding:12px 14px; border:1px solid #d9e2ec; border-radius:10px; outline:none
+    /* Barre filtre + listing style Indeed */
+    .jobs-wrap{margin-top:16px}
+    .filterbar{
+      display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:2px 0 8px;
     }
-    .hint{font-size:13px; color:var(--muted)}
-
-    .jobs{margin-top:18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px}
-    .job{background:var(--card); border:1px solid #e8eef7; border-radius:12px; padding:18px; box-shadow:var(--shadow)}
-    .job h3{margin:0 0 6px; color:var(--primary)}
-    .job p{margin:0 0 12px; color:var(--muted); min-height:42px}
-    .badges{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px}
-    .badge{background:#f0faf6; color:#0b7a55; border:1px solid #b8ead7; padding:4px 10px; border-radius:999px; font-size:12px}
-    .open-btn{
-      background:var(--primary); color:#fff; border:none; padding:10px 14px; border-radius:10px; cursor:pointer; font-size:14.5px
+    .search{
+      flex:1; min-width:240px; position:relative;
     }
-    .open-btn:hover{background:var(--primary-2)}
+    .search input{
+      width:100%; padding:12px 42px 12px 42px; border:1px solid var(--line); border-radius:999px; outline:none;
+      box-shadow:inset 0 1px 0 rgba(0,0,0,.02); background:#fff;
+      transition:border .2s ease, box-shadow .2s ease;
+      font-size:15px;
+    }
+    .search input:focus{
+      border-color:#c9ddff; box-shadow:0 0 0 4px rgba(0,115,230,.12);
+    }
+    .search .icon{
+      position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:18px; color:#8da0b6
+    }
+    .search .clear{
+      position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:12px;
+      background:#eff3f9; border:1px solid var(--line); color:#49617f;
+      padding:4px 8px; border-radius:999px; cursor:pointer;
+    }
+    .hint{color:var(--muted); font-size:13px}
 
-    .note{margin-top:10px; font-size:13px; color:var(--muted)}
+    .jobs{
+      margin-top:14px; display:grid; grid-template-columns:repeat(12,1fr); gap:14px;
+    }
+    .job{
+      grid-column: span 4; min-height:210px;
+      background:var(--card); border:1px solid var(--line);
+      border-radius:var(--radius-sm); box-shadow:var(--shadow);
+      padding:18px; display:flex; flex-direction:column; gap:10px;
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .job:hover{ transform:translateY(-2px); border-color:#cfe2ff; box-shadow:0 14px 32px rgba(0,0,0,.12);}
+    .job h3{margin:0; color:var(--primary); font-size:18px}
+    .job p{margin:0; color:var(--muted)}
+    .badge-row{display:flex; gap:8px; flex-wrap:wrap}
+    .badge{
+      display:inline-flex; align-items:center; gap:6px;
+      background:#edf7f3; color:#0a6b52; border:1px solid #bfe8d9;
+      padding:4px 10px; border-radius:999px; font-size:12px;
+    }
+    .btn{
+      align-self:flex-start;
+      background:var(--primary); color:#fff; border:none; border-radius:10px;
+      padding:10px 14px; font-size:14.5px; cursor:pointer;
+      box-shadow:0 6px 14px rgba(0,76,153,.18);
+      transition:filter .18s ease, transform .08s ease;
+    }
+    .btn:hover{ filter:brightness(1.05) }
+    .btn:active{ transform:translateY(1px) }
 
-    /* Modal */
-    .modal{display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:999}
+    /* Modales pro */
+    .modal{display:none; position:fixed; inset:0; z-index:999; background:rgba(15,23,42,.5)}
     .modal-box{
-      background:#fff; width:92%; max-width:680px; margin:8vh auto; border-radius:16px; box-shadow:0 14px 40px rgba(0,0,0,.25);
-      position:relative; overflow:hidden
+      background:#fff; width:92%; max-width:720px; margin:7vh auto; border-radius:16px; overflow:hidden;
+      box-shadow:0 24px 60px rgba(0,0,0,.35); position:relative;
     }
-    .modal-head{background:linear-gradient(135deg,var(--primary),#0a5fb7); color:#fff; padding:16px 18px}
-    .modal-head h3{margin:0; font-size:22px}
-    .close{position:absolute; top:10px; right:14px; font-size:24px; color:#fff; cursor:pointer; opacity:.9}
-    .modal-body{padding:18px}
-    .modal-body h4{margin:14px 0 6px}
-    ul{margin:8px 0 0 18px}
-    .cta-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin-top:16px}
+    .modal-head{
+      background:linear-gradient(135deg,var(--primary), #0a60b5);
+      color:#fff; padding:16px 18px; display:flex; align-items:center; justify-content:space-between;
+    }
+    .modal-title{margin:0; font-size:20px; font-weight:700}
+    .close{background:transparent; border:none; color:#fff; font-size:26px; cursor:pointer; opacity:.9}
+    .modal-body{padding:20px}
+    .modal-body h4{margin:10px 0 6px; color:var(--text)}
+    .modal-body ul{margin:8px 0 0 20px}
+    .modal-footer{
+      padding:16px 20px; display:flex; gap:10px; align-items:center; justify-content:space-between; border-top:1px solid var(--line);
+      background:#fbfdff;
+    }
     .apply{
-      background:var(--accent); color:#083d35; border:none; padding:12px 16px; border-radius:10px; cursor:pointer; font-weight:700
+      background:var(--accent); color:#083d35; border:none; border-radius:10px; padding:12px 16px; font-weight:700; cursor:pointer;
+      box-shadow:0 8px 18px rgba(32,201,151,.22);
     }
-    .apply:hover{filter:brightness(1.05)}
-    .soft{font-size:12.5px; color:#6b6b6b}
+    .apply:hover{ filter:brightness(1.05) }
+    .soft{font-size:12.5px; color:#6e7b8f}
 
-    footer{padding:26px; text-align:center; color:#8a8a8a; font-size:13px}
-    @media (max-width:560px){ header h1{font-size:32px} }
+    footer{padding:28px; text-align:center; color:#7f8aa3; font-size:13px}
+
+    /* Responsive */
+    @media (max-width:1024px){
+      .job{grid-column: span 6;}
+    }
+    @media (max-width:640px){
+      .hero h1{font-size:32px}
+      .job{grid-column:span 12}
+    }
   </style>
 </head>
 <body>
-
   <!-- HERO -->
-  <header>
+  <section class="hero" role="banner" aria-label="Recrutement DzNet1">
     <h1>On recrute — postes disponibles</h1>
     <p>Envie de travailler de la maison ? Rejoins une équipe jeune qui pousse la techno au max.</p>
-    <div class="chips">
-      <span class="chip">💻 Télétravail 100%</span>
+    <div class="hero-chips" aria-label="avantages">
+      <span class="chip">💻 <b>Télétravail 100%</b></span>
       <span class="chip">⏰ Après-midi / horaires ajustables</span>
       <span class="chip">🎓 Part-time universitaire bienvenu</span>
       <span class="chip">💳 30 000 DA / mois</span>
       <span class="chip">📶 SIM Djezzy + Internet pris en charge</span>
     </div>
-  </header>
+  </section>
 
   <main class="container">
+    <!-- Valeurs & culture -->
+    <section class="card" aria-labelledby="titre-culture">
+      <h2 id="titre-culture" class="section-title">Notre culture RH</h2>
+      <div class="subtle">Sérieux • Travail d’équipe • Confiance • Idées neuves • Exécution rapide</div>
 
-    <!-- Valeurs & Culture -->
-    <section class="card">
-      <div class="headline">
-        <div>
-          <h2>Notre culture RH</h2>
-          <div class="tagline">Sérieux • Travail d’équipe • Confiance • Idées neuves • Exécution rapide</div>
-        </div>
+      <div class="values" role="list">
+        <div class="value" role="listitem"><b>Sérieux.</b> On tient nos engagements et on respecte les délais, même à distance.</div>
+        <div class="value" role="listitem"><b>Équipe.</b> On s’entraide, on partage et on apprend vite ensemble.</div>
+        <div class="value" role="listitem"><b>Confiance.</b> Transparence, feedback honnête, responsabilité individuelle.</div>
+        <div class="value" role="listitem"><b>Idées neuves.</b> On aime tester, améliorer, optimiser en continu.</div>
+        <div class="value" role="listitem"><b>Tech au max.</b> Outils modernes, automatisation, data, IA quand c’est utile.</div>
+        <div class="value" role="listitem"><b>Esprit jeune.</b> DzNet1 est nouveau, dynamique, ambitieux, bienveillant.</div>
       </div>
 
-      <div class="values">
-        <div class="value"><b>Sérieux.</b> On respecte les délais et on tient nos engagements, même à distance.</div>
-        <div class="value"><b>Équipe.</b> On travaille ensemble, on partage le savoir, on s’entraide au quotidien.</div>
-        <div class="value"><b>Confiance.</b> Transparence, feedback honnête, responsabilité individuelle.</div>
-        <div class="value"><b>Idées neuves.</b> On aime expérimenter et optimiser en continu.</div>
-        <div class="value"><b>Tech au max.</b> Outils modernes, automatisation, data, IA quand c’est utile.</div>
-        <div class="value"><b>Esprit jeune.</b> DzNet1 est nouveau, équipe totalement jeune, dynamique et ambitieuse.</div>
-      </div>
-
-      <!-- Formulation inclusive et discrète -->
+      <!-- formulation inclusive & discrète -->
       <div class="ribbon">💡 <b>Candidatures féminines fortement encouragées.</b> (Nous valorisons la diversité des profils.)</div>
       <div class="equal">DzNet1 applique une politique d’égalité des chances et d’accès à l’emploi.</div>
     </section>
 
-    <!-- Barre de filtre -->
-    <section class="card" style="margin-top:16px;">
-      <div class="headline">
-        <h2>Offres en cours</h2>
-        <span class="hint">Tape “math”, “anglais”, “marketing”… pour filtrer.</span>
-      </div>
-      <div class="filter-bar">
-        <input id="search" type="text" placeholder="Rechercher un poste (ex. anglais, web…)" oninput="filtrer()"/>
+    <!-- Offres -->
+    <section class="card jobs-wrap" aria-labelledby="titre-offres" style="margin-top:16px;">
+      <div style="display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div>
+          <h2 id="titre-offres" class="section-title">Offres en cours</h2>
+          <div class="subtle">Clique sur « Voir la fiche » pour lire le détail avant de postuler.</div>
+        </div>
+        <div class="subtle">Tape “math”, “anglais”, “marketing”… pour filtrer.</div>
       </div>
 
-      <!-- Liste des postes -->
-      <div id="jobs" class="jobs" style="margin-top:16px;">
+      <div class="filterbar" role="search">
+        <div class="search">
+          <span class="icon">🔎</span>
+          <input id="q" type="text" placeholder="Rechercher un poste (ex. anglais, web, support…)" oninput="filtrer()" aria-label="Rechercher un poste"/>
+          <button class="clear" type="button" onclick="effacerRecherche()">Effacer</button>
+        </div>
+      </div>
+
+      <div id="jobs" class="jobs" role="list">
         <!-- Anglais -->
-        <article class="job" data-keywords="anglais prof primaire secondaire révision soutien langue">
+        <article class="job" data-keywords="anglais prof primaire secondaire révision soutien langue cours en ligne" role="listitem">
           <h3>👩‍🏫 Professeur d’anglais (primaire & secondaire)</h3>
-          <p>Accompagner en ligne des élèves en difficulté, faire des révisions et des ateliers pratiques.</p>
-          <div class="badges">
+          <p>Accompagner en ligne des élèves en difficulté : révisions, ateliers pratiques, progression simple.</p>
+          <div class="badge-row">
             <span class="badge">Télétravail</span><span class="badge">Après-midi</span><span class="badge">Part-time OK</span>
           </div>
-          <button class="open-btn" onclick="openModal('m-english')">Voir la fiche</button>
+          <button class="btn" onclick="openModal('m-english')">Voir la fiche</button>
         </article>
 
         <!-- Maths -->
-        <article class="job" data-keywords="math maths prof primaire secondaire exercices soutien">
+        <article class="job" data-keywords="math maths prof primaire secondaire exercices soutien révisions" role="listitem">
           <h3>👨‍🏫 Professeur de mathématiques (primaire & secondaire)</h3>
-          <p>Faire progresser à distance : révisions ciblées, exercices guidés, méthode claire.</p>
-          <div class="badges">
+          <p>Faire progresser à distance : révisions ciblées, exercices guidés, méthode claire et rassurante.</p>
+          <div class="badge-row">
             <span class="badge">Télétravail</span><span class="badge">Horaires ajustables</span><span class="badge">Part-time OK</span>
           </div>
-          <button class="open-btn" onclick="openModal('m-math')">Voir la fiche</button>
+          <button class="btn" onclick="openModal('m-math')">Voir la fiche</button>
         </article>
 
         <!-- Web Marketing -->
-        <article class="job" data-keywords="marketing web réseaux sociaux contenu campagne social media">
+        <article class="job" data-keywords="marketing web réseaux sociaux contenu campagne social media" role="listitem">
           <h3>🌐 Web marketing</h3>
-          <p>Booster la visibilité DzNet1 : contenu, réseaux sociaux, petites campagnes ciblées.</p>
-          <div class="badges">
+          <p>Booster la visibilité DzNet1 : contenu simple & authentique, réseaux sociaux, mini-campagnes ciblées.</p>
+          <div class="badge-row">
             <span class="badge">Télétravail</span><span class="badge">Jeune équipe</span><span class="badge">Tech-friendly</span>
           </div>
-          <button class="open-btn" onclick="openModal('m-marketing')">Voir la fiche</button>
+          <button class="btn" onclick="openModal('m-marketing')">Voir la fiche</button>
         </article>
 
         <!-- Support -->
-        <article class="job" data-keywords="support client assistance plateforme parents élèves">
+        <article class="job" data-keywords="support client assistance plateforme parents élèves aide" role="listitem">
           <h3>💬 Support client</h3>
-          <p>Aider parents & élèves sur la plateforme : réponses simples, suivi et bonne énergie.</p>
-          <div class="badges">
+          <p>Aider parents & élèves sur la plateforme : réponses simples, suivi, esprit positif.</p>
+          <div class="badge-row">
             <span class="badge">Télétravail</span><span class="badge">Après-midi</span><span class="badge">Formation assurée</span>
           </div>
-          <button class="open-btn" onclick="openModal('m-support')">Voir la fiche</button>
+          <button class="btn" onclick="openModal('m-support')">Voir la fiche</button>
         </article>
       </div>
-
-      <div class="note">Astuce : tu peux postuler avec ton CV (PDF/Word). Objet du mail rempli automatiquement.</div>
     </section>
   </main>
 
-  <!-- MODALS -->
-  <div id="m-english" class="modal" onclick="backdropClose(event)">
-    <div class="modal-box">
+  <!-- MODALES -->
+  <div id="m-english" class="modal" onclick="backdropClose(event)" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-labelledby="t-english" aria-modal="true">
       <div class="modal-head">
-        <span class="close" onclick="closeModal('m-english')">&times;</span>
-        <h3>👩‍🏫 Professeur d’anglais — Télétravail</h3>
+        <h3 id="t-english" class="modal-title">👩‍🏫 Professeur d’anglais — Télétravail</h3>
+        <button class="close" aria-label="Fermer" onclick="closeModal('m-english')">×</button>
       </div>
       <div class="modal-body">
         <h4>Missions</h4>
         <ul>
-          <li>Donner des cours en ligne (primaire & secondaire).</li>
-          <li>Aider les enfants en difficulté, faire des révisions, suivi simple.</li>
-          <li>Utiliser nos outils (plateforme DzNet1) et proposer des idées d’amélioration.</li>
+          <li>Cours en ligne (primaire & secondaire).</li>
+          <li>Aide aux enfants en difficulté, révisions et suivi.</li>
+          <li>Utiliser la plateforme DzNet1 et proposer des idées d’amélioration.</li>
         </ul>
         <h4>Conditions & atouts</h4>
         <ul>
           <li>À l’aise avec Internet et les sites web.</li>
           <li>Horaires après-midi / ajustables. Part-time universitaire accepté.</li>
-          <li>Rémunération : 30 000 DA/mois.</li>
+          <li>Rémunération : 30 000 DA / mois.</li>
           <li>📶 SIM Djezzy + Internet pris en charge.</li>
-          <li>Équipe jeune, environnement bienveillant, ouverture aux idées.</li>
+          <li>Équipe jeune, bienveillante, ouverte aux idées.</li>
         </ul>
-        <div class="cta-row">
-          <button class="apply" onclick="postuler('Professeur d’anglais')">📤 Postuler maintenant</button>
-          <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances appliquée.</span>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="apply" onclick="postuler('Professeur d’anglais')">📤 Postuler maintenant</button>
+        <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances.</span>
       </div>
     </div>
   </div>
 
-  <div id="m-math" class="modal" onclick="backdropClose(event)">
-    <div class="modal-box">
+  <div id="m-math" class="modal" onclick="backdropClose(event)" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-labelledby="t-math" aria-modal="true">
       <div class="modal-head">
-        <span class="close" onclick="closeModal('m-math')">&times;</span>
-        <h3>👨‍🏫 Professeur de mathématiques — Télétravail</h3>
+        <h3 id="t-math" class="modal-title">👨‍🏫 Professeur de mathématiques — Télétravail</h3>
+        <button class="close" aria-label="Fermer" onclick="closeModal('m-math')">×</button>
       </div>
       <div class="modal-body">
         <h4>Missions</h4>
         <ul>
           <li>Encadrement en ligne (primaire & secondaire), révisions ciblées.</li>
-          <li>Exercices guidés, méthode claire et rassurante.</li>
-          <li>Participation à la création de petites fiches récap.</li>
+          <li>Exercices guidés, méthode claire.</li>
+          <li>Contribuer à de petites fiches récap.</li>
         </ul>
         <h4>Conditions & atouts</h4>
         <ul>
-          <li>À l’aise avec Internet, visios et documents partagés.</li>
-          <li>Horaires après-midi / flexibles. Part-time universitaire bienvenu.</li>
-          <li>Rémunération : 30 000 DA/mois. SIM Djezzy + Internet pris en charge.</li>
-          <li>Équipe jeune, apprentissage continu, place aux nouvelles idées.</li>
+          <li>À l’aise avec Internet, visios et docs partagés.</li>
+          <li>Horaires après-midi / flex. Part-time universitaire bienvenu.</li>
+          <li>30 000 DA / mois. SIM Djezzy + Internet pris en charge.</li>
+          <li>Équipe jeune, apprentissage continu, place aux idées.</li>
         </ul>
-        <div class="cta-row">
-          <button class="apply" onclick="postuler('Professeur de mathématiques')">📤 Postuler maintenant</button>
-          <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances appliquée.</span>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="apply" onclick="postuler('Professeur de mathématiques')">📤 Postuler maintenant</button>
+        <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances.</span>
       </div>
     </div>
   </div>
 
-  <div id="m-marketing" class="modal" onclick="backdropClose(event)">
-    <div class="modal-box">
+  <div id="m-marketing" class="modal" onclick="backdropClose(event)" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-labelledby="t-marketing" aria-modal="true">
       <div class="modal-head">
-        <span class="close" onclick="closeModal('m-marketing')">&times;</span>
-        <h3>🌐 Web marketing — Télétravail</h3>
+        <h3 id="t-marketing" class="modal-title">🌐 Web marketing — Télétravail</h3>
+        <button class="close" aria-label="Fermer" onclick="closeModal('m-marketing')">×</button>
       </div>
       <div class="modal-body">
         <h4>Missions</h4>
         <ul>
-          <li>Créer du contenu simple et authentique (FR/AR) pour nos réseaux.</li>
-          <li>Lancer des mini-campagnes locales, mesurer l’impact.</li>
-          <li>Proposer des idées fraîches et orientées action.</li>
+          <li>Créer du contenu simple & authentique (FR/AR) pour nos réseaux.</li>
+          <li>Lancer de petites campagnes locales, mesurer l’impact.</li>
+          <li>Proposer des idées orientées action.</li>
         </ul>
         <h4>Conditions & atouts</h4>
         <ul>
           <li>À l’aise avec les outils web & social.</li>
           <li>Horaires ajustables. Culture test & learn.</li>
           <li>Rémunération fixe + bonus selon résultats.</li>
-          <li>Équipe jeune, techno friendly, beaucoup d’autonomie.</li>
+          <li>Équipe jeune, techno friendly, autonomie.</li>
         </ul>
-        <div class="cta-row">
-          <button class="apply" onclick="postuler('Web marketing')">📤 Postuler maintenant</button>
-          <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances appliquée.</span>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="apply" onclick="postuler('Web marketing')">📤 Postuler maintenant</button>
+        <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances.</span>
       </div>
     </div>
   </div>
 
-  <div id="m-support" class="modal" onclick="backdropClose(event)">
-    <div class="modal-box">
+  <div id="m-support" class="modal" onclick="backdropClose(event)" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-labelledby="t-support" aria-modal="true">
       <div class="modal-head">
-        <span class="close" onclick="closeModal('m-support')">&times;</span>
-        <h3>💬 Support client — Télétravail</h3>
+        <h3 id="t-support" class="modal-title">💬 Support client — Télétravail</h3>
+        <button class="close" aria-label="Fermer" onclick="closeModal('m-support')">×</button>
       </div>
       <div class="modal-body">
         <h4>Missions</h4>
         <ul>
           <li>Aider parents & élèves à utiliser la plateforme.</li>
           <li>Répondre simplement, suivre les cas, remonter les retours.</li>
-          <li>Participer aux petites améliorations de process.</li>
+          <li>Contribuer à l’amélioration continue des process.</li>
         </ul>
         <h4>Conditions & atouts</h4>
         <ul>
           <li>Bon relationnel écrit/oral, calme et positif.</li>
           <li>Horaires après-midi / flex.</li>
-          <li>SIM Djezzy + Internet pris en charge.</li>
-          <li>Équipe jeune, bienveillante, on forme si besoin.</li>
+          <li>📶 SIM Djezzy + Internet pris en charge.</li>
+          <li>Équipe jeune, bienveillante, formation assurée.</li>
         </ul>
-        <div class="cta-row">
-          <button class="apply" onclick="postuler('Support client')">📤 Postuler maintenant</button>
-          <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances appliquée.</span>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="apply" onclick="postuler('Support client')">📤 Postuler maintenant</button>
+        <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances.</span>
       </div>
     </div>
   </div>
 
   <footer>
-    © 2025 DzNet1 — RH. On recrute en continu — télétravail, équipe jeune, techno au max.
+    © 2025 DzNet1 — RH • On recrute en continu (télétravail, équipe jeune, techno au max).
   </footer>
 
   <script>
-    // --- Filtre simple par mots-clés
+    /* --- Recherche / filtre --- */
     function filtrer(){
-      const q = (document.getElementById('search').value || '').toLowerCase().trim();
+      const q = (document.getElementById('q').value || '').toLowerCase().trim();
       const items = document.querySelectorAll('#jobs .job');
+      let any = false;
       items.forEach(it=>{
-        const k = (it.dataset.keywords || it.textContent).toLowerCase();
-        it.style.display = k.includes(q) ? '' : 'none';
+        const k = (it.dataset.keywords + ' ' + it.textContent).toLowerCase();
+        const show = k.includes(q);
+        it.style.display = show ? '' : 'none';
+        if(show) any = true;
       });
     }
+    function effacerRecherche(){
+      const i = document.getElementById('q');
+      i.value=''; i.focus(); filtrer();
+    }
 
-    // --- Modals
-    function openModal(id){ document.getElementById(id).style.display='block'; }
-    function closeModal(id){ document.getElementById(id).style.display='none'; }
-    function backdropClose(e){ if(e.target.classList.contains('modal')) e.target.style.display='none'; }
+    /* --- Modales --- */
+    function openModal(id){
+      const m = document.getElementById(id);
+      m.style.display = 'block';
+      m.setAttribute('aria-hidden','false');
+    }
+    function closeModal(id){
+      const m = document.getElementById(id);
+      m.style.display = 'none';
+      m.setAttribute('aria-hidden','true');
+    }
+    function backdropClose(e){
+      if(e.target.classList.contains('modal')){ e.target.style.display='none'; e.target.setAttribute('aria-hidden','true'); }
+    }
+    window.addEventListener('keydown',(e)=>{
+      if(e.key==='Escape'){ document.querySelectorAll('.modal').forEach(m=>{m.style.display='none'; m.setAttribute('aria-hidden','true');}); }
+    });
 
-    // --- Mailto RH
+    /* --- Mailto RH --- */
     function postuler(poste){
       const mail = "RH@dznet1.com";
       const sujet = encodeURIComponent("Candidature - " + poste);

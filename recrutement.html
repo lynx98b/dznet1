@@ -1,266 +1,336 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recrutement DzNet1</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DzNet1 — On recrute (Télétravail)</title>
   <style>
-    body {
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      background-color: #f4f6f8;
-      color: #333;
-      margin: 0;
-      padding: 0;
+    :root{
+      --primary:#004c99;
+      --primary-2:#0073e6;
+      --accent:#20c997;
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --text:#333;
+      --muted:#666;
+      --chip:#eef6ff;
+      --shadow:0 6px 18px rgba(0,0,0,.08);
+      --radius:14px;
     }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Segoe UI",Roboto,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+    a{text-decoration:none;color:inherit}
+    header{
+      background:linear-gradient(135deg,var(--primary),#002a5e);
+      color:#fff; padding:48px 16px; text-align:center; position:relative; overflow:hidden
+    }
+    header h1{margin:0 0 10px;font-size:40px;letter-spacing:.3px}
+    header p{margin:0;opacity:.95}
+    .chips{margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+    .chip{background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); color:#fff; padding:8px 12px; border-radius:999px; font-size:14px}
 
-    header {
-      background-color: #004c99;
-      color: white;
-      text-align: center;
-      padding: 20px;
+    .container{max-width:1100px;margin:-30px auto 40px; padding:0 16px}
+    .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px}
+    .headline{
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px
     }
+    .headline h2{margin:0; color:var(--primary)}
+    .tagline{color:var(--muted)}
+    .values{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:12px}
+    .value{background:var(--chip); border-radius:12px; padding:14px; border:1px solid #dbe9ff}
+    .value b{color:var(--primary)}
+    .ribbon{
+      margin-top:16px; background:#fff4f8; border:1px solid #ffd6e5; color:#b40054;
+      padding:12px 14px; border-radius:10px; font-size:14px
+    }
+    .equal{margin-top:10px; font-size:12.5px; color:#8a8a8a}
 
-    .container {
-      max-width: 800px;
-      margin: 40px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    .filter-bar{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .filter-bar input{
+      flex:1; min-width:220px; padding:12px 14px; border:1px solid #d9e2ec; border-radius:10px; outline:none
     }
+    .hint{font-size:13px; color:var(--muted)}
 
-    h2 {
-      color: #004c99;
-      text-align: center;
+    .jobs{margin-top:18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px}
+    .job{background:var(--card); border:1px solid #e8eef7; border-radius:12px; padding:18px; box-shadow:var(--shadow)}
+    .job h3{margin:0 0 6px; color:var(--primary)}
+    .job p{margin:0 0 12px; color:var(--muted); min-height:42px}
+    .badges{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px}
+    .badge{background:#f0faf6; color:#0b7a55; border:1px solid #b8ead7; padding:4px 10px; border-radius:999px; font-size:12px}
+    .open-btn{
+      background:var(--primary); color:#fff; border:none; padding:10px 14px; border-radius:10px; cursor:pointer; font-size:14.5px
     }
+    .open-btn:hover{background:var(--primary-2)}
 
-    .job {
-      border-bottom: 1px solid #ddd;
-      padding: 20px 0;
-      cursor: pointer;
-    }
+    .note{margin-top:10px; font-size:13px; color:var(--muted)}
 
-    .job:last-child {
-      border-bottom: none;
+    /* Modal */
+    .modal{display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:999}
+    .modal-box{
+      background:#fff; width:92%; max-width:680px; margin:8vh auto; border-radius:16px; box-shadow:0 14px 40px rgba(0,0,0,.25);
+      position:relative; overflow:hidden
     }
+    .modal-head{background:linear-gradient(135deg,var(--primary),#0a5fb7); color:#fff; padding:16px 18px}
+    .modal-head h3{margin:0; font-size:22px}
+    .close{position:absolute; top:10px; right:14px; font-size:24px; color:#fff; cursor:pointer; opacity:.9}
+    .modal-body{padding:18px}
+    .modal-body h4{margin:14px 0 6px}
+    ul{margin:8px 0 0 18px}
+    .cta-row{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin-top:16px}
+    .apply{
+      background:var(--accent); color:#083d35; border:none; padding:12px 16px; border-radius:10px; cursor:pointer; font-weight:700
+    }
+    .apply:hover{filter:brightness(1.05)}
+    .soft{font-size:12.5px; color:#6b6b6b}
 
-    .job h3 {
-      margin: 0;
-      color: #004c99;
-    }
-
-    .job p {
-      margin: 5px 0 10px 0;
-      color: #555;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.5);
-    }
-
-    .modal-content {
-      background-color: #fff;
-      margin: 10% auto;
-      padding: 30px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 600px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      position: relative;
-    }
-
-    .close {
-      color: #aaa;
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    .close:hover {
-      color: #004c99;
-    }
-
-    .apply-btn {
-      background-color: #004c99;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      display: block;
-      margin: 20px auto 0;
-    }
-
-    .apply-btn:hover {
-      background-color: #0073e6;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      color: #777;
-      font-size: 13px;
-    }
+    footer{padding:26px; text-align:center; color:#8a8a8a; font-size:13px}
+    @media (max-width:560px){ header h1{font-size:32px} }
   </style>
 </head>
 <body>
 
+  <!-- HERO -->
   <header>
-    <h1>📘 Recrutement DzNet1</h1>
-    <p>Découvrez nos postes disponibles et postulez facilement</p>
+    <h1>On recrute — postes disponibles</h1>
+    <p>Envie de travailler de la maison ? Rejoins une équipe jeune qui pousse la techno au max.</p>
+    <div class="chips">
+      <span class="chip">💻 Télétravail 100%</span>
+      <span class="chip">⏰ Après-midi / horaires ajustables</span>
+      <span class="chip">🎓 Part-time universitaire bienvenu</span>
+      <span class="chip">💳 30 000 DA / mois</span>
+      <span class="chip">📶 SIM Djezzy + Internet pris en charge</span>
+    </div>
   </header>
 
-  <div class="container">
-    <h2>Postes à pourvoir</h2>
+  <main class="container">
 
-    <div class="job" onclick="ouvrirFiche('anglais')">
-      <h3>👩‍🏫 Professeur d’anglais (primaire & secondaire)</h3>
-      <p>Aidez les élèves à progresser dans la langue anglaise à travers des cours en ligne.</p>
+    <!-- Valeurs & Culture -->
+    <section class="card">
+      <div class="headline">
+        <div>
+          <h2>Notre culture RH</h2>
+          <div class="tagline">Sérieux • Travail d’équipe • Confiance • Idées neuves • Exécution rapide</div>
+        </div>
+      </div>
+
+      <div class="values">
+        <div class="value"><b>Sérieux.</b> On respecte les délais et on tient nos engagements, même à distance.</div>
+        <div class="value"><b>Équipe.</b> On travaille ensemble, on partage le savoir, on s’entraide au quotidien.</div>
+        <div class="value"><b>Confiance.</b> Transparence, feedback honnête, responsabilité individuelle.</div>
+        <div class="value"><b>Idées neuves.</b> On aime expérimenter et optimiser en continu.</div>
+        <div class="value"><b>Tech au max.</b> Outils modernes, automatisation, data, IA quand c’est utile.</div>
+        <div class="value"><b>Esprit jeune.</b> DzNet1 est nouveau, équipe totalement jeune, dynamique et ambitieuse.</div>
+      </div>
+
+      <!-- Formulation inclusive et discrète -->
+      <div class="ribbon">💡 <b>Candidatures féminines fortement encouragées.</b> (Nous valorisons la diversité des profils.)</div>
+      <div class="equal">DzNet1 applique une politique d’égalité des chances et d’accès à l’emploi.</div>
+    </section>
+
+    <!-- Barre de filtre -->
+    <section class="card" style="margin-top:16px;">
+      <div class="headline">
+        <h2>Offres en cours</h2>
+        <span class="hint">Tape “math”, “anglais”, “marketing”… pour filtrer.</span>
+      </div>
+      <div class="filter-bar">
+        <input id="search" type="text" placeholder="Rechercher un poste (ex. anglais, web…)" oninput="filtrer()"/>
+      </div>
+
+      <!-- Liste des postes -->
+      <div id="jobs" class="jobs" style="margin-top:16px;">
+        <!-- Anglais -->
+        <article class="job" data-keywords="anglais prof primaire secondaire révision soutien langue">
+          <h3>👩‍🏫 Professeur d’anglais (primaire & secondaire)</h3>
+          <p>Accompagner en ligne des élèves en difficulté, faire des révisions et des ateliers pratiques.</p>
+          <div class="badges">
+            <span class="badge">Télétravail</span><span class="badge">Après-midi</span><span class="badge">Part-time OK</span>
+          </div>
+          <button class="open-btn" onclick="openModal('m-english')">Voir la fiche</button>
+        </article>
+
+        <!-- Maths -->
+        <article class="job" data-keywords="math maths prof primaire secondaire exercices soutien">
+          <h3>👨‍🏫 Professeur de mathématiques (primaire & secondaire)</h3>
+          <p>Faire progresser à distance : révisions ciblées, exercices guidés, méthode claire.</p>
+          <div class="badges">
+            <span class="badge">Télétravail</span><span class="badge">Horaires ajustables</span><span class="badge">Part-time OK</span>
+          </div>
+          <button class="open-btn" onclick="openModal('m-math')">Voir la fiche</button>
+        </article>
+
+        <!-- Web Marketing -->
+        <article class="job" data-keywords="marketing web réseaux sociaux contenu campagne social media">
+          <h3>🌐 Web marketing</h3>
+          <p>Booster la visibilité DzNet1 : contenu, réseaux sociaux, petites campagnes ciblées.</p>
+          <div class="badges">
+            <span class="badge">Télétravail</span><span class="badge">Jeune équipe</span><span class="badge">Tech-friendly</span>
+          </div>
+          <button class="open-btn" onclick="openModal('m-marketing')">Voir la fiche</button>
+        </article>
+
+        <!-- Support -->
+        <article class="job" data-keywords="support client assistance plateforme parents élèves">
+          <h3>💬 Support client</h3>
+          <p>Aider parents & élèves sur la plateforme : réponses simples, suivi et bonne énergie.</p>
+          <div class="badges">
+            <span class="badge">Télétravail</span><span class="badge">Après-midi</span><span class="badge">Formation assurée</span>
+          </div>
+          <button class="open-btn" onclick="openModal('m-support')">Voir la fiche</button>
+        </article>
+      </div>
+
+      <div class="note">Astuce : tu peux postuler avec ton CV (PDF/Word). Objet du mail rempli automatiquement.</div>
+    </section>
+  </main>
+
+  <!-- MODALS -->
+  <div id="m-english" class="modal" onclick="backdropClose(event)">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="close" onclick="closeModal('m-english')">&times;</span>
+        <h3>👩‍🏫 Professeur d’anglais — Télétravail</h3>
+      </div>
+      <div class="modal-body">
+        <h4>Missions</h4>
+        <ul>
+          <li>Donner des cours en ligne (primaire & secondaire).</li>
+          <li>Aider les enfants en difficulté, faire des révisions, suivi simple.</li>
+          <li>Utiliser nos outils (plateforme DzNet1) et proposer des idées d’amélioration.</li>
+        </ul>
+        <h4>Conditions & atouts</h4>
+        <ul>
+          <li>À l’aise avec Internet et les sites web.</li>
+          <li>Horaires après-midi / ajustables. Part-time universitaire accepté.</li>
+          <li>Rémunération : 30 000 DA/mois.</li>
+          <li>📶 SIM Djezzy + Internet pris en charge.</li>
+          <li>Équipe jeune, environnement bienveillant, ouverture aux idées.</li>
+        </ul>
+        <div class="cta-row">
+          <button class="apply" onclick="postuler('Professeur d’anglais')">📤 Postuler maintenant</button>
+          <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances appliquée.</span>
+        </div>
+      </div>
     </div>
-
-    <div class="job" onclick="ouvrirFiche('math')">
-      <h3>👨‍🏫 Professeur de mathématiques (primaire & secondaire)</h3>
-      <p>Participez à la réussite scolaire des enfants en difficulté via notre plateforme.</p>
-    </div>
-
-    <div class="job" onclick="ouvrirFiche('marketing')">
-      <h3>🌐 Web marketing</h3>
-      <p>Contribuez à la visibilité de DzNet1 sur le web et les réseaux sociaux.</p>
-    </div>
-
-    <div class="job" onclick="ouvrirFiche('support')">
-      <h3>💬 Support client</h3>
-      <p>Accompagnez les élèves et parents dans l’utilisation de notre plateforme.</p>
-    </div>
-
   </div>
 
-  <!-- Modals (fiches de poste) -->
-  <div id="anglais" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="fermerFiche('anglais')">&times;</span>
-      <h2>👩‍🏫 Professeur d’anglais</h2>
-      <p>
-        <strong>Missions :</strong><br>
-        - Donner des cours d’anglais en ligne aux élèves du primaire et du secondaire.<br>
-        - Aider les enfants à surmonter leurs difficultés linguistiques.<br>
-        - Participer aux révisions et aux suivis personnalisés.
-      </p>
-      <p>
-        <strong>Conditions :</strong><br>
-        - Familiarité avec Internet et les sites web.<br>
-        - Travail à distance via la plateforme DzNet1.<br>
-        - Temps plein ou partiel (universitaires acceptés).<br>
-        - Salaire : 30 000 DA/mois.<br>
-        - SIM Djezzy + Internet fournis.
-      </p>
-      <button class="apply-btn" onclick="postuler('Professeur d’anglais')">📤 Postuler maintenant</button>
+  <div id="m-math" class="modal" onclick="backdropClose(event)">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="close" onclick="closeModal('m-math')">&times;</span>
+        <h3>👨‍🏫 Professeur de mathématiques — Télétravail</h3>
+      </div>
+      <div class="modal-body">
+        <h4>Missions</h4>
+        <ul>
+          <li>Encadrement en ligne (primaire & secondaire), révisions ciblées.</li>
+          <li>Exercices guidés, méthode claire et rassurante.</li>
+          <li>Participation à la création de petites fiches récap.</li>
+        </ul>
+        <h4>Conditions & atouts</h4>
+        <ul>
+          <li>À l’aise avec Internet, visios et documents partagés.</li>
+          <li>Horaires après-midi / flexibles. Part-time universitaire bienvenu.</li>
+          <li>Rémunération : 30 000 DA/mois. SIM Djezzy + Internet pris en charge.</li>
+          <li>Équipe jeune, apprentissage continu, place aux nouvelles idées.</li>
+        </ul>
+        <div class="cta-row">
+          <button class="apply" onclick="postuler('Professeur de mathématiques')">📤 Postuler maintenant</button>
+          <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances appliquée.</span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div id="math" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="fermerFiche('math')">&times;</span>
-      <h2>👨‍🏫 Professeur de mathématiques</h2>
-      <p>
-        <strong>Missions :</strong><br>
-        - Enseigner les mathématiques en ligne aux élèves du primaire et du secondaire.<br>
-        - Réaliser des révisions et exercices interactifs.<br>
-        - Suivre la progression individuelle des élèves.
-      </p>
-      <p>
-        <strong>Conditions :</strong><br>
-        - À l’aise avec Internet et les plateformes éducatives.<br>
-        - Travail à distance, flexible.<br>
-        - Temps partiel possible pour universitaires.<br>
-        - Salaire : 30 000 DA/mois + Internet fourni.
-      </p>
-      <button class="apply-btn" onclick="postuler('Professeur de mathématiques')">📤 Postuler maintenant</button>
+  <div id="m-marketing" class="modal" onclick="backdropClose(event)">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="close" onclick="closeModal('m-marketing')">&times;</span>
+        <h3>🌐 Web marketing — Télétravail</h3>
+      </div>
+      <div class="modal-body">
+        <h4>Missions</h4>
+        <ul>
+          <li>Créer du contenu simple et authentique (FR/AR) pour nos réseaux.</li>
+          <li>Lancer des mini-campagnes locales, mesurer l’impact.</li>
+          <li>Proposer des idées fraîches et orientées action.</li>
+        </ul>
+        <h4>Conditions & atouts</h4>
+        <ul>
+          <li>À l’aise avec les outils web & social.</li>
+          <li>Horaires ajustables. Culture test & learn.</li>
+          <li>Rémunération fixe + bonus selon résultats.</li>
+          <li>Équipe jeune, techno friendly, beaucoup d’autonomie.</li>
+        </ul>
+        <div class="cta-row">
+          <button class="apply" onclick="postuler('Web marketing')">📤 Postuler maintenant</button>
+          <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances appliquée.</span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div id="marketing" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="fermerFiche('marketing')">&times;</span>
-      <h2>🌐 Web marketing</h2>
-      <p>
-        <strong>Missions :</strong><br>
-        - Promouvoir la plateforme DzNet1.<br>
-        - Gérer les campagnes digitales et les réseaux sociaux.<br>
-        - Analyser la performance des actions marketing.
-      </p>
-      <p>
-        <strong>Conditions :</strong><br>
-        - Maîtrise des outils web et réseaux sociaux.<br>
-        - Travail à distance.<br>
-        - Salaire fixe + bonus de performance.
-      </p>
-      <button class="apply-btn" onclick="postuler('Web marketing')">📤 Postuler maintenant</button>
-    </div>
-  </div>
-
-  <div id="support" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="fermerFiche('support')">&times;</span>
-      <h2>💬 Support client</h2>
-      <p>
-        <strong>Missions :</strong><br>
-        - Aider les utilisateurs à naviguer sur la plateforme DzNet1.<br>
-        - Répondre aux questions et résoudre les problèmes techniques simples.<br>
-        - Maintenir un contact positif et professionnel.
-      </p>
-      <p>
-        <strong>Conditions :</strong><br>
-        - Bonne communication écrite et orale.<br>
-        - Travail à domicile, horaire flexible.<br>
-        - Familiarité avec Internet requise.
-      </p>
-      <button class="apply-btn" onclick="postuler('Support client')">📤 Postuler maintenant</button>
+  <div id="m-support" class="modal" onclick="backdropClose(event)">
+    <div class="modal-box">
+      <div class="modal-head">
+        <span class="close" onclick="closeModal('m-support')">&times;</span>
+        <h3>💬 Support client — Télétravail</h3>
+      </div>
+      <div class="modal-body">
+        <h4>Missions</h4>
+        <ul>
+          <li>Aider parents & élèves à utiliser la plateforme.</li>
+          <li>Répondre simplement, suivre les cas, remonter les retours.</li>
+          <li>Participer aux petites améliorations de process.</li>
+        </ul>
+        <h4>Conditions & atouts</h4>
+        <ul>
+          <li>Bon relationnel écrit/oral, calme et positif.</li>
+          <li>Horaires après-midi / flex.</li>
+          <li>SIM Djezzy + Internet pris en charge.</li>
+          <li>Équipe jeune, bienveillante, on forme si besoin.</li>
+        </ul>
+        <div class="cta-row">
+          <button class="apply" onclick="postuler('Support client')">📤 Postuler maintenant</button>
+          <span class="soft">Candidatures féminines fortement encouragées — Égalité des chances appliquée.</span>
+        </div>
+      </div>
     </div>
   </div>
 
   <footer>
-    © 2025 DzNet1 — Tous droits réservés.
+    © 2025 DzNet1 — RH. On recrute en continu — télétravail, équipe jeune, techno au max.
   </footer>
 
   <script>
-    function ouvrirFiche(id) {
-      document.getElementById(id).style.display = 'block';
+    // --- Filtre simple par mots-clés
+    function filtrer(){
+      const q = (document.getElementById('search').value || '').toLowerCase().trim();
+      const items = document.querySelectorAll('#jobs .job');
+      items.forEach(it=>{
+        const k = (it.dataset.keywords || it.textContent).toLowerCase();
+        it.style.display = k.includes(q) ? '' : 'none';
+      });
     }
 
-    function fermerFiche(id) {
-      document.getElementById(id).style.display = 'none';
-    }
+    // --- Modals
+    function openModal(id){ document.getElementById(id).style.display='block'; }
+    function closeModal(id){ document.getElementById(id).style.display='none'; }
+    function backdropClose(e){ if(e.target.classList.contains('modal')) e.target.style.display='none'; }
 
-    function postuler(poste) {
+    // --- Mailto RH
+    function postuler(poste){
       const mail = "RH@dznet1.com";
       const sujet = encodeURIComponent("Candidature - " + poste);
       const corps = encodeURIComponent(
-        "Bonjour,\n\nJe souhaite postuler pour le poste de " + poste + 
-        " au sein de DzNet1.\n\nVeuillez trouver ci-joint mon CV.\n\nCordialement,\n[Votre nom]"
+        "Bonjour,\n\nJe souhaite postuler pour le poste de " + poste +
+        " chez DzNet1 (télétravail).\n\nVeuillez trouver ci-joint mon CV (PDF/Word).\n" +
+        "Disponibilités : [après-midi / ajustables]\n" +
+        "Type : [temps plein / part-time universitaire]\n\n" +
+        "Cordialement,\n[Votre nom]\n[Téléphone]"
       );
       window.location.href = `mailto:${mail}?subject=${sujet}&body=${corps}`;
     }
-
-    // Fermer la modale en cliquant à l’extérieur
-    window.onclick = function(event) {
-      const modals = document.querySelectorAll('.modal');
-      modals.forEach(m => {
-        if (event.target === m) m.style.display = 'none';
-      });
-    };
   </script>
-
 </body>
 </html>

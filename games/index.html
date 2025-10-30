@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sommaire des Jeux - DZNet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 30px;
+        }
+        
+        .game-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e1e8ed;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .game-icon {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .game-content {
+            padding: 20px;
+        }
+        
+        .game-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .game-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .game-link {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        
+        .game-link:hover {
+            background: #2980b9;
+        }
+        
+        .file-name {
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 10px;
+            font-family: monospace;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 Jeux de Culture Générale</h1>
+            <p class="subtitle">Découvrez tous nos jeux éducatifs et testez vos connaissances</p>
+        </header>
+        
+        <div class="games-grid" id="gamesGrid">
+            <div class="loading">
+                <p>Chargement des jeux...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - liste de vos fichiers HTML
+        const gameFiles = [
+            'jeux_de_culture.html',
+            'jeux_de_culture2.html', 
+            'regles.html'
+            // Ajoutez ici tous vos fichiers HTML
+        ];
+
+        // Fonction pour extraire les métadonnées d'un fichier HTML
+        async function extractFileInfo(filename) {
+            try {
+                const response = await fetch(filename);
+                const html = await response.text();
+                
+                // Créer un DOM temporaire pour parser le HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Extraire le titre
+                const title = doc.querySelector('title')?.textContent || 
+                             filename.replace('.html', '').replace(/_/g, ' ');
+                
+                // Extraire la description
+                let description = doc.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+                
+                if (!description) {
+                    const firstParagraph = doc.querySelector('p');
+                    if (firstParagraph) {
+                        description = firstParagraph.textContent.substring(0, 120) + '...';
+                    } else {
+                        description = "Jeu de culture générale - Testez vos connaissances";
+                    }
+                }
+                
+                return {
+                    filename,
+                    title,
+                    description,
+                    url: filename
+                };
+            } catch (error) {
+                console.error(`Erreur lors du chargement de ${filename}:`, error);
+                return {
+                    filename,
+                    title: filename.replace('.html', '').replace(/_/g, ' '),
+                    description: "Jeu de culture générale",
+                    url: filename
+                };
+            }
+        }
+
+        // Fonction pour afficher tous les jeux
+        async function loadAllGames() {
+            const gamesGrid = document.getElementById('gamesGrid');
+            
+            try {
+                const gamesPromises = gameFiles.map(extractFileInfo);
+                const games = await Promise.all(gamesPromises);
+                
+                if (games.length === 0) {
+                    gamesGrid.innerHTML = `
+                        <div class="empty-state">
+                            <h2>Aucun jeu trouvé</h2>
+                            <p>Veuillez configurer la liste des fichiers dans le script.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                gamesGrid.innerHTML = games.map(game => `
+                    <div class="game-card">
+                        <div class="game-icon">🎯</div>
+                        <div class="game-content">
+                            <h3 class="game-title">${game.title}</h3>
+                            <p class="game-description">${game.description}</p>
+                            <a href="${game.url}" class="game-link">Jouer maintenant</a>
+                            <div class="file-name">${game.filename}</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement des jeux:', error);
+                gamesGrid.innerHTML = `
+                    <div class="empty-state">
+                        <h2>Erreur de chargement</h2>
+                        <p>Impossible de charger la liste des jeux. Vérifiez la console pour plus de détails.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Charger les jeux au démarrage
+        document.addEventListener('DOMContentLoaded', loadAllGames);
+    </script>
+</body>
+</html>

@@ -235,14 +235,13 @@
         async function detectFilesByPattern() {
             console.log('🎯 Détection par pattern...');
             const patterns = [
-                'jeux', 'jeu', 'game', 'quiz', 'test', 'culture',
-                'jsuxt' // Spécial pour votre fichier existant
+                'jeux'  // Spécial pour votre fichier existant
             ];
             
             const discoveredFiles = [];
             
             // Tester les patterns avec numéros (jeux1.html, jeux2.html, etc.)
-            for (let i = 1; i <= 50; i++) {
+            for (let i = 1; i <= 20; i++) {
                 for (const pattern of patterns) {
                     const filename = `${pattern}${i}.html`;
                     if (await fileExists(filename)) {

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concours de Dessin - Protection des Plages Algériennes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 8px solid #4ECDC4;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            position: relative;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 3px 3px 0 #2C7873;
+            margin-bottom: 10px;
+        }
+        
+        .language-tabs {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 10px;
+        }
+        
+        .lang-tab {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-tab.active {
+            background: white;
+            color: #2C7873;
+        }
+        
+        .content-section {
+            padding: 30px;
+        }
+        
+        .language-content {
+            display: none;
+        }
+        
+        .language-content.active {
+            display: block;
+        }
+        
+        .contest-theme {
+            background: linear-gradient(135deg, #FFD93D 0%, #FF9A3D 100%);
+            padding: 25px;
+            border-radius: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 4px solid #FF6B6B;
+        }
+        
+        .theme-emoji {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .requirement-card {
+            background: #E8F5E9;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #4CAF50;
+        }
+        
+        .requirement-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .submission-info {
+            background: linear-gradient(135deg, #6C5CE7 0%, #A29BFE 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+        }
+        
+        .email-highlight {
+            background: #FFD93D;
+            color: #C44536;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        
+        .legal-notice {
+            background: #FFF9C4;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px dashed #FDCB6E;
+            font-size: 0.9rem;
+        }
+        
+        .prizes-section {
+            background: linear-gradient(135deg, #FD79A8 0%, #F8A5C2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .prizes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .prize-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .prize-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .timeline {
+            background: #F7F9FC;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-date {
+            background: #4ECDC4;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            margin-right: 20px;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        footer {
+            background: #2C7873;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+        
+        .participate-btn {
+            background: #FF6B6B;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin: 20px 0;
+        }
+        
+        .participate-btn:hover {
+            transform: scale(1.1);
+            background: #FF5252;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .requirements-grid, .prizes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .language-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .lang-tab {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="theme-emoji">🎨🏖️🌊</div>
+            <h1>Concours de Dessin</h1>
+            <p class="subtitle">Protection des Plages & Fond Marin Algérien</p>
+            
+            <div class="language-tabs">
+                <div class="lang-tab active" onclick="switchLanguage('fr')">Français</div>
+                <div class="lang-tab" onclick="switchLanguage('ar')">العربية</div>
+            </div>
+        </header>
+
+        <!-- Contenu Français -->
+        <div class="content-section">
+            <div class="language-content active" id="fr-content">
+                <div class="contest-theme">
+                    <h2>🎯 Thème du Concours</h2>
+                    <p style="font-size: 1.3rem; margin: 15px 0;">
+                        "Protégeons nos plages et préservons la beauté de notre mer Méditerranée"
+                    </p>
+                    <p>Montre-nous comment tu imagines une plage propre et protégée !</p>
+                </div>
+
+                <h2>📝 Comment Participer ?</h2>
+                <div class="requirements-grid">
+                    <div class="requirement-card">
+                        <div class="requirement-emoji">✏️</div>
+                        <h3>Crée ton dessin</h3>
+                        <p>Dessine une plage propre avec la mer bleue, des poissons heureux et des gens qui protègent l'environnement</p>
+                    </div>
+                    
+                    <div class="requirement-card">
+                        <div class="requirement-emoji">📄</div>
+                        <h3>Informations requises</h3>
+                        <p>Écris au dos :<br>- Ton nom complet<br>- Ton âge<br>- Numéro de téléphone parent</p>
+                    </div>
+                    
+                    <div class="requirement-card">
+                        <div class="requirement-emoji">📷</div>
+                        <h3>Photo (optionnelle)</h3>
+                        <p>Tu peux joindre une photo de toi avec ton dessin (avec l'autorisation de tes parents)</p>
+                    </div>
+                </div>
+
+                <div class="submission-info">
+                    <h2>📤 Envoie ton dessin</h2>
+                    <p>Scanne ou photographie ton dessin et envoie-le à :</p>
+                    <div class="email-highlight pulse">concours@dznet1.com</div>
+                    <p><strong>Date limite : 30 Novembre 2024</strong></p>
+                </div>
+
+                <div class="legal-notice">
+                    <h3>⚠️ Mention Légale - Protection des Données</h3>
+                    <p>En participant, les parents autorisent la publication du dessin et éventuellement de la photo de l'enfant. 
+                    Les données personnelles (nom, âge) peuvent être publiées. Le numéro de téléphone reste confidentiel et 
+                    sert uniquement à contacter les gagnants. Droit de retrait à tout moment par email.</p>
+                </div>
+
+                <div class="prizes-section">
+                    <h2>🏆 Lots à Gagner !</h2>
+                    <div class="prizes-grid">
+                        <div class="prize-card">
+                            <div class="prize-emoji">🥇</div>
+                            <h3>1er Prix</h3>
+                            <p>Tablette éducative DZNET1-KIDS + Kit artistique complet</p>
+                        </div>
+                        <div class="prize-card">
+                            <div class="prize-emoji">🥈</div>
+                            <h3>2ème Prix</h3>
+                            <p>Collection de livres sur la mer + Matériel de dessin professionnel</p>
+                        </div>
+                        <div class="prize-card">
+                            <div class="prize-emoji">🥉</div>
+                            <h3>3ème Prix</h3>
+                            <p>Jeux éducatifs sur l'environnement + Tenue de plage</p>
+                        </div>
+                        <div class="prize-card">
+                            <div class="prize-emoji">🎁</div>
+                            <h3>10 Mentions</h3>
+                            <p>Diplôme du jeune artiste écologique + Cadeaux surprises</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline">
+                    <h2>📅 Calendrier du Concours</h2>
+                    <div class="timeline-item">
+                        <div class="timeline-date">15 Octobre</div>
+                        <div>Lancement du concours</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">30 Novembre</div>
+                        <div>Date limite d'envoi</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">15 Décembre</div>
+                        <div>Annonce des gagnants</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">20 Décembre</div>
+                        <div>Exposition virtuelle des dessins</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <button class="participate-btn" onclick="alert('Scanne ton dessin et envoie-le à concours@dznet1.com ! 🎨')">
+                        Je participe ! 🎨
+                    </button>
+                </div>
+            </div>
+
+            <!-- Contenu Arabe -->
+            <div class="language-content" id="ar-content" dir="rtl">
+                <div class="contest-theme">
+                    <h2>🎯 موضوع المسابقة</h2>
+                    <p style="font-size: 1.3rem; margin: 15px 0;">
+                        "لنحمي شواطئنا ونحافظ على جمال بحرنا الأبيض المتوسط"
+                    </p>
+                    <p>أرنا كيف تتخيل شاطئًا نظيفًا ومحميًا!</p>
+                </div>
+
+                <h2>📝 كيفية المشاركة</h2>
+                <div class="requirements-grid">
+                    <div class="requirement-card">
+                        <div class="requirement-emoji">✏️</div>
+                        <h3>أنشئ رسوماتك</h3>
+                        <p>ارسم شاطئًا نظيفًا مع بحر أزرق وأسماك سعيدة وأشخاص يحمون البيئة</p>
+                    </div>
+                    
+                    <div class="requirement-card">
+                        <div class="requirement-emoji">📄</div>
+                        <h3>المعلومات المطلوبة</h3>
+                        <p>اكتب في الخلف:<br>- اسمك الكامل<br>- عمرك<br>- رقم هاتف ولي الأمر</p>
+                    </div>
+                    
+                    <div class="requirement-card">
+                        <div class="requirement-emoji">📷</div>
+                        <h3>صورة (اختيارية)</h3>
+                        <p>يمكنك إرفاق صورة لك مع رسمك (بموافقة والديك)</p>
+                    </div>
+                </div>
+
+                <div class="submission-info">
+                    <h2>📤 أرسل رسمك</h2>
+                    <p>امسح أو صور رسمك وأرسله إلى:</p>
+                    <div class="email-highlight pulse">concours@dznet1.com</div>
+                    <p><strong>آخر موعد: 30 نوفمبر 2024</strong></p>
+                </div>
+
+                <div class="legal-notice">
+                    <h3>⚠️ إشعار قانوني - حماية البيانات</h3>
+                    <p>بالمشاركة، يأذن أولياء الأمور بنشر الرسم وربما صورة الطفل. يمكن نشر البيانات الشخصية (الاسم، العمر). 
+                    يبقى رقم الهاتف سريًا ويستخدم فقط للاتصال بالفائزين. الحق في السحب في أي وقت عبر البريد الإلكتروني.</p>
+                </div>
+
+                <div class="prizes-section">
+                    <h2>🏆 الجوائز!</h2>
+                    <div class="prizes-grid">
+                        <div class="prize-card">
+                            <div class="prize-emoji">🥇</div>
+                            <h3>الجائزة الأولى</h3>
+                            <p>لوحة تعليمية DZNET1-KIDS + مجموعة فنية كاملة</p>
+                        </div>
+                        <div class="prize-card">
+                            <div class="prize-emoji">🥈</div>
+                            <h3>الجائزة الثانية</h3>
+                            <p>مجموعة كتب عن البحر + أدوات رسم احترافية</p>
+                        </div>
+                        <div class="prize-card">
+                            <div class="prize-emoji">🥉</div>
+                            <h3>الجائزة الثالثة</h3>
+                            <p>ألعاب تعليمية عن البيئة + ملابس شاطئ</p>
+                        </div>
+                        <div class="prize-card">
+                            <div class="prize-emoji">🎁</div>
+                            <h3>10 إشارات</h3>
+                            <p>دبلوم الفنان البيئي الصغير + هدايا مفاجأة</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline">
+                    <h2>📅 جدول المسابقة</h2>
+                    <div class="timeline-item">
+                        <div class="timeline-date">15 أكتوبر</div>
+                        <div>انطلاق المسابقة</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">30 نوفمبر</div>
+                        <div>آخر موعد للإرسال</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">15 ديسمبر</div>
+                        <div>إعلان الفائزين</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">20 ديسمبر</div>
+                        <div>معرض افتراضي للرسومات</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <button class="participate-btn" onclick="alert('امسح رسمك وأرسله إلى concours@dznet1.com ! 🎨')">
+                        أشارك! 🎨
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>🌟 <strong>DZNet Kids - نعمل من أجل أطفال أفضل</strong> 🌟</p>
+            <p style="margin-top: 10px; opacity: 0.9;">
+                مسابقة توعوية لتعزيز الحس البيئي لدى الأطفال الجزائريين
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function switchLanguage(lang) {
+            // Mettre à jour les onglets
+            document.querySelectorAll('.lang-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Afficher le contenu correspondant
+            document.querySelectorAll('.language-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(lang + '-content').classList.add('active');
+        }
+
+        // Animation pour l'email
+        const emailElement = document.querySelector('.email-highlight');
+        setInterval(() => {
+            emailElement.classList.toggle('pulse');
+        }, 4000);
+
+        // Effet de vague pour le header
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('header');
+            header.style.background = `
+                linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%),
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px)
+            `;
+        });
+    </script>
+</body>
+</html>

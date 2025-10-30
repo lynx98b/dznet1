@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les 5 Piliers de l'Islam avec Adam</title>
+    <style>
+        /* Styles généraux */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* En-tête */
+        header {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 5px solid #1B5E20;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .islamic-pattern {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: #2E7D32;
+            opacity: 0.7;
+            z-index: 1;
+        }
+        
+        .islamic-pattern:before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            width: 100%;
+            height: 20px;
+            background: 
+                repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(255,255,255,0.3) 15px, rgba(255,255,255,0.3) 30px);
+        }
+        
+        /* Conteneur principal */
+        .container {
+            max-width: 1100px;
+            margin: 25px auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+        
+        /* Zone d'histoire */
+        .story-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 30px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid #4CAF50;
+        }
+        
+        /* Illustration animée */
+        .illustration {
+            height: 280px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #4CAF50;
+        }
+        
+        .character-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            width: 100%;
+            height: 100%;
+            padding: 0 20px;
+        }
+        
+        .child {
+            font-size: 140px;
+            animation: bounce 3s infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .pillar-icon {
+            font-size: 80px;
+            margin: 0 10px;
+            opacity: 0.8;
+        }
+        
+        .mosque {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 100px;
+            z-index: 1;
+            opacity: 0.2;
+        }
+        
+        .bubble {
+            position: absolute;
+            background: white;
+            border-radius: 20px;
+            padding: 12px 18px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            max-width: 250px;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 10;
+        }
+        
+        .child-bubble {
+            top: 30px;
+            right: 30px;
+        }
+        
+        .bubble:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 12px solid transparent;
+        }
+        
+        .child-bubble:after {
+            border-left-color: white;
+            border-right: 0;
+            right: -12px;
+            top: 20px;
+        }
+        
+        .bubble.show {
+            opacity: 1;
+        }
+        
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        
+        /* Texte de l'histoire */
+        .story-text {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background-color: #C8E6C9;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+        
+        .pillars-section {
+            background-color: #E8F5E9;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #4CAF50;
+        }
+        
+        .pillars-section h3 {
+            color: #2E7D32;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        
+        .pillar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .pillar-number {
+            background: #4CAF50;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .pillar-content {
+            flex: 1;
+        }
+        
+        .pillar-content h4 {
+            color: #2E7D32;
+            margin-bottom: 5px;
+        }
+        
+        /* Contrôles audio */
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .audio-btn {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .audio-btn:hover {
+            background: linear-gradient(135deg, #43A047 0%, #1B5E20 100%);
+            transform: scale(1.1);
+        }
+        
+        /* Options interactives */
+        .interactive-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .option-btn {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .option-btn:hover {
+            background: linear-gradient(135deg, #43A047 0%, #1B5E20 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Sélection d'histoires */
+        .story-selection {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .story-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #4CAF50;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .story-card-image {
+            width: 100%;
+            height: 130px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 70px;
+            color: white;
+        }
+        
+        /* Pied de page */
+        footer {
+            background-color: #1B5E20;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            border-top: 5px solid #4CAF50;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .story-container {
+                padding: 20px;
+            }
+            
+            .child {
+                font-size: 100px;
+            }
+            
+            .pillar-icon {
+                font-size: 60px;
+            }
+            
+            .story-text {
+                font-size: 1.1rem;
+            }
+            
+            .interactive-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .character-container {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .pillar {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .pillar-number {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="islamic-pattern"></div>
+        <div class="header-content">
+            <h1>Les 5 Piliers de l'Islam avec Adam</h1>
+            <p>Découvre l'histoire d'Adam, un enfant qui aime faire le bien et apprend les bases de l'Islam</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="story-container">
+            <div class="illustration">
+                <div class="mosque">🕌</div>
+                <div class="character-container">
+                    <div class="child">👦</div>
+                    <div class="pillar-icon">📖</div>
+                    <div class="pillar-icon">🤲</div>
+                    <div class="pillar-icon">🕌</div>
+                </div>
+                <div class="bubble child-bubble" id="childBubble">J'aime aider les autres et faire le bien!</div>
+            </div>
+            
+            <div class="story-text">
+                <p>Adam est un petit garçon de <span class="highlight">8 ans</span> qui adore aider les autres. Un jour, son grand-père lui a expliqué les <span class="highlight">5 piliers de l'Islam</span>, les bases importantes de la religion musulmane.</p>
+                
+                <div class="pillars-section">
+                    <h3>Les 5 Piliers de l'Islam</h3>
+                    
+                    <div class="pillar">
+                        <div class="pillar-number">1</div>
+                        <div class="pillar-content">
+                            <h4>Chahada - La profession de foi</h4>
+                            <p>"Il n'y a de divinité qu'Allah et Mohammed est Son messager"</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pillar">
+                        <div class="pillar-number">2</div>
+                        <div class="pillar-content">
+                            <h4>Salat - La prière</h4>
+                            <p>Prier cinq fois par jour en direction de La Mecque</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pillar">
+                        <div class="pillar-number">3</div>
+                        <div class="pillar-content">
+                            <h4>Zakat - L'aumône</h4>
+                            <p>Partager une partie de ses biens avec ceux dans le besoin</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pillar">
+                        <div class="pillar-number">4</div>
+                        <div class="pillar-content">
+                            <h4>Saoum - Le jeûne</h4>
+                            <p>Jeûner pendant le mois sacré du Ramadan</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pillar">
+                        <div class="pillar-number">5</div>
+                        <div class="pillar-content">
+                            <h4>Hajj - Le pèlerinage</h4>
+                            <p>Se rendre à La Mecque au moins une fois dans sa vie si on en a les moyens</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Adam a décidé d'appliquer ces piliers dans sa vie quotidienne. Il commence toujours sa journée par la <span class="highlight">Chahada</span>, prie <span class="highlight">5 fois</span> par jour, et donne régulièrement une partie de son argent de poche à des œuvres caritatives.</p>
+            </div>
+            
+            <div class="audio-controls">
+                <button class="audio-btn" id="playBtn">▶</button>
+                <button class="audio-btn" id="pauseBtn">❚❚</button>
+                <button class="audio-btn" id="restartBtn">↺</button>
+            </div>
+            
+            <div class="interactive-options">
+                <button class="option-btn" onclick="showChildMessage()">Adam parle</button>
+                <button class="option-btn" onclick="showPillar(1)">Chahada</button>
+                <button class="option-btn" onclick="showPillar(2)">Salat</button>
+                <button class="option-btn" onclick="showPillar(3)">Zakat</button>
+                <button class="option-btn" onclick="showPillar(4)">Saoum</button>
+                <button class="option-btn" onclick="showPillar(5)">Hajj</button>
+            </div>
+        </div>
+        
+        <h2 style="color: white; text-align: center;">Découvre d'autres histoires d'Adam</h2>
+        <div class="story-selection">
+            <div class="story-card" onclick="loadStory(1)">
+                <div class="story-card-image" style="background:linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);">🤲</div>
+                <h3>Adam et la Prière</h3>
+            </div>
+            <div class="story-card" onclick="loadStory(2)">
+                <div class="story-card-image" style="background:linear-gradient(135deg, #FF9800 0%, #F57C00 100%);">🌙</div>
+                <h3>Le Premier Ramadan</h3>
+            </div>
+            <div class="story-card" onclick="loadStory(3)">
+                <div class="story-card-image" style="background:linear-gradient(135deg, #2196F3 0%, #0D47A1 100%);">🤝</div>
+                <h3>Le Partage et l'Amitié</h3>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 Les 5 Piliers de l'Islam avec Adam - Apprends les valeurs de l'Islam en t'amusant</p>
+    </footer>
+
+    <script>
+        // Variables pour la narration audio
+        let audioContext;
+        let audioBuffer;
+        let audioSource;
+        let isPlaying = false;
+        
+        // Messages pour Adam
+        const childMessages = [
+            "J'aime aider les autres et faire le bien!",
+            "Je prie 5 fois par jour, c'est important!",
+            "Partager avec ceux dans le besoin me rend heureux!",
+            "Pendant le Ramadan, je jeûne avec ma famille!",
+            "Un jour, j'irai en pèlerinage à La Mecque!"
+        ];
+        
+        // Initialisation de l'audio
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                console.log("Audio initialisé");
+            } catch (e) {
+                console.error("L'audio n'est pas supporté", e);
+            }
+        }
+        
+        // Simulation de la lecture audio
+        function playAudio() {
+            if (!isPlaying) {
+                isPlaying = true;
+                document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #2196F3 0%, #0D47A1 100%)';
+                console.log("Lecture de l'histoire audio...");
+                
+                // Simulation d'un changement d'illustration pendant la narration
+                setTimeout(() => {
+                    document.querySelector('.child').textContent = '📖';
+                }, 2000);
+                
+                setTimeout(() => {
+                    document.querySelector('.child').textContent = '🤲';
+                }, 4000);
+                
+                setTimeout(() => {
+                    document.querySelector('.child').textContent = '👦';
+                }, 6000);
+            }
+        }
+        
+        function pauseAudio() {
+            isPlaying = false;
+            document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)';
+            console.log("Audio en pause");
+        }
+        
+        function restartAudio() {
+            pauseAudio();
+            document.querySelector('.child').textContent = '👦';
+            setTimeout(playAudio, 500);
+        }
+        
+        // Fonctions interactives
+        function showChildMessage() {
+            const bubble = document.getElementById('childBubble');
+            const randomMessage = childMessages[Math.floor(Math.random() * childMessages.length)];
+            bubble.textContent = randomMessage;
+            bubble.classList.add('show');
+            setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 3000);
+            
+            // Animation spéciale
+            const childElement = document.querySelector('.child');
+            childElement.style.animation = 'none';
+            setTimeout(() => {
+                childElement.style.animation = 'bounce 3s infinite alternate';
+            }, 10);
+        }
+        
+        function showPillar(pillarNumber) {
+            const pillarIcons = ['📖', '🤲', '🤝', '🌙', '🕌'];
+            const pillarNames = ['Chahada', 'Salat', 'Zakat', 'Saoum', 'Hajj'];
+            
+            document.querySelector('.child').textContent = pillarIcons[pillarNumber-1];
+            
+            const bubble = document.getElementById('childBubble');
+            bubble.textContent = `C'est le ${pillarNumber}ème pilier: ${pillarNames[pillarNumber-1]}`;
+            bubble.classList.add('show');
+            setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 3000);
+            
+            // Animation spéciale
+            const childElement = document.querySelector('.child');
+            childElement.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                childElement.style.transform = 'scale(1)';
+            }, 500);
+        }
+        
+        function loadStory(storyId) {
+            // Dans un cas réel, vous chargeriez une nouvelle histoire depuis un serveur
+            console.log(`Chargement de l'histoire ${storyId}`);
+            
+            // Simulation de changement d'histoire
+            const stories = [
+                {
+                    title: "Adam et la Prière",
+                    childChar: "🤲",
+                    text: "Adam apprend à faire ses prières cinq fois par jour. Son grand-père lui explique l'importance de chaque moment de prière et comment se concentrer pendant la Salat. Adam découvre que la prière lui apporte de la paix intérieure."
+                },
+                {
+                    title: "Le Premier Ramadan",
+                    childChar: "🌙",
+                    text: "C'est le premier Ramadan où Adam jeûne toute la journée. Il apprend la patience et la gratitude. Le soir, il rompt le jeûne en famille avec des dattes et un bon repas. Adam comprend que le jeûne nous aide à penser à ceux qui ont faim tous les jours."
+                },
+                {
+                    title: "Le Partage et l'Amitié",
+                    childChar: "🤝",
+                    text: "Adam décide de donner une partie de son argent de poche pour aider les enfants dans le besoin. Il organise même une collecte à l'école avec ses amis. Ensemble, ils réunissent assez d'argent pour acheter des fournitures scolaires pour des enfants défavorisés."
+                }
+            ];
+            
+            const story = stories[storyId - 1];
+            document.querySelector('.child').textContent = story.childChar;
+            document.querySelector('.story-text').innerHTML = `<p>${story.text}</p>`;
+            
+            // Animation de transition
+            const container = document.querySelector('.story-container');
+            container.style.opacity = '0.7';
+            setTimeout(() => {
+                container.style.opacity = '1';
+            }, 300);
+        }
+        
+        // Initialisation au chargement de la page
+        window.onload = function() {
+            initAudio();
+            
+            // Configuration des boutons audio
+            document.getElementById('playBtn').addEventListener('click', playAudio);
+            document.getElementById('pauseBtn').addEventListener('click', pauseAudio);
+            document.getElementById('restartBtn').addEventListener('click', restartAudio);
+            
+            // Afficher les bulles au chargement
+            setTimeout(showChildMessage, 1000);
+        };
+    </script>
+</body>
+</html>

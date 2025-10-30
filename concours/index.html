@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Concours Éducatifs - DZNet Kids</title>
+    <title>Détection Automatique des Concours - DZNet Kids</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
         * {
@@ -59,49 +59,11 @@
             text-align: center;
         }
         
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            padding: 40px;
-        }
-        
-        .benefit-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            border: 3px solid #4CAF50;
-            transition: transform 0.3s ease;
-        }
-        
-        .benefit-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .benefit-icon {
-            font-size: 50px;
-            margin-bottom: 15px;
+        .stats {
+            background: #f8f9fa;
+            padding: 15px;
             text-align: center;
-        }
-        
-        .benefit-title {
-            color: #2E7D32;
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .benefit-list {
-            list-style: none;
-        }
-        
-        .benefit-item {
-            background: #E8F5E9;
-            margin-bottom: 10px;
-            padding: 12px;
-            border-radius: 10px;
-            border-left: 4px solid #4CAF50;
+            border-bottom: 1px solid #dee2e6;
         }
         
         .concours-grid {
@@ -180,63 +142,64 @@
             margin-bottom: 10px;
         }
         
-        .stats {
-            background: #f8f9fa;
-            padding: 15px;
-            text-align: center;
-            border-bottom: 1px solid #dee2e6;
+        .file-name {
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 10px;
+            font-family: monospace;
         }
         
-        .parent-section {
-            background: linear-gradient(135deg, #FD79A8 0%, #F8A5C2 100%);
-            color: white;
+        .loading {
+            text-align: center;
             padding: 40px;
+            color: #666;
+        }
+        
+        .empty-state {
             text-align: center;
+            padding: 60px 20px;
+            color: #666;
         }
         
-        .parent-tips {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
+        .error-state {
+            text-align: center;
+            padding: 40px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            margin: 20px;
+            color: #856404;
         }
         
-        .tip-card {
-            background: rgba(255,255,255,0.2);
+        .search-section {
             padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .tip-emoji {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-        
-        footer {
-            background: #2C7873;
-            color: white;
+            background: #f8f9fa;
             text-align: center;
-            padding: 25px;
         }
         
-        .participation-btn {
-            background: #FF6B6B;
+        .search-input {
+            padding: 12px 20px;
+            border: 2px solid #3498db;
+            border-radius: 25px;
+            font-size: 1rem;
+            width: 300px;
+            max-width: 100%;
+            margin: 0 10px;
+        }
+        
+        .search-btn {
+            background: #3498db;
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.2rem;
+            padding: 12px 25px;
+            border-radius: 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            font-weight: 600;
-            margin-top: 20px;
+            font-size: 1rem;
+            transition: background 0.3s ease;
         }
         
-        .participation-btn:hover {
-            transform: scale(1.1);
-            background: #FF5252;
+        .search-btn:hover {
+            background: #2980b9;
         }
         
         @keyframes float {
@@ -249,13 +212,18 @@
         }
         
         @media (max-width: 768px) {
-            .concours-grid, .benefits-grid {
+            .concours-grid {
                 grid-template-columns: 1fr;
                 padding: 20px;
             }
             
             h1 {
                 font-size: 2rem;
+            }
+            
+            .search-input {
+                width: 100%;
+                margin-bottom: 10px;
             }
         }
     </style>
@@ -264,230 +232,325 @@
     <div class="container">
         <header>
             <h1>🎯 Concours Éducatifs DZNet Kids</h1>
-            <p class="subtitle">Apprendre en s'amusant, grandir en relevant des défis !</p>
+            <p class="subtitle">Détection automatique de tous nos concours actifs</p>
         </header>
         
-        <div class="stats">
-            <span>🌟 5 concours actifs • 👨‍👩‍👧‍👦 500+ participants • 🏆 30+ récompenses distribuées</span>
+        <div class="stats" id="stats">
+            <span id="gameCount">🔍 Scan des concours en cours...</span>
         </div>
         
-        <!-- Section Hero -->
-        <div class="hero-section">
-            <div style="font-size: 60px; margin-bottom: 20px;" class="floating">🎨📚🌳</div>
-            <h2>Pourquoi nos concours éducatifs ?</h2>
-            <p style="font-size: 1.2rem; margin: 20px auto; max-width: 800px;">
-                Nos concours transforment l'apprentissage en aventure ! Chaque défi est conçu pour développer 
-                les compétences de votre enfant tout en nourissant sa curiosité naturelle.
-            </p>
-            <button class="participation-btn" onclick="scrollToConcours()">Découvrir les Concours 🚀</button>
+        <div class="search-section">
+            <input type="text" class="search-input" id="searchInput" placeholder="Rechercher un concours...">
+            <button class="search-btn" onclick="filterConcours()">🔍 Rechercher</button>
+            <button class="search-btn" onclick="resetSearch()">🔄 Tout voir</button>
         </div>
         
-        <!-- Bénéfices pour les enfants -->
-        <div class="benefits-grid">
-            <div class="benefit-card">
-                <div class="benefit-icon">🧠</div>
-                <h3 class="benefit-title">Développement Cognitif</h3>
-                <ul class="benefit-list">
-                    <li class="benefit-item">Améliore la mémoire et la concentration</li>
-                    <li class="benefit-item">Développe la pensée logique</li>
-                    <li class="benefit-item">Stimule la créativité</li>
-                    <li class="benefit-item">Renforce la résolution de problèmes</li>
-                </ul>
-            </div>
-            
-            <div class="benefit-card">
-                <div class="benefit-icon">💖</div>
-                <h3 class="benefit-title">Épanouissement Émotionnel</h3>
-                <ul class="benefit-list">
-                    <li class="benefit-item">Boost de la confiance en soi</li>
-                    <li class="benefit-item">Apprentissage de la persévérance</li>
-                    <li class="benefit-item">Gestion des émotions</li>
-                    <li class="benefit-item">Développement de l'autonomie</li>
-                </ul>
-            </div>
-            
-            <div class="benefit-card">
-                <div class="benefit-icon">🌟</div>
-                <h3 class="benefit-title">Compétences Sociales</h3>
-                <ul class="benefit-list">
-                    <li class="benefit-item">Apprentissage du fair-play</li>
-                    <li class="benefit-item">Développement de l'esprit d'équipe</li>
-                    <li class="benefit-item">Renforcement de la communication</li>
-                    <li class="benefit-item">Respect des règles et des autres</li>
-                </ul>
+        <div class="concours-grid" id="concoursGrid">
+            <div class="loading">
+                <p>Recherche automatique des concours...</p>
             </div>
         </div>
-        
-        <!-- Liste des concours -->
-        <div id="concours-section">
-            <h2 style="text-align: center; padding: 30px; color: #2c3e50;">🎮 Nos Concours Actifs</h2>
-            <div class="concours-grid">
-                <!-- Concours 1 -->
-                <div class="concours-card">
-                    <div class="concours-icon">
-                        <div class="floating">🔤</div>
-                    </div>
-                    <div class="concours-content">
-                        <div class="age-badge">Âge: 5-8 ans</div>
-                        <h3 class="concours-title">Concours Chiffres & Lettres</h3>
-                        <p class="concours-description">
-                            Découvre le monde magique des chiffres et des lettres à travers des aventures interactives.
-                            Apprends en t'amusant avec nos petits personnages attachants !
-                        </p>
-                        <a href="concour1.html" class="concours-link">Participer maintenant</a>
-                    </div>
-                </div>
-                
-                <!-- Concours 2 -->
-                <div class="concours-card">
-                    <div class="concours-icon">
-                        <div class="floating">🦊🐪</div>
-                    </div>
-                    <div class="concours-content">
-                        <div class="age-badge">Âge: 5-8 ans</div>
-                        <h3 class="concours-title">Aventure Saharienne</h3>
-                        <p class="concours-description">
-                            Suis Fara le fennec et Kamel le chameau dans le désert algérien.
-                            Apprends la géographie et la faune locale de façon ludique !
-                        </p>
-                        <a href="concour2.html" class="concours-link">Participer maintenant</a>
-                    </div>
-                </div>
-                
-                <!-- Concours 3 -->
-                <div class="concours-card">
-                    <div class="concours-icon">
-                        <div class="floating">🏖️</div>
-                    </div>
-                    <div class="concours-content">
-                        <div class="age-badge">Âge: 6-9 ans</div>
-                        <h3 class="concours-title">Découverte d'Oran</h3>
-                        <p class="concours-description">
-                            Explore la belle ville d'Oran avec Yasmine et Karim.
-                            Découvre la culture algérienne et les trésors de la Méditerranée.
-                        </p>
-                        <a href="concour3.html" class="concours-link">Participer maintenant</a>
-                    </div>
-                </div>
-                
-                <!-- Concours 4 -->
-                <div class="concours-card">
-                    <div class="concours-icon">
-                        <div class="floating">🤖👦</div>
-                    </div>
-                    <div class="concours-content">
-                        <div class="age-badge">Âge: 5-8 ans</div>
-                        <h3 class="concours-title">Robo & Tom</h3>
-                        <p class="concours-description">
-                            Apprends l'importance du travail bien fait et de l'écoute avec Robo le robot et Tom.
-                            Des valeurs essentielles pour bien grandir !
-                        </p>
-                        <a href="concour4.html" class="concours-link">Participer maintenant</a>
-                    </div>
-                </div>
-                
-                <!-- Concours 5 -->
-                <div class="concours-card">
-                    <div class="concours-icon">
-                        <div class="floating">🕌</div>
-                    </div>
-                    <div class="concours-content">
-                        <div class="age-badge">Âge: 6-9 ans</div>
-                        <h3 class="concours-title">Les 5 Piliers</h3>
-                        <p class="concours-description">
-                            Suis Adam dans son apprentissage des 5 piliers de l'Islam.
-                            Une approche douce et éducative des valeurs spirituelles.
-                        </p>
-                        <a href="concour5.html" class="concours-link">Participer maintenant</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Section Parents -->
-        <div class="parent-section">
-            <h2>👨‍👩‍👧‍👦 Pour les Parents</h2>
-            <p style="font-size: 1.2rem; margin: 20px auto; max-width: 800px;">
-                Votre rôle est essentiel dans l'aventure éducative de votre enfant. 
-                Découvrez comment accompagner au mieux leur participation.
-            </p>
-            
-            <div class="parent-tips">
-                <div class="tip-card">
-                    <div class="tip-emoji">💻</div>
-                    <h4>Accompagnement Numérique</h4>
-                    <p>Participez avec votre enfant, montrez votre intérêt pour ses découvertes</p>
-                </div>
-                
-                <div class="tip-card">
-                    <div class="tip-emoji">🏆</div>
-                    <h4>Valorisation des Efforts</h4>
-                    <p>Célébrez chaque progrès, pas seulement les victoires</p>
-                </div>
-                
-                <div class="tip-card">
-                    <div class="tip-emoji">⏰</div>
-                    <h4>Gestion du Temps</h4>
-                    <p>Établissez des plages de jeu régulières et équilibrées</p>
-                </div>
-                
-                <div class="tip-card">
-                    <div class="tip-emoji">💬</div>
-                    <h4>Dialogue et Partage</h4>
-                    <p>Discutez des apprentissages et découvertes après chaque session</p>
-                </div>
-            </div>
-        </div>
-        
-        <footer>
-            <p>🌟 <strong>DZNet Kids - L'éducation par le jeu</strong> 🌟</p>
-            <p style="margin-top: 10px; opacity: 0.9;">
-                Des concours conçus par des experts en pédagogie pour le développement harmonieux de votre enfant
-            </p>
-        </footer>
     </div>
 
     <script>
-        function scrollToConcours() {
-            document.getElementById('concours-section').scrollIntoView({
-                behavior: 'smooth'
+        // Configuration
+        const EXCLUDED_FILES = ['index.html', 'concours.html', 'sommaire.html'];
+        const CONCOURS_PATTERNS = ['concours', 'concour', 'contest', 'jeux', 'game', 'quiz'];
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+
+        // Fonction pour détecter tous les fichiers de concours
+        async function discoverConcoursFiles() {
+            try {
+                console.log('🔍 Début du scan des fichiers de concours...');
+                
+                let allFiles = [];
+                
+                try {
+                    // Essayer de récupérer la liste via fetch
+                    const response = await fetch('./');
+                    const text = await response.text();
+                    
+                    // Parser le HTML pour trouver les liens
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(text, 'text/html');
+                    const links = doc.querySelectorAll('a[href$=".html"]');
+                    
+                    allFiles = Array.from(links)
+                        .map(link => link.getAttribute('href'))
+                        .filter(file => !EXCLUDED_FILES.includes(file) && 
+                               CONCOURS_PATTERNS.some(pattern => file.toLowerCase().includes(pattern)));
+                        
+                    console.log(`📁 Fichiers de concours trouvés:`, allFiles);
+                    
+                } catch (error) {
+                    console.log('❌ Scan automatique échoué, utilisation de la détection par pattern');
+                }
+                
+                // Si pas de fichiers trouvés, utiliser la détection par pattern
+                if (allFiles.length === 0) {
+                    allFiles = await detectFilesByPattern();
+                }
+                
+                return allFiles;
+                
+            } catch (error) {
+                console.error('Erreur lors de la découverte des fichiers:', error);
+                return [];
+            }
+        }
+
+        // Détection par pattern
+        async function detectFilesByPattern() {
+            console.log('🎯 Détection par pattern...');
+            const discoveredFiles = [];
+            
+            // Tester les patterns avec numéros
+            for (let i = 1; i <= 20; i++) {
+                for (const pattern of CONCOURS_PATTERNS) {
+                    const filename = `${pattern}${i}.html`;
+                    if (await fileExists(filename)) {
+                        discoveredFiles.push(filename);
+                        console.log(`✅ Trouvé: ${filename}`);
+                    }
+                    
+                    // Variante avec underscore
+                    const filenameUnderscore = `${pattern}_${i}.html`;
+                    if (await fileExists(filenameUnderscore)) {
+                        discoveredFiles.push(filenameUnderscore);
+                        console.log(`✅ Trouvé: ${filenameUnderscore}`);
+                    }
+                }
+            }
+            
+            // Tester les patterns sans numéros
+            for (const pattern of CONCOURS_PATTERNS) {
+                const filename = `${pattern}.html`;
+                if (await fileExists(filename)) {
+                    discoveredFiles.push(filename);
+                    console.log(`✅ Trouvé: ${filename}`);
+                }
+            }
+            
+            return discoveredFiles;
+        }
+
+        // Vérifier si un fichier existe
+        async function fileExists(url) {
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                return response.ok;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        // Vérifier si une image existe
+        function checkImageExists(imageUrl) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                const timeout = setTimeout(() => resolve(false), 2000);
+                
+                img.onload = () => {
+                    clearTimeout(timeout);
+                    resolve(true);
+                };
+                img.onerror = () => {
+                    clearTimeout(timeout);
+                    resolve(false);
+                };
+                img.src = imageUrl;
             });
         }
-        
-        // Animation des cartes au survol
-        document.addEventListener('DOMContentLoaded', function() {
+
+        // Trouver le logo d'un concours
+        async function findConcoursLogo(baseFilename) {
+            const baseName = baseFilename.replace('.html', '');
+            
+            for (const ext of imageExtensions) {
+                const imageUrl = `${baseName}${ext}`;
+                const exists = await checkImageExists(imageUrl);
+                if (exists) {
+                    return imageUrl;
+                }
+            }
+            
+            return null;
+        }
+
+        // Extraire les métadonnées d'un fichier HTML
+        async function extractFileInfo(filename) {
+            try {
+                const response = await fetch(filename);
+                const html = await response.text();
+                
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Extraire le titre
+                const title = doc.querySelector('title')?.textContent || 
+                             filename.replace('.html', '')
+                                    .replace(/_/g, ' ')
+                                    .replace(/([a-z])([A-Z])/g, '$1 $2')
+                                    .replace(/\b\w/g, l => l.toUpperCase());
+                
+                // Extraire la description
+                let description = doc.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+                
+                if (!description) {
+                    const firstParagraph = doc.querySelector('p');
+                    if (firstParagraph) {
+                        description = firstParagraph.textContent.substring(0, 120) + '...';
+                    } else {
+                        const firstH1 = doc.querySelector('h1');
+                        description = firstH1 ? firstH1.textContent + " - Concours éducatif" : "Concours éducatif - Apprendre en s'amusant";
+                    }
+                }
+                
+                // Chercher le logo
+                const logoUrl = await findConcoursLogo(filename);
+                
+                // Déterminer l'âge cible basé sur le contenu
+                let ageRange = "5-8 ans";
+                if (description.toLowerCase().includes('oran') || description.toLowerCase().includes('piliers')) {
+                    ageRange = "6-9 ans";
+                }
+                
+                return {
+                    filename,
+                    title,
+                    description,
+                    url: filename,
+                    logoUrl,
+                    ageRange
+                };
+            } catch (error) {
+                console.error(`Erreur avec ${filename}:`, error);
+                return {
+                    filename,
+                    title: filename.replace('.html', '')
+                                  .replace(/_/g, ' ')
+                                  .replace(/([a-z])([A-Z])/g, '$1 $2')
+                                  .replace(/\b\w/g, l => l.toUpperCase()),
+                    description: "Concours éducatif interactif",
+                    url: filename,
+                    logoUrl: null,
+                    ageRange: "5-8 ans"
+                };
+            }
+        }
+
+        // Filtrer les concours
+        function filterConcours() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.concours-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.concours-title').textContent.toLowerCase();
+                const description = card.querySelector('.concours-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            document.getElementById('stats').innerHTML = 
+                `🎯 ${visibleCount} concours trouvés pour "${searchTerm}"`;
+        }
+
+        // Réinitialiser la recherche
+        function resetSearch() {
+            document.getElementById('searchInput').value = '';
             const cards = document.querySelectorAll('.concours-card');
             cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-10px) scale(1.02)';
-                });
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
+                card.style.display = 'block';
             });
-        });
-        
-        // Compteur de participants animé
-        function animateCounter(element, target, duration) {
-            let start = 0;
-            const increment = target / (duration / 16);
-            const timer = setInterval(() => {
-                start += increment;
-                if (start >= target) {
-                    element.textContent = target + '+';
-                    clearInterval(timer);
-                } else {
-                    element.textContent = Math.floor(start) + '+';
-                }
-            }, 16);
+            updateStats();
         }
-        
-        // Démarrer l'animation du compteur
-        setTimeout(() => {
-            const participantCount = document.querySelector('.stats span');
-            participantCount.innerHTML = '🌟 5 concours actifs • 👨‍👩‍👧‍👦 <span id="participant-counter">500</span>+ participants • 🏆 30+ récompenses distribuées';
-            animateCounter(document.getElementById('participant-counter'), 500, 2000);
-        }, 1000);
+
+        // Mettre à jour les statistiques
+        function updateStats() {
+            const cards = document.querySelectorAll('.concours-card');
+            document.getElementById('stats').innerHTML = 
+                `🎯 ${cards.length} concours actifs détectés automatiquement`;
+        }
+
+        // Fonction principale
+        async function loadAllConcoursAutomatically() {
+            const concoursGrid = document.getElementById('concoursGrid');
+            const statsElement = document.getElementById('stats');
+            
+            try {
+                statsElement.textContent = '🔍 Recherche des concours...';
+                
+                // Découvrir automatiquement les fichiers
+                const discoveredFiles = await discoverConcoursFiles();
+                
+                if (discoveredFiles.length === 0) {
+                    statsElement.textContent = '❌ Aucun concours trouvé';
+                    concoursGrid.innerHTML = `
+                        <div class="error-state">
+                            <h2>Aucun concours détecté</h2>
+                            <p>Le système n'a pas pu détecter automatiquement les fichiers de concours.</p>
+                            <p>Vérifiez que vos fichiers suivent la convention de nommage (concours1.html, concours2.html, etc.)</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                statsElement.textContent = `📁 ${discoveredFiles.length} concours détectés - Chargement...`;
+                
+                // Charger les informations de chaque fichier
+                const concoursPromises = discoveredFiles.map(extractFileInfo);
+                const concours = await Promise.all(concoursPromises);
+                
+                // Trier par nom de fichier
+                concours.sort((a, b) => a.filename.localeCompare(b.filename));
+                
+                // Mettre à jour les statistiques
+                updateStats();
+                
+                // Afficher les concours
+                concoursGrid.innerHTML = concours.map(concour => `
+                    <div class="concours-card">
+                        <div class="concours-icon">
+                            ${concour.logoUrl ? 
+                                `<img src="${concour.logoUrl}" alt="${concour.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                 <div class="floating" style="display:none;">🎯</div>` :
+                                `<div class="floating">🎯</div>`
+                            }
+                        </div>
+                        <div class="concours-content">
+                            <div class="age-badge">Âge: ${concour.ageRange}</div>
+                            <h3 class="concours-title">${concour.title}</h3>
+                            <p class="concours-description">${concour.description}</p>
+                            <a href="${concour.url}" class="concours-link">Participer maintenant</a>
+                            <div class="file-name">${concour.filename}</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Erreur générale:', error);
+                statsElement.textContent = '❌ Erreur lors du chargement';
+                concoursGrid.innerHTML = `
+                    <div class="error-state">
+                        <h2>Erreur de chargement</h2>
+                        <p>Une erreur est survenue lors de la détection automatique des concours.</p>
+                        <p>Vérifiez la console pour plus de détails.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Recherche en temps réel
+        document.getElementById('searchInput').addEventListener('input', filterConcours);
+
+        // Démarrer automatiquement au chargement
+        document.addEventListener('DOMContentLoaded', loadAllConcoursAutomatically);
     </script>
 </body>
 </html>

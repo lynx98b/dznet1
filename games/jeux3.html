@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contes du Sahara - Histoires Algériennes</title>
+    <style>
+        /* Styles généraux */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5d372 0%, #e6b565 100%);
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* En-tête */
+        header {
+            background: linear-gradient(135deg, #d4a55a 0%, #b88a4a 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 5px solid #8c6e3a;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .desert-background {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: #d4a55a;
+            z-index: 1;
+        }
+        
+        .desert-background:before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            width: 100%;
+            height: 30px;
+            background: radial-gradient(circle at 20px 15px, transparent 15px, #d4a55a 16px);
+            background-size: 40px 30px;
+        }
+        
+        /* Conteneur principal */
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        /* Zone d'histoire */
+        .story-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 25px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid #b88a4a;
+        }
+        
+        /* Illustration animée */
+        .illustration {
+            height: 250px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #e6c9a0 0%, #d4b483 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #a78a5a;
+        }
+        
+        .animated-character {
+            font-size: 120px;
+            animation: bounce 2s infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .sun {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #ffeb3b, #ff9800);
+            border-radius: 50%;
+            box-shadow: 0 0 20px #ff9800;
+            animation: pulse 3s infinite alternate;
+        }
+        
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        /* Texte de l'histoire */
+        .story-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background-color: #ffeb3b;
+            padding: 2px 5px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .algeria-flag {
+            display: inline-block;
+            width: 20px;
+            height: 15px;
+            background: linear-gradient(to right, #006233 33%, white 33%, white 66%, #d21034 66%);
+            margin: 0 5px;
+            vertical-align: middle;
+            border: 1px solid #ccc;
+        }
+        
+        /* Contrôles audio */
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .audio-btn {
+            background-color: #d4a55a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .audio-btn:hover {
+            background-color: #b88a4a;
+            transform: scale(1.1);
+        }
+        
+        /* Options interactives */
+        .interactive-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option-btn {
+            background: linear-gradient(135deg, #d4a55a 0%, #b88a4a 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .option-btn:hover {
+            background: linear-gradient(135deg, #b88a4a 0%, #9c7540 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Sélection d'histoires */
+        .story-selection {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .story-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 15px;
+            width: 180px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #d4a55a;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .story-card-image {
+            width: 100%;
+            height: 120px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 60px;
+            color: white;
+        }
+        
+        /* Pied de page */
+        footer {
+            background-color: #8c6e3a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 5px solid #b88a4a;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .story-container {
+                padding: 15px;
+            }
+            
+            .animated-character {
+                font-size: 80px;
+            }
+            
+            .story-text {
+                font-size: 1.1rem;
+            }
+            
+            .interactive-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="desert-background"></div>
+        <div class="header-content">
+            <h1>Contes du Sahara</h1>
+            <p>Découvre les aventures du Fennec et du Chameau dans le désert algérien !</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="story-container">
+            <div class="illustration">
+                <div class="sun"></div>
+                <div class="animated-character">🦊</div>
+            </div>
+            
+            <div class="story-text">
+                <p>Il était une fois, dans le grand désert du <span class="algeria-flag"></span> <span class="highlight">Sahara algérien</span>, un petit <span class="highlight">fennec</span> nommé Fara. Avec ses grandes oreilles, il entendait tout ce qui se passait dans le désert.</p>
+                <p>Un jour, il rencontra un grand <span class="highlight">chameau</span> nommé Kamel qui portait <span class="highlight">2</span> grosses bosses sur son dos. "Je cherche de l'ombre", dit Fara. "Je peux t'aider !" répondit Kamel.</p>
+                <p>Ensemble, ils partirent à la recherche des <span class="highlight">3</span> palmiers magiques qui, selon la légende, offraient l'ombre la plus fraîche du désert.</p>
+            </div>
+            
+            <div class="audio-controls">
+                <button class="audio-btn" id="playBtn">▶</button>
+                <button class="audio-btn" id="pauseBtn">❚❚</button>
+                <button class="audio-btn" id="restartBtn">↺</button>
+            </div>
+            
+            <div class="interactive-options">
+                <button class="option-btn" onclick="showAnimal('🦊')">Fennec</button>
+                <button class="option-btn" onclick="showAnimal('🐪')">Chameau</button>
+                <button class="option-btn" onclick="showNumber(2)">2 bosses</button>
+                <button class="option-btn" onclick="showNumber(3)">3 palmiers</button>
+            </div>
+        </div>
+        
+        <h2>Choisis une autre aventure saharienne</h2>
+        <div class="story-selection">
+            <div class="story-card" onclick="loadStory(1)">
+                <div class="story-card-image" style="background:linear-gradient(135deg, #d4a55a 0%, #b88a4a 100%);">🐪</div>
+                <h3>Le Chameau et les Dattes</h3>
+            </div>
+            <div class="story-card" onclick="loadStory(2)">
+                <div class="story-card-image" style="background:linear-gradient(135deg, #e6c9a0 0%, #d4b483 100%);">🏜️</div>
+                <h3>Le Mystère des Dunes</h3>
+            </div>
+            <div class="story-card" onclick="loadStory(3)">
+                <div class="story-card-image" style="background:linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);">🌴</div>
+                <h3>L'Oasis Secrète</h3>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 Contes du Sahara - Histoires algériennes pour enfants de 5 à 8 ans</p>
+    </footer>
+
+    <script>
+        // Variables pour la narration audio
+        let audioContext;
+        let audioBuffer;
+        let audioSource;
+        let isPlaying = false;
+        
+        // Initialisation de l'audio
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                // Dans un cas réel, vous chargeriez un fichier audio ici
+                console.log("Audio initialisé");
+            } catch (e) {
+                console.error("L'audio n'est pas supporté", e);
+            }
+        }
+        
+        // Simulation de la lecture audio
+        function playAudio() {
+            if (!isPlaying) {
+                isPlaying = true;
+                document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #28a745 0%, #218838 100%)';
+                console.log("Lecture de l'histoire audio...");
+                
+                // Simulation d'un changement d'illustration pendant la narration
+                setTimeout(() => {
+                    document.querySelector('.animated-character').textContent = '🐪';
+                }, 2000);
+                
+                setTimeout(() => {
+                    document.querySelector('.animated-character').textContent = '2';
+                }, 4000);
+                
+                setTimeout(() => {
+                    document.querySelector('.animated-character').textContent = '3';
+                }, 6000);
+                
+                setTimeout(() => {
+                    document.querySelector('.animated-character').textContent = '🌴';
+                }, 8000);
+            }
+        }
+        
+        function pauseAudio() {
+            isPlaying = false;
+            document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #d4a55a 0%, #b88a4a 100%)';
+            console.log("Audio en pause");
+        }
+        
+        function restartAudio() {
+            pauseAudio();
+            document.querySelector('.animated-character').textContent = '🦊';
+            setTimeout(playAudio, 500);
+        }
+        
+        // Fonctions interactives
+        function showAnimal(animal) {
+            document.querySelector('.animated-character').textContent = animal;
+            console.log(`Affichage de l'animal ${animal}`);
+            
+            // Animation spéciale
+            const charElement = document.querySelector('.animated-character');
+            charElement.style.animation = 'none';
+            setTimeout(() => {
+                charElement.style.animation = 'bounce 2s infinite alternate';
+            }, 10);
+        }
+        
+        function showNumber(number) {
+            document.querySelector('.animated-character').textContent = number;
+            console.log(`Affichage du chiffre ${number}`);
+            
+            // Animation spéciale
+            const charElement = document.querySelector('.animated-character');
+            charElement.style.transform = 'scale(1.5)';
+            setTimeout(() => {
+                charElement.style.transform = 'scale(1)';
+            }, 300);
+        }
+        
+        function loadStory(storyId) {
+            // Dans un cas réel, vous chargeriez une nouvelle histoire depuis un serveur
+            console.log(`Chargement de l'histoire ${storyId}`);
+            
+            // Simulation de changement d'histoire
+            const stories = [
+                {
+                    title: "Le Chameau et les Dattes",
+                    character: "🐪",
+                    text: "Kamel le <span class='highlight'>chameau</span> adorait les dattes. Un jour, il découvrit un palmier avec <span class='highlight'>5</span> régimes de dattes. Mais pour les atteindre, il avait besoin de l'aide de Fara le <span class='highlight'>fennec</span>..."
+                },
+                {
+                    title: "Le Mystère des Dunes",
+                    character: "🏜️",
+                    text: "Une nuit, Fara le <span class='highlight'>fennec</span> entendit un bruit étrange venant des dunes. Avec Kamel le <span class='highlight'>chameau</span>, ils partirent explorer et découvrirent <span class='highlight'>4</span> petites traces mystérieuses..."
+                },
+                {
+                    title: "L'Oasis Secrète",
+                    character: "🌴",
+                    text: "En suivant une vieille carte trouvée dans une grotte, Fara et Kamel cherchèrent l'oasis secrète qui abritait <span class='highlight'>7</span> sources d'eau pure. Leur voyage les mena à travers <span class='highlight'>6</span> grandes dunes..."
+                }
+            ];
+            
+            const story = stories[storyId - 1];
+            document.querySelector('.animated-character').textContent = story.character;
+            document.querySelector('.story-text').innerHTML = `<p>${story.text}</p>`;
+            
+            // Animation de transition
+            const container = document.querySelector('.story-container');
+            container.style.opacity = '0.7';
+            setTimeout(() => {
+                container.style.opacity = '1';
+            }, 300);
+        }
+        
+        // Initialisation au chargement de la page
+        window.onload = function() {
+            initAudio();
+            
+            // Configuration des boutons audio
+            document.getElementById('playBtn').addEventListener('click', playAudio);
+            document.getElementById('pauseBtn').addEventListener('click', pauseAudio);
+            document.getElementById('restartBtn').addEventListener('click', restartAudio);
+        };
+    </script>
+</body>
+</html>

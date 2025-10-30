@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Défis 60 Secondes - Jeu pour Enfants</title>
+    <style>
+        /* [v1.001] Interface colorée responsive pour enfants 5-8 ans */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #ff6b6b;
+            text-shadow: 3px 3px 0 #4ecdc4;
+            margin-bottom: 10px;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        .timer-score {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .timer {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+        }
+
+        .score {
+            background: #4ecdc4;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(78,205,196,0.4);
+        }
+
+        .game-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .game-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: none;
+            padding: 30px 20px;
+            border-radius: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 25px rgba(245,87,108,0.4);
+        }
+
+        .game-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(245,87,108,0.6);
+        }
+
+        .game-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .game-area {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            color: #333;
+            min-height: 400px;
+        }
+
+        .game-area.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .choice-btn {
+            background: #ffd93d;
+            border: 4px solid #ff6b6b;
+            padding: 20px 40px;
+            margin: 10px;
+            border-radius: 15px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #333;
+        }
+
+        .choice-btn:hover {
+            background: #ffed4e;
+            transform: scale(1.1);
+        }
+
+        .back-btn {
+            background: #95e1d3;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .back-btn:hover {
+            background: #a8eddc;
+        }
+
+        .question {
+            font-size: 2em;
+            margin: 30px 0;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8em; }
+            .timer-score { font-size: 1.2em; flex-direction: column; gap: 10px; }
+            .game-btn { font-size: 1.1em; padding: 20px 15px; }
+            .choice-btn { font-size: 1.2em; padding: 15px 30px; }
+        }
+
+        /* Animations de feedback */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .correct {
+            animation: pulse 0.5s;
+            background: #4ecdc4 !important;
+        }
+
+        .wrong {
+            animation: shake 0.5s;
+            background: #ff6b6b !important;
+        }
+
+        .game-over {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            font-size: 1.5em;
+        }
+
+        .stars {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+
+        .input-number {
+            font-size: 2em;
+            padding: 15px;
+            border: 4px solid #4ecdc4;
+            border-radius: 15px;
+            width: 150px;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .submit-btn {
+            background: #4ecdc4;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 15px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .submit-btn:hover {
+            background: #45b7aa;
+            transform: scale(1.05);
+        }
+
+        .sequence-display {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .color-box {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            border: 4px solid #333;
+            animation: pulse 0.5s;
+        }
+
+        @media (max-width: 600px) {
+            .color-box { width: 60px; height: 60px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Défis 60 Secondes ! 🎮</h1>
+        
+        <div class="timer-score">
+            <div class="timer">⏱️ Temps: <span id="time">60</span>s</div>
+            <div class="score">⭐ Score: <span id="score">0</span></div>
+        </div>
+
+        <!-- Menu principal -->
+        <div id="menu" class="game-menu">
+            <button class="game-btn" onclick="startGame('color')">
+                🎨 Trouve la Couleur !
+            </button>
+            <button class="game-btn" onclick="startGame('count')">
+                ⭐ Compte les Étoiles !
+            </button>
+            <button class="game-btn" onclick="startGame('memory')">
+                🧠 Mémorise la Séquence !
+            </button>
+        </div>
+
+        <!-- Zone de jeu 1: Trouve la couleur -->
+        <div id="game-color" class="game-area">
+            <div class="question">
+                Clique sur la couleur: <br>
+                <span id="color-word" style="font-size: 1.5em;">ROUGE</span>
+            </div>
+            <div>
+                <button class="choice-btn" onclick="checkColor('rouge')">ROUGE</button>
+                <button class="choice-btn" onclick="checkColor('bleu')">BLEU</button>
+                <button class="choice-btn" onclick="checkColor('jaune')">JAUNE</button>
+                <button class="choice-btn" onclick="checkColor('vert')">VERT</button>
+            </div>
+            <button class="back-btn" onclick="backToMenu()">🏠 Retour</button>
+        </div>
+
+        <!-- Zone de jeu 2: Compte les étoiles -->
+        <div id="game-count" class="game-area">
+            <div class="question">Combien y a-t-il d'étoiles ?</div>
+            <div class="stars" id="stars-display"></div>
+            <input type="number" id="count-input" class="input-number" min="0" max="9" placeholder="?">
+            <br>
+            <button class="submit-btn" onclick="checkCount()">✔️ Valider</button>
+            <button class="back-btn" onclick="backToMenu()">🏠 Retour</button>
+        </div>
+
+        <!-- Zone de jeu 3: Mémorise la séquence -->
+        <div id="game-memory" class="game-area">
+            <div class="question">Mémorise la séquence !</div>
+            <div class="sequence-display" id="sequence-show"></div>
+            <div id="sequence-input" class="hidden">
+                <p style="font-size: 1.3em; margin: 20px;">Reproduis la séquence :</p>
+                <div>
+                    <button class="choice-btn" style="background: red;" onclick="addToSequence('red')">ROUGE</button>
+                    <button class="choice-btn" style="background: blue;" onclick="addToSequence('blue')">BLEU</button>
+                    <button class="choice-btn" style="background: yellow; color: #333;" onclick="addToSequence('yellow')">JAUNE</button>
+                    <button class="choice-btn" style="background: green;" onclick="addToSequence('green')">VERT</button>
+                </div>
+                <p style="font-size: 1.2em; margin: 20px;">Ta séquence: <span id="user-sequence"></span></p>
+                <button class="submit-btn" onclick="checkSequence()">✔️ Valider</button>
+            </div>
+            <button class="back-btn" onclick="backToMenu()">🏠 Retour</button>
+        </div>
+    </div>
+
+    <script>
+        // [v1.001] Logique du jeu - Variables globales
+        let timeLeft = 60;
+        let score = 0;
+        let currentGame = null;
+        let timerInterval = null;
+        let currentColor = '';
+        let currentCount = 0;
+        let currentSequence = [];
+        let userSequence = [];
+        let sequenceLength = 3;
+
+        const colors = ['rouge', 'bleu', 'jaune', 'vert'];
+        const colorMap = {
+            'rouge': 'red',
+            'bleu': 'blue',
+            'jaune': 'yellow',
+            'vert': 'green'
+        };
+
+        // Fonction de démarrage du jeu
+        function startGame(gameType) {
+            currentGame = gameType;
+            score = 0;
+            timeLeft = 60;
+            updateDisplay();
+            
+            document.getElementById('menu').classList.add('hidden');
+            document.getElementById(`game-${gameType}`).classList.add('active');
+            
+            startTimer();
+            
+            if (gameType === 'color') nextColorQuestion();
+            if (gameType === 'count') nextCountQuestion();
+            if (gameType === 'memory') startMemoryRound();
+        }
+
+        // Timer
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateDisplay();
+                
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        // Mise à jour affichage
+        function updateDisplay() {
+            document.getElementById('time').textContent = timeLeft;
+            document.getElementById('score').textContent = score;
+        }
+
+        // Retour au menu
+        function backToMenu() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            document.querySelectorAll('.game-area').forEach(area => {
+                area.classList.remove('active');
+            });
+            
+            document.getElementById('menu').classList.remove('hidden');
+            
+            timeLeft = 60;
+            score = 0;
+            updateDisplay();
+        }
+
+        // JEU 1: Trouve la couleur
+        function nextColorQuestion() {
+            const wordColor = colors[Math.floor(Math.random() * colors.length)];
+            const textColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            currentColor = wordColor;
+            
+            const wordElement = document.getElementById('color-word');
+            wordElement.textContent = wordColor.toUpperCase();
+            wordElement.style.color = colorMap[textColor];
+        }
+
+        function checkColor(choice) {
+            const buttons = document.querySelectorAll('#game-color .choice-btn');
+            
+            if (choice === currentColor) {
+                score += 10;
+                playSound('correct');
+                buttons.forEach(btn => {
+                    if (btn.textContent === choice.toUpperCase()) {
+                        btn.classList.add('correct');
+                        setTimeout(() => btn.classList.remove('correct'), 500);
+                    }
+                });
+            } else {
+                playSound('wrong');
+                buttons.forEach(btn => {
+                    if (btn.textContent === choice.toUpperCase()) {
+                        btn.classList.add('wrong');
+                        setTimeout(() => btn.classList.remove('wrong'), 500);
+                    }
+                });
+            }
+            
+            updateDisplay();
+            setTimeout(nextColorQuestion, 600);
+        }
+
+        // JEU 2: Compte les étoiles
+        function nextCountQuestion() {
+            currentCount = Math.floor(Math.random() * 7) + 3; // 3 à 9 étoiles
+            document.getElementById('stars-display').textContent = '⭐'.repeat(currentCount);
+            document.getElementById('count-input').value = '';
+            document.getElementById('count-input').focus();
+        }
+
+        function checkCount() {
+            const input = parseInt(document.getElementById('count-input').value);
+            
+            if (input === currentCount) {
+                score += 15;
+                playSound('correct');
+                document.getElementById('stars-display').style.animation = 'pulse 0.5s';
+            } else {
+                playSound('wrong');
+                document.getElementById('stars-display').style.animation = 'shake 0.5s';
+            }
+            
+            setTimeout(() => {
+                document.getElementById('stars-display').style.animation = '';
+            }, 500);
+            
+            updateDisplay();
+            setTimeout(nextCountQuestion, 800);
+        }
+
+        // Validation avec Entrée
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('count-input')?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') checkCount();
+            });
+        });
+
+        // JEU 3: Mémorise la séquence
+        function startMemoryRound() {
+            userSequence = [];
+            currentSequence = [];
+            
+            // Générer séquence aléatoire
+            for (let i = 0; i < sequenceLength; i++) {
+                currentSequence.push(colors[Math.floor(Math.random() * colors.length)]);
+            }
+            
+            showSequence();
+        }
+
+        function showSequence() {
+            const display = document.getElementById('sequence-show');
+            const inputDiv = document.getElementById('sequence-input');
+            
+            display.innerHTML = '';
+            inputDiv.classList.add('hidden');
+            document.getElementById('user-sequence').textContent = '';
+            
+            currentSequence.forEach((color, index) => {
+                setTimeout(() => {
+                    const box = document.createElement('div');
+                    box.className = 'color-box';
+                    box.style.background = colorMap[color];
+                    display.appendChild(box);
+                    
+                    if (index === currentSequence.length - 1) {
+                        setTimeout(() => {
+                            display.innerHTML = '<p style="font-size: 1.5em;">À toi !</p>';
+                            inputDiv.classList.remove('hidden');
+                        }, 2000);
+                    }
+                }, index * 1000);
+            });
+        }
+
+        function addToSequence(color) {
+            const frenchColor = Object.keys(colorMap).find(key => colorMap[key] === color);
+            userSequence.push(frenchColor);
+            
+            const display = document.getElementById('user-sequence');
+            display.textContent = userSequence.map(c => c.toUpperCase()).join(' - ');
+            playSound('click');
+        }
+
+        function checkSequence() {
+            if (userSequence.length !== currentSequence.length) {
+                alert('⚠️ Complète toute la séquence !');
+                return;
+            }
+            
+            const correct = userSequence.every((color, index) => color === currentSequence[index]);
+            
+            if (correct) {
+                score += 20;
+                playSound('correct');
+                sequenceLength = Math.min(sequenceLength + 1, 6); // Max 6 couleurs
+                alert('🎉 Bravo ! Niveau suivant !');
+            } else {
+                playSound('wrong');
+                sequenceLength = Math.max(sequenceLength - 1, 3); // Min 3 couleurs
+                alert('😅 Oups ! Essaie encore !');
+            }
+            
+            updateDisplay();
+            setTimeout(startMemoryRound, 1000);
+        }
+
+        // Fin du jeu
+        function endGame() {
+            clearInterval(timerInterval);
+            
+            const gameArea = document.querySelector('.game-area.active');
+            if (gameArea) {
+                gameArea.innerHTML = `
+                    <div class="game-over">
+                        <h2>🎊 Temps écoulé ! 🎊</h2>
+                        <p style="font-size: 2em; margin: 20px;">Score final: ${score} points</p>
+                        <p style="font-size: 1.2em;">${getEncouragement(score)}</p>
+                        <button class="submit-btn" onclick="backToMenu()" style="margin-top: 30px;">
+                            🔄 Rejouer
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function getEncouragement(points) {
+            if (points >= 200) return "🌟 INCROYABLE ! Tu es un champion !";
+            if (points >= 150) return "🎉 SUPER ! Tu es très rapide !";
+            if (points >= 100) return "👏 BIEN JOUÉ ! Continue comme ça !";
+            if (points >= 50) return "😊 C'est bien ! Tu t'améliores !";
+            return "💪 Continue à t'entraîner, tu vas y arriver !";
+        }
+
+        // Sons (synthèse basique)
+        function playSound(type) {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            if (type === 'correct') {
+                oscillator.frequency.value = 800;
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.3);
+            } else if (type === 'wrong') {
+                oscillator.frequency.value = 200;
+                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.2);
+            } else if (type === 'click') {
+                oscillator.frequency.value = 600;
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            }
+        }
+    </script>
+</body>
+</html>

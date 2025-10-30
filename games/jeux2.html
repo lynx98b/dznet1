@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histoires Magiques - Chiffres et Lettres</title>
+    <style>
+        /* Styles généraux */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f9ff;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        /* En-tête */
+        header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Conteneur principal */
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        /* Zone d'histoire */
+        .story-container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            padding: 25px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Illustration animée */
+        .illustration {
+            height: 250px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .animated-character {
+            font-size: 120px;
+            animation: bounce 2s infinite alternate;
+        }
+        
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        
+        /* Texte de l'histoire */
+        .story-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background-color: #ffeb3b;
+            padding: 2px 5px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        /* Contrôles audio */
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .audio-btn {
+            background-color: #4facfe;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .audio-btn:hover {
+            background-color: #3a8fd4;
+            transform: scale(1.1);
+        }
+        
+        /* Options interactives */
+        .interactive-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option-btn {
+            background-color: #ff9a9e;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .option-btn:hover {
+            background-color: #ff7b81;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Sélection d'histoires */
+        .story-selection {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .story-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 15px;
+            width: 180px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .story-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        /* Pied de page */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .story-container {
+                padding: 15px;
+            }
+            
+            .animated-character {
+                font-size: 80px;
+            }
+            
+            .story-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Histoires Magiques</h1>
+        <p>Découvre le monde merveilleux des chiffres et des lettres avec nos histoires interactives !</p>
+    </header>
+    
+    <div class="container">
+        <div class="story-container">
+            <div class="illustration">
+                <div class="animated-character">A</div>
+            </div>
+            
+            <div class="story-text">
+                <p>Il était une fois, dans un pays lointain, une petite <span class="highlight">lettre A</span> qui cherchait des amis. Elle rencontra le <span class="highlight">chiffre 1</span> qui était très timide. Ensemble, ils décidèrent de partir à l'aventure pour rencontrer d'autres lettres et chiffres.</p>
+                <p>Sur leur chemin, ils croisèrent la <span class="highlight">lettre B</span> qui dansait avec le <span class="highlight">chiffre 2</span>. "Rejoignez-nous !" crièrent-ils en formant le mot <span class="highlight">B A 1 2</span>.</p>
+            </div>
+            
+            <div class="audio-controls">
+                <button class="audio-btn" id="playBtn">▶</button>
+                <button class="audio-btn" id="pauseBtn">❚❚</button>
+                <button class="audio-btn" id="restartBtn">↺</button>
+            </div>
+            
+            <div class="interactive-options">
+                <button class="option-btn" onclick="showLetter('A')">A</button>
+                <button class="option-btn" onclick="showNumber(1)">1</button>
+                <button class="option-btn" onclick="showLetter('B')">B</button>
+                <button class="option-btn" onclick="showNumber(2)">2</button>
+            </div>
+        </div>
+        
+        <h2>Choisis une autre histoire</h2>
+        <div class="story-selection">
+            <div class="story-card" onclick="loadStory(1)">
+                <div style="background:linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%); height:120px; border-radius:10px; display:flex; justify-content:center; align-items:center; font-size:60px; color:white">C</div>
+                <h3>L'aventure du C et du 3</h3>
+            </div>
+            <div class="story-card" onclick="loadStory(2)">
+                <div style="background:linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); height:120px; border-radius:10px; display:flex; justify-content:center; align-items:center; font-size:60px; color:white">D</div>
+                <h3>Le mystère du D et du 4</h3>
+            </div>
+            <div class="story-card" onclick="loadStory(3)">
+                <div style="background:linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); height:120px; border-radius:10px; display:flex; justify-content:center; align-items:center; font-size:60px; color:white">E</div>
+                <h3>Le voyage du E et du 5</h3>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 Histoires Magiques - Conçu pour les enfants de 5 à 8 ans</p>
+    </footer>
+
+    <script>
+        // Variables pour la narration audio
+        let audioContext;
+        let audioBuffer;
+        let audioSource;
+        let isPlaying = false;
+        
+        // Initialisation de l'audio
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                // Dans un cas réel, vous chargeriez un fichier audio ici
+                console.log("Audio initialisé");
+            } catch (e) {
+                console.error("L'audio n'est pas supporté", e);
+            }
+        }
+        
+        // Simulation de la lecture audio
+        function playAudio() {
+            if (!isPlaying) {
+                isPlaying = true;
+                document.getElementById('playBtn').style.backgroundColor = '#28a745';
+                console.log("Lecture de l'histoire audio...");
+                
+                // Simulation d'un changement d'illustration pendant la narration
+                setTimeout(() => {
+                    document.querySelector('.animated-character').textContent = '1';
+                }, 2000);
+                
+                setTimeout(() => {
+                    document.querySelector('.animated-character').textContent = 'B';
+                }, 4000);
+                
+                setTimeout(() => {
+                    document.querySelector('.animated-character').textContent = '2';
+                }, 6000);
+            }
+        }
+        
+        function pauseAudio() {
+            isPlaying = false;
+            document.getElementById('playBtn').style.backgroundColor = '#4facfe';
+            console.log("Audio en pause");
+        }
+        
+        function restartAudio() {
+            pauseAudio();
+            document.querySelector('.animated-character').textContent = 'A';
+            setTimeout(playAudio, 500);
+        }
+        
+        // Fonctions interactives
+        function showLetter(letter) {
+            document.querySelector('.animated-character').textContent = letter;
+            console.log(`Affichage de la lettre ${letter}`);
+            
+            // Animation spéciale
+            const charElement = document.querySelector('.animated-character');
+            charElement.style.animation = 'none';
+            setTimeout(() => {
+                charElement.style.animation = 'bounce 2s infinite alternate';
+            }, 10);
+        }
+        
+        function showNumber(number) {
+            document.querySelector('.animated-character').textContent = number;
+            console.log(`Affichage du chiffre ${number}`);
+            
+            // Animation spéciale
+            const charElement = document.querySelector('.animated-character');
+            charElement.style.transform = 'scale(1.5)';
+            setTimeout(() => {
+                charElement.style.transform = 'scale(1)';
+            }, 300);
+        }
+        
+        function loadStory(storyId) {
+            // Dans un cas réel, vous chargeriez une nouvelle histoire depuis un serveur
+            console.log(`Chargement de l'histoire ${storyId}`);
+            
+            // Simulation de changement d'histoire
+            const stories = [
+                {
+                    title: "L'aventure du C et du 3",
+                    character: "C",
+                    text: "Le <span class='highlight'>C</span> et le <span class='highlight'>3</span> étaient les meilleurs amis du monde. Un jour, ils décidèrent de construire une cabane dans les arbres..."
+                },
+                {
+                    title: "Le mystère du D et du 4",
+                    character: "D",
+                    text: "Personne ne savait pourquoi le <span class='highlight'>D</span> et le <span class='highlight'>4</span> disparaissaient chaque après-midi. Jusqu'au jour où un petit détective les suivit..."
+                },
+                {
+                    title: "Le voyage du E et du 5",
+                    character: "E",
+                    text: "Le <span class='highlight'>E</span> et le <span class='highlight'>5</span> adoraient voyager. Un jour, ils montèrent à bord d'un train magique qui les emmena dans un pays de bonbons..."
+                }
+            ];
+            
+            const story = stories[storyId - 1];
+            document.querySelector('.animated-character').textContent = story.character;
+            document.querySelector('.story-text').innerHTML = `<p>${story.text}</p>`;
+            
+            // Animation de transition
+            const container = document.querySelector('.story-container');
+            container.style.opacity = '0.7';
+            setTimeout(() => {
+                container.style.opacity = '1';
+            }, 300);
+        }
+        
+        // Initialisation au chargement de la page
+        window.onload = function() {
+            initAudio();
+            
+            // Configuration des boutons audio
+            document.getElementById('playBtn').addEventListener('click', playAudio);
+            document.getElementById('pauseBtn').addEventListener('click', pauseAudio);
+            document.getElementById('restartBtn').addEventListener('click', restartAudio);
+        };
+    </script>
+</body>
+</html>

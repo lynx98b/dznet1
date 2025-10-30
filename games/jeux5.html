@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robo & Tom - L'importance du travail bien fait</title>
+    <style>
+        /* Styles généraux */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* En-tête */
+        header {
+            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 5px solid #e86a4c;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .tech-background {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: #ff7e5f;
+            z-index: 1;
+        }
+        
+        .tech-background:before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            width: 100%;
+            height: 30px;
+            background: 
+                radial-gradient(circle at 20px 15px, transparent 15px, #ff7e5f 16px),
+                linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.2) 50%);
+            background-size: 40px 30px, 10px 100%;
+        }
+        
+        /* Conteneur principal */
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        /* Zone d'histoire */
+        .story-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 25px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid #ff7e5f;
+        }
+        
+        /* Illustration animée */
+        .illustration {
+            height: 250px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #6a11cb;
+        }
+        
+        .character-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .robot {
+            font-size: 120px;
+            animation: bounce 2s infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .child {
+            font-size: 100px;
+            animation: bounce 2.5s infinite alternate-reverse;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .bubble {
+            position: absolute;
+            background: white;
+            border-radius: 20px;
+            padding: 10px 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            max-width: 200px;
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .robot-bubble {
+            top: 20px;
+            left: 20px;
+        }
+        
+        .child-bubble {
+            top: 20px;
+            right: 20px;
+        }
+        
+        .bubble:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+        }
+        
+        .robot-bubble:after {
+            border-right-color: white;
+            border-left: 0;
+            left: -10px;
+            top: 20px;
+        }
+        
+        .child-bubble:after {
+            border-left-color: white;
+            border-right: 0;
+            right: -10px;
+            top: 20px;
+        }
+        
+        .bubble.show {
+            opacity: 1;
+        }
+        
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        
+        /* Texte de l'histoire */
+        .story-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background-color: #ffeb3b;
+            padding: 2px 5px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .message-box {
+            background-color: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        /* Contrôles audio */
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .audio-btn {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .audio-btn:hover {
+            background: linear-gradient(135deg, #5a0db5 0%, #1c68e6 100%);
+            transform: scale(1.1);
+        }
+        
+        /* Options interactives */
+        .interactive-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .option-btn {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .option-btn:hover {
+            background: linear-gradient(135deg, #5a0db5 0%, #1c68e6 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Sélection d'histoires */
+        .story-selection {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .story-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 15px;
+            width: 180px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #6a11cb;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .story-card-image {
+            width: 100%;
+            height: 120px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 60px;
+            color: white;
+        }
+        
+        /* Pied de page */
+        footer {
+            background-color: #5a0db5;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 5px solid #6a11cb;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .story-container {
+                padding: 15px;
+            }
+            
+            .robot, .child {
+                font-size: 80px;
+            }
+            
+            .story-text {
+                font-size: 1.1rem;
+            }
+            
+            .interactive-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .character-container {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="tech-background"></div>
+        <div class="header-content">
+            <h1>Robo & Tom</h1>
+            <p>Découvre l'importance de bien faire son travail et d'écouter ses parents !</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="story-container">
+            <div class="illustration">
+                <div class="character-container">
+                    <div class="robot">🤖</div>
+                    <div class="child">👦</div>
+                </div>
+                <div class="bubble robot-bubble" id="robotBubble">Bonjour! Je suis Robo le robot!</div>
+                <div class="bubble child-bubble" id="childBubble">Et moi c'est Tom!</div>
+            </div>
+            
+            <div class="story-text">
+                <p>Tom était un petit garçon de <span class="highlight">7 ans</span> qui n'aimait pas trop ranger sa chambre. Un jour, ses parents lui offrirent un robot extraordinaire nommé <span class="highlight">Robo</span>.</p>
+                <p>"Robo t'aidera, mais tu dois suivre ses conseils", dirent ses parents. Robo expliqua à Tom: "Pour que tout fonctionne bien, nous devons faire <span class="highlight">3 choses importantes</span> chaque jour."</p>
+                
+                <div class="message-box">
+                    <p><strong>Leçon importante:</strong> Bien faire son travail et écouter ses parents rend la vie plus agréable pour tout le monde!</p>
+                </div>
+                
+                <p>La première chose était de <span class="highlight">ranger ses affaires</span>. La deuxième était de <span class="highlight">faire ses devoirs</span>. Et la troisième était d'<span class="highlight">écouter ses parents</span>.</p>
+            </div>
+            
+            <div class="audio-controls">
+                <button class="audio-btn" id="playBtn">▶</button>
+                <button class="audio-btn" id="pauseBtn">❚❚</button>
+                <button class="audio-btn" id="restartBtn">↺</button>
+            </div>
+            
+            <div class="interactive-options">
+                <button class="option-btn" onclick="showRobotMessage()">Robo parle</button>
+                <button class="option-btn" onclick="showChildMessage()">Tom parle</button>
+                <button class="option-btn" onclick="showNumber(7)">Âge de Tom</button>
+                <button class="option-btn" onclick="showNumber(3)">3 règles</button>
+            </div>
+        </div>
+        
+        <h2>Choisis une autre aventure de Robo & Tom</h2>
+        <div class="story-selection">
+            <div class="story-card" onclick="loadStory(1)">
+                <div class="story-card-image" style="background:linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">🧹</div>
+                <h3>Le Grand Rangement</h3>
+            </div>
+            <div class="story-card" onclick="loadStory(2)">
+                <div class="story-card-image" style="background:linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);">📚</div>
+                <h3>Les Devoirs Magiques</h3>
+            </div>
+            <div class="story-card" onclick="loadStory(3)">
+                <div class="story-card-image" style="background:linear-gradient(135deg, #42e695 0%, #3bb2b8 100%);">👨‍👩‍👦</div>
+                <h3>L'Anniversaire Surprise</h3>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 Robo & Tom - Apprends en t'amusant avec nos histoires interactives</p>
+    </footer>
+
+    <script>
+        // Variables pour la narration audio
+        let audioContext;
+        let audioBuffer;
+        let audioSource;
+        let isPlaying = false;
+        
+        // Initialisation de l'audio
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                // Dans un cas réel, vous chargeriez un fichier audio ici
+                console.log("Audio initialisé");
+            } catch (e) {
+                console.error("L'audio n'est pas supporté", e);
+            }
+        }
+        
+        // Simulation de la lecture audio
+        function playAudio() {
+            if (!isPlaying) {
+                isPlaying = true;
+                document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #28a745 0%, #218838 100%)';
+                console.log("Lecture de l'histoire audio...");
+                
+                // Simulation d'un changement d'illustration pendant la narration
+                setTimeout(() => {
+                    document.querySelector('.robot').textContent = '🛠️';
+                }, 2000);
+                
+                setTimeout(() => {
+                    document.querySelector('.child').textContent = '📚';
+                }, 4000);
+                
+                setTimeout(() => {
+                    document.querySelector('.robot').textContent = '👍';
+                }, 6000);
+            }
+        }
+        
+        function pauseAudio() {
+            isPlaying = false;
+            document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)';
+            console.log("Audio en pause");
+        }
+        
+        function restartAudio() {
+            pauseAudio();
+            document.querySelector('.robot').textContent = '🤖';
+            document.querySelector('.child').textContent = '👦';
+            setTimeout(playAudio, 500);
+        }
+        
+        // Fonctions interactives
+        function showRobotMessage() {
+            const bubble = document.getElementById('robotBubble');
+            bubble.classList.add('show');
+            setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 3000);
+            
+            // Animation spéciale
+            const robotElement = document.querySelector('.robot');
+            robotElement.style.animation = 'none';
+            setTimeout(() => {
+                robotElement.style.animation = 'bounce 2s infinite alternate';
+            }, 10);
+        }
+        
+        function showChildMessage() {
+            const bubble = document.getElementById('childBubble');
+            bubble.classList.add('show');
+            setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 3000);
+            
+            // Animation spéciale
+            const childElement = document.querySelector('.child');
+            childElement.style.animation = 'none';
+            setTimeout(() => {
+                childElement.style.animation = 'bounce 2.5s infinite alternate-reverse';
+            }, 10);
+        }
+        
+        function showNumber(number) {
+            document.querySelector('.child').textContent = number;
+            console.log(`Affichage du chiffre ${number}`);
+            
+            // Animation spéciale
+            const childElement = document.querySelector('.child');
+            childElement.style.transform = 'scale(1.5)';
+            setTimeout(() => {
+                childElement.style.transform = 'scale(1)';
+            }, 300);
+        }
+        
+        function loadStory(storyId) {
+            // Dans un cas réel, vous chargeriez une nouvelle histoire depuis un serveur
+            console.log(`Chargement de l'histoire ${storyId}`);
+            
+            // Simulation de changement d'histoire
+            const stories = [
+                {
+                    title: "Le Grand Rangement",
+                    robotChar: "🧹",
+                    childChar: "🚀",
+                    text: "Robo aida Tom à transformer le rangement en jeu amusant. Ils firent <span class='highlight'>2 équipes</span> et comptèrent <span class='highlight'>5 jouets</span> à ranger chacun. Tom découvrit que ranger pouvait être aussi amusant que jouer!"
+                },
+                {
+                    title: "Les Devoirs Magiques",
+                    robotChar: "📚",
+                    childChar: "✏️",
+                    text: "Tom n'aimait pas faire ses devoirs. Robo lui montra comment les transformer en aventure. Ils firent <span class='highlight'>4 exercices</span> de mathématiques en sautant sur des nombres magiques. Tom obtint <span class='highlight'>10/10</span> et fut très fier!"
+                },
+                {
+                    title: "L'Anniversaire Surprise",
+                    robotChar: "🎁",
+                    childChar: "🎉",
+                    text: "Les parents de Tom lui avaient préparé une surprise pour son anniversaire. Robo l'aida à être sage et à écouter ses parents toute la semaine. En récompense, il eut une fête avec <span class='highlight'>6 amis</span> et <span class='highlight'>8 ballons</span> magiques!"
+                }
+            ];
+            
+            const story = stories[storyId - 1];
+            document.querySelector('.robot').textContent = story.robotChar;
+            document.querySelector('.child').textContent = story.childChar;
+            document.querySelector('.story-text').innerHTML = `<p>${story.text}</p>`;
+            
+            // Animation de transition
+            const container = document.querySelector('.story-container');
+            container.style.opacity = '0.7';
+            setTimeout(() => {
+                container.style.opacity = '1';
+            }, 300);
+        }
+        
+        // Initialisation au chargement de la page
+        window.onload = function() {
+            initAudio();
+            
+            // Configuration des boutons audio
+            document.getElementById('playBtn').addEventListener('click', playAudio);
+            document.getElementById('pauseBtn').addEventListener('click', pauseAudio);
+            document.getElementById('restartBtn').addEventListener('click', restartAudio);
+            
+            // Afficher les bulles au chargement
+            setTimeout(showRobotMessage, 1000);
+            setTimeout(showChildMessage, 2500);
+        };
+    </script>
+</body>
+</html>

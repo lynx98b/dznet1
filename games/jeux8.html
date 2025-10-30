@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Algérie - Découvre les Traditions Culinaires !</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #C44536 0%, #FFD93D 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .age-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #4ECDC4;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .quiz-container {
+            padding: 30px;
+        }
+        
+        .question-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #C44536;
+        }
+        
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .option-btn {
+            background: white;
+            border: 3px solid #e1e8ed;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .option-btn:hover {
+            border-color: #3498db;
+            transform: scale(1.05);
+        }
+        
+        .option-btn.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        
+        .option-btn.wrong {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        
+        .image-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .food-image {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .feedback-section {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feedback-correct {
+            background: #d4edda;
+            color: #155724;
+            border: 3px solid #28a745;
+        }
+        
+        .feedback-wrong {
+            background: #f8d7da;
+            color: #721c24;
+            border: 3px solid #dc3545;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+        }
+        
+        .next-btn, .restart-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .next-btn:hover, .restart-btn:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+        
+        .next-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .score-section {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .score-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .stars {
+            font-size: 2rem;
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e1e8ed;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(135deg, #FFD93D 0%, #C44536 100%);
+            transition: width 0.3s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .bounce {
+            animation: bounce 0.5s ease infinite;
+        }
+        
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #FFD93D;
+            animation: confetti 2s ease-in-out forwards;
+        }
+        
+        @media (max-width: 768px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .question-text {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="age-badge">5-8 ans</div>
+            <h1>🍽️ Quiz Algérie Gourmande</h1>
+            <p class="subtitle">Découvre les délicieuses traditions culinaires algériennes !</p>
+        </header>
+        
+        <div class="quiz-container">
+            <div class="progress-bar">
+                <div class="progress" id="progressBar" style="width: 0%"></div>
+            </div>
+            
+            <div class="question-section">
+                <h2 class="question-text" id="questionText">Chargement du quiz...</h2>
+                
+                <div class="image-section">
+                    <img id="foodImage" class="food-image" src="" alt="Plat algérien" style="display: none;">
+                </div>
+                
+                <div class="options-grid" id="optionsGrid">
+                    <!-- Les options seront générées ici -->
+                </div>
+            </div>
+            
+            <div class="feedback-section" id="feedbackSection" style="display: none;">
+                <!-- Le feedback sera affiché ici -->
+            </div>
+            
+            <div class="controls">
+                <div class="score" id="scoreDisplay">Score: 0/0</div>
+                <button class="next-btn" id="nextBtn" onclick="nextQuestion()" disabled>Question Suivante →</button>
+            </div>
+            
+            <div class="score-section" id="finalScore" style="display: none;">
+                <h2 class="score-text" id="finalScoreText">Bravo !</h2>
+                <div class="stars" id="starsContainer"></div>
+                <p id="finalMessage">Tu es un vrai expert de la cuisine algérienne !</p>
+                <button class="restart-btn" onclick="restartQuiz()">🔄 Rejouer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions du quiz sur l'Algérie et ses traditions culinaires
+        const quizQuestions = [
+            {
+                question: "Quel est ce plat traditionnel algérien à base de semoule ?",
+                image: "🥘",
+                options: ["Le couscous", "La pizza", "Les hamburgers", "Les sushis"],
+                correctAnswer: 0,
+                explanation: "Exact ! Le couscous est le plat traditionnel algérien le plus célèbre, préparé avec de la semoule et des légumes."
+            },
+            {
+                question: "Quelle pâtisserie algérienne est en forme d'étoile et contient des amandes ?",
+                image: "⭐",
+                options: ["La baklawa", "Le gâteau au chocolat", "Les croissants", "Les donuts"],
+                correctAnswer: 0,
+                explanation: "Bravo ! La baklawa est une délicieuse pâtisserie en forme d'étoile avec des amandes et du miel."
+            },
+            {
+                question: "Quelle boisson traditionnelle algérienne est à base de menthe ?",
+                image: "🍵",
+                options: ["Le café", "Le jus d'orange", "Le thé à la menthe", "Le lait"],
+                correctAnswer: 2,
+                explanation: "Très bien ! Le thé à la menthe est la boisson traditionnelle servie pour accueillir les invités."
+            },
+            {
+                question: "Quel fruit est très populaire en Algérie et pousse dans les oasis ?",
+                image: "🌴",
+                options: ["La pomme", "La datte", "La banane", "L'orange"],
+                correctAnswer: 1,
+                explanation: "Excellent ! Les dattes sont les fruits des palmiers-dattiers qui poussent dans les oasis algériennes."
+            },
+            {
+                question: "Comment s'appelle le pain traditionnel algérien ?",
+                image: "🍞",
+                options: ["La baguette", "Le kesra", "Le pain de mie", "Le croissant"],
+                correctAnswer: 1,
+                explanation: "Oui ! Le kesra est le pain traditionnel algérien, souvent cuit dans un four en terre."
+            },
+            {
+                question: "Quel plat algérien ressemble à une crêpe et se mange avec du miel ?",
+                image: "🥞",
+                options: ["La pizza", "Le baghrir", "Les frites", "Le riz"],
+                correctAnswer: 1,
+                explanation: "Parfait ! Le baghrir est une crêpe algérienne avec des petits trous, délicieuse avec du miel."
+            },
+            {
+                question: "Quelle ville algérienne est célèbre pour ses oranges ?",
+                image: "🍊",
+                options: ["Alger", "Blida", "Oran", "Constantine"],
+                correctAnswer: 1,
+                explanation: "Très bien ! Blida est appelée 'la ville des roses' mais aussi réputée pour ses délicieuses oranges."
+            },
+            {
+                question: "Quel est ce plat algérien à base de pois chiches et de viande ?",
+                image: "🍲",
+                options: ["Le hamburger", "La chorba", "Les spaghettis", "Le hot-dog"],
+                correctAnswer: 1,
+                explanation: "Exact ! La chorba est une soupe traditionnelle avec des pois chiches, très populaire pendant le Ramadan."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+
+        // Éléments DOM
+        const questionText = document.getElementById('questionText');
+        const optionsGrid = document.getElementById('optionsGrid');
+        const feedbackSection = document.getElementById('feedbackSection');
+        const nextBtn = document.getElementById('nextBtn');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const finalScore = document.getElementById('finalScore');
+        const finalScoreText = document.getElementById('finalScoreText');
+        const finalMessage = document.getElementById('finalMessage');
+        const starsContainer = document.getElementById('starsContainer');
+        const progressBar = document.getElementById('progressBar');
+        const foodImage = document.getElementById('foodImage');
+
+        // Démarrer le quiz
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            updateScore();
+            showQuestion();
+            finalScore.style.display = 'none';
+        }
+
+        // Afficher la question actuelle
+        function showQuestion() {
+            const question = quizQuestions[currentQuestionIndex];
+            
+            // Mettre à jour la barre de progression
+            const progress = ((currentQuestionIndex) / quizQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Afficher la question et l'image
+            questionText.textContent = question.question;
+            foodImage.textContent = question.image;
+            foodImage.style.display = 'block';
+            
+            // Générer les options
+            optionsGrid.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.onclick = () => selectAnswer(index);
+                optionsGrid.appendChild(button);
+            });
+            
+            // Cacher le feedback et désactiver le bouton suivant
+            feedbackSection.style.display = 'none';
+            nextBtn.disabled = true;
+        }
+
+        // Sélectionner une réponse
+        function selectAnswer(selectedIndex) {
+            const question = quizQuestions[currentQuestionIndex];
+            const options = document.querySelectorAll('.option-btn');
+            const feedback = feedbackSection;
+            
+            // Désactiver tous les boutons
+            options.forEach(btn => btn.onclick = null);
+            
+            // Marquer la bonne et mauvaise réponse
+            options[question.correctAnswer].classList.add('correct');
+            if (selectedIndex !== question.correctAnswer) {
+                options[selectedIndex].classList.add('wrong');
+            }
+            
+            // Vérifier la réponse
+            const isCorrect = selectedIndex === question.correctAnswer;
+            if (isCorrect) {
+                score++;
+                feedback.textContent = "🎉 Bravo ! " + question.explanation;
+                feedback.className = 'feedback-section feedback-correct';
+                createConfetti();
+            } else {
+                feedback.textContent = "💡 Presque ! " + question.explanation;
+                feedback.className = 'feedback-section feedback-wrong';
+            }
+            
+            feedback.style.display = 'block';
+            nextBtn.disabled = false;
+            
+            // Enregistrer la réponse de l'utilisateur
+            userAnswers.push({
+                question: question.question,
+                userAnswer: question.options[selectedIndex],
+                correctAnswer: question.options[question.correctAnswer],
+                isCorrect: isCorrect
+            });
+            
+            updateScore();
+        }
+
+        // Question suivante
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < quizQuestions.length) {
+                showQuestion();
+            } else {
+                showFinalScore();
+            }
+        }
+
+        // Mettre à jour le score
+        function updateScore() {
+            scoreDisplay.textContent = `Score: ${score}/${currentQuestionIndex}`;
+        }
+
+        // Afficher le score final
+        function showFinalScore() {
+            const percentage = (score / quizQuestions.length) * 100;
+            
+            // Générer les étoiles
+            starsContainer.innerHTML = '';
+            const starCount = Math.ceil(percentage / 20);
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('span');
+                star.textContent = '⭐';
+                star.classList.add('bounce');
+                star.style.animationDelay = `${i * 0.2}s`;
+                starsContainer.appendChild(star);
+            }
+            
+            // Message final personnalisé
+            let message = "";
+            if (percentage >= 80) {
+                message = "🌟 Tu es un vrai chef algérien ! 🌟";
+            } else if (percentage >= 60) {
+                message = "👍 Très bien ! Tu connais bien la cuisine algérienne !";
+            } else if (percentage >= 40) {
+                message = "😊 Pas mal ! Continue à découvrir les plats algériens !";
+            } else {
+                message = "👋 C'est un bon début ! Rejoue pour apprendre plus !";
+            }
+            
+            finalScoreText.textContent = `Score Final: ${score}/${quizQuestions.length}`;
+            finalMessage.textContent = message;
+            
+            // Afficher la section finale
+            document.querySelector('.question-section').style.display = 'none';
+            document.querySelector('.controls').style.display = 'none';
+            feedbackSection.style.display = 'none';
+            finalScore.style.display = 'block';
+            
+            // Confetti de célébration
+            createConfetti();
+        }
+
+        // Redémarrer le quiz
+        function restartQuiz() {
+            document.querySelector('.question-section').style.display = 'block';
+            document.querySelector('.controls').style.display = 'flex';
+            startQuiz();
+        }
+
+        // Créer des confettis
+        function createConfetti() {
+            const colors = ['#FFD93D', '#C44536', '#4ECDC4', '#3498db', '#9b59b6'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    // Supprimer après l'animation
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }, i * 100);
+            }
+        }
+
+        // Démarrer le quiz au chargement
+        document.addEventListener('DOMContentLoaded', startQuiz);
+    </script>
+</body>
+</html>

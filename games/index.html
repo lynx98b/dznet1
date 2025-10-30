@@ -241,7 +241,7 @@
             const discoveredFiles = [];
             
             // Tester les patterns avec numéros (jeux1.html, jeux2.html, etc.)
-            for (let i = 1; i <= 20; i++) {
+            for (let i = 0; i <= 20; i++) {
                 for (const pattern of patterns) {
                     const filename = `${pattern}${i}.html`;
                     if (await fileExists(filename)) {

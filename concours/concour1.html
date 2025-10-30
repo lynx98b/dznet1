@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concours Robotique Junior - Algérie 🤖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        /* [v1.001] Page concours robotique enfants 5-8 ans - Style inspiré document fourni */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 8px solid #FF6B35;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #4568dc 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            position: relative;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            text-shadow: 3px 3px 0 #2d3561;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .champion-section {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border-bottom: 8px solid #4568dc;
+        }
+
+        .champion-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 6px solid #FFD93D;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #36D1DC 0%, #5B86E5 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .champion-name {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+        }
+
+        .champion-score {
+            font-size: 1.8rem;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .champion-story {
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: right;
+            direction: rtl;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            border: 3px solid #FFD93D;
+        }
+
+        .participants-section {
+            padding: 30px;
+        }
+
+        .participants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .participant-card {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 3px solid #00ACC1;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .participant-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .participant-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #4568dc 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .participant-info {
+            flex: 1;
+        }
+
+        .participant-name {
+            font-weight: 700;
+            color: #01579B;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .participant-score {
+            color: #666;
+            font-weight: 600;
+        }
+
+        .participant-reward {
+            background: #FFD93D;
+            color: #C44536;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        .rank-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #4568dc 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .top-three {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+        }
+
+        .rewards-section {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .reward-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .reward-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .motivation-section {
+            background: linear-gradient(135deg, #F7971E 0%, #FFD200 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .motivation-text {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .next-month-btn {
+            background: white;
+            color: #F7971E;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .next-month-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        footer {
+            background: #2d3561;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            .participants-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .champion-name {
+                font-size: 2rem;
+            }
+            
+            .champion-avatar {
+                width: 120px;
+                height: 120px;
+                font-size: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 مسابقة الروبوتات المبتدئين 🤖</h1>
+            <div class="subtitle">اكتشف أبطال الروبوتات لهذا الشهر! 🔧⚙️</div>
+        </header>
+
+        <!-- Champion du mois -->
+        <div class="champion-section">
+            <div class="champion-avatar floating">🏆</div>
+            <div class="champion-name">أمين بن يحيى</div>
+            <div class="champion-score">⭐ 995 نقطة</div>
+            <div class="champion-story">
+                "في مشروعي صنعت روبوت صغير يساعد جدتي في سقي النباتات! استخدمت أردوينو ومحرك صغير وحساس رطوبة. تعلمت كيف أبرمج الروبوت ليعمل تلقائياً عندما تكون التربة جافة. أيضاً ساعدت أصدقائي في المدرسة لفهم كيف تعمل الدوائر الكهربائية. أحلم أن أصبح مهندس روبوتات وأصنع روبوتات تساعد الناس! 🚀🔧"
+            </div>
+        </div>
+
+        <!-- Liste des participants -->
+        <div class="participants-section">
+            <h2 style="text-align: center; color: #2d3561; margin-bottom: 20px;">🏅 ترتيب أبطال الروبوتات</h2>
+            <div class="participants-grid">
+                <!-- Top 3 -->
+                <div class="participant-card">
+                    <div class="rank-badge top-three">1</div>
+                    <div class="participant-avatar">🏆</div>
+                    <div class="participant-info">
+                        <div class="participant-name">أمين بن يحيى</div>
+                        <div class="participant-score">995 نقطة</div>
+                        <div class="participant-reward">🎫 بطاقة RABOT 2026 + 🔧 Kit Arduino Pro</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge top-three">2</div>
+                    <div class="participant-avatar">🥈</div>
+                    <div class="participant-info">
+                        <div class="participant-name">سلمى زروقي</div>
+                        <div class="participant-score">970 نقطة</div>
+                        <div class="participant-reward">📚 تكوين روبوتات + 🖼️ ملصق ROBOT</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge top-three">3</div>
+                    <div class="participant-avatar">🥉</div>
+                    <div class="participant-info">
+                        <div class="participant-name">ياسين عماري</div>
+                        <div class="participant-score">945 نقطة</div>
+                        <div class="participant-reward">🔧 Kit Arduino Starter + 📚 كتاب البرمجة</div>
+                    </div>
+                </div>
+
+                <!-- Participants 4-30 -->
+                <div class="participant-card">
+                    <div class="rank-badge">4</div>
+                    <div class="participant-avatar">🤖</div>
+                    <div class="participant-info">
+                        <div class="participant-name">زينب مرابط</div>
+                        <div class="participant-score">920 نقطة</div>
+                        <div class="participant-reward">🖼️ ملصق ROBOT</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">5</div>
+                    <div class="participant-avatar">⚙️</div>
+                    <div class="participant-info">
+                        <div class="participant-name">رياض بوعلام</div>
+                        <div class="participant-score">900 نقطة</div>
+                        <div class="participant-reward">📚 كتاب الإلكترونيات</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">6</div>
+                    <div class="participant-avatar">🔩</div>
+                    <div class="participant-info">
+                        <div class="participant-name">نسرين حمادي</div>
+                        <div class="participant-score">885 نقطة</div>
+                        <div class="participant-reward">🔧 أدوات روبوتات صغيرة</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">7</div>
+                    <div class="participant-avatar">💡</div>
+                    <div class="participant-info">
+                        <div class="participant-name">كريم بن صالح</div>
+                        <div class="participant-score">870 نقطة</div>
+                        <div class="participant-reward">📚 مجلة روبوتات</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">8</div>
+                    <div class="participant-avatar">🔌</div>
+                    <div class="participant-info">
+                        <div class="participant-name">ريان شريف</div>
+                        <div class="participant-score">855 نقطة</div>
+                        <div class="participant-reward">💻 دورة برمجة أونلاين</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">9</div>
+                    <div class="participant-avatar">🚀</div>
+                    <div class="participant-info">
+                        <div class="participant-name">هدى بلقاسم</div>
+                        <div class="participant-score">840 نقطة</div>
+                        <div class="participant-reward">🎨 أدوات تصميم 3D</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">10</div>
+                    <div class="participant-avatar">🌟</div>
+                    <div class="participant-info">
+                        <div class="participant-name">سفيان مزياني</div>
+                        <div class="participant-score">825 نقطة</div>
+                        <div class="participant-reward">🔧 مفك كهربائي</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">11</div>
+                    <div class="participant-avatar">⚡</div>
+                    <div class="participant-info">
+                        <div class="participant-name">مريم قادري</div>
+                        <div class="participant-score">810 نقطة</div>
+                        <div class="participant-reward">📚 كتاب الروبوتات</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">12</div>
+                    <div class="participant-avatar">🎯</div>
+                    <div class="participant-info">
+                        <div class="participant-name">عبد الرحمن دحماني</div>
+                        <div class="participant-score">795 نقطة</div>
+                        <div class="participant-reward">🖼️ ملصق تعليمي</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">13</div>
+                    <div class="participant-avatar">🔬</div>
+                    <div class="participant-info">
+                        <div class="participant-name">إيمان بن سعيد</div>
+                        <div class="participant-score">780 نقطة</div>
+                        <div class="participant-reward">🔍 عدسة مكبرة</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">14</div>
+                    <div class="participant-avatar">🏗️</div>
+                    <div class="participant-info">
+                        <div class="participant-name">وليد بوشامة</div>
+                        <div class="participant-score">765 نقطة</div>
+                        <div class="participant-reward">🧩 لعبة بناء</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">15</div>
+                    <div class="participant-avatar">🎓</div>
+                    <div class="participant-info">
+                        <div class="participant-name">سارة بن عمر</div>
+                        <div class="participant-score">750 نقطة</div>
+                        <div class="participant-reward">📚 دفتر ملاحظات تقني</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">16</div>
+                    <div class="participant-avatar">🎨</div>
+                    <div class="participant-info">
+                        <div class="participant-name">أيوب لعماري</div>
+                        <div class="participant-score">735 نقطة</div>
+                        <div class="participant-reward">✏️ أقلام تلوين تقنية</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">17</div>
+                    <div class="participant-avatar">🔭</div>
+                    <div class="participant-info">
+                        <div class="participant-name">فاطمة الزهراء براهيمي</div>
+                        <div class="participant-score">720 نقطة</div>
+                        <div class="participant-reward">📖 مجلة علوم</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">18</div>
+                    <div class="participant-avatar">💻</div>
+                    <div class="participant-info">
+                        <div class="participant-name">إلياس بوزيان</div>
+                        <div class="participant-score">705 نقطة</div>
+                        <div class="participant-reward">⌨️ لوحة مفاتيح صغيرة</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">19</div>
+                    <div class="participant-avatar">🎮</div>
+                    <div class="participant-info">
+                        <div class="participant-name">حنان محمدي</div>
+                        <div class="participant-score">690 نقطة</div>
+                        <div class="participant-reward">🕹️ لعبة برمجة</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">20</div>
+                    <div class="participant-avatar">🌈</div>
+                    <div class="participant-info">
+                        <div class="participant-name">عماد بن طالب</div>
+                        <div class="participant-score">675 نقطة</div>
+                        <div class="participant-reward">🎨 حقيبة أدوات</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">21</div>
+                    <div class="participant-avatar">🎪</div>
+                    <div class="participant-info">
+                        <div class="participant-name">نادية سعداوي</div>
+                        <div class="participant-score">660 نقطة</div>
+                        <div class="participant-reward">📚 كتاب قصص علمية</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">22</div>
+                    <div class="participant-avatar">🛠️</div>
+                    <div class="participant-info">
+                        <div class="participant-name">بلال زغود</div>
+                        <div class="participant-score">645 نقطة</div>
+                        <div class="participant-reward">🔧 علبة أدوات</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">23</div>
+                    <div class="participant-avatar">🎯</div>
+                    <div class="participant-info">
+                        <div class="participant-name">سمية بوعزة</div>
+                        <div class="participant-score">630 نقطة</div>
+                        <div class="participant-reward">📐 مسطرة تقنية</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">24</div>
+                    <div class="participant-avatar">🌍</div>
+                    <div class="participant-info">
+                        <div class="participant-name">يوسف مقراني</div>
+                        <div class="participant-score">615 نقطة</div>
+                        <div class="participant-reward">🌐 USB تعليمي</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">25</div>
+                    <div class="participant-avatar">🎨</div>
+                    <div class="participant-info">
+                        <div class="participant-name">ليندا شلالي</div>
+                        <div class="participant-score">600 نقطة</div>
+                        <div class="participant-reward">🖍️ أقلام فلوماستر</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">26</div>
+                    <div class="participant-avatar">📡</div>
+                    <div class="participant-info">
+                        <div class="participant-name">معاذ بن عيسى</div>
+                        <div class="participant-score">585 نقطة</div>
+                        <div class="participant-reward">📻 راديو صغير</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">27</div>
+                    <div class="participant-avatar">🎓</div>
+                    <div class="participant-info">
+                        <div class="participant-name">أسماء بوقرة</div>
+                        <div class="participant-score">570 نقطة</div>
+                        <div class="participant-reward">📝 دفتر رسومات</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">28</div>
+                    <div class="participant-avatar">🔋</div>
+                    <div class="participant-info">
+                        <div class="participant-name">فارس بلحاج</div>
+                        <div class="participant-score">555 نقطة</div>
+                        <div class="participant-reward">🔋 بطاريات قابلة للشحن</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">29</div>
+                    <div class="participant-avatar">🎈</div>
+                    <div class="participant-info">
+                        <div class="participant-name">ملاك عروسي</div>
+                        <div class="participant-score">540 نقطة</div>
+                        <div class="participant-reward">🎁 مفاجأة تقنية</div>
+                    </div>
+                </div>
+
+                <div class="participant-card">
+                    <div class="rank-badge">30</div>
+                    <div class="participant-avatar">🏅</div>
+                    <div class="participant-info">
+                        <div class="participant-name">عبد الله مهداوي</div>
+                        <div class="participant-score">525 نقطة</div>
+                        <div class="participant-reward">🏅 شهادة مشاركة</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section des récompenses -->
+        <div class="rewards-section">
+            <h2>🎁 الجوائز الخاصة</h2>
+            <div class="rewards-grid">
+                <div class="reward-card">
+                    <div class="reward-emoji">🎫</div>
+                    <div>بطاقة RABOT الجزائر 2026</div>
+                </div>
+                <div class="reward-card">
+                    <div class="reward-emoji">🔧</div>
+                    <div>Kit Arduino</div>
+                </div>
+                <div class="reward-card">
+                    <div class="reward-emoji">📚</div>
+                    <div>تكوين في الروبوتات</div>
+                </div>
+                <div class="reward-card">
+                    <div class="reward-emoji">🖼️</div>
+                    <div>Poster ROBOT</div>
+                </div>
+                <div class="reward-card">
+                    <div class="reward-emoji">💻</div>
+                    <div>دورات برمجة</div>
+                </div>
+                <div class="reward-card">
+                    <div class="reward-emoji">🛠️</div>
+                    <div>أدوات إلكترونية</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section motivation -->
+        <div class="motivation-section">
+            <h2>🚀 هل تعلم؟</h2>
+            <div class="motivation-text">
+                كل طفل يشارك هو بطل حقيقي في عالم الروبوتات!<br>
+                الشهر القادم، قد تكون أنت على منصة التتويج! 🤖✨
+            </div>
+            <button class="next-month-btn">أريد المشاركة في المسابقة القادمة! 🔧</button>
+        </div>
+
+        <footer>
+            <p>🌟 <strong>مبروك لجميع أبطال الروبوتات!</strong> 🌟</p>
+            <p style="margin-top: 10px; opacity: 0.9;">استمروا في الابتكار والتعلم والإبداع! 🤖💡</p>
+        </footer>
+    </div>
+
+    <script>
+        /* [v1.001] Script interactif concours robotique */
+        
+        // Animation bouton inscription
+        document.querySelector('.next-month-btn').addEventListener('click', function() {
+            this.innerHTML = '🎉 تم التسجيل! نراك قريباً أيها البطل! 🤖';
+            this.style.background = '#667eea';
+            this.style.color = 'white';
+            celebrate();
+        });
+
+        // Fonction célébration
+        function celebrate() {
+            const emojis = ['🤖', '⚙️', '🔧', '⚡', '🏆', '✨', '💡'];
+            const container = document.querySelector('.motivation-section');
+            
+            for (let i = 0; i < 20; i++) {
+                const emoji = document.createElement('div');
+                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.position = 'absolute';
+                emoji.style.fontSize = '30px';
+                emoji.style.left = Math.random() * 100 + '%';
+                emoji.style.animation = `float ${1 + Math.random() * 2}s ease-in-out forwards`;
+                container.appendChild(emoji);
+                
+                setTimeout(() => emoji.remove(), 3000);
+            }
+        }
+
+        // Effet pulse top 3
+        const topThreeCards = document.querySelectorAll('.top-three');
+        setInterval(() => {
+            topThreeCards.forEach(card => {
+                card.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    card.style.transform = 'scale(1)';
+                }, 500);
+            });
+        }, 3000);
+
+        console.log("✅ Page concours robotique chargée - v1.001");
+    </script>
+</body>
+</html>

@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conseils Super Héros - Bien-être et Écrans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Nunito', sans-serif;
         }
 
         body {
             background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
             min-height: 100vh;
             padding: 20px;
+            line-height: 1.6;
         }
 
         .container {
@@ -36,6 +38,12 @@
             position: relative;
         }
 
+        h1, h2, h3 {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
         h1 {
             font-size: 2.8rem;
             text-shadow: 3px 3px 0 #2C7873;
@@ -45,6 +53,7 @@
         .subtitle {
             font-size: 1.4rem;
             opacity: 0.9;
+            font-weight: 600;
         }
 
         .hero-emoji {
@@ -87,7 +96,7 @@
         .card-title {
             font-size: 1.5rem;
             color: #2E7D32;
-            font-weight: bold;
+            font-weight: 700;
         }
 
         .advice-list {
@@ -101,10 +110,12 @@
             border-radius: 15px;
             border-left: 5px solid #4CAF50;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            font-size: 1.1rem;
         }
 
         .advice-item strong {
             color: #2E7D32;
+            font-weight: 700;
         }
 
         .timer-section {
@@ -122,6 +133,7 @@
             color: #C44536;
             margin: 20px 0;
             text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+            font-family: 'Fredoka One', cursive;
         }
 
         .timer-controls {
@@ -141,6 +153,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-weight: 600;
         }
 
         .timer-btn:hover {
@@ -157,6 +170,7 @@
             text-align: center;
             font-size: 1.2rem;
             color: #E17055;
+            font-weight: 600;
         }
 
         .posture-guide {
@@ -180,6 +194,7 @@
             padding: 20px;
             border-radius: 15px;
             backdrop-filter: blur(10px);
+            font-weight: 600;
         }
 
         .step-emoji {
@@ -199,6 +214,7 @@
         .promise-text {
             font-size: 1.3rem;
             margin-bottom: 20px;
+            font-weight: 600;
         }
 
         .promise-btn {
@@ -242,6 +258,15 @@
             animation: pulse 2s infinite;
         }
 
+        /* Améliorations de la lisibilité */
+        .advice-item {
+            line-height: 1.5;
+        }
+
+        .card-title {
+            line-height: 1.3;
+        }
+
         @media (max-width: 768px) {
             .advice-sections {
                 grid-template-columns: 1fr;
@@ -254,6 +279,15 @@
             
             .timer-display {
                 font-size: 3rem;
+            }
+            
+            .timer-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .timer-btn {
+                width: 200px;
             }
         }
     </style>
@@ -275,7 +309,7 @@
                 </div>
                 <ul class="advice-list">
                     <li class="advice-item">
-                        <strong>20-20-20</strong> : Toutes les 20 minutes, regarde 20 secondes à 20 pieds (6 mètres) loin
+                        <strong>20-20-20</strong> : Toutes les 20 minutes, regarde 20 secondes au loin
                     </li>
                     <li class="advice-item">
                         <strong>Pauses actives</strong> : Danse, saute, fais des étirements entre les sessions
@@ -387,8 +421,9 @@
     </div>
 
     <script>
+        // [Le même script qu'avant - gardé pour la fonctionnalité]
         let timer;
-        let timeLeft = 20 * 60; // 20 minutes en secondes
+        let timeLeft = 20 * 60;
         let isRunning = false;
 
         function updateTimerDisplay() {
@@ -408,12 +443,9 @@
                     if (timeLeft === 0) {
                         clearInterval(timer);
                         isRunning = false;
-                        // Animation et sonnerie
                         document.getElementById('timer').classList.add('pulse');
                         document.getElementById('break-message').innerHTML = 
                             '🎉 <strong>BRAVO !</strong> C\'est l\'heure de la pause ! Danse et bouge ! 💃';
-                        
-                        // Sonnerie douce
                         playBellSound();
                     }
                 }, 1000);
@@ -436,7 +468,6 @@
         }
 
         function playBellSound() {
-            // Créer un son de cloche doux
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
@@ -459,8 +490,6 @@
             btn.innerHTML = '✅ Promesse signée ! 💖';
             btn.style.background = '#4ECDC4';
             btn.style.color = 'white';
-            
-            // Confettis virtuels !
             showConfetti();
         }
 
@@ -481,10 +510,8 @@
             }
         }
 
-        // Initialisation
         updateTimerDisplay();
         
-        // Ajouter des conseils aléatoires qui changent
         const tips = [
             "💡 Conseil du jour : Fais des grimaces pendant les pauses, c'est bon pour les muscles du visage !",
             "🌟 Astuce : Chante une chanson joyeuse entre deux sessions d'écran !",

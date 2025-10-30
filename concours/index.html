@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concours Éducatifs - DZNet Kids</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 40px;
+        }
+        
+        .benefit-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 3px solid #4CAF50;
+            transition: transform 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .benefit-title {
+            color: #2E7D32;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .benefit-list {
+            list-style: none;
+        }
+        
+        .benefit-item {
+            background: #E8F5E9;
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .concours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 30px;
+        }
+        
+        .concours-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e1e8ed;
+        }
+        
+        .concours-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .concours-icon {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .concours-content {
+            padding: 20px;
+        }
+        
+        .concours-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .concours-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .concours-link {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        
+        .concours-link:hover {
+            background: #2980b9;
+        }
+        
+        .age-badge {
+            background: #FFD93D;
+            color: #C44536;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .stats {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .parent-section {
+            background: linear-gradient(135deg, #FD79A8 0%, #F8A5C2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .parent-tips {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .tip-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .tip-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            background: #2C7873;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+        
+        .participation-btn {
+            background: #FF6B6B;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        .participation-btn:hover {
+            transform: scale(1.1);
+            background: #FF5252;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .concours-grid, .benefits-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Concours Éducatifs DZNet Kids</h1>
+            <p class="subtitle">Apprendre en s'amusant, grandir en relevant des défis !</p>
+        </header>
+        
+        <div class="stats">
+            <span>🌟 5 concours actifs • 👨‍👩‍👧‍👦 500+ participants • 🏆 30+ récompenses distribuées</span>
+        </div>
+        
+        <!-- Section Hero -->
+        <div class="hero-section">
+            <div style="font-size: 60px; margin-bottom: 20px;" class="floating">🎨📚🌳</div>
+            <h2>Pourquoi nos concours éducatifs ?</h2>
+            <p style="font-size: 1.2rem; margin: 20px auto; max-width: 800px;">
+                Nos concours transforment l'apprentissage en aventure ! Chaque défi est conçu pour développer 
+                les compétences de votre enfant tout en nourissant sa curiosité naturelle.
+            </p>
+            <button class="participation-btn" onclick="scrollToConcours()">Découvrir les Concours 🚀</button>
+        </div>
+        
+        <!-- Bénéfices pour les enfants -->
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">🧠</div>
+                <h3 class="benefit-title">Développement Cognitif</h3>
+                <ul class="benefit-list">
+                    <li class="benefit-item">Améliore la mémoire et la concentration</li>
+                    <li class="benefit-item">Développe la pensée logique</li>
+                    <li class="benefit-item">Stimule la créativité</li>
+                    <li class="benefit-item">Renforce la résolution de problèmes</li>
+                </ul>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">💖</div>
+                <h3 class="benefit-title">Épanouissement Émotionnel</h3>
+                <ul class="benefit-list">
+                    <li class="benefit-item">Boost de la confiance en soi</li>
+                    <li class="benefit-item">Apprentissage de la persévérance</li>
+                    <li class="benefit-item">Gestion des émotions</li>
+                    <li class="benefit-item">Développement de l'autonomie</li>
+                </ul>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">🌟</div>
+                <h3 class="benefit-title">Compétences Sociales</h3>
+                <ul class="benefit-list">
+                    <li class="benefit-item">Apprentissage du fair-play</li>
+                    <li class="benefit-item">Développement de l'esprit d'équipe</li>
+                    <li class="benefit-item">Renforcement de la communication</li>
+                    <li class="benefit-item">Respect des règles et des autres</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Liste des concours -->
+        <div id="concours-section">
+            <h2 style="text-align: center; padding: 30px; color: #2c3e50;">🎮 Nos Concours Actifs</h2>
+            <div class="concours-grid">
+                <!-- Concours 1 -->
+                <div class="concours-card">
+                    <div class="concours-icon">
+                        <div class="floating">🔤</div>
+                    </div>
+                    <div class="concours-content">
+                        <div class="age-badge">Âge: 5-8 ans</div>
+                        <h3 class="concours-title">Concours Chiffres & Lettres</h3>
+                        <p class="concours-description">
+                            Découvre le monde magique des chiffres et des lettres à travers des aventures interactives.
+                            Apprends en t'amusant avec nos petits personnages attachants !
+                        </p>
+                        <a href="concour1.html" class="concours-link">Participer maintenant</a>
+                    </div>
+                </div>
+                
+                <!-- Concours 2 -->
+                <div class="concours-card">
+                    <div class="concours-icon">
+                        <div class="floating">🦊🐪</div>
+                    </div>
+                    <div class="concours-content">
+                        <div class="age-badge">Âge: 5-8 ans</div>
+                        <h3 class="concours-title">Aventure Saharienne</h3>
+                        <p class="concours-description">
+                            Suis Fara le fennec et Kamel le chameau dans le désert algérien.
+                            Apprends la géographie et la faune locale de façon ludique !
+                        </p>
+                        <a href="concour2.html" class="concours-link">Participer maintenant</a>
+                    </div>
+                </div>
+                
+                <!-- Concours 3 -->
+                <div class="concours-card">
+                    <div class="concours-icon">
+                        <div class="floating">🏖️</div>
+                    </div>
+                    <div class="concours-content">
+                        <div class="age-badge">Âge: 6-9 ans</div>
+                        <h3 class="concours-title">Découverte d'Oran</h3>
+                        <p class="concours-description">
+                            Explore la belle ville d'Oran avec Yasmine et Karim.
+                            Découvre la culture algérienne et les trésors de la Méditerranée.
+                        </p>
+                        <a href="concour3.html" class="concours-link">Participer maintenant</a>
+                    </div>
+                </div>
+                
+                <!-- Concours 4 -->
+                <div class="concours-card">
+                    <div class="concours-icon">
+                        <div class="floating">🤖👦</div>
+                    </div>
+                    <div class="concours-content">
+                        <div class="age-badge">Âge: 5-8 ans</div>
+                        <h3 class="concours-title">Robo & Tom</h3>
+                        <p class="concours-description">
+                            Apprends l'importance du travail bien fait et de l'écoute avec Robo le robot et Tom.
+                            Des valeurs essentielles pour bien grandir !
+                        </p>
+                        <a href="concour4.html" class="concours-link">Participer maintenant</a>
+                    </div>
+                </div>
+                
+                <!-- Concours 5 -->
+                <div class="concours-card">
+                    <div class="concours-icon">
+                        <div class="floating">🕌</div>
+                    </div>
+                    <div class="concours-content">
+                        <div class="age-badge">Âge: 6-9 ans</div>
+                        <h3 class="concours-title">Les 5 Piliers</h3>
+                        <p class="concours-description">
+                            Suis Adam dans son apprentissage des 5 piliers de l'Islam.
+                            Une approche douce et éducative des valeurs spirituelles.
+                        </p>
+                        <a href="concour5.html" class="concours-link">Participer maintenant</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section Parents -->
+        <div class="parent-section">
+            <h2>👨‍👩‍👧‍👦 Pour les Parents</h2>
+            <p style="font-size: 1.2rem; margin: 20px auto; max-width: 800px;">
+                Votre rôle est essentiel dans l'aventure éducative de votre enfant. 
+                Découvrez comment accompagner au mieux leur participation.
+            </p>
+            
+            <div class="parent-tips">
+                <div class="tip-card">
+                    <div class="tip-emoji">💻</div>
+                    <h4>Accompagnement Numérique</h4>
+                    <p>Participez avec votre enfant, montrez votre intérêt pour ses découvertes</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-emoji">🏆</div>
+                    <h4>Valorisation des Efforts</h4>
+                    <p>Célébrez chaque progrès, pas seulement les victoires</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-emoji">⏰</div>
+                    <h4>Gestion du Temps</h4>
+                    <p>Établissez des plages de jeu régulières et équilibrées</p>
+                </div>
+                
+                <div class="tip-card">
+                    <div class="tip-emoji">💬</div>
+                    <h4>Dialogue et Partage</h4>
+                    <p>Discutez des apprentissages et découvertes après chaque session</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🌟 <strong>DZNet Kids - L'éducation par le jeu</strong> 🌟</p>
+            <p style="margin-top: 10px; opacity: 0.9;">
+                Des concours conçus par des experts en pédagogie pour le développement harmonieux de votre enfant
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function scrollToConcours() {
+            document.getElementById('concours-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+        
+        // Animation des cartes au survol
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.concours-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+        
+        // Compteur de participants animé
+        function animateCounter(element, target, duration) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target + '+';
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start) + '+';
+                }
+            }, 16);
+        }
+        
+        // Démarrer l'animation du compteur
+        setTimeout(() => {
+            const participantCount = document.querySelector('.stats span');
+            participantCount.innerHTML = '🌟 5 concours actifs • 👨‍👩‍👧‍👦 <span id="participant-counter">500</span>+ participants • 🏆 30+ récompenses distribuées';
+            animateCounter(document.getElementById('participant-counter'), 500, 2000);
+        }, 1000);
+    </script>
+</body>
+</html>

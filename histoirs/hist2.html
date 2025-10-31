@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaïa le Grand Chêne - L'Aventure de la Forêt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #8BC34A 0%, #4CAF50 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .story-book {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .cover {
+            background: linear-gradient(135deg, #388E3C 0%, #8BC34A 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .cover::before {
+            content: "🌳";
+            font-size: 8rem;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.3;
+        }
+        
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            color: #FFEB3B;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .age-badge {
+            background: #FF9800;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        .page {
+            padding: 40px;
+            min-height: 500px;
+            display: none;
+            background: white;
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        .page-content {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .illustration {
+            flex: 1;
+            text-align: center;
+            font-size: 8rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .text-content {
+            flex: 2;
+        }
+        
+        .page-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            color: #388E3C;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #FF9800;
+            padding-bottom: 10px;
+        }
+        
+        .story-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #455A64;
+            margin-bottom: 25px;
+        }
+        
+        .character {
+            display: inline-block;
+            background: #8BC34A;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .science-fact {
+            background: #E8F5E8;
+            border-left: 5px solid #4CAF50;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+        
+        .science-fact::before {
+            content: "🌱 Le savais-tu ? ";
+            font-weight: bold;
+            color: #388E3C;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background: #F5F5F5;
+            border-top: 3px solid #E0E0E0;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #388E3C 0%, #8BC34A 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn:disabled {
+            background: #BDBDBD;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .page-indicator {
+            background: #FF9800;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes grow {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes leafFall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(50px) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes birdFly {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(100px); }
+        }
+        
+        .growing-tree {
+            animation: grow 2s ease-in-out;
+        }
+        
+        .falling-leaf {
+            position: absolute;
+            font-size: 2rem;
+            animation: leafFall 3s linear infinite;
+        }
+        
+        .flying-bird {
+            position: absolute;
+            font-size: 2rem;
+            animation: birdFly 4s linear infinite;
+        }
+        
+        .sun-beam {
+            position: absolute;
+            font-size: 4rem;
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        .ecosystem-element {
+            position: absolute;
+            font-size: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .page-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .illustration {
+                font-size: 6rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .story-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="story-book">
+        <!-- Page de couverture -->
+        <div class="cover">
+            <h1>Gaïa le Grand Chêne</h1>
+            <p class="subtitle">Le secret de la forêt magique</p>
+            <div class="age-badge">Pour les petits explorateurs de 5-6 ans</div>
+        </div>
+        
+        <!-- Page 1 -->
+        <div class="page active" id="page1">
+            <div class="page-content">
+                <div class="illustration">🌰✨</div>
+                <div class="text-content">
+                    <h2 class="page-title">Le Gland Magique</h2>
+                    <p class="story-text">
+                        Par une belle journée de printemps, un petit <span class="character">gland</span> doré dormait paisiblement sous la terre.
+                    </p>
+                    <p class="story-text">
+                        Soudain, une douce pluie vint le réveiller. "Il est temps de grandir !" chuchota la pluie.
+                    </p>
+                    <div class="science-fact">
+                        Les glands sont les bébés des chênes. Ils contiennent toute la magie pour devenir un grand arbre !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 2 -->
+        <div class="page" id="page2">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">La Danse du Soleil</h2>
+                    <p class="story-text">
+                        Les rayons du <span class="character">soleil</span> caressèrent doucement la terre. 
+                        "Bonjour petit gland !" dirent-ils en dansant.
+                    </p>
+                    <p class="story-text">
+                        Grâce à la chaleur du soleil, le gland sentit une petite pousse sortir de sa coque.
+                    </p>
+                    <div class="science-fact">
+                        Le soleil donne l'énergie aux plantes pour pousser, comme une magie naturelle !
+                    </div>
+                </div>
+                <div class="illustration" id="sunIllustration">☀️🌱</div>
+            </div>
+        </div>
+        
+        <!-- Page 3 -->
+        <div class="page" id="page3">
+            <div class="page-content">
+                <div class="illustration" id="treeIllustration">🌱➡️🌳</div>
+                <div class="text-content">
+                    <h2 class="page-title">Gaïa Grandit</h2>
+                    <p class="story-text">
+                        La petite pousse devint une jeune pousse, puis un arbuste, et enfin un magnifique <span class="character">chêne</span> nommé Gaïa.
+                    </p>
+                    <p class="story-text">
+                        "Regarde comme je suis grand !" s'émerveilla Gaïa en déployant ses premières branches.
+                    </p>
+                    <div class="science-fact">
+                        Les arbres poussent lentement mais sûrement, un peu chaque année !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 4 -->
+        <div class="page" id="page4">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">La Maison des Oiseaux</h2>
+                    <p class="story-text">
+                        <span class="character">Titi le Rougegorge</span> découvrit Gaïa. "Quel bel arbre pour faire mon nid !"
+                    </p>
+                    <p class="story-text">
+                        Bientôt, de nombreux oiseaux vinrent habiter dans les branches de Gaïa. L'arbre était heureux d'avoir des amis.
+                    </p>
+                    <div class="science-fact">
+                        Les arbres sont comme des immeubles pour les oiseaux et les petits animaux de la forêt !
+                    </div>
+                </div>
+                <div class="illustration" id="birdIllustration">🐦🌳</div>
+            </div>
+        </div>
+        
+        <!-- Page 5 -->
+        <div class="page" id="page5">
+            <div class="page-content">
+                <div class="illustration">🍃🔄</div>
+                <div class="text-content">
+                    <h2 class="page-title">Le Cycle des Feuilles</h2>
+                    <p class="story-text">
+                        À l'automne, les feuilles de Gaïa devinrent jaunes, oranges et rouges. 
+                        "C'est notre danse d'adieu !" chantèrent-elles.
+                    </p>
+                    <p class="story-text">
+                        Les feuilles tombèrent et formèrent une couverture douce pour protéger les racines de Gaïa pendant l'hiver.
+                    </p>
+                    <div class="science-fact">
+                        Les feuilles mortes nourrissent la terre et aident l'arbre à faire de nouvelles feuilles au printemps !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 6 -->
+        <div class="page" id="page6">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">La Grande Famille</h2>
+                    <p class="story-text">
+                        <span class="character">Mimi l'Écureuil</span> cachait ses noisettes dans l'écorce de Gaïa. 
+                        <span class="character">Lulu la Chenille</span> grignotait ses feuilles.
+                    </p>
+                    <p class="story-text">
+                        Tous vivaient en harmonie autour de Gaïa, formant une grande famille de la forêt.
+                    </p>
+                    <div class="science-fact">
+                        Chaque être vivant dans la forêt dépend des arbres pour se nourrir et s'abriter !
+                    </div>
+                </div>
+                <div class="illustration">🐿️🐛🌳</div>
+            </div>
+        </div>
+        
+        <!-- Page 7 -->
+        <div class="page" id="page7">
+            <div class="page-content">
+                <div class="illustration">🌧️💧🌳</div>
+                <div class="text-content">
+                    <h2 class="page-title">Le Don de la Pluie</h2>
+                    <p class="story-text">
+                        Quand la pluie tombait, Gaïa étirait ses racines pour boire l'eau précieuse. 
+                        "Merci nuages !" disait-il.
+                    </p>
+                    <p class="story-text">
+                        L'eau voyageait des racines jusqu'au sommet de l'arbre, nourrissant chaque feuille.
+                    </p>
+                    <div class="science-fact">
+                        Les arbres boivent l'eau par leurs racines et la font monter jusqu'à leurs feuilles !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 8 -->
+        <div class="page" id="page8">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">Le Cercle de la Vie</h2>
+                    <p class="story-text">
+                        Gaïa comprit qu'il faisait partie d'un grand cercle magique : 
+                        le soleil, la pluie, les animaux, tout était connecté.
+                    </p>
+                    <p class="story-text">
+                        "Je protégerai tous mes amis !" promit Gaïa en laissant tomber de nouveaux glands pour faire naître d'autres arbres.
+                    </p>
+                    <div class="science-fact">
+                        La forêt est comme une grande famille où chacun aide les autres à vivre et grandir !
+                    </div>
+                </div>
+                <div class="illustration">🌳🤝🌍</div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="previousPage()" disabled>
+                ← Page Précédente
+            </button>
+            
+            <div class="page-indicator">
+                Page <span id="currentPage">1</span>/8
+            </div>
+            
+            <button class="nav-btn" id="nextBtn" onclick="nextPage()">
+                Page Suivante →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 8;
+        
+        // Mettre à jour l'affichage de la page
+        function updatePageDisplay() {
+            // Cacher toutes les pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Afficher la page actuelle
+            document.getElementById(`page${currentPage}`).classList.add('active');
+            
+            // Mettre à jour l'indicateur de page
+            document.getElementById('currentPage').textContent = currentPage;
+            
+            // Mettre à jour les boutons de navigation
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+            
+            // Animations spéciales selon la page
+            triggerPageAnimations();
+        }
+        
+        // Page suivante
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePageDisplay();
+            }
+        }
+        
+        // Page précédente
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePageDisplay();
+            }
+        }
+        
+        // Animations spéciales selon la page
+        function triggerPageAnimations() {
+            // Nettoyer les animations précédentes
+            document.querySelectorAll('.falling-leaf, .flying-bird, .sun-beam, .ecosystem-element').forEach(el => el.remove());
+            
+            switch(currentPage) {
+                case 2: // Page du soleil
+                    createSunBeams();
+                    break;
+                case 3: // Page de l'arbre qui pousse
+                    animateTreeGrowth();
+                    break;
+                case 4: // Page des oiseaux
+                    createFlyingBirds();
+                    break;
+                case 5: // Page des feuilles
+                    createFallingLeaves();
+                    break;
+                case 8: // Page de l'écosystème
+                    createEcosystem();
+                    break;
+            }
+        }
+        
+        // Créer les rayons de soleil
+        function createSunBeams() {
+            const container = document.getElementById('sunIllustration');
+            for (let i = 0; i < 3; i++) {
+                const beam = document.createElement('div');
+                beam.className = 'sun-beam';
+                beam.textContent = '✨';
+                beam.style.left = (20 + i * 30) + '%';
+                beam.style.top = '20%';
+                beam.style.animationDelay = (i * 0.5) + 's';
+                container.appendChild(beam);
+            }
+        }
+        
+        // Animer la croissance de l'arbre
+        function animateTreeGrowth() {
+            const container = document.getElementById('treeIllustration');
+            container.classList.add('growing-tree');
+        }
+        
+        // Créer des oiseaux volants
+        function createFlyingBirds() {
+            const container = document.getElementById('birdIllustration');
+            for (let i = 0; i < 2; i++) {
+                const bird = document.createElement('div');
+                bird.className = 'flying-bird';
+                bird.textContent = '🐦';
+                bird.style.top = (30 + i * 20) + '%';
+                bird.style.animationDelay = (i * 1) + 's';
+                container.appendChild(bird);
+            }
+        }
+        
+        // Créer des feuilles qui tombent
+        function createFallingLeaves() {
+            const container = document.querySelector('#page5 .illustration');
+            const leafTypes = ['🍂', '🍁', '🥮'];
+            
+            for (let i = 0; i < 5; i++) {
+                const leaf = document.createElement('div');
+                leaf.className = 'falling-leaf';
+                leaf.textContent = leafTypes[Math.floor(Math.random() * leafTypes.length)];
+                leaf.style.left = Math.random() * 80 + 10 + '%';
+                leaf.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(leaf);
+            }
+        }
+        
+        // Créer l'écosystème complet
+        function createEcosystem() {
+            const container = document.querySelector('#page8 .illustration');
+            const elements = [
+                { emoji: '🐦', top: '20%', left: '10%' },
+                { emoji: '🐿️', top: '70%', left: '20%' },
+                { emoji: '🐛', top: '50%', left: '80%' },
+                { emoji: '🐝', top: '30%', left: '60%' },
+                { emoji: '🦋', top: '40%', left: '40%' }
+            ];
+            
+            elements.forEach((element, index) => {
+                const el = document.createElement('div');
+                el.className = 'ecosystem-element';
+                el.textContent = element.emoji;
+                el.style.top = element.top;
+                el.style.left = element.left;
+                el.style.animation = `float ${2 + index * 0.5}s ease-in-out infinite`;
+                container.appendChild(el);
+            });
+        }
+        
+        // Navigation au clavier
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') {
+                nextPage();
+            } else if (event.key === 'ArrowLeft') {
+                previousPage();
+            }
+        });
+        
+        // Démarrer sur la première page
+        document.addEventListener('DOMContentLoaded', updatePageDisplay);
+    </script>
+</body>
+</html>

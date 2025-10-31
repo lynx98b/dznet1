@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poupette la Poule - Le Mystère des Œufs Dorés</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #FFEB3B 0%, #FFC107 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .story-book {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .cover {
+            background: linear-gradient(135deg, #FF9800 0%, #FFC107 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .cover::before {
+            content: "🐔";
+            font-size: 8rem;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.3;
+        }
+        
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            color: #5D4037;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .age-badge {
+            background: #5D4037;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        .page {
+            padding: 40px;
+            min-height: 500px;
+            display: none;
+            background: white;
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        .page-content {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .illustration {
+            flex: 1;
+            text-align: center;
+            font-size: 8rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .text-content {
+            flex: 2;
+        }
+        
+        .page-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            color: #FF9800;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #FFD54F;
+            padding-bottom: 10px;
+        }
+        
+        .story-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #5D4037;
+            margin-bottom: 25px;
+        }
+        
+        .character {
+            display: inline-block;
+            background: #FFD54F;
+            color: #5D4037;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .science-fact {
+            background: #FFF8E1;
+            border-left: 5px solid #FFC107;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+        
+        .science-fact::before {
+            content: "🥚 Le savais-tu ? ";
+            font-weight: bold;
+            color: #FF9800;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background: #F5F5F5;
+            border-top: 3px solid #E0E0E0;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #FF9800 0%, #FFC107 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn:disabled {
+            background: #BDBDBD;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .page-indicator {
+            background: #5D4037;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes eggWiggle {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        @keyframes chickHatch {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes chickenWalk {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(10px) rotate(5deg); }
+            50% { transform: translateX(0); }
+            75% { transform: translateX(-10px) rotate(-5deg); }
+            100% { transform: translateX(0); }
+        }
+        
+        .wiggling-egg {
+            animation: eggWiggle 2s ease-in-out infinite;
+        }
+        
+        .hatching-chick {
+            animation: chickHatch 1s ease-in-out;
+        }
+        
+        .walking-chicken {
+            animation: chickenWalk 3s ease-in-out infinite;
+        }
+        
+        .farm-element {
+            position: absolute;
+            font-size: 1.5rem;
+        }
+        
+        .falling-grain {
+            position: absolute;
+            font-size: 1rem;
+            animation: float 2s linear infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .page-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .illustration {
+                font-size: 6rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .story-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="story-book">
+        <!-- Page de couverture -->
+        <div class="cover">
+            <h1>Poupette la Poule</h1>
+            <p class="subtitle">Le Mystère des Œufs Dorés</p>
+            <div class="age-badge">Pour les petits fermiers de 5-6 ans</div>
+        </div>
+        
+        <!-- Page 1 -->
+        <div class="page active" id="page1">
+            <div class="page-content">
+                <div class="illustration">🏡🌅</div>
+                <div class="text-content">
+                    <h2 class="page-title">Le Réveil de la Ferme</h2>
+                    <p class="story-text">
+                        Tous les matins, au lever du soleil, <span class="character">Cocorico le coq</span> chantait pour réveiller toute la ferme.
+                    </p>
+                    <p class="story-text">
+                        "<span class="character">Cocorico !</span> Debout tout le monde !" criait-il du haut du poulailler.
+                    </p>
+                    <div class="science-fact">
+                        Le coq chante pour annoncer le lever du soleil et montrer qu'il est le chef du poulailler !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 2 -->
+        <div class="page" id="page2">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">Poupette la Pondeuse</h2>
+                    <p class="story-text">
+                        <span class="character">Poupette la poule</span> se réveillait en picorant quelques grains de blé.
+                    </p>
+                    <p class="story-text">
+                        "Aujourd'hui, je vais pondre un bel œuf !" disait-elle en se préparant dans le nid douillet.
+                    </p>
+                    <div class="science-fact">
+                        Une poule pond environ un œuf par jour, même sans avoir besoin d'un coq !
+                    </div>
+                </div>
+                <div class="illustration" id="henIllustration">🐔🌾</div>
+            </div>
+        </div>
+        
+        <!-- Page 3 -->
+        <div class="page" id="page3">
+            <div class="page-content">
+                <div class="illustration" id="eggIllustration">🥚✨</div>
+                <div class="text-content">
+                    <h2 class="page-title">Le Miracle de l'Œuf</h2>
+                    <p class="story-text">
+                        Après quelques heures, <span class="character">Poupette</span> pondait un magnifique œuf tout chaud et doré.
+                    </p>
+                    <p class="story-text">
+                        "Coucou ! Voici mon petit trésor !" chantait-elle fièrement.
+                    </p>
+                    <div class="science-fact">
+                        La coquille d'œuf est faite de calcium, comme nos os, pour protéger le bébé poussin !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 4 -->
+        <div class="page" id="page4">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">La Couvaison Magique</h2>
+                    <p class="story-text">
+                        Quand <span class="character">Poupette</span> voulait des bébés, elle s'asseyait sur ses œufs pour les garder au chaud.
+                    </p>
+                    <p class="story-text">
+                        "Je dois rester 21 jours sans bouger pour que mes œufs deviennent des poussins !" expliquait-elle.
+                    </p>
+                    <div class="science-fact">
+                        La poule tourne ses œufs plusieurs fois par jour pour que la chaleur se répartisse bien !
+                    </div>
+                </div>
+                <div class="illustration" id="nestIllustration">🐣❤️</div>
+            </div>
+        </div>
+        
+        <!-- Page 5 -->
+        <div class="page" id="page5">
+            <div class="page-content">
+                <div class="illustration">🐥💥</div>
+                <div class="text-content">
+                    <h2 class="page-title">La Grande Éclosion</h2>
+                    <p class="story-text">
+                        Au 21ème jour, un petit <span class="character">CRAQ !</span> se faisait entendre dans l'œuf.
+                    </p>
+                    <p class="story-text">
+                        Un minuscule bec perçait la coquille, puis une petite boule de plumes jaunes apparaissait !
+                    </p>
+                    <div class="science-fact">
+                        Le poussin utilise une petite dent sur son bec, appelée "diamant", pour casser sa coquille !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 6 -->
+        <div class="page" id="page6">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">La Famille Grandit</h2>
+                    <p class="story-text">
+                        <span class="character">Piou-Piou le poussin</span> sortait de l'œuf tout mouillé et fatigué.
+                    </p>
+                    <p class="story-text">
+                        "<span class="character">Maman !</span>" pépiait-il en se blottissant sous les plumes chaudes de Poupette.
+                    </p>
+                    <div class="science-fact">
+                        Les poussins reconnaissent le cri de leur maman dès leur naissance !
+                    </div>
+                </div>
+                <div class="illustration" id="chickIllustration">🐥🐔</div>
+            </div>
+        </div>
+        
+        <!-- Page 7 -->
+        <div class="page" id="page7">
+            <div class="page-content">
+                <div class="illustration">🌾👨‍🌾</div>
+                <div class="text-content">
+                    <h2 class="page-title">La Vie à la Ferme</h2>
+                    <p class="story-text">
+                        Le fermier apportait des grains et de l'eau fraîche. "Bon appétit mes petites poules !"
+                    </p>
+                    <p class="story-text">
+                        Les poules grattaient la terre pour trouver des vers et des insectes délicieux.
+                    </p>
+                    <div class="science-fact">
+                        Les poules aident le fermier en mangeant les insectes qui pourraient abîmer les cultures !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 8 -->
+        <div class="page" id="page8">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">Le Cercle de la Vie</h2>
+                    <p class="story-text">
+                        <span class="character">Piou-Piou</span> grandissait et devenait une belle poule. À son tour, elle pondait des œufs.
+                    </p>
+                    <p class="story-text">
+                        "La vie continue !" chantait <span class="character">Cocorico</span> en regardant sa grande famille.
+                    </p>
+                    <div class="science-fact">
+                        Une poule peut vivre jusqu'à 8 ans et pondre plus de 1000 œufs dans sa vie !
+                    </div>
+                </div>
+                <div class="illustration" id="familyIllustration">🐔🐥🌅</div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="previousPage()" disabled>
+                ← Page Précédente
+            </button>
+            
+            <div class="page-indicator">
+                Page <span id="currentPage">1</span>/8
+            </div>
+            
+            <button class="nav-btn" id="nextBtn" onclick="nextPage()">
+                Page Suivante →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 8;
+        
+        // Mettre à jour l'affichage de la page
+        function updatePageDisplay() {
+            // Cacher toutes les pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Afficher la page actuelle
+            document.getElementById(`page${currentPage}`).classList.add('active');
+            
+            // Mettre à jour l'indicateur de page
+            document.getElementById('currentPage').textContent = currentPage;
+            
+            // Mettre à jour les boutons de navigation
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+            
+            // Animations spéciales selon la page
+            triggerPageAnimations();
+        }
+        
+        // Page suivante
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePageDisplay();
+            }
+        }
+        
+        // Page précédente
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePageDisplay();
+            }
+        }
+        
+        // Animations spéciales selon la page
+        function triggerPageAnimations() {
+            // Nettoyer les animations précédentes
+            document.querySelectorAll('.wiggling-egg, .hatching-chick, .walking-chicken, .farm-element, .falling-grain').forEach(el => el.remove());
+            
+            switch(currentPage) {
+                case 2: // Page de la poule
+                    createWalkingChicken();
+                    break;
+                case 3: // Page des œufs
+                    createWigglingEggs();
+                    break;
+                case 4: // Page du nid
+                    createNestScene();
+                    break;
+                case 6: // Page des poussins
+                    createHatchingChicks();
+                    break;
+                case 8: // Page de la famille
+                    createFamilyScene();
+                    break;
+            }
+        }
+        
+        // Créer une poule qui marche
+        function createWalkingChicken() {
+            const container = document.getElementById('henIllustration');
+            const chicken = document.createElement('div');
+            chicken.className = 'walking-chicken';
+            chicken.textContent = '🐔';
+            chicken.style.position = 'absolute';
+            chicken.style.top = '40%';
+            chicken.style.left = '30%';
+            container.appendChild(chicken);
+            
+            // Ajouter des grains qui tombent
+            for (let i = 0; i < 5; i++) {
+                const grain = document.createElement('div');
+                grain.className = 'falling-grain';
+                grain.textContent = '🌾';
+                grain.style.left = (40 + i * 10) + '%';
+                grain.style.animationDelay = (i * 0.3) + 's';
+                container.appendChild(grain);
+            }
+        }
+        
+        // Créer des œufs qui bougent
+        function createWigglingEggs() {
+            const container = document.getElementById('eggIllustration');
+            for (let i = 0; i < 3; i++) {
+                const egg = document.createElement('div');
+                egg.className = 'wiggling-egg';
+                egg.textContent = '🥚';
+                egg.style.position = 'absolute';
+                egg.style.top = (30 + i * 20) + '%';
+                egg.style.left = (20 + i * 25) + '%';
+                egg.style.animationDelay = (i * 0.5) + 's';
+                container.appendChild(egg);
+            }
+        }
+        
+        // Créer la scène du nid
+        function createNestScene() {
+            const container = document.getElementById('nestIllustration');
+            const eggs = ['🥚', '🥚', '🥚'];
+            
+            eggs.forEach((egg, index) => {
+                const eggElement = document.createElement('div');
+                eggElement.className = 'wiggling-egg';
+                eggElement.textContent = egg;
+                eggElement.style.position = 'absolute';
+                eggElement.style.top = '50%';
+                eggElement.style.left = (30 + index * 20) + '%';
+                eggElement.style.animationDelay = (index * 0.3) + 's';
+                container.appendChild(eggElement);
+            });
+        }
+        
+        // Créer des poussins qui éclosent
+        function createHatchingChicks() {
+            const container = document.getElementById('chickIllustration');
+            for (let i = 0; i < 2; i++) {
+                const chick = document.createElement('div');
+                chick.className = 'hatching-chick';
+                chick.textContent = '🐥';
+                chick.style.position = 'absolute';
+                chick.style.top = (40 + i * 25) + '%';
+                chick.style.left = (30 + i * 20) + '%';
+                chick.style.animationDelay = (i * 0.5) + 's';
+                container.appendChild(chick);
+            }
+        }
+        
+        // Créer la scène familiale
+        function createFamilyScene() {
+            const container = document.getElementById('familyIllustration');
+            const family = [
+                { emoji: '🐔', top: '30%', left: '20%', animation: 'walking-chicken' },
+                { emoji: '🐓', top: '30%', left: '70%', animation: 'float' },
+                { emoji: '🐥', top: '60%', left: '30%', animation: 'float' },
+                { emoji: '🐥', top: '60%', left: '50%', animation: 'float' },
+                { emoji: '🐥', top: '60%', left: '70%', animation: 'float' }
+            ];
+            
+            family.forEach((member, index) => {
+                const element = document.createElement('div');
+                element.className = member.animation;
+                element.textContent = member.emoji;
+                element.style.position = 'absolute';
+                element.style.top = member.top;
+                element.style.left = member.left;
+                element.style.animationDelay = (index * 0.3) + 's';
+                container.appendChild(element);
+            });
+        }
+        
+        // Navigation au clavier
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') {
+                nextPage();
+            } else if (event.key === 'ArrowLeft') {
+                previousPage();
+            }
+        });
+        
+        // Démarrer sur la première page
+        document.addEventListener('DOMContentLoaded', updatePageDisplay);
+    </script>
+</body>
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Léo et le Mystère des Nuages - Histoire Éducative</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #87CEEB 0%, #E0F7FA 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .story-book {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .cover {
+            background: linear-gradient(135deg, #4FC3F7 0%, #0288D1 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .cover::before {
+            content: "☁️";
+            font-size: 8rem;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.3;
+        }
+        
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            color: #FFEB3B;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .age-badge {
+            background: #FF9800;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        .page {
+            padding: 40px;
+            min-height: 500px;
+            display: none;
+            background: white;
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        .page-content {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .illustration {
+            flex: 1;
+            text-align: center;
+            font-size: 8rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .text-content {
+            flex: 2;
+        }
+        
+        .page-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            color: #0288D1;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #FFEB3B;
+            padding-bottom: 10px;
+        }
+        
+        .story-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #455A64;
+            margin-bottom: 25px;
+        }
+        
+        .character {
+            display: inline-block;
+            background: #FFEB3B;
+            color: #FF6D00;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .science-fact {
+            background: #E3F2FD;
+            border-left: 5px solid #2196F3;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+        
+        .science-fact::before {
+            content: "🔍 Savais-tu ? ";
+            font-weight: bold;
+            color: #2196F3;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background: #F5F5F5;
+            border-top: 3px solid #E0E0E0;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #4FC3F7 0%, #0288D1 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn:disabled {
+            background: #BDBDBD;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .page-indicator {
+            background: #FF9800;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes rain {
+            0% { transform: translateY(-100px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100px); opacity: 0; }
+        }
+        
+        .rain-drop {
+            position: absolute;
+            width: 3px;
+            height: 15px;
+            background: #2196F3;
+            animation: rain 1s linear infinite;
+        }
+        
+        .thunder {
+            position: absolute;
+            font-size: 4rem;
+            animation: flash 0.3s ease-in-out;
+        }
+        
+        @keyframes flash {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        
+        .snow-flake {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: snowFall 5s linear infinite;
+        }
+        
+        @keyframes snowFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100px) rotate(360deg); opacity: 0; }
+        }
+        
+        @media (max-width: 768px) {
+            .page-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .illustration {
+                font-size: 6rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .story-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="story-book">
+        <!-- Page de couverture -->
+        <div class="cover">
+            <h1>Léo et le Mystère des Nuages</h1>
+            <p class="subtitle">Une aventure magique dans le ciel</p>
+            <div class="age-badge">Pour les explorateurs de 5-6 ans</div>
+        </div>
+        
+        <!-- Page 1 -->
+        <div class="page active" id="page1">
+            <div class="page-content">
+                <div class="illustration">👦🌞</div>
+                <div class="text-content">
+                    <h2 class="page-title">Léo le Petit Curieux</h2>
+                    <p class="story-text">
+                        Par une belle journée ensoleillée, <span class="character">Léo</span> regardait le ciel bleu. 
+                        Soudain, il remarqua de petits nuages blancs qui ressemblaient à des boules de coton.
+                    </p>
+                    <p class="story-text">
+                        "<span class="character">Maman</span>, comment les nuages se forment-ils ?" demanda Léo.
+                    </p>
+                    <div class="science-fact">
+                        Les nuages naissent quand l'eau des lacs, des rivières et des océans s'évapore et monte dans le ciel !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 2 -->
+        <div class="page" id="page2">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">L'Aventure de Gouttelette</h2>
+                    <p class="story-text">
+                        <span class="character">Gouttelette</span>, une petite particule d'eau, s'évapora de la rivière et commença à voyager vers le ciel.
+                    </p>
+                    <p class="story-text">
+                        En montant, elle rencontra d'autres gouttelettes. Ensemble, elles formèrent un magnifique nuage blanc et doux.
+                    </p>
+                    <div class="science-fact">
+                        Quand les gouttelettes se rassemblent dans le ciel froid, elles forment les nuages que nous voyons !
+                    </div>
+                </div>
+                <div class="illustration">💧☁️</div>
+            </div>
+        </div>
+        
+        <!-- Page 3 -->
+        <div class="page" id="page3">
+            <div class="page-content">
+                <div class="illustration">☁️➡️🌧️</div>
+                <div class="text-content">
+                    <h2 class="page-title">Le Nuage Grandit</h2>
+                    <p class="story-text">
+                        Le nuage de <span class="character">Gouttelette</span> devint de plus en plus gros et lourd. 
+                        Il changea de couleur, passant du blanc au gris foncé.
+                    </p>
+                    <p class="story-text">
+                        "Oh non !" s'écria Gouttelette, "Nous sommes trop nombreuses maintenant ! Le nuage ne peut plus nous porter !"
+                    </p>
+                    <div class="science-fact">
+                        Quand un nuage contient trop de gouttelettes, elles deviennent trop lourdes et tombent en pluie !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 4 -->
+        <div class="page" id="page4">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">La Danse de la Pluie</h2>
+                    <p class="story-text">
+                        <span class="character">Plip ! Plop !</span> Les gouttelettes commencèrent à tomber doucement sur le sol. 
+                        C'était une jolie pluie printanière !
+                    </p>
+                    <p class="story-text">
+                        Léo tendit la main pour attraper les gouttes. "C'est magique !" s'exclama-t-il.
+                    </p>
+                    <div class="science-fact">
+                        La pluie aide les plantes à pousser et remplit les rivières pour que le cycle puisse recommencer !
+                    </div>
+                </div>
+                <div class="illustration" id="rainIllustration">🌧️🌺</div>
+            </div>
+        </div>
+        
+        <!-- Page 5 -->
+        <div class="page" id="page5">
+            <div class="page-content">
+                <div class="illustration">⚡🌩️</div>
+                <div class="text-content">
+                    <h2 class="page-title">Le Spectacle des Éclairs</h2>
+                    <p class="story-text">
+                        Soudain, le ciel s'illumina d'un grand <span class="character">ZIG ZAG</span> lumineux ! 
+                        C'était un éclair qui dansait entre les nuages.
+                    </p>
+                    <p class="story-text">
+                        "Ne t'inquiète pas," dit Maman à Léo, "c'est juste l'électricité des nuages qui fait la fête !"
+                    </p>
+                    <div class="science-fact">
+                        Les éclairs se produisent quand l'électricité saute d'un nuage à un autre ou vers le sol !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 6 -->
+        <div class="page" id="page6">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">Le Tonnerre Applaudit</h2>
+                    <p class="story-text">
+                        <span class="character">BOUM !</span> Un grand bruit suivit l'éclair. C'était le tonnerre qui applaudissait le spectacle des éclairs.
+                    </p>
+                    <p class="story-text">
+                        "L'éclair va si vite et le tonnerre si lentement qu'on les entend séparément !" expliqua Maman.
+                    </p>
+                    <div class="science-fact">
+                        Le tonnerre est le son de l'éclair qui chauffe l'air très très vite !
+                    </div>
+                </div>
+                <div class="illustration">📢🌩️</div>
+            </div>
+        </div>
+        
+        <!-- Page 7 -->
+        <div class="page" id="page7">
+            <div class="page-content">
+                <div class="illustration">❄️☃️</div>
+                <div class="text-content">
+                    <h2 class="page-title">La Magie de l'Hiver</h2>
+                    <p class="story-text">
+                        Quand il fait très froid, <span class="character">Gouttelette</span> et ses amies se transforment en cristaux de glace étincelants.
+                    </p>
+                    <p class="story-text">
+                        Elles tombent doucement du ciel en formant de magnifiques flocons de neige, chacun unique et spécial.
+                    </p>
+                    <div class="science-fact">
+                        Chaque flocon de neige a une forme différente, comme des petits joyaux de glace !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 8 -->
+        <div class="page" id="page8">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">Le Grand Cycle de l'Eau</h2>
+                    <p class="story-text">
+                        <span class="character">Léo</span> avait maintenant compris le secret des nuages ! 
+                        L'eau voyage sans cesse entre la terre et le ciel.
+                    </p>
+                    <p class="story-text">
+                        "Merci Gouttelette pour ce merveilleux voyage !" dit Léo en regardant le magnifique arc-en-ciel qui apparaissait.
+                    </p>
+                    <div class="science-fact">
+                        L'eau sur Terre suit toujours le même cycle : évaporation → nuages → pluie → rivières → et recommence !
+                    </div>
+                </div>
+                <div class="illustration">🌈✨</div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="previousPage()" disabled>
+                ← Page Précédente
+            </button>
+            
+            <div class="page-indicator">
+                Page <span id="currentPage">1</span>/8
+            </div>
+            
+            <button class="nav-btn" id="nextBtn" onclick="nextPage()">
+                Page Suivante →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 8;
+        
+        // Mettre à jour l'affichage de la page
+        function updatePageDisplay() {
+            // Cacher toutes les pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Afficher la page actuelle
+            document.getElementById(`page${currentPage}`).classList.add('active');
+            
+            // Mettre à jour l'indicateur de page
+            document.getElementById('currentPage').textContent = currentPage;
+            
+            // Mettre à jour les boutons de navigation
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+            
+            // Animations spéciales selon la page
+            triggerPageAnimations();
+        }
+        
+        // Page suivante
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePageDisplay();
+            }
+        }
+        
+        // Page précédente
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePageDisplay();
+            }
+        }
+        
+        // Animations spéciales selon la page
+        function triggerPageAnimations() {
+            const rainIllustration = document.getElementById('rainIllustration');
+            
+            // Nettoyer les animations précédentes
+            document.querySelectorAll('.rain-drop, .thunder, .snow-flake').forEach(el => el.remove());
+            
+            switch(currentPage) {
+                case 4: // Page de pluie
+                    createRain();
+                    break;
+                case 5: // Page des éclairs
+                    createThunder();
+                    break;
+                case 7: // Page de neige
+                    createSnow();
+                    break;
+            }
+        }
+        
+        // Créer l'animation de pluie
+        function createRain() {
+            const container = document.getElementById('rainIllustration');
+            for (let i = 0; i < 15; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'rain-drop';
+                drop.style.left = Math.random() * 100 + 'px';
+                drop.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(drop);
+            }
+        }
+        
+        // Créer l'animation d'éclair
+        function createThunder() {
+            const container = document.querySelector('#page5 .illustration');
+            const thunder = document.createElement('div');
+            thunder.className = 'thunder';
+            thunder.textContent = '⚡';
+            thunder.style.left = '50%';
+            thunder.style.top = '30%';
+            container.appendChild(thunder);
+        }
+        
+        // Créer l'animation de neige
+        function createSnow() {
+            const container = document.querySelector('#page7 .illustration');
+            for (let i = 0; i < 10; i++) {
+                const flake = document.createElement('div');
+                flake.className = 'snow-flake';
+                flake.textContent = '❄️';
+                flake.style.left = Math.random() * 100 + 'px';
+                flake.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(flake);
+            }
+        }
+        
+        // Navigation au clavier
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') {
+                nextPage();
+            } else if (event.key === 'ArrowLeft') {
+                previousPage();
+            }
+        });
+        
+        // Démarrer sur la première page
+        document.addEventListener('DOMContentLoaded', updatePageDisplay);
+    </script>
+</body>
+</html>

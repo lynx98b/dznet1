@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détection Automatique des Concours - DZNet Kids</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <title>Sommaire des Concours - DZNet</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
@@ -36,12 +35,6 @@
             text-align: center;
         }
         
-        h1, h2, h3 {
-            font-family: 'Fredoka One', cursive;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-        }
-        
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
@@ -52,13 +45,6 @@
             opacity: 0.9;
         }
         
-        .hero-section {
-            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
-            color: white;
-            padding: 40px;
-            text-align: center;
-        }
-        
         .stats {
             background: #f8f9fa;
             padding: 15px;
@@ -66,14 +52,14 @@
             border-bottom: 1px solid #dee2e6;
         }
         
-        .concours-grid {
+        .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
             padding: 30px;
         }
         
-        .concours-card {
+        .game-card {
             background: white;
             border-radius: 10px;
             overflow: hidden;
@@ -82,12 +68,12 @@
             border: 1px solid #e1e8ed;
         }
         
-        .concours-card:hover {
+        .game-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
         
-        .concours-icon {
+        .game-icon {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             height: 120px;
@@ -99,24 +85,37 @@
             overflow: hidden;
         }
         
-        .concours-content {
+        .game-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .game-icon .default-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .game-content {
             padding: 20px;
         }
         
-        .concours-title {
+        .game-title {
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 10px;
             color: #2c3e50;
         }
         
-        .concours-description {
+        .game-description {
             color: #666;
             margin-bottom: 15px;
             line-height: 1.5;
         }
         
-        .concours-link {
+        .game-link {
             display: inline-block;
             background: #3498db;
             color: white;
@@ -127,19 +126,8 @@
             transition: background 0.3s ease;
         }
         
-        .concours-link:hover {
+        .game-link:hover {
             background: #2980b9;
-        }
-        
-        .age-badge {
-            background: #FFD93D;
-            color: #C44536;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 10px;
         }
         
         .file-name {
@@ -171,59 +159,10 @@
             color: #856404;
         }
         
-        .search-section {
-            padding: 20px;
-            background: #f8f9fa;
-            text-align: center;
-        }
-        
-        .search-input {
-            padding: 12px 20px;
-            border: 2px solid #3498db;
-            border-radius: 25px;
-            font-size: 1rem;
-            width: 300px;
-            max-width: 100%;
-            margin: 0 10px;
-        }
-        
-        .search-btn {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s ease;
-        }
-        
-        .search-btn:hover {
-            background: #2980b9;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-        
         @media (max-width: 768px) {
-            .concours-grid {
-                grid-template-columns: 1fr;
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
                 padding: 20px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .search-input {
-                width: 100%;
-                margin-bottom: 10px;
             }
         }
     </style>
@@ -231,21 +170,15 @@
 <body>
     <div class="container">
         <header>
-            <h1>🎯 Concours Éducatifs DZNet Kids</h1>
-            <p class="subtitle">Détection automatique de tous nos concours actifs</p>
+            <h1>🎮 Jeux de Culture Générale</h1>
+            <p class="subtitle">Découvrez tous nos concours éducatifs  </p>
         </header>
         
         <div class="stats" id="stats">
-            <span id="gameCount">🔍 Scan des concours en cours...</span>
+            <span id="gameCount">Scan des fichiers en cours...</span>
         </div>
         
-        <div class="search-section">
-            <input type="text" class="search-input" id="searchInput" placeholder="Rechercher un concours...">
-            <button class="search-btn" onclick="filterConcours()">🔍 Rechercher</button>
-            <button class="search-btn" onclick="resetSearch()">🔄 Tout voir</button>
-        </div>
-        
-        <div class="concours-grid" id="concoursGrid">
+        <div class="games-grid" id="gamesGrid">
             <div class="loading">
                 <p>Recherche automatique des concours...</p>
             </div>
@@ -254,33 +187,32 @@
 
     <script>
         // Configuration
-        const EXCLUDED_FILES = ['index.html', 'concours.html', 'sommaire.html'];
-        const CONCOURS_PATTERNS = ['concours', 'concour', 'contest', 'jeux', 'game', 'quiz'];
+        const EXCLUDED_FILES = ['index.html', 'sommaire.html']; // Fichiers à ignorer
         const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
 
-        // Fonction pour détecter tous les fichiers de concours
-        async function discoverConcoursFiles() {
+        // Fonction pour détecter tous les fichiers HTML du dossier
+        async function discoverHTMLFiles() {
             try {
-                console.log('🔍 Début du scan des fichiers de concours...');
+                console.log('🔍 Début du scan des fichiers HTML...');
                 
+                // Stratégie 1: Essayer de récupérer la liste via fetch (pour GitHub Pages)
                 let allFiles = [];
                 
                 try {
-                    // Essayer de récupérer la liste via fetch
+                    // Cette méthode fonctionne sur certains serveurs
                     const response = await fetch('./');
                     const text = await response.text();
                     
-                    // Parser le HTML pour trouver les liens
+                    // Parser le HTML de la page d'index pour trouver les liens
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(text, 'text/html');
                     const links = doc.querySelectorAll('a[href$=".html"]');
                     
                     allFiles = Array.from(links)
                         .map(link => link.getAttribute('href'))
-                        .filter(file => !EXCLUDED_FILES.includes(file) && 
-                               CONCOURS_PATTERNS.some(pattern => file.toLowerCase().includes(pattern)));
+                        .filter(file => !EXCLUDED_FILES.includes(file));
                         
-                    console.log(`📁 Fichiers de concours trouvés:`, allFiles);
+                    console.log(`📁 Fichiers trouvés via scan:`, allFiles);
                     
                 } catch (error) {
                     console.log('❌ Scan automatique échoué, utilisation de la détection par pattern');
@@ -299,32 +231,38 @@
             }
         }
 
-        // Détection par pattern
+        // Fonction pour détecter les fichiers par pattern (jeux1, jeux2, etc.)
         async function detectFilesByPattern() {
             console.log('🎯 Détection par pattern...');
+            const patterns = [
+                'concour'  // Spécial pour votre fichier existant
+            ];
+            
             const discoveredFiles = [];
             
-            // Tester les patterns avec numéros
-            for (let i = 1; i <= 20; i++) {
-                for (const pattern of CONCOURS_PATTERNS) {
+            // Tester les patterns avec numéros (jeux1.html, jeux2.html, etc.)
+            for (let i = 0; i <= 10; i++) {
+                for (const pattern of patterns) {
                     const filename = `${pattern}${i}.html`;
                     if (await fileExists(filename)) {
                         discoveredFiles.push(filename);
                         console.log(`✅ Trouvé: ${filename}`);
                     }
-                    
-                    // Variante avec underscore
-                    const filenameUnderscore = `${pattern}_${i}.html`;
-                    if (await fileExists(filenameUnderscore)) {
-                        discoveredFiles.push(filenameUnderscore);
-                        console.log(`✅ Trouvé: ${filenameUnderscore}`);
-                    }
                 }
             }
             
             // Tester les patterns sans numéros
-            for (const pattern of CONCOURS_PATTERNS) {
+            for (const pattern of patterns) {
                 const filename = `${pattern}.html`;
+                if (await fileExists(filename)) {
+                    discoveredFiles.push(filename);
+                    console.log(`✅ Trouvé: ${filename}`);
+                }
+            }
+            
+            // Chercher aussi les fichiers avec underscores
+            for (const pattern of patterns) {
+                const filename = `${pattern}_culture.html`;
                 if (await fileExists(filename)) {
                     discoveredFiles.push(filename);
                     console.log(`✅ Trouvé: ${filename}`);
@@ -334,7 +272,7 @@
             return discoveredFiles;
         }
 
-        // Vérifier si un fichier existe
+        // Fonction pour vérifier si un fichier existe
         async function fileExists(url) {
             try {
                 const response = await fetch(url, { method: 'HEAD' });
@@ -344,7 +282,7 @@
             }
         }
 
-        // Vérifier si une image existe
+        // Fonction pour vérifier si une image existe
         function checkImageExists(imageUrl) {
             return new Promise((resolve) => {
                 const img = new Image();
@@ -362,10 +300,11 @@
             });
         }
 
-        // Trouver le logo d'un concours
-        async function findConcoursLogo(baseFilename) {
+        // Fonction pour trouver le logo d'un jeu
+        async function findGameLogo(baseFilename) {
             const baseName = baseFilename.replace('.html', '');
             
+            // Tester toutes les extensions d'image
             for (const ext of imageExtensions) {
                 const imageUrl = `${baseName}${ext}`;
                 const exists = await checkImageExists(imageUrl);
@@ -377,7 +316,7 @@
             return null;
         }
 
-        // Extraire les métadonnées d'un fichier HTML
+        // Fonction pour extraire les métadonnées d'un fichier HTML
         async function extractFileInfo(filename) {
             try {
                 const response = await fetch(filename);
@@ -402,26 +341,19 @@
                         description = firstParagraph.textContent.substring(0, 120) + '...';
                     } else {
                         const firstH1 = doc.querySelector('h1');
-                        description = firstH1 ? firstH1.textContent + " - Concours éducatif" : "Concours éducatif - Apprendre en s'amusant";
+                        description = firstH1 ? firstH1.textContent + " - Jeu de culture générale" : "Jeu de culture générale - Testez vos connaissances";
                     }
                 }
                 
                 // Chercher le logo
-                const logoUrl = await findConcoursLogo(filename);
-                
-                // Déterminer l'âge cible basé sur le contenu
-                let ageRange = "5-8 ans";
-                if (description.toLowerCase().includes('oran') || description.toLowerCase().includes('piliers')) {
-                    ageRange = "6-9 ans";
-                }
+                const logoUrl = await findGameLogo(filename);
                 
                 return {
                     filename,
                     title,
                     description,
                     url: filename,
-                    logoUrl,
-                    ageRange
+                    logoUrl
                 };
             } catch (error) {
                 console.error(`Erreur avec ${filename}:`, error);
@@ -431,104 +363,64 @@
                                   .replace(/_/g, ' ')
                                   .replace(/([a-z])([A-Z])/g, '$1 $2')
                                   .replace(/\b\w/g, l => l.toUpperCase()),
-                    description: "Concours éducatif interactif",
+                    description: "Jeu de culture générale",
                     url: filename,
-                    logoUrl: null,
-                    ageRange: "5-8 ans"
+                    logoUrl: null
                 };
             }
         }
 
-        // Filtrer les concours
-        function filterConcours() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('.concours-card');
-            let visibleCount = 0;
-            
-            cards.forEach(card => {
-                const title = card.querySelector('.concours-title').textContent.toLowerCase();
-                const description = card.querySelector('.concours-description').textContent.toLowerCase();
-                
-                if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                    card.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-            
-            document.getElementById('stats').innerHTML = 
-                `🎯 ${visibleCount} concours trouvés pour "${searchTerm}"`;
-        }
-
-        // Réinitialiser la recherche
-        function resetSearch() {
-            document.getElementById('searchInput').value = '';
-            const cards = document.querySelectorAll('.concours-card');
-            cards.forEach(card => {
-                card.style.display = 'block';
-            });
-            updateStats();
-        }
-
-        // Mettre à jour les statistiques
-        function updateStats() {
-            const cards = document.querySelectorAll('.concours-card');
-            document.getElementById('stats').innerHTML = 
-                `🎯 ${cards.length} concours actifs détectés automatiquement`;
-        }
-
         // Fonction principale
-        async function loadAllConcoursAutomatically() {
-            const concoursGrid = document.getElementById('concoursGrid');
-            const statsElement = document.getElementById('stats');
+        async function loadAllGamesAutomatically() {
+            const gamesGrid = document.getElementById('gamesGrid');
+            const statsElement = document.getElementById('gameCount');
             
             try {
-                statsElement.textContent = '🔍 Recherche des concours...';
+                statsElement.textContent = '🔍 Recherche des fichiers HTML...';
                 
                 // Découvrir automatiquement les fichiers
-                const discoveredFiles = await discoverConcoursFiles();
+                const discoveredFiles = await discoverHTMLFiles();
                 
                 if (discoveredFiles.length === 0) {
-                    statsElement.textContent = '❌ Aucun concours trouvé';
-                    concoursGrid.innerHTML = `
+                    statsElement.textContent = '❌ Aucun fichier HTML trouvé';
+                    gamesGrid.innerHTML = `
                         <div class="error-state">
-                            <h2>Aucun concours détecté</h2>
-                            <p>Le système n'a pas pu détecter automatiquement les fichiers de concours.</p>
-                            <p>Vérifiez que vos fichiers suivent la convention de nommage (concours1.html, concours2.html, etc.)</p>
+                            <h2>Aucun jeu trouvé</h2>
+                            <p>Le système n'a pas pu détecter automatiquement les fichiers HTML.</p>
+                            <p>Vérifiez que vos fichiers suivent la convention de nommage (jeux1.html, jeux2.html, etc.)</p>
                         </div>
                     `;
                     return;
                 }
                 
-                statsElement.textContent = `📁 ${discoveredFiles.length} concours détectés - Chargement...`;
+                statsElement.textContent = `📁 ${discoveredFiles.length} jeu(x) détecté(s) - Chargement...`;
                 
                 // Charger les informations de chaque fichier
-                const concoursPromises = discoveredFiles.map(extractFileInfo);
-                const concours = await Promise.all(concoursPromises);
+                const gamesPromises = discoveredFiles.map(extractFileInfo);
+                const games = await Promise.all(gamesPromises);
                 
                 // Trier par nom de fichier
-                concours.sort((a, b) => a.filename.localeCompare(b.filename));
+                games.sort((a, b) => a.filename.localeCompare(b.filename));
                 
                 // Mettre à jour les statistiques
-                updateStats();
+                const gamesWithLogos = games.filter(game => game.logoUrl).length;
+                statsElement.textContent = `🎮 ${games.length} jeu(x) trouvé(s) • 🖼️ ${gamesWithLogos} avec logo`;
                 
-                // Afficher les concours
-                concoursGrid.innerHTML = concours.map(concour => `
-                    <div class="concours-card">
-                        <div class="concours-icon">
-                            ${concour.logoUrl ? 
-                                `<img src="${concour.logoUrl}" alt="${concour.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                                 <div class="floating" style="display:none;">🎯</div>` :
-                                `<div class="floating">🎯</div>`
+                // Afficher les jeux
+                gamesGrid.innerHTML = games.map(game => `
+                    <div class="game-card">
+                        <div class="game-icon">
+                            ${game.logoUrl ? 
+                                `<img src="${game.logoUrl}" alt="${game.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                 <div class="default-icon" style="display:none;">🎯</div>` :
+                                `<div class="default-icon">🎯</div>`
                             }
                         </div>
-                        <div class="concours-content">
-                            <div class="age-badge">Âge: ${concour.ageRange}</div>
-                            <h3 class="concours-title">${concour.title}</h3>
-                            <p class="concours-description">${concour.description}</p>
-                            <a href="${concour.url}" class="concours-link">Participer maintenant</a>
-                            <div class="file-name">${concour.filename}</div>
+                        <div class="game-content">
+                            <h3 class="game-title">${game.title}</h3>
+                            <p class="game-description">${game.description}</p>
+                            <a href="${game.url}" class="game-link">Jouer maintenant</a>
+                            <div class="file-name">${game.filename}</div>
                         </div>
                     </div>
                 `).join('');
@@ -536,21 +428,18 @@
             } catch (error) {
                 console.error('Erreur générale:', error);
                 statsElement.textContent = '❌ Erreur lors du chargement';
-                concoursGrid.innerHTML = `
+                gamesGrid.innerHTML = `
                     <div class="error-state">
                         <h2>Erreur de chargement</h2>
-                        <p>Une erreur est survenue lors de la détection automatique des concours.</p>
+                        <p>Une erreur est survenue lors de la détection automatique des jeux.</p>
                         <p>Vérifiez la console pour plus de détails.</p>
                     </div>
                 `;
             }
         }
 
-        // Recherche en temps réel
-        document.getElementById('searchInput').addEventListener('input', filterConcours);
-
         // Démarrer automatiquement au chargement
-        document.addEventListener('DOMContentLoaded', loadAllConcoursAutomatically);
+        document.addEventListener('DOMContentLoaded', loadAllGamesAutomatically);
     </script>
 </body>
 </html>

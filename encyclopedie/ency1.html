@@ -1,0 +1,177 @@
+<!--
+  Encyclopédie pour enfants – Géo: Les Continents (v1.000)
+  Auteur: ChatGPT pour LYNX98B
+  Note: Page unique, fond noir, typographie dorée, style accessible et responsive.
+  Images: sources libres (Wikimedia Commons) avec attribution dans les légendes.
+-->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Encyclopédie des Enfants – Les Continents</title>
+  <meta name="description" content="Article simple et illustré pour enfants sur les 7 continents: Afrique, Antarctique, Asie, Europe, Amérique du Nord, Amérique du Sud, Océanie." />
+  <style>
+    :root{
+      --bg:#0b0f1a;         /* fond nuit */
+      --panel:#101629;      /* panneaux */
+      --gold:#f6c55b;       /* or principal */
+      --gold-2:#ffd27a;     /* or clair */
+      --muted:#a7b0c6;      /* texte secondaire */
+      --border:#ffffff1a;   /* bordures douces */
+      --radius:18px;
+      --shadow:0 14px 34px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:radial-gradient(1200px 700px at 70% -10%,#1b2647 0%,var(--bg) 55%),var(--bg);color:#e8eaf0;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;}
+    header{padding:28px 16px 12px;text-align:center}
+    h1{font-size:clamp(28px,6vw,54px);color:var(--gold);text-shadow:0 2px 0 #0006}
+    .sub{color:var(--muted);max-width:900px;margin:10px auto 0}
+
+    .wrap{max-width:1100px;margin:22px auto;padding:0 14px}
+    .hero-map{background:linear-gradient(180deg,#ffffff08,#00000033);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
+    figure{margin:0}
+    figcaption{font-size:13px;color:#c9d3ee99;margin-top:6px}
+    figcaption a{color:var(--gold-2);text-decoration:none}
+
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+
+    .card{background:linear-gradient(180deg,#ffffff06,#0000002a);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+    .card h2{color:var(--gold-2);font-size:22px;margin-bottom:8px}
+    .badge{display:inline-block; padding:4px 10px;border:1px solid #ffffff22;border-radius:999px;background:linear-gradient(180deg,#ffffff0d,#00000033);backdrop-filter:blur(6px);font-size:12px;color:var(--gold)}
+    .facts{margin-top:8px}
+    .facts li{margin-left:18px}
+
+    .footer{color:#8ea3c7;text-align:center;margin:30px auto 40px;font-size:14px}
+    .credits{font-size:12px;color:#8ea3c7}
+
+    .stars, .stars:before, .stars:after{position:fixed;inset:0;content:"";pointer-events:none;z-index:-1;background-image:
+      radial-gradient(2px 2px at 20% 30%, #fff8 40%, transparent 41%),
+      radial-gradient(1px 1px at 70% 20%, #fff6 40%, transparent 41%),
+      radial-gradient(1px 1px at 40% 80%, #fff9 40%, transparent 41%),
+      radial-gradient(1.5px 1.5px at 85% 60%, #fff8 40%, transparent 41%),
+      radial-gradient(1.5px 1.5px at 10% 70%, #fff7 40%, transparent 41%);
+      animation: twinkle 6s linear infinite;}
+    .stars:before{filter:blur(1px);opacity:.9;animation-duration: 8s}
+    .stars:after{filter:blur(2px);opacity:.7;animation-duration:10s}
+    @keyframes twinkle{0%,100%{opacity:.9}50%{opacity:.5}}
+
+    .continent-img{width:100%;height:auto;border-radius:12px;border:1px solid var(--border)}
+  </style>
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <header>
+    <h1>Encyclopédie des Enfants • Les Continents</h1>
+    <p class="sub">Découvrons notre planète en 7 grandes parties: <b>Afrique</b>, <b>Antarctique</b>, <b>Asie</b>, <b>Europe</b>, <b>Amérique du Nord</b>, <b>Amérique du Sud</b> et <b>Océanie</b>.</p>
+  </header>
+
+  <main class="wrap">
+    <!-- Carte du monde -->
+    <section class="hero-map">
+      <figure>
+        <img class="continent-img" src="https://upload.wikimedia.org/wikipedia/commons/3/3c/BlankMap-World-Continents.PNG" alt="Carte du monde avec les continents" />
+        <figcaption>Carte: Wikimedia Commons, <em>BlankMap-World-Continents</em>, licence libre. Source citée ci-dessous.</figcaption>
+      </figure>
+    </section>
+
+    <!-- Cartes continents -->
+    <section class="grid" aria-label="Les continents">
+      <article class="card" id="afrique">
+        <div class="badge">Afrique</div>
+        <h2>Le continent de la diversité</h2>
+        <ul class="facts">
+          <li>Des déserts (Sahara), des savanes et des forêts tropicales.</li>
+          <li>Une grande variété d’animaux: lions, éléphants, girafes…</li>
+          <li>Des peuples et langues très nombreux et anciens.</li>
+        </ul>
+        <figure>
+          <img class="continent-img" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/African_landscape.jpg" alt="Paysage d’Afrique" />
+          <figcaption>Photo: © Tjeerd Wiersma (CC BY 2.0) via Wikimedia Commons.</figcaption>
+        </figure>
+      </article>
+
+      <article class="card" id="antarctique">
+        <div class="badge">Antarctique</div>
+        <h2>Le continent de glace</h2>
+        <ul class="facts">
+          <li>Très froid et presque inhabité en permanence.</li>
+          <li>On y trouve des manchots et des phoques.</li>
+          <li>Des chercheurs y étudient le climat et la glace.</li>
+        </ul>
+        <figure>
+          <img class="continent-img" src="https://upload.wikimedia.org/wikipedia/commons/4/42/Antarctica_Landscape.jpg" alt="Paysage d’Antarctique" />
+          <figcaption>Photo: (CC BY-SA 2.0) via Wikimedia Commons.</figcaption>
+        </figure>
+      </article>
+
+      <article class="card" id="asie">
+        <div class="badge">Asie</div>
+        <h2>Le plus grand continent</h2>
+        <ul class="facts">
+          <li>Le plus vaste et très peuplé.</li>
+          <li>De hautes montagnes (Himalaya) et de grandes plaines.</li>
+          <li>Des cultures et cuisines très variées.</li>
+        </ul>
+      </article>
+
+      <article class="card" id="europe">
+        <div class="badge">Europe</div>
+        <h2>Villes et histoire</h2>
+        <ul class="facts">
+          <li>Beaucoup de monuments célèbres et musées.</li>
+          <li>Des paysages de montagnes, plaines et côtes.</li>
+          <li>De nombreuses langues et traditions.</li>
+        </ul>
+      </article>
+
+      <article class="card" id="amnord">
+        <div class="badge">Amérique du Nord</div>
+        <h2>Grands espaces</h2>
+        <ul class="facts">
+          <li>Des montagnes Rocheuses aux forêts boréales.</li>
+          <li>Des lacs et chutes d’eau célèbres.</li>
+          <li>Animaux: bisons, ours, caribous…</li>
+        </ul>
+      </article>
+
+      <article class="card" id="amsud">
+        <div class="badge">Amérique du Sud</div>
+        <h2>Amazonie & Andes</h2>
+        <ul class="facts">
+          <li>La forêt amazonienne très riche en vie.</li>
+          <li>Les Andes: une longue chaîne de montagnes.</li>
+          <li>Cultures et musiques colorées.</li>
+        </ul>
+      </article>
+
+      <article class="card" id="oceanie">
+        <div class="badge">Océanie</div>
+        <h2>Îles et grande barrière</h2>
+        <ul class="facts">
+          <li>Comprend l’Australie, la Nouvelle-Zélande et beaucoup d’îles.</li>
+          <li>Des récifs coralliens et des animaux uniques.</li>
+          <li>Des déserts, des forêts et des plages.</li>
+        </ul>
+      </article>
+    </section>
+
+    <p class="credits">Images libres&nbsp;: voir crédits ci-dessous. Cette page respecte les licences indiquées par les auteurs.</p>
+    <section class="card" style="margin-top:16px">
+      <h2 style="color:var(--gold-2);margin-bottom:8px">Crédits & Sources d’images</h2>
+      <ul>
+        <li>Carte du monde: Wikimedia Commons, <em>BlankMap-World-Continents.PNG</em> (licence libre).</li>
+        <li>Afrique: Tjeerd Wiersma, <em>African landscape.jpg</em> (CC BY 2.0) via Wikimedia Commons.</li>
+        <li>Antarctique: <em>Antarctica_Landscape.jpg</em> (CC BY-SA 2.0) via Wikimedia Commons.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">© <span id="year"></span> Encyclopédie des Enfants – Géo · Made for learning</footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

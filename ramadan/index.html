@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DZNET1 - Ramadan Mubarak 🌙 Internet Sécurisé pour Enfants</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #0c2461 0%, #1e3799 50%, #0a3d62 100%);
+            color: #f7f1e3;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Guirlandes et décorations Ramadan */
+        .ramadan-decoration {
+            position: fixed;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .lantern {
+            position: absolute;
+            font-size: 2rem;
+            animation: swing 3s ease-in-out infinite;
+            color: #FFD700;
+            text-shadow: 0 0 10px #FF6B6B;
+        }
+
+        .star {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: twinkle 2s ease-in-out infinite;
+            color: #FFFFFF;
+        }
+
+        .moon {
+            position: absolute;
+            font-size: 3rem;
+            animation: float 6s ease-in-out infinite;
+            color: #F8EFBA;
+        }
+
+        .mosque {
+            position: absolute;
+            font-size: 4rem;
+            bottom: 20px;
+            color: #2C3A47;
+            opacity: 0.1;
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Header avec effet de lumière */
+        .header {
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.95) 0%, rgba(52, 73, 94, 0.9) 100%);
+            padding: 30px 0;
+            text-align: center;
+            position: relative;
+            border-bottom: 3px solid #FFD700;
+            box-shadow: 0 5px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stars" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="20" cy="20" r="1" fill="white" opacity="0.3"/><circle cx="50" cy="30" r="0.5" fill="white" opacity="0.2"/><circle cx="80" cy="20" r="0.8" fill="white" opacity="0.4"/></pattern></defs><rect width="100" height="100" fill="url(%23stars)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .logo {
+            font-family: 'Amiri', serif;
+            font-size: 4rem;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 0 0 20px #FF9F1C, 0 0 30px #FF6B6B;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #f7f1e3;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .ramadan-greeting {
+            font-family: 'Amiri', serif;
+            font-size: 2.5rem;
+            color: #FFD700;
+            text-shadow: 0 0 15px #FF9F1C;
+            margin: 20px 0;
+        }
+
+        /* Section principale */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .announcement-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .announcement-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+
+        .card-title {
+            font-family: 'Amiri', serif;
+            font-size: 2.8rem;
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .card-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #f7f1e3;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #FFD700;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-family: 'Amiri', serif;
+        }
+
+        .feature-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #f7f1e3;
+        }
+
+        /* Compte à rebours Ramadan */
+        .countdown {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(255, 159, 28, 0.2) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px 0;
+            text-align: center;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+        }
+
+        .countdown-title {
+            font-family: 'Amiri', serif;
+            font-size: 2.2rem;
+            color: #FFD700;
+            margin-bottom: 30px;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 100px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #FFD700;
+            font-family: 'Amiri', serif;
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            color: #f7f1e3;
+            margin-top: 10px;
+        }
+
+        /* Bouton d'action */
+        .cta-button {
+            background: linear-gradient(135deg, #FFD700 0%, #FF9F1C 100%);
+            color: #2C3A47;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 10px;
+            font-family: 'Tajawal', sans-serif;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(44, 62, 80, 0.9);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 2px solid #FFD700;
+            margin-top: 50px;
+        }
+
+        .footer-text {
+            color: #f7f1e3;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            color: #FFD700;
+            font-size: 1.5rem;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            color: #FF9F1C;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .ramadan-greeting {
+                font-size: 1.8rem;
+            }
+            
+            .card-title {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .countdown-timer {
+                gap: 10px;
+            }
+            
+            .countdown-item {
+                min-width: 80px;
+                padding: 15px;
+            }
+            
+            .countdown-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Décorations Ramadan -->
+    <div class="ramadan-decoration" id="decorations"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">DZNET1</div>
+            <div class="subtitle">Internet Sécurisé pour les Enfants Algériens</div>
+            <div class="ramadan-greeting">
+                <i class="fas fa-moon"></i> Ramadan Mubarak 2024 <i class="fas fa-star"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu Principal -->
+    <div class="main-content">
+        <!-- Annonce d'Ouverture -->
+        <div class="announcement-card">
+            <h1 class="card-title">🌙 Ouverture Spécial Ramadan 🌙</h1>
+            <p class="card-text">
+                Chers parents, chers enfants,<br>
+                En ce mois béni de Ramadan, DZNET1 est fier de vous annoncer le lancement de notre plateforme 
+                internet 100% sécurisée spécialement conçue pour les enfants algériens.
+            </p>
+            <p class="card-text">
+                Un environnement digital sûr où vos enfants peuvent apprendre, découvrir et s'amuser 
+                en toute tranquillité, sous la protection divine et notre système de sécurité avancé.
+            </p>
+            <a href="#features" class="cta-button">
+                <i class="fas fa-shield-alt"></i> Découvrir la Sécurité
+            </a>
+            <a href="#explore" class="cta-button" style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);">
+                <i class="fas fa-compass"></i> Explorer le Contenu
+            </a>
+        </div>
+
+        <!-- Compte à rebours Ramadan -->
+        <div class="countdown">
+            <h2 class="countdown-title">Temps jusqu'à la prochaine prière</h2>
+            <div class="countdown-timer" id="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">12</div>
+                    <div class="countdown-label">Heures</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">34</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">56</div>
+                    <div class="countdown-label">Secondes</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-grid" id="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">Protection Totale</h3>
+                <p class="feature-description">
+                    Système de filtrage intelligent qui bloque automatiquement les contenus inappropriés 
+                    et protège vos enfants des dangers du web.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="feature-title">Éducation Islamique</h3>
+                <p class="feature-description">
+                    Contenu éducatif aligné avec nos valeurs : histoires des prophètes, apprentissage 
+                    du Coran, et découverte de la culture arabo-musulmane.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3 class="feature-title">Jeux Éducatifs</h3>
+                <p class="feature-description">
+                    Jeux interactifs et puzzles qui développent l'intelligence tout en respectant 
+                    les principes islamiques et les valeurs morales.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="feature-title">Communauté Saine</h3>
+                <p class="feature-description">
+                    Espace social modéré où les enfants peuvent interagir en sécurité sous 
+                    la supervision de nos éducateurs spécialisés.
+                </p>
+            </div>
+
+            <div class="feature-card" id="explore">
+                <div class="feature-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h3 class="feature-title">Contenu Local</h3>
+                <p class="feature-description">
+                    Histoires, jeux et activités inspirés de la culture algérienne, 
+                    disponibles en arabe et en français.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h3 class="feature-title">Contrôle Parental</h3>
+                <p class="feature-description">
+                    Tableau de bord complet pour les parents : temps d'écran, activités 
+                    suivies, et rapports détaillés.
+                </p>
+            </div>
+        </div>
+
+        <!-- Message Spécial Ramadan -->
+        <div class="announcement-card">
+            <h2 class="card-title">🕌 Offre Spécial Ramadan 🕌</h2>
+            <p class="card-text">
+                Pendant tout le mois de Ramadan, profitez de <strong>30% de réduction</strong> sur l'abonnement annuel 
+                et recevez notre <strong>kit éducatif Ramadan</strong> incluant :
+            </p>
+            <ul style="text-align: left; font-size: 1.2rem; line-height: 2; margin: 20px 0;">
+                <li>📖 Calendrier des prières pour enfants</li>
+                <li>🎨 Livre de coloriage islamique</li>
+                <li>🧩 Jeux éducatifs sur le Ramadan</li>
+                <li>🌟 Certificat de participation</li>
+            </ul>
+            <a href="#" class="cta-button" style="background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%);">
+                <i class="fas fa-gift"></i> Profiter de l'Offre
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                <i class="fas fa-mosque"></i> DZNET1 - Internet Sécurisé pour la Famille Algérienne
+            </p>
+            <p class="footer-text">
+                "Un internet qui respecte nos valeurs et protège nos enfants"
+            </p>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p class="footer-text" style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">
+                © 2024 DZNET1. Tous droits réservés. Ramadan Mubarak!
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Créer les décorations Ramadan
+        function createDecorations() {
+            const decorationContainer = document.getElementById('decorations');
+            const decorations = [];
+            
+            // Créer des lanternes
+            for (let i = 0; i < 15; i++) {
+                const lantern = document.createElement('div');
+                lantern.className = 'lantern';
+                lantern.innerHTML = '🪔';
+                lantern.style.left = Math.random() * 100 + 'vw';
+                lantern.style.top = Math.random() * 50 + 'vh';
+                lantern.style.animationDelay = Math.random() * 3 + 's';
+                decorations.push(lantern);
+            }
+            
+            // Créer des étoiles
+            for (let i = 0; i < 25; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.innerHTML = '⭐';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                decorations.push(star);
+            }
+            
+            // Créer des lunes
+            for (let i = 0; i < 3; i++) {
+                const moon = document.createElement('div');
+                moon.className = 'moon';
+                moon.innerHTML = '🌙';
+                moon.style.left = (20 + i * 30) + 'vw';
+                moon.style.top = (10 + i * 5) + 'vh';
+                moon.style.animationDelay = i * 2 + 's';
+                decorations.push(moon);
+            }
+            
+            // Créer des mosquées en arrière-plan
+            for (let i = 0; i < 5; i++) {
+                const mosque = document.createElement('div');
+                mosque.className = 'mosque';
+                mosque.innerHTML = '🕌';
+                mosque.style.left = (i * 25) + 'vw';
+                decorations.push(mosque);
+            }
+            
+            // Ajouter toutes les décorations au DOM
+            decorations.forEach(decoration => {
+                decorationContainer.appendChild(decoration);
+            });
+        }
+
+        // Mettre à jour le compte à rebours (simulation)
+        function updateCountdown() {
+            const now = new Date();
+            const nextPrayer = new Date();
+            
+            // Simuler la prochaine prière dans 4 heures
+            nextPrayer.setHours(now.getHours() + 4);
+            nextPrayer.setMinutes(30);
+            nextPrayer.setSeconds(0);
+            
+            const diff = nextPrayer - now;
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        // Effet de scintillement aléatoire pour les étoiles
+        function randomTwinkle() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                if (Math.random() > 0.7) {
+                    star.style.animation = 'none';
+                    setTimeout(() => {
+                        star.style.animation = 'twinkle 2s ease-in-out infinite';
+                    }, 100);
+                }
+            });
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            createDecorations();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            setInterval(randomTwinkle, 3000);
+            
+            // Effet de saisie pour le titre
+            const title = document.querySelector('.logo');
+            title.style.animation = 'none';
+            setTimeout(() => {
+                title.style.animation = 'fadeIn 2s ease-in';
+            }, 500);
+        });
+
+        // Effet de parallaxe pour les décorations
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const decoration = document.getElementById('decorations');
+            decoration.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+    </script>
+</body>
+</html>

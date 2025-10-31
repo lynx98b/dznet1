@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bella l'Abeille - Le Secret du Miel Doré</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA000 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .story-book {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .cover {
+            background: linear-gradient(135deg, #FFC107 0%, #FF9800 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .cover::before {
+            content: "🐝";
+            font-size: 8rem;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.3;
+        }
+        
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            color: #5D4037;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .age-badge {
+            background: #5D4037;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+        
+        .page {
+            padding: 40px;
+            min-height: 500px;
+            display: none;
+            background: white;
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        .page-content {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .illustration {
+            flex: 1;
+            text-align: center;
+            font-size: 8rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .text-content {
+            flex: 2;
+        }
+        
+        .page-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            color: #FF9800;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #FFD700;
+            padding-bottom: 10px;
+        }
+        
+        .story-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #5D4037;
+            margin-bottom: 25px;
+        }
+        
+        .character {
+            display: inline-block;
+            background: #FFD700;
+            color: #5D4037;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .science-fact {
+            background: #FFF8E1;
+            border-left: 5px solid #FFC107;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+        
+        .science-fact::before {
+            content: "🍯 Le savais-tu ? ";
+            font-weight: bold;
+            color: #FF9800;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background: #F5F5F5;
+            border-top: 3px solid #E0E0E0;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #FF9800 0%, #FFC107 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn:disabled {
+            background: #BDBDBD;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .page-indicator {
+            background: #5D4037;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes beeFly {
+            0% { transform: translateX(-50px) translateY(0); }
+            25% { transform: translateX(25px) translateY(-20px); }
+            50% { transform: translateX(50px) translateY(0); }
+            75% { transform: translateX(25px) translateY(20px); }
+            100% { transform: translateX(-50px) translateY(0); }
+        }
+        
+        @keyframes flowerBloom {
+            0% { transform: scale(0.8); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes honeyDrip {
+            0% { transform: translateY(-20px) scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(20px) scale(1); opacity: 0; }
+        }
+        
+        .flying-bee {
+            position: absolute;
+            font-size: 2rem;
+            animation: beeFly 3s ease-in-out infinite;
+        }
+        
+        .blooming-flower {
+            position: absolute;
+            font-size: 2rem;
+            animation: flowerBloom 2s ease-in-out infinite;
+        }
+        
+        .dripping-honey {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: honeyDrip 2s linear infinite;
+        }
+        
+        .pollen-dust {
+            position: absolute;
+            font-size: 1rem;
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .page-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .illustration {
+                font-size: 6rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .story-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="story-book">
+        <!-- Page de couverture -->
+        <div class="cover">
+            <h1>Bella l'Abeille</h1>
+            <p class="subtitle">Le Secret du Miel Doré</p>
+            <div class="age-badge">Pour les petits explorateurs de 5-6 ans</div>
+        </div>
+        
+        <!-- Page 1 -->
+        <div class="page active" id="page1">
+            <div class="page-content">
+                <div class="illustration">🏰🐝</div>
+                <div class="text-content">
+                    <h2 class="page-title">La Ruche Magique</h2>
+                    <p class="story-text">
+                        Au cœur d'un joli jardin, se trouvait une ruche dorée où vivait <span class="character">Bella l'abeille</span> et ses milliers de sœurs.
+                    </p>
+                    <p class="story-text">
+                        Chaque matin, la reine donnait une mission spéciale : "Partez butiner les plus belles fleurs !"
+                    </p>
+                    <div class="science-fact">
+                        Une ruche peut abriter jusqu'à 60,000 abeilles qui travaillent toutes ensemble !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 2 -->
+        <div class="page" id="page2">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">La Danse des Fleurs</h2>
+                    <p class="story-text">
+                        <span class="character">Bella</span> volait de fleur en fleur en fredonnant : "Bonjour madame la Tulipe ! Bonjour monsieur le Coquelicot !"
+                    </p>
+                    <p class="story-text">
+                        Les fleurs lui offraient leur nectar sucré en échange d'un peu de pollen pour faire de nouvelles fleurs.
+                    </p>
+                    <div class="science-fact">
+                        Les abeilles visitent environ 1000 fleurs par jour pour récolter du nectar !
+                    </div>
+                </div>
+                <div class="illustration" id="flowerIllustration">🌼🐝</div>
+            </div>
+        </div>
+        
+        <!-- Page 3 -->
+        <div class="page" id="page3">
+            <div class="page-content">
+                <div class="illustration" id="pollenIllustration">🌸💛</div>
+                <div class="text-content">
+                    <h2 class="page-title">La Poussière d'Or</h2>
+                    <p class="story-text">
+                        En butinant, <span class="character">Bella</span> se couvrait les pattes de <span class="character">pollen</span>, une poussière magique dorée.
+                    </p>
+                    <p class="story-text">
+                        "Je suis une petite magicienne !" rigolait-elle en transportant cette poudre précieuse d'une fleur à l'autre.
+                    </p>
+                    <div class="science-fact">
+                        Le pollen permet aux fleurs de faire des graines et de nouvelles plantes !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 4 -->
+        <div class="page" id="page4">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">Le Voyage du Nectar</h2>
+                    <p class="story-text">
+                        <span class="character">Bella</span> stockait le nectar sucré dans son estomac spécial appelé "jabot".
+                    </p>
+                    <p class="story-text">
+                        De retour à la ruche, elle le régurgitait pour les abeilles ouvrières qui le transformaient en miel.
+                    </p>
+                    <div class="science-fact">
+                        Les abeilles font des allers-retours toute la journée entre les fleurs et la ruche !
+                    </div>
+                </div>
+                <div class="illustration" id="nectarIllustration">🍯🐝</div>
+            </div>
+        </div>
+        
+        <!-- Page 5 -->
+        <div class="page" id="page5">
+            <div class="page-content">
+                <div class="illustration">🏗️🍯</div>
+                <div class="text-content">
+                    <h2 class="page-title">L'Usine à Miel</h2>
+                    <p class="story-text">
+                        Dans la ruche, les abeilles ouvrières travaillaient sans relâche. Certaines ventilaient le nectar avec leurs ailes.
+                    </p>
+                    <p class="story-text">
+                        D'autres construisaient des alvéoles de cire pour stocker le miel doré.
+                    </p>
+                    <div class="science-fact">
+                        Les abeilles battent des ailes très vite pour faire évaporer l'eau du nectar et le transformer en miel !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 6 -->
+        <div class="page" id="page6">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">Le Trésor Doré</h2>
+                    <p class="story-text">
+                        Après plusieurs jours de travail, le nectar était devenu un délicieux <span class="character">miel</span> doré et épais.
+                    </p>
+                    <p class="story-text">
+                        Les abeilles scellaient chaque alvéole avec de la cire pour conserver ce précieux trésor.
+                    </p>
+                    <div class="science-fact">
+                        Le miel ne se périme jamais ! Les archéologues ont trouvé du miel vieux de 3000 ans encore bon à manger !
+                    </div>
+                </div>
+                <div class="illustration" id="honeyIllustration">🍯✨</div>
+            </div>
+        </div>
+        
+        <!-- Page 7 -->
+        <div class="page" id="page7">
+            <div class="page-content">
+                <div class="illustration">🐝❄️</div>
+                <div class="text-content">
+                    <h2 class="page-title">La Réserve d'Hiver</h2>
+                    <p class="story-text">
+                        <span class="character">Bella</span> et ses sœurs préparaient des réserves pour l'hiver. 
+                        "Il nous faut assez de miel pour tenir jusqu'au printemps !"
+                    </p>
+                    <p class="story-text">
+                        Elles se regroupaient en boule pour se tenir chaud et se nourrissaient de leur miel.
+                    </p>
+                    <div class="science-fact">
+                        Les abeilles mangent leur propre miel pour avoir de l'énergie quand il n'y a plus de fleurs !
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 8 -->
+        <div class="page" id="page8">
+            <div class="page-content">
+                <div class="text-content">
+                    <h2 class="page-title">Le Cadeau de la Nature</h2>
+                    <p class="story-text">
+                        Grâce au travail des abeilles, les arbres donnaient des fruits, les légumes poussaient dans le potager.
+                    </p>
+                    <p class="story-text">
+                        "Nous protégeons les abeilles !" promirent les enfants en plantant des fleurs sauvages.
+                    </p>
+                    <div class="science-fact">
+                        Sans les abeilles, nous n'aurions pas de pommes, de fraises, ni de tomates ! Elles sont indispensables !
+                    </div>
+                </div>
+                <div class="illustration" id="gardenIllustration">🌍🤝🐝</div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn" onclick="previousPage()" disabled>
+                ← Page Précédente
+            </button>
+            
+            <div class="page-indicator">
+                Page <span id="currentPage">1</span>/8
+            </div>
+            
+            <button class="nav-btn" id="nextBtn" onclick="nextPage()">
+                Page Suivante →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 8;
+        
+        // Mettre à jour l'affichage de la page
+        function updatePageDisplay() {
+            // Cacher toutes les pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Afficher la page actuelle
+            document.getElementById(`page${currentPage}`).classList.add('active');
+            
+            // Mettre à jour l'indicateur de page
+            document.getElementById('currentPage').textContent = currentPage;
+            
+            // Mettre à jour les boutons de navigation
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+            
+            // Animations spéciales selon la page
+            triggerPageAnimations();
+        }
+        
+        // Page suivante
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePageDisplay();
+            }
+        }
+        
+        // Page précédente
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePageDisplay();
+            }
+        }
+        
+        // Animations spéciales selon la page
+        function triggerPageAnimations() {
+            // Nettoyer les animations précédentes
+            document.querySelectorAll('.flying-bee, .blooming-flower, .dripping-honey, .pollen-dust').forEach(el => el.remove());
+            
+            switch(currentPage) {
+                case 2: // Page des fleurs
+                    createBloomingFlowers();
+                    break;
+                case 3: // Page du pollen
+                    createPollenDust();
+                    break;
+                case 4: // Page du nectar
+                    createFlyingBees();
+                    break;
+                case 6: // Page du miel
+                    createHoneyDrips();
+                    break;
+                case 8: // Page du jardin
+                    createGardenScene();
+                    break;
+            }
+        }
+        
+        // Créer des fleurs qui s'épanouissent
+        function createBloomingFlowers() {
+            const container = document.getElementById('flowerIllustration');
+            const flowerTypes = ['🌼', '🌸', '🌺', '🌷', '💮'];
+            
+            for (let i = 0; i < 3; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'blooming-flower';
+                flower.textContent = flowerTypes[i];
+                flower.style.left = (20 + i * 25) + '%';
+                flower.style.top = '30%';
+                flower.style.animationDelay = (i * 0.5) + 's';
+                container.appendChild(flower);
+            }
+        }
+        
+        // Créer de la poussière de pollen
+        function createPollenDust() {
+            const container = document.getElementById('pollenIllustration');
+            
+            for (let i = 0; i < 8; i++) {
+                const pollen = document.createElement('div');
+                pollen.className = 'pollen-dust';
+                pollen.textContent = '💛';
+                pollen.style.left = Math.random() * 80 + 10 + '%';
+                pollen.style.top = Math.random() * 80 + 10 + '%';
+                pollen.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(pollen);
+            }
+        }
+        
+        // Créer des abeilles volantes
+        function createFlyingBees() {
+            const container = document.getElementById('nectarIllustration');
+            
+            for (let i = 0; i < 2; i++) {
+                const bee = document.createElement('div');
+                bee.className = 'flying-bee';
+                bee.textContent = '🐝';
+                bee.style.top = (40 + i * 20) + '%';
+                bee.style.animationDelay = (i * 1) + 's';
+                container.appendChild(bee);
+            }
+        }
+        
+        // Créer des gouttes de miel qui tombent
+        function createHoneyDrips() {
+            const container = document.getElementById('honeyIllustration');
+            
+            for (let i = 0; i < 4; i++) {
+                const honey = document.createElement('div');
+                honey.className = 'dripping-honey';
+                honey.textContent = '🍯';
+                honey.style.left = (20 + i * 20) + '%';
+                honey.style.animationDelay = (i * 0.3) + 's';
+                container.appendChild(honey);
+            }
+        }
+        
+        // Créer la scène du jardin
+        function createGardenScene() {
+            const container = document.getElementById('gardenIllustration');
+            const elements = [
+                { emoji: '🐝', top: '20%', left: '30%' },
+                { emoji: '🌼', top: '60%', left: '20%' },
+                { emoji: '🍎', top: '40%', left: '60%' },
+                { emoji: '🍓', top: '70%', left: '70%' },
+                { emoji: '👧', top: '30%', left: '80%' }
+            ];
+            
+            elements.forEach((element, index) => {
+                const el = document.createElement('div');
+                el.className = 'flying-bee';
+                el.textContent = element.emoji;
+                el.style.top = element.top;
+                el.style.left = element.left;
+                el.style.animation = `float ${2 + index * 0.5}s ease-in-out infinite`;
+                container.appendChild(el);
+            });
+        }
+        
+        // Navigation au clavier
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') {
+                nextPage();
+            } else if (event.key === 'ArrowLeft') {
+                previousPage();
+            }
+        });
+        
+        // Démarrer sur la première page
+        document.addEventListener('DOMContentLoaded', updatePageDisplay);
+    </script>
+</body>
+</html>

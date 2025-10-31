@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sommaire des encyclopédie - DZNet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .stats {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 30px;
+        }
+        
+        .game-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e1e8ed;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .game-icon {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .game-icon .default-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .game-content {
+            padding: 20px;
+        }
+        
+        .game-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .game-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .game-link {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        
+        .game-link:hover {
+            background: #2980b9;
+        }
+        
+        .file-name {
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 10px;
+            font-family: monospace;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .error-state {
+            text-align: center;
+            padding: 40px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            margin: 20px;
+            color: #856404;
+        }
+        
+        @media (max-width: 768px) {
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮 encyclopédie de Culture Générale</h1>
+            <p class="subtitle">Découvrez tous nos encyclopédie éducatifs et testez vos connaissances</p>
+        </header>
+        
+        <div class="stats" id="stats">
+            <span id="gameCount">Scan des fichiers en cours...</span>
+        </div>
+        
+        <div class="games-grid" id="gamesGrid">
+            <div class="loading">
+                <p>Recherche automatique des encyclopédie...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const EXCLUDED_FILES = ['index.html', 'sommaire.html']; // Fichiers à ignorer
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+
+        // Fonction pour détecter tous les fichiers HTML du dossier
+        async function discoverHTMLFiles() {
+            try {
+                console.log('🔍 Début du scan des fichiers HTML...');
+                
+                // Stratégie 1: Essayer de récupérer la liste via fetch (pour GitHub Pages)
+                let allFiles = [];
+                
+                try {
+                    // Cette méthode fonctionne sur certains serveurs
+                    const response = await fetch('./');
+                    const text = await response.text();
+                    
+                    // Parser le HTML de la page d'index pour trouver les liens
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(text, 'text/html');
+                    const links = doc.querySelectorAll('a[href$=".html"]');
+                    
+                    allFiles = Array.from(links)
+                        .map(link => link.getAttribute('href'))
+                        .filter(file => !EXCLUDED_FILES.includes(file));
+                        
+                    console.log(`📁 Fichiers trouvés via scan:`, allFiles);
+                    
+                } catch (error) {
+                    console.log('❌ Scan automatique échoué, utilisation de la détection par pattern');
+                }
+                
+                // Si pas de fichiers trouvés, utiliser la détection par pattern
+                if (allFiles.length === 0) {
+                    allFiles = await detectFilesByPattern();
+                }
+                
+                return allFiles;
+                
+            } catch (error) {
+                console.error('Erreur lors de la découverte des fichiers:', error);
+                return [];
+            }
+        }
+
+        // Fonction pour détecter les fichiers par pattern (encyclopédie1, encyclopédie2, etc.)
+        async function detectFilesByPattern() {
+            console.log('🎯 Détection par pattern...');
+            const patterns = [
+                'ency'  // Spécial pour votre fichier existant
+            ];
+            
+            const discoveredFiles = [];
+            
+            // Tester les patterns avec numéros (encyclopédie1.html, encyclopédie2.html, etc.)
+            for (let i = 0; i <= 20; i++) {
+                for (const pattern of patterns) {
+                    const filename = `${pattern}${i}.html`;
+                    if (await fileExists(filename)) {
+                        discoveredFiles.push(filename);
+                        console.log(`✅ Trouvé: ${filename}`);
+                    }
+                }
+            }
+            
+            // Tester les patterns sans numéros
+            for (const pattern of patterns) {
+                const filename = `${pattern}.html`;
+                if (await fileExists(filename)) {
+                    discoveredFiles.push(filename);
+                    console.log(`✅ Trouvé: ${filename}`);
+                }
+            }
+            
+            // Chercher aussi les fichiers avec underscores
+            for (const pattern of patterns) {
+                const filename = `${pattern}_culture.html`;
+                if (await fileExists(filename)) {
+                    discoveredFiles.push(filename);
+                    console.log(`✅ Trouvé: ${filename}`);
+                }
+            }
+            
+            return discoveredFiles;
+        }
+
+        // Fonction pour vérifier si un fichier existe
+        async function fileExists(url) {
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                return response.ok;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        // Fonction pour vérifier si une image existe
+        function checkImageExists(imageUrl) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                const timeout = setTimeout(() => resolve(false), 2000);
+                
+                img.onload = () => {
+                    clearTimeout(timeout);
+                    resolve(true);
+                };
+                img.onerror = () => {
+                    clearTimeout(timeout);
+                    resolve(false);
+                };
+                img.src = imageUrl;
+            });
+        }
+
+        // Fonction pour trouver le logo d'un jeu
+        async function findGameLogo(baseFilename) {
+            const baseName = baseFilename.replace('.html', '');
+            
+            // Tester toutes les extensions d'image
+            for (const ext of imageExtensions) {
+                const imageUrl = `${baseName}${ext}`;
+                const exists = await checkImageExists(imageUrl);
+                if (exists) {
+                    return imageUrl;
+                }
+            }
+            
+            return null;
+        }
+
+        // Fonction pour extraire les métadonnées d'un fichier HTML
+        async function extractFileInfo(filename) {
+            try {
+                const response = await fetch(filename);
+                const html = await response.text();
+                
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Extraire le titre
+                const title = doc.querySelector('title')?.textContent || 
+                             filename.replace('.html', '')
+                                    .replace(/_/g, ' ')
+                                    .replace(/([a-z])([A-Z])/g, '$1 $2')
+                                    .replace(/\b\w/g, l => l.toUpperCase());
+                
+                // Extraire la description
+                let description = doc.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+                
+                if (!description) {
+                    const firstParagraph = doc.querySelector('p');
+                    if (firstParagraph) {
+                        description = firstParagraph.textContent.substring(0, 120) + '...';
+                    } else {
+                        const firstH1 = doc.querySelector('h1');
+                        description = firstH1 ? firstH1.textContent + " - Jeu de culture générale" : "Jeu de culture générale - Testez vos connaissances";
+                    }
+                }
+                
+                // Chercher le logo
+                const logoUrl = await findGameLogo(filename);
+                
+                return {
+                    filename,
+                    title,
+                    description,
+                    url: filename,
+                    logoUrl
+                };
+            } catch (error) {
+                console.error(`Erreur avec ${filename}:`, error);
+                return {
+                    filename,
+                    title: filename.replace('.html', '')
+                                  .replace(/_/g, ' ')
+                                  .replace(/([a-z])([A-Z])/g, '$1 $2')
+                                  .replace(/\b\w/g, l => l.toUpperCase()),
+                    description: "Jeu de culture générale",
+                    url: filename,
+                    logoUrl: null
+                };
+            }
+        }
+
+        // Fonction principale
+        async function loadAllGamesAutomatically() {
+            const gamesGrid = document.getElementById('gamesGrid');
+            const statsElement = document.getElementById('gameCount');
+            
+            try {
+                statsElement.textContent = '🔍 Recherche des fichiers HTML...';
+                
+                // Découvrir automatiquement les fichiers
+                const discoveredFiles = await discoverHTMLFiles();
+                
+                if (discoveredFiles.length === 0) {
+                    statsElement.textContent = '❌ Aucun fichier HTML trouvé';
+                    gamesGrid.innerHTML = `
+                        <div class="error-state">
+                            <h2>Aucun jeu trouvé</h2>
+                            <p>Le système n'a pas pu détecter automatiquement les fichiers HTML.</p>
+                            <p>Vérifiez que vos fichiers suivent la convention de nommage (encyclopédie1.html, encyclopédie2.html, etc.)</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                statsElement.textContent = `📁 ${discoveredFiles.length} jeu(x) détecté(s) - Chargement...`;
+                
+                // Charger les informations de chaque fichier
+                const gamesPromises = discoveredFiles.map(extractFileInfo);
+                const games = await Promise.all(gamesPromises);
+                
+                // Trier par nom de fichier
+                games.sort((a, b) => a.filename.localeCompare(b.filename));
+                
+                // Mettre à jour les statistiques
+                const gamesWithLogos = games.filter(game => game.logoUrl).length;
+                statsElement.textContent = `🎮 ${games.length} jeu(x) trouvé(s) • 🖼️ ${gamesWithLogos} avec logo`;
+                
+                // Afficher les encyclopédie
+                gamesGrid.innerHTML = games.map(game => `
+                    <div class="game-card">
+                        <div class="game-icon">
+                            ${game.logoUrl ? 
+                                `<img src="${game.logoUrl}" alt="${game.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                 <div class="default-icon" style="display:none;">🎯</div>` :
+                                `<div class="default-icon">🎯</div>`
+                            }
+                        </div>
+                        <div class="game-content">
+                            <h3 class="game-title">${game.title}</h3>
+                            <p class="game-description">${game.description}</p>
+                            <a href="${game.url}" class="game-link">Jouer maintenant</a>
+                            <div class="file-name">${game.filename}</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Erreur générale:', error);
+                statsElement.textContent = '❌ Erreur lors du chargement';
+                gamesGrid.innerHTML = `
+                    <div class="error-state">
+                        <h2>Erreur de chargement</h2>
+                        <p>Une erreur est survenue lors de la détection automatique des encyclopédie.</p>
+                        <p>Vérifiez la console pour plus de détails.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Démarrer automatiquement au chargement
+        document.addEventListener('DOMContentLoaded', loadAllGamesAutomatically);
+    </script>
+</body>
+</html>

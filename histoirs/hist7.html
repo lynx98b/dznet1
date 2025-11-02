@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super-Héros de l'Hygiène - La Guerre contre les Microbes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 8px solid #4ECDC4;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            position: relative;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 3px 3px 0 #2C7873;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .story-container {
+            padding: 25px;
+        }
+        
+        .illustration {
+            height: 280px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #A8E6CF 0%, #DCEDC1 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid #4CAF50;
+        }
+        
+        .character-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            width: 100%;
+            height: 100%;
+            padding: 0 20px;
+        }
+        
+        .hero {
+            font-size: 100px;
+            animation: bounce 3s infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .microbe {
+            font-size: 60px;
+            animation: wiggle 2s infinite;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .bubble {
+            position: absolute;
+            background: white;
+            border-radius: 20px;
+            padding: 12px 18px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            max-width: 250px;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 10;
+        }
+        
+        .hero-bubble {
+            top: 30px;
+            left: 30px;
+        }
+        
+        .microbe-bubble {
+            top: 30px;
+            right: 30px;
+        }
+        
+        .bubble:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 12px solid transparent;
+        }
+        
+        .hero-bubble:after {
+            border-right-color: white;
+            border-left: 0;
+            left: -12px;
+            top: 20px;
+        }
+        
+        .microbe-bubble:after {
+            border-left-color: white;
+            border-right: 0;
+            right: -12px;
+            top: 20px;
+        }
+        
+        .bubble.show {
+            opacity: 1;
+        }
+        
+        .story-text {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background-color: #FFEB3B;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+        
+        .hygiene-tips {
+            background: #E8F5E9;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border: 3px solid #4CAF50;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .tip-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 2px solid #4CAF50;
+        }
+        
+        .tip-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .audio-btn {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .audio-btn:hover {
+            background: linear-gradient(135deg, #3db8a8 0%, #388f7e 100%);
+            transform: scale(1.1);
+        }
+        
+        .interactive-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .option-btn {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .option-btn:hover {
+            background: linear-gradient(135deg, #3db8a8 0%, #388f7e 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .germs-section {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .germs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .germ-card {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .germ-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            background: #2C7873;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .story-container {
+                padding: 15px;
+            }
+            
+            .hero {
+                font-size: 70px;
+            }
+            
+            .microbe {
+                font-size: 40px;
+            }
+            
+            .story-text {
+                font-size: 1.1rem;
+            }
+            
+            .interactive-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .character-container {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🦸‍♂️ Super-Héros de l'Hygiène 🦸‍♀️</h1>
+            <div class="subtitle">La grande bataille contre les microbes !</div>
+        </header>
+        
+        <div class="story-container">
+            <div class="illustration">
+                <div class="character-container">
+                    <div class="hero">👦</div>
+                    <div class="microbe">🦠</div>
+                    <div class="microbe">🧫</div>
+                </div>
+                <div class="bubble hero-bubble" id="heroBubble">Je suis un super-héros de l'hygiène !</div>
+                <div class="bubble microbe-bubble" id="microbeBubble">Nous sommes les microbes !</div>
+            </div>
+            
+            <div class="story-text">
+                <p>Léo était un petit garçon de <span class="highlight">6 ans</span> qui adorait jouer dans le jardin. Un jour, il rencontra des <span class="highlight">microbes rigolos</span> qui voulaient devenir ses amis.</p>
+                
+                <p>"Attention Léo !" dit le microbe vert. "Nous sommes <span class="highlight">partout</span> : sur les mains, sur les dents, sur les jouets !"</p>
+                
+                <p>Léo apprit qu'il y avait <span class="highlight">3 règles d'or</span> pour rester en bonne santé :</p>
+            </div>
+
+            <div class="hygiene-tips">
+                <h3>💫 Les 3 Super-Pouvoirs de l'Hygiène</h3>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <div class="tip-emoji">🧼</div>
+                        <h4>Super Mains</h4>
+                        <p>Se laver les mains avec du savon pendant 20 secondes</p>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-emoji">🦷</div>
+                        <h4>Dents Fortes</h4>
+                        <p>Brosser les dents 2 fois par jour pendant 2 minutes</p>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-emoji">🚿</div>
+                        <h4>Corps Propre</h4>
+                        <p>Prendre un bain régulièrement pour chasser les microbes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-text">
+                <p>Les microbes expliquèrent à Léo qu'ils n'étaient pas tous méchants. "Certains d'entre nous sont gentils et aident ton corps ! Mais d'autres peuvent rendre malade."</p>
+                
+                <p>Léo découvrit qu'en se lavant les mains <span class="highlight">5 fois</span> par jour et en brossant ses dents <span class="highlight">2 fois</span>, il pouvait garder les méchants microbes loin de lui !</p>
+            </div>
+
+            <div class="germs-section">
+                <h3>🦠 Connais tes Ennemis !</h3>
+                <div class="germs-grid">
+                    <div class="germ-card">
+                        <div class="germ-emoji">🦠</div>
+                        <h4>Microbes des mains</h4>
+                        <p>Aiment se cacher entre les doigts</p>
+                    </div>
+                    <div class="germ-card">
+                        <div class="germ-emoji">🧫</div>
+                        <h4>Bactéries des dents</h4>
+                        <p>Adorent le sucre sur les dents</p>
+                    </div>
+                    <div class="germ-card">
+                        <div class="germ-emoji">🦠</div>
+                        <h4>Germes du corps</h4>
+                        <p>Se multiplient dans la sueur</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-text">
+                <p>Maintenant, Léo est un vrai <span class="highlight">super-héros de l'hygiène</span> ! Il montre à tous ses amis comment se protéger des microbes.</p>
+                
+                <p>"Rappelle-toi," dit Léo, "<span class="highlight">l'hygiène</span> c'est notre super-pouvoir secret pour rester en bonne santé !"</p>
+            </div>
+            
+            <div class="audio-controls">
+                <button class="audio-btn" id="playBtn">▶</button>
+                <button class="audio-btn" id="pauseBtn">❚❚</button>
+                <button class="audio-btn" id="restartBtn">↺</button>
+            </div>
+            
+            <div class="interactive-options">
+                <button class="option-btn" onclick="showHeroMessage()">Léo parle</button>
+                <button class="option-btn" onclick="showMicrobeMessage()">Microbe parle</button>
+                <button class="option-btn" onclick="showHygiene('🧼')">Savon</button>
+                <button class="option-btn" onclick="showHygiene('🦷')">Brosse à dents</button>
+                <button class="option-btn" onclick="showNumber(3)">3 règles</button>
+                <button class="option-btn" onclick="showNumber(20)">20 secondes</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🌟 <strong>Deviens un Super-Héros de l'Hygiène !</strong> 🌟</p>
+            <p style="margin-top: 10px; opacity: 0.9;">Lave-toi les mains et brosse tes dents comme Léo</p>
+        </footer>
+    </div>
+
+    <script>
+        // Variables pour la narration audio
+        let isPlaying = false;
+        
+        // Messages pour les personnages
+        const heroMessages = [
+            "Je suis un super-héros de l'hygiène !",
+            "Je me lave les mains 5 fois par jour !",
+            "Je brosse mes dents 2 fois par jour !",
+            "Les microbes n'ont aucune chance !",
+            "L'hygiène, c'est mon super-pouvoir !"
+        ];
+        
+        const microbeMessages = [
+            "Nous sommes les microbes !",
+            "Nous adorons les mains sales !",
+            "Le sucre sur les dents, c'est notre festin !",
+            "Certains d'entre nous sont gentils !",
+            "Le savon est notre pire ennemi !"
+        ];
+
+        // Simulation de la lecture audio
+        function playAudio() {
+            if (!isPlaying) {
+                isPlaying = true;
+                document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #2196F3 0%, #0D47A1 100%)';
+                console.log("Lecture de l'histoire audio...");
+                
+                // Simulation d'un changement d'illustration pendant la narration
+                setTimeout(() => {
+                    document.querySelector('.hero').textContent = '🧼';
+                }, 2000);
+                
+                setTimeout(() => {
+                    document.querySelector('.hero').textContent = '🦷';
+                }, 4000);
+                
+                setTimeout(() => {
+                    document.querySelector('.hero').textContent = '🚿';
+                }, 6000);
+                
+                setTimeout(() => {
+                    document.querySelector('.hero').textContent = '👦';
+                }, 8000);
+            }
+        }
+        
+        function pauseAudio() {
+            isPlaying = false;
+            document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%)';
+            console.log("Audio en pause");
+        }
+        
+        function restartAudio() {
+            pauseAudio();
+            document.querySelector('.hero').textContent = '👦';
+            setTimeout(playAudio, 500);
+        }
+        
+        // Fonctions interactives
+        function showHeroMessage() {
+            const bubble = document.getElementById('heroBubble');
+            const randomMessage = heroMessages[Math.floor(Math.random() * heroMessages.length)];
+            bubble.textContent = randomMessage;
+            bubble.classList.add('show');
+            setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 3000);
+            
+            // Animation spéciale
+            const heroElement = document.querySelector('.hero');
+            heroElement.style.animation = 'none';
+            setTimeout(() => {
+                heroElement.style.animation = 'bounce 3s infinite alternate';
+            }, 10);
+        }
+        
+        function showMicrobeMessage() {
+            const bubble = document.getElementById('microbeBubble');
+            const randomMessage = microbeMessages[Math.floor(Math.random() * microbeMessages.length)];
+            bubble.textContent = randomMessage;
+            bubble.classList.add('show');
+            setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 3000);
+            
+            // Animation spéciale
+            const microbeElements = document.querySelectorAll('.microbe');
+            microbeElements.forEach(microbe => {
+                microbe.classList.add('shake');
+                setTimeout(() => {
+                    microbe.classList.remove('shake');
+                }, 500);
+            });
+        }
+        
+        function showHygiene(item) {
+            document.querySelector('.hero').textContent = item;
+            
+            // Animation spéciale
+            const heroElement = document.querySelector('.hero');
+            heroElement.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                heroElement.style.transform = 'scale(1)';
+            }, 500);
+        }
+        
+        function showNumber(number) {
+            document.querySelector('.hero').textContent = number;
+            
+            // Animation spéciale
+            const heroElement = document.querySelector('.hero');
+            heroElement.style.transform = 'scale(1.5)';
+            setTimeout(() => {
+                heroElement.style.transform = 'scale(1)';
+            }, 500);
+        }
+        
+        // Initialisation au chargement de la page
+        window.onload = function() {
+            // Configuration des boutons audio
+            document.getElementById('playBtn').addEventListener('click', playAudio);
+            document.getElementById('pauseBtn').addEventListener('click', pauseAudio);
+            document.getElementById('restartBtn').addEventListener('click', restartAudio);
+            
+            // Afficher les bulles au chargement
+            setTimeout(showHeroMessage, 1000);
+            setTimeout(showMicrobeMessage, 2500);
+            
+            // Animation automatique des microbes
+            setInterval(() => {
+                const microbes = document.querySelectorAll('.microbe');
+                microbes.forEach(microbe => {
+                    microbe.style.animation = 'none';
+                    setTimeout(() => {
+                        microbe.style.animation = 'wiggle 2s infinite';
+                    }, 10);
+                });
+            }, 4000);
+        };
+    </script>
+</body>
+</html>

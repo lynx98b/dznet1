@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Générateur de prompt pour contenu HTML enfant - Version professionnelle">
-    <title>Générateur Prompt Contenu Enfant - v1.003</title>
+    <title>Générateur Prompt Contenu Enfant - v1.004</title>
     <style>
         /* ===== VARIABLES & RESET ===== */
         :root {
@@ -407,6 +407,15 @@
             flex-shrink: 0;
         }
         
+        /* ===== DRAPEAUX LANGUES ===== */
+        .language-flag {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            margin-right: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
         /* ===== PALETTES COULEURS ===== */
         .color-palette {
             display: flex;
@@ -536,6 +545,17 @@
             font-size: 14px;
         }
         
+        .feature-badge {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             body {
@@ -609,7 +629,7 @@
                 <span>❓</span>
                 <span>Guide Parents</span>
             </button>
-            <span class="version-badge">v1.003</span>
+            <span class="version-badge">v1.004</span>
             <h1>🎨 Générateur de Prompt - Contenu HTML Enfant</h1>
             <p>Créez des expériences éducatives interactives sécurisées pour vos enfants</p>
             <p style="font-size: 12px; margin-top: 10px;">✅ Toujours Responsive | 🔒 Conforme RGPD/COPPA | ♿ Accessible</p>
@@ -629,6 +649,7 @@
                     <li><strong>Pédagogie :</strong> Adapte le niveau de difficulté à l'âge exact de votre enfant</li>
                     <li><strong>Accessibilité :</strong> Fonctionne sur tablette, téléphone, ordinateur sans installation</li>
                     <li><strong>Offline :</strong> Une fois téléchargé, fonctionne sans Internet (idéal pour voyages)</li>
+                    <li><strong>Multilingue :</strong> Créez du contenu en Français, Arabe ou Anglais</li>
                 </ul>
                 
                 <h3>📊 Statistiques & Bénéfices</h3>
@@ -811,6 +832,49 @@
                                 <span>🎯 Totalement autonome</span>
                             </label>
                         </div>
+                    </div>
+                </div>
+                
+                <!-- SECTION 1.5: LANGUES -->
+                <div class="section">
+                    <h2 class="section-title">🌍 Langue du Contenu<span class="feature-badge">NOUVEAU</span></h2>
+                    
+                    <div class="form-group">
+                        <label>Langue(s) du contenu (sélection multiple possible)</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="languages" value="Français" checked>
+                                <span>🇫🇷 Français</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="languages" value="Arabe">
+                                <span>🇸🇦 العربية (Arabe)</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="languages" value="Anglais">
+                                <span>🇬🇧 English (Anglais)</span>
+                            </label>
+                        </div>
+                        <span class="helper-text">💡 Multilingue : sélectionnez plusieurs langues pour contenu bilingue/trilingue</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Disposition des langues si multilingue</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="languageLayout" value="Sélecteur de langue (bouton pour changer)" checked>
+                                <span>🔘 Sélecteur de langue (bouton pour changer)</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="languageLayout" value="Affichage simultané côte à côte">
+                                <span>⬌ Affichage simultané côte à côte</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="languageLayout" value="Bilingue avec traduction au survol">
+                                <span>👆 Bilingue avec traduction au survol</span>
+                            </label>
+                        </div>
+                        <span class="helper-text">Applicable uniquement si plusieurs langues sélectionnées</span>
                     </div>
                 </div>
                 
@@ -1034,6 +1098,111 @@
                     </div>
                 </div>
                 
+                <!-- SECTION 3.5: SUIVI & ANALYTICS -->
+                <div class="section">
+                    <h2 class="section-title">📊 Suivi & Analytics<span class="feature-badge">NOUVEAU</span></h2>
+                    
+                    <div class="form-group">
+                        <label>Chronomètre temps de jeu</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="timer" value="Oui - Afficher chronomètre visible en permanence" checked>
+                                <span>⏱️ Oui - Chronomètre visible en permanence</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="timer" value="Oui - Chronomètre discret (petit coin d'écran)">
+                                <span>🕐 Oui - Chronomètre discret (coin d'écran)</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="timer" value="Non - Pas de chronomètre (apprentissage sans pression)">
+                                <span>🚫 Non - Pas de chronomètre (sans pression)</span>
+                            </label>
+                        </div>
+                        <span class="helper-text">💡 Le chronomètre aide à gérer le temps d'écran quotidien</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Statistiques & progression</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="stats" value="Afficher score en temps réel">
+                                <span>📈 Score en temps réel</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="stats" value="Barre de progression visuelle">
+                                <span>📊 Barre de progression visuelle</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="stats" value="Compteur réussites/erreurs">
+                                <span>✅❌ Compteur réussites/erreurs</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="stats" value="Récapitulatif détaillé à la fin">
+                                <span>📋 Récapitulatif détaillé final</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="stats" value="Graphique d'évolution (si plusieurs sessions)">
+                                <span>📉 Graphique d'évolution</span>
+                            </label>
+                        </div>
+                        <span class="helper-text">Stockage temporaire en sessionStorage (effacé à fermeture)</span>
+                    </div>
+                </div>
+                
+                <!-- SECTION 3.6: ASSISTANCE PARENTALE -->
+                <div class="section">
+                    <h2 class="section-title">👨‍👩‍👧 Assistance Parentale<span class="feature-badge">NOUVEAU</span></h2>
+                    
+                    <div class="form-group">
+                        <label>Conseils contextuels pour parents</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="parentalGuidance" value="Oui - Panneau d'aide discret avec conseils en temps réel" checked>
+                                <span>💡 Oui - Panneau d'aide avec conseils temps réel</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="parentalGuidance" value="Oui - Notifications subtiles selon réactions enfant">
+                                <span>🔔 Oui - Notifications selon réactions</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="parentalGuidance" value="Non - Enfant en totale autonomie">
+                                <span>🎯 Non - Autonomie totale</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Type de conseils à fournir</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="guidanceTypes" value="Comment encourager après une erreur">
+                                <span>💪 Encourager après erreur</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="guidanceTypes" value="Quand féliciter (timing optimal)">
+                                <span>🎉 Quand féliciter</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="guidanceTypes" value="Détecter frustration et comment intervenir">
+                                <span>😤 Gérer frustration</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="guidanceTypes" value="Proposer pauses si temps écoulé long">
+                                <span>☕ Suggérer pauses</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="guidanceTypes" value="Identifier points forts et axes d'amélioration">
+                                <span>📌 Points forts/amélioration</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="guidanceTypes" value="Questions de discussion post-activité">
+                                <span>💬 Questions de discussion</span>
+                            </label>
+                        </div>
+                        <span class="helper-text">Conseils affichés uniquement aux adultes (bouton dédié ou section cachée)</span>
+                    </div>
+                </div>
+                
                 <!-- SECTION 4: DESIGN & COULEURS -->
                 <div class="section">
                     <h2 class="section-title">🎨 Design et Couleurs</h2>
@@ -1167,7 +1336,7 @@
     
     <script>
         // ===== VERSION & CONFIG =====
-        const VERSION = "v1.003";
+        const VERSION = "v1.004";
         const STORAGE_KEY_NAME = 'prompt_generator_creator_name';
         
         // ===== INITIALISATION =====
@@ -1205,7 +1374,6 @@
             document.body.style.overflow = 'auto';
         }
         
-        // Fermer modal au clic extérieur
         document.getElementById('helpModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeHelpModal();
@@ -1315,7 +1483,7 @@
             submitBtn.classList.add('loading');
             submitBtn.disabled = true;
             
-            // Simuler génération (petit délai pour UX)
+            // Simuler génération
             setTimeout(() => {
                 generatePrompt();
                 submitBtn.classList.remove('loading');
@@ -1333,13 +1501,19 @@
             // Sauvegarder nom
             localStorage.setItem(STORAGE_KEY_NAME, creatorName);
             
-            // Âges (multiple)
+            // Âges
             const ageRanges = Array.from(document.querySelectorAll('input[name="ageRange"]:checked'))
                 .map(cb => cb.value)
                 .join(', ');
             
             const readingLevel = document.querySelector('input[name="readingLevel"]:checked').value;
             const supervision = document.querySelector('input[name="supervision"]:checked').value;
+            
+            // Langues
+            const languages = Array.from(document.querySelectorAll('input[name="languages"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+            const languageLayout = document.querySelector('input[name="languageLayout"]:checked').value;
             
             // Thème
             const theme = document.getElementById('theme').value;
@@ -1364,6 +1538,18 @@
             
             const rewards = document.querySelector('input[name="rewards"]:checked').value;
             const errorHandling = document.querySelector('input[name="errorHandling"]:checked').value;
+            
+            // Analytics
+            const timer = document.querySelector('input[name="timer"]:checked').value;
+            const stats = Array.from(document.querySelectorAll('input[name="stats"]:checked'))
+                .map(cb => `- ${cb.value}`)
+                .join('\n');
+            
+            // Assistance parentale
+            const parentalGuidance = document.querySelector('input[name="parentalGuidance"]:checked').value;
+            const guidanceTypes = Array.from(document.querySelectorAll('input[name="guidanceTypes"]:checked'))
+                .map(cb => `- ${cb.value}`)
+                .join('\n');
             
             // Design
             const colorPalette = document.querySelector('input[name="colorPalette"]:checked').value;
@@ -1396,6 +1582,8 @@
    - Mécaniques d'interactions choisies (avec justifications techniques)
    - Approche CSS responsive (mobile-first, breakpoints)
    - Architecture JavaScript (fonctions principales, gestion événements)
+   - Implémentation chronomètre et statistiques
+   - Système d'assistance parentale
    - Points de vigilance sécurité/accessibilité
    - Estimation poids final (<150 KB)
 
@@ -1416,6 +1604,17 @@
 - **Niveau lecture :** ${readingLevel}
 - **Supervision :** ${supervision}
 
+### 🌍 Langue & Localisation
+- **Langue(s) du contenu :** ${languages}
+- **Disposition multilingue :** ${languageLayout}
+
+**Instructions linguistiques :**
+- Si une seule langue : tout le contenu dans cette langue
+- Si multilingue : implémenter selon disposition choisie
+- Pour l'arabe : utiliser \`dir="rtl"\` et police adaptée (Arial, Tahoma)
+- Traduire TOUS les textes : instructions, boutons, messages, feedbacks
+- Pas de Google Translate API (traductions intégrées directement en dur)
+
 ### 🎨 Contenu Éducatif
 **Thème principal :** ${theme}
 
@@ -1433,6 +1632,44 @@ ${interactions || '- Propose des interactions adaptées au thème et à l\'âge'
 
 **Gestion des erreurs :** ${errorHandling}
 
+### 📊 Suivi & Analytics Intégrés
+**Chronomètre :** ${timer}
+- Si activé : afficher temps écoulé en format MM:SS
+- Position selon option (visible permanent ou discret)
+- Démarrage automatique au chargement de la page
+- Stockage en sessionStorage (pas persistant)
+
+**Statistiques demandées :**
+${stats || '- Aucune statistique particulière demandée'}
+
+**Implémentation statistiques :**
+- Utiliser sessionStorage uniquement (effacé à fermeture)
+- Variables à tracker : temps, tentatives, réussites, erreurs, score
+- Si récapitulatif final : écran de synthèse avec emojis encourageants
+- Jamais envoyer données vers serveur externe
+
+### 👨‍👩‍👧 Assistance Parentale Contextualisée
+**Mode assistance :** ${parentalGuidance}
+
+${guidanceTypes ? '**Types de conseils à intégrer :**\n' + guidanceTypes : ''}
+
+**Implémentation assistance :**
+- Créer panneau/section masqué par défaut (bouton "👪 Aide Parents")
+- Conseils contextuels basés sur :
+  * Temps écoulé (>15 min → suggérer pause)
+  * Nombre d'erreurs consécutives (>3 → encouragement parent)
+  * Réussite rapide (félicitations adaptées)
+  * Signes de frustration (temps long sur une question)
+- Format: bulles de conseil courtes (2-3 phrases max)
+- Exemples concrets de phrases à dire à l'enfant
+- Accessible uniquement par adulte (bouton discret ou combinaison touches)
+
+**Exemples de conseils selon situations :**
+- Erreur répétée : "Votre enfant rencontre une difficulté. Demandez-lui de vous expliquer sa réflexion avant de donner la réponse."
+- Réussite : "Bravo ! C'est le moment idéal pour féliciter : 'Tu as bien réfléchi, je suis fier de toi !'"
+- Temps long : "Laissez votre enfant prendre son temps. La réflexion est plus importante que la rapidité."
+- Pause suggérée : "15 minutes d'écran écoulées. Proposez une pause active (étirements, jeu dehors)."
+
 ### 🎨 Design & Couleurs
 **Palette de couleurs :** ${colorPalette}
 - Utiliser ces couleurs comme base pour l'interface
@@ -1443,6 +1680,7 @@ ${interactions || '- Propose des interactions adaptées au thème et à l\'âge'
 - Taille minimum : 16px mobile, 18px desktop
 - Interligne : 1.5 minimum
 - Préférer sans-serif lisible (Verdana, Arial, ou Comic Sans pour 3-6 ans)
+- Pour arabe : Tahoma, Arial avec dir="rtl"
 
 ### 📱 Technique & Responsive (OBLIGATOIRE)
 **Contraintes strictes non négociables :**
@@ -1482,8 +1720,8 @@ body { font-size: 16px; }
 - Labels associés à tous inputs/boutons
 - Navigation clavier complète (Tab, Enter, Espace, Flèches)
 - Ordre DOM logique (pas uniquement CSS)
-- \`lang="fr"\` sur balise \`<html>\`
-- Aria-live="polite" pour feedback dynamique
+- \`lang="fr"\` (ou ar/en selon langue) sur balise \`<html>\`
+- Aria-live="polite" pour feedback dynamique (scores, chronomètre)
 - Focus visible (outline 3px solid)
 
 ${accessibility ? '**Fonctionnalités accessibilité renforcées demandées :**\n' + accessibility : ''}
@@ -1500,7 +1738,7 @@ ${accessibility ? '**Fonctionnalités accessibilité renforcées demandées :**\
 ❌ Aucune publicité ou mention de marque commerciale
 
 **AUTORISATIONS :**
-✅ sessionStorage uniquement pour scores temporaires (effacé à fermeture navigateur)
+✅ sessionStorage uniquement pour scores/temps temporaires (effacé à fermeture navigateur)
 ✅ Médias en Base64 ou SVG inline (taille contrôlée)
 ✅ Sons de récompense courts (<5 secondes, format WebM/MP3)
 
@@ -1520,6 +1758,9 @@ ${accessibility ? '**Fonctionnalités accessibilité renforcées demandées :**\
    - Un seul fichier \`index.html\`
    - Prêt à ouvrir en double-clic (sans serveur)
    - Tout le code CSS/JS intégré
+   - Chronomètre fonctionnel
+   - Statistiques opérationnelles
+   - Assistance parentale implémentée
 
 **2. En-tête commenté du fichier HTML :**
 \`\`\`html
@@ -1532,14 +1773,22 @@ VERSION : ${projectVersion}
 GÉNÉRATEUR : Formulaire v${VERSION}
 ═══════════════════════════════════════════════════════════════
 ÂGE CIBLE : ${ageRanges}
+LANGUE(S) : ${languages}
 NIVEAU : ${readingLevel}
 OBJECTIFS : [Lister 3 principaux objectifs pédagogiques]
+═══════════════════════════════════════════════════════════════
+FONCTIONNALITÉS INTÉGRÉES :
+- Chronomètre : ${timer.includes('Oui') ? 'OUI' : 'NON'}
+- Statistiques : ${stats ? 'OUI' : 'NON'}
+- Assistance Parentale : ${parentalGuidance.includes('Oui') ? 'OUI' : 'NON'}
 ═══════════════════════════════════════════════════════════════
 INSTRUCTIONS D'UTILISATION :
 1. Ouvrir ce fichier avec navigateur moderne (Chrome, Firefox, Safari, Edge)
 2. Aucune installation requise, fonctionne offline
 3. Testé sur mobile/tablette/desktop
 4. Support tactile et clavier
+5. Chronomètre démarre automatiquement au chargement
+6. Bouton "Aide Parents" en haut à droite pour conseils
 
 NAVIGATEURS TESTÉS :
 - ✅ Chrome 90+ (Windows/Mac/Android)
@@ -1558,7 +1807,7 @@ RÉVISIONS :
 **3. Section <head> structure obligatoire :**
 \`\`\`html
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="${languages.includes('Arabe') ? 'ar' : (languages.includes('Anglais') ? 'en' : 'fr')}"${languages.includes('Arabe') ? ' dir="rtl"' : ''}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1566,6 +1815,7 @@ RÉVISIONS :
     <meta name="author" content="${creatorName}">
     <meta name="version" content="${projectVersion}">
     <meta name="date" content="${creationDate}">
+    <meta name="languages" content="${languages}">
     <title>${theme} | Éducatif ${ageRanges}</title>
     <!-- CSP ici si applicable -->
     <style>
@@ -1586,6 +1836,10 @@ Vérifie ces points et liste-les dans ta réponse :
 - [ ] Fonctionne offline à 100%
 - [ ] Tous objectifs pédagogiques intégrés
 - [ ] Contenu adapté à l'âge ${ageRanges}
+- [ ] Langue(s) ${languages} implémentée(s) correctement
+- [ ] Chronomètre fonctionnel (si activé)
+- [ ] Statistiques opérationnelles (si activées)
+- [ ] Assistance parentale accessible et pertinente (si activée)
 - [ ] Commentaires en-tête présents et complets
 - [ ] Version ${projectVersion} mentionnée dans code
 
@@ -1593,7 +1847,7 @@ Vérifie ces points et liste-les dans ta réponse :
 
 ## 🚀 RAPPEL WORKFLOW - COMMENCE MAINTENANT
 
-**ÉTAPE 1 :** Analyse ce cahier des charges et propose-moi un **PLAN DÉTAILLÉ TXT** (structure, interactions, approche technique, points vigilance)
+**ÉTAPE 1 :** Analyse ce cahier des charges et propose-moi un **PLAN DÉTAILLÉ TXT** (structure, interactions, approche technique, implémentation chronomètre/stats/assistance, points vigilance)
 
 **ÉTAPE 2 :** J'analyse ton plan et je te réponds (OK ou ajustements)
 

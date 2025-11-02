@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Gardiens de la Forêt</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #87CEEB, #90EE90);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #2E8B57;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 0px #FFD700;
+        }
+
+        .scene {
+            display: none;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .scene-image {
+            width: 100%;
+            height: 300px;
+            border-radius: 15px;
+            margin: 20px 0;
+            background-size: cover;
+            background-position: center;
+            border: 5px solid #FFD700;
+        }
+
+        .scene-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-align: justify;
+            padding: 0 10px;
+        }
+
+        .choices {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .choice-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 0 #2E7D32;
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+        }
+
+        .choice-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0 #2E7D32;
+        }
+
+        .choice-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #2E7D32;
+        }
+
+        .nature-btn {
+            background-color: #FF9800;
+            box-shadow: 0 4px 0 #E65100;
+        }
+
+        .nature-btn:hover {
+            background-color: #F57C00;
+            box-shadow: 0 6px 0 #E65100;
+        }
+
+        .nature-btn:active {
+            box-shadow: 0 2px 0 #E65100;
+        }
+
+        .sound-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #FF5722;
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #D84315;
+            z-index: 100;
+        }
+
+        .sound-btn:hover {
+            background-color: #E64A19;
+        }
+
+        .character {
+            position: absolute;
+            bottom: 0;
+            width: 100px;
+            height: 150px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            transition: left 2s ease;
+        }
+
+        .leo {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150"><circle cx="50" cy="40" r="25" fill="%23FFCCBC"/><rect x="35" y="65" width="30" height="50" fill="%234CAF50"/><rect x="25" y="115" width="15" height="35" fill="%234CAF50"/><rect x="60" y="115" width="15" height="35" fill="%234CAF50"/><circle cx="40" cy="35" r="5" fill="%23333"/><circle cx="60" cy="35" r="5" fill="%23333"/><path d="M45 50 Q50 55 55 50" stroke="%23333" stroke-width="2" fill="none"/></svg>');
+            left: -120px;
+        }
+
+        .lila {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150"><circle cx="50" cy="40" r="25" fill="%23E1BEE7"/><rect x="35" y="65" width="30" height="50" fill="%239C27B0"/><rect x="25" y="115" width="15" height="35" fill="%239C27B0"/><rect x="60" y="115" width="15" height="35" fill="%239C27B0"/><circle cx="40" cy="35" r="5" fill="%23333"/><circle cx="60" cy="35" r="5" fill="%23333"/><path d="M45 50 Q50 60 55 50" stroke="%23333" stroke-width="2" fill="none"/></svg>');
+            right: -120px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #4CAF50, #8BC34A);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .nature-score {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #2E8B57;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .bounce {
+            animation: bounce 1s infinite;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .scene-text {
+                font-size: 1.1rem;
+            }
+            
+            .choice-btn {
+                font-size: 1rem;
+                padding: 10px 15px;
+            }
+            
+            .scene-image {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Les Gardiens de la Forêt</h1>
+    
+    <div class="container">
+        <div class="nature-score">Nature protégée: <span id="score">0</span>%</div>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        
+        <div class="character leo" id="leo"></div>
+        <div class="character lila" id="lila"></div>
+        
+        <!-- Scène 1 -->
+        <div class="scene active" id="scene1">
+            <div class="scene-image" style="background-color: #87CEEB;"></div>
+            <p class="scene-text">Bonjour ! Je m'appelle Léo, et voici ma sœur Lila. Nous habitons près d'une magnifique forêt remplie d'arbres, de fleurs et d'animaux. Mais récemment, nous avons remarqué que la forêt a besoin d'aide. Des déchets traînent partout et certains animaux ont du mal à trouver de la nourriture. Veux-tu nous aider à protéger notre forêt ?</p>
+            <div class="choices">
+                <button class="choice-btn nature-btn" onclick="nextScene(2)">Oui, je veux aider !</button>
+                <button class="choice-btn" onclick="showNatureTip()">En savoir plus sur la nature</button>
+            </div>
+        </div>
+        
+        <!-- Scène 2 -->
+        <div class="scene" id="scene2">
+            <div class="scene-image" style="background-color: #90EE90;"></div>
+            <p class="scene-text">Super ! Regarde, il y a des déchets près de cet arbre. Que devrions-nous faire ?</p>
+            <div class="choices">
+                <button class="choice-btn nature-btn" onclick="increaseScore(25); nextScene(3)">Les ramasser et les trier</button>
+                <button class="choice-btn" onclick="nextScene(4)">Les laisser, ce n'est pas notre problème</button>
+            </div>
+        </div>
+        
+        <!-- Scène 3 -->
+        <div class="scene" id="scene3">
+            <div class="scene-image" style="background-color: #98FB98;"></div>
+            <p class="scene-text">Excellent choix ! En ramassant les déchets, nous protégeons les animaux qui pourraient les manger par erreur. Et en les triant, nous permettons de recycler certains matériaux. La forêt te remercie !</p>
+            <div class="choices">
+                <button class="choice-btn nature-btn" onclick="nextScene(5)">Continuer l'aventure</button>
+            </div>
+        </div>
+        
+        <!-- Scène 4 -->
+        <div class="scene" id="scene4">
+            <div class="scene-image" style="background-color: #FFB6C1;"></div>
+            <p class="scene-text">Oh non ! Regarde, un petit oiseau s'est coincé dans un sac en plastique. Si nous avions ramassé les déchets, cela ne serait pas arrivé. Aidons-le à se libérer !</p>
+            <div class="choices">
+                <button class="choice-btn nature-btn" onclick="increaseScore(15); nextScene(5)">Aider l'oiseau</button>
+            </div>
+        </div>
+        
+        <!-- Scène 5 -->
+        <div class="scene" id="scene5">
+            <div class="scene-image" style="background-color: #FFD700;"></div>
+            <p class="scene-text">Maintenant, regarde ces belles fleurs. Elles attirent les abeilles et les papillons qui pollinisent les plantes. Comment pouvons-nous les aider à prospérer ?</p>
+            <div class="choices">
+                <button class="choice-btn nature-btn" onclick="increaseScore(20); nextScene(6)">Planter plus de fleurs</button>
+                <button class="choice-btn" onclick="nextScene(7)">Cueillir toutes les fleurs</button>
+            </div>
+        </div>
+        
+        <!-- Scène 6 -->
+        <div class="scene" id="scene6">
+            <div class="scene-image" style="background-color: #DA70D6;"></div>
+            <p class="scene-text">Génial ! En plantant plus de fleurs, nous aidons les insectes pollinisateurs à trouver de la nourriture. Cela permet aussi à la forêt de rester colorée et vivante. Les abeilles bourdonnent de joie !</p>
+            <div class="choices">
+                <button class="choice-btn nature-btn" onclick="nextScene(8)">Continuer</button>
+            </div>
+        </div>
+        
+        <!-- Scène 7 -->
+        <div class="scene" id="scene7">
+            <div class="scene-image" style="background-color: #FF6347;"></div>
+            <p class="scene-text">Oh non ! En cueillant toutes les fleurs, les abeilles et les papillons n'ont plus de nourriture. Sans eux, les plantes ne peuvent plus se reproduire. La forêt perd ses belles couleurs.</p>
+            <div class="choices">
+                <button class="choice-btn nature-btn" onclick="increaseScore(10); nextScene(8)">Planter de nouvelles fleurs</button>
+            </div>
+        </div>
+        
+        <!-- Scène 8 -->
+        <div class="scene" id="scene8">
+            <div class="scene-image" style="background-color: #20B2AA;"></div>
+            <p class="scene-text">Regarde cette rivière ! Elle est propre et claire. Les poissons nagent joyeusement. Comment pouvons-nous garder l'eau propre ?</p>
+            <div class="choices">
+                <button class="choice-btn nature-btn" onclick="increaseScore(25); nextScene(9)">Ne rien jeter dans l'eau</button>
+                <button class="choice-btn" onclick="nextScene(10)">Jeter nos déchets dans la rivière</button>
+            </div>
+        </div>
+        
+        <!-- Scène 9 -->
+        <div class="scene" id="scene9">
+            <div class="scene-image" style="background-color: #00CED1;"></div>
+            <p class="scene-text">Parfait ! En gardant l'eau propre, nous protégeons les poissons et les autres animaux qui en dépendent. L'eau est essentielle à toute vie dans la forêt.</p>
+            <div class="choices">
+                <button class="choice-btn nature-btn" onclick="nextScene(11)">Continuer</button>
+            </div>
+        </div>
+        
+        <!-- Scène 10 -->
+        <div class="scene" id="scene10">
+            <div class="scene-image" style="background-color: #4682B4;"></div>
+            <p class="scene-text">Oh là là ! En jetant des déchets dans l'eau, nous la polluons. Les poissons tombent malades et l'eau devient dangereuse pour tous. Nettoyons vite cette pollution !</p>
+            <div class="choices">
+                <button class="choice-btn nature-btn" onclick="increaseScore(15); nextScene(11)">Nettoyer la rivière</button>
+            </div>
+        </div>
+        
+        <!-- Scène 11 -->
+        <div class="scene" id="scene11">
+            <div class="scene-image" style="background-color: #32CD32;"></div>
+            <p class="scene-text">Félicitations ! Grâce à toi, la forêt est maintenant plus propre et plus belle. Les animaux sont heureux et la nature prospère. Tu es devenu(e) un vrai Gardien de la Forêt !</p>
+            <div class="choices">
+                <button class="choice-btn nature-btn" onclick="restartStory()">Recommencer l'aventure</button>
+            </div>
+        </div>
+    </div>
+    
+    <button class="sound-btn" id="soundBtn">🔊</button>
+
+    <script>
+        let currentScene = 1;
+        let natureScore = 0;
+        let soundEnabled = true;
+        
+        // Sons pour l'histoire
+        const sounds = {
+            forest: new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA=='),
+            birds: new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA=='),
+            success: new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==')
+        };
+        
+        // Initialiser les sons (dans un vrai projet, utiliser des fichiers audio réels)
+        for (let key in sounds) {
+            sounds[key].volume = 0.5;
+            sounds[key].loop = key !== 'success';
+        }
+        
+        function nextScene(sceneNumber) {
+            document.getElementById(`scene${currentScene}`).classList.remove('active');
+            currentScene = sceneNumber;
+            document.getElementById(`scene${currentScene}`).classList.add('active');
+            
+            // Animation des personnages
+            animateCharacters();
+            
+            // Jouer un son selon la scène
+            if (soundEnabled) {
+                if (sceneNumber === 1) {
+                    sounds.forest.play();
+                } else if (sceneNumber === 5 || sceneNumber === 6) {
+                    sounds.birds.play();
+                } else if (sceneNumber === 11) {
+                    sounds.success.play();
+                }
+            }
+            
+            // Mettre à jour la barre de progression
+            updateProgress();
+        }
+        
+        function increaseScore(points) {
+            natureScore += points;
+            if (natureScore > 100) natureScore = 100;
+            document.getElementById('score').textContent = natureScore;
+            updateProgress();
+            
+            // Animation de félicitations
+            if (points >= 20) {
+                document.querySelector('.scene-image').classList.add('bounce');
+                setTimeout(() => {
+                    document.querySelector('.scene-image').classList.remove('bounce');
+                }, 2000);
+            }
+        }
+        
+        function updateProgress() {
+            document.getElementById('progress').style.width = `${natureScore}%`;
+        }
+        
+        function animateCharacters() {
+            const leo = document.getElementById('leo');
+            const lila = document.getElementById('lila');
+            
+            // Réinitialiser les positions
+            leo.style.left = '-120px';
+            lila.style.right = '-120px';
+            
+            // Animer l'entrée des personnages
+            setTimeout(() => {
+                leo.style.left = '50px';
+                lila.style.right = '50px';
+            }, 500);
+        }
+        
+        function showNatureTip() {
+            alert("Savais-tu que les forêts produisent l'oxygène que nous respirons ? Protéger la nature, c'est protéger notre planète !");
+        }
+        
+        function restartStory() {
+            currentScene = 1;
+            natureScore = 0;
+            document.getElementById('score').textContent = '0';
+            updateProgress();
+            
+            // Réinitialiser toutes les scènes
+            document.querySelectorAll('.scene').forEach(scene => {
+                scene.classList.remove('active');
+            });
+            document.getElementById('scene1').classList.add('active');
+            
+            // Réinitialiser l'animation des personnages
+            animateCharacters();
+        }
+        
+        // Gestion du son
+        document.getElementById('soundBtn').addEventListener('click', function() {
+            soundEnabled = !soundEnabled;
+            this.textContent = soundEnabled ? '🔊' : '🔇';
+            
+            if (!soundEnabled) {
+                for (let key in sounds) {
+                    sounds[key].pause();
+                }
+            } else {
+                if (currentScene === 1) {
+                    sounds.forest.play();
+                }
+            }
+        });
+        
+        // Démarrer l'animation des personnages au chargement
+        window.onload = animateCharacters;
+    </script>
+</body>
+</html>

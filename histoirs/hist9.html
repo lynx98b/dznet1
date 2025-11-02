@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Mots Magiques - Apprends la Politesse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 8px solid #4ECDC4;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            position: relative;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 3px 3px 0 #2C7873;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .story-container {
+            padding: 25px;
+        }
+        
+        .illustration {
+            height: 280px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #A8E6CF 0%, #DCEDC1 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid #4CAF50;
+        }
+        
+        .character-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            width: 100%;
+            height: 100%;
+            padding: 0 20px;
+        }
+        
+        .child {
+            font-size: 100px;
+            animation: bounce 3s infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .magic-word {
+            font-size: 60px;
+            animation: sparkle 2s infinite;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .bubble {
+            position: absolute;
+            background: white;
+            border-radius: 20px;
+            padding: 12px 18px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            max-width: 250px;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 10;
+        }
+        
+        .child-bubble {
+            top: 30px;
+            left: 30px;
+        }
+        
+        .word-bubble {
+            top: 30px;
+            right: 30px;
+        }
+        
+        .bubble:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 12px solid transparent;
+        }
+        
+        .child-bubble:after {
+            border-right-color: white;
+            border-left: 0;
+            left: -12px;
+            top: 20px;
+        }
+        
+        .word-bubble:after {
+            border-left-color: white;
+            border-right: 0;
+            right: -12px;
+            top: 20px;
+        }
+        
+        .bubble.show {
+            opacity: 1;
+        }
+        
+        .story-text {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background-color: #FFEB3B;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+        
+        .magic-words-section {
+            background: #E8F5E9;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border: 3px solid #4CAF50;
+        }
+        
+        .words-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .word-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 2px solid #4CAF50;
+            transition: transform 0.3s ease;
+        }
+        
+        .word-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .word-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .situations-section {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+        }
+        
+        .situations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .situation-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .situation-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .audio-btn {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .audio-btn:hover {
+            background: linear-gradient(135deg, #3db8a8 0%, #388f7e 100%);
+            transform: scale(1.1);
+        }
+        
+        .interactive-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .option-btn {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .option-btn:hover {
+            background: linear-gradient(135deg, #3db8a8 0%, #388f7e 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        footer {
+            background: #2C7873;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg); 
+                filter: brightness(1);
+            }
+            50% { 
+                transform: scale(1.2) rotate(10deg); 
+                filter: brightness(1.3);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .magic-effect {
+            animation: sparkle 1s ease-in-out;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .story-container {
+                padding: 15px;
+            }
+            
+            .child {
+                font-size: 70px;
+            }
+            
+            .magic-word {
+                font-size: 40px;
+            }
+            
+            .story-text {
+                font-size: 1.1rem;
+            }
+            
+            .interactive-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .character-container {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✨ Les Mots Magiques ✨</h1>
+            <div class="subtitle">Apprends la politesse en t'amusant !</div>
+        </header>
+        
+        <div class="story-container">
+            <div class="illustration">
+                <div class="character-container">
+                    <div class="child">👧</div>
+                    <div class="magic-word">✨</div>
+                    <div class="magic-word">🌟</div>
+                </div>
+                <div class="bubble child-bubble" id="childBubble">Bonjour ! Je m'appelle Lila !</div>
+                <div class="bubble word-bubble" id="wordBubble">Nous sommes les mots magiques !</div>
+            </div>
+            
+            <div class="story-text">
+                <p>Lila était une petite fille de <span class="highlight">6 ans</span> très gentille. Un jour, elle découvrit que certains mots avaient des <span class="highlight">pouvoirs magiques</span> !</p>
+                
+                <p>"Quand tu dis <span class="highlight">'Bonjour'</span>, les gens te sourient !" expliqua le premier mot magique.</p>
+                
+                <p>"Quand tu dis <span class="highlight">'Merci'</span>, les gens sont heureux de t'avoir aidé !" ajouta un autre.</p>
+            </div>
+
+            <div class="magic-words-section">
+                <h3>💫 Les 6 Mots Magiques</h3>
+                <div class="words-grid">
+                    <div class="word-card">
+                        <div class="word-emoji">🌅</div>
+                        <h4>Bonjour</h4>
+                        <p>Quand on arrive le matin</p>
+                    </div>
+                    <div class="word-card">
+                        <div class="word-emoji">🌇</div>
+                        <h4>Bonsoir</h4>
+                        <p>Quand on arrive le soir</p>
+                    </div>
+                    <div class="word-card">
+                        <div class="word-emoji">🌙</div>
+                        <h4>Bonne nuit</h4>
+                        <p>Quand on va se coucher</p>
+                    </div>
+                    <div class="word-card">
+                        <div class="word-emoji">🙏</div>
+                        <h4>Merci</h4>
+                        <p>Quand on reçoit quelque chose</p>
+                    </div>
+                    <div class="word-card">
+                        <div class="word-emoji">🤲</div>
+                        <h4>S'il te plaît</h4>
+                        <p>Quand on demande quelque chose</p>
+                    </div>
+                    <div class="word-card">
+                        <div class="word-emoji">👋</div>
+                        <h4>Au revoir</h4>
+                        <p>Quand on part</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="situations-section">
+                <h3>🎭 Quand utiliser les mots magiques ?</h3>
+                <div class="situations-grid">
+                    <div class="situation-card">
+                        <div class="situation-emoji">🏫</div>
+                        <h4>À l'école</h4>
+                        <p>"Bonjour maîtresse !" en arrivant</p>
+                        <p>"Merci !" quand on reçoit un crayon</p>
+                    </div>
+                    <div class="situation-card">
+                        <div class="situation-emoji">🏠</div>
+                        <h4>À la maison</h4>
+                        <p>"S'il te plaît" pour un jouet</p>
+                        <p>"Bonne nuit" avant de dormir</p>
+                    </div>
+                    <div class="situation-card">
+                        <div class="situation-emoji">🛒</div>
+                        <h4>Au magasin</h4>
+                        <p>"Bonjour" à la caissière</p>
+                        <p>"Merci, au revoir !" en partant</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-text">
+                <p>Lila apprit aussi les <span class="highlight">formules douces</span> :</p>
+                
+                <p>"<span class="highlight">STP</span> c'est pour les amis, <span class="highlight">SVP</span> c'est pour les grandes personnes !"</p>
+                
+                <p>Maintenant, Lila utilise les mots magiques partout ! À l'école, à la maison, au parc... Et devine quoi ? <span class="highlight">Tout le monde l'adore</span> !</p>
+                
+                <p>"Les mots magiques rendent le monde plus gentil !" dit Lila en souriant.</p>
+            </div>
+            
+            <div class="audio-controls">
+                <button class="audio-btn" id="playBtn">▶</button>
+                <button class="audio-btn" id="pauseBtn">❚❚</button>
+                <button class="audio-btn" id="restartBtn">↺</button>
+            </div>
+            
+            <div class="interactive-options">
+                <button class="option-btn" onclick="showChildMessage()">Lila parle</button>
+                <button class="option-btn" onclick="showWordMessage()">Mot magique</button>
+                <button class="option-btn" onclick="showMagicWord('🌅')">Bonjour</button>
+                <button class="option-btn" onclick="showMagicWord('🙏')">Merci</button>
+                <button class="option-btn" onclick="showMagicWord('🤲')">SVP</button>
+                <button class="option-btn" onclick="showMagicWord('🌙')">Bonne nuit</button>
+                <button class="option-btn" onclick="showNumber(6)">6 mots</button>
+                <button class="option-btn" onclick="createMagicEffect()">✨ Magie !</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🌟 <strong>Souviens-toi : La politesse, c'est magique !</strong> 🌟</p>
+            <p style="margin-top: 10px; opacity: 0.9;">Utilise tes mots magiques tous les jours</p>
+        </footer>
+    </div>
+
+    <script>
+        // Variables pour la narration audio
+        let isPlaying = false;
+        
+        // Messages pour les personnages
+        const childMessages = [
+            "Bonjour ! Je m'appelle Lila !",
+            "Merci pour ton aide !",
+            "S'il te plaît, peux-tu m'aider ?",
+            "Bonne nuit, fais de beaux rêves !",
+            "Au revoir, à demain !",
+            "Les mots magiques, c'est super !"
+        ];
+        
+        const wordMessages = [
+            "Nous sommes les mots magiques !",
+            "Bonjour fait sourire les gens !",
+            "Merci rend les gens heureux !",
+            "SVP montre que tu es poli !",
+            "Bonsoir pour le soir !",
+            "Bonne nuit pour dormir !"
+        ];
+
+        // Simulation de la lecture audio
+        function playAudio() {
+            if (!isPlaying) {
+                isPlaying = true;
+                document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #2196F3 0%, #0D47A1 100%)';
+                console.log("Lecture de l'histoire audio...");
+                
+                // Simulation d'un changement d'illustration pendant la narration
+                const magicWords = ['🌅', '🙏', '🤲', '🌇', '🌙', '👋'];
+                let wordIndex = 0;
+                
+                const wordInterval = setInterval(() => {
+                    if (!isPlaying) {
+                        clearInterval(wordInterval);
+                        return;
+                    }
+                    
+                    document.querySelector('.magic-word').textContent = magicWords[wordIndex];
+                    wordIndex = (wordIndex + 1) % magicWords.length;
+                    
+                }, 2000);
+            }
+        }
+        
+        function pauseAudio() {
+            isPlaying = false;
+            document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%)';
+            console.log("Audio en pause");
+        }
+        
+        function restartAudio() {
+            pauseAudio();
+            document.querySelector('.magic-word').textContent = '✨';
+            setTimeout(playAudio, 500);
+        }
+        
+        // Fonctions interactives
+        function showChildMessage() {
+            const bubble = document.getElementById('childBubble');
+            const randomMessage = childMessages[Math.floor(Math.random() * childMessages.length)];
+            bubble.textContent = randomMessage;
+            bubble.classList.add('show');
+            setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 3000);
+            
+            // Animation spéciale
+            const childElement = document.querySelector('.child');
+            childElement.style.animation = 'none';
+            setTimeout(() => {
+                childElement.style.animation = 'bounce 3s infinite alternate';
+            }, 10);
+        }
+        
+        function showWordMessage() {
+            const bubble = document.getElementById('wordBubble');
+            const randomMessage = wordMessages[Math.floor(Math.random() * wordMessages.length)];
+            bubble.textContent = randomMessage;
+            bubble.classList.add('show');
+            setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 3000);
+            
+            // Animation spéciale
+            const wordElements = document.querySelectorAll('.magic-word');
+            wordElements.forEach(word => {
+                word.classList.add('magic-effect');
+                setTimeout(() => {
+                    word.classList.remove('magic-effect');
+                }, 1000);
+            });
+        }
+        
+        function showMagicWord(word) {
+            document.querySelector('.magic-word').textContent = word;
+            
+            // Animation spéciale
+            const wordElement = document.querySelector('.magic-word');
+            wordElement.classList.add('magic-effect');
+            setTimeout(() => {
+                wordElement.classList.remove('magic-effect');
+            }, 1000);
+        }
+        
+        function showNumber(number) {
+            const illustration = document.querySelector('.illustration');
+            const numberDisplay = document.createElement('div');
+            numberDisplay.textContent = number;
+            numberDisplay.style.fontSize = '80px';
+            numberDisplay.style.color = '#FFD93D';
+            numberDisplay.style.textShadow = '3px 3px 0 rgba(0,0,0,0.3)';
+            numberDisplay.style.position = 'absolute';
+            numberDisplay.style.left = '50%';
+            numberDisplay.style.top = '50%';
+            numberDisplay.style.transform = 'translate(-50%, -50%)';
+            numberDisplay.style.animation = 'bounce 1s ease-in-out';
+            numberDisplay.style.zIndex = '5';
+            
+            illustration.appendChild(numberDisplay);
+            
+            setTimeout(() => {
+                numberDisplay.remove();
+            }, 2000);
+        }
+        
+        function createMagicEffect() {
+            const illustration = document.querySelector('.illustration');
+            
+            // Créer des étoiles magiques
+            for (let i = 0; i < 10; i++) {
+                const star = document.createElement('div');
+                star.textContent = '✨';
+                star.style.fontSize = (20 + Math.random() * 30) + 'px';
+                star.style.position = 'absolute';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animation = `sparkle ${1 + Math.random()}s ease-in-out`;
+                star.style.zIndex = '5';
+                
+                illustration.appendChild(star);
+                
+                setTimeout(() => {
+                    star.remove();
+                }, 2000);
+            }
+            
+            // Faire briller tous les mots magiques
+            document.querySelectorAll('.word-emoji').forEach(emoji => {
+                emoji.classList.add('magic-effect');
+                setTimeout(() => {
+                    emoji.classList.remove('magic-effect');
+                }, 1000);
+            });
+        }
+        
+        // Initialisation au chargement de la page
+        window.onload = function() {
+            // Configuration des boutons audio
+            document.getElementById('playBtn').addEventListener('click', playAudio);
+            document.getElementById('pauseBtn').addEventListener('click', pauseAudio);
+            document.getElementById('restartBtn').addEventListener('click', restartAudio);
+            
+            // Afficher les bulles au chargement
+            setTimeout(showChildMessage, 1000);
+            setTimeout(showWordMessage, 2500);
+            
+            // Animation automatique des mots magiques
+            setInterval(() => {
+                const words = document.querySelectorAll('.magic-word');
+                words.forEach(word => {
+                    word.style.animation = 'none';
+                    setTimeout(() => {
+                        word.style.animation = 'sparkle 2s infinite';
+                    }, 10);
+                });
+            }, 4000);
+            
+            // Faire flotter les cartes de mots
+            setInterval(() => {
+                const cards = document.querySelectorAll('.word-card');
+                cards.forEach(card => {
+                    card.classList.add('floating');
+                    setTimeout(() => {
+                        card.classList.remove('floating');
+                    }, 3000);
+                });
+            }, 5000);
+        };
+    </script>
+</body>
+</html>

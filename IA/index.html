@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Générateur de prompt pour contenu HTML enfant - Version professionnelle">
-    <title>Générateur Prompt Contenu Enfant - v1.002</title>
+    <title>Générateur Prompt Contenu Enfant - v1.003</title>
     <style>
         /* ===== VARIABLES & RESET ===== */
         :root {
             --primary: #4A90E2;
             --success: #27AE60;
             --warning: #F39C12;
+            --danger: #E74C3C;
             --info: #3498DB;
             --bg-light: #F8F9FA;
             --text-dark: #2C3E50;
@@ -95,7 +96,7 @@
             transform: scale(1.05);
         }
         
-        /* ===== MODAL HELP ===== */
+        /* ===== MODAL GÉNÉRIQUE ===== */
         .modal {
             display: none;
             position: fixed;
@@ -106,6 +107,8 @@
             height: 100%;
             background: rgba(0,0,0,0.7);
             animation: fadeIn 0.3s;
+            overflow-y: auto;
+            padding: 20px;
         }
         
         .modal.active {
@@ -119,10 +122,15 @@
             padding: 40px;
             border-radius: 16px;
             max-width: 700px;
+            width: 100%;
             max-height: 85vh;
             overflow-y: auto;
             position: relative;
             animation: slideDown 0.4s;
+        }
+        
+        .modal-content.large {
+            max-width: 900px;
         }
         
         @keyframes fadeIn {
@@ -139,7 +147,7 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: #E74C3C;
+            background: var(--danger);
             color: white;
             border: none;
             width: 35px;
@@ -190,6 +198,53 @@
             border-left: 4px solid var(--success);
         }
         
+        /* ===== MODAL RÉSULTAT ===== */
+        .result-modal .modal-content {
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .result-header {
+            background: linear-gradient(135deg, var(--success) 0%, #229954 100%);
+            color: white;
+            padding: 25px 40px;
+            text-align: center;
+        }
+        
+        .result-header h2 {
+            color: white;
+            margin: 0 0 10px 0;
+            font-size: 26px;
+        }
+        
+        .result-body {
+            padding: 30px 40px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        #promptOutputModal {
+            background: #F8F9FA;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .result-actions {
+            padding: 20px 40px 30px 40px;
+            background: var(--bg-light);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
         /* ===== FORMULAIRE ===== */
         .form-wrapper {
             padding: 40px;
@@ -231,6 +286,7 @@
         
         .form-group {
             margin-bottom: 20px;
+            position: relative;
         }
         
         label {
@@ -242,7 +298,46 @@
         
         label.required::after {
             content: " *";
-            color: #E74C3C;
+            color: var(--danger);
+        }
+        
+        /* ===== VALIDATION ERREURS ===== */
+        .error-message {
+            display: none;
+            color: var(--danger);
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 5px;
+            padding: 8px 12px;
+            background: #FADBD8;
+            border-radius: 4px;
+            border-left: 3px solid var(--danger);
+        }
+        
+        .form-group.has-error .error-message {
+            display: block;
+            animation: shake 0.5s;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .form-group.has-error input,
+        .form-group.has-error select,
+        .form-group.has-error textarea {
+            border-color: var(--danger);
+            background: #FADBD8;
+        }
+        
+        .form-group.has-error .checkbox-group,
+        .form-group.has-error .radio-group {
+            border: 3px solid var(--danger);
+            border-radius: 8px;
+            padding: 10px;
+            background: #FADBD8;
         }
         
         input[type="text"],
@@ -254,7 +349,7 @@
             border: 2px solid var(--border);
             border-radius: 8px;
             font-size: 14px;
-            transition: border 0.3s;
+            transition: all 0.3s;
             font-family: inherit;
         }
         
@@ -358,6 +453,12 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            justify-content: center;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
         
         .btn-primary {
@@ -365,13 +466,25 @@
             color: white;
             flex: 1;
             min-width: 200px;
-            justify-content: center;
         }
         
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             background: #357ABD;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .btn-success:hover:not(:disabled) {
+            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
         }
         
         .btn-secondary {
@@ -383,48 +496,27 @@
             background: #BDC3C7;
         }
         
-        /* ===== ZONE RÉSULTAT ===== */
-        #resultSection {
+        /* ===== SPINNER CHARGEMENT ===== */
+        .spinner {
             display: none;
-            margin-top: 30px;
-            padding: 30px;
-            background: var(--bg-light);
-            border-radius: 12px;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
         
-        #resultSection.active {
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        button.loading .spinner {
             display: block;
-            animation: slideIn 0.5s ease;
         }
         
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        #promptOutput {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            border: 2px solid var(--border);
-            max-height: 500px;
-            overflow-y: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        
-        .copy-success {
-            background: var(--success) !important;
-            color: white;
+        button.loading span:not(.spinner) {
+            display: none;
         }
         
         /* ===== HELPER TEXT ===== */
@@ -472,7 +564,8 @@
                 flex-direction: column;
             }
             
-            .btn-primary {
+            .btn-primary,
+            .btn-success {
                 width: 100%;
             }
             
@@ -485,6 +578,12 @@
                 padding: 25px;
                 margin: 20px;
                 max-height: 90vh;
+            }
+            
+            .result-header,
+            .result-body,
+            .result-actions {
+                padding: 20px;
             }
             
             .metadata-grid {
@@ -500,18 +599,6 @@
             outline: 3px solid var(--primary);
             outline-offset: 2px;
         }
-        
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0,0,0,0);
-            white-space: nowrap;
-            border: 0;
-        }
     </style>
 </head>
 <body>
@@ -522,7 +609,7 @@
                 <span>❓</span>
                 <span>Guide Parents</span>
             </button>
-            <span class="version-badge">v1.002</span>
+            <span class="version-badge">v1.003</span>
             <h1>🎨 Générateur de Prompt - Contenu HTML Enfant</h1>
             <p>Créez des expériences éducatives interactives sécurisées pour vos enfants</p>
             <p style="font-size: 12px; margin-top: 10px;">✅ Toujours Responsive | 🔒 Conforme RGPD/COPPA | ♿ Accessible</p>
@@ -576,7 +663,9 @@
                 <ol style="line-height: 2; margin-left: 20px;">
                     <li><strong>Remplissez le formulaire</strong> avec l'âge, le thème souhaité, les interactions</li>
                     <li><strong>Cliquez "Générer"</strong> → Un texte (prompt) est créé automatiquement</li>
-                    <li><strong>Copiez le prompt</strong> et collez-le dans une IA (ChatGPT, Claude, etc.)</li>
+                    <li><strong>Une fenêtre s'ouvre</strong> avec le prompt complet</li>
+                    <li><strong>Copiez ou téléchargez</strong> le prompt</li>
+                    <li><strong>Collez-le dans une IA</strong> (ChatGPT, Claude, etc.)</li>
                     <li><strong>L'IA vous proposera d'abord un plan</strong> → Validez-le</li>
                     <li><strong>L'IA génère le fichier HTML</strong> → Téléchargez-le et ouvrez-le dans un navigateur</li>
                     <li><strong>Votre enfant joue et apprend !</strong> 🎉</li>
@@ -601,6 +690,35 @@
             </div>
         </div>
         
+        <!-- MODAL RÉSULTAT -->
+        <div id="resultModal" class="modal result-modal">
+            <div class="modal-content large">
+                <button class="modal-close" onclick="closeResultModal()">×</button>
+                <div class="result-header">
+                    <h2>🎉 Prompt Généré avec Succès !</h2>
+                    <p style="font-size: 14px; margin: 0;">Copiez ou téléchargez ce prompt et collez-le dans votre IA</p>
+                </div>
+                <div class="result-body">
+                    <p style="margin-bottom: 15px; color: #7F8C8D; font-size: 14px;">
+                        <strong>📌 Prochaine étape :</strong> Utilisez ce prompt avec Claude, ChatGPT, Gemini ou toute autre IA générative
+                    </p>
+                    <div id="promptOutputModal"></div>
+                </div>
+                <div class="result-actions">
+                    <button id="copyBtnModal" class="btn-success">
+                        <span class="spinner"></span>
+                        <span>📋 Copier le Prompt</span>
+                    </button>
+                    <button id="downloadBtnModal" class="btn-primary">
+                        <span>💾 Exporter (.txt)</span>
+                    </button>
+                    <button onclick="closeResultModal()" class="btn-secondary">
+                        <span>✖️ Fermer</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
         <!-- FORMULAIRE -->
         <div class="form-wrapper">
             <form id="promptForm">
@@ -612,11 +730,12 @@
                         <div class="form-group" style="margin-bottom: 0;">
                             <label for="creatorName" class="required">Votre nom / Prénom</label>
                             <input type="text" id="creatorName" placeholder="Ex: Marie Dupont" required>
+                            <div class="error-message">❌ Champ obligatoire</div>
+                            <span class="helper-text">💾 Sauvegardé automatiquement pour prochaine fois</span>
                         </div>
                         <div class="form-group" style="margin-bottom: 0;">
                             <label for="projectVersion">Version du projet</label>
                             <input type="text" id="projectVersion" value="v1.0" placeholder="v1.0">
-                            <span class="helper-text">Incrémentez pour chaque révision</span>
                         </div>
                         <div class="form-group" style="margin-bottom: 0;">
                             <label>Date de création</label>
@@ -629,7 +748,7 @@
                 <div class="section">
                     <h2 class="section-title">🎯 Public Cible</h2>
                     
-                    <div class="form-group">
+                    <div class="form-group" id="ageGroup">
                         <label class="required">Tranches d'âge visées (sélection multiple possible)</label>
                         <div class="checkbox-group">
                             <label class="checkbox-item">
@@ -653,11 +772,12 @@
                                 <span>11-12 ans (Collège)</span>
                             </label>
                         </div>
+                        <div class="error-message">❌ Sélectionnez au moins une tranche d'âge</div>
                         <span class="helper-text">💡 Sélectionnez plusieurs âges si le contenu doit s'adapter à fratrie</span>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="readingLevel" class="required">Niveau de lecture</label>
+                    <div class="form-group" id="readingGroup">
+                        <label class="required">Niveau de lecture</label>
                         <div class="radio-group">
                             <label class="radio-item">
                                 <input type="radio" name="readingLevel" value="Pré-lecteur (images/audio/pictogrammes)" required>
@@ -672,10 +792,11 @@
                                 <span>📚 Lecteur autonome</span>
                             </label>
                         </div>
+                        <div class="error-message">❌ Champ obligatoire - Sélectionnez un niveau de lecture</div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="supervision">Supervision adulte</label>
+                        <label>Supervision adulte</label>
                         <div class="radio-group">
                             <label class="radio-item">
                                 <input type="radio" name="supervision" value="Adulte présent obligatoire" checked>
@@ -697,13 +818,14 @@
                 <div class="section">
                     <h2 class="section-title">🎨 Thème et Contenu</h2>
                     
-                    <div class="form-group">
+                    <div class="form-group" id="themeGroup">
                         <label for="theme" class="required">Sujet principal</label>
                         <input type="text" id="theme" placeholder="Ex: Apprentissage des couleurs primaires" required>
+                        <div class="error-message">❌ Champ obligatoire - Décrivez le sujet</div>
                         <span class="helper-text">Décrivez le sujet en 1 phrase claire</span>
                     </div>
                     
-                    <div class="form-group">
+                    <div class="form-group" id="goalsGroup">
                         <label class="required">Objectifs pédagogiques (cochez tous ceux qui s'appliquent)</label>
                         <div class="checkbox-group">
                             <label class="checkbox-item">
@@ -787,6 +909,7 @@
                                 <span>🕐 Lecture de l'heure</span>
                             </label>
                         </div>
+                        <div class="error-message">❌ Sélectionnez au moins un objectif ou utilisez le champ ci-dessous</div>
                     </div>
                     
                     <div class="form-group">
@@ -863,6 +986,7 @@
                                 <span>📦 Tri et catégories</span>
                             </label>
                         </div>
+                        <span class="helper-text">Si aucune sélection, l'IA proposera des interactions adaptées</span>
                     </div>
                     
                     <div class="form-group">
@@ -1029,7 +1153,8 @@
                 
                 <!-- BOUTONS -->
                 <div class="button-group">
-                    <button type="submit" class="btn-primary">
+                    <button type="submit" id="submitBtn" class="btn-primary">
+                        <span class="spinner"></span>
                         <span>🚀 Générer le Prompt</span>
                     </button>
                     <button type="reset" class="btn-secondary">
@@ -1037,37 +1162,36 @@
                     </button>
                 </div>
             </form>
-            
-            <!-- ZONE RÉSULTAT -->
-            <div id="resultSection">
-                <h3 style="margin-bottom: 15px; color: var(--primary);">✅ Prompt Généré avec Succès</h3>
-                <p style="margin-bottom: 15px; color: #7F8C8D;">
-                    <strong>Étape suivante :</strong> Copiez ce texte et collez-le dans votre IA préférée (Claude, ChatGPT, Gemini, etc.)
-                </p>
-                
-                <div id="promptOutput"></div>
-                
-                <div class="button-group" style="margin-top: 20px;">
-                    <button id="copyBtn" class="btn-primary">
-                        <span>📋 Copier le Prompt</span>
-                    </button>
-                    <button id="downloadBtn" class="btn-secondary">
-                        <span>💾 Télécharger (.txt)</span>
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
     
     <script>
         // ===== VERSION & CONFIG =====
-        const VERSION = "v1.002";
+        const VERSION = "v1.003";
+        const STORAGE_KEY_NAME = 'prompt_generator_creator_name';
         
-        // ===== INITIALISATION DATE =====
-        document.getElementById('creationDate').value = new Date().toLocaleDateString('fr-FR', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
+        // ===== INITIALISATION =====
+        window.addEventListener('DOMContentLoaded', function() {
+            // Date automatique
+            document.getElementById('creationDate').value = new Date().toLocaleDateString('fr-FR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Charger nom sauvegardé
+            const savedName = localStorage.getItem(STORAGE_KEY_NAME);
+            if (savedName) {
+                document.getElementById('creatorName').value = savedName;
+            }
+        });
+        
+        // ===== SAUVEGARDE NOM AUTOMATIQUE =====
+        document.getElementById('creatorName').addEventListener('blur', function() {
+            const name = this.value.trim();
+            if (name) {
+                localStorage.setItem(STORAGE_KEY_NAME, name);
+            }
         });
         
         // ===== MODAL HELP =====
@@ -1088,34 +1212,126 @@
             }
         });
         
-        // ===== GESTION FORMULAIRE =====
-        document.getElementById('promptForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // ===== MODAL RÉSULTAT =====
+        function openResultModal() {
+            document.getElementById('resultModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeResultModal() {
+            document.getElementById('resultModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        document.getElementById('resultModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeResultModal();
+            }
+        });
+        
+        // ===== VALIDATION FORMULAIRE =====
+        function clearErrors() {
+            document.querySelectorAll('.form-group.has-error').forEach(group => {
+                group.classList.remove('has-error');
+            });
+        }
+        
+        function showError(groupId, message) {
+            const group = document.getElementById(groupId);
+            if (group) {
+                group.classList.add('has-error');
+                const errorMsg = group.querySelector('.error-message');
+                if (errorMsg && message) {
+                    errorMsg.textContent = '❌ ' + message;
+                }
+            }
+        }
+        
+        function validateForm() {
+            clearErrors();
+            let isValid = true;
+            let firstErrorElement = null;
             
-            // Validation âges sélectionnés
+            // Validation nom
+            const creatorName = document.getElementById('creatorName').value.trim();
+            if (!creatorName) {
+                const group = document.querySelector('#creatorName').closest('.form-group');
+                group.classList.add('has-error');
+                isValid = false;
+                if (!firstErrorElement) firstErrorElement = group;
+            }
+            
+            // Validation âge
             const ageChecked = document.querySelectorAll('input[name="ageRange"]:checked');
             if (ageChecked.length === 0) {
-                alert('❌ Veuillez sélectionner au moins une tranche d\'âge');
-                return;
+                showError('ageGroup', 'Sélectionnez au moins une tranche d\'âge');
+                isValid = false;
+                if (!firstErrorElement) firstErrorElement = document.getElementById('ageGroup');
+            }
+            
+            // Validation niveau lecture
+            const readingChecked = document.querySelector('input[name="readingLevel"]:checked');
+            if (!readingChecked) {
+                showError('readingGroup', 'Champ obligatoire - Sélectionnez un niveau de lecture');
+                isValid = false;
+                if (!firstErrorElement) firstErrorElement = document.getElementById('readingGroup');
+            }
+            
+            // Validation thème
+            const theme = document.getElementById('theme').value.trim();
+            if (!theme) {
+                showError('themeGroup', 'Champ obligatoire - Décrivez le sujet');
+                isValid = false;
+                if (!firstErrorElement) firstErrorElement = document.getElementById('themeGroup');
             }
             
             // Validation objectifs pédagogiques
             const goalsChecked = document.querySelectorAll('input[name="pedGoals"]:checked');
             const customGoals = document.getElementById('customGoals').value.trim();
-            if (goalsChecked.length === 0 && customGoals === '') {
-                alert('❌ Veuillez sélectionner au moins un objectif pédagogique ou en saisir un personnalisé');
+            if (goalsChecked.length === 0 && !customGoals) {
+                showError('goalsGroup', 'Sélectionnez au moins un objectif ou utilisez le champ libre');
+                isValid = false;
+                if (!firstErrorElement) firstErrorElement = document.getElementById('goalsGroup');
+            }
+            
+            // Scroll vers première erreur
+            if (!isValid && firstErrorElement) {
+                firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            
+            return isValid;
+        }
+        
+        // ===== GESTION FORMULAIRE =====
+        document.getElementById('promptForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validateForm()) {
                 return;
             }
             
-            generatePrompt();
+            // Animation bouton
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+            
+            // Simuler génération (petit délai pour UX)
+            setTimeout(() => {
+                generatePrompt();
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+            }, 800);
         });
         
         // ===== FONCTION GÉNÉRATION PROMPT =====
         function generatePrompt() {
             // Métadonnées
-            const creatorName = document.getElementById('creatorName').value;
+            const creatorName = document.getElementById('creatorName').value.trim();
             const projectVersion = document.getElementById('projectVersion').value;
             const creationDate = document.getElementById('creationDate').value;
+            
+            // Sauvegarder nom
+            localStorage.setItem(STORAGE_KEY_NAME, creatorName);
             
             // Âges (multiple)
             const ageRanges = Array.from(document.querySelectorAll('input[name="ageRange"]:checked'))
@@ -1166,7 +1382,7 @@
 - **Créé par :** ${creatorName}
 - **Date de création :** ${creationDate}
 - **Version projet :** ${projectVersion}
-- **Générateur :** Formulaire v1.002
+- **Générateur :** Formulaire v${VERSION}
 **═══════════════════════════════════════════════════════════════**
 
 ## 📋 INSTRUCTION IMPORTANTE POUR L'IA
@@ -1206,7 +1422,7 @@
 **Style narratif :** ${narrativeStyle}
 
 **Objectifs pédagogiques à couvrir :**
-${allGoals || '- [ERREUR : Aucun objectif spécifié]'}
+${allGoals}
 ${additionalContext ? '\n**Précisions supplémentaires importantes :**\n' + additionalContext : ''}
 
 ### 🎮 Interactivité & Gameplay
@@ -1313,7 +1529,7 @@ PROJET : ${theme}
 CRÉÉ PAR : ${creatorName}
 DATE : ${creationDate}
 VERSION : ${projectVersion}
-GÉNÉRATEUR : Formulaire v1.002
+GÉNÉRATEUR : Formulaire v${VERSION}
 ═══════════════════════════════════════════════════════════════
 ÂGE CIBLE : ${ageRanges}
 NIVEAU : ${readingLevel}
@@ -1385,38 +1601,42 @@ Vérifie ces points et liste-les dans ta réponse :
 
 **⏩ Lance-toi avec l'ÉTAPE 1 maintenant : propose ton plan détaillé !**`;
             
-            // Affichage du prompt
-            document.getElementById('promptOutput').textContent = prompt;
-            document.getElementById('resultSection').classList.add('active');
-            
-            // Scroll vers résultat
-            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            // Affichage dans modal
+            document.getElementById('promptOutputModal').textContent = prompt;
+            openResultModal();
         }
         
-        // ===== COPIER PROMPT =====
-        document.getElementById('copyBtn').addEventListener('click', function() {
-            const promptText = document.getElementById('promptOutput').textContent;
+        // ===== COPIER PROMPT MODAL =====
+        document.getElementById('copyBtnModal').addEventListener('click', function() {
+            const promptText = document.getElementById('promptOutputModal').textContent;
+            const btn = this;
+            
+            btn.classList.add('loading');
+            btn.disabled = true;
             
             navigator.clipboard.writeText(promptText).then(() => {
-                const btn = this;
-                const originalHTML = btn.innerHTML;
-                
-                btn.innerHTML = '<span>✅ Copié dans le presse-papier !</span>';
-                btn.classList.add('copy-success');
-                
                 setTimeout(() => {
-                    btn.innerHTML = originalHTML;
-                    btn.classList.remove('copy-success');
-                }, 2500);
+                    btn.classList.remove('loading');
+                    btn.classList.add('copy-success');
+                    btn.innerHTML = '<span>✅ Copié avec succès !</span>';
+                    
+                    setTimeout(() => {
+                        btn.classList.remove('copy-success');
+                        btn.innerHTML = '<span class="spinner"></span><span>📋 Copier le Prompt</span>';
+                        btn.disabled = false;
+                    }, 2500);
+                }, 300);
             }).catch(err => {
-                alert('❌ Erreur lors de la copie. Copiez manuellement le texte ci-dessus.');
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                alert('❌ Erreur lors de la copie. Sélectionnez manuellement le texte.');
                 console.error('Erreur copie:', err);
             });
         });
         
-        // ===== TÉLÉCHARGER TXT =====
-        document.getElementById('downloadBtn').addEventListener('click', function() {
-            const promptText = document.getElementById('promptOutput').textContent;
+        // ===== TÉLÉCHARGER TXT MODAL =====
+        document.getElementById('downloadBtnModal').addEventListener('click', function() {
+            const promptText = document.getElementById('promptOutputModal').textContent;
             const blob = new Blob([promptText], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -1427,7 +1647,7 @@ Vérifie ces points et liste-les dans ta réponse :
             const timestamp = new Date().toISOString().slice(0,10);
             
             a.href = url;
-            a.download = \`prompt_\${theme}_\${creator}_\${version}_\${timestamp}.txt\`;
+            a.download = `prompt_${theme}_${creator}_${version}_${timestamp}.txt`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -1437,13 +1657,18 @@ Vérifie ces points et liste-les dans ta réponse :
         // ===== RESET FORM =====
         document.getElementById('promptForm').addEventListener('reset', function() {
             setTimeout(() => {
-                document.getElementById('resultSection').classList.remove('active');
+                clearErrors();
                 // Réinitialiser date
                 document.getElementById('creationDate').value = new Date().toLocaleDateString('fr-FR', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
                 });
+                // Garder le nom sauvegardé
+                const savedName = localStorage.getItem(STORAGE_KEY_NAME);
+                if (savedName) {
+                    document.getElementById('creatorName').value = savedName;
+                }
             }, 100);
         });
     </script>

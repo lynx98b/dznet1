@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les 4 Saisons Magiques - Découvre la Nature</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 8px solid #4ECDC4;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            position: relative;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 3px 3px 0 #2C7873;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .story-container {
+            padding: 25px;
+        }
+        
+        .seasons-display {
+            height: 300px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid #4ECDC4;
+            transition: all 1s ease;
+        }
+        
+        .season-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        
+        .season-content.active {
+            opacity: 1;
+        }
+        
+        .spring { background: linear-gradient(135deg, #A8E6CF 0%, #DCEDC1 100%); }
+        .summer { background: linear-gradient(135deg, #FFD93D 0%, #FF9A3D 100%); }
+        .autumn { background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); }
+        .winter { background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); }
+        
+        .season-emoji {
+            font-size: 100px;
+            margin-bottom: 20px;
+            animation: bounce 3s infinite;
+        }
+        
+        .season-title {
+            font-size: 2rem;
+            color: white;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+        
+        .season-description {
+            font-size: 1.2rem;
+            color: white;
+            text-align: center;
+            max-width: 80%;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+        }
+        
+        .story-text {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background-color: #FFEB3B;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+        
+        .season-info {
+            background: #E8F5E9;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border: 3px solid #4CAF50;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .info-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 2px solid #4CAF50;
+        }
+        
+        .info-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .audio-btn {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .audio-btn:hover {
+            background: linear-gradient(135deg, #3db8a8 0%, #388f7e 100%);
+            transform: scale(1.1);
+        }
+        
+        .seasons-navigation {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 25px 0;
+        }
+        
+        .season-btn {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .season-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .season-btn.spring { background: linear-gradient(135deg, #A8E6CF 0%, #7BCF9C 100%); }
+        .season-btn.summer { background: linear-gradient(135deg, #FFD93D 0%, #FFB347 100%); }
+        .season-btn.autumn { background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); }
+        .season-btn.winter { background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); }
+        
+        .fruits-section {
+            background: linear-gradient(135deg, #FD79A8 0%, #F8A5C2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+        }
+        
+        .fruits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .fruit-card {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .fruit-emoji {
+            font-size: 40px;
+            margin-bottom: 5px;
+        }
+        
+        footer {
+            background: #2C7873;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .sparkle {
+            animation: sparkle 2s infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .story-container {
+                padding: 15px;
+            }
+            
+            .season-emoji {
+                font-size: 70px;
+            }
+            
+            .story-text {
+                font-size: 1.1rem;
+            }
+            
+            .seasons-navigation {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌷 Les 4 Saisons Magiques 🌞</h1>
+            <div class="subtitle">Découvre les merveilles de la nature toute l'année !</div>
+        </header>
+        
+        <div class="story-container">
+            <div class="seasons-display">
+                <!-- Printemps -->
+                <div class="season-content spring active">
+                    <div class="season-emoji">🌷</div>
+                    <h2 class="season-title">Le Printemps</h2>
+                    <p class="season-description">La nature se réveille ! Les fleurs poussent et les animaux sortent.</p>
+                </div>
+                
+                <!-- Été -->
+                <div class="season-content summer">
+                    <div class="season-emoji">🌞</div>
+                    <h2 class="season-title">L'Été</h2>
+                    <p class="season-description">Il fait chaud et beau ! C'est le temps des jeux et des vacances.</p>
+                </div>
+                
+                <!-- Automne -->
+                <div class="season-content autumn">
+                    <div class="season-emoji">🍂</div>
+                    <h2 class="season-title">L'Automne</h2>
+                    <p class="season-description">Les feuilles changent de couleur et tombent des arbres.</p>
+                </div>
+                
+                <!-- Hiver -->
+                <div class="season-content winter">
+                    <div class="season-emoji">⛄</div>
+                    <h2 class="season-title">L'Hiver</h2>
+                    <p class="season-description">Il fait froid, parfois il neige ! On se réchauffe à la maison.</p>
+                </div>
+            </div>
+            
+            <div class="story-text">
+                <p>Il était une fois un petit arbre nommé <span class="highlight">Bobby</span> qui vivait dans une belle forêt. Bobby adorait observer comment la nature changeait pendant les <span class="highlight">4 saisons</span> de l'année.</p>
+                
+                <p>Au <span class="highlight">printemps</span>, Bobby se couvrait de jolies fleurs roses. Les oiseaux revenaient faire leurs nids dans ses branches.</p>
+                
+                <p>En <span class="highlight">été</span>, ses feuilles devenaient bien vertes et les enfants venaient jouer à l'ombre sous son feuillage.</p>
+            </div>
+
+            <div class="seasons-navigation">
+                <button class="season-btn spring" onclick="showSeason('spring')">🌷 Printemps</button>
+                <button class="season-btn summer" onclick="showSeason('summer')">🌞 Été</button>
+                <button class="season-btn autumn" onclick="showSeason('autumn')">🍂 Automne</button>
+                <button class="season-btn winter" onclick="showSeason('winter')">⛄ Hiver</button>
+            </div>
+
+            <div class="season-info" id="seasonInfo">
+                <h3>🌷 Activités du Printemps</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-emoji">🌸</div>
+                        <h4>Planter des fleurs</h4>
+                        <p>Voir pousser de jolies couleurs</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">🪁</div>
+                        <h4>Faire voler un cerf-volant</h4>
+                        <p>Profiter du vent printanier</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-emoji">🐦</div>
+                        <h4>Observer les oiseaux</h4>
+                        <p>Ils reviennent de voyage</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fruits-section">
+                <h3>🍓 Fruits de Saison</h3>
+                <div class="fruits-grid">
+                    <div class="fruit-card">
+                        <div class="fruit-emoji">🍓</div>
+                        <p>Fraise</p>
+                    </div>
+                    <div class="fruit-card">
+                        <div class="fruit-emoji">🍒</div>
+                        <p>Cerise</p>
+                    </div>
+                    <div class="fruit-card">
+                        <div class="fruit-emoji">🍋</div>
+                        <p>Citron</p>
+                    </div>
+                    <div class="fruit-card">
+                        <div class="fruit-emoji">🥬</div>
+                        <p>Salade</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-text">
+                <p>Quand <span class="highlight">l'automne</span> arrivait, les feuilles de Bobby devenaient jaunes, oranges et rouges. C'était tellement beau !</p>
+                
+                <p>Puis venait <span class="highlight">l'hiver</span>. Bobby perdait ses feuilles et se reposait pendant que la neige le recouvrait d'un manteau blanc.</p>
+                
+                <p>Bobby aimait toutes les saisons, car chacune apportait sa <span class="highlight">magie particulière</span> !</p>
+            </div>
+            
+            <div class="audio-controls">
+                <button class="audio-btn" id="playBtn">▶</button>
+                <button class="audio-btn" id="pauseBtn">❚❚</button>
+                <button class="audio-btn" id="restartBtn">↺</button>
+            </div>
+            
+            <div class="seasons-navigation">
+                <button class="season-btn" onclick="showActivity('🌸')">Fleurs</button>
+                <button class="season-btn" onclick="showActivity('🪁')">Cerf-volant</button>
+                <button class="season-btn" onclick="showActivity('🍂')">Feuilles</button>
+                <button class="season-btn" onclick="showActivity('⛄')">Bonhomme de neige</button>
+                <button class="season-btn" onclick="showNumber(4)">4 Saisons</button>
+                <button class="season-btn" onclick="showFruit('🍓')">Fruits</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🌟 <strong>Découvre la magie des saisons !</strong> 🌟</p>
+            <p style="margin-top: 10px; opacity: 0.9;">Chaque saison apporte son lot de surprises et de joies</p>
+        </footer>
+    </div>
+
+    <script>
+        // Variables pour la narration audio
+        let isPlaying = false;
+        let currentSeason = 'spring';
+
+        // Données des saisons
+        const seasonsData = {
+            spring: {
+                title: "🌷 Activités du Printemps",
+                activities: [
+                    { emoji: "🌸", name: "Planter des fleurs", desc: "Voir pousser de jolies couleurs" },
+                    { emoji: "🪁", name: "Faire voler un cerf-volant", desc: "Profiter du vent printanier" },
+                    { emoji: "🐦", name: "Observer les oiseaux", desc: "Ils reviennent de voyage" }
+                ],
+                fruits: ["🍓", "🍒", "🍋", "🥬"]
+            },
+            summer: {
+                title: "🌞 Activités de l'Été",
+                activities: [
+                    { emoji: "🏖️", name: "Aller à la plage", desc: "Jouer avec le sable et l'eau" },
+                    { emoji: "🍦", name: "Manger des glaces", desc: "Se rafraîchir quand il fait chaud" },
+                    { emoji: "🌊", name: "Nager dans la mer", desc: "S'amuser dans les vagues" }
+                ],
+                fruits: ["🍉", "🍑", "🍇", "🥭"]
+            },
+            autumn: {
+                title: "🍂 Activités de l'Automne",
+                activities: [
+                    { emoji: "🍂", name: "Ramasser les feuilles", desc: "Faire de jolis tas colorés" },
+                    { emoji: "🌰", name: "Cueillir des marrons", desc: "Trouver des trésors de la forêt" },
+                    { emoji: "🧣", name: "Prendre de belles photos", desc: "Capturer les belles couleurs" }
+                ],
+                fruits: ["🍎", "🍐", "🍊", "🎃"]
+            },
+            winter: {
+                title: "⛄ Activités de l'Hiver",
+                activities: [
+                    { emoji: "⛄", name: "Faire un bonhomme de neige", desc: "Créer un ami d'hiver" },
+                    { emoji: "☕", name: "Boire du chocolat chaud", desc: "Se réchauffer ensemble" },
+                    { emoji: "🎄", name: "Décorer le sapin", desc: "Préparer Noël en famille" }
+                ],
+                fruits: ["🍊", "🥝", "🍌", "🍎"]
+            }
+        };
+
+        // Afficher une saison
+        function showSeason(season) {
+            currentSeason = season;
+            
+            // Mettre à jour l'affichage
+            document.querySelectorAll('.season-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelector(`.${season}`).classList.add('active');
+            
+            // Mettre à jour les informations
+            updateSeasonInfo(season);
+        }
+
+        // Mettre à jour les informations de la saison
+        function updateSeasonInfo(season) {
+            const data = seasonsData[season];
+            const infoSection = document.getElementById('seasonInfo');
+            const fruitsSection = document.querySelector('.fruits-grid');
+            
+            // Mettre à jour les activités
+            infoSection.innerHTML = `
+                <h3>${data.title}</h3>
+                <div class="info-grid">
+                    ${data.activities.map(activity => `
+                        <div class="info-card">
+                            <div class="info-emoji">${activity.emoji}</div>
+                            <h4>${activity.name}</h4>
+                            <p>${activity.desc}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            // Mettre à jour les fruits
+            fruitsSection.innerHTML = data.fruits.map(fruit => `
+                <div class="fruit-card">
+                    <div class="fruit-emoji floating">${fruit}</div>
+                    <p>${getFruitName(fruit)}</p>
+                </div>
+            `).join('');
+        }
+
+        // Obtenir le nom du fruit
+        function getFruitName(emoji) {
+            const fruitNames = {
+                "🍓": "Fraise", "🍒": "Cerise", "🍋": "Citron", "🥬": "Salade",
+                "🍉": "Pastèque", "🍑": "Pêche", "🍇": "Raisin", "🥭": "Mangue",
+                "🍎": "Pomme", "🍐": "Poire", "🍊": "Orange", "🎃": "Citrouille",
+                "🍊": "Clémentine", "🥝": "Kiwi", "🍌": "Banane"
+            };
+            return fruitNames[emoji] || "Fruit";
+        }
+
+        // Simulation de la lecture audio
+        function playAudio() {
+            if (!isPlaying) {
+                isPlaying = true;
+                document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #2196F3 0%, #0D47A1 100%)';
+                console.log("Lecture de l'histoire audio...");
+                
+                // Faire défiler les saisons automatiquement
+                const seasons = ['spring', 'summer', 'autumn', 'winter'];
+                let currentIndex = seasons.indexOf(currentSeason);
+                
+                const seasonInterval = setInterval(() => {
+                    if (!isPlaying) {
+                        clearInterval(seasonInterval);
+                        return;
+                    }
+                    
+                    currentIndex = (currentIndex + 1) % seasons.length;
+                    showSeason(seasons[currentIndex]);
+                    
+                }, 4000);
+            }
+        }
+        
+        function pauseAudio() {
+            isPlaying = false;
+            document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%)';
+            console.log("Audio en pause");
+        }
+        
+        function restartAudio() {
+            pauseAudio();
+            showSeason('spring');
+            setTimeout(playAudio, 500);
+        }
+
+        // Fonctions interactives
+        function showActivity(activity) {
+            const display = document.querySelector('.seasons-display');
+            const emoji = document.createElement('div');
+            emoji.textContent = activity;
+            emoji.style.fontSize = '80px';
+            emoji.style.position = 'absolute';
+            emoji.style.left = Math.random() * 70 + 15 + '%';
+            emoji.style.top = Math.random() * 60 + 20 + '%';
+            emoji.style.animation = 'float 3s ease-in-out';
+            emoji.style.zIndex = '5';
+            
+            display.appendChild(emoji);
+            
+            setTimeout(() => {
+                emoji.remove();
+            }, 3000);
+        }
+        
+        function showFruit(fruit) {
+            const fruitsGrid = document.querySelector('.fruits-grid');
+            fruitsGrid.querySelectorAll('.fruit-emoji').forEach(emoji => {
+                emoji.classList.add('sparkle');
+                setTimeout(() => {
+                    emoji.classList.remove('sparkle');
+                }, 2000);
+            });
+        }
+        
+        function showNumber(number) {
+            const display = document.querySelector('.seasons-display');
+            const numberDisplay = document.createElement('div');
+            numberDisplay.textContent = number;
+            numberDisplay.style.fontSize = '100px';
+            numberDisplay.style.color = 'white';
+            numberDisplay.style.textShadow = '3px 3px 0 rgba(0,0,0,0.3)';
+            numberDisplay.style.position = 'absolute';
+            numberDisplay.style.left = '50%';
+            numberDisplay.style.top = '50%';
+            numberDisplay.style.transform = 'translate(-50%, -50%)';
+            numberDisplay.style.animation = 'bounce 1s ease-in-out';
+            numberDisplay.style.zIndex = '5';
+            
+            display.appendChild(numberDisplay);
+            
+            setTimeout(() => {
+                numberDisplay.remove();
+            }, 2000);
+        }
+        
+        // Initialisation au chargement de la page
+        window.onload = function() {
+            // Configuration des boutons audio
+            document.getElementById('playBtn').addEventListener('click', playAudio);
+            document.getElementById('pauseBtn').addEventListener('click', pauseAudio);
+            document.getElementById('restartBtn').addEventListener('click', restartAudio);
+            
+            // Initialiser les informations de la saison
+            updateSeasonInfo('spring');
+            
+            // Animation automatique des fruits
+            setInterval(() => {
+                const fruits = document.querySelectorAll('.fruit-emoji');
+                fruits.forEach(fruit => {
+                    fruit.classList.add('floating');
+                });
+            }, 4000);
+        };
+    </script>
+</body>
+</html>

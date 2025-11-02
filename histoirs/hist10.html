@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Fourmi et la Cigale - Les Efforts Récompensés</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 8px solid #4ECDC4;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            position: relative;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 3px 3px 0 #2C7873;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .story-container {
+            padding: 25px;
+        }
+        
+        .illustration {
+            height: 280px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #A8E6CF 0%, #DCEDC1 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid #4CAF50;
+        }
+        
+        .character-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            width: 100%;
+            height: 100%;
+            padding: 0 20px;
+        }
+        
+        .ant {
+            font-size: 80px;
+            animation: work 4s infinite;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cigale {
+            font-size: 80px;
+            animation: sing 3s infinite;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .bubble {
+            position: absolute;
+            background: white;
+            border-radius: 20px;
+            padding: 12px 18px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            max-width: 250px;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 10;
+        }
+        
+        .ant-bubble {
+            top: 30px;
+            left: 30px;
+        }
+        
+        .cigale-bubble {
+            top: 30px;
+            right: 30px;
+        }
+        
+        .bubble:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 12px solid transparent;
+        }
+        
+        .ant-bubble:after {
+            border-right-color: white;
+            border-left: 0;
+            left: -12px;
+            top: 20px;
+        }
+        
+        .cigale-bubble:after {
+            border-left-color: white;
+            border-right: 0;
+            right: -12px;
+            top: 20px;
+        }
+        
+        .bubble.show {
+            opacity: 1;
+        }
+        
+        .story-text {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background-color: #FFEB3B;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+        
+        .lesson-section {
+            background: #E8F5E9;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border: 3px solid #4CAF50;
+        }
+        
+        .seasons-display {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .season-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 2px solid #4CAF50;
+        }
+        
+        .summer { border-color: #FFD93D; }
+        .winter { border-color: #74b9ff; }
+        
+        .season-emoji {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+        
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .audio-btn {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .audio-btn:hover {
+            background: linear-gradient(135deg, #3db8a8 0%, #388f7e 100%);
+            transform: scale(1.1);
+        }
+        
+        .interactive-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .option-btn {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .option-btn:hover {
+            background: linear-gradient(135deg, #3db8a8 0%, #388f7e 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .moral-section {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .food-storage {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .food-item {
+            font-size: 40px;
+            animation: bounce 2s infinite;
+        }
+        
+        footer {
+            background: #2C7873;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+        
+        @keyframes work {
+            0%, 100% { 
+                transform: translateX(0) rotate(0deg); 
+            }
+            25% { 
+                transform: translateX(20px) rotate(5deg); 
+            }
+            50% { 
+                transform: translateX(40px) rotate(0deg); 
+            }
+            75% { 
+                transform: translateX(20px) rotate(-5deg); 
+            }
+        }
+        
+        @keyframes sing {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg); 
+            }
+            25% { 
+                transform: scale(1.1) rotate(5deg); 
+            }
+            75% { 
+                transform: scale(1.1) rotate(-5deg); 
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes shiver {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+        }
+        
+        .shiver {
+            animation: shiver 0.5s ease-in-out infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .story-container {
+                padding: 15px;
+            }
+            
+            .ant, .cigale {
+                font-size: 60px;
+            }
+            
+            .story-text {
+                font-size: 1.1rem;
+            }
+            
+            .interactive-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .seasons-display {
+                grid-template-columns: 1fr;
+            }
+            
+            .character-container {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐜 La Fourmi et la Cigale 🦗</h1>
+            <div class="subtitle">Une histoire sur l'importance du travail et des efforts</div>
+        </header>
+        
+        <div class="story-container">
+            <div class="illustration">
+                <div class="character-container">
+                    <div class="ant">🐜</div>
+                    <div class="cigale">🦗</div>
+                </div>
+                <div class="bubble ant-bubble" id="antBubble">Je travaille dur pour l'hiver !</div>
+                <div class="bubble cigale-bubble" id="cigaleBubble">Je préfère chanter et m'amuser !</div>
+            </div>
+            
+            <div class="story-text">
+                <p>Par une belle journée d'<span class="highlight">été</span>, une petite fourmi nommée <span class="highlight">Frida</span> travaillait sans relâche. Elle transportait des graines et des feuilles vers sa fourmilière.</p>
+                
+                <p>Pendant ce temps, sa voisine <span class="highlight">Célia la cigale</span> chantait joyeusement sur une feuille. "Pourquoi travailles-tu autant ?" demanda Célia. "Viens plutôt chanter avec moi !"</p>
+                
+                <p>"Je prépare mes réserves pour <span class="highlight">l'hiver</span>," répondit Frida. "Quand il fera froid, j'aurai de quoi manger."</p>
+            </div>
+
+            <div class="lesson-section">
+                <h3>🌞 Pendant l'Été</h3>
+                <div class="seasons-display">
+                    <div class="season-card summer">
+                        <div class="season-emoji">🐜</div>
+                        <h4>La Fourmi Frida</h4>
+                        <p>• Travaille toute la journée</p>
+                        <p>• Ramasse de la nourriture</p>
+                        <p>• Prépare ses réserves</p>
+                        <div class="food-storage">
+                            <div class="food-item">🌽</div>
+                            <div class="food-item">🍎</div>
+                            <div class="food-item">🥜</div>
+                        </div>
+                    </div>
+                    <div class="season-card summer">
+                        <div class="season-emoji">🦗</div>
+                        <h4>La Cigale Célia</h4>
+                        <p>• Chante toute la journée</p>
+                        <p>• Danse au soleil</p>
+                        <p>• Ne pense pas à demain</p>
+                        <div style="font-size: 40px; margin-top: 10px;">🎵🎶</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-text">
+                <p>Célia se moqua de Frida : "L'hiver est loin ! Profite du soleil avec moi !"</p>
+                
+                <p>Mais Frida continua son travail. Jour après jour, elle transporta <span class="highlight">100 graines</span>, <span class="highlight">50 feuilles</span> et <span class="highlight">20 fruits</span> dans sa maison souterraine.</p>
+                
+                <p>Quand <span class="highlight">l'automne</span> arriva, les arbres perdirent leurs feuilles et l'air devint frais.</p>
+            </div>
+
+            <div class="lesson-section">
+                <h3>❄️ Pendant l'Hiver</h3>
+                <div class="seasons-display">
+                    <div class="season-card winter">
+                        <div class="season-emoji">🐜</div>
+                        <h4>La Fourmi Frida</h4>
+                        <p>• Est bien au chaud</p>
+                        <p>• A plein de nourriture</p>
+                        <p>• Se repose tranquillement</p>
+                        <div style="font-size: 40px; margin-top: 10px;">🏠💤</div>
+                    </div>
+                    <div class="season-card winter">
+                        <div class="season-emoji">🦗</div>
+                        <h4>La Cigale Célia</h4>
+                        <p>• A très faim</p>
+                        <p>• N'a pas de maison</p>
+                        <p>• Regrette son imprudence</p>
+                        <div style="font-size: 40px; margin-top: 10px;" class="shiver">🥶😢</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-text">
+                <p>Quand le <span class="highlight">froid glacial</span> de l'hiver arriva, Frida était bien préparée. Au chaud dans sa fourmilière, elle avait assez de nourriture pour tout l'hiver.</p>
+                
+                <p>Mais Célia grelottait de froid. Elle n'avait ni maison ni nourriture. Elle frappa à la porte de Frida : "Aurais-tu un peu de nourriture à me donner ? J'ai si faim !"</p>
+                
+                <p>Frida, étant gentille, partagea ses réserves avec Célia. "Maintenant tu comprends pourquoi je travaillais tant en été," dit-elle doucement.</p>
+            </div>
+
+            <div class="moral-section">
+                <h3>💫 La Leçon de l'Histoire</h3>
+                <p style="font-size: 1.4rem; margin: 15px 0;">
+                    <strong>Le travail et les efforts sont toujours récompensés !</strong>
+                </p>
+                <div style="font-size: 3rem; margin: 15px 0;">🌟</div>
+                <p>Il faut penser à l'avenir et se préparer aux moments difficiles</p>
+            </div>
+
+            <div class="story-text">
+                <p>L'année suivante, Célia avait bien retenu la leçon. Elle chantait toujours, mais elle <span class="highlight">travaillait aussi</span> pour préparer l'hiver.</p>
+                
+                <p>Les deux amies vécurent heureuses, comprenant que le <span class="highlight">travail</span> et la <span class="highlight">prévoyance</span> sont aussi importants que le plaisir et les loisirs.</p>
+            </div>
+            
+            <div class="audio-controls">
+                <button class="audio-btn" id="playBtn">▶</button>
+                <button class="audio-btn" id="pauseBtn">❚❚</button>
+                <button class="audio-btn" id="restartBtn">↺</button>
+            </div>
+            
+            <div class="interactive-options">
+                <button class="option-btn" onclick="showAntMessage()">Frida parle</button>
+                <button class="option-btn" onclick="showCigaleMessage()">Célia parle</button>
+                <button class="option-btn" onclick="showWork('🌽')">Nourriture</button>
+                <button class="option-btn" onclick="showWork('🏠')">Maison</button>
+                <button class="option-btn" onclick="showSeason('🌞')">Été</button>
+                <button class="option-btn" onclick="showSeason('❄️')">Hiver</button>
+                <button class="option-btn" onclick="showNumber(100)">100 graines</button>
+                <button class="option-btn" onclick="showLesson()">🌟 Leçon</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🌟 <strong>Le travail et la persévérance mènent au succès !</strong> 🌟</p>
+            <p style="margin-top: 10px; opacity: 0.9;">Comme Frida la fourmi, tes efforts seront récompensés</p>
+        </footer>
+    </div>
+
+    <script>
+        // Variables pour la narration audio
+        let isPlaying = false;
+        
+        // Messages pour les personnages
+        const antMessages = [
+            "Je travaille dur pour l'hiver !",
+            "Chaque graine compte pour plus tard !",
+            "Je prépare mes réserves !",
+            "La prévoyance, c'est important !",
+            "Je suis prête pour l'hiver !",
+            "Le travail est récompensé !"
+        ];
+        
+        const cigaleMessages = [
+            "Je préfère chanter et m'amuser !",
+            "L'hiver est si loin !",
+            "Pourquoi travailler autant ?",
+            "Le soleil est si agréable !",
+            "J'ai si faim...",
+            "J'aurais dû écouter Frida !"
+        ];
+
+        // Simulation de la lecture audio
+        function playAudio() {
+            if (!isPlaying) {
+                isPlaying = true;
+                document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #2196F3 0%, #0D47A1 100%)';
+                console.log("Lecture de l'histoire audio...");
+                
+                // Simulation d'un changement d'illustration pendant la narration
+                setTimeout(() => {
+                    document.querySelector('.ant').textContent = '🌽';
+                }, 2000);
+                
+                setTimeout(() => {
+                    document.querySelector('.cigale').textContent = '🎵';
+                }, 4000);
+                
+                setTimeout(() => {
+                    document.querySelector('.ant').textContent = '🏠';
+                }, 6000);
+                
+                setTimeout(() => {
+                    document.querySelector('.cigale').textContent = '🥶';
+                }, 8000);
+                
+                setTimeout(() => {
+                    document.querySelector('.ant').textContent = '🐜';
+                    document.querySelector('.cigale').textContent = '🦗';
+                }, 10000);
+            }
+        }
+        
+        function pauseAudio() {
+            isPlaying = false;
+            document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%)';
+            console.log("Audio en pause");
+        }
+        
+        function restartAudio() {
+            pauseAudio();
+            document.querySelector('.ant').textContent = '🐜';
+            document.querySelector('.cigale').textContent = '🦗';
+            setTimeout(playAudio, 500);
+        }
+        
+        // Fonctions interactives
+        function showAntMessage() {
+            const bubble = document.getElementById('antBubble');
+            const randomMessage = antMessages[Math.floor(Math.random() * antMessages.length)];
+            bubble.textContent = randomMessage;
+            bubble.classList.add('show');
+            setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 3000);
+            
+            // Animation spéciale
+            const antElement = document.querySelector('.ant');
+            antElement.style.animation = 'none';
+            setTimeout(() => {
+                antElement.style.animation = 'work 4s infinite';
+            }, 10);
+        }
+        
+        function showCigaleMessage() {
+            const bubble = document.getElementById('cigaleBubble');
+            const randomMessage = cigaleMessages[Math.floor(Math.random() * cigaleMessages.length)];
+            bubble.textContent = randomMessage;
+            bubble.classList.add('show');
+            setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 3000);
+            
+            // Animation spéciale
+            const cigaleElement = document.querySelector('.cigale');
+            cigaleElement.style.animation = 'none';
+            setTimeout(() => {
+                cigaleElement.style.animation = 'sing 3s infinite';
+            }, 10);
+        }
+        
+        function showWork(item) {
+            document.querySelector('.ant').textContent = item;
+            
+            // Animation spéciale
+            const antElement = document.querySelector('.ant');
+            antElement.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                antElement.style.transform = 'scale(1)';
+            }, 500);
+        }
+        
+        function showSeason(season) {
+            if (season === '🌞') {
+                document.querySelector('.cigale').textContent = '🎵';
+                document.querySelector('.cigale').style.animation = 'sing 3s infinite';
+            } else {
+                document.querySelector('.cigale').textContent = '🥶';
+                document.querySelector('.cigale').classList.add('shiver');
+                setTimeout(() => {
+                    document.querySelector('.cigale').classList.remove('shiver');
+                }, 2000);
+            }
+        }
+        
+        function showNumber(number) {
+            const illustration = document.querySelector('.illustration');
+            const numberDisplay = document.createElement('div');
+            numberDisplay.textContent = number;
+            numberDisplay.style.fontSize = '60px';
+            numberDisplay.style.color = '#FFD93D';
+            numberDisplay.style.textShadow = '3px 3px 0 rgba(0,0,0,0.3)';
+            numberDisplay.style.position = 'absolute';
+            numberDisplay.style.left = '50%';
+            numberDisplay.style.top = '50%';
+            numberDisplay.style.transform = 'translate(-50%, -50%)';
+            numberDisplay.style.animation = 'bounce 1s ease-in-out';
+            numberDisplay.style.zIndex = '5';
+            
+            illustration.appendChild(numberDisplay);
+            
+            setTimeout(() => {
+                numberDisplay.remove();
+            }, 2000);
+        }
+        
+        function showLesson() {
+            const moralSection = document.querySelector('.moral-section');
+            moralSection.style.animation = 'none';
+            setTimeout(() => {
+                moralSection.style.transform = 'scale(1.05)';
+                moralSection.style.transition = 'transform 0.3s ease';
+                setTimeout(() => {
+                    moralSection.style.transform = 'scale(1)';
+                }, 300);
+            }, 10);
+            
+            // Créer des étoiles
+            for (let i = 0; i < 5; i++) {
+                const star = document.createElement('div');
+                star.textContent = '🌟';
+                star.style.fontSize = '30px';
+                star.style.position = 'absolute';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animation = `bounce ${1 + Math.random()}s ease-in-out`;
+                star.style.zIndex = '5';
+                
+                document.querySelector('.illustration').appendChild(star);
+                
+                setTimeout(() => {
+                    star.remove();
+                }, 2000);
+            }
+        }
+        
+        // Initialisation au chargement de la page
+        window.onload = function() {
+            // Configuration des boutons audio
+            document.getElementById('playBtn').addEventListener('click', playAudio);
+            document.getElementById('pauseBtn').addEventListener('click', pauseAudio);
+            document.getElementById('restartBtn').addEventListener('click', restartAudio);
+            
+            // Afficher les bulles au chargement
+            setTimeout(showAntMessage, 1000);
+            setTimeout(showCigaleMessage, 2500);
+            
+            // Animation automatique des aliments
+            setInterval(() => {
+                const foodItems = document.querySelectorAll('.food-item');
+                foodItems.forEach(item => {
+                    item.style.animation = 'none';
+                    setTimeout(() => {
+                        item.style.animation = 'bounce 2s infinite';
+                    }, 10);
+                });
+            }, 4000);
+        };
+    </script>
+</body>
+</html>

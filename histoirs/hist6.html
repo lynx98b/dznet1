@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Poisson Voyageur - Découvre les Océans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 8px solid #4ECDC4;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            position: relative;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 3px 3px 0 #2C7873;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .story-container {
+            padding: 25px;
+        }
+        
+        .illustration {
+            height: 280px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid #4ECDC4;
+        }
+        
+        .animated-fish {
+            font-size: 120px;
+            animation: swim 4s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .ocean-background {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to top, #0984e3, transparent);
+        }
+        
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .bubble {
+            position: absolute;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in infinite;
+        }
+        
+        .story-text {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background-color: #FFEB3B;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+        
+        .ocean-fact {
+            background: #E3F2FD;
+            border-left: 5px solid #2196F3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 15px 15px 0;
+        }
+        
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .audio-btn {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .audio-btn:hover {
+            background: linear-gradient(135deg, #3db8a8 0%, #388f7e 100%);
+            transform: scale(1.1);
+        }
+        
+        .interactive-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .option-btn {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .option-btn:hover {
+            background: linear-gradient(135deg, #3db8a8 0%, #388f7e 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .world-map {
+            background: #E8F5E9;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+            text-align: center;
+            border: 3px solid #4CAF50;
+        }
+        
+        .map-container {
+            position: relative;
+            height: 200px;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            border-radius: 15px;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 2px solid #74b9ff;
+        }
+        
+        .fish-marker {
+            position: absolute;
+            font-size: 30px;
+            animation: pulse 2s infinite;
+        }
+        
+        .oceans-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .ocean-card {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 2px solid #74b9ff;
+        }
+        
+        .ocean-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            background: #2C7873;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+        
+        @keyframes swim {
+            0%, 100% { 
+                transform: translateX(0) rotate(0deg); 
+            }
+            25% { 
+                transform: translateX(50px) rotate(5deg); 
+            }
+            50% { 
+                transform: translateX(100px) rotate(0deg); 
+            }
+            75% { 
+                transform: translateX(50px) rotate(-5deg); 
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100px) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .story-container {
+                padding: 15px;
+            }
+            
+            .animated-fish {
+                font-size: 80px;
+            }
+            
+            .story-text {
+                font-size: 1.1rem;
+            }
+            
+            .interactive-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐠 Le Poisson Voyageur 🐠</h1>
+            <div class="subtitle">Une aventure à travers les océans du monde !</div>
+        </header>
+        
+        <div class="story-container">
+            <div class="illustration">
+                <div class="bubbles" id="bubbles"></div>
+                <div class="animated-fish">🐠</div>
+                <div class="ocean-background"></div>
+            </div>
+            
+            <div class="story-text">
+                <p>Il était une fois un petit poisson curieux nommé <span class="highlight">Nemo</span> qui vivait dans la <span class="highlight">Mer Méditerranée</span>. Un jour, il décida de partir à l'aventure pour découvrir les <span class="highlight">5 grands océans</span> du monde !</p>
+                
+                <div class="ocean-fact">
+                    <p><strong>Le savais-tu ?</strong> Il y a 5 océans sur notre planète : Pacifique, Atlantique, Indien, Arctique et Austral !</p>
+                </div>
+                
+                <p>Son premier voyage le mena dans l'<span class="highlight">Océan Atlantique</span>, le deuxième plus grand océan. Là, il rencontra <span class="highlight">3</span> dauphins joueurs qui lui montrèrent les courants chauds.</p>
+                
+                <p>Ensuite, Nemo nagea vers l'<span class="highlight">Océan Pacifique</span>, le plus grand de tous ! Il y découvrit des <span class="highlight">coraux colorés</span> et des milliers de poissons différents.</p>
+            </div>
+            
+            <div class="world-map">
+                <h3>🌍 Voyage de Nemo à travers le monde</h3>
+                <div class="map-container">
+                    <div class="fish-marker" style="top: 40%; left: 45%;">🐠</div>
+                </div>
+                <p>Suis le parcours de Nemo sur la carte !</p>
+            </div>
+            
+            <div class="oceans-list">
+                <div class="ocean-card">
+                    <div class="ocean-emoji">🌊</div>
+                    <h4>Océan Pacifique</h4>
+                    <p>Le plus grand océan</p>
+                </div>
+                <div class="ocean-card">
+                    <div class="ocean-emoji">🌊</div>
+                    <h4>Océan Atlantique</h4>
+                    <p>Le deuxième plus grand</p>
+                </div>
+                <div class="ocean-card">
+                    <div class="ocean-emoji">🌊</div>
+                    <h4>Océan Indien</h4>
+                    <p>Connu pour ses moussons</p>
+                </div>
+                <div class="ocean-card">
+                    <div class="ocean-emoji">❄️</div>
+                    <h4>Océan Arctique</h4>
+                    <p>Le plus froid</p>
+                </div>
+                <div class="ocean-card">
+                    <div class="ocean-emoji">🌊</div>
+                    <h4>Océan Austral</h4>
+                    <p>Autour de l'Antarctique</p>
+                </div>
+            </div>
+            
+            <div class="audio-controls">
+                <button class="audio-btn" id="playBtn">▶</button>
+                <button class="audio-btn" id="pauseBtn">❚❚</button>
+                <button class="audio-btn" id="restartBtn">↺</button>
+            </div>
+            
+            <div class="interactive-options">
+                <button class="option-btn" onclick="showOcean('🐠')">Nemo</button>
+                <button class="option-btn" onclick="showOcean('🐬')">Les Dauphins</button>
+                <button class="option-btn" onclick="showOcean('🐋')">Une Baleine</button>
+                <button class="option-btn" onclick="showOcean('🪸')">Coraux</button>
+                <button class="option-btn" onclick="showNumber(5)">5 Océans</button>
+                <button class="option-btn" onclick="showNumber(3)">3 Dauphins</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🌟 <strong>Le Poisson Voyageur</strong> - Découvre la géographie en t'amusant ! 🌟</p>
+            <p style="margin-top: 10px; opacity: 0.9;">Apprends les océans et les mers avec Nemo</p>
+        </footer>
+    </div>
+
+    <script>
+        // Variables pour la narration audio
+        let isPlaying = false;
+        
+        // Créer des bulles animées
+        function createBubbles() {
+            const bubblesContainer = document.getElementById('bubbles');
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.style.left = Math.random() * 100 + '%';
+                bubble.style.width = (10 + Math.random() * 20) + 'px';
+                bubble.style.height = bubble.style.width;
+                bubble.style.animationDelay = Math.random() * 6 + 's';
+                bubblesContainer.appendChild(bubble);
+            }
+        }
+        
+        // Simulation de la lecture audio
+        function playAudio() {
+            if (!isPlaying) {
+                isPlaying = true;
+                document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #2196F3 0%, #0D47A1 100%)';
+                console.log("Lecture de l'histoire audio...");
+                
+                // Simulation d'un changement d'illustration pendant la narration
+                setTimeout(() => {
+                    document.querySelector('.animated-fish').textContent = '🐬';
+                }, 2000);
+                
+                setTimeout(() => {
+                    document.querySelector('.animated-fish').textContent = '🐋';
+                }, 4000);
+                
+                setTimeout(() => {
+                    document.querySelector('.animated-fish').textContent = '🪸';
+                }, 6000);
+                
+                setTimeout(() => {
+                    document.querySelector('.animated-fish').textContent = '🐠';
+                }, 8000);
+            }
+        }
+        
+        function pauseAudio() {
+            isPlaying = false;
+            document.getElementById('playBtn').style.background = 'linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%)';
+            console.log("Audio en pause");
+        }
+        
+        function restartAudio() {
+            pauseAudio();
+            document.querySelector('.animated-fish').textContent = '🐠';
+            setTimeout(playAudio, 500);
+        }
+        
+        // Fonctions interactives
+        function showOcean(character) {
+            document.querySelector('.animated-fish').textContent = character;
+            console.log(`Affichage: ${character}`);
+            
+            // Animation spéciale
+            const fishElement = document.querySelector('.animated-fish');
+            fishElement.style.animation = 'none';
+            setTimeout(() => {
+                fishElement.style.animation = 'swim 4s ease-in-out infinite';
+            }, 10);
+        }
+        
+        function showNumber(number) {
+            document.querySelector('.animated-fish').textContent = number;
+            console.log(`Affichage du chiffre ${number}`);
+            
+            // Animation spéciale
+            const fishElement = document.querySelector('.animated-fish');
+            fishElement.style.transform = 'scale(1.5)';
+            setTimeout(() => {
+                fishElement.style.transform = 'scale(1)';
+            }, 500);
+        }
+        
+        // Animation du poisson sur la carte
+        function animateFishOnMap() {
+            const markers = document.querySelectorAll('.fish-marker');
+            markers.forEach(marker => {
+                setInterval(() => {
+                    marker.style.animation = 'none';
+                    setTimeout(() => {
+                        marker.style.animation = 'pulse 2s infinite';
+                    }, 10);
+                }, 4000);
+            });
+        }
+        
+        // Initialisation au chargement de la page
+        window.onload = function() {
+            // Configuration des boutons audio
+            document.getElementById('playBtn').addEventListener('click', playAudio);
+            document.getElementById('pauseBtn').addEventListener('click', pauseAudio);
+            document.getElementById('restartBtn').addEventListener('click', restartAudio);
+            
+            // Créer les bulles
+            createBubbles();
+            
+            // Animer le poisson sur la carte
+            animateFishOnMap();
+            
+            // Faire nager le poisson automatiquement
+            setInterval(() => {
+                const fish = document.querySelector('.animated-fish');
+                if (!isPlaying) {
+                    const animals = ['🐠', '🐬', '🐋', '🐙', '🦈'];
+                    const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
+                    fish.textContent = randomAnimal;
+                }
+            }, 5000);
+        };
+    </script>
+</body>
+</html>

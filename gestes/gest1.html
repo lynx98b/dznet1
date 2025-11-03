@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma Routine du Matin 🌅</title>
+    <!-- 
+    ═══════════════════════════════════════════════════════════════
+    PROJET: Routine Matinale Interactive Enfants
+    VERSION: v1.0
+    CRÉATEUR: mohamed
+    DATE: 3 novembre 2025
+    THÈME: Comment se préparer le matin
+    PUBLIC: 3-6 ans (Petite section à CP)
+    LANGUES: Français + Arabe
+    POIDS CIBLE: < 150 KB
+    COMPATIBILITÉ: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+    ACCESSIBILITÉ: WCAG 2.1 AA
+    ═══════════════════════════════════════════════════════════════
+    -->
+    <style>
+        /* ═══ RESET & BASE ═══ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+            background: linear-gradient(135deg, #FFE4E1 0%, #E0F2F7 100%);
+            min-height: 100vh;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
+        /* ═══ CONTENEUR PRINCIPAL ═══ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        /* ═══ EN-TÊTE ═══ */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .title {
+            font-size: clamp(24px, 5vw, 48px);
+            color: #FF6B9D;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: clamp(14px, 3vw, 20px);
+            color: #5B9AA0;
+        }
+
+        /* ═══ CHRONOMÈTRE ═══ */
+        .timer {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 18px;
+            color: #5B9AA0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ═══ SÉLECTEUR DE LANGUE ═══ */
+        .language-selector {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .lang-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .lang-btn.active {
+            background: #FFD93D;
+            transform: scale(1.15);
+        }
+
+        /* ═══ ZONE INSTRUCTIONS ═══ */
+        .instructions {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .instructions p {
+            font-size: clamp(16px, 3vw, 24px);
+            color: #6C5CE7;
+            line-height: 1.5;
+        }
+
+        /* ═══ ZONE DE JEU ═══ */
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .game-area {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* ═══ CARTES À GLISSER ═══ */
+        .cards-container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .cards-container h2 {
+            text-align: center;
+            color: #FF6B9D;
+            margin-bottom: 20px;
+            font-size: clamp(18px, 3vw, 28px);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            min-height: 300px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: grab;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 3px solid transparent;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+
+        .card.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: clamp(14px, 2.5vw, 18px);
+            color: #2D3436;
+            font-weight: bold;
+        }
+
+        /* ═══ ZONES DE DÉPÔT ═══ */
+        .drop-zones {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .drop-zones h2 {
+            text-align: center;
+            color: #5B9AA0;
+            margin-bottom: 20px;
+            font-size: clamp(18px, 3vw, 28px);
+        }
+
+        .drop-zone {
+            background: #FFF9C4;
+            border: 4px dashed #FFD93D;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .drop-zone.drag-over {
+            background: #D1F2EB;
+            border-color: #6BCF7F;
+            transform: scale(1.05);
+        }
+
+        .drop-zone.filled {
+            background: #D1F2EB;
+            border-color: #6BCF7F;
+            border-style: solid;
+        }
+
+        .drop-zone-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #FF6B9D;
+            background: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* ═══ BOUTONS D'ACTION ═══ */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: clamp(16px, 3vw, 22px);
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            min-width: 150px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-check {
+            background: #6BCF7F;
+            color: white;
+        }
+
+        .btn-reset {
+            background: #FF6B9D;
+            color: white;
+        }
+
+        .btn-help {
+            background: #FFD93D;
+            color: #2D3436;
+        }
+
+        /* ═══ MODAL RÉSULTAT ═══ */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: modalPop 0.5s ease-out;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: clamp(24px, 5vw, 36px);
+            color: #6BCF7F;
+            margin-bottom: 15px;
+        }
+
+        .modal-text {
+            font-size: clamp(16px, 3vw, 22px);
+            color: #2D3436;
+            margin-bottom: 30px;
+        }
+
+        /* ═══ ASSISTANCE PARENTALE ═══ */
+        .parent-guide {
+            background: rgba(255, 255, 255, 0.9);
+            border-left: 5px solid #6C5CE7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .parent-guide.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .parent-guide h3 {
+            color: #6C5CE7;
+            margin-bottom: 10px;
+            font-size: clamp(14px, 2.5vw, 18px);
+        }
+
+        .parent-guide p {
+            color: #2D3436;
+            font-size: clamp(12px, 2vw, 16px);
+            line-height: 1.4;
+        }
+
+        /* ═══ ANIMATIONS ═══ */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .bounce {
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* ═══ CONFETTIS ═══ */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #FFD93D;
+            pointer-events: none;
+            z-index: 3000;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ═══ RESPONSIVE MOBILE ═══ */
+        @media (max-width: 767px) {
+            .timer {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+
+            .lang-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .card {
+                padding: 10px;
+            }
+
+            .card-icon {
+                font-size: 36px;
+            }
+
+            .drop-zone-number {
+                width: 50px;
+                height: 50px;
+                font-size: 28px;
+            }
+        }
+
+        /* ═══ ACCESSIBILITÉ ═══ */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        *:focus {
+            outline: 3px solid #FFD93D;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ═══ CHRONOMÈTRE ═══ -->
+    <div class="timer" role="timer" aria-live="polite">
+        <span aria-label="Chronomètre">⏱️</span>
+        <span id="timerDisplay">00:00</span>
+    </div>
+
+    <!-- ═══ SÉLECTEUR DE LANGUE ═══ -->
+    <div class="language-selector" role="group" aria-label="Sélecteur de langue">
+        <button class="lang-btn active" data-lang="fr" aria-label="Français" title="Français">🇫🇷</button>
+        <button class="lang-btn" data-lang="ar" aria-label="العربية" title="العربية">🇸🇦</button>
+    </div>
+
+    <!-- ═══ CONTENEUR PRINCIPAL ═══ -->
+    <div class="container">
+        <!-- EN-TÊTE -->
+        <header class="header">
+            <h1 class="title" id="mainTitle">Ma Routine du Matin 🌅</h1>
+            <p class="subtitle" id="subtitle">Apprends à te préparer comme un champion !</p>
+        </header>
+
+        <!-- INSTRUCTIONS -->
+        <div class="instructions" role="region" aria-label="Instructions">
+            <p id="instructionText">Glisse les images dans le bon ordre ! 👆</p>
+        </div>
+
+        <!-- ZONE DE JEU -->
+        <div class="game-area">
+            <!-- CARTES À GLISSER -->
+            <div class="cards-container">
+                <h2 id="cardsTitle">Les étapes 📋</h2>
+                <div class="cards-grid" id="cardsGrid">
+                    <!-- Les cartes seront générées en JavaScript -->
+                </div>
+            </div>
+
+            <!-- ZONES DE DÉPÔT -->
+            <div class="drop-zones">
+                <h2 id="dropTitle">Dans l'ordre ! 🎯</h2>
+                <div id="dropZonesContainer">
+                    <!-- Les zones seront générées en JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- BOUTONS D'ACTION -->
+        <div class="action-buttons">
+            <button class="btn btn-check" id="checkBtn" aria-label="Vérifier mes réponses">
+                ✅ <span id="checkBtnText">Vérifier</span>
+            </button>
+            <button class="btn btn-reset" id="resetBtn" aria-label="Recommencer">
+                🔄 <span id="resetBtnText">Recommencer</span>
+            </button>
+            <button class="btn btn-help" id="helpBtn" aria-label="Demander de l'aide">
+                💡 <span id="helpBtnText">Aide</span>
+            </button>
+        </div>
+
+        <!-- ASSISTANCE PARENTALE -->
+        <div class="parent-guide" id="parentGuide" role="complementary" aria-label="Guide pour les parents">
+            <h3 id="parentGuideTitle">💬 Conseil pour les parents</h3>
+            <p id="parentGuideText"></p>
+        </div>
+    </div>
+
+    <!-- MODAL RÉSULTAT -->
+    <div class="modal" id="resultModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <div class="modal-icon" id="modalIcon">🎉</div>
+            <h2 class="modal-title" id="modalTitle">Bravo !</h2>
+            <p class="modal-text" id="modalText">Tu as réussi !</p>
+            <button class="btn btn-check" id="modalCloseBtn" onclick="closeModal()">
+                <span id="modalCloseBtnText">Continuer</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         JAVASCRIPT - LOGIQUE DU JEU
+         ═══════════════════════════════════════════════════════════════ -->
+    <script>
+        // ═══ CONFIGURATION ═══
+        const CONFIG = {
+            version: 'v1.0',
+            maxAttempts: 3,
+            helpDelay: 5000 // Afficher aide après 5 secondes d'inactivité
+        };
+
+        // ═══ DONNÉES BILINGUES ═══
+        const TRANSLATIONS = {
+            fr: {
+                mainTitle: 'Ma Routine du Matin 🌅',
+                subtitle: 'Apprends à te préparer comme un champion !',
+                instructionText: 'Glisse les images dans le bon ordre ! 👆',
+                cardsTitle: 'Les étapes 📋',
+                dropTitle: 'Dans l\'ordre ! 🎯',
+                checkBtnText: 'Vérifier',
+                resetBtnText: 'Recommencer',
+                helpBtnText: 'Aide',
+                parentGuideTitle: '💬 Conseil pour les parents',
+                modalCloseBtnText: 'Continuer',
+                successTitle: 'Bravo !',
+                successText: 'Tu as réussi en {time} ! Tu es un champion ! 🎊',
+                errorTitle: 'Presque !',
+                errorText: 'Essaie encore, tu vas y arriver ! 💪',
+                helpTitle: '💡 Aide',
+                helpText: 'La bonne réponse est montrée avec des étoiles ⭐',
+                parentGuideTexts: {
+                    attempt1: 'Votre enfant explore. Laissez-le essayer sans intervenir.',
+                    attempt2: 'Deuxième tentative. Encouragez-le avec des phrases positives : "Tu peux le faire !"',
+                    attempt3: 'Troisième tentative. Proposez de regarder ensemble les images et de les nommer.',
+                    success: 'Excellent ! Félicitez chaleureusement votre enfant pour sa réussite.',
+                    inactive: 'Votre enfant hésite. Demandez-lui : "Que fais-tu en premier le matin ?"'
+                },
+                steps: [
+                    { icon: '🛏️', text: 'Se réveiller', order: 1 },
+                    { icon: '🚿', text: 'Se laver', order: 2 },
+                    { icon: '👕', text: 'S\'habiller', order: 3 },
+                    { icon: '🍽️', text: 'Manger', order: 4 }
+                ]
+            },
+            ar: {
+                mainTitle: 'روتيني الصباحي 🌅',
+                subtitle: 'تعلم كيف تستعد كالبطل !',
+                instructionText: 'اسحب الصور بالترتيب الصحيح ! 👆',
+                cardsTitle: 'الخطوات 📋',
+                dropTitle: 'بالترتيب ! 🎯',
+                checkBtnText: 'تحقق',
+                resetBtnText: 'ابدأ من جديد',
+                helpBtnText: 'مساعدة',
+                parentGuideTitle: '💬 نصيحة للوالدين',
+                modalCloseBtnText: 'متابعة',
+                successTitle: 'أحسنت !',
+                successText: 'لقد نجحت في {time} ! أنت بطل ! 🎊',
+                errorTitle: 'تقريبا !',
+                errorText: 'حاول مرة أخرى، ستنجح ! 💪',
+                helpTitle: '💡 مساعدة',
+                helpText: 'الإجابة الصحيحة موضحة بالنجوم ⭐',
+                parentGuideTexts: {
+                    attempt1: 'طفلك يستكشف. دعه يحاول دون تدخل.',
+                    attempt2: 'المحاولة الثانية. شجعه بعبارات إيجابية: "يمكنك فعلها !"',
+                    attempt3: 'المحاولة الثالثة. اقترح النظر معًا إلى الصور وتسميتها.',
+                    success: 'ممتاز ! هنئ طفلك بحرارة على نجاحه.',
+                    inactive: 'طفلك متردد. اسأله: "ماذا تفعل أولاً في الصباح ?"'
+                },
+                steps: [
+                    { icon: '🛏️', text: 'الاستيقاظ', order: 1 },
+                    { icon: '🚿', text: 'الاستحمام', order: 2 },
+                    { icon: '👕', text: 'ارتداء الملابس', order: 3 },
+                    { icon: '🍽️', text: 'تناول الطعام', order: 4 }
+                ]
+            }
+        };
+
+        // ═══ ÉTAT DU JEU ═══
+        let currentLang = 'fr';
+        let attempts = 0;
+        let timerInterval;
+        let timerSeconds = 0;
+        let draggedCard = null;
+        let inactivityTimer;
+        let gameStarted = false;
+
+        // ═══ INITIALISATION ═══
+        document.addEventListener('DOMContentLoaded', () => {
+            initGame();
+            setupEventListeners();
+            startTimer();
+            startInactivityMonitor();
+        });
+
+        function initGame() {
+            renderCards();
+            renderDropZones();
+            updateTexts();
+        }
+
+        // ═══ GESTION DES LANGUES ═══
+        function updateTexts() {
+            const t = TRANSLATIONS[currentLang];
+            
+            document.getElementById('mainTitle').textContent = t.mainTitle;
+            document.getElementById('subtitle').textContent = t.subtitle;
+            document.getElementById('instructionText').textContent = t.instructionText;
+            document.getElementById('cardsTitle').textContent = t.cardsTitle;
+            document.getElementById('dropTitle').textContent = t.dropTitle;
+            document.getElementById('checkBtnText').textContent = t.checkBtnText;
+            document.getElementById('resetBtnText').textContent = t.resetBtnText;
+            document.getElementById('helpBtnText').textContent = t.helpBtnText;
+            document.getElementById('parentGuideTitle').textContent = t.parentGuideTitle;
+            document.getElementById('modalCloseBtnText').textContent = t.modalCloseBtnText;
+
+            // Mettre à jour direction du texte pour l'arabe
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        }
+
+        // ═══ RENDU DES CARTES ═══
+        function renderCards() {
+            const container = document.getElementById('cardsGrid');
+            const steps = [...TRANSLATIONS[currentLang].steps];
+            
+            // Mélanger les cartes
+            shuffleArray(steps);
+            
+            container.innerHTML = steps.map((step, index) => `
+                <div class="card" 
+                     draggable="true" 
+                     data-order="${step.order}"
+                     data-index="${index}"
+                     role="button"
+                     aria-label="${step.text}"
+                     tabindex="0">
+                    <div class="card-icon">${step.icon}</div>
+                    <div class="card-text">${step.text}</div>
+                </div>
+            `).join('');
+
+            // Ajouter événements drag & drop
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragend', handleDragEnd);
+                card.addEventListener('touchstart', handleTouchStart, { passive: false });
+                card.addEventListener('touchmove', handleTouchMove, { passive: false });
+                card.addEventListener('touchend', handleTouchEnd);
+            });
+        }
+
+        // ═══ RENDU DES ZONES DE DÉPÔT ═══
+        function renderDropZones() {
+            const container = document.getElementById('dropZonesContainer');
+            const steps = TRANSLATIONS[currentLang].steps;
+            
+            container.innerHTML = steps.map((step, index) => `
+                <div class="drop-zone" 
+                     data-position="${index + 1}"
+                     role="region"
+                     aria-label="Zone ${index + 1}">
+                    <div class="drop-zone-number">${index + 1}</div>
+                </div>
+            `).join('');
+
+            // Ajouter événements drag & drop
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.addEventListener('dragover', handleDragOver);
+                zone.addEventListener('drop', handleDrop);
+                zone.addEventListener('dragleave', handleDragLeave);
+            });
+        }
+
+        // ═══ GESTION DRAG & DROP ═══
+        function handleDragStart(e) {
+            gameStarted = true;
+            resetInactivityTimer();
+            draggedCard = e.target.closest('.card');
+            draggedCard.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', draggedCard.innerHTML);
+        }
+
+        function handleDragEnd(e) {
+            draggedCard.classList.remove('dragging');
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            const dropZone = e.target.closest('.drop-zone');
+            if (dropZone && !dropZone.classList.contains('filled')) {
+                dropZone.classList.add('drag-over');
+            }
+        }
+
+        function handleDragLeave(e) {
+            const dropZone = e.target.closest('.drop-zone');
+            if (dropZone) {
+                dropZone.classList.remove('drag-over');
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            const dropZone = e.target.closest('.drop-zone');
+            
+            if (!dropZone || dropZone.classList.contains('filled')) return;
+
+            dropZone.classList.remove('drag-over');
+            
+            // Cloner la carte dans la zone
+            const cardClone = draggedCard.cloneNode(true);
+            cardClone.draggable = false;
+            cardClone.style.cursor = 'default';
+            
+            // Vider la zone et ajouter la carte
+            Array.from(dropZone.children).forEach(child => {
+                if (!child.classList.contains('drop-zone-number')) {
+                    child.remove();
+                }
+            });
+            
+            dropZone.appendChild(cardClone);
+            dropZone.classList.add('filled');
+            
+            // Cacher la carte originale
+            draggedCard.style.visibility = 'hidden';
+            
+            // Animation de succès
+            cardClone.classList.add('bounce');
+            setTimeout(() => cardClone.classList.remove('bounce'), 600);
+            
+            // Son de réussite (simulé)
+            playSound('drop');
+        }
+
+        // ═══ TOUCH SUPPORT (MOBILE) ═══
+        let touchCard = null;
+        let touchClone = null;
+
+        function handleTouchStart(e) {
+            gameStarted = true;
+            resetInactivityTimer();
+            touchCard = e.target.closest('.card');
+            
+            // Créer un clone pour le déplacement
+            touchClone = touchCard.cloneNode(true);
+            touchClone.style.position = 'fixed';
+            touchClone.style.zIndex = '9999';
+            touchClone.style.opacity = '0.8';
+            touchClone.style.pointerEvents = 'none';
+            document.body.appendChild(touchClone);
+            
+            updateTouchClonePosition(e.touches[0]);
+        }
+
+        function handleTouchMove(e) {
+            e.preventDefault();
+            if (!touchClone) return;
+            updateTouchClonePosition(e.touches[0]);
+        }
+
+        function handleTouchEnd(e) {
+            if (!touchClone) return;
+            
+            const touch = e.changedTouches[0];
+            const dropZone = document.elementFromPoint(touch.clientX, touch.clientY)?.closest('.drop-zone');
+            
+            if (dropZone && !dropZone.classList.contains('filled')) {
+                // Simuler le drop
+                const cardClone = touchCard.cloneNode(true);
+                cardClone.draggable = false;
+                cardClone.style.cursor = 'default';
+                
+                Array.from(dropZone.children).forEach(child => {
+                    if (!child.classList.contains('drop-zone-number')) {
+                        child.remove();
+                    }
+                });
+                
+                dropZone.appendChild(cardClone);
+                dropZone.classList.add('filled');
+                touchCard.style.visibility = 'hidden';
+                
+                cardClone.classList.add('bounce');
+                setTimeout(() => cardClone.classList.remove('bounce'), 600);
+                
+                playSound('drop');
+            }
+            
+            touchClone.remove();
+            touchClone = null;
+        }
+
+        function updateTouchClonePosition(touch) {
+            touchClone.style.left = (touch.clientX - 60) + 'px';
+            touchClone.style.top = (touch.clientY - 60) + 'px';
+        }
+
+        // ═══ VÉRIFICATION ═══
+        function checkAnswer() {
+            const dropZones = document.querySelectorAll('.drop-zone');
+            let correct = true;
+            
+            dropZones.forEach(zone => {
+                const position = parseInt(zone.dataset.position);
+                const card = zone.querySelector('.card');
+                
+                if (!card) {
+                    correct = false;
+                    return;
+                }
+                
+                const order = parseInt(card.dataset.order);
+                if (order !== position) {
+                    correct = false;
+                    zone.classList.add('shake');
+                    setTimeout(() => zone.classList.remove('shake'), 500);
+                }
+            });
+
+            attempts++;
+            
+            if (correct) {
+                showSuccess();
+                stopTimer();
+                createConfetti();
+            } else {
+                showError();
+                showParentGuide(`attempt${attempts}`);
+                
+                if (attempts >= CONFIG.maxAttempts) {
+                    showSolution();
+                }
+            }
+            
+            playSound(correct ? 'success' : 'error');
+        }
+
+        // ═══ AIDE ═══
+        function showHelp() {
+            showParentGuide('inactive');
+            showSolution();
+            playSound('help');
+        }
+
+        function showSolution() {
+            const dropZones = document.querySelectorAll('.drop-zone');
+            const steps = TRANSLATIONS[currentLang].steps;
+            
+            dropZones.forEach((zone, index) => {
+                const correctStep = steps[index];
+                zone.style.border = '4px solid gold';
+                zone.innerHTML = `
+                    <div class="drop-zone-number">⭐</div>
+                    <div style="font-size: 24px;">${correctStep.icon}</div>
+                    <div style="font-size: 14px; color: #FF6B9D;">${correctStep.text}</div>
+                `;
+            });
+            
+            setTimeout(() => {
+                dropZones.forEach(zone => {
+                    zone.style.border = '';
+                });
+            }, 3000);
+        }
+
+        // ═══ RÉINITIALISATION ═══
+        function resetGame() {
+            attempts = 0;
+            timerSeconds = 0;
+            gameStarted = false;
+            
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.visibility = 'visible';
+            });
+            
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.classList.remove('filled');
+                Array.from(zone.children).forEach(child => {
+                    if (!child.classList.contains('drop-zone-number')) {
+                        child.remove();
+                    }
+                });
+            });
+            
+            hideParentGuide();
+            renderCards();
+            startInactivityMonitor();
+            playSound('reset');
+        }
+
+        // ═══ MODALES ═══
+        function showSuccess() {
+            const t = TRANSLATIONS[currentLang];
+            const time = formatTime(timerSeconds);
+            
+            document.getElementById('modalIcon').textContent = '🎉';
+            document.getElementById('modalTitle').textContent = t.successTitle;
+            document.getElementById('modalText').textContent = t.successText.replace('{time}', time);
+            document.getElementById('resultModal').classList.add('show');
+            
+            showParentGuide('success');
+        }
+
+        function showError() {
+            const t = TRANSLATIONS[currentLang];
+            
+            document.getElementById('modalIcon').textContent = '💪';
+            document.getElementById('modalTitle').textContent = t.errorTitle;
+            document.getElementById('modalText').textContent = t.errorText;
+            document.getElementById('resultModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('resultModal').classList.remove('show');
+        }
+
+        // ═══ GUIDE PARENTAL ═══
+        function showParentGuide(type) {
+            const t = TRANSLATIONS[currentLang];
+            const guide = document.getElementById('parentGuide');
+            const text = document.getElementById('parentGuideText');
+            
+            text.textContent = t.parentGuideTexts[type];
+            guide.classList.add('show');
+            
+            setTimeout(() => {
+                hideParentGuide();
+            }, 8000);
+        }
+
+        function hideParentGuide() {
+            document.getElementById('parentGuide').classList.remove('show');
+        }
+
+        // ═══ CHRONOMÈTRE ═══
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (gameStarted) {
+                    timerSeconds++;
+                    document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // ═══ MONITEUR D'INACTIVITÉ ═══
+        function startInactivityMonitor() {
+            resetInactivityTimer();
+        }
+
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                if (gameStarted && attempts === 0) {
+                    showParentGuide('inactive');
+                }
+            }, CONFIG.helpDelay);
+        }
+
+        // ═══ CONFETTIS ═══
+        function createConfetti() {
+            const colors = ['#FFD93D', '#6BCF7F', '#FF6B9D', '#5B9AA0', '#E0F2F7'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * window.innerWidth + 'px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        // ═══ SONS (SIMULÉS) ═══
+        function playSound(type) {
+            // Simulé avec vibration si disponible
+            if (navigator.vibrate) {
+                const patterns = {
+                    drop: [50],
+                    success: [100, 50, 100],
+                    error: [200],
+                    help: [50, 50, 50],
+                    reset: [30]
+                };
+                navigator.vibrate(patterns[type] || [50]);
+            }
+        }
+
+        // ═══ UTILITAIRES ═══
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // ═══ EVENT LISTENERS ═══
+        function setupEventListeners() {
+            // Boutons de langue
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentLang = btn.dataset.lang;
+                    updateTexts();
+                    resetGame();
+                });
+            });
+
+            // Boutons d'action
+            document.getElementById('checkBtn').addEventListener('click', checkAnswer);
+            document.getElementById('resetBtn').addEventListener('click', resetGame);
+            document.getElementById('helpBtn').addEventListener('click', showHelp);
+
+            // Support clavier
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && document.activeElement.classList.contains('card')) {
+                    // Simuler le drag pour accessibilité
+                }
+            });
+
+            // Fermeture modale
+            document.getElementById('resultModal').addEventListener('click', (e) => {
+                if (e.target.id === 'resultModal') {
+                    closeModal();
+                }
+            });
+        }
+
+        // ═══ CONSOLE VERSION ═══
+        console.log(`%c🌅 Routine Matinale v${CONFIG.version}`, 'font-size: 20px; color: #FF6B9D; font-weight: bold;');
+        console.log('%cCréé par mohamed - 3 novembre 2025', 'color: #5B9AA0;');
+    </script>
+</body>
+</html>

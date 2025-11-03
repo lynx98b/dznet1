@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sous le Palmier 🌴 - Amina en Algérie</title>
+    <!-- 
+    ═══════════════════════════════════════════════════════════════
+    PROJET: Sous le Palmier - Histoire Interactive Algérienne
+    VERSION: v1.0
+    CRÉATEUR: mohamed
+    DATE: 3 novembre 2025
+    THÈME: Culture algérienne dans une oasis
+    PERSONNAGE: Amina (guide enfant)
+    PUBLIC: 3-6 ans (Petite section à CP)
+    LANGUES: Français + Arabe
+    ACTIVITÉS: Compter (1-10), Couleurs, Quiz culturel
+    POIDS CIBLE: < 150 KB
+    COMPATIBILITÉ: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+    ACCESSIBILITÉ: WCAG 2.1 AA
+    ═══════════════════════════════════════════════════════════════
+    -->
+    <style>
+        /* ═══ RESET & BASE ═══ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+            background: linear-gradient(180deg, #87CEEB 0%, #F4E8C1 50%, #DEB887 100%);
+            min-height: 100vh;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
+        /* ═══ CONTENEUR PRINCIPAL ═══ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        /* ═══ EN-TÊTE ═══ */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .title {
+            font-size: clamp(24px, 5vw, 48px);
+            color: #2E7D32;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: clamp(14px, 3vw, 20px);
+            color: #D2691E;
+        }
+
+        /* ═══ CHRONOMÈTRE & ÉTOILES ═══ */
+        .stats-bar {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .timer {
+            font-size: 16px;
+            color: #2E7D32;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 5px;
+            font-size: 24px;
+        }
+
+        .star {
+            opacity: 0.3;
+            transition: opacity 0.3s;
+        }
+
+        .star.earned {
+            opacity: 1;
+            animation: starPop 0.5s ease-out;
+        }
+
+        @keyframes starPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        /* ═══ SÉLECTEUR DE LANGUE ═══ */
+        .language-selector {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .lang-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .lang-btn.active {
+            background: #FFD700;
+            transform: scale(1.15);
+        }
+
+        /* ═══ ÉCRANS ═══ */
+        .screen {
+            display: none;
+            min-height: 500px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ═══ ÉCRAN D'ACCUEIL ═══ */
+        .welcome-screen {
+            text-align: center;
+            background: white;
+            padding: 40px 20px;
+            border-radius: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            margin-top: 80px;
+        }
+
+        .amina-character {
+            font-size: 120px;
+            margin-bottom: 20px;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        .welcome-text {
+            font-size: clamp(18px, 4vw, 28px);
+            color: #2E7D32;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .start-btn {
+            padding: 20px 50px;
+            font-size: clamp(20px, 4vw, 32px);
+            font-weight: bold;
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ═══ ACTIVITÉ 1 : COMPTER ═══ */
+        .counting-screen {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .activity-title {
+            text-align: center;
+            font-size: clamp(20px, 4vw, 32px);
+            color: #2E7D32;
+            margin-bottom: 20px;
+        }
+
+        .instruction {
+            text-align: center;
+            font-size: clamp(16px, 3vw, 24px);
+            color: #D2691E;
+            margin-bottom: 30px;
+        }
+
+        .palm-trees-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            padding: 20px;
+        }
+
+        .palm-tree {
+            font-size: 48px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            filter: grayscale(100%);
+            opacity: 0.5;
+        }
+
+        .palm-tree:hover {
+            transform: scale(1.2);
+        }
+
+        .palm-tree.counted {
+            filter: grayscale(0%);
+            opacity: 1;
+            animation: treePop 0.5s ease-out;
+        }
+
+        @keyframes treePop {
+            0% { transform: scale(0) rotate(0deg); }
+            50% { transform: scale(1.3) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .counter-display {
+            text-align: center;
+            font-size: clamp(36px, 6vw, 72px);
+            color: #2E7D32;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* ═══ ACTIVITÉ 2 : COULEURS ═══ */
+        .colors-screen {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .colors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto 30px;
+        }
+
+        .color-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            border: 4px solid transparent;
+        }
+
+        .color-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .color-card.revealed {
+            border-color: #FFD700;
+            animation: cardReveal 0.5s ease-out;
+        }
+
+        @keyframes cardReveal {
+            0% { transform: rotateY(0deg); }
+            50% { transform: rotateY(90deg); }
+            100% { transform: rotateY(0deg); }
+        }
+
+        .color-icon {
+            font-size: 64px;
+            margin-bottom: 15px;
+        }
+
+        .color-name {
+            font-size: clamp(18px, 3vw, 24px);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .color-item {
+            font-size: clamp(14px, 2.5vw, 18px);
+            color: #666;
+        }
+
+        /* ═══ ACTIVITÉ 3 : QUIZ ═══ */
+        .quiz-screen {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .quiz-question {
+            text-align: center;
+            font-size: clamp(18px, 3.5vw, 28px);
+            color: #2E7D32;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #F0F8FF;
+            border-radius: 15px;
+            border-left: 5px solid #2E7D32;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        @media (min-width: 768px) {
+            .quiz-options {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .quiz-option {
+            padding: 20px;
+            font-size: clamp(16px, 3vw, 22px);
+            background: white;
+            border: 3px solid #2E7D32;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .quiz-option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .quiz-option.correct {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+            animation: correctPulse 0.5s ease-out;
+        }
+
+        .quiz-option.incorrect {
+            background: #F44336;
+            color: white;
+            border-color: #F44336;
+            animation: shake 0.5s ease-out;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* ═══ ÉCRAN DE RÉUSSITE ═══ */
+        .success-screen {
+            text-align: center;
+            background: white;
+            padding: 40px 20px;
+            border-radius: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            margin-top: 80px;
+        }
+
+        .success-icon {
+            font-size: 100px;
+            margin-bottom: 20px;
+        }
+
+        .success-title {
+            font-size: clamp(28px, 5vw, 48px);
+            color: #2E7D32;
+            margin-bottom: 20px;
+        }
+
+        .success-text {
+            font-size: clamp(16px, 3vw, 24px);
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .success-stats {
+            background: #F0F8FF;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+
+        .stat-row {
+            font-size: clamp(18px, 3vw, 24px);
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ═══ BOUTONS D'ACTION ═══ */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: clamp(16px, 3vw, 22px);
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-width: 150px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #FF9800;
+            color: white;
+        }
+
+        /* ═══ ASSISTANCE PARENTALE ═══ */
+        .parent-guide {
+            background: rgba(255, 255, 255, 0.95);
+            border-left: 5px solid #2E7D32;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .parent-guide.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .parent-guide h3 {
+            color: #2E7D32;
+            margin-bottom: 10px;
+            font-size: clamp(14px, 2.5vw, 18px);
+        }
+
+        .parent-guide p {
+            color: #333;
+            font-size: clamp(12px, 2vw, 16px);
+            line-height: 1.4;
+        }
+
+        /* ═══ RESPONSIVE MOBILE ═══ */
+        @media (max-width: 767px) {
+            .stats-bar {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+
+            .stars {
+                font-size: 20px;
+            }
+
+            .lang-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .palm-tree {
+                font-size: 36px;
+            }
+
+            .color-icon {
+                font-size: 48px;
+            }
+        }
+
+        /* ═══ ACCESSIBILITÉ ═══ */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        *:focus {
+            outline: 3px solid #FFD700;
+            outline-offset: 2px;
+        }
+
+        /* ═══ CONFETTIS ═══ */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 3000;
+            animation: confettiFall 3s linear forwards;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ═══ BARRE DE STATS ═══ -->
+    <div class="stats-bar" role="region" aria-label="Statistiques">
+        <div class="timer" role="timer" aria-live="polite">
+            <span>⏱️</span>
+            <span id="timerDisplay">00:00</span>
+        </div>
+        <div class="stars" aria-label="Étoiles gagnées">
+            <span class="star" id="star1">⭐</span>
+            <span class="star" id="star2">⭐</span>
+            <span class="star" id="star3">⭐</span>
+        </div>
+    </div>
+
+    <!-- ═══ SÉLECTEUR DE LANGUE ═══ -->
+    <div class="language-selector" role="group" aria-label="Sélecteur de langue">
+        <button class="lang-btn active" data-lang="fr" aria-label="Français">🇫🇷</button>
+        <button class="lang-btn" data-lang="ar" aria-label="العربية">🇸🇦</button>
+    </div>
+
+    <!-- ═══ CONTENEUR PRINCIPAL ═══ -->
+    <div class="container">
+        <!-- ÉCRAN D'ACCUEIL -->
+        <div class="screen active" id="welcomeScreen">
+            <div class="welcome-screen">
+                <div class="amina-character">👧🏽</div>
+                <h1 class="title" id="welcomeTitle">Bonjour ! Je m'appelle Amina 🌴</h1>
+                <p class="welcome-text" id="welcomeText">Viens découvrir mon oasis en Algérie ! Nous allons compter les palmiers, apprendre les couleurs et découvrir pourquoi les palmiers sont si importants !</p>
+                <button class="start-btn" id="startBtn" onclick="startAdventure()">
+                    <span id="startBtnText">Commencer l'aventure</span> 🚀
+                </button>
+            </div>
+        </div>
+
+        <!-- ACTIVITÉ 1 : COMPTER LES PALMIERS -->
+        <div class="screen" id="countingScreen">
+            <div class="counting-screen">
+                <h2 class="activity-title" id="countTitle">🌴 Activité 1 : Compte les palmiers !</h2>
+                <p class="instruction" id="countInstruction">Touche les palmiers un par un pour les compter de 1 à 10 !</p>
+                
+                <div class="counter-display">
+                    <span id="currentCount">0</span> / 10
+                </div>
+
+                <div class="palm-trees-grid" id="palmTreesGrid">
+                    <!-- Généré en JavaScript -->
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="countNextBtn" onclick="nextActivity()" style="display: none;">
+                        <span id="countNextBtnText">Activité suivante</span> ➡️
+                    </button>
+                </div>
+
+                <div class="parent-guide" id="countGuide">
+                    <h3 id="countGuideTitle">💬 Conseil pour les parents</h3>
+                    <p id="countGuideText"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTIVITÉ 2 : COULEURS DE L'OASIS -->
+        <div class="screen" id="colorsScreen">
+            <div class="colors-screen">
+                <h2 class="activity-title" id="colorTitle">🎨 Activité 2 : Les couleurs de l'oasis !</h2>
+                <p class="instruction" id="colorInstruction">Touche chaque carte pour découvrir les couleurs de mon oasis !</p>
+
+                <div class="colors-grid" id="colorsGrid">
+                    <!-- Généré en JavaScript -->
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="colorNextBtn" onclick="nextActivity()" style="display: none;">
+                        <span id="colorNextBtnText">Activité suivante</span> ➡️
+                    </button>
+                </div>
+
+                <div class="parent-guide" id="colorGuide">
+                    <h3 id="colorGuideTitle">💬 Conseil pour les parents</h3>
+                    <p id="colorGuideText"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTIVITÉ 3 : QUIZ CULTUREL -->
+        <div class="screen" id="quizScreen">
+            <div class="quiz-screen">
+                <h2 class="activity-title" id="quizTitle">🤔 Activité 3 : Quiz sur les palmiers !</h2>
+                
+                <div class="quiz-question" id="quizQuestion">
+                    <!-- Question générée en JavaScript -->
+                </div>
+
+                <div class="quiz-options" id="quizOptions">
+                    <!-- Options générées en JavaScript -->
+                </div>
+
+                <div class="parent-guide" id="quizGuide">
+                    <h3 id="quizGuideTitle">💬 Conseil pour les parents</h3>
+                    <p id="quizGuideText"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ÉCRAN DE RÉUSSITE -->
+        <div class="screen" id="successScreen">
+            <div class="success-screen">
+                <div class="success-icon">🎉</div>
+                <h1 class="success-title" id="successTitle">Bravo Champion(ne) !</h1>
+                <p class="success-text" id="successText">Tu as terminé toutes les activités avec Amina ! Tu connais maintenant l'importance des palmiers en Algérie !</p>
+                
+                <div class="success-stats">
+                    <div class="stat-row">
+                        <span>⏱️</span>
+                        <span id="finalTime">00:00</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>⭐</span>
+                        <span id="finalStars">3/3</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>🌴</span>
+                        <span id="culturalFact"></span>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="restartAdventure()">
+                        <span id="restartBtnText">Recommencer</span> 🔄
+                    </button>
+                </div>
+
+                <div class="parent-guide show">
+                    <h3 id="successGuideTitle">💬 Message pour les parents</h3>
+                    <p id="successGuideText"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         JAVASCRIPT - LOGIQUE DU JEU
+         ═══════════════════════════════════════════════════════════════ -->
+    <script>
+        // ═══ CONFIGURATION ═══
+        const CONFIG = {
+            version: 'v1.0',
+            totalActivities: 3,
+            palmTreeCount: 10
+        };
+
+        // ═══ DONNÉES BILINGUES ═══
+        const TRANSLATIONS = {
+            fr: {
+                welcomeTitle: "Bonjour ! Je m'appelle Amina 🌴",
+                welcomeText: "Viens découvrir mon oasis en Algérie ! Nous allons compter les palmiers, apprendre les couleurs et découvrir pourquoi les palmiers sont si importants !",
+                startBtnText: "Commencer l'aventure",
+                
+                // Activité 1
+                countTitle: "🌴 Activité 1 : Compte les palmiers !",
+                countInstruction: "Touche les palmiers un par un pour les compter de 1 à 10 !",
+                countNextBtnText: "Activité suivante",
+                countGuideTitle: "💬 Conseil pour les parents",
+                countGuideTexts: {
+                    start: "Encouragez votre enfant à compter à voix haute en touchant chaque palmier.",
+                    halfway: "Excellent ! Continuez à compter ensemble. Répétez les nombres après lui/elle.",
+                    complete: "Bravo ! Vous pouvez maintenant demander : 'Combien y a-t-il de palmiers en tout ?'"
+                },
+
+                // Activité 2
+                colorTitle: "🎨 Activité 2 : Les couleurs de l'oasis !",
+                colorInstruction: "Touche chaque carte pour découvrir les couleurs de mon oasis !",
+                colorNextBtnText: "Activité suivante",
+                colorGuideTitle: "💬 Conseil pour les parents",
+                colorGuideTexts: {
+                    start: "Aidez votre enfant à identifier les couleurs dans la pièce où vous êtes.",
+                    exploring: "Demandez : 'De quelle couleur est le ciel ? Et les feuilles du palmier ?'",
+                    complete: "Excellent ! Jouez au jeu 'Je vois quelque chose de vert/bleu/jaune...'"
+                },
+                colors: [
+                    { name: "Vert", item: "Feuilles de palmier", color: "#4CAF50", icon: "🌿" },
+                    { name: "Marron", item: "Tronc d'arbre", color: "#8D6E63", icon: "🪵" },
+                    { name: "Bleu", item: "Ciel de l'oasis", color: "#2196F3", icon: "☁️" },
+                    { name: "Jaune", item: "Soleil d'Algérie", color: "#FFEB3B", icon: "☀️" },
+                    { name: "Orange", item: "Dattes sucrées", color: "#FF9800", icon: "🥭" }
+                ],
+
+                // Activité 3
+                quizTitle: "🤔 Activité 3 : Quiz sur les palmiers !",
+                quizGuideTitle: "💬 Conseil pour les parents",
+                quizGuideTexts: {
+                    start: "Lisez les questions ensemble et laissez votre enfant réfléchir avant de répondre.",
+                    incorrect: "Ce n'est pas grave ! Expliquez la bonne réponse avec des exemples.",
+                    correct: "Bravo ! Renforcez l'apprentissage en discutant de ce qu'ils ont appris."
+                },
+                quizQuestions: [
+                    {
+                        question: "Que produisent les palmiers en Algérie ?",
+                        options: ["Des pommes 🍎", "Des dattes 🥭", "Des bananes 🍌", "Des oranges 🍊"],
+                        correct: 1,
+                        explanation: "Les palmiers produisent des dattes, un fruit très sucré !"
+                    },
+                    {
+                        question: "Pourquoi les gens se rassemblent sous les palmiers ?",
+                        options: ["Pour jouer 🎮", "Pour l'ombre et le thé ☕", "Pour dormir 😴", "Pour cuisiner 🍳"],
+                        correct: 1,
+                        explanation: "On se rassemble sous les palmiers pour l'ombre fraîche et boire du thé ensemble !"
+                    },
+                    {
+                        question: "De quelle couleur sont les feuilles du palmier ?",
+                        options: ["Rouges ❤️", "Bleues 💙", "Vertes 💚", "Jaunes 💛"],
+                        correct: 2,
+                        explanation: "Les feuilles du palmier sont vertes et très grandes !"
+                    }
+                ],
+
+                // Succès
+                successTitle: "Bravo Champion(ne) !",
+                successText: "Tu as terminé toutes les activités avec Amina ! Tu connais maintenant l'importance des palmiers en Algérie !",
+                restartBtnText: "Recommencer",
+                successGuideTitle: "💬 Message pour les parents",
+                successGuideText: "Félicitations ! Votre enfant a découvert la culture algérienne de manière ludique. Prolongez l'apprentissage en parlant des traditions de votre famille ou en goûtant des dattes ensemble !",
+                culturalFacts: [
+                    "Les palmiers peuvent vivre 100 ans !",
+                    "Un palmier produit jusqu'à 100 kg de dattes par an !",
+                    "L'Algérie a des milliers d'oasis avec des palmiers !"
+                ]
+            },
+            ar: {
+                welcomeTitle: "مرحبا ! اسمي أمينة 🌴",
+                welcomeText: "تعال لاكتشاف واحتي في الجزائر ! سنعد النخيل ونتعلم الألوان ونكتشف لماذا النخيل مهم جدا !",
+                startBtnText: "ابدأ المغامرة",
+                
+                // Activité 1
+                countTitle: "🌴 النشاط 1 : عد النخيل !",
+                countInstruction: "المس النخيل واحدة تلو الأخرى لتعدها من 1 إلى 10 !",
+                countNextBtnText: "النشاط التالي",
+                countGuideTitle: "💬 نصيحة للوالدين",
+                countGuideTexts: {
+                    start: "شجع طفلك على العد بصوت عالٍ عند لمس كل نخلة.",
+                    halfway: "ممتاز ! استمر في العد معًا. كرر الأرقام بعده/بعدها.",
+                    complete: "أحسنت ! يمكنك الآن أن تسأل: 'كم عدد النخيل إجمالاً ؟'"
+                },
+
+                // Activité 2
+                colorTitle: "🎨 النشاط 2 : ألوان الواحة !",
+                colorInstruction: "المس كل بطاقة لاكتشاف ألوان واحتي !",
+                colorNextBtnText: "النشاط التالي",
+                colorGuideTitle: "💬 نصيحة للوالدين",
+                colorGuideTexts: {
+                    start: "ساعد طفلك على تحديد الألوان في الغرفة التي أنتم فيها.",
+                    exploring: "اسأل: 'ما لون السماء ؟ وأوراق النخيل ؟'",
+                    complete: "ممتاز ! العب لعبة 'أرى شيئًا أخضر/أزرق/أصفر...'"
+                },
+                colors: [
+                    { name: "أخضر", item: "أوراق النخيل", color: "#4CAF50", icon: "🌿" },
+                    { name: "بني", item: "جذع الشجرة", color: "#8D6E63", icon: "🪵" },
+                    { name: "أزرق", item: "سماء الواحة", color: "#2196F3", icon: "☁️" },
+                    { name: "أصفر", item: "شمس الجزائر", color: "#FFEB3B", icon: "☀️" },
+                    { name: "برتقالي", item: "تمر حلو", color: "#FF9800", icon: "🥭" }
+                ],
+
+                // Activité 3
+                quizTitle: "🤔 النشاط 3 : مسابقة حول النخيل !",
+                quizGuideTitle: "💬 نصيحة للوالدين",
+                quizGuideTexts: {
+                    start: "اقرأ الأسئلة معًا ودع طفلك يفكر قبل الإجابة.",
+                    incorrect: "لا بأس ! اشرح الإجابة الصحيحة بأمثلة.",
+                    correct: "أحسنت ! عزز التعلم من خلال مناقشة ما تعلموه."
+                },
+                quizQuestions: [
+                    {
+                        question: "ماذا ينتج النخيل في الجزائر ؟",
+                        options: ["تفاح 🍎", "تمر 🥭", "موز 🍌", "برتقال 🍊"],
+                        correct: 1,
+                        explanation: "ينتج النخيل التمر، وهو فاكهة حلوة جدا !"
+                    },
+                    {
+                        question: "لماذا يتجمع الناس تحت النخيل ؟",
+                        options: ["للعب 🎮", "للظل والشاي ☕", "للنوم 😴", "للطبخ 🍳"],
+                        correct: 1,
+                        explanation: "نتجمع تحت النخيل للظل البارد وشرب الشاي معا !"
+                    },
+                    {
+                        question: "ما لون أوراق النخيل ؟",
+                        options: ["أحمر ❤️", "أزرق 💙", "أخضر 💚", "أصفر 💛"],
+                        correct: 2,
+                        explanation: "أوراق النخيل خضراء وكبيرة جدا !"
+                    }
+                ],
+
+                // Succès
+                successTitle: "أحسنت أيها البطل !",
+                successText: "لقد أنهيت جميع الأنشطة مع أمينة ! أنت تعرف الآن أهمية النخيل في الجزائر !",
+                restartBtnText: "ابدأ من جديد",
+                successGuideTitle: "💬 رسالة للوالدين",
+                successGuideText: "تهانينا ! اكتشف طفلك الثقافة الجزائرية بطريقة ممتعة. تابع التعلم من خلال الحديث عن تقاليد عائلتك أو تذوق التمر معًا !",
+                culturalFacts: [
+                    "يمكن أن تعيش النخلة 100 سنة !",
+                    "تنتج النخلة ما يصل إلى 100 كجم من التمر سنويًا !",
+                    "الجزائر بها آلاف الواحات مع النخيل !"
+                ]
+            }
+        };
+
+        // ═══ ÉTAT DU JEU ═══
+        let currentLang = 'fr';
+        let currentScreen = 'welcomeScreen';
+        let starsEarned = 0;
+        let timerInterval;
+        let timerSeconds = 0;
+        let palmTreesClicked = 0;
+        let colorsRevealed = 0;
+        let currentQuizQuestion = 0;
+        let quizCorrectAnswers = 0;
+
+        // ═══ INITIALISATION ═══
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            startTimer();
+        });
+
+        // ═══ GESTION DES LANGUES ═══
+        function updateTexts() {
+            const t = TRANSLATIONS[currentLang];
+            
+            // Écran d'accueil
+            document.getElementById('welcomeTitle').textContent = t.welcomeTitle;
+            document.getElementById('welcomeText').textContent = t.welcomeText;
+            document.getElementById('startBtnText').textContent = t.startBtnText;
+
+            // Activité 1
+            document.getElementById('countTitle').textContent = t.countTitle;
+            document.getElementById('countInstruction').textContent = t.countInstruction;
+            document.getElementById('countNextBtnText').textContent = t.countNextBtnText;
+            document.getElementById('countGuideTitle').textContent = t.countGuideTitle;
+
+            // Activité 2
+            document.getElementById('colorTitle').textContent = t.colorTitle;
+            document.getElementById('colorInstruction').textContent = t.colorInstruction;
+            document.getElementById('colorNextBtnText').textContent = t.colorNextBtnText;
+            document.getElementById('colorGuideTitle').textContent = t.colorGuideTitle;
+
+            // Activité 3
+            document.getElementById('quizTitle').textContent = t.quizTitle;
+            document.getElementById('quizGuideTitle').textContent = t.quizGuideTitle;
+
+            // Succès
+            document.getElementById('successTitle').textContent = t.successTitle;
+            document.getElementById('successText').textContent = t.successText;
+            document.getElementById('restartBtnText').textContent = t.restartBtnText;
+            document.getElementById('successGuideTitle').textContent = t.successGuideTitle;
+            document.getElementById('successGuideText').textContent = t.successGuideText;
+
+            // Direction du texte
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        }
+
+        // ═══ NAVIGATION ═══
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            currentScreen = screenId;
+        }
+
+        function startAdventure() {
+            showScreen('countingScreen');
+            initCountingActivity();
+            showParentGuide('countGuide', 'start');
+        }
+
+        function nextActivity() {
+            if (currentScreen === 'countingScreen') {
+                showScreen('colorsScreen');
+                initColorsActivity();
+                showParentGuide('colorGuide', 'start');
+            } else if (currentScreen === 'colorsScreen') {
+                showScreen('quizScreen');
+                initQuizActivity();
+                showParentGuide('quizGuide', 'start');
+            }
+        }
+
+        function restartAdventure() {
+            location.reload();
+        }
+
+        // ═══ ACTIVITÉ 1 : COMPTER ═══
+        function initCountingActivity() {
+            const grid = document.getElementById('palmTreesGrid');
+            grid.innerHTML = '';
+            palmTreesClicked = 0;
+            
+            for (let i = 1; i <= CONFIG.palmTreeCount; i++) {
+                const tree = document.createElement('div');
+                tree.className = 'palm-tree';
+                tree.textContent = '🌴';
+                tree.dataset.number = i;
+                tree.setAttribute('role', 'button');
+                tree.setAttribute('aria-label', `Palmier ${i}`);
+                tree.setAttribute('tabindex', '0');
+                tree.onclick = () => countPalmTree(tree, i);
+                grid.appendChild(tree);
+            }
+        }
+
+        function countPalmTree(tree, number) {
+            if (tree.classList.contains('counted')) return;
+            
+            palmTreesClicked++;
+            tree.classList.add('counted');
+            document.getElementById('currentCount').textContent = palmTreesClicked;
+            
+            playSound('count');
+            
+            if (palmTreesClicked === 5) {
+                showParentGuide('countGuide', 'halfway');
+            }
+            
+            if (palmTreesClicked === CONFIG.palmTreeCount) {
+                earnStar(1);
+                document.getElementById('countNextBtn').style.display = 'block';
+                showParentGuide('countGuide', 'complete');
+                createConfetti();
+            }
+        }
+
+        // ═══ ACTIVITÉ 2 : COULEURS ═══
+        function initColorsActivity() {
+            const grid = document.getElementById('colorsGrid');
+            const colors = TRANSLATIONS[currentLang].colors;
+            colorsRevealed = 0;
+            
+            grid.innerHTML = colors.map((color, index) => `
+                <div class="color-card" 
+                     onclick="revealColor(${index})"
+                     data-index="${index}"
+                     role="button"
+                     aria-label="${color.name}"
+                     tabindex="0">
+                    <div class="color-icon">${color.icon}</div>
+                    <div class="color-name" style="color: ${color.color}">${color.name}</div>
+                    <div class="color-item">${color.item}</div>
+                </div>
+            `).join('');
+        }
+
+        function revealColor(index) {
+            const card = document.querySelector(`[data-index="${index}"]`);
+            if (card.classList.contains('revealed')) return;
+            
+            card.classList.add('revealed');
+            colorsRevealed++;
+            
+            playSound('reveal');
+            
+            if (colorsRevealed === 3) {
+                showParentGuide('colorGuide', 'exploring');
+            }
+            
+            if (colorsRevealed === TRANSLATIONS[currentLang].colors.length) {
+                earnStar(2);
+                document.getElementById('colorNextBtn').style.display = 'block';
+                showParentGuide('colorGuide', 'complete');
+                createConfetti();
+            }
+        }
+
+        // ═══ ACTIVITÉ 3 : QUIZ ═══
+        function initQuizActivity() {
+            currentQuizQuestion = 0;
+            quizCorrectAnswers = 0;
+            showQuizQuestion();
+        }
+
+        function showQuizQuestion() {
+            const questions = TRANSLATIONS[currentLang].quizQuestions;
+            
+            if (currentQuizQuestion >= questions.length) {
+                if (quizCorrectAnswers >= 2) {
+                    earnStar(3);
+                    showSuccessScreen();
+                } else {
+                    // Recommencer le quiz
+                    currentQuizQuestion = 0;
+                    quizCorrectAnswers = 0;
+                    showQuizQuestion();
+                }
+                return;
+            }
+            
+            const q = questions[currentQuizQuestion];
+            document.getElementById('quizQuestion').textContent = q.question;
+            
+            const optionsHtml = q.options.map((option, index) => `
+                <button class="quiz-option" 
+                        onclick="checkQuizAnswer(${index})"
+                        aria-label="${option}">
+                    ${option}
+                </button>
+            `).join('');
+            
+            document.getElementById('quizOptions').innerHTML = optionsHtml;
+        }
+
+        function checkQuizAnswer(selectedIndex) {
+            const questions = TRANSLATIONS[currentLang].quizQuestions;
+            const q = questions[currentQuizQuestion];
+            const options = document.querySelectorAll('.quiz-option');
+            
+            if (selectedIndex === q.correct) {
+                options[selectedIndex].classList.add('correct');
+                quizCorrectAnswers++;
+                playSound('success');
+                showParentGuide('quizGuide', 'correct');
+            } else {
+                options[selectedIndex].classList.add('incorrect');
+                options[q.correct].classList.add('correct');
+                playSound('error');
+                showParentGuide('quizGuide', 'incorrect');
+            }
+            
+            // Désactiver tous les boutons
+            options.forEach(opt => opt.disabled = true);
+            
+            // Passer à la question suivante
+            setTimeout(() => {
+                currentQuizQuestion++;
+                showQuizQuestion();
+            }, 2000);
+        }
+
+        // ═══ ÉCRAN DE RÉUSSITE ═══
+        function showSuccessScreen() {
+            showScreen('successScreen');
+            stopTimer();
+            
+            const t = TRANSLATIONS[currentLang];
+            document.getElementById('finalTime').textContent = formatTime(timerSeconds);
+            document.getElementById('finalStars').textContent = `${starsEarned}/3`;
+            
+            const randomFact = t.culturalFacts[Math.floor(Math.random() * t.culturalFacts.length)];
+            document.getElementById('culturalFact').textContent = randomFact;
+            
+            createConfetti();
+        }
+
+        // ═══ SYSTÈME D'ÉTOILES ═══
+        function earnStar(starNumber) {
+            const star = document.getElementById(`star${starNumber}`);
+            if (!star.classList.contains('earned')) {
+                star.classList.add('earned');
+                starsEarned++;
+                playSound('star');
+            }
+        }
+
+        // ═══ ASSISTANCE PARENTALE ═══
+        function showParentGuide(guideId, type) {
+            const guide = document.getElementById(guideId);
+            const textElement = document.getElementById(guideId.replace('Guide', 'GuideText'));
+            
+            const t = TRANSLATIONS[currentLang];
+            let texts;
+            
+            if (guideId === 'countGuide') {
+                texts = t.countGuideTexts;
+            } else if (guideId === 'colorGuide') {
+                texts = t.colorGuideTexts;
+            } else if (guideId === 'quizGuide') {
+                texts = t.quizGuideTexts;
+            }
+            
+            if (texts && texts[type]) {
+                textElement.textContent = texts[type];
+                guide.classList.add('show');
+                
+                setTimeout(() => {
+                    guide.classList.remove('show');
+                }, 8000);
+            }
+        }
+
+        // ═══ CHRONOMÈTRE ═══
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (currentScreen !== 'welcomeScreen' && currentScreen !== 'successScreen') {
+                    timerSeconds++;
+                    document.getElementById('timerDisplay').textContent = formatTime(timerSeconds);
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // ═══ CONFETTIS ═══
+        function createConfetti() {
+            const colors = ['#FFD700', '#4CAF50', '#2196F3', '#FF9800', '#E91E63'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * window.innerWidth + 'px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        // ═══ SONS (SIMULÉS) ═══
+        function playSound(type) {
+            if (navigator.vibrate) {
+                const patterns = {
+                    count: [30],
+                    reveal: [50],
+                    success: [100, 50, 100],
+                    error: [200],
+                    star: [50, 50, 50, 50, 50]
+                };
+                navigator.vibrate(patterns[type] || [50]);
+            }
+        }
+
+        // ═══ EVENT LISTENERS ═══
+        function setupEventListeners() {
+            // Boutons de langue
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentLang = btn.dataset.lang;
+                    updateTexts();
+                    
+                    // Réinitialiser l'activité en cours
+                    if (currentScreen === 'countingScreen') {
+                        initCountingActivity();
+                    } else if (currentScreen === 'colorsScreen') {
+                        initColorsActivity();
+                    } else if (currentScreen === 'quizScreen') {
+                        initQuizActivity();
+                    }
+                });
+            });
+
+            // Support clavier
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && document.activeElement.onclick) {
+                    document.activeElement.click();
+                }
+            });
+        }
+
+        // ═══ CONSOLE VERSION ═══
+        console.log(`%c🌴 Sous le Palmier v${CONFIG.version}`, 'font-size: 20px; color: #2E7D32; font-weight: bold;');
+        console.log('%cCréé par mohamed - 3 novembre 2025', 'color: #D2691E;');
+        console.log('%cPersonnage : Amina | Culture : Algérie | Activités : 3', 'color: #666;');
+    </script>
+</body>
+</html>

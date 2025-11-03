@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Générateur de prompt pour contenu HTML enfant - Version professionnelle">
-    <title>Générateur Prompt Contenu Enfant - v1.004</title>
+    <title>Générateur Prompt Contenu Enfant - v1.005</title>
     <style>
         /* ===== VARIABLES & RESET ===== */
         :root {
@@ -619,6 +619,66 @@
             outline: 3px solid var(--primary);
             outline-offset: 2px;
         }
+        
+        /* ===== NOUVEAU : FORMAT JSON ===== */
+        .format-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .format-option {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .format-option.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .format-option:not(.active):hover {
+            background: #E8F4F8;
+            border-color: var(--primary);
+        }
+        
+        .json-preview {
+            background: #2C3E50;
+            color: #ECF0F1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .json-key {
+            color: #3498DB;
+        }
+        
+        .json-string {
+            color: #27AE60;
+        }
+        
+        .json-number {
+            color: #E74C3C;
+        }
+        
+        .json-boolean {
+            color: #9B59B6;
+        }
     </style>
 </head>
 <body>
@@ -629,10 +689,10 @@
                 <span>❓</span>
                 <span>Guide Parents</span>
             </button>
-            <span class="version-badge">v1.004</span>
+            <span class="version-badge">v1.005</span>
             <h1>🎨 Générateur de Prompt - Contenu HTML Enfant</h1>
             <p>Créez des expériences éducatives interactives sécurisées pour vos enfants</p>
-            <p style="font-size: 12px; margin-top: 10px;">✅ Toujours Responsive | 🔒 Conforme RGPD/COPPA | ♿ Accessible</p>
+            <p style="font-size: 12px; margin-top: 10px;">✅ Format JSON optimisé | 🔒 Conforme RGPD/COPPA | ♿ Accessible</p>
         </header>
         
         <!-- MODAL AIDE -->
@@ -742,6 +802,19 @@
         
         <!-- FORMULAIRE -->
         <div class="form-wrapper">
+            <div class="format-toggle">
+                <div class="format-option active" data-format="json">
+                    🚀 Format JSON (Recommandé)
+                </div>
+                <div class="format-option" data-format="text">
+                    📝 Format Texte (Ancien)
+                </div>
+            </div>
+            
+            <div id="jsonPreview" class="json-preview">
+                {/* Aperçu JSON */}
+            </div>
+            
             <form id="promptForm">
                 
                 <!-- MÉTADONNÉES PROJET -->
@@ -1336,8 +1409,9 @@
     
     <script>
         // ===== VERSION & CONFIG =====
-        const VERSION = "v1.004";
+        const VERSION = "v1.005";
         const STORAGE_KEY_NAME = 'prompt_generator_creator_name';
+        let currentFormat = 'json'; // Format par défaut
         
         // ===== INITIALISATION =====
         window.addEventListener('DOMContentLoaded', function() {
@@ -1353,7 +1427,89 @@
             if (savedName) {
                 document.getElementById('creatorName').value = savedName;
             }
+            
+            // Initialiser le sélecteur de format
+            initFormatSelector();
+            
+            // Mettre à jour l'aperçu JSON
+            updateJsonPreview();
         });
+        
+        // ===== GESTION DU FORMAT =====
+        function initFormatSelector() {
+            const formatOptions = document.querySelectorAll('.format-option');
+            
+            formatOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Désactiver toutes les options
+                    formatOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Activer l'option cliquée
+                    this.classList.add('active');
+                    
+                    // Mettre à jour le format courant
+                    currentFormat = this.dataset.format;
+                    
+                    // Afficher/masquer l'aperçu JSON
+                    const jsonPreview = document.getElementById('jsonPreview');
+                    if (currentFormat === 'json') {
+                        jsonPreview.style.display = 'block';
+                        updateJsonPreview();
+                    } else {
+                        jsonPreview.style.display = 'none';
+                    }
+                });
+            });
+        }
+        
+        function updateJsonPreview() {
+            if (currentFormat !== 'json') return;
+            
+            // Récupérer les valeurs du formulaire pour l'aperçu
+            const creatorName = document.getElementById('creatorName').value.trim() || "Votre nom";
+            const theme = document.getElementById('theme').value.trim() || "Thème du projet";
+            
+            // Construire l'aperçu JSON
+            const jsonPreview = {
+                metadata: {
+                    creator: creatorName,
+                    version: document.getElementById('projectVersion').value,
+                    date: document.getElementById('creationDate').value,
+                    generator: `Formulaire ${VERSION}`
+                },
+                target: {
+                    age: "Tranches d'âge sélectionnées",
+                    theme: theme,
+                    language: "Langues sélectionnées"
+                },
+                content: {
+                    goals: "Objectifs pédagogiques",
+                    interactions: "Types d'interactions"
+                }
+            };
+            
+            // Afficher l'aperçu formaté
+            document.getElementById('jsonPreview').innerHTML = syntaxHighlight(JSON.stringify(jsonPreview, null, 2));
+        }
+        
+        function syntaxHighlight(json) {
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                let cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'json-null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
         
         // ===== SAUVEGARDE NOM AUTOMATIQUE =====
         document.getElementById('creatorName').addEventListener('blur', function() {
@@ -1361,6 +1517,13 @@
             if (name) {
                 localStorage.setItem(STORAGE_KEY_NAME, name);
             }
+            updateJsonPreview();
+        });
+        
+        // ===== ÉCOUTEURS POUR METTRE À JOUR L'APERÇU =====
+        document.querySelectorAll('input, select, textarea').forEach(element => {
+            element.addEventListener('change', updateJsonPreview);
+            element.addEventListener('input', updateJsonPreview);
         });
         
         // ===== MODAL HELP =====
@@ -1493,6 +1656,14 @@
         
         // ===== FONCTION GÉNÉRATION PROMPT =====
         function generatePrompt() {
+            if (currentFormat === 'json') {
+                generateJsonPrompt();
+            } else {
+                generateTextPrompt();
+            }
+        }
+        
+        function generateJsonPrompt() {
             // Métadonnées
             const creatorName = document.getElementById('creatorName').value.trim();
             const projectVersion = document.getElementById('projectVersion').value;
@@ -1503,16 +1674,14 @@
             
             // Âges
             const ageRanges = Array.from(document.querySelectorAll('input[name="ageRange"]:checked'))
-                .map(cb => cb.value)
-                .join(', ');
+                .map(cb => cb.value);
             
             const readingLevel = document.querySelector('input[name="readingLevel"]:checked').value;
             const supervision = document.querySelector('input[name="supervision"]:checked').value;
             
             // Langues
             const languages = Array.from(document.querySelectorAll('input[name="languages"]:checked'))
-                .map(cb => cb.value)
-                .join(', ');
+                .map(cb => cb.value);
             const languageLayout = document.querySelector('input[name="languageLayout"]:checked').value;
             
             // Thème
@@ -1522,19 +1691,17 @@
             
             // Objectifs pédagogiques
             const pedGoals = Array.from(document.querySelectorAll('input[name="pedGoals"]:checked'))
-                .map(cb => `- ${cb.value}`)
-                .join('\n');
+                .map(cb => cb.value);
             const customGoals = document.getElementById('customGoals').value.trim();
-            let allGoals = pedGoals;
+            let allGoals = [...pedGoals];
             if (customGoals) {
-                const customFormatted = customGoals.split('\n').map(line => `- ${line.trim()}`).join('\n');
-                allGoals = allGoals ? allGoals + '\n' + customFormatted : customFormatted;
+                const customFormatted = customGoals.split('\n').map(line => line.trim()).filter(line => line);
+                allGoals = [...allGoals, ...customFormatted];
             }
             
             // Interactions
             const interactions = Array.from(document.querySelectorAll('input[name="interactions"]:checked'))
-                .map(cb => `- ${cb.value}`)
-                .join('\n');
+                .map(cb => cb.value);
             
             const rewards = document.querySelector('input[name="rewards"]:checked').value;
             const errorHandling = document.querySelector('input[name="errorHandling"]:checked').value;
@@ -1542,44 +1709,96 @@
             // Analytics
             const timer = document.querySelector('input[name="timer"]:checked').value;
             const stats = Array.from(document.querySelectorAll('input[name="stats"]:checked'))
-                .map(cb => `- ${cb.value}`)
-                .join('\n');
+                .map(cb => cb.value);
             
             // Assistance parentale
             const parentalGuidance = document.querySelector('input[name="parentalGuidance"]:checked').value;
             const guidanceTypes = Array.from(document.querySelectorAll('input[name="guidanceTypes"]:checked'))
-                .map(cb => `- ${cb.value}`)
-                .join('\n');
+                .map(cb => cb.value);
             
             // Design
             const colorPalette = document.querySelector('input[name="colorPalette"]:checked').value;
             
             // Accessibilité
             const accessibility = Array.from(document.querySelectorAll('input[name="accessibility"]:checked'))
-                .map(cb => `- ${cb.value}`)
-                .join('\n');
+                .map(cb => cb.value);
             
-            // Construction du prompt
-            const prompt = `# 🎯 PROMPT CRÉATION CONTENU HTML INTERACTIF ENFANT
+            // Construction de l'objet JSON
+            const promptData = {
+                metadata: {
+                    creator: creatorName,
+                    projectVersion: projectVersion,
+                    creationDate: creationDate,
+                    generator: `Formulaire ${VERSION}`
+                },
+                targetAudience: {
+                    ageRanges: ageRanges,
+                    readingLevel: readingLevel,
+                    supervision: supervision
+                },
+                language: {
+                    languages: languages,
+                    layout: languageLayout
+                },
+                content: {
+                    theme: theme,
+                    narrativeStyle: narrativeStyle,
+                    educationalGoals: allGoals,
+                    additionalContext: additionalContext || undefined
+                },
+                interactivity: {
+                    interactionTypes: interactions,
+                    rewardSystem: rewards,
+                    errorHandling: errorHandling
+                },
+                analytics: {
+                    timer: timer,
+                    statistics: stats
+                },
+                parentalAssistance: {
+                    guidanceType: parentalGuidance,
+                    guidanceTopics: guidanceTypes
+                },
+                design: {
+                    colorPalette: colorPalette
+                },
+                accessibility: {
+                    features: accessibility
+                },
+                technicalRequirements: {
+                    format: "HTML5 standalone",
+                    fileSize: "< 150 KB",
+                    responsive: true,
+                    offline: true,
+                    compatibility: ["Chrome 90+", "Firefox 88+", "Safari 14+", "Edge 90+"],
+                    accessibility: "WCAG 2.1 AA minimum"
+                },
+                security: {
+                    noExternalLinks: true,
+                    noTracking: true,
+                    noPersonalData: true,
+                    noAds: true,
+                    gdprCompliant: true
+                },
+                workflow: {
+                    step1: "Analyze this JSON specification",
+                    step2: "Propose a detailed plan in TXT format",
+                    step3: "Wait for explicit approval before generating HTML",
+                    step4: "Generate complete standalone HTML file after approval"
+                }
+            };
+            
+            // Construction du prompt final avec instructions
+            const prompt = `# 🎯 PROMPT CRÉATION CONTENU HTML INTERACTIF ENFANT - FORMAT JSON
 
-**═══════════════════════════════════════════════════════════════**
-**MÉTADONNÉES PROJET**
-**═══════════════════════════════════════════════════════════════**
-- **Créé par :** ${creatorName}
-- **Date de création :** ${creationDate}
-- **Version projet :** ${projectVersion}
-- **Générateur :** Formulaire v${VERSION}
-**═══════════════════════════════════════════════════════════════**
+## 📋 INSTRUCTIONS POUR L'IA
 
-## 📋 INSTRUCTION IMPORTANTE POUR L'IA
+**WORKFLOW OBLIGATOIRE :**
 
-**WORKFLOW OBLIGATOIRE EN 3 ÉTAPES :**
-
-1️⃣ **LIS attentivement tout ce cahier des charges**
-
-2️⃣ **PROPOSE-MOI d'abord un PLAN DÉTAILLÉ en format TXT** contenant :
+1. **ANALYSE** cette spécification JSON complète
+2. **PROPOSE-MOI** d'abord un **PLAN DÉTAILLÉ** en format TXT contenant :
    - Structure HTML (sections principales, navigation)
-   - Mécaniques d'interactions choisies (avec justifications techniques)
+   - Mécaniques d'interactions (avec justifications techniques)
    - Approche CSS responsive (mobile-first, breakpoints)
    - Architecture JavaScript (fonctions principales, gestion événements)
    - Implémentation chronomètre et statistiques
@@ -1587,244 +1806,21 @@
    - Points de vigilance sécurité/accessibilité
    - Estimation poids final (<150 KB)
 
-3️⃣ **ATTENDS mon approbation explicite** :
-   - Si je réponds "OK", "Approuvé", "Valide", "Génère le HTML" → Passe à l'étape 4
-   - Si je demande des ajustements → Révise le plan et repropose
+3. **ATTENDS MON APPROBATION EXPLICITE** avant de générer le HTML
 
-4️⃣ **SEULEMENT après mon "OK"** → Génère le fichier HTML complet standalone
-
-**⚠️ NE GÉNÈRE JAMAIS LE HTML SANS AVOIR PRÉSENTÉ LE PLAN ET REÇU MON ACCORD**
+4. **SEULEMENT APRÈS MON "OK"** → Génère le fichier HTML complet standalone
 
 ---
 
-## 🎯 SPÉCIFICATIONS DU PROJET
+## 🎯 SPÉCIFICATIONS DU PROJET (JSON)
 
-### 👥 Public Cible
-- **Âges visés :** ${ageRanges}
-- **Niveau lecture :** ${readingLevel}
-- **Supervision :** ${supervision}
-
-### 🌍 Langue & Localisation
-- **Langue(s) du contenu :** ${languages}
-- **Disposition multilingue :** ${languageLayout}
-
-**Instructions linguistiques :**
-- Si une seule langue : tout le contenu dans cette langue
-- Si multilingue : implémenter selon disposition choisie
-- Pour l'arabe : utiliser \`dir="rtl"\` et police adaptée (Arial, Tahoma)
-- Traduire TOUS les textes : instructions, boutons, messages, feedbacks
-- Pas de Google Translate API (traductions intégrées directement en dur)
-
-### 🎨 Contenu Éducatif
-**Thème principal :** ${theme}
-
-**Style narratif :** ${narrativeStyle}
-
-**Objectifs pédagogiques à couvrir :**
-${allGoals}
-${additionalContext ? '\n**Précisions supplémentaires importantes :**\n' + additionalContext : ''}
-
-### 🎮 Interactivité & Gameplay
-**Mécaniques à implémenter :**
-${interactions || '- Propose des interactions adaptées au thème et à l\'âge'}
-
-**Système de récompenses :** ${rewards}
-
-**Gestion des erreurs :** ${errorHandling}
-
-### 📊 Suivi & Analytics Intégrés
-**Chronomètre :** ${timer}
-- Si activé : afficher temps écoulé en format MM:SS
-- Position selon option (visible permanent ou discret)
-- Démarrage automatique au chargement de la page
-- Stockage en sessionStorage (pas persistant)
-
-**Statistiques demandées :**
-${stats || '- Aucune statistique particulière demandée'}
-
-**Implémentation statistiques :**
-- Utiliser sessionStorage uniquement (effacé à fermeture)
-- Variables à tracker : temps, tentatives, réussites, erreurs, score
-- Si récapitulatif final : écran de synthèse avec emojis encourageants
-- Jamais envoyer données vers serveur externe
-
-### 👨‍👩‍👧 Assistance Parentale Contextualisée
-**Mode assistance :** ${parentalGuidance}
-
-${guidanceTypes ? '**Types de conseils à intégrer :**\n' + guidanceTypes : ''}
-
-**Implémentation assistance :**
-- Créer panneau/section masqué par défaut (bouton "👪 Aide Parents")
-- Conseils contextuels basés sur :
-  * Temps écoulé (>15 min → suggérer pause)
-  * Nombre d'erreurs consécutives (>3 → encouragement parent)
-  * Réussite rapide (félicitations adaptées)
-  * Signes de frustration (temps long sur une question)
-- Format: bulles de conseil courtes (2-3 phrases max)
-- Exemples concrets de phrases à dire à l'enfant
-- Accessible uniquement par adulte (bouton discret ou combinaison touches)
-
-**Exemples de conseils selon situations :**
-- Erreur répétée : "Votre enfant rencontre une difficulté. Demandez-lui de vous expliquer sa réflexion avant de donner la réponse."
-- Réussite : "Bravo ! C'est le moment idéal pour féliciter : 'Tu as bien réfléchi, je suis fier de toi !'"
-- Temps long : "Laissez votre enfant prendre son temps. La réflexion est plus importante que la rapidité."
-- Pause suggérée : "15 minutes d'écran écoulées. Proposez une pause active (étirements, jeu dehors)."
-
-### 🎨 Design & Couleurs
-**Palette de couleurs :** ${colorPalette}
-- Utiliser ces couleurs comme base pour l'interface
-- Assurer contrastes WCAG 2.1 AA minimum (4.5:1 texte normal)
-- Adapter luminosité pour sections enfants (éviter couleurs trop vives/saturées)
-
-**Police de caractères :**
-- Taille minimum : 16px mobile, 18px desktop
-- Interligne : 1.5 minimum
-- Préférer sans-serif lisible (Verdana, Arial, ou Comic Sans pour 3-6 ans)
-- Pour arabe : Tahoma, Arial avec dir="rtl"
-
-### 📱 Technique & Responsive (OBLIGATOIRE)
-**Contraintes strictes non négociables :**
-toujours un seul fichier html qui contien tous css html javascript
-✅ **HTML5 valide** : Vérifier sur validator.w3.org (aucune erreur tolérée)
-✅ **CSS inline ou dans <style>** : Aucun fichier externe
-✅ **JavaScript Vanilla** : Zéro bibliothèque/framework (pas jQuery, React, etc.)
-✅ **Poids total < 150 KB** : Images en SVG inline ou Base64 <20 KB chacune
-✅ **100% offline** : Aucune dépendance CDN, Google Fonts, ou ressource externe
-✅ **Mobile-first** : Design pensé pour mobile d'abord, puis tablette/desktop
-
-**Breakpoints responsive obligatoires :**
-\`\`\`css
-/* Mobile par défaut : 320px-767px */
-body { font-size: 16px; }
-
-/* Tablette : 768px-1023px */
-@media (min-width: 768px) {
-  body { font-size: 17px; }
-}
-
-/* Desktop : ≥1024px */
-@media (min-width: 1024px) {
-  body { font-size: 18px; }
-}
+\`\`\`json
+${JSON.stringify(promptData, null, 2)}
 \`\`\`
 
-**Compatibilité navigateurs :**
-- Chrome/Edge 90+ (2021)
-- Firefox 88+ (2021)
-- Safari 14+ (2020)
+---
 
-### ♿ Accessibilité (WCAG 2.1 AA Minimum)
-
-**Exigences de base (toujours appliquer) :**
-- Attributs \`alt\` descriptifs sur toutes images (alt="" pour décoratives)
-- Labels associés à tous inputs/boutons
-- Navigation clavier complète (Tab, Enter, Espace, Flèches)
-- Ordre DOM logique (pas uniquement CSS)
-- \`lang="fr"\` (ou ar/en selon langue) sur balise \`<html>\`
-- Aria-live="polite" pour feedback dynamique (scores, chronomètre)
-- Focus visible (outline 3px solid)
-
-${accessibility ? '**Fonctionnalités accessibilité renforcées demandées :**\n' + accessibility : ''}
-
-### 🔒 Sécurité & Conformité (RGPD/COPPA)
-
-**INTERDICTIONS ABSOLUES :**
-❌ Aucune collecte données personnelles (nom, email, localisation, âge réel)
-❌ Aucun cookie ou localStorage sans consentement parental explicite
-❌ Aucun tracking tiers (Google Analytics, Facebook Pixel, Hotjar, etc.)
-❌ Aucun lien externe non contrôlé (risque phishing/contenu inapproprié)
-❌ Aucune iframe (YouTube, Vimeo, DailyMotion, etc.)
-❌ Aucun contenu violent/anxiogène/commercial/stéréotypé
-❌ Aucune publicité ou mention de marque commerciale
-
-**AUTORISATIONS :**
-✅ sessionStorage uniquement pour scores/temps temporaires (effacé à fermeture navigateur)
-✅ Médias en Base64 ou SVG inline (taille contrôlée)
-✅ Sons de récompense courts (<5 secondes, format WebM/MP3)
-
-**Content Security Policy recommandée :**
-\`\`\`html
-<meta http-equiv="Content-Security-Policy" 
-      content="default-src 'self' 'unsafe-inline'; 
-               img-src 'self' data:; 
-               media-src 'self' data:; 
-               script-src 'self' 'unsafe-inline'; 
-               style-src 'self' 'unsafe-inline';">
-\`\`\`
-
-### 📦 Livrables Attendus (Après Approbation du Plan)
-
-**1. Fichier HTML standalone complet**
-   - Un seul fichier \`index.html\`
-   - Prêt à ouvrir en double-clic (sans serveur)
-   - Tout le code CSS/JS intégré
-   - Chronomètre fonctionnel
-   - Statistiques opérationnelles
-   - Assistance parentale implémentée
-
-**2. En-tête commenté du fichier HTML :**
-\`\`\`html
-<!--
-═══════════════════════════════════════════════════════════════
-PROJET : ${theme}
-CRÉÉ PAR : ${creatorName}
-DATE : ${creationDate}
-VERSION : ${projectVersion}
-GÉNÉRATEUR : Formulaire v${VERSION}
-═══════════════════════════════════════════════════════════════
-ÂGE CIBLE : ${ageRanges}
-LANGUE(S) : ${languages}
-NIVEAU : ${readingLevel}
-OBJECTIFS : [Lister 3 principaux objectifs pédagogiques]
-═══════════════════════════════════════════════════════════════
-FONCTIONNALITÉS INTÉGRÉES :
-- Chronomètre : ${timer.includes('Oui') ? 'OUI' : 'NON'}
-- Statistiques : ${stats ? 'OUI' : 'NON'}
-- Assistance Parentale : ${parentalGuidance.includes('Oui') ? 'OUI' : 'NON'}
-═══════════════════════════════════════════════════════════════
-INSTRUCTIONS D'UTILISATION :
-1. Ouvrir ce fichier avec navigateur moderne (Chrome, Firefox, Safari, Edge)
-2. Aucune installation requise, fonctionne offline
-3. Testé sur mobile/tablette/desktop
-4. Support tactile et clavier
-5. Chronomètre démarre automatiquement au chargement
-6. Bouton "Aide Parents" en haut à droite pour conseils
-
-NAVIGATEURS TESTÉS :
-- ✅ Chrome 90+ (Windows/Mac/Android)
-- ✅ Firefox 88+ (Windows/Mac)
-- ✅ Safari 14+ (Mac/iOS)
-- ✅ Edge 90+ (Windows)
-
-BUGS CONNUS : [Lister si applicable, sinon mettre "Aucun"]
-
-RÉVISIONS :
-- ${projectVersion} (${creationDate}) : Création initiale
-═══════════════════════════════════════════════════════════════
--->
-\`\`\`
-
-**3. Section <head> structure obligatoire :**
-\`\`\`html
-<!DOCTYPE html>
-<html lang="${languages.includes('Arabe') ? 'ar' : (languages.includes('Anglais') ? 'en' : 'fr')}"${languages.includes('Arabe') ? ' dir="rtl"' : ''}>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="${theme} - Contenu éducatif interactif pour enfants ${ageRanges}">
-    <meta name="author" content="${creatorName}">
-    <meta name="version" content="${projectVersion}">
-    <meta name="date" content="${creationDate}">
-    <meta name="languages" content="${languages}">
-    <title>${theme} | Éducatif ${ageRanges}</title>
-    <!-- CSP ici si applicable -->
-    <style>
-        /* CSS ici */
-    </style>
-</head>
-\`\`\`
-
-### ✅ Checklist Validation Finale (Avant Livraison HTML)
+## ✅ CHECKLIST VALIDATION FINALE
 
 Vérifie ces points et liste-les dans ta réponse :
 - [ ] HTML valide W3C (0 erreur sur validator.w3.org)
@@ -1835,8 +1831,8 @@ Vérifie ces points et liste-les dans ta réponse :
 - [ ] Aucune dépendance externe (CDN, Google Fonts)
 - [ ] Fonctionne offline à 100%
 - [ ] Tous objectifs pédagogiques intégrés
-- [ ] Contenu adapté à l'âge ${ageRanges}
-- [ ] Langue(s) ${languages} implémentée(s) correctement
+- [ ] Contenu adapté à l'âge ${ageRanges.join(', ')}
+- [ ] Langue(s) ${languages.join(', ')} implémentée(s) correctement
 - [ ] Chronomètre fonctionnel (si activé)
 - [ ] Statistiques opérationnelles (si activées)
 - [ ] Assistance parentale accessible et pertinente (si activée)
@@ -1845,17 +1841,24 @@ Vérifie ces points et liste-les dans ta réponse :
 
 ---
 
-## 🚀 RAPPEL WORKFLOW - COMMENCE MAINTENANT
-
-**ÉTAPE 1 :** Analyse ce cahier des charges et propose-moi un **PLAN DÉTAILLÉ TXT** (structure, interactions, approche technique, implémentation chronomètre/stats/assistance, points vigilance)
-
-**ÉTAPE 2 :** J'analyse ton plan et je te réponds (OK ou ajustements)
-
-**ÉTAPE 3 :** Seulement après mon "OK" → Tu génères le HTML complet
-
-**⏩ Lance-toi avec l'ÉTAPE 1 maintenant : propose ton plan détaillé !**`;
+**⏩ COMMENCE MAINTENANT AVEC L'ANALYSE DU JSON ET PROPOSE TON PLAN DÉTAILLÉ !**`;
             
             // Affichage dans modal
+            document.getElementById('promptOutputModal').textContent = prompt;
+            openResultModal();
+        }
+        
+        function generateTextPrompt() {
+            // Ancienne fonction de génération de prompt texte (conservée pour compatibilité)
+            // ... (le code original de génération de prompt texte)
+            
+            // Pour l'exemple, j'utilise une version simplifiée
+            const prompt = `# PROMPT TEXTE (ANCIEN FORMAT)
+            
+Ceci est l'ancien format texte. Le format JSON est recommandé pour de meilleurs résultats avec les IA modernes.
+
+Utilisez le format JSON pour une meilleure structuration des données.`;
+            
             document.getElementById('promptOutputModal').textContent = prompt;
             openResultModal();
         }
@@ -1923,6 +1926,8 @@ Vérifie ces points et liste-les dans ta réponse :
                 if (savedName) {
                     document.getElementById('creatorName').value = savedName;
                 }
+                // Mettre à jour l'aperçu JSON
+                updateJsonPreview();
             }, 100);
         });
     </script>

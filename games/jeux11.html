@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Healthy Eating Adventure - Contenu éducatif interactif pour enfants 5-6 ans"/>
+  <meta name="author" content="Salima Bouchaib"/>
+  <meta name="version" content="v1.001"/>
+  <meta name="date" content="3 novembre 2025"/>
+  <meta name="languages" content="Anglais, Français"/>
+  <title>Healthy Eating Adventure | Éducatif 5-6 ans (v1.001)</title>
+
+  <style>
+    /* ============================================================
+       v1.001 — Healthy Eating Adventure (Standalone)
+       Auteur: Salima Bouchaib — Correction & intégration: Assistant
+       Objectifs: Navigation multi-écrans + Jeux + Timer + Score
+       ============================================================ */
+
+    /* ===== RESET & BASE ===== */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --primary:#C8E6C9; --secondary:#B3E5FC; --accent:#E1BEE7; --background:#FFF9C4;
+      --text:#333; --success:#4CAF50; --warning:#FF9800; --error:#F44336; --white:#FFF;
+    }
+    body {
+      font-family: Verdana, Arial, sans-serif;
+      background:var(--background); color:var(--text);
+      line-height:1.5; min-height:100vh; overflow-x:hidden; font-size:16px;
+    }
+    h1,h2,h3 { font-weight:bold; margin-bottom:1rem; text-align:center; }
+    h1{font-size:1.8rem} h2{font-size:1.5rem} h3{font-size:1.3rem}
+
+    /* ===== LAYOUT ===== */
+    .container { max-width:1200px; margin:0 auto; padding:1rem; }
+    .screen { display:none; animation:fadeIn .4s ease; }
+    .screen.active { display:block; }
+
+    /* ===== HEADER ===== */
+    .header {
+      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      padding:.5rem 1rem; position:sticky; top:0; z-index:100; box-shadow:0 2px 10px rgba(0,0,0,.1);
+    }
+    .header-content { display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .stats-bar { display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
+    .stat-item {
+      background:var(--white); padding:.5rem 1rem; border-radius:25px; font-weight:bold;
+      box-shadow:0 2px 5px rgba(0,0,0,.1); display:flex; align-items:center; gap:.5rem;
+    }
+    .controls { display:flex; gap:.5rem; flex-wrap:wrap; }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      background:var(--accent); border:none; padding:1rem 1.5rem; border-radius:50px;
+      font-weight:bold; cursor:pointer; transition:.2s; min-height:56px; min-width:56px;
+      display:inline-flex; align-items:center; justify-content:center; text-decoration:none; color:var(--text);
+    }
+    .btn:hover,.btn:focus { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,.2); outline:3px solid var(--text); }
+    .btn-primary { background:var(--primary); font-size:1.2rem; padding:1rem 1.8rem; }
+    .btn-small { padding:.5rem 1rem; min-height:46px; min-width:46px; font-size:.95rem; }
+
+    /* ===== GRIDS & CARDS ===== */
+    .game-grid { display:grid; gap:1rem; margin:2rem 0; }
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .grid-4{grid-template-columns:repeat(4,1fr)}
+    .card {
+      background:var(--white); border-radius:15px; padding:1rem; text-align:center; cursor:pointer;
+      transition:.2s; box-shadow:0 3px 10px rgba(0,0,0,.1); border:3px solid transparent;
+    }
+    .card:hover,.card:focus{transform:scale(1.04); border-color:var(--accent); outline:none;}
+    .fruit-emoji{font-size:3rem; margin-bottom:.5rem;}
+
+    /* ===== MEMORY ===== */
+    .memory-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin:1rem auto; max-width:480px; }
+    .memory-card {
+      aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:2rem;
+      background:var(--secondary); border-radius:12px; border:3px solid transparent; user-select:none;
+    }
+    .memory-card.flipped { background:var(--white); }
+
+    /* ===== DRAG & DROP ===== */
+    .drag-container { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; margin:2rem 0; }
+    .drag-item {
+      background:var(--white); padding:1rem; border-radius:15px; cursor:grab; user-select:none;
+      box-shadow:0 3px 10px rgba(0,0,0,.1); transition:.2s; min-width:120px; text-align:center;
+    }
+    .drag-item:active{cursor:grabbing}
+    .drag-item.dragging{opacity:.5}
+    .drop-zone {
+      border:3px dashed var(--accent); border-radius:15px; padding:2rem; text-align:center;
+      background:var(--white); transition:.2s; min-height:150px; display:flex; align-items:center; justify-content:center;
+    }
+    .drop-zone.active{ border-color:var(--success); background:var(--primary); }
+
+    /* ===== PARENT PANEL ===== */
+    .parent-panel{
+      position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--white);
+      padding:2rem; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,.3); z-index:1000; max-width:90vw; width:420px; display:none;
+    }
+    .parent-panel.active{ display:block; animation:slideIn .25s ease-out; }
+    .parent-overlay{
+      position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:999; display:none;
+    }
+    .parent-overlay.active{ display:block; }
+    .tip-item{ background:var(--background); padding:1rem; margin:1rem 0; border-radius:10px; border-left:4px solid var(--accent); }
+
+    /* ===== COLORING ===== */
+    .coloring-area{ background:var(--white); border-radius:15px; padding:1rem; margin:1rem 0; }
+    #drawingCanvas{ border:3px solid var(--accent); border-radius:10px; background:var(--white); cursor:crosshair; display:block; margin:0 auto; max-width:100%; }
+    .color-palette{ display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; margin:1rem 0; }
+    .color-option{ width:40px; height:40px; border-radius:50%; cursor:pointer; border:3px solid transparent; transition:.2s; }
+    .color-option.active{ border-color:var(--text); transform:scale(1.15); }
+
+    /* ===== FEEDBACK ===== */
+    .feedback{
+      position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); padding:1rem 1.5rem;
+      border-radius:16px; font-size:1.4rem; font-weight:bold; z-index:1001; display:none; color:#fff;
+    }
+    .feedback.show{ display:block; animation:popIn .45s ease-out; }
+    .feedback.success{ background:var(--success); } .feedback.error{ background:var(--error); }
+
+    .stars{ display:flex; gap:.4rem; justify-content:center; margin:1rem 0; }
+    .star{ font-size:2rem; color:#FFD700; opacity:.3; transition:.2s; }
+    .star.active{ opacity:1; transform:scale(1.1); }
+
+    /* ===== ANIM ===== */
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes slideIn{from{opacity:0; transform:translate(-50%,-60%)} to{opacity:1; transform:translate(-50%,-50%)}}
+    @keyframes popIn{
+      0%{opacity:0; transform:translate(-50%,-50%) scale(.6)}
+      70%{opacity:1; transform:translate(-50%,-50%) scale(1.05)}
+      100%{opacity:1; transform:translate(-50%,-50%) scale(1)}
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (min-width:768px){
+      body{font-size:17px}
+      .game-grid.grid-2{grid-template-columns:repeat(3,1fr)}
+      .game-grid.grid-3{grid-template-columns:repeat(4,1fr)}
+      .grid-4{grid-template-columns:repeat(6,1fr)}
+      .header-content{flex-wrap:nowrap}
+    }
+    @media (min-width:1024px){ body{font-size:18px} .container{padding:2rem} }
+
+    /* ===== ACCESSIBILITY ===== */
+    @media (prefers-reduced-motion:reduce){ *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;} }
+    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+    /* ===== RTL SUPPORT ===== */
+    [dir="rtl"]{ text-align:right; }
+    [dir="rtl"] .header-content{ flex-direction:row-reverse; }
+  </style>
+</head>
+
+<body>
+  <!-- ============================================================
+       PROJET : Healthy Eating Adventure — v1.001 (Standalone)
+       CRÉÉ PAR : Salima Bouchaib — Intégration complète
+       DATE : 3 novembre 2025
+       LANGUES : EN/FR — bouton 🌐
+       ============================================================ -->
+
+  <!-- HEADER: Timer / Score / Stars + Controls -->
+  <header class="header" role="banner">
+    <div class="header-content">
+      <div class="stats-bar">
+        <div class="stat-item" id="timer">
+          <span aria-hidden="true">⏱️</span>
+          <span id="time-display">00:00</span>
+          <span class="sr-only" id="time-aria">Time elapsed: 0 minutes 0 seconds</span>
+        </div>
+        <div class="stat-item" id="score-display">
+          <span aria-hidden="true">⭐</span>
+          <span id="score">0</span>
+          <span class="sr-only" id="score-aria">Score: 0 points</span>
+        </div>
+        <div class="stat-item" id="stars-display">
+          <span aria-hidden="true">🏆</span>
+          <span id="stars">0</span>
+          <span class="sr-only" id="stars-aria">Stars earned: 0</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn btn-small" id="language-btn" aria-label="Change language">🌐</button>
+        <button class="btn btn-small" id="parent-help-btn" aria-label="Parent help">👪</button>
+        <button class="btn btn-small" id="reset-btn" aria-label="Reset game">🔄</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- FEEDBACK Toast -->
+  <div id="feedback" class="feedback" role="alert" aria-live="assertive"></div>
+
+  <!-- PARENT OVERLAY & PANEL -->
+  <div class="parent-overlay" id="parent-overlay"></div>
+  <aside class="parent-panel" id="parent-panel" role="dialog" aria-modal="true" aria-labelledby="parent-title">
+    <h3 id="parent-title">Parent Tips</h3>
+    <div class="tip-item" data-i18n="tip1">Encourage short sessions (10–15 min) with breaks.</div>
+    <div class="tip-item" data-i18n="tip2">Celebrate small wins to build confidence.</div>
+    <div class="tip-item" data-i18n="tip3">Model healthy habits: fruits, water, brushing teeth.</div>
+    <div style="text-align:center; margin-top:1rem;">
+      <button class="btn btn-small" id="close-parent">OK</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="container" role="main">
+    <!-- HOME -->
+    <section id="home-screen" class="screen active" role="region" aria-labelledby="home-title">
+      <h1 id="home-title" data-i18n="home_title">🍎 Healthy Eating Adventure 🥦</h1>
+      <p id="home_sub" style="text-align:center; margin-bottom:2rem; font-size:1.1rem;" data-i18n="home_sub">
+        Join our fun adventure to learn about healthy foods and good habits!
+      </p>
+
+      <div style="text-align:center; margin:2rem 0;">
+        <button class="btn btn-primary" id="start-btn" aria-describedby="start-description" data-i18n="start_btn">
+          Start Adventure!
+        </button>
+        <p id="start-description" class="sr-only" data-i18n="start_desc">Start the healthy eating educational adventure</p>
+      </div>
+
+      <div class="game-grid grid-2">
+        <div class="card" data-screen="fruits-screen" tabindex="0" role="button" aria-pressed="false">
+          <div class="fruit-emoji">🍎🍌</div>
+          <h3 data-i18n="menu_fruits_title">Fruits & Vegetables</h3>
+          <p data-i18n="menu_fruits_sub">Learn about healthy foods</p>
+        </div>
+        <div class="card" data-screen="hygiene-screen" tabindex="0" role="button" aria-pressed="false">
+          <div class="fruit-emoji">🚰🦷</div>
+          <h3 data-i18n="menu_hyg_title">Daily Hygiene</h3>
+          <p data-i18n="menu_hyg_sub">Good habits for health</p>
+        </div>
+        <div class="card" data-screen="logic-screen" tabindex="0" role="button" aria-pressed="false">
+          <div class="fruit-emoji">🧩🎯</div>
+          <h3 data-i18n="menu_logic_title">Logic Games</h3>
+          <p data-i18n="menu_logic_sub">Fun puzzles and memory</p>
+        </div>
+        <div class="card" data-screen="creativity-screen" tabindex="0" role="button" aria-pressed="false">
+          <div class="fruit-emoji">🎨✏️</div>
+          <h3 data-i18n="menu_crea_title">Creativity</h3>
+          <p data-i18n="menu_crea_sub">Draw and color</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FRUITS -->
+    <section id="fruits-screen" class="screen" role="region" aria-labelledby="fruits-title">
+      <h2 id="fruits-title" data-i18n="fruits_title">🍎 Fruits & Vegetables 🥦</h2>
+      <p style="text-align:center; margin-bottom:1rem;" data-i18n="fruits_sub">
+        Drag the food to the correct category!
+      </p>
+
+      <!-- Draggable items -->
+      <div class="drag-container" id="drag-items">
+        <div class="drag-item" draggable="true" data-type="fruit" aria-grabbed="false">
+          <div class="fruit-emoji">🍎</div><p data-i18n="apple">Apple</p>
+        </div>
+        <div class="drag-item" draggable="true" data-type="vegetable" aria-grabbed="false">
+          <div class="fruit-emoji">🥦</div><p data-i18n="broccoli">Broccoli</p>
+        </div>
+        <div class="drag-item" draggable="true" data-type="fruit" aria-grabbed="false">
+          <div class="fruit-emoji">🍌</div><p data-i18n="banana">Banana</p>
+        </div>
+        <div class="drag-item" draggable="true" data-type="vegetable" aria-grabbed="false">
+          <div class="fruit-emoji">🥕</div><p data-i18n="carrot">Carrot</p>
+        </div>
+      </div>
+
+      <!-- Drop zones -->
+      <div class="game-grid grid-2" style="margin-top:1rem;">
+        <div class="drop-zone" data-type="fruit" id="fruit-zone" aria-label="Fruits zone">
+          <div>
+            <h3 data-i18n="fruits_zone">Fruits Zone</h3>
+            <p data-i18n="drop_fruits">Drop fruits here</p>
+          </div>
+        </div>
+        <div class="drop-zone" data-type="vegetable" id="vegetable-zone" aria-label="Vegetables zone">
+          <div>
+            <h3 data-i18n="vegetables_zone">Vegetables Zone</h3>
+            <p data-i18n="drop_vegetables">Drop vegetables here</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:1.5rem;">
+        <button class="btn" data-screen="home-screen" data-i18n="back">← Back</button>
+      </div>
+    </section>
+
+    <!-- HYGIENE -->
+    <section id="hygiene-screen" class="screen" role="region" aria-labelledby="hygiene-title">
+      <h2 id="hygiene-title" data-i18n="hyg_title">🚰 Daily Hygiene 🦷</h2>
+      <p style="text-align:center; margin-bottom:1rem;" data-i18n="hyg_sub">Put the steps in the correct order!</p>
+
+      <div class="game-grid grid-2" id="hygiene-sequence">
+        <!-- L’ordre correct: 1 Wash → 2 Brush → 3 Eat → 4 Sleep -->
+        <div class="card sequence-card" data-step="1" tabindex="0" role="button"><div class="fruit-emoji">🚰</div><h3 data-i18n="wash">Wash Hands</h3></div>
+        <div class="card sequence-card" data-step="2" tabindex="0" role="button"><div class="fruit-emoji">🦷</div><h3 data-i18n="brush">Brush Teeth</h3></div>
+        <div class="card sequence-card" data-step="3" tabindex="0" role="button"><div class="fruit-emoji">🍎</div><h3 data-i18n="eat">Eat Healthy</h3></div>
+        <div class="card sequence-card" data-step="4" tabindex="0" role="button"><div class="fruit-emoji">😴</div><h3 data-i18n="sleep">Good Sleep</h3></div>
+      </div>
+
+      <div style="text-align:center; margin:1.5rem 0;">
+        <button class="btn" id="check-sequence" data-i18n="check_order">Check Order</button>
+      </div>
+
+      <div style="text-align:center;">
+        <button class="btn" data-screen="home-screen" data-i18n="back">← Back</button>
+      </div>
+    </section>
+
+    <!-- LOGIC (Memory) -->
+    <section id="logic-screen" class="screen" role="region" aria-labelledby="logic-title">
+      <h2 id="logic-title" data-i18n="logic_title">🧩 Memory Match 🎯</h2>
+      <p style="text-align:center; margin-bottom:1rem;" data-i18n="logic_sub">Find the pairs!</p>
+
+      <div class="memory-grid" id="memory-grid" aria-label="Memory grid">
+        <!-- Généré dynamiquement via JS -->
+      </div>
+
+      <div class="stars" aria-hidden="true">
+        <span class="star" id="star1">★</span>
+        <span class="star" id="star2">★</span>
+        <span class="star" id="star3">★</span>
+      </div>
+
+      <div style="text-align:center; margin-top:1rem;">
+        <button class="btn" id="reset-memory" data-i18n="reset_memory">Reset Memory</button>
+      </div>
+
+      <div style="text-align:center; margin-top:1.5rem;">
+        <button class="btn" data-screen="home-screen" data-i18n="back">← Back</button>
+      </div>
+    </section>
+
+    <!-- CREATIVITY (Drawing) -->
+    <section id="creativity-screen" class="screen" role="region" aria-labelledby="crea-title">
+      <h2 id="crea-title" data-i18n="crea_title">🎨 Creativity ✏️</h2>
+      <p style="text-align:center; margin-bottom:1rem;" data-i18n="crea_sub">Pick a color and draw!</p>
+
+      <div class="coloring-area">
+        <div class="color-palette" id="palette">
+          <!-- Palette simple — neutre pour enfants -->
+          <div class="color-option" data-color="#000000" style="background:#000000" aria-label="Black"></div>
+          <div class="color-option" data-color="#ff0000" style="background:#ff0000" aria-label="Red"></div>
+          <div class="color-option" data-color="#00aa00" style="background:#00aa00" aria-label="Green"></div>
+          <div class="color-option" data-color="#0000ff" style="background:#0000ff" aria-label="Blue"></div>
+          <div class="color-option" data-color="#ffa500" style="background:#ffa500" aria-label="Orange"></div>
+          <div class="color-option" data-color="#aaaaaa" style="background:#aaaaaa" aria-label="Grey"></div>
+          <div class="color-option" data-color="#ffffff" style="background:#ffffff; border:1px solid #ccc" aria-label="Eraser (White)"></div>
+        </div>
+
+        <canvas id="drawingCanvas" width="600" height="400" aria-label="Drawing canvas"></canvas>
+
+        <div style="text-align:center; margin-top:1rem;">
+          <button class="btn" id="clear-canvas" data-i18n="clear_canvas">Clear</button>
+          <button class="btn" id="download-canvas" data-i18n="download_canvas">Download</button>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:1.5rem;">
+        <button class="btn" data-screen="home-screen" data-i18n="back">← Back</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======================= SCRIPTS ======================= -->
+  <script>
+    /* ============================================================
+       v1.001 — JS principal (autonome)
+       - Navigation multi-écrans via [data-screen]
+       - Timer, score, étoiles
+       - Drag & Drop fruits/légumes
+       - Séquence hygiène (ordre)
+       - Memory 3x2
+       - Dessin (canvas)
+       - Panneau Parents + Feedback
+       - Bilingue EN/FR (bouton 🌐)
+       ============================================================ */
+
+    /* -------------------- i18n (EN/FR) -------------------- */
+    const STRINGS = {
+      en: {
+        home_title: "🍎 Healthy Eating Adventure 🥦",
+        home_sub: "Join our fun adventure to learn about healthy foods and good habits!",
+        start_btn: "Start Adventure!",
+        start_desc: "Start the healthy eating educational adventure",
+        menu_fruits_title: "Fruits & Vegetables",
+        menu_fruits_sub: "Learn about healthy foods",
+        menu_hyg_title: "Daily Hygiene",
+        menu_hyg_sub: "Good habits for health",
+        menu_logic_title: "Logic Games",
+        menu_logic_sub: "Fun puzzles and memory",
+        menu_crea_title: "Creativity",
+        menu_crea_sub: "Draw and color",
+        fruits_title: "🍎 Fruits & Vegetables 🥦",
+        fruits_sub: "Drag the food to the correct category!",
+        fruits_zone: "Fruits Zone",
+        drop_fruits: "Drop fruits here",
+        vegetables_zone: "Vegetables Zone",
+        drop_vegetables: "Drop vegetables here",
+        apple: "Apple", broccoli: "Broccoli", banana: "Banana", carrot: "Carrot",
+        hyg_title: "🚰 Daily Hygiene 🦷",
+        hyg_sub: "Put the steps in the correct order!",
+        wash: "Wash Hands", brush: "Brush Teeth", eat: "Eat Healthy", sleep: "Good Sleep",
+        check_order: "Check Order",
+        logic_title: "🧩 Memory Match 🎯",
+        logic_sub: "Find the pairs!",
+        reset_memory: "Reset Memory",
+        crea_title: "🎨 Creativity ✏️",
+        crea_sub: "Pick a color and draw!",
+        clear_canvas: "Clear", download_canvas: "Download",
+        back: "← Back",
+        tip1: "Encourage short sessions (10–15 min) with breaks.",
+        tip2: "Celebrate small wins to build confidence.",
+        tip3: "Model healthy habits: fruits, water, brushing teeth.",
+        good_job: "Great job!",
+        try_again: "Try again!",
+        all_sorted: "Perfect sorting!",
+        pair_found: "Pair found!",
+        completed: "Completed!",
+        reset_done: "Reset done."
+      },
+      fr: {
+        home_title: "🍎 Aventure Alimentation Saine 🥦",
+        home_sub: "Découvrons en s'amusant les aliments sains et les bonnes habitudes !",
+        start_btn: "Commencer l'aventure !",
+        start_desc: "Commencer l'activité éducative sur l'alimentation saine",
+        menu_fruits_title: "Fruits & Légumes",
+        menu_fruits_sub: "Découvrir les aliments sains",
+        menu_hyg_title: "Hygiène Quotidienne",
+        menu_hyg_sub: "Bonnes habitudes pour la santé",
+        menu_logic_title: "Jeux de Logique",
+        menu_logic_sub: "Puzzles et mémoire",
+        menu_crea_title: "Créativité",
+        menu_crea_sub: "Dessiner et colorier",
+        fruits_title: "🍎 Fruits & Légumes 🥦",
+        fruits_sub: "Glisse l'aliment dans la bonne catégorie !",
+        fruits_zone: "Zone Fruits",
+        drop_fruits: "Dépose les fruits ici",
+        vegetables_zone: "Zone Légumes",
+        drop_vegetables: "Dépose les légumes ici",
+        apple: "Pomme", broccoli: "Brocoli", banana: "Banane", carrot: "Carotte",
+        hyg_title: "🚰 Hygiène Quotidienne 🦷",
+        hyg_sub: "Remets les étapes dans le bon ordre !",
+        wash: "Se laver les mains", brush: "Se brosser les dents", eat: "Manger sain", sleep: "Bien dormir",
+        check_order: "Vérifier l'ordre",
+        logic_title: "🧩 Memory 🎯",
+        logic_sub: "Retrouve les paires !",
+        reset_memory: "Réinitialiser le Memory",
+        crea_title: "🎨 Créativité ✏️",
+        crea_sub: "Choisis une couleur et dessine !",
+        clear_canvas: "Effacer", download_canvas: "Télécharger",
+        back: "← Retour",
+        tip1: "Préférez des sessions courtes (10–15 min) avec des pauses.",
+        tip2: "Valorisez les petites réussites pour renforcer la confiance.",
+        tip3: "Montrez l’exemple : fruits, eau, brossage des dents.",
+        good_job: "Bravo !",
+        try_again: "Essaie encore !",
+        all_sorted: "Tri parfait !",
+        pair_found: "Paire trouvée !",
+        completed: "Terminé !",
+        reset_done: "Réinitialisé."
+      }
+    };
+
+    let lang = 'en'; // Langue par défaut
+    const $ = (sel, ctx=document) => ctx.querySelector(sel);
+    const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+
+    /* -------------------- Lang switch -------------------- */
+    function applyI18N() {
+      $$("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (STRINGS[lang][key]) el.textContent = STRINGS[lang][key];
+      });
+      // Labels dynamiques ARIA
+      $("#time-aria").textContent = lang==='fr' ? "Temps écoulé : 0 minutes 0 secondes" : "Time elapsed: 0 minutes 0 seconds";
+      $("#score-aria").textContent = lang==='fr' ? "Score : 0 points" : "Score: 0 points";
+      $("#stars-aria").textContent = lang==='fr' ? "Étoiles gagnées : 0" : "Stars earned: 0";
+      // Titre document
+      document.title = lang==='fr'
+        ? "Aventure Alimentation Saine (v1.001)"
+        : "Healthy Eating Adventure (v1.001)";
+    }
+
+    $("#language-btn").addEventListener("click", () => {
+      lang = (lang === 'en') ? 'fr' : 'en';
+      applyI18N();
+      toast(lang==='fr' ? "Langue : Français" : "Language: English", 'success');
+    });
+
+    /* -------------------- Navigation -------------------- */
+    function showScreen(id){
+      $$(".screen").forEach(s => s.classList.remove("active"));
+      $("#"+id).classList.add("active");
+      // Focus titre pour accessibilité
+      const heading = $("#"+id+" h1, #"+id+" h2");
+      if (heading) heading.focus?.();
+    }
+    // Boutons menu
+    $$("[data-screen]").forEach(el=>{
+      el.addEventListener("click", ()=>{
+        const target = el.getAttribute("data-screen");
+        if (target) showScreen(target);
+      });
+      el.addEventListener("keypress", (e)=>{
+        if (e.key==='Enter' || e.key===' '){
+          e.preventDefault(); el.click();
+        }
+      });
+    });
+    $("#start-btn").addEventListener("click", ()=> showScreen("fruits-screen"));
+    $("#reset-btn").addEventListener("click", fullReset);
+
+    /* -------------------- Timer / Score / Stars -------------------- */
+    let startTime = Date.now();
+    let timerInterval = null;
+    let score = 0;
+    let stars = 0;
+
+    function startTimer(){
+      if (timerInterval) clearInterval(timerInterval);
+      startTime = Date.now();
+      timerInterval = setInterval(updateTime, 1000);
+    }
+    function updateTime(){
+      const elapsed = Math.floor((Date.now()-startTime)/1000);
+      const m = String(Math.floor(elapsed/60)).padStart(2,'0');
+      const s = String(elapsed%60).padStart(2,'0');
+      $("#time-display").textContent = `${m}:${s}`;
+      $("#time-aria").textContent = (lang==='fr')
+        ? `Temps écoulé : ${m} minutes ${s} secondes` : `Time elapsed: ${m} minutes ${s} seconds`;
+    }
+    function addScore(points){
+      score += points;
+      $("#score").textContent = score;
+      $("#score-aria").textContent = (lang==='fr') ? `Score : ${score} points` : `Score: ${score} points`;
+      // Gagner des étoiles automatiquement
+      const newStars = Math.min(3, Math.floor(score/10)); // 0..3
+      if (newStars !== stars){
+        stars = newStars;
+        updateStarsUI();
+      }
+    }
+    function updateStarsUI(){
+      for (let i=1;i<=3;i++){
+        const el = $("#star"+i);
+        if (!el) continue;
+        el.classList.toggle("active", i<=stars);
+      }
+      $("#stars").textContent = stars;
+      $("#stars-aria").textContent = (lang==='fr') ? `Étoiles gagnées : ${stars}` : `Stars earned: ${stars}`;
+    }
+    startTimer();
+
+    /* -------------------- Feedback (toast) -------------------- */
+    const feedback = $("#feedback");
+    function toast(msg, type='success', duration=1200){
+      feedback.textContent = msg;
+      feedback.className = `feedback show ${type}`;
+      setTimeout(()=>{ feedback.className = 'feedback'; }, duration);
+    }
+
+    /* -------------------- Parent panel -------------------- */
+    const parentOverlay = $("#parent-overlay");
+    const parentPanel = $("#parent-panel");
+    $("#parent-help-btn").addEventListener("click", ()=>{
+      parentOverlay.classList.add("active");
+      parentPanel.classList.add("active");
+    });
+    $("#close-parent").addEventListener("click", closeParent);
+    parentOverlay.addEventListener("click", closeParent);
+    function closeParent(){
+      parentOverlay.classList.remove("active");
+      parentPanel.classList.remove("active");
+    }
+
+    /* -------------------- Fruits: Drag & Drop -------------------- */
+    let correctDrops = 0;
+    const totalDraggables = 4;
+    $$("#drag-items .drag-item").forEach(item=>{
+      item.addEventListener("dragstart", e=>{
+        item.classList.add("dragging");
+        e.dataTransfer.setData("text/plain", item.getAttribute("data-type"));
+        e.dataTransfer.effectAllowed = "move";
+      });
+      item.addEventListener("dragend", ()=> item.classList.remove("dragging"));
+    });
+
+    $$(".drop-zone").forEach(zone=>{
+      zone.addEventListener("dragover", e=>{
+        e.preventDefault(); zone.classList.add("active");
+      });
+      zone.addEventListener("dragleave", ()=> zone.classList.remove("active"));
+      zone.addEventListener("drop", e=>{
+        e.preventDefault(); zone.classList.remove("active");
+        const type = e.dataTransfer.getData("text/plain");
+        const expected = zone.getAttribute("data-type");
+        // Trouver l’élément en cours de drag (fallback touch non géré ici pour simplicité)
+        const dragging = $(".drag-item.dragging");
+        if (!dragging) return;
+        if (type === expected){
+          zone.appendChild(dragging);
+          dragging.setAttribute("draggable","false");
+          dragging.style.cursor = "default";
+          correctDrops++;
+          addScore(3);
+          toast(STRINGS[lang].good_job, 'success');
+          if (correctDrops === totalDraggables){
+            toast(STRINGS[lang].all_sorted, 'success', 1500);
+          }
+        } else {
+          toast(STRINGS[lang].try_again, 'error');
+        }
+      });
+    });
+
+    /* -------------------- Hygiene sequence -------------------- */
+    // Interaction: cliquer les cartes dans l’ordre; on stocke la séquence d’IDs choisis.
+    const sequenceCards = $$("#hygiene-sequence .sequence-card");
+    const correctOrder = ["1","2","3","4"];
+    let chosenOrder = [];
+    sequenceCards.forEach(card=>{
+      card.addEventListener("click", ()=>{
+        const step = card.getAttribute("data-step");
+        if (!chosenOrder.includes(step)){
+          chosenOrder.push(step);
+          card.style.borderColor = "#8bc34a";
+          addScore(1);
+        }
+      });
+    });
+    $("#check-sequence").addEventListener("click", ()=>{
+      const ok = chosenOrder.join(",") === correctOrder.join(",");
+      if (ok){ addScore(5); toast(STRINGS[lang].completed, 'success', 1400); }
+      else { toast(STRINGS[lang].try_again, 'error'); }
+      // Reset visuel pour permettre de rejouer facilement
+      setTimeout(()=>{
+        chosenOrder = [];
+        sequenceCards.forEach(c=> c.style.borderColor = "transparent");
+      }, 700);
+    });
+
+    /* -------------------- Memory Game (3x2) -------------------- */
+    const memoryEmojis = ["🍎","🍎","🥦","🥦","🍌","🍌"];
+    let memoryLock = false;
+    let memoryFirst = null;
+    let memoryPairs = 0;
+
+    function shuffle(array){
+      for (let i=array.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    function initMemory(){
+      const grid = $("#memory-grid");
+      grid.innerHTML = "";
+      memoryLock = false; memoryFirst = null; memoryPairs = 0;
+      const data = shuffle([...memoryEmojis]);
+      data.forEach((emo, idx)=>{
+        const card = document.createElement("div");
+        card.className = "memory-card";
+        card.setAttribute("data-emoji", emo);
+        card.setAttribute("tabindex","0");
+        card.setAttribute("role","button");
+        card.addEventListener("click", ()=> flipCard(card));
+        card.addEventListener("keypress", (e)=>{ if (e.key==='Enter' || e.key===' ') flipCard(card); });
+        grid.appendChild(card);
+      });
+    }
+    function flipCard(card){
+      if (memoryLock || card.classList.contains("flipped")) return;
+      card.classList.add("flipped");
+      card.textContent = card.getAttribute("data-emoji");
+      if (!memoryFirst){
+        memoryFirst = card;
+        return;
+      }
+      // seconde carte
+      const second = card;
+      const match = memoryFirst.getAttribute("data-emoji") === second.getAttribute("data-emoji");
+      if (!match){
+        memoryLock = true;
+        setTimeout(()=>{
+          memoryFirst.classList.remove("flipped"); memoryFirst.textContent = "";
+          second.classList.remove("flipped"); second.textContent = "";
+          memoryFirst = null; memoryLock = false;
+        }, 500);
+        return;
+      }
+      // Paire trouvée
+      addScore(2);
+      toast(STRINGS[lang].pair_found, 'success', 800);
+      memoryPairs++;
+      memoryFirst = null;
+      if (memoryPairs === memoryEmojis.length/2){
+        addScore(5);
+        toast(STRINGS[lang].completed, 'success', 1500);
+      }
+    }
+    $("#reset-memory").addEventListener("click", ()=>{ initMemory(); toast(STRINGS[lang].reset_done,'success'); });
+
+    /* -------------------- Drawing Canvas -------------------- */
+    const canvas = $("#drawingCanvas");
+    const ctx = canvas.getContext("2d");
+    let drawing = false;
+    let color = "#000000";
+    let last = null;
+
+    function pickColor(c){
+      color = c;
+      $$(".color-option").forEach(el=>el.classList.remove("active"));
+      const el = $(`.color-option[data-color="${c}"]`);
+      if (el) el.classList.add("active");
+    }
+    $("#palette").addEventListener("click",(e)=>{
+      const target = e.target.closest(".color-option"); if (!target) return;
+      pickColor(target.getAttribute("data-color"));
+    });
+    pickColor("#000000");
+
+    function getPos(evt){
+      const rect = canvas.getBoundingClientRect();
+      const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+      const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
+      return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+    function startDraw(evt){ drawing = true; last = getPos(evt); }
+    function endDraw(){ drawing = false; last = null; }
+    function moveDraw(evt){
+      if (!drawing) return;
+      const pos = getPos(evt);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 5;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(last.x, last.y);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+      last = pos;
+      evt.preventDefault();
+    }
+    // Souris
+    canvas.addEventListener("mousedown", startDraw);
+    canvas.addEventListener("mouseup", endDraw);
+    canvas.addEventListener("mouseleave", endDraw);
+    canvas.addEventListener("mousemove", moveDraw);
+    // Touch
+    canvas.addEventListener("touchstart", startDraw, {passive:false});
+    canvas.addEventListener("touchend", endDraw, {passive:false});
+    canvas.addEventListener("touchcancel", endDraw, {passive:false});
+    canvas.addEventListener("touchmove", moveDraw, {passive:false});
+
+    $("#clear-canvas").addEventListener("click", ()=>{
+      ctx.clearRect(0,0,canvas.width, canvas.height);
+    });
+    $("#download-canvas").addEventListener("click", ()=>{
+      const link = document.createElement('a');
+      link.download = 'drawing.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+
+    /* -------------------- Reset global -------------------- */
+    function fullReset(){
+      // Scores & timer
+      score = 0; stars = 0;
+      $("#score").textContent = 0;
+      $("#stars").textContent = 0;
+      updateStarsUI();
+      startTimer();
+      // Fruits
+      correctDrops = 0;
+      const dragZone = $("#drag-items");
+      dragZone.innerHTML = "";
+      const items = [
+        {emo:"🍎", type:"fruit", key:"apple"},
+        {emo:"🥦", type:"vegetable", key:"broccoli"},
+        {emo:"🍌", type:"fruit", key:"banana"},
+        {emo:"🥕", type:"vegetable", key:"carrot"},
+      ];
+      items.forEach(it=>{
+        const div = document.createElement("div");
+        div.className="drag-item"; div.draggable=true; div.setAttribute("data-type", it.type);
+        div.setAttribute("aria-grabbed","false");
+        div.innerHTML = `<div class="fruit-emoji">${it.emo}</div><p data-i18n="${it.key}">${STRINGS[lang][it.key]}</p>`;
+        div.addEventListener("dragstart", e=>{
+          div.classList.add("dragging");
+          e.dataTransfer.setData("text/plain", div.getAttribute("data-type"));
+          e.dataTransfer.effectAllowed="move";
+        });
+        div.addEventListener("dragend", ()=>div.classList.remove("dragging"));
+        dragZone.appendChild(div);
+      });
+      // Vider zones
+      $("#fruit-zone").innerHTML = `<div><h3 data-i18n="fruits_zone">${STRINGS[lang].fruits_zone}</h3><p data-i18n="drop_fruits">${STRINGS[lang].drop_fruits}</p></div>`;
+      $("#vegetable-zone").innerHTML = `<div><h3 data-i18n="vegetables_zone">${STRINGS[lang].vegetables_zone}</h3><p data-i18n="drop_vegetables">${STRINGS[lang].drop_vegetables}</p></div>`;
+      // Réattacher les handlers DnD sur zones
+      $$(".drop-zone").forEach(zone=>{
+        zone.addEventListener("dragover", e=>{ e.preventDefault(); zone.classList.add("active"); });
+        zone.addEventListener("dragleave", ()=> zone.classList.remove("active"));
+        zone.addEventListener("drop", e=>{
+          e.preventDefault(); zone.classList.remove("active");
+          const type = e.dataTransfer.getData("text/plain");
+          const expected = zone.getAttribute("data-type");
+          const dragging = $(".drag-item.dragging");
+          if (!dragging) return;
+          if (type === expected){
+            zone.appendChild(dragging);
+            dragging.setAttribute("draggable","false");
+            dragging.style.cursor="default";
+            correctDrops++;
+            addScore(3);
+            toast(STRINGS[lang].good_job,'success');
+            if (correctDrops === totalDraggables) toast(STRINGS[lang].all_sorted,'success',1500);
+          } else {
+            toast(STRINGS[lang].try_again,'error');
+          }
+        });
+      });
+      // Sequence
+      chosenOrder = [];
+      sequenceCards.forEach(c=> c.style.borderColor = "transparent");
+      // Memory
+      initMemory();
+      // Canvas
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      toast(STRINGS[lang].reset_done,'success');
+      applyI18N();
+    }
+
+    // Init au chargement
+    window.addEventListener("load", ()=>{
+      applyI18N();
+      initMemory();
+    });
+  </script>
+</body>
+</html>

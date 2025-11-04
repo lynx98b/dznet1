@@ -1,6 +1,6 @@
-<!-- visit_intranet.html | v1.005 -->
+<!-- visit_intranet.html | v1.006 -->
 <!-- Auteur : lynx98b -->
-<!-- Version avec texte explicatif central coloré selon la rubrique survolée -->
+<!-- Version stable sans mouvement d’icônes, avec texte explicatif central coloré -->
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -81,14 +81,14 @@
       color: white;
       font-size: 2.5rem;
       text-decoration: none;
-      transition: all 0.3s ease;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
       cursor: pointer;
+      transition: filter 0.3s ease;
     }
 
+    /* Pas de mouvement au survol */
     .circle-btn:hover {
-      transform: scale(1.15);
-      filter: brightness(1.2);
+      filter: brightness(1.1);
     }
 
     /* --- Couleurs distinctes --- */

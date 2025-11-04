@@ -1,0 +1,197 @@
+<!-- visit_intranet.html | v1.005 -->
+<!-- Auteur : lynx98b -->
+<!-- Version avec texte explicatif central coloré selon la rubrique survolée -->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visite l’Intranet - DZNET1</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* --- Thème global --- */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0a0a0a;
+      font-family: 'Poppins', sans-serif;
+      color: #e8e8e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* --- Cercle principal --- */
+    .main-circle {
+      position: relative;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, #1a1a1a 60%, #0d0d0d 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 60px rgba(0, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 5s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.2); }
+      50% { box-shadow: 0 0 60px rgba(0, 255, 255, 0.6); }
+    }
+
+    /* --- Texte central --- */
+    .center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #00ffff;
+      font-size: 1.6rem;
+      text-shadow: 0 0 12px rgba(0, 255, 255, 0.8);
+    }
+
+    .center-text h2 {
+      margin-bottom: 0.3em;
+    }
+
+    /* --- Texte dynamique --- */
+    #rubrique-name {
+      font-weight: bold;
+      font-size: 1.3rem;
+      opacity: 0;
+      transition: opacity 0.4s ease, color 0.3s ease;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    /* --- Boutons circulaires --- */
+    .circle-btn {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2.5rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+    }
+
+    .circle-btn:hover {
+      transform: scale(1.15);
+      filter: brightness(1.2);
+    }
+
+    /* --- Couleurs distinctes --- */
+    .concours { background: linear-gradient(145deg, #ff005a, #ff3366); }
+    .games { background: linear-gradient(145deg, #0099ff, #33ccff); }
+    .encyclopedie { background: linear-gradient(145deg, #00cc99, #00ffcc); }
+    .gestes { background: linear-gradient(145deg, #ffb400, #ffcc33); color: #333; }
+    .histoirs { background: linear-gradient(145deg, #aa55ff, #cc88ff); }
+    .ramadams { background: linear-gradient(145deg, #008877, #00cc99); }
+
+    /* --- Positionnement autour du cercle --- */
+    .b1 { top: -50px; left: 50%; transform: translate(-50%, -100%); }
+    .b2 { top: 20%; right: -60px; }
+    .b3 { bottom: 20%; right: -60px; }
+    .b4 { bottom: -50px; left: 50%; transform: translate(-50%, 100%); }
+    .b5 { bottom: 20%; left: -60px; }
+    .b6 { top: 20%; left: -60px; }
+
+    /* --- Responsive --- */
+    @media (max-width: 800px) {
+      .main-circle { width: 400px; height: 400px; }
+      .circle-btn { width: 95px; height: 95px; font-size: 1.9rem; }
+      .center-text { font-size: 1.3rem; }
+    }
+
+    @media (max-width: 500px) {
+      .main-circle { width: 320px; height: 320px; }
+      .circle-btn { width: 80px; height: 80px; font-size: 1.4rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-circle">
+    <!-- Texte central -->
+    <div class="center-text">
+      <h2>🌍 Bienvenue sur l’Intranet</h2>
+      <p>Choisis ta rubrique :</p>
+      <p id="rubrique-name"></p>
+    </div>
+
+    <!-- Boutons -->
+    <a href="https://dznet1.com/concours" 
+       class="circle-btn concours b1" 
+       data-title="Participe à nos concours amusants !" 
+       data-color="#ff3366">
+      <i class="fa-solid fa-trophy"></i>
+    </a>
+
+    <a href="https://dznet1.com/games" 
+       class="circle-btn games b2" 
+       data-title="Joue et apprends en t’amusant !" 
+       data-color="#33ccff">
+      <i class="fa-solid fa-gamepad"></i>
+    </a>
+
+    <a href="https://dznet1.com/encyclopedie" 
+       class="circle-btn encyclopedie b3" 
+       data-title="Explore les connaissances du monde !" 
+       data-color="#00ffcc">
+      <i class="fa-solid fa-book"></i>
+    </a>
+
+    <a href="https://dznet1.com/gestes" 
+       class="circle-btn gestes b4" 
+       data-title="Découvre les bons gestes du quotidien !" 
+       data-color="#ffcc33">
+      <i class="fa-solid fa-hands-helping"></i>
+    </a>
+
+    <a href="https://dznet1.com/histoirs" 
+       class="circle-btn histoirs b5" 
+       data-title="Lis des histoires passionnantes !" 
+       data-color="#cc88ff">
+      <i class="fa-solid fa-scroll"></i>
+    </a>
+
+    <a href="https://dznet1.com/ramadams" 
+       class="circle-btn ramadams b6" 
+       data-title="Découvre le monde du Ramadan !" 
+       data-color="#00cc99">
+      <i class="fa-solid fa-moon"></i>
+    </a>
+  </div>
+
+  <!-- --- Script dynamique --- -->
+  <script>
+    const boutons = document.querySelectorAll('.circle-btn');
+    const rubriqueName = document.getElementById('rubrique-name');
+
+    boutons.forEach(btn => {
+      btn.addEventListener('mouseenter', () => {
+        rubriqueName.textContent = btn.dataset.title;
+        rubriqueName.style.color = btn.dataset.color;
+        rubriqueName.style.opacity = "1";
+        rubriqueName.style.textShadow = `0 0 20px ${btn.dataset.color}`;
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        rubriqueName.style.opacity = "0";
+        setTimeout(() => { rubriqueName.textContent = ''; }, 300);
+      });
+    });
+  </script>
+</body>
+</html>

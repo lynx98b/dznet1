@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Générateur de prompt pour contenu HTML enfant - Version professionnelle">
-    <title>Générateur Prompt Contenu Enfant - v1.005</title>
+    <meta name="description" content="Générateur de prompt pour contenu HTML enfant - Version professionnelle optimisée">
+    <title>Générateur Prompt Contenu Enfant - v1.006</title>
     <style>
         /* ===== VARIABLES & RESET ===== */
         :root {
@@ -94,6 +94,37 @@
         .help-btn:hover {
             background: #E67E22;
             transform: scale(1.05);
+        }
+        
+        /* ===== PROGRESS BAR ===== */
+        .progress-container {
+            background: var(--bg-light);
+            padding: 20px 30px;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #E0E0E0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success) 0%, var(--primary) 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        .progress-text {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #7F8C8D;
+            text-align: center;
         }
         
         /* ===== MODAL GÉNÉRIQUE ===== */
@@ -224,7 +255,8 @@
         }
         
         #promptOutputModal {
-            background: #F8F9FA;
+            background: #2C3E50;
+            color: #ECF0F1;
             padding: 20px;
             border-radius: 8px;
             border: 2px solid var(--border);
@@ -265,23 +297,76 @@
             margin-top: 15px;
         }
         
+        /* ===== SECTIONS COLLAPSIBLES ===== */
         .section {
-            margin-bottom: 40px;
-            padding-bottom: 30px;
-            border-bottom: 2px solid var(--border);
+            margin-bottom: 20px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
         }
         
-        .section:last-child {
-            border-bottom: none;
+        .section.collapsed .section-content {
+            display: none;
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, var(--bg-light) 0%, #E8E8E8 100%);
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            user-select: none;
+        }
+        
+        .section-header:hover {
+            background: linear-gradient(135deg, #E8E8E8 0%, #D8D8D8 100%);
         }
         
         .section-title {
             font-size: 20px;
             color: var(--primary);
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
+            margin: 0;
+        }
+        
+        .section-toggle {
+            font-size: 24px;
+            color: var(--primary);
+            transition: transform 0.3s;
+        }
+        
+        .section.collapsed .section-toggle {
+            transform: rotate(-90deg);
+        }
+        
+        .section-content {
+            padding: 30px;
+            background: white;
+        }
+        
+        .required-badge {
+            background: var(--danger);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .optional-badge {
+            background: var(--info);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 10px;
         }
         
         .form-group {
@@ -294,11 +379,62 @@
             font-weight: 600;
             margin-bottom: 8px;
             font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         label.required::after {
             content: " *";
             color: var(--danger);
+        }
+        
+        /* ===== TOOLTIPS ===== */
+        .tooltip {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: var(--info);
+            color: white;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: help;
+            margin-left: 5px;
+        }
+        
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2C3E50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            white-space: nowrap;
+            max-width: 300px;
+            white-space: normal;
+            width: max-content;
+            z-index: 100;
+            font-size: 13px;
+            font-weight: normal;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .tooltip:hover::before {
+            content: '';
+            position: absolute;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: #2C3E50;
+            z-index: 101;
         }
         
         /* ===== VALIDATION ERREURS ===== */
@@ -407,15 +543,6 @@
             flex-shrink: 0;
         }
         
-        /* ===== DRAPEAUX LANGUES ===== */
-        .language-flag {
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            margin-right: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-        
         /* ===== PALETTES COULEURS ===== */
         .color-palette {
             display: flex;
@@ -425,6 +552,13 @@
             background: white;
             border-radius: 8px;
             border: 2px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .color-palette:hover {
+            border-color: var(--primary);
+            background: #E8F4F8;
         }
         
         .color-palette input[type="radio"] {
@@ -503,6 +637,15 @@
         
         .btn-secondary:hover {
             background: #BDC3C7;
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #E67E22;
         }
         
         /* ===== SPINNER CHARGEMENT ===== */
@@ -609,6 +752,10 @@
             .metadata-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .section-content {
+                padding: 20px;
+            }
         }
         
         /* ===== ACCESSIBILITÉ ===== */
@@ -619,66 +766,6 @@
             outline: 3px solid var(--primary);
             outline-offset: 2px;
         }
-        
-        /* ===== NOUVEAU : FORMAT JSON ===== */
-        .format-toggle {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            background: var(--bg-light);
-            padding: 15px;
-            border-radius: 8px;
-        }
-        
-        .format-option {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-        
-        .format-option.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        
-        .format-option:not(.active):hover {
-            background: #E8F4F8;
-            border-color: var(--primary);
-        }
-        
-        .json-preview {
-            background: #2C3E50;
-            color: #ECF0F1;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            max-height: 200px;
-            overflow-y: auto;
-            margin-top: 10px;
-            display: none;
-        }
-        
-        .json-key {
-            color: #3498DB;
-        }
-        
-        .json-string {
-            color: #27AE60;
-        }
-        
-        .json-number {
-            color: #E74C3C;
-        }
-        
-        .json-boolean {
-            color: #9B59B6;
-        }
     </style>
 </head>
 <body>
@@ -687,86 +774,65 @@
         <header>
             <button class="help-btn" onclick="openHelpModal()">
                 <span>❓</span>
-                <span>Guide Parents</span>
+                <span>Guide</span>
             </button>
-            <span class="version-badge">v1.005</span>
+            <span class="version-badge">v1.006</span>
             <h1>🎨 Générateur de Prompt - Contenu HTML Enfant</h1>
-            <p>Créez des expériences éducatives interactives sécurisées pour vos enfants</p>
-            <p style="font-size: 12px; margin-top: 10px;">✅ Format JSON optimisé | 🔒 Conforme RGPD/COPPA | ♿ Accessible</p>
+            <p>Créez des expériences éducatives interactives sécurisées</p>
+            <p style="font-size: 12px; margin-top: 10px;">✅ Toujours trilingue FR/AR/EN | 🔒 RGPD/COPPA | ♿ Accessible</p>
         </header>
+        
+        <!-- PROGRESS BAR -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">
+                Remplissez au minimum les 3 champs obligatoires pour générer un prompt
+            </div>
+        </div>
         
         <!-- MODAL AIDE -->
         <div id="helpModal" class="modal">
             <div class="modal-content">
                 <button class="modal-close" onclick="closeHelpModal()">×</button>
-                <h2>📘 Guide Parents : Qu'est-ce que cet outil ?</h2>
+                <h2>📘 Guide Rapide</h2>
                 
-                <p><strong>Objectif :</strong> Cet outil vous aide à créer un "prompt" (instruction détaillée) pour générer du contenu éducatif HTML interactif adapté à l'âge de vos enfants.</p>
+                <p><strong>🎯 Objectif :</strong> Créer un prompt pour générer du contenu éducatif HTML interactif adapté aux enfants.</p>
                 
-                <h3>🎯 Pourquoi utiliser cet outil ?</h3>
-                <ul style="line-height: 2; margin-left: 20px;">
-                    <li><strong>Sécurité :</strong> Garantit un contenu sans publicité, sans tracking, sans liens externes dangereux</li>
-                    <li><strong>Pédagogie :</strong> Adapte le niveau de difficulté à l'âge exact de votre enfant</li>
-                    <li><strong>Accessibilité :</strong> Fonctionne sur tablette, téléphone, ordinateur sans installation</li>
-                    <li><strong>Offline :</strong> Une fois téléchargé, fonctionne sans Internet (idéal pour voyages)</li>
-                    <li><strong>Multilingue :</strong> Créez du contenu en Français, Arabe ou Anglais</li>
-                </ul>
-                
-                <h3>📊 Statistiques & Bénéfices</h3>
+                <h3>✅ SEULEMENT 3 CHAMPS OBLIGATOIRES :</h3>
                 <div class="stat-box">
-                    <strong>85%</strong> des enfants retiennent mieux avec du contenu interactif vs lecture passive (Étude UNESCO 2023)
+                    <strong>1.</strong> Votre nom/prénom<br>
+                    <strong>2.</strong> Au moins 1 tranche d'âge<br>
+                    <strong>3.</strong> Le thème/sujet du contenu
                 </div>
-                <div class="stat-box">
-                    <strong>70%</strong> des parents recherchent du contenu éducatif sans écran passif (Common Sense Media 2024)
-                </div>
-                <div class="stat-box">
-                    <strong>92%</strong> de satisfaction avec du contenu adapté à l'âge précis (données internes)
-                </div>
-                
-                <h3>🌟 Exemples Réels d'Utilisation</h3>
-                
-                <div class="example-box">
-                    <strong>Exemple 1 : Léa, 5 ans - Apprentissage des couleurs</strong><br>
-                    Maman a créé un jeu de "chasse aux couleurs" où Léa clique sur des objets de la bonne couleur. Résultat : Léa connaît maintenant 8 couleurs et s'amuse 15 min/jour en autonomie.
-                </div>
-                
-                <div class="example-box">
-                    <strong>Exemple 2 : Tom, 8 ans - Tables de multiplication</strong><br>
-                    Papa a généré un quiz interactif avec animations. Tom a progressé de 40% en 2 semaines en jouant 10 min après l'école.
-                </div>
-                
-                <div class="example-box">
-                    <strong>Exemple 3 : École primaire - Hygiène dentaire</strong><br>
-                    Une institutrice a créé une histoire interactive où les enfants aident "Dent-Blanche" à rester propre. 95% de la classe se brosse maintenant les dents matin et soir.
-                </div>
-                
-                <h3>⚙️ Comment ça marche ?</h3>
-                <ol style="line-height: 2; margin-left: 20px;">
-                    <li><strong>Remplissez le formulaire</strong> avec l'âge, le thème souhaité, les interactions</li>
-                    <li><strong>Cliquez "Générer"</strong> → Un texte (prompt) est créé automatiquement</li>
-                    <li><strong>Une fenêtre s'ouvre</strong> avec le prompt complet</li>
-                    <li><strong>Copiez ou téléchargez</strong> le prompt</li>
-                    <li><strong>Collez-le dans une IA</strong> (ChatGPT, Claude, etc.)</li>
-                    <li><strong>L'IA vous proposera d'abord un plan</strong> → Validez-le</li>
-                    <li><strong>L'IA génère le fichier HTML</strong> → Téléchargez-le et ouvrez-le dans un navigateur</li>
-                    <li><strong>Votre enfant joue et apprend !</strong> 🎉</li>
-                </ol>
-                
-                <h3>🔒 Garanties de Sécurité</h3>
-                <ul style="line-height: 2; margin-left: 20px;">
-                    <li>✅ Aucune collecte de données personnelles</li>
-                    <li>✅ Aucune publicité ou contenu commercial</li>
-                    <li>✅ Pas de lien vers des sites externes</li>
-                    <li>✅ Contenu validé selon standards éducatifs</li>
-                    <li>✅ Conforme RGPD et loi COPPA (protection enfants)</li>
-                </ul>
                 
                 <div class="info-banner">
-                    <strong>💡 Astuce :</strong> Commencez simple ! Choisissez un seul objectif pédagogique pour le premier essai (ex: reconnaître 5 couleurs). Vous pourrez créer des contenus plus complexes ensuite.
+                    <strong>💡 Nouveau :</strong> Tous les autres champs sont <strong>optionnels</strong> avec valeurs par défaut intelligentes. Le contenu sera <strong>TOUJOURS trilingue</strong> (Français/Arabe/Anglais) automatiquement.
                 </div>
                 
+                <h3>🚀 Comment ça marche ?</h3>
+                <ol style="line-height: 2; margin-left: 20px;">
+                    <li>Remplissez les 3 champs obligatoires minimum</li>
+                    <li>Ajoutez des options si besoin (sinon valeurs par défaut)</li>
+                    <li>Cliquez "Générer le Prompt"</li>
+                    <li>Copiez le prompt JSON généré</li>
+                    <li>Collez-le dans ChatGPT/Claude/Gemini</li>
+                    <li>L'IA génère le fichier HTML directement</li>
+                    <li>Téléchargez et ouvrez dans un navigateur</li>
+                </ol>
+                
+                <h3>🔒 Garanties</h3>
+                <ul style="line-height: 2; margin-left: 20px;">
+                    <li>✅ Toujours responsive (mobile/tablette/PC)</li>
+                    <li>✅ Toujours trilingue FR/AR/EN</li>
+                    <li>✅ Aucune donnée collectée</li>
+                    <li>✅ Fonctionne offline</li>
+                    <li>✅ Pas de publicité</li>
+                </ul>
+                
                 <button class="btn-primary" onclick="closeHelpModal()" style="margin-top: 25px; width: 100%;">
-                    <span>✅ J'ai compris, je commence !</span>
+                    <span>✅ Compris, je commence !</span>
                 </button>
             </div>
         </div>
@@ -777,12 +843,9 @@
                 <button class="modal-close" onclick="closeResultModal()">×</button>
                 <div class="result-header">
                     <h2>🎉 Prompt Généré avec Succès !</h2>
-                    <p style="font-size: 14px; margin: 0;">Copiez ou téléchargez ce prompt et collez-le dans votre IA</p>
+                    <p style="font-size: 14px; margin: 0;">Copiez ce prompt et collez-le dans votre IA (ChatGPT, Claude, Gemini...)</p>
                 </div>
                 <div class="result-body">
-                    <p style="margin-bottom: 15px; color: #7F8C8D; font-size: 14px;">
-                        <strong>📌 Prochaine étape :</strong> Utilisez ce prompt avec Claude, ChatGPT, Gemini ou toute autre IA générative
-                    </p>
                     <div id="promptOutputModal"></div>
                 </div>
                 <div class="result-actions">
@@ -791,7 +854,7 @@
                         <span>📋 Copier le Prompt</span>
                     </button>
                     <button id="downloadBtnModal" class="btn-primary">
-                        <span>💾 Exporter (.txt)</span>
+                        <span>💾 Télécharger (.txt)</span>
                     </button>
                     <button onclick="closeResultModal()" class="btn-secondary">
                         <span>✖️ Fermer</span>
@@ -802,19 +865,6 @@
         
         <!-- FORMULAIRE -->
         <div class="form-wrapper">
-            <div class="format-toggle">
-                <div class="format-option active" data-format="json">
-                    🚀 Format JSON (Recommandé)
-                </div>
-                <div class="format-option" data-format="text">
-                    📝 Format Texte (Ancien)
-                </div>
-            </div>
-            
-            <div id="jsonPreview" class="json-preview">
-                {/* Aperçu JSON */}
-            </div>
-            
             <form id="promptForm">
                 
                 <!-- MÉTADONNÉES PROJET -->
@@ -825,579 +875,349 @@
                             <label for="creatorName" class="required">Votre nom / Prénom</label>
                             <input type="text" id="creatorName" placeholder="Ex: Marie Dupont" required>
                             <div class="error-message">❌ Champ obligatoire</div>
-                            <span class="helper-text">💾 Sauvegardé automatiquement pour prochaine fois</span>
+                            <span class="helper-text">💾 Sauvegardé automatiquement</span>
                         </div>
                         <div class="form-group" style="margin-bottom: 0;">
-                            <label for="projectVersion">Version du projet</label>
+                            <label for="projectVersion">Version</label>
                             <input type="text" id="projectVersion" value="v1.0" placeholder="v1.0">
                         </div>
                         <div class="form-group" style="margin-bottom: 0;">
-                            <label>Date de création</label>
+                            <label>Date</label>
                             <input type="text" id="creationDate" readonly style="background: #f0f0f0;">
                         </div>
                     </div>
                 </div>
                 
-                <!-- SECTION 1: ÂGE (MULTIPLE) -->
+                <!-- SECTION 1: ÂGE (OBLIGATOIRE) -->
                 <div class="section">
-                    <h2 class="section-title">🎯 Public Cible</h2>
-                    
-                    <div class="form-group" id="ageGroup">
-                        <label class="required">Tranches d'âge visées (sélection multiple possible)</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="ageRange" value="3-4 ans (Petite section)">
-                                <span>3-4 ans (Petite section)</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="ageRange" value="5-6 ans (Grande section/CP)">
-                                <span>5-6 ans (Grande section/CP)</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="ageRange" value="7-8 ans (CE1/CE2)">
-                                <span>7-8 ans (CE1/CE2)</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="ageRange" value="9-10 ans (CM1/CM2)">
-                                <span>9-10 ans (CM1/CM2)</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="ageRange" value="11-12 ans (Collège)">
-                                <span>11-12 ans (Collège)</span>
-                            </label>
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <div class="section-title">
+                            🎯 Public Cible
+                            <span class="required-badge">OBLIGATOIRE</span>
+                            <span class="tooltip" data-tooltip="Sélectionnez au moins 1 tranche d'âge">?</span>
                         </div>
-                        <div class="error-message">❌ Sélectionnez au moins une tranche d'âge</div>
-                        <span class="helper-text">💡 Sélectionnez plusieurs âges si le contenu doit s'adapter à fratrie</span>
+                        <div class="section-toggle">▼</div>
                     </div>
-                    
-                    <div class="form-group" id="readingGroup">
-                        <label class="required">Niveau de lecture</label>
-                        <div class="radio-group">
-                            <label class="radio-item">
-                                <input type="radio" name="readingLevel" value="Pré-lecteur (images/audio/pictogrammes)" required>
-                                <span>📸 Pré-lecteur (images/audio/pictogrammes)</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="readingLevel" value="Lecteur débutant (phrases courtes max 8 mots)">
-                                <span>📖 Lecteur débutant (phrases courtes)</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="readingLevel" value="Lecteur autonome (textes structurés)">
-                                <span>📚 Lecteur autonome</span>
-                            </label>
+                    <div class="section-content">
+                        <div class="form-group" id="ageGroup">
+                            <label class="required">Tranches d'âge (minimum 1)</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="ageRange" value="3-4 ans (Petite section)">
+                                    <span>3-4 ans (Petite section)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="ageRange" value="5-6 ans (Grande section/CP)">
+                                    <span>5-6 ans (Grande section/CP)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="ageRange" value="7-8 ans (CE1/CE2)">
+                                    <span>7-8 ans (CE1/CE2)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="ageRange" value="9-10 ans (CM1/CM2)">
+                                    <span>9-10 ans (CM1/CM2)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="ageRange" value="11-12 ans (Collège)">
+                                    <span>11-12 ans (Collège)</span>
+                                </label>
+                            </div>
+                            <div class="error-message">❌ Sélectionnez au moins 1 tranche d'âge</div>
                         </div>
-                        <div class="error-message">❌ Champ obligatoire - Sélectionnez un niveau de lecture</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Supervision adulte</label>
-                        <div class="radio-group">
-                            <label class="radio-item">
-                                <input type="radio" name="supervision" value="Adulte présent obligatoire" checked>
-                                <span>👨‍👩‍👧 Adulte présent obligatoire</span>
+                        
+                        <div class="form-group">
+                            <label>Niveau de lecture
+                                <span class="tooltip" data-tooltip="Si non renseigné, sera adapté automatiquement selon l'âge">?</span>
                             </label>
-                            <label class="radio-item">
-                                <input type="radio" name="supervision" value="Semi-autonome (adulte à proximité)">
-                                <span>👀 Semi-autonome (adulte à proximité)</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="supervision" value="Totalement autonome">
-                                <span>🎯 Totalement autonome</span>
-                            </label>
+                            <div class="radio-group">
+                                <label class="radio-item">
+                                    <input type="radio" name="readingLevel" value="Pré-lecteur (images/audio/pictogrammes)">
+                                    <span>📸 Pré-lecteur</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="readingLevel" value="Lecteur débutant (phrases courtes max 8 mots)">
+                                    <span>📖 Débutant</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="readingLevel" value="Lecteur autonome (textes structurés)">
+                                    <span>📚 Autonome</span>
+                                </label>
+                            </div>
+                            <span class="helper-text">🤖 Par défaut : adapté automatiquement à l'âge</span>
                         </div>
                     </div>
                 </div>
                 
-                <!-- SECTION 1.5: LANGUES -->
+                <!-- SECTION 2: THÈME (OBLIGATOIRE) -->
                 <div class="section">
-                    <h2 class="section-title">🌍 Langue du Contenu<span class="feature-badge">NOUVEAU</span></h2>
-                    
-                    <div class="form-group">
-                        <label>Langue(s) du contenu (sélection multiple possible)</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="languages" value="Français" checked>
-                                <span>🇫🇷 Français</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="languages" value="Arabe">
-                                <span>🇸🇦 العربية (Arabe)</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="languages" value="Anglais">
-                                <span>🇬🇧 English (Anglais)</span>
-                            </label>
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <div class="section-title">
+                            🎨 Thème et Contenu
+                            <span class="required-badge">OBLIGATOIRE</span>
+                            <span class="tooltip" data-tooltip="Décrivez simplement ce que vous voulez enseigner">?</span>
                         </div>
-                        <span class="helper-text">💡 Multilingue : sélectionnez plusieurs langues pour contenu bilingue/trilingue</span>
+                        <div class="section-toggle">▼</div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Disposition des langues si multilingue</label>
-                        <div class="radio-group">
-                            <label class="radio-item">
-                                <input type="radio" name="languageLayout" value="Sélecteur de langue (bouton pour changer)" checked>
-                                <span>🔘 Sélecteur de langue (bouton pour changer)</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="languageLayout" value="Affichage simultané côte à côte">
-                                <span>⬌ Affichage simultané côte à côte</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="languageLayout" value="Bilingue avec traduction au survol">
-                                <span>👆 Bilingue avec traduction au survol</span>
-                            </label>
+                    <div class="section-content">
+                        <div class="form-group" id="themeGroup">
+                            <label for="theme" class="required">Sujet principal</label>
+                            <input type="text" id="theme" placeholder="Ex: Apprentissage des couleurs primaires" required>
+                            <div class="error-message">❌ Champ obligatoire</div>
+                            <span class="helper-text">Une phrase simple suffit</span>
                         </div>
-                        <span class="helper-text">Applicable uniquement si plusieurs langues sélectionnées</span>
-                    </div>
-                </div>
-                
-                <!-- SECTION 2: THÈME -->
-                <div class="section">
-                    <h2 class="section-title">🎨 Thème et Contenu</h2>
-                    
-                    <div class="form-group" id="themeGroup">
-                        <label for="theme" class="required">Sujet principal</label>
-                        <input type="text" id="theme" placeholder="Ex: Apprentissage des couleurs primaires" required>
-                        <div class="error-message">❌ Champ obligatoire - Décrivez le sujet</div>
-                        <span class="helper-text">Décrivez le sujet en 1 phrase claire</span>
-                    </div>
-                    
-                    <div class="form-group" id="goalsGroup">
-                        <label class="required">Objectifs pédagogiques (cochez tous ceux qui s'appliquent)</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Reconnaissance des couleurs primaires/secondaires">
-                                <span>🎨 Reconnaissance couleurs</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Identification des formes géométriques">
-                                <span>🔷 Formes géométriques</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Apprentissage des chiffres et comptage 1-10/1-20">
-                                <span>🔢 Chiffres et comptage</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Reconnaissance alphabet et lettres">
-                                <span>🔤 Alphabet et lettres</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Découverte des animaux et leurs cris">
-                                <span>🐶 Animaux et cris</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Identification fruits et légumes">
-                                <span>🍎 Fruits et légumes</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Parties du corps humain">
-                                <span>👤 Parties du corps</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Reconnaissance et gestion des émotions">
-                                <span>😊 Émotions et sentiments</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Jours de la semaine">
-                                <span>📅 Jours de la semaine</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Saisons et météo">
-                                <span>🌦️ Saisons et météo</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Famille et relations sociales">
-                                <span>👨‍👩‍👧‍👦 Famille et relations</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Hygiène quotidienne (lavage mains, brossage dents)">
-                                <span>🧼 Hygiène quotidienne</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Sécurité routière (piéton, vélo)">
-                                <span>🚦 Sécurité routière</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Respect de l'environnement et recyclage">
-                                <span>♻️ Environnement et recyclage</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Partage, coopération, empathie">
-                                <span>🤝 Partage et coopération</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Développement motricité fine (cliquer, glisser)">
-                                <span>✋ Motricité fine</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Entraînement mémoire visuelle/auditive">
-                                <span>🧠 Mémoire visuelle/auditive</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Logique et raisonnement (puzzles, séquences)">
-                                <span>🧩 Logique et raisonnement</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Créativité artistique (coloriage, dessin)">
-                                <span>🎨 Créativité artistique</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="pedGoals" value="Lecture de l'heure">
-                                <span>🕐 Lecture de l'heure</span>
-                            </label>
+                        
+                        <div class="form-group">
+                            <label>Objectifs pédagogiques (optionnel)</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="pedGoals" value="Reconnaissance couleurs">
+                                    <span>🎨 Couleurs</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="pedGoals" value="Formes géométriques">
+                                    <span>🔷 Formes</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="pedGoals" value="Chiffres et comptage">
+                                    <span>🔢 Chiffres</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="pedGoals" value="Alphabet et lettres">
+                                    <span>🔤 Alphabet</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="pedGoals" value="Animaux">
+                                    <span>🐶 Animaux</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="pedGoals" value="Émotions">
+                                    <span>😊 Émotions</span>
+                                </label>
+                            </div>
+                            <span class="helper-text">🤖 Par défaut : adapté au thème saisi</span>
                         </div>
-                        <div class="error-message">❌ Sélectionnez au moins un objectif ou utilisez le champ ci-dessous</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="customGoals">Autres objectifs spécifiques (optionnel)</label>
-                        <textarea id="customGoals" placeholder="Ex: Apprendre à reconnaître les instruments de musique classiques&#10;Développer l'attention auditive..."></textarea>
-                        <span class="helper-text">Un objectif par ligne si plusieurs</span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="narrativeStyle">Style narratif</label>
-                        <select id="narrativeStyle">
-                            <option value="Éducatif neutre avec voix off bienveillante">Éducatif neutre avec voix off bienveillante</option>
-                            <option value="Aventure avec personnage héros enfant">Aventure avec personnage héros enfant</option>
-                            <option value="Ludique avec mascotte animale attachante">Ludique avec mascotte animale attachante</option>
-                            <option value="Conte interactif façon livre dont vous êtes le héros">Conte interactif (livre dont vous êtes le héros)</option>
-                            <option value="Documentaire style reportage enfant (type C'est pas sorcier)">Documentaire style reportage enfant</option>
-                            <option value="Jeu vidéo éducatif avec niveaux progressifs">Jeu vidéo éducatif avec niveaux</option>
-                            <option value="Exploration libre monde ouvert">Exploration libre monde ouvert</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="additionalContext">Précisions supplémentaires (optionnel)</label>
-                        <textarea id="additionalContext" placeholder="Ex: Mon enfant adore les dinosaures, intégrer ce thème si possible&#10;Préférer vocabulaire inclusif et non-genré&#10;Éviter les références à Halloween (sensibilité familiale)..."></textarea>
-                        <span class="helper-text">Contexte culturel, préférences, sensibilités particulières</span>
-                    </div>
-                </div>
-                
-                <!-- SECTION 3: INTERACTIVITÉ -->
-                <div class="section">
-                    <h2 class="section-title">🎮 Interactivité</h2>
-                    
-                    <div class="form-group">
-                        <label>Types d'interactions souhaités (sélection multiple)</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="interactions" value="Quiz/QCM avec choix multiples">
-                                <span>📝 Quiz/QCM</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="interactions" value="Glisser-déposer (drag & drop)">
-                                <span>🖱️ Glisser-déposer</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="interactions" value="Colorier/Dessiner sur canvas HTML5">
-                                <span>🎨 Colorier/Dessiner</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="interactions" value="Jeux de mémoire (paires, memory)">
-                                <span>🧠 Jeux de mémoire</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="interactions" value="Animations déclenchées au clic">
-                                <span>✨ Animations au clic</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="interactions" value="Histoire à choix multiples (embranchements)">
-                                <span>📖 Histoire à choix</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="interactions" value="Puzzles et assemblage">
-                                <span>🧩 Puzzles</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="interactions" value="Jeux de sons (associer son à image)">
-                                <span>🔊 Jeux de sons</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="interactions" value="Labyrinthe avec navigation clavier/tactile">
-                                <span>🗺️ Labyrinthe</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="interactions" value="Tri et catégorisation (ranger par catégorie)">
-                                <span>📦 Tri et catégories</span>
-                            </label>
-                        </div>
-                        <span class="helper-text">Si aucune sélection, l'IA proposera des interactions adaptées</span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Système de récompenses</label>
-                        <div class="radio-group">
-                            <label class="radio-item">
-                                <input type="radio" name="rewards" value="Sons positifs + animations joyeuses" checked>
-                                <span>🎵 Sons + animations</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="rewards" value="Étoiles/badges visuels collectionnables">
-                                <span>⭐ Étoiles/badges</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="rewards" value="Messages encourageants avec emojis">
-                                <span>💬 Messages encourageants</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="rewards" value="Déblocage progressif de contenus bonus">
-                                <span>🔓 Déblocage de bonus</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Gestion des erreurs</label>
-                        <div class="radio-group">
-                            <label class="radio-item">
-                                <input type="radio" name="errorHandling" value="Réessayer sans pénalité avec indices progressifs" checked>
-                                <span>💡 Réessayer avec indices</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="errorHandling" value="Afficher solution après 3 tentatives">
-                                <span>🔍 Solution après 3 essais</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="errorHandling" value="Apprentissage par l'erreur : expliquer pourquoi c'est faux">
-                                <span>📚 Apprentissage de l'erreur</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="errorHandling" value="Jamais bloquer, toujours positif, passer à la suite">
-                                <span>✅ Toujours positif, passer</span>
-                            </label>
+                        
+                        <div class="form-group">
+                            <label for="customGoals">Autres objectifs (optionnel)</label>
+                            <textarea id="customGoals" placeholder="Ex: Reconnaître les instruments de musique"></textarea>
                         </div>
                     </div>
                 </div>
                 
-                <!-- SECTION 3.5: SUIVI & ANALYTICS -->
-                <div class="section">
-                    <h2 class="section-title">📊 Suivi & Analytics<span class="feature-badge">NOUVEAU</span></h2>
-                    
-                    <div class="form-group">
-                        <label>Chronomètre temps de jeu</label>
-                        <div class="radio-group">
-                            <label class="radio-item">
-                                <input type="radio" name="timer" value="Oui - Afficher chronomètre visible en permanence" checked>
-                                <span>⏱️ Oui - Chronomètre visible en permanence</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="timer" value="Oui - Chronomètre discret (petit coin d'écran)">
-                                <span>🕐 Oui - Chronomètre discret (coin d'écran)</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="timer" value="Non - Pas de chronomètre (apprentissage sans pression)">
-                                <span>🚫 Non - Pas de chronomètre (sans pression)</span>
-                            </label>
+                <!-- SECTION 3: OPTIONS LAYOUT (NOUVEAU) -->
+                <div class="section collapsed">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <div class="section-title">
+                            📐 Structure de la Page
+                            <span class="optional-badge">OPTIONNEL</span>
+                            <span class="feature-badge">NOUVEAU</span>
                         </div>
-                        <span class="helper-text">💡 Le chronomètre aide à gérer le temps d'écran quotidien</span>
+                        <div class="section-toggle">▼</div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Statistiques & progression</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="stats" value="Afficher score en temps réel">
-                                <span>📈 Score en temps réel</span>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label>Type de navigation
+                                <span class="tooltip" data-tooltip="Single page = tout sur 1 page avec scroll. Multi-pages = plusieurs écrans avec boutons suivant/précédent">?</span>
                             </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="stats" value="Barre de progression visuelle">
-                                <span>📊 Barre de progression visuelle</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="stats" value="Compteur réussites/erreurs">
-                                <span>✅❌ Compteur réussites/erreurs</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="stats" value="Récapitulatif détaillé à la fin">
-                                <span>📋 Récapitulatif détaillé final</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="stats" value="Graphique d'évolution (si plusieurs sessions)">
-                                <span>📉 Graphique d'évolution</span>
-                            </label>
+                            <div class="radio-group">
+                                <label class="radio-item">
+                                    <input type="radio" name="pageType" value="single" checked>
+                                    <span>📄 Single Page (scroll)</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="pageType" value="multi">
+                                    <span>📚 Multi-Pages (navigation)</span>
+                                </label>
+                            </div>
+                            <span class="helper-text">🤖 Par défaut : Single Page</span>
                         </div>
-                        <span class="helper-text">Stockage temporaire en sessionStorage (effacé à fermeture)</span>
+                        
+                        <div class="form-group">
+                            <label>Position aide/infos supplémentaires
+                                <span class="tooltip" data-tooltip="Afficher une colonne latérale avec conseils, statistiques, aide pour parents">?</span>
+                            </label>
+                            <div class="radio-group">
+                                <label class="radio-item">
+                                    <input type="radio" name="helpPosition" value="none" checked>
+                                    <span>🚫 Aucune colonne</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="helpPosition" value="left">
+                                    <span>👈 Colonne gauche</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="helpPosition" value="right">
+                                    <span>👉 Colonne droite</span>
+                                </label>
+                            </div>
+                            <span class="helper-text">🤖 Par défaut : Aucune colonne (contenu pleine largeur)</span>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- SECTION 3.6: ASSISTANCE PARENTALE -->
-                <div class="section">
-                    <h2 class="section-title">👨‍👩‍👧 Assistance Parentale<span class="feature-badge">NOUVEAU</span></h2>
-                    
-                    <div class="form-group">
-                        <label>Conseils contextuels pour parents</label>
-                        <div class="radio-group">
-                            <label class="radio-item">
-                                <input type="radio" name="parentalGuidance" value="Oui - Panneau d'aide discret avec conseils en temps réel" checked>
-                                <span>💡 Oui - Panneau d'aide avec conseils temps réel</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="parentalGuidance" value="Oui - Notifications subtiles selon réactions enfant">
-                                <span>🔔 Oui - Notifications selon réactions</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" name="parentalGuidance" value="Non - Enfant en totale autonomie">
-                                <span>🎯 Non - Autonomie totale</span>
-                            </label>
+                <!-- SECTION 4: INTERACTIVITÉ (OPTIONNEL) -->
+                <div class="section collapsed">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <div class="section-title">
+                            🎮 Interactivité
+                            <span class="optional-badge">OPTIONNEL</span>
                         </div>
+                        <div class="section-toggle">▼</div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Type de conseils à fournir</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="guidanceTypes" value="Comment encourager après une erreur">
-                                <span>💪 Encourager après erreur</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="guidanceTypes" value="Quand féliciter (timing optimal)">
-                                <span>🎉 Quand féliciter</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="guidanceTypes" value="Détecter frustration et comment intervenir">
-                                <span>😤 Gérer frustration</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="guidanceTypes" value="Proposer pauses si temps écoulé long">
-                                <span>☕ Suggérer pauses</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="guidanceTypes" value="Identifier points forts et axes d'amélioration">
-                                <span>📌 Points forts/amélioration</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="guidanceTypes" value="Questions de discussion post-activité">
-                                <span>💬 Questions de discussion</span>
-                            </label>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label>Types d'interactions</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="interactions" value="Quiz/QCM">
+                                    <span>📝 Quiz/QCM</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="interactions" value="Glisser-déposer">
+                                    <span>🖱️ Glisser-déposer</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="interactions" value="Colorier/Dessiner">
+                                    <span>🎨 Colorier</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="interactions" value="Jeux de mémoire">
+                                    <span>🧠 Mémoire</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="interactions" value="Animations au clic">
+                                    <span>✨ Animations</span>
+                                </label>
+                            </div>
+                            <span class="helper-text">🤖 Par défaut : adapté au thème et à l'âge</span>
                         </div>
-                        <span class="helper-text">Conseils affichés uniquement aux adultes (bouton dédié ou section cachée)</span>
+                        
+                        <div class="form-group">
+                            <label>Système de récompenses</label>
+                            <div class="radio-group">
+                                <label class="radio-item">
+                                    <input type="radio" name="rewards" value="Sons + animations" checked>
+                                    <span>🎵 Sons + animations</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="rewards" value="Étoiles/badges">
+                                    <span>⭐ Étoiles/badges</span>
+                                </label>
+                                <label class="radio-item">
+                                    <input type="radio" name="rewards" value="Messages encourageants">
+                                    <span>💬 Messages</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- SECTION 4: DESIGN & COULEURS -->
-                <div class="section">
-                    <h2 class="section-title">🎨 Design et Couleurs</h2>
-                    
-                    <div class="form-group">
-                        <label class="required">Palette de couleurs (douces pour les yeux)</label>
-                        <div style="display: flex; flex-direction: column; gap: 12px;">
-                            <label class="color-palette">
-                                <input type="radio" name="colorPalette" value="Pastel Doux (#FFE4E1, #E0F2F7, #FFF9C4, #D1F2EB)" checked>
-                                <div style="display: flex; gap: 5px;">
-                                    <div class="color-swatch" style="background: #FFE4E1;"></div>
-                                    <div class="color-swatch" style="background: #E0F2F7;"></div>
-                                    <div class="color-swatch" style="background: #FFF9C4;"></div>
-                                    <div class="color-swatch" style="background: #D1F2EB;"></div>
-                                </div>
-                                <span class="palette-name">🌸 Pastel Doux (recommandé 3-7 ans)</span>
-                            </label>
-                            
-                            <label class="color-palette">
-                                <input type="radio" name="colorPalette" value="Océan Calme (#B3E5FC, #81D4FA, #4FC3F7, #29B6F6)">
-                                <div style="display: flex; gap: 5px;">
-                                    <div class="color-swatch" style="background: #B3E5FC;"></div>
-                                    <div class="color-swatch" style="background: #81D4FA;"></div>
-                                    <div class="color-swatch" style="background: #4FC3F7;"></div>
-                                    <div class="color-swatch" style="background: #29B6F6;"></div>
-                                </div>
-                                <span class="palette-name">🌊 Océan Calme (apaisant)</span>
-                            </label>
-                            
-                            <label class="color-palette">
-                                <input type="radio" name="colorPalette" value="Forêt Enchantée (#C8E6C9, #A5D6A7, #81C784, #66BB6A)">
-                                <div style="display: flex; gap: 5px;">
-                                    <div class="color-swatch" style="background: #C8E6C9;"></div>
-                                    <div class="color-swatch" style="background: #A5D6A7;"></div>
-                                    <div class="color-swatch" style="background: #81C784;"></div>
-                                    <div class="color-swatch" style="background: #66BB6A;"></div>
-                                </div>
-                                <span class="palette-name">🌲 Forêt Enchantée (nature)</span>
-                            </label>
-                            
-                            <label class="color-palette">
-                                <input type="radio" name="colorPalette" value="Coucher de Soleil (#FFCCBC, #FFAB91, #FF8A65, #FF7043)">
-                                <div style="display: flex; gap: 5px;">
-                                    <div class="color-swatch" style="background: #FFCCBC;"></div>
-                                    <div class="color-swatch" style="background: #FFAB91;"></div>
-                                    <div class="color-swatch" style="background: #FF8A65;"></div>
-                                    <div class="color-swatch" style="background: #FF7043;"></div>
-                                </div>
-                                <span class="palette-name">🌅 Coucher de Soleil (chaleureux)</span>
-                            </label>
-                            
-                            <label class="color-palette">
-                                <input type="radio" name="colorPalette" value="Neutre Moderne (#F5F5F5, #E0E0E0, #BDBDBD, #9E9E9E)">
-                                <div style="display: flex; gap: 5px;">
-                                    <div class="color-swatch" style="background: #F5F5F5;"></div>
-                                    <div class="color-swatch" style="background: #E0E0E0;"></div>
-                                    <div class="color-swatch" style="background: #BDBDBD;"></div>
-                                    <div class="color-swatch" style="background: #9E9E9E;"></div>
-                                </div>
-                                <span class="palette-name">⚪ Neutre Moderne (minimaliste)</span>
-                            </label>
-                            
-                            <label class="color-palette">
-                                <input type="radio" name="colorPalette" value="Arc-en-ciel Doux (#FFE0B2, #FFF9C4, #C8E6C9, #B3E5FC, #E1BEE7)">
-                                <div style="display: flex; gap: 5px;">
-                                    <div class="color-swatch" style="background: #FFE0B2;"></div>
-                                    <div class="color-swatch" style="background: #FFF9C4;"></div>
-                                    <div class="color-swatch" style="background: #C8E6C9;"></div>
-                                    <div class="color-swatch" style="background: #B3E5FC;"></div>
-                                    <div class="color-swatch" style="background: #E1BEE7;"></div>
-                                </div>
-                                <span class="palette-name">🌈 Arc-en-ciel Doux (multicolore)</span>
-                            </label>
+                <!-- SECTION 5: DESIGN (OPTIONNEL) -->
+                <div class="section collapsed">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <div class="section-title">
+                            🎨 Design et Couleurs
+                            <span class="optional-badge">OPTIONNEL</span>
                         </div>
-                        <span class="helper-text">Toutes palettes testées pour contrastes WCAG AA minimum</span>
+                        <div class="section-toggle">▼</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label>Palette de couleurs</label>
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <label class="color-palette">
+                                    <input type="radio" name="colorPalette" value="Pastel Doux" checked>
+                                    <div style="display: flex; gap: 5px;">
+                                        <div class="color-swatch" style="background: #FFE4E1;"></div>
+                                        <div class="color-swatch" style="background: #E0F2F7;"></div>
+                                        <div class="color-swatch" style="background: #FFF9C4;"></div>
+                                        <div class="color-swatch" style="background: #D1F2EB;"></div>
+                                    </div>
+                                    <span class="palette-name">🌸 Pastel Doux</span>
+                                </label>
+                                
+                                <label class="color-palette">
+                                    <input type="radio" name="colorPalette" value="Océan Calme">
+                                    <div style="display: flex; gap: 5px;">
+                                        <div class="color-swatch" style="background: #B3E5FC;"></div>
+                                        <div class="color-swatch" style="background: #81D4FA;"></div>
+                                        <div class="color-swatch" style="background: #4FC3F7;"></div>
+                                        <div class="color-swatch" style="background: #29B6F6;"></div>
+                                    </div>
+                                    <span class="palette-name">🌊 Océan Calme</span>
+                                </label>
+                                
+                                <label class="color-palette">
+                                    <input type="radio" name="colorPalette" value="Forêt Enchantée">
+                                    <div style="display: flex; gap: 5px;">
+                                        <div class="color-swatch" style="background: #C8E6C9;"></div>
+                                        <div class="color-swatch" style="background: #A5D6A7;"></div>
+                                        <div class="color-swatch" style="background: #81C784;"></div>
+                                        <div class="color-swatch" style="background: #66BB6A;"></div>
+                                    </div>
+                                    <span class="palette-name">🌲 Forêt Enchantée</span>
+                                </label>
+                            </div>
+                            <span class="helper-text">🤖 Par défaut : Pastel Doux</span>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- SECTION 5: ACCESSIBILITÉ -->
-                <div class="section">
-                    <h2 class="section-title">♿ Accessibilité</h2>
-                    
-                    <div class="info-banner">
-                        <strong>ℹ️ Info :</strong> Le contenu sera TOUJOURS responsive (mobile/tablette/PC) et conforme WCAG 2.1 AA minimum. Options ci-dessous pour besoins spécifiques.
+                <!-- SECTION 6: ACCESSIBILITÉ (OPTIONNEL) -->
+                <div class="section collapsed">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <div class="section-title">
+                            ♿ Accessibilité Renforcée
+                            <span class="optional-badge">OPTIONNEL</span>
+                        </div>
+                        <div class="section-toggle">▼</div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Accessibilité renforcée</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="accessibility" value="Support mobilité réduite (gros boutons 60x60px, espacement large)">
-                                <span>♿ Mobilité réduite (gros boutons)</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="accessibility" value="Navigation complète au clavier (Tab/Flèches/Enter/Espace)">
-                                <span>⌨️ Navigation clavier complète</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="accessibility" value="Support lecteurs d'écran (NVDA, VoiceOver, JAWS)">
-                                <span>🔊 Lecteurs d'écran</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="accessibility" value="Contrastes renforcés WCAG AAA (ratio 7:1)">
-                                <span>👁️ Contrastes renforcés AAA</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="accessibility" value="Police dyslexie-friendly (OpenDyslexic ou équivalent)">
-                                <span>📖 Police dyslexie-friendly</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="accessibility" value="Mode sombre/clair commutable">
-                                <span>🌓 Mode sombre/clair</span>
-                            </label>
+                    <div class="section-content">
+                        <div class="info-banner">
+                            <strong>ℹ️</strong> Le contenu sera TOUJOURS responsive et conforme WCAG 2.1 AA. Ces options sont pour besoins spécifiques.
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Options d'accessibilité</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="accessibility" value="Gros boutons 60x60px">
+                                    <span>♿ Gros boutons</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="accessibility" value="Navigation clavier complète">
+                                    <span>⌨️ Navigation clavier</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="accessibility" value="Support lecteurs d'écran">
+                                    <span>🔊 Lecteurs d'écran</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="accessibility" value="Contrastes AAA (7:1)">
+                                    <span>👁️ Contrastes AAA</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="accessibility" value="Police dyslexie">
+                                    <span>📖 Police dyslexie</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="accessibility" value="Mode sombre/clair">
+                                    <span>🌓 Mode sombre/clair</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- BOUTONS -->
                 <div class="button-group">
+                    <button type="button" id="previewBtn" class="btn-warning">
+                        <span>👁️ Prévisualiser le Prompt</span>
+                    </button>
                     <button type="submit" id="submitBtn" class="btn-primary">
                         <span class="spinner"></span>
-                        <span>🚀 Générer le Prompt</span>
+                        <span>🚀 Générer le Prompt Final</span>
                     </button>
                     <button type="reset" class="btn-secondary">
                         <span>🔄 Réinitialiser</span>
@@ -1409,9 +1229,8 @@
     
     <script>
         // ===== VERSION & CONFIG =====
-        const VERSION = "v1.005";
+        const VERSION = "v1.006";
         const STORAGE_KEY_NAME = 'prompt_generator_creator_name';
-        let currentFormat = 'json'; // Format par défaut
         
         // ===== INITIALISATION =====
         window.addEventListener('DOMContentLoaded', function() {
@@ -1428,102 +1247,53 @@
                 document.getElementById('creatorName').value = savedName;
             }
             
-            // Initialiser le sélecteur de format
-            initFormatSelector();
+            // Mettre à jour la progress bar
+            updateProgress();
             
-            // Mettre à jour l'aperçu JSON
-            updateJsonPreview();
+            // Écouteurs pour progress bar
+            document.querySelectorAll('input, select, textarea').forEach(element => {
+                element.addEventListener('change', updateProgress);
+                element.addEventListener('input', updateProgress);
+            });
         });
         
-        // ===== GESTION DU FORMAT =====
-        function initFormatSelector() {
-            const formatOptions = document.querySelectorAll('.format-option');
+        // ===== PROGRESS BAR =====
+        function updateProgress() {
+            const creatorName = document.getElementById('creatorName').value.trim();
+            const ageChecked = document.querySelectorAll('input[name="ageRange"]:checked').length;
+            const theme = document.getElementById('theme').value.trim();
             
-            formatOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Désactiver toutes les options
-                    formatOptions.forEach(opt => opt.classList.remove('active'));
-                    
-                    // Activer l'option cliquée
-                    this.classList.add('active');
-                    
-                    // Mettre à jour le format courant
-                    currentFormat = this.dataset.format;
-                    
-                    // Afficher/masquer l'aperçu JSON
-                    const jsonPreview = document.getElementById('jsonPreview');
-                    if (currentFormat === 'json') {
-                        jsonPreview.style.display = 'block';
-                        updateJsonPreview();
-                    } else {
-                        jsonPreview.style.display = 'none';
-                    }
-                });
-            });
+            let completed = 0;
+            if (creatorName) completed++;
+            if (ageChecked > 0) completed++;
+            if (theme) completed++;
+            
+            const percentage = (completed / 3) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+            
+            if (percentage === 100) {
+                document.getElementById('progressText').textContent = '✅ Prêt à générer ! Tous les champs obligatoires sont remplis';
+                document.getElementById('progressText').style.color = 'var(--success)';
+                document.getElementById('progressText').style.fontWeight = '600';
+            } else {
+                document.getElementById('progressText').textContent = completed + '/3 champs obligatoires remplis';
+                document.getElementById('progressText').style.color = '#7F8C8D';
+                document.getElementById('progressText').style.fontWeight = 'normal';
+            }
         }
         
-        function updateJsonPreview() {
-            if (currentFormat !== 'json') return;
-            
-            // Récupérer les valeurs du formulaire pour l'aperçu
-            const creatorName = document.getElementById('creatorName').value.trim() || "Votre nom";
-            const theme = document.getElementById('theme').value.trim() || "Thème du projet";
-            
-            // Construire l'aperçu JSON
-            const jsonPreview = {
-                metadata: {
-                    creator: creatorName,
-                    version: document.getElementById('projectVersion').value,
-                    date: document.getElementById('creationDate').value,
-                    generator: `Formulaire ${VERSION}`
-                },
-                target: {
-                    age: "Tranches d'âge sélectionnées",
-                    theme: theme,
-                    language: "Langues sélectionnées"
-                },
-                content: {
-                    goals: "Objectifs pédagogiques",
-                    interactions: "Types d'interactions"
-                }
-            };
-            
-            // Afficher l'aperçu formaté
-            document.getElementById('jsonPreview').innerHTML = syntaxHighlight(JSON.stringify(jsonPreview, null, 2));
+        // ===== SECTIONS COLLAPSIBLES =====
+        function toggleSection(header) {
+            const section = header.parentElement;
+            section.classList.toggle('collapsed');
         }
         
-        function syntaxHighlight(json) {
-            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-                let cls = 'json-number';
-                if (/^"/.test(match)) {
-                    if (/:$/.test(match)) {
-                        cls = 'json-key';
-                    } else {
-                        cls = 'json-string';
-                    }
-                } else if (/true|false/.test(match)) {
-                    cls = 'json-boolean';
-                } else if (/null/.test(match)) {
-                    cls = 'json-null';
-                }
-                return '<span class="' + cls + '">' + match + '</span>';
-            });
-        }
-        
-        // ===== SAUVEGARDE NOM AUTOMATIQUE =====
+        // ===== SAUVEGARDE NOM =====
         document.getElementById('creatorName').addEventListener('blur', function() {
             const name = this.value.trim();
             if (name) {
                 localStorage.setItem(STORAGE_KEY_NAME, name);
             }
-            updateJsonPreview();
-        });
-        
-        // ===== ÉCOUTEURS POUR METTRE À JOUR L'APERÇU =====
-        document.querySelectorAll('input, select, textarea').forEach(element => {
-            element.addEventListener('change', updateJsonPreview);
-            element.addEventListener('input', updateJsonPreview);
         });
         
         // ===== MODAL HELP =====
@@ -1575,6 +1345,11 @@
                 if (errorMsg && message) {
                     errorMsg.textContent = '❌ ' + message;
                 }
+                // Ouvrir la section si fermée
+                const section = group.closest('.section');
+                if (section && section.classList.contains('collapsed')) {
+                    section.classList.remove('collapsed');
+                }
             }
         }
         
@@ -1595,34 +1370,17 @@
             // Validation âge
             const ageChecked = document.querySelectorAll('input[name="ageRange"]:checked');
             if (ageChecked.length === 0) {
-                showError('ageGroup', 'Sélectionnez au moins une tranche d\'âge');
+                showError('ageGroup', 'Sélectionnez au moins 1 tranche d\'âge');
                 isValid = false;
                 if (!firstErrorElement) firstErrorElement = document.getElementById('ageGroup');
-            }
-            
-            // Validation niveau lecture
-            const readingChecked = document.querySelector('input[name="readingLevel"]:checked');
-            if (!readingChecked) {
-                showError('readingGroup', 'Champ obligatoire - Sélectionnez un niveau de lecture');
-                isValid = false;
-                if (!firstErrorElement) firstErrorElement = document.getElementById('readingGroup');
             }
             
             // Validation thème
             const theme = document.getElementById('theme').value.trim();
             if (!theme) {
-                showError('themeGroup', 'Champ obligatoire - Décrivez le sujet');
+                showError('themeGroup', 'Décrivez le sujet du contenu');
                 isValid = false;
                 if (!firstErrorElement) firstErrorElement = document.getElementById('themeGroup');
-            }
-            
-            // Validation objectifs pédagogiques
-            const goalsChecked = document.querySelectorAll('input[name="pedGoals"]:checked');
-            const customGoals = document.getElementById('customGoals').value.trim();
-            if (goalsChecked.length === 0 && !customGoals) {
-                showError('goalsGroup', 'Sélectionnez au moins un objectif ou utilisez le champ libre');
-                isValid = false;
-                if (!firstErrorElement) firstErrorElement = document.getElementById('goalsGroup');
             }
             
             // Scroll vers première erreur
@@ -1632,6 +1390,19 @@
             
             return isValid;
         }
+        
+        // ===== PRÉVISUALISATION =====
+        document.getElementById('previewBtn').addEventListener('click', function() {
+            if (!validateForm()) {
+                alert('❌ Veuillez remplir les 3 champs obligatoires d\'abord');
+                return;
+            }
+            
+            const promptData = buildPromptData();
+            const preview = JSON.stringify(promptData, null, 2);
+            
+            alert('📋 APERÇU DU PROMPT JSON\n\n' + preview.substring(0, 500) + '\n\n... (tronqué pour aperçu)\n\nCliquez "Générer le Prompt Final" pour obtenir le prompt complet.');
+        });
         
         // ===== GESTION FORMULAIRE =====
         document.getElementById('promptForm').addEventListener('submit', function(e) {
@@ -1647,23 +1418,15 @@
             submitBtn.disabled = true;
             
             // Simuler génération
-            setTimeout(() => {
+            setTimeout(function() {
                 generatePrompt();
                 submitBtn.classList.remove('loading');
                 submitBtn.disabled = false;
             }, 800);
         });
         
-        // ===== FONCTION GÉNÉRATION PROMPT =====
-        function generatePrompt() {
-            if (currentFormat === 'json') {
-                generateJsonPrompt();
-            } else {
-                generateTextPrompt();
-            }
-        }
-        
-        function generateJsonPrompt() {
+        // ===== CONSTRUCTION DES DONNÉES =====
+        function buildPromptData() {
             // Métadonnées
             const creatorName = document.getElementById('creatorName').value.trim();
             const projectVersion = document.getElementById('projectVersion').value;
@@ -1674,196 +1437,298 @@
             
             // Âges
             const ageRanges = Array.from(document.querySelectorAll('input[name="ageRange"]:checked'))
-                .map(cb => cb.value);
+                .map(function(cb) { return cb.value; });
             
-            const readingLevel = document.querySelector('input[name="readingLevel"]:checked').value;
-            const supervision = document.querySelector('input[name="supervision"]:checked').value;
-            
-            // Langues
-            const languages = Array.from(document.querySelectorAll('input[name="languages"]:checked'))
-                .map(cb => cb.value);
-            const languageLayout = document.querySelector('input[name="languageLayout"]:checked').value;
+            const readingLevelEl = document.querySelector('input[name="readingLevel"]:checked');
+            const readingLevel = readingLevelEl ? readingLevelEl.value : "Adapté automatiquement selon l'âge";
             
             // Thème
-            const theme = document.getElementById('theme').value;
-            const narrativeStyle = document.getElementById('narrativeStyle').value;
-            const additionalContext = document.getElementById('additionalContext').value.trim();
+            const theme = document.getElementById('theme').value.trim();
             
             // Objectifs pédagogiques
             const pedGoals = Array.from(document.querySelectorAll('input[name="pedGoals"]:checked'))
-                .map(cb => cb.value);
+                .map(function(cb) { return cb.value; });
             const customGoals = document.getElementById('customGoals').value.trim();
-            let allGoals = [...pedGoals];
+            let allGoals = pedGoals.slice();
             if (customGoals) {
-                const customFormatted = customGoals.split('\n').map(line => line.trim()).filter(line => line);
-                allGoals = [...allGoals, ...customFormatted];
+                const customFormatted = customGoals.split('\n').map(function(line) { return line.trim(); }).filter(function(line) { return line; });
+                allGoals = allGoals.concat(customFormatted);
             }
+            if (allGoals.length === 0) {
+                allGoals = ["Adapté automatiquement selon le thème et l'âge"];
+            }
+            
+            // Layout
+            const pageType = document.querySelector('input[name="pageType"]:checked').value;
+            const helpPosition = document.querySelector('input[name="helpPosition"]:checked').value;
             
             // Interactions
             const interactions = Array.from(document.querySelectorAll('input[name="interactions"]:checked'))
-                .map(cb => cb.value);
+                .map(function(cb) { return cb.value; });
+            if (interactions.length === 0) {
+                interactions.push("Adapté automatiquement selon le thème et l'âge");
+            }
             
             const rewards = document.querySelector('input[name="rewards"]:checked').value;
-            const errorHandling = document.querySelector('input[name="errorHandling"]:checked').value;
-            
-            // Analytics
-            const timer = document.querySelector('input[name="timer"]:checked').value;
-            const stats = Array.from(document.querySelectorAll('input[name="stats"]:checked'))
-                .map(cb => cb.value);
-            
-            // Assistance parentale
-            const parentalGuidance = document.querySelector('input[name="parentalGuidance"]:checked').value;
-            const guidanceTypes = Array.from(document.querySelectorAll('input[name="guidanceTypes"]:checked'))
-                .map(cb => cb.value);
             
             // Design
             const colorPalette = document.querySelector('input[name="colorPalette"]:checked').value;
             
             // Accessibilité
             const accessibility = Array.from(document.querySelectorAll('input[name="accessibility"]:checked'))
-                .map(cb => cb.value);
+                .map(function(cb) { return cb.value; });
             
-            // Construction de l'objet JSON
-            const promptData = {
+            return {
                 metadata: {
                     creator: creatorName,
                     projectVersion: projectVersion,
                     creationDate: creationDate,
-                    generator: `Formulaire ${VERSION}`
+                    generator: "Formulaire " + VERSION,
+                    formVersion: VERSION
                 },
                 targetAudience: {
                     ageRanges: ageRanges,
-                    readingLevel: readingLevel,
-                    supervision: supervision
+                    readingLevel: readingLevel
                 },
                 language: {
-                    languages: languages,
-                    layout: languageLayout
+                    languages: ["Français", "العربية (Arabe)", "English"],
+                    layout: "Sélecteur avec 3 drapeaux cliquables (🇫🇷 🇩🇿 🇬🇧)",
+                    note: "TOUJOURS trilingue - Non négociable"
                 },
                 content: {
                     theme: theme,
-                    narrativeStyle: narrativeStyle,
-                    educationalGoals: allGoals,
-                    additionalContext: additionalContext || undefined
+                    educationalGoals: allGoals
+                },
+                layout: {
+                    pageType: pageType,
+                    helpPosition: helpPosition
                 },
                 interactivity: {
                     interactionTypes: interactions,
-                    rewardSystem: rewards,
-                    errorHandling: errorHandling
-                },
-                analytics: {
-                    timer: timer,
-                    statistics: stats
-                },
-                parentalAssistance: {
-                    guidanceType: parentalGuidance,
-                    guidanceTopics: guidanceTypes
+                    rewardSystem: rewards
                 },
                 design: {
                     colorPalette: colorPalette
                 },
                 accessibility: {
-                    features: accessibility
+                    baseLevel: "WCAG 2.1 AA (TOUJOURS respecté)",
+                    additionalFeatures: accessibility.length > 0 ? accessibility : ["Aucune option spéciale demandée"]
                 },
                 technicalRequirements: {
-                    format: "HTML5 standalone",
-                    fileSize: "< 150 KB",
+                    format: "HTML5 standalone - FICHIER UNIQUE",
+                    fileSize: "< 200 KB",
                     responsive: true,
                     offline: true,
                     compatibility: ["Chrome 90+", "Firefox 88+", "Safari 14+", "Edge 90+"],
-                    accessibility: "WCAG 2.1 AA minimum"
+                    noExternalDependencies: "CRITIQUE - Aucun CDN, aucune ressource externe"
                 },
                 security: {
                     noExternalLinks: true,
                     noTracking: true,
                     noPersonalData: true,
                     noAds: true,
-                    gdprCompliant: true
-                },
-                workflow: {
-                    step1: "Analyze this JSON specification",
-                    step2: "Propose a detailed plan in TXT format",
-                    step3: "Wait for explicit approval before generating HTML",
-                    step4: "Generate complete standalone HTML file after approval"
+                    gdprCompliant: true,
+                    coppaCompliant: true
                 }
             };
+        }
+        
+        // ===== GÉNÉRATION PROMPT =====
+        function generatePrompt() {
+            const promptData = buildPromptData();
             
-            // Construction du prompt final avec instructions
-            const prompt = `# 🎯 PROMPT CRÉATION CONTENU HTML INTERACTIF ENFANT - FORMAT JSON
+            const prompt = "# 🎯 PROMPT CRÉATION CONTENU HTML INTERACTIF ENFANT - v" + VERSION + "\n\n" +
+"## 🚨 INSTRUCTIONS CRITIQUES POUR L'IA\n\n" +
+"**⚠️ RÈGLE ABSOLUE #1 : LE FICHIER HTML DOIT DÉMARRER AU 1ER ESSAI**\n\n" +
+"Tu dois générer un fichier HTML qui fonctionne **PARFAITEMENT dès le premier lancement**, SANS AUCUNE ERREUR, même en cas de :\n" +
+"- ❌ Images manquantes → Utilise des emojis Unicode ou formes CSS\n" +
+"- ❌ Sons manquants → Désactive les sons ou simule visuellement\n" +
+"- ❌ Polices manquantes → Utilise uniquement Arial, sans-serif, system-ui\n" +
+"- ❌ Icônes manquantes → Utilise des emojis Unicode (✅ ❌ 🎵 🎨 ⭐)\n\n" +
+"**AUCUNE dépendance externe autorisée :**\n" +
+"- 🚫 Pas de CDN (Bootstrap, jQuery, Font Awesome, Google Fonts)\n" +
+"- 🚫 Pas de <link> externe\n" +
+"- 🚫 Pas de <script src=\"...\"> externe\n" +
+"- 🚫 Pas de @import CSS externe\n" +
+"- 🚫 Pas de fetch/AJAX vers API externe\n\n" +
+"**✅ SEULEMENT AUTORISÉ :**\n" +
+"- ✅ Code HTML/CSS/JS inline dans un fichier unique\n" +
+"- ✅ Emojis Unicode natifs\n" +
+"- ✅ Formes CSS pures (border-radius, gradients, transforms)\n" +
+"- ✅ Couleurs hexadécimales / RGB\n" +
+"- ✅ Polices système (Arial, Helvetica, sans-serif)\n" +
+"- ✅ localStorage / sessionStorage pour sauvegardes locales\n\n" +
+"---\n\n" +
+"## 📋 WORKFLOW OBLIGATOIRE\n\n" +
+"**ÉTAPE 1 : ANALYSE**\n" +
+"→ Lis attentivement la spécification JSON ci-dessous\n\n" +
+"**ÉTAPE 2 : PLAN DÉTAILLÉ**\n" +
+"→ Propose-moi un **PLAN EN FRANÇAIS** contenant :\n" +
+"   - Structure HTML (balises principales, sections)\n" +
+"   - Mécaniques d'interactions (événements, logique)\n" +
+"   - Approche CSS responsive (mobile-first, breakpoints)\n" +
+"   - Architecture JavaScript (fonctions, gestion état)\n" +
+"   - Implémentation trilingue FR/AR/EN (sélecteur drapeaux)\n" +
+"   - Stratégie pour gérer ressources manquantes (emojis, CSS shapes)\n" +
+"   - Points de vigilance sécurité/accessibilité\n" +
+"   - Estimation poids final (<200 KB)\n\n" +
+"**ÉTAPE 3 : ATTENDRE VALIDATION**\n" +
+"→ **NE GÉNÈRE PAS LE HTML AVANT MON \"OK\" ou \"VALIDE\" EXPLICITE**\n\n" +
+"**ÉTAPE 4 : GÉNÉRATION FINALE**\n" +
+"→ Après mon approbation, génère le fichier HTML complet standalone\n" +
+"→ Teste mentalement tous les cas d'erreur avant de me le fournir\n\n" +
+"---\n\n" +
+"## 🎯 SPÉCIFICATIONS DU PROJET (JSON)\n\n" +
+"```json\n" +
+JSON.stringify(promptData, null, 2) + "\n" +
+"```\n\n" +
+"---\n\n" +
+"## ✅ CHECKLIST VALIDATION FINALE (À FOURNIR AVEC LE HTML)\n\n" +
+"Avant de me donner le fichier HTML, vérifie et confirme :\n\n" +
+"**FONCTIONNEL :**\n" +
+"- [ ] Le fichier s'ouvre sans erreur dans Chrome/Firefox/Safari\n" +
+"- [ ] Aucune erreur console JavaScript\n" +
+"- [ ] Aucune ressource 404 (images, fonts, scripts)\n" +
+"- [ ] Les 3 langues (FR/AR/EN) fonctionnent avec drapeaux 🇫🇷 🇩🇿 🇬🇧\n" +
+"- [ ] Navigation " + (promptData.layout.pageType === 'single' ? 'scroll fluide' : 'multi-pages avec boutons') + " opérationnelle\n" +
+"- [ ] Toutes interactions testées (clics, hover, animations)\n" +
+"- [ ] Récompenses visuelles fonctionnent (" + promptData.interactivity.rewardSystem + ")\n\n" +
+"**RESPONSIVE :**\n" +
+"- [ ] Testé sur 320px (mobile), 768px (tablette), 1920px (desktop)\n" +
+"- [ ] Pas de débordement horizontal\n" +
+"- [ ] Texte lisible sur tous écrans\n" +
+"- [ ] Boutons touchables (min 44x44px sur mobile)\n\n" +
+"**ACCESSIBILITÉ :**\n" +
+"- [ ] Contrastes couleurs ≥ 4.5:1 (WCAG AA)\n" +
+"- [ ] Navigation clavier fonctionnelle (Tab, Enter, Espace)\n" +
+"- [ ] Attributs alt sur éléments visuels importants\n" +
+"- [ ] Attributs aria-label sur boutons icônes\n\n" +
+"**PERFORMANCE :**\n" +
+"- [ ] Poids total < 200 KB\n" +
+"- [ ] Pas de lag au chargement\n" +
+"- [ ] Animations fluides (60 FPS)\n\n" +
+"**SÉCURITÉ :**\n" +
+"- [ ] Aucun lien externe cliquable\n" +
+"- [ ] Pas de collecte de données personnelles\n" +
+"- [ ] sessionStorage uniquement pour sauvegardes locales\n\n" +
+"**CONTENU :**\n" +
+"- [ ] Adapté à l'âge : " + promptData.targetAudience.ageRanges.join(', ') + "\n" +
+"- [ ] Thème \"" + promptData.content.theme + "\" bien traité\n" +
+"- [ ] Objectifs pédagogiques intégrés\n" +
+"- [ ] Ton bienveillant, encouragements positifs\n\n" +
+"**MÉTADONNÉES :**\n" +
+"- [ ] Commentaire en-tête HTML avec version " + promptData.metadata.projectVersion + "\n" +
+"- [ ] Créateur \"" + promptData.metadata.creator + "\" mentionné\n" +
+"- [ ] Date " + promptData.metadata.creationDate + " présente\n\n" +
+"---\n\n" +
+"## 💡 EXEMPLES DE GESTION RESSOURCES MANQUANTES\n\n" +
+"**Images manquantes → CSS Shapes + Emojis :**\n" +
+"```html\n" +
+"<!-- ❌ PAS ÇA -->\n" +
+"<img src=\"cat.png\" alt=\"Chat\">\n\n" +
+"<!-- ✅ ÇA -->\n" +
+"<div class=\"animal-icon\">🐱</div>\n" +
+"<style>\n" +
+".animal-icon {\n" +
+"    font-size: 80px;\n" +
+"    width: 100px;\n" +
+"    height: 100px;\n" +
+"    display: flex;\n" +
+"    align-items: center;\n" +
+"    justify-content: center;\n" +
+"    background: linear-gradient(135deg, #FFE4E1, #FFC1CC);\n" +
+"    border-radius: 50%;\n" +
+"    box-shadow: 0 4px 12px rgba(0,0,0,0.1);\n" +
+"}\n" +
+"</style>\n" +
+"```\n\n" +
+"**Sons manquants → Feedback visuel :**\n" +
+"```javascript\n" +
+"// ❌ PAS ÇA\n" +
+"function playSound() {\n" +
+"    new Audio('correct.mp3').play(); // Erreur si fichier absent\n" +
+"}\n\n" +
+"// ✅ ÇA\n" +
+"function showSuccessFeedback() {\n" +
+"    const feedback = document.createElement('div');\n" +
+"    feedback.textContent = '🎉 Bravo ! ✅';\n" +
+"    feedback.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); font-size:48px; animation:popIn 0.5s;';\n" +
+"    document.body.appendChild(feedback);\n" +
+"    setTimeout(function() { feedback.remove(); }, 2000);\n" +
+"}\n" +
+"```\n\n" +
+"**Icônes Font Awesome manquantes → Emojis Unicode :**\n" +
+"```html\n" +
+"<!-- ❌ PAS ÇA -->\n" +
+"<i class=\"fa fa-star\"></i>\n\n" +
+"<!-- ✅ ÇA -->\n" +
+"<span>⭐</span>\n" +
+"```\n\n" +
+"---\n\n" +
+"## 🌍 IMPLÉMENTATION TRILINGUE OBLIGATOIRE\n\n" +
+"Le HTML doit contenir 3 drapeaux cliquables **TOUJOURS** :\n" +
+"- 🇫🇷 Français\n" +
+"- 🇩🇿 العربية (Arabe - drapeau Algérie)\n" +
+"- 🇬🇧 English\n\n" +
+"Utilise un sélecteur en haut à droite avec emojis drapeaux cliquables.\n" +
+"Au clic sur un drapeau → Tout le contenu texte change dans la langue correspondante.\n\n" +
+"Exemple structure :\n" +
+"```html\n" +
+"<div class=\"language-selector\">\n" +
+"    <button onclick=\"setLanguage('fr')\" class=\"flag-btn\">🇫🇷</button>\n" +
+"    <button onclick=\"setLanguage('ar')\" class=\"flag-btn\">🇩🇿</button>\n" +
+"    <button onclick=\"setLanguage('en')\" class=\"flag-btn\">🇬🇧</button>\n" +
+"</div>\n\n" +
+"<h1 id=\"title\"></h1>\n\n" +
+"<script>\n" +
+"const translations = {\n" +
+"    fr: { title: \"Bienvenue\" },\n" +
+"    ar: { title: \"مرحبا\" },\n" +
+"    en: { title: \"Welcome\" }\n" +
+"};\n\n" +
+"function setLanguage(lang) {\n" +
+"    document.getElementById('title').textContent = translations[lang].title;\n" +
+"    // ... autres éléments\n" +
+"}\n\n" +
+"// Langue par défaut\n" +
+"setLanguage('fr');\n" +
+"</script>\n" +
+"```\n\n" +
+"---\n\n" +
+"## 🎨 GESTION LAYOUT\n\n" +
+"**Si pageType = \"single\" :**\n" +
+"- Tout sur une seule page avec scroll\n" +
+"- Sections séparées visuellement\n" +
+"- Menu ancres pour navigation rapide\n\n" +
+"**Si pageType = \"multi\" :**\n" +
+"- Plusieurs écrans avec boutons Suivant/Précédent\n" +
+"- Barre de progression (1/5, 2/5...)\n" +
+"- Sauvegarder progression en sessionStorage\n\n" +
+"**Si helpPosition = \"left\" ou \"right\" :**\n" +
+"- Créer sidebar fixe " + (promptData.layout.helpPosition === 'left' ? 'à gauche' : promptData.layout.helpPosition === 'right' ? 'à droite' : 'aucune') + "\n" +
+"- Contenu principal à côté\n" +
+"- Responsive : sidebar en bas sur mobile\n" +
+"- Contenu sidebar : conseils parents, statistiques\n\n" +
+"---\n\n" +
+"## ⚠️ DERNIERS RAPPELS CRITIQUES\n\n" +
+"1. **UN SEUL FICHIER HTML** - Tout inline (CSS + JS)\n" +
+"2. **AUCUNE DÉPENDANCE EXTERNE** - Zéro CDN, zéro <link>, zéro <script src>\n" +
+"3. **DOIT MARCHER OFFLINE** à 100%\n" +
+"4. **TOUJOURS TRILINGUE** FR/AR/EN avec drapeaux\n" +
+"5. **GESTION ERREURS** : Prévoir tous cas de ressources manquantes\n" +
+"6. **RESPONSIVE** : Tester mentalement 320px, 768px, 1920px\n" +
+"7. **ACCESSIBLE** : WCAG 2.1 AA minimum\n" +
+"8. **SÉCURISÉ** : Aucun lien externe, aucune collecte données\n\n" +
+"---\n\n" +
+"**🚀 COMMENCE MAINTENANT PAR PROPOSER TON PLAN DÉTAILLÉ EN FRANÇAIS**\n" +
+"**N'OUBLIE PAS : J'ATTENDS TON PLAN, PAS LE HTML DIRECTEMENT**";
 
-## 📋 INSTRUCTIONS POUR L'IA
-
-**WORKFLOW OBLIGATOIRE :**
-
-1. **ANALYSE** cette spécification JSON complète
-2. **PROPOSE-MOI** d'abord un **PLAN DÉTAILLÉ** en format TXT contenant :
-   - Structure HTML (sections principales, navigation)
-   - Mécaniques d'interactions (avec justifications techniques)
-   - Approche CSS responsive (mobile-first, breakpoints)
-   - Architecture JavaScript (fonctions principales, gestion événements)
-   - Implémentation chronomètre et statistiques
-   - Système d'assistance parentale
-   - Points de vigilance sécurité/accessibilité
-   - Estimation poids final (<150 KB)
-
-3. **ATTENDS MON APPROBATION EXPLICITE** avant de générer le HTML
-
-4. **SEULEMENT APRÈS MON "OK"** → Génère le fichier HTML complet standalone
-
----
-
-## 🎯 SPÉCIFICATIONS DU PROJET (JSON)
-
-\`\`\`json
-${JSON.stringify(promptData, null, 2)}
-\`\`\`
-
----
-
-## ✅ CHECKLIST VALIDATION FINALE
-
-Vérifie ces points et liste-les dans ta réponse :
-- [ ] HTML valide W3C (0 erreur sur validator.w3.org)
-- [ ] Responsive testé : 320px / 768px / 1920px
-- [ ] Navigation clavier fonctionnelle (Tab, Enter)
-- [ ] Contrastes couleurs ≥4.5:1 (WebAIM Contrast Checker)
-- [ ] Poids total < 150 KB
-- [ ] Aucune dépendance externe (CDN, Google Fonts)
-- [ ] Fonctionne offline à 100%
-- [ ] Tous objectifs pédagogiques intégrés
-- [ ] Contenu adapté à l'âge ${ageRanges.join(', ')}
-- [ ] Langue(s) ${languages.join(', ')} implémentée(s) correctement
-- [ ] Chronomètre fonctionnel (si activé)
-- [ ] Statistiques opérationnelles (si activées)
-- [ ] Assistance parentale accessible et pertinente (si activée)
-- [ ] Commentaires en-tête présents et complets
-- [ ] Version ${projectVersion} mentionnée dans code
-si je ne spécifi pas la langue tu doit le faire ne 3 langue ARAB / FRNCAI /ENGLAIS , avec 3 icon soufor de drapeau , arab c'est algerie 
---- 
-
-**⏩ COMMENCE MAINTENANT le html ! le fichier doit fontioner meme si il manque d autre fichier qui sont relier ,comme des image ou des fichier de son ...**`;
-            
             // Affichage dans modal
             document.getElementById('promptOutputModal').textContent = prompt;
             openResultModal();
         }
         
-        function generateTextPrompt() {
-            // Ancienne fonction de génération de prompt texte (conservée pour compatibilité)
-            // ... (le code original de génération de prompt texte)
-            
-            // Pour l'exemple, j'utilise une version simplifiée
-            const prompt = `# PROMPT TEXTE (ANCIEN FORMAT)
-            
-Ceci est l'ancien format texte. Le format JSON est recommandé pour de meilleurs résultats avec les IA modernes.
-
-Utilisez le format JSON pour une meilleure structuration des données.`;
-            
-            document.getElementById('promptOutputModal').textContent = prompt;
-            openResultModal();
-        }
-        
-        // ===== COPIER PROMPT MODAL =====
+        // ===== COPIER PROMPT =====
         document.getElementById('copyBtnModal').addEventListener('click', function() {
             const promptText = document.getElementById('promptOutputModal').textContent;
             const btn = this;
@@ -1871,27 +1736,25 @@ Utilisez le format JSON pour une meilleure structuration des données.`;
             btn.classList.add('loading');
             btn.disabled = true;
             
-            navigator.clipboard.writeText(promptText).then(() => {
-                setTimeout(() => {
+            navigator.clipboard.writeText(promptText).then(function() {
+                setTimeout(function() {
                     btn.classList.remove('loading');
-                    btn.classList.add('copy-success');
-                    btn.innerHTML = '<span>✅ Copié avec succès !</span>';
+                    btn.innerHTML = '<span>✅ Copié !</span>';
                     
-                    setTimeout(() => {
-                        btn.classList.remove('copy-success');
+                    setTimeout(function() {
                         btn.innerHTML = '<span class="spinner"></span><span>📋 Copier le Prompt</span>';
                         btn.disabled = false;
                     }, 2500);
                 }, 300); 
-            }).catch(err => {
+            }).catch(function(err) {
                 btn.classList.remove('loading');
                 btn.disabled = false;
-                alert('❌ Erreur lors de la copie. Sélectionnez manuellement le texte.');
-                console.error('Erreur copie:', err);
+                alert('❌ Erreur copie. Sélectionnez manuellement le texte.');
+                console.error('Erreur:', err);
             });
         });
         
-        // ===== TÉLÉCHARGER TXT MODAL =====
+        // ===== TÉLÉCHARGER TXT =====
         document.getElementById('downloadBtnModal').addEventListener('click', function() {
             const promptText = document.getElementById('promptOutputModal').textContent;
             const blob = new Blob([promptText], { type: 'text/plain;charset=utf-8' });
@@ -1900,11 +1763,10 @@ Utilisez le format JSON pour une meilleure structuration des données.`;
             
             const theme = document.getElementById('theme').value.replace(/[^a-z0-9]/gi, '_').toLowerCase();
             const creator = document.getElementById('creatorName').value.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-            const version = document.getElementById('projectVersion').value.replace(/[^a-z0-9.]/gi, '');
             const timestamp = new Date().toISOString().slice(0,10);
             
             a.href = url;
-            a.download = `prompt_${theme}_${creator}_${version}_${timestamp}.txt`;
+            a.download = 'prompt_' + theme + '_' + creator + '_' + timestamp + '.txt';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -1913,21 +1775,18 @@ Utilisez le format JSON pour une meilleure structuration des données.`;
         
         // ===== RESET FORM =====
         document.getElementById('promptForm').addEventListener('reset', function() {
-            setTimeout(() => {
+            setTimeout(function() {
                 clearErrors();
-                // Réinitialiser date
                 document.getElementById('creationDate').value = new Date().toLocaleDateString('fr-FR', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
                 });
-                // Garder le nom sauvegardé
                 const savedName = localStorage.getItem(STORAGE_KEY_NAME);
                 if (savedName) {
                     document.getElementById('creatorName').value = savedName;
                 }
-                // Mettre à jour l'aperçu JSON
-                updateJsonPreview();
+                updateProgress();
             }, 100);
         });
     </script>

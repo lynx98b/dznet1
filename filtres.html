@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-CRRK6Z4D1X');
+  </script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DzNet1 - الفلاتر المجتمعية</title>
@@ -270,5 +281,43 @@
     </div>
 
     <script src="script.js"></script>
+
+    <div class="page-navigation">
+      <a class="nav-button" href="index.html">Page précédente</a>
+      <a class="nav-button" href="enfants.html">Page suivante</a>
+    </div>
+    <style>
+      .page-navigation {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        max-width: 420px;
+        margin: 60px auto 20px;
+        padding: 0 20px;
+      }
+      .page-navigation .nav-button {
+        flex: 1;
+        text-align: center;
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: #ffffff;
+        padding: 12px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      }
+      .page-navigation .nav-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
+      }
+      .page-navigation .nav-button.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+        background: #95a5a6;
+        box-shadow: none;
+      }
+    </style>
+
 </body>
 </html>

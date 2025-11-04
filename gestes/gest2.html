@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timmy's Hygiene Adventure</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Comic Sans MS',cursive,sans-serif;}
+body{
+  background:linear-gradient(135deg,#a1c4fd 0%,#c2e9fb 100%);
+  min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;
+}
+.story-container{
+  width:100%;max-width:800px;background:white;border-radius:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);overflow:hidden;position:relative;
+}
+.header{
+  background:linear-gradient(90deg,#ff9a9e 0%,#fad0c4 100%);
+  padding:20px;text-align:center;color:white;text-shadow:2px 2px 4px rgba(0,0,0,0.3);
+  position:relative;
+}
+.lang-switch{
+  position:absolute;top:15px;right:20px;display:flex;gap:10px;
+}
+.lang-switch img{
+  width:32px;height:22px;cursor:pointer;border-radius:4px;
+  transition:transform 0.2s,box-shadow 0.2s;
+  box-shadow:0 0 5px rgba(255,255,255,0.5);
+}
+.lang-switch img:hover{transform:scale(1.1);box-shadow:0 0 10px rgba(255,255,255,0.9);}
+h1{font-size:2.3rem;margin-bottom:10px;}
+.subtitle{font-size:1.1rem;opacity:0.9;}
+.story-content{padding:30px;min-height:400px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;}
+.page{display:none;text-align:center;width:100%;}
+.page.active{display:block;animation:fadeIn 0.8s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.character{font-size:5rem;margin:20px 0;animation:bounce 2s infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-15px);}}
+.story-text{
+  font-size:1.3rem;line-height:1.6;margin:20px 0;color:#333;
+  background-color:rgba(255,255,255,0.7);padding:20px;border-radius:15px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.1);
+}
+.controls{display:flex;justify-content:space-between;width:100%;margin-top:20px;}
+.btn{
+  padding:12px 25px;background-color:#2196F3;color:white;border:none;border-radius:50px;
+  cursor:pointer;font-size:1.1rem;transition:all 0.3s;box-shadow:0 4px 8px rgba(0,0,0,0.2);
+}
+.btn:hover{background-color:#0b7dda;transform:translateY(-3px);}
+.btn:disabled{background-color:#ccc;cursor:not-allowed;}
+.progress-bar{width:100%;height:10px;background-color:#e0e0e0;border-radius:5px;margin-top:20px;overflow:hidden;}
+.progress{height:100%;background:linear-gradient(90deg,#ff9a9e 0%,#fad0c4 100%);width:0%;transition:width 0.5s;}
+.page1{background:#ffebee;} .page2{background:#e8f5e9;} .page3{background:#e3f2fd;} .page4{background:#fff3e0;} .page5{background:#f3e5f5;} .page6{background:#e0f2f1;}
+@media(max-width:600px){h1{font-size:1.8rem;}.story-text{font-size:1.1rem;}.lang-switch img{width:28px;height:20px;}}
+</style>
+</head>
+<body>
+<div class="story-container">
+  <div class="header">
+    <div class="lang-switch">
+      <img src="https://flagcdn.com/w20/fr.png" alt="Français" title="Français" onclick="setLang('fr')">
+      <img src="https://flagcdn.com/w20/gb.png" alt="English" title="English" onclick="setLang('en')">
+      <img src="https://flagcdn.com/w20/dz.png" alt="العربية" title="العربية" onclick="setLang('ar')">
+    </div>
+    <h1 id="title"></h1>
+    <div class="subtitle" id="subtitle"></div>
+  </div>
+  <div class="progress-bar"><div class="progress" id="progress"></div></div>
+  <div class="story-content" id="content"></div>
+</div>
+
+<script>
+/* ======== TEXTES MULTILINGUES ======== */
+const texts={
+  fr:{
+    title:"L'Aventure Hygiène de Timmy",
+    subtitle:"Une histoire amusante sur la propreté et la santé !",
+    pages:[
+      {emoji:"👦",text:"Salut ! Je suis Timmy ! J'adore jouer dehors. Tu veux m'aider à rester propre ?"},
+      {emoji:"🧼",text:"Oh non ! Mes mains sont sales. Lavons-les ensemble !"},
+      {emoji:"🦷",text:"Après avoir mangé une pomme, je dois me brosser les dents ! Comptons jusqu’à 20 !"},
+      {emoji:"🚿",text:"Après avoir joué toute la journée, c’est le bain ! Fais éclater les bulles !"},
+      {emoji:"👕",text:"Je dois mettre des vêtements propres maintenant !"},
+      {emoji:"🌟",text:"Youpi ! Je suis tout propre et prêt à dormir ! Merci pour ton aide !"}
+    ],
+    next:"Suivant",prev:"Précédent"
+  },
+  en:{
+    title:"Timmy's Hygiene Adventure",
+    subtitle:"A fun story about staying clean and healthy!",
+    pages:[
+      {emoji:"👦",text:"Hi! I'm Timmy! I love playing outside. Will you help me learn about hygiene?"},
+      {emoji:"🧼",text:"Oh no! My hands are dirty. Let's wash them together!"},
+      {emoji:"🦷",text:"After eating that yummy apple, I need to brush my teeth! Let's count to 20!"},
+      {emoji:"🚿",text:"After playing all day, it's bath time! Pop all the bubbles!"},
+      {emoji:"👕",text:"Now I need to put on clean clothes!"},
+      {emoji:"🌟",text:"Yay! Now I'm all clean and ready for bed! Thank you for helping me learn!"}
+    ],
+    next:"Next",prev:"Previous"
+  },
+  ar:{
+    title:"مغامرة تيمي مع النظافة",
+    subtitle:"قصة ممتعة عن البقاء نظيفًا وصحيًا!",
+    pages:[
+      {emoji:"👦",text:"مرحباً! أنا تيمي! أحب اللعب في الخارج. هل تساعدني في تعلم النظافة؟"},
+      {emoji:"🧼",text:"يا إلهي! يداي متسختان. هيا نغسلهما معًا!"},
+      {emoji:"🦷",text:"بعد أكل التفاحة، يجب أن أنظف أسناني! فلنعدّ إلى 20!"},
+      {emoji:"🚿",text:"بعد اللعب طوال اليوم، حان وقت الاستحمام! فجر جميع الفقاعات!"},
+      {emoji:"👕",text:"الآن يجب أن أرتدي ملابس نظيفة!"},
+      {emoji:"🌟",text:"رائع! أصبحت نظيفًا وجاهزًا للنوم! شكرًا لمساعدتك لي!"}
+    ],
+    next:"التالي",prev:"السابق"
+  }
+};
+
+let currentLang='fr';
+let currentPage=0;
+
+/* ======== INITIALISATION ======== */
+function initStory(){
+  const t=texts[currentLang];
+  document.getElementById('title').textContent=t.title;
+  document.getElementById('subtitle').textContent=t.subtitle;
+  loadPage(0);
+}
+function loadPage(index){
+  const t=texts[currentLang];
+  const p=t.pages[index];
+  const content=document.getElementById('content');
+  content.innerHTML=`
+    <div class="page active">
+      <div class="character">${p.emoji}</div>
+      <div class="story-text" dir="${currentLang==='ar'?'rtl':'ltr'}">${p.text}</div>
+      <div class="controls">
+        <button class="btn" onclick="prevPage()" ${index===0?'disabled':''}>${t.prev}</button>
+        <button class="btn" onclick="nextPage()" ${index===t.pages.length-1?'disabled':''}>${t.next}</button>
+      </div>
+    </div>`;
+  document.getElementById('progress').style.width=`${((index+1)/t.pages.length)*100}%`;
+  speakText(p.text);
+}
+
+/* ======== NAVIGATION ======== */
+function nextPage(){if(currentPage<texts[currentLang].pages.length-1){currentPage++;loadPage(currentPage);}}
+function prevPage(){if(currentPage>0){currentPage--;loadPage(currentPage);}}
+
+/* ======== CHANGEMENT DE LANGUE ======== */
+function setLang(lang){
+  currentLang=lang;currentPage=0;
+  initStory();
+}
+
+/* ======== SYNTHÈSE VOCALE ======== */
+function speakText(txt){
+  if(!('speechSynthesis'in window))return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang=(currentLang==='ar')?'ar-SA':(currentLang==='en')?'en-US':'fr-FR';
+  u.rate=0.95;u.pitch=1.1;u.volume=0.9;
+  window.speechSynthesis.speak(u);
+}
+
+/* ======== DÉMARRAGE ======== */
+if('speechSynthesis'in window)speechSynthesis.onvoiceschanged=()=>{};
+initStory();
+</script>
+</body>
+</html>

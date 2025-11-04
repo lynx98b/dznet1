@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drapeau de l'Algérie 🇩🇿 — Multilingue</title>
+<style>
+:root {
+  --green:#006233;
+  --red:#CE1126;
+  --white:#ffffff;
+}
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background-color: #f0f8ff;
+  color: #333;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: linear-gradient(135deg, var(--green), #008040);
+  color: white;
+  padding: 20px;
+  border-bottom: 8px solid var(--red);
+  position: relative;
+}
+.lang-switch {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  gap: 10px;
+}
+.lang-switch button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+.container { max-width: 800px; margin: auto; padding: 20px; }
+.drapeau-image {
+  width: 250px; height: 167px;
+  border: 6px solid var(--green);
+  border-radius: 15px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  background: linear-gradient(to right, var(--green) 50%, white 50%);
+  position: relative;
+}
+.croissant, .etoile {
+  position: absolute;
+  background-color: var(--red);
+}
+.croissant {
+  left: 35%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+.etoile {
+  left: 45%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px; height: 30px;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+.quiz-section {
+  background: white; padding: 25px; border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-top: 30px;
+}
+.reponses { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.reponse-btn {
+  background-color: #4CAF50; color: white;
+  border: none; padding: 12px;
+  border-radius: 12px; cursor: pointer;
+  transition: all .3s;
+}
+.reponse-btn:hover { background-color: #45a049; transform: scale(1.05); }
+.feedback { font-size: 1.3rem; margin-top: 10px; display:none; }
+.bonne { color: green; }
+.mauvaise { color: red; }
+footer {
+  background: linear-gradient(135deg, var(--green), #008040);
+  color: white;
+  padding: 15px;
+  border-top: 8px solid var(--red);
+}
+@media (max-width:600px) {
+  .reponses { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title">🇩🇿 Le Drapeau de l'Algérie 🇩🇿</h1>
+  <p id="subtitle">Découvrons ensemble notre beau drapeau !</p>
+  <div class="lang-switch">
+    <button onclick="setLang('fr')" title="Français">🇫🇷</button>
+    <button onclick="setLang('ar')" title="العربية">🇩🇿</button>
+    <button onclick="setLang('en')" title="English">🇬🇧</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="drapeau-image">
+    <div class="croissant"></div>
+    <div class="etoile"></div>
+  </div>
+
+  <section class="quiz-section" id="quiz">
+    <h2 id="quizTitle">🎯 Petit Quiz Amusant</h2>
+
+    <div class="question" id="q1"></div>
+    <div class="reponses" id="r1"></div>
+    <div class="feedback" id="f1"></div>
+
+    <div class="question" id="q2"></div>
+    <div class="reponses" id="r2"></div>
+    <div class="feedback" id="f2"></div>
+
+    <div class="question" id="q3"></div>
+    <div class="reponses" id="r3"></div>
+    <div class="feedback" id="f3"></div>
+
+    <div id="result" style="margin-top:20px; font-weight:bold;"></div>
+    <button class="reponse-btn" onclick="resetQuiz()">🔄 <span id="restartBtn">Recommencer</span></button>
+  </section>
+</div>
+
+<footer>
+  <p id="footerText">🌟 Sois fier de ton drapeau, sois fier de l'Algérie ! 🌟</p>
+</footer>
+
+<script>
+const translations = {
+  fr: {
+    title: "🇩🇿 Le Drapeau de l'Algérie 🇩🇿",
+    subtitle: "Découvrons ensemble notre beau drapeau !",
+    quizTitle: "🎯 Petit Quiz Amusant",
+    restart: "Recommencer",
+    footer: "🌟 Sois fier de ton drapeau, sois fier de l'Algérie ! 🌟",
+    questions: [
+      ["1. Quelle couleur représente la nature et la religion ?", ["🟢 Vert","⚪ Blanc","🔴 Rouge","🔵 Bleu"], "🟢 Vert"],
+      ["2. Quelle couleur montre que nous aimons la paix ?", ["⚪ Blanc","🔴 Rouge","🟢 Vert","🟡 Jaune"], "⚪ Blanc"],
+      ["3. Quelle couleur rappelle le courage de nos héros ?", ["🔴 Rouge","⚪ Blanc","🟢 Vert","🟠 Orange"], "🔴 Rouge"]
+    ],
+    correct: "✅ Bravo ! Excellente réponse !",
+    wrong: "❌ Oh non ! Essaie encore !"
+  },
+  ar: {
+    title: "🇩🇿 العلم الجزائري 🇩🇿",
+    subtitle: "لنكتشف معًا جمال علمنا الوطني!",
+    quizTitle: "🎯 مسابقة ممتعة صغيرة",
+    restart: "إعادة المحاولة",
+    footer: "🌟 كن فخوراً بعلمك وبلدك! 🌟",
+    questions: [
+      ["١. أي لون يرمز إلى الطبيعة والدين؟", ["🟢 الأخضر","⚪ الأبيض","🔴 الأحمر","🔵 الأزرق"], "🟢 الأخضر"],
+      ["٢. أي لون يدل على السلام؟", ["⚪ الأبيض","🔴 الأحمر","🟢 الأخضر","🟡 الأصفر"], "⚪ الأبيض"],
+      ["٣. أي لون يرمز إلى شجاعة أبطالنا؟", ["🔴 الأحمر","⚪ الأبيض","🟢 الأخضر","🟠 البرتقالي"], "🔴 الأحمر"]
+    ],
+    correct: "✅ أحسنت! إجابة صحيحة!",
+    wrong: "❌ حاول مرة أخرى!"
+  },
+  en: {
+    title: "🇩🇿 The Flag of Algeria 🇩🇿",
+    subtitle: "Let's discover our beautiful flag together!",
+    quizTitle: "🎯 Fun Little Quiz",
+    restart: "Restart",
+    footer: "🌟 Be proud of your flag, be proud of Algeria! 🌟",
+    questions: [
+      ["1. Which color represents nature and religion?", ["🟢 Green","⚪ White","🔴 Red","🔵 Blue"], "🟢 Green"],
+      ["2. Which color stands for peace and purity?", ["⚪ White","🔴 Red","🟢 Green","🟡 Yellow"], "⚪ White"],
+      ["3. Which color shows the courage of our heroes?", ["🔴 Red","⚪ White","🟢 Green","🟠 Orange"], "🔴 Red"]
+    ],
+    correct: "✅ Well done! Correct answer!",
+    wrong: "❌ Try again!"
+  }
+};
+
+let currentLang = "fr";
+let correctAnswers = 0;
+
+function setLang(lang){
+  currentLang = lang;
+  const t = translations[lang];
+  document.getElementById("title").innerText = t.title;
+  document.getElementById("subtitle").innerText = t.subtitle;
+  document.getElementById("quizTitle").innerText = t.quizTitle;
+  document.getElementById("restartBtn").innerText = t.restart;
+  document.getElementById("footerText").innerText = t.footer;
+  // Load questions
+  for(let i=0;i<3;i++){
+    document.getElementById("q"+(i+1)).innerText = t.questions[i][0];
+    const rDiv = document.getElementById("r"+(i+1));
+    rDiv.innerHTML = "";
+    t.questions[i][1].forEach(ans=>{
+      const btn = document.createElement("button");
+      btn.className = "reponse-btn";
+      btn.innerText = ans;
+      btn.onclick = ()=>checkAnswer(i+1, ans);
+      rDiv.appendChild(btn);
+    });
+    document.getElementById("f"+(i+1)).style.display = "none";
+    document.getElementById("f"+(i+1)).innerText = "";
+  }
+  correctAnswers = 0;
+  document.getElementById("result").innerText = "";
+}
+
+function checkAnswer(q, rep){
+  const t = translations[currentLang];
+  const correct = t.questions[q-1][2];
+  const f = document.getElementById("f"+q);
+  if(rep === correct){
+    f.innerText = t.correct;
+    f.className = "feedback bonne";
+    correctAnswers++;
+  } else {
+    f.innerText = t.wrong;
+    f.className = "feedback mauvaise";
+  }
+  f.style.display = "block";
+  if(correctAnswers === 3) document.getElementById("result").innerText = "🎉 "+(currentLang==="fr"?"Félicitations!":"")+ (currentLang==="ar"?"أحسنت!":"") + (currentLang==="en"?"Congratulations!":"");
+}
+
+function resetQuiz(){
+  setLang(currentLang);
+}
+
+window.onload = ()=>setLang("fr");
+</script>
+</body>
+</html>

@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'unsafe-inline' 'self'; script-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>Chasse au Trésor — v1.0</title>
+<!--
+  =====================================================================
+  PROJET : Mini-appli éducative enfant (3–8 ans) — "Chasse au Trésor"
+  CRÉATEUR : mohamed
+  VERSION : v1.0
+  DATE : 4 novembre 2025
+  GÉNÉRATEUR : Formulaire v1.005
+  CARACTÉRISTIQUES :
+    - HTML5 standalone, offline 100%, sans tracking (RGPD)
+    - Aucune dépendance externe, aucune donnée personnelle
+    - Responsive mobile-first (320 / 768 / 1920)
+    - Accessibilité : focus visible, ARIA live, navigation clavier
+    - Sécurité : CSP stricte, aucun eval, aucun lien externe
+    - Jeux : Couleurs, Lettres, Animaux, Fruits/Légumes, Saisons/Météo,
+             Drag & Drop, Memory, Puzzle, Labyrinthe, Tri/Catégorie,
+             + Final Trésor (lapin magique)
+    - Chronomètre discret + barre de progression
+    - Panneau d’aide parentale contextuel
+  =====================================================================
+-->
+<style>
+  :root{
+    /* Palette arc-en-ciel doux (texte foncé pour contraste) */
+    --c1:#FFE0B2; --c2:#FFF9C4; --c3:#C8E6C9; --c4:#B3E5FC; --c5:#E1BEE7;
+    --ink:#1d2730; --ink-weak:#2b3947; --ok:#1b8d3b; --warn:#a05a00; --err:#9b1c1c;
+    --focus:#2d6cdf; --accent:#7c4dff;
+    --surface:#fff; --muted:#f4f6f8; --shadow:0 6px 20px rgba(0,0,0,.10);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font:16px/1.5 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    color:var(--ink); background:linear-gradient(135deg,var(--c2),var(--c4) 60%,var(--c5));
+  }
+  header,footer{background:rgba(255,255,255,.85); backdrop-filter:saturate(1.1) blur(4px)}
+  header{
+    position:sticky; top:0; z-index:10; box-shadow:var(--shadow);
+    padding:.5rem .75rem; display:flex; align-items:center; gap:.75rem; flex-wrap:wrap;
+  }
+  .brand{font-weight:800; letter-spacing:.2px}
+  .chip{display:inline-flex; align-items:center; gap:.35rem; border-radius:999px; padding:.35rem .6rem; background:var(--muted); font-size:.85rem}
+  .spacer{flex:1}
+  .btn{border:0; border-radius:12px; padding:.6rem .9rem; background:var(--accent); color:#fff; cursor:pointer}
+  .btn.secondary{background:#444; color:#fff}
+  .btn.ghost{background:transparent; border:2px solid var(--ink); color:var(--ink)}
+  .btn:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+  .bar{
+    width:240px; height:10px; background:#e6e9ef; border-radius:999px; overflow:hidden; box-shadow:inset 0 1px 2px rgba(0,0,0,.15);
+  }
+  .bar>i{display:block; height:100%; width:0%; background:linear-gradient(90deg,#00b894,#55efc4); transition:width .3s ease}
+  .timer{font-variant-numeric:tabular-nums}
+  nav{
+    display:flex; gap:.4rem; padding:.5rem .75rem; overflow:auto; background:rgba(255,255,255,.7)
+  }
+  nav a{
+    white-space:nowrap; text-decoration:none; color:var(--ink); background:var(--muted);
+    padding:.45rem .6rem; border-radius:999px; font-size:.9rem; border:2px solid transparent;
+  }
+  nav a[aria-current="page"]{background:#fff; border-color:var(--accent)}
+  main{padding:1rem; max-width:1100px; margin:0 auto}
+  section[role="region"]{display:none; background:#fff; border-radius:18px; box-shadow:var(--shadow); padding:1rem}
+  section[role="region"].active{display:block; animation:fade .25s ease}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
+
+  /* Cartes génériques d’activité */
+  .cards{display:grid; gap:.75rem}
+  .card{
+    background:var(--muted); border-radius:16px; padding:1rem; min-height:72px;
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.1rem; cursor:pointer;
+    border:2px solid transparent; user-select:none;
+  }
+  .card:focus-visible{outline:3px solid var(--focus)}
+  .success{box-shadow:0 0 0 3px rgba(27,141,59,.3) inset}
+  .hint{animation:pulse 1s infinite}
+  @keyframes pulse{50%{box-shadow:0 0 0 6px rgba(44,130,201,.2) inset}}
+
+  /* Drag & drop */
+  .dropzone{border:2px dashed #999; border-radius:16px; min-height:100px; display:grid; place-items:center; padding:1rem}
+  .draggable{display:inline-block; padding:.6rem .8rem; background:var(--c3); border-radius:12px; margin:.25rem; cursor:grab}
+  .drop-ok{border-color:var(--ok)}
+
+  /* Memory */
+  .memory{display:grid; grid-template-columns:repeat(3, minmax(80px,1fr)); gap:.5rem}
+  .card-mem{height:84px; border-radius:12px; display:grid; place-items:center; background:var(--c1); font-size:1.4rem; cursor:pointer; border:2px solid #0000}
+  .card-mem.revealed{background:#fff}
+  .card-mem.matched{background:#c8f7c5}
+
+  /* Puzzle */
+  .puzzle-stage{position:relative; height:240px; border-radius:16px; background:var(--c2); overflow:hidden}
+  .piece{position:absolute; width:60px; height:60px; border-radius:10px; background:var(--c4); display:grid; place-items:center; font-weight:800; cursor:grab; touch-action:none}
+  .snap{outline:3px dashed var(--accent)}
+
+  /* Labyrinthe */
+  .maze{--n:8; display:grid; grid-template-columns:repeat(var(--n), 1fr); gap:3px; background:#ccc; padding:3px; border-radius:12px}
+  .cell{aspect-ratio:1/1; background:#fff; border-radius:6px}
+  .cell.wall{background:#333}
+  .cell.start{background:#a3e635}
+  .cell.goal{background:#facc15}
+  .cursor{background:#3b82f6 !important}
+
+  /* Tri/Catégorisation */
+  .bins{display:grid; grid-template-columns:1fr 1fr; gap:.75rem}
+  .bin{border:2px dashed #777; border-radius:14px; min-height:90px; padding:.5rem}
+  .badge{display:inline-block; padding:.4rem .6rem; border-radius:999px; background:var(--c5); margin:.25rem}
+
+  /* Aide parentale */
+  #parental-help{position:fixed; inset:auto 0 0 auto; right:0; top:0; width:min(420px,100%); height:100%;
+    transform:translateX(100%); background:#fff; box-shadow:-8px 0 24px rgba(0,0,0,.15); transition:transform .25s ease; z-index:20}
+  #parental-help.open{transform:none}
+  #parental-help header{position:sticky; top:0}
+  .help-body{padding:1rem; overflow:auto; height:calc(100% - 64px)}
+  .stat{font-size:.92rem; opacity:.9}
+
+  /* Focus visuel accessible */
+  :focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+
+  /* Layout responsive */
+  .controls{display:flex; gap:.5rem; flex-wrap:wrap; align-items:center}
+  .stack{display:grid; gap:1rem}
+  @media (min-width:480px){ .cards{grid-template-columns:repeat(2,1fr)} }
+  @media (min-width:768px){ .cards{grid-template-columns:repeat(3,1fr)} .stack{grid-template-columns: 1fr 1fr} }
+  @media (min-width:1200px){ .cards{grid-template-columns:repeat(4,1fr)} }
+  /* Préférence utilisateur : réduire animations */
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important; transition:none !important}
+  }
+</style>
+</head>
+<body>
+<header role="banner">
+  <div class="brand" aria-label="Titre de l'application">🐰 Chasse au Trésor</div>
+  <div class="chip" role="status" aria-live="polite">Langue : <button class="btn ghost" id="btn-lang" aria-label="Changer de langue">FR</button></div>
+  <button class="btn secondary" id="btn-help" aria-haspopup="dialog" aria-controls="parental-help" aria-expanded="false">Aide parentale</button>
+  <div class="spacer" aria-hidden="true"></div>
+  <div class="chip timer" id="timer" aria-label="Chronomètre">00:00</div>
+  <div class="bar" aria-label="Progression de l'aventure"><i id="progress"></i></div>
+</header>
+
+<nav aria-label="Étapes">
+  <!-- Rempli dynamiquement -->
+</nav>
+
+<main id="main" tabindex="-1">
+  <!-- Sections générées en JS pour garder le HTML compact -->
+</main>
+
+<aside id="parental-help" role="dialog" aria-modal="true" aria-label="Conseils pour les parents">
+  <header class="controls">
+    <strong class="brand">Aide parentale</strong>
+    <div class="spacer"></div>
+    <button class="btn" id="btn-close-help" aria-label="Fermer l'aide parentale">Fermer</button>
+  </header>
+  <div class="help-body">
+    <p class="stat">Temps total : <span id="stat-time">00:00</span></p>
+    <p class="stat">Indices utilisés : <span id="stat-hints">0</span></p>
+    <p class="stat">Tentatives : <span id="stat-tries">0</span></p>
+    <hr>
+    <h3>Encourager après une erreur</h3>
+    <ul>
+      <li>“Bravo d’avoir essayé, réessaie à ton rythme.”</li>
+      <li>“Regarde, on peut chercher ensemble l’indice.”</li>
+      <li>“Parfait, tu progresses !”</li>
+    </ul>
+    <h3>Détecter la frustration</h3>
+    <ul>
+      <li>Signes : souffle, abandon, clics rapides.</li>
+      <li>Action : proposer une pause de 30s, respirer, simplifier.</li>
+    </ul>
+    <h3>Questions après l’activité</h3>
+    <ul>
+      <li>“Quelle couleur/lettre as-tu préférée ?”</li>
+      <li>“Quel animal a fait le cri le plus drôle ?”</li>
+      <li>“Comment as-tu trouvé le chemin du labyrinthe ?”</li>
+    </ul>
+  </div>
+</aside>
+
+<footer role="contentinfo" style="padding:1rem; text-align:center">
+  <small>© 2025 — créateur : mohamed — v1.0 — Offline • Aucun tracking • RGPD</small>
+  <div class="controls" style="justify-content:center; margin-top:.5rem">
+    <button class="btn ghost" id="btn-restart" aria-label="Recommencer l'aventure">Rejouer</button>
+  </div>
+  <div aria-live="polite" aria-atomic="true" id="aria-live" style="position:absolute; left:-9999px"></div>
+</footer>
+
+<script>
+/* =========================================================================
+   App (namespace unique)
+   ========================================================================= */
+const App = {
+  steps: [
+    {id:'home', label:'Accueil'},
+    {id:'colors', label:'Couleurs'},
+    {id:'letters', label:'Lettres'},
+    {id:'animals', label:'Animaux'},
+    {id:'fruits', label:'Fruits/Légumes'},
+    {id:'seasons', label:'Saisons/Météo'},
+    {id:'drag', label:'Motricité (Drag)'},
+    {id:'memory', label:'Mémoire'},
+    {id:'puzzle', label:'Puzzle'},
+    {id:'maze', label:'Labyrinthe'},
+    {id:'sort', label:'Catégoriser'},
+    {id:'treasure', label:'Trésor'}
+  ],
+  state:{
+    lang:'fr', currentIndex:0, completed:{}, tries:0, hints:0,
+    timerStart:null, elapsed:0, frustrationScore:0, activityCleanup:null
+  },
+  qs:(sel,root=document)=>root.querySelector(sel),
+  qsa:(sel,root=document)=>[...root.querySelectorAll(sel)],
+  speak:(msg)=>{ const live=App.qs('#aria-live'); live.textContent=msg; },
+  /* ---------- Audio Web : bip positif / erreur (offline, 0 Ko) ---------- */
+  audio:{
+    ctx:null,
+    init(){
+      if(!this.ctx) this.ctx = new (window.AudioContext||window.webkitAudioContext)();
+    },
+    tone(freq=660,ms=160){
+      try{
+        this.init();
+        const o=this.ctx.createOscillator(), g=this.ctx.createGain();
+        o.type='sine'; o.frequency.value=freq;
+        o.connect(g); g.connect(this.ctx.destination);
+        g.gain.setValueAtTime(.001, this.ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(.2, this.ctx.currentTime+.02);
+        o.start();
+        g.gain.exponentialRampToValueAtTime(.001, this.ctx.currentTime+ms/1000);
+        o.stop(this.ctx.currentTime+ms/1000+0.05);
+      }catch(e){}
+    },
+    positive(){ this.tone(740,140); },
+    error(){ this.tone(240,220); }
+  },
+  /* ------------------------- Navigation / Progress ----------------------- */
+  mount(){
+    // Build nav
+    const nav=document.querySelector('nav');
+    App.steps.forEach((s,i)=>{
+      const a=document.createElement('a');
+      a.href="#"; a.textContent = s.label; a.setAttribute('data-i',i);
+      a.addEventListener('click',e=>{e.preventDefault(); App.nav.go(i);});
+      nav.appendChild(a);
+    });
+    // Build sections
+    const main=document.getElementById('main');
+    App.steps.forEach((s,i)=>{
+      const sec=document.createElement('section');
+      sec.id=s.id; sec.setAttribute('role','region'); sec.setAttribute('aria-labelledby',`h-${s.id}`);
+      if(i===0) sec.classList.add('active');
+      sec.innerHTML=App.templates[s.id]();
+      main.appendChild(sec);
+    });
+    // Controls
+    App.qs('#btn-lang').addEventListener('click', App.i18n.toggle);
+    App.qs('#btn-help').addEventListener('click', ()=>App.help.open(true));
+    App.qs('#btn-close-help').addEventListener('click', ()=>App.help.open(false));
+    App.qs('#btn-restart').addEventListener('click', App.reset);
+    document.addEventListener('keydown', App.keys.global);
+
+    // Timer
+    App.timer.start();
+
+    // Init first activity
+    App.nav.go(0, true);
+  },
+  keys:{
+    global(e){
+      const helpOpen = App.qs('#parental-help').classList.contains('open');
+      if(e.key==='A' || e.key==='a'){ App.help.open(!helpOpen); }
+      if(e.key==='Escape' && helpOpen){ App.help.open(false); }
+    }
+  },
+  nav:{
+    go(index, first=false){
+      const prev = App.state.currentIndex;
+      App.state.currentIndex = Math.max(0, Math.min(App.steps.length-1, index));
+      // Update nav current
+      App.qsa('nav a').forEach((a,i)=>a.setAttribute('aria-current', i===App.state.currentIndex ? 'page' : 'false'));
+      // Switch section
+      const id=App.steps[App.state.currentIndex].id;
+      App.qsa('main section').forEach(s=>s.classList.remove('active'));
+      const sec=App.qs(`#${id}`); sec.classList.add('active');
+      // Cleanup previous activity listeners if any
+      if(App.state.activityCleanup) try{ App.state.activityCleanup(); }catch(e){}
+      // Init activity
+      if(App.inits[id]) App.state.activityCleanup = App.inits[id]();
+      else App.state.activityCleanup = null;
+      // Progress
+      App.ui.updateProgress();
+      // Move focus to main region for a11y
+      App.qs('#main').focus();
+      if(!first){ App.speak(`Étape : ${App.steps[App.state.currentIndex].label}`); }
+      // Persist last step (no personal data)
+      try{ localStorage.setItem('ct_last_step', String(App.state.currentIndex)); }catch(e){}
+    },
+    next(){ App.nav.go(App.state.currentIndex+1); },
+    prev(){ App.nav.go(App.state.currentIndex-1); }
+  },
+  ui:{
+    updateProgress(){
+      const total=App.steps.length-1; // ignore home from completion
+      const done=Object.values(App.state.completed).filter(Boolean).length;
+      const pct = Math.round(100 * done / total);
+      App.qs('#progress').style.width = pct + '%';
+      App.qs('#progress').setAttribute('aria-valuenow', String(pct));
+      App.qs('#stat-hints').textContent = App.state.hints;
+      App.qs('#stat-tries').textContent = App.state.tries;
+    },
+    toast(msg){
+      App.speak(msg);
+      // Visuel léger : clignotement header
+      const h=document.querySelector('header'); h.style.boxShadow='0 0 0 4px rgba(124,77,255,.35)';
+      setTimeout(()=>h.style.boxShadow='var(--shadow)',250);
+    }
+  },
+  /* ------------------------------- i18n ---------------------------------- */
+  i18n:{
+    t:k=>App.i18n.dict.fr[k]||k,
+    toggle(){
+      // FR uniquement pour cette version – placeholder extensible
+      App.ui.toast('Langue : Français');
+    },
+    dict:{ fr:{
+      start:'Commencer l’aventure',
+      next:'Suivant', prev:'Précédent', validate:'Valider',
+      findBlue:'Clique la couleur BLEUE',
+      gg:'Bravo !', try:'Essaie encore…', treasure:'Trésor révélé !'
+    }}
+  },
+  /* ------------------------------- Timer --------------------------------- */
+  timer:{
+    iv:null,
+    start(){
+      App.state.timerStart = performance.now() - App.state.elapsed;
+      if(this.iv) clearInterval(this.iv);
+      this.iv = setInterval(()=>{
+        App.state.elapsed = performance.now() - App.state.timerStart;
+        const s=Math.floor(App.state.elapsed/1000), m=String(Math.floor(s/60)).padStart(2,'0'), ss=String(s%60).padStart(2,'0');
+        App.qs('#timer').textContent = `${m}:${ss}`;
+        App.qs('#stat-time').textContent = `${m}:${ss}`;
+      },500);
+    },
+    stop(){ if(this.iv) clearInterval(this.iv); }
+  },
+  /* --------------------------- Helpers génériques ------------------------ */
+  markDone(id){
+    if(!App.state.completed[id]){
+      App.state.completed[id]=true;
+      App.audio.positive(); App.ui.updateProgress();
+      App.ui.toast('Étape réussie ✔');
+      // auto-advance après 700ms sauf treasure
+      if(id!=='treasure'){ setTimeout(()=>App.nav.next(), 700); }
+    }
+  },
+  hint(el){
+    App.state.hints++; el.classList.add('hint'); setTimeout(()=>el.classList.remove('hint'),1500); App.ui.updateProgress();
+  },
+  /* ------------------------ Templates de sections ------------------------ */
+  templates:{
+    home:()=>`
+      <h2 id="h-home">Bienvenue, explorateur !</h2>
+      <p>Pars à l’aventure pour trouver le <strong>lapin magique</strong>. Chaque jeu réussi te rapproche du trésor.</p>
+      <div class="controls">
+        <button class="btn" id="start">${App.i18n.t('start')}</button>
+      </div>
+    `,
+    colors:()=>`
+      <h2 id="h-colors">Couleurs</h2>
+      <p><strong>Mission :</strong> ${App.i18n.t('findBlue')}</p>
+      <div class="cards" role="group" aria-label="Choix de couleurs">
+        <button class="card" data-color="red" style="background:#ffadad">Rouge</button>
+        <button class="card" data-color="blue" style="background:#a0c4ff">Bleu</button>
+        <button class="card" data-color="green" style="background:#caffbf">Vert</button>
+      </div>
+      <div class="controls" style="margin-top:1rem"><button class="btn secondary" id="c-hint">Indice</button></div>
+    `,
+    letters:()=>`
+      <h2 id="h-letters">Lettres</h2>
+      <p>Appaire la lettre <strong>A</strong> avec son son.</p>
+      <div class="cards" role="group" aria-label="Lettres">
+        <button class="card" data-letter="A">A</button>
+        <button class="card" data-letter="B">B</button>
+        <button class="card" data-letter="C">C</button>
+      </div>
+    `,
+    animals:()=>`
+      <h2 id="h-animals">Animaux</h2>
+      <p>Quel animal fait “meuh” ?</p>
+      <div class="cards" role="group" aria-label="Animaux">
+        <button class="card" data-animal="cow">🐮 Vache</button>
+        <button class="card" data-animal="cat">🐱 Chat</button>
+        <button class="card" data-animal="dog">🐶 Chien</button>
+      </div>
+    `,
+    fruits:()=>`
+      <h2 id="h-fruits">Fruits & Légumes</h2>
+      <p>Choisis un <strong>fruit</strong> :</p>
+      <div class="cards">
+        <button class="card" data-fruit="pomme">🍎 Pomme</button>
+        <button class="card" data-fruit="banane">🍌 Banane</button>
+        <button class="card" data-fruit="carotte">🥕 Carotte</button>
+      </div>
+    `,
+    seasons:()=>`
+      <h2 id="h-seasons">Saisons & Météo</h2>
+      <p>Associe la neige à l’hiver.</p>
+      <div class="cards">
+        <button class="card" data-season="ete">☀️ Soleil</button>
+        <button class="card" data-season="hiver">❄️ Neige</button>
+        <button class="card" data-season="printemps">🌸 Fleur</button>
+      </div>
+    `,
+    drag:()=>`
+      <h2 id="h-drag">Motricité (Glisser)</h2>
+      <p>Glisse les formes dans la zone.</p>
+      <div class="controls" aria-label="Objets à déplacer">
+        <div class="draggable" draggable="true" data-obj="rond">⚪ Rond</div>
+        <div class="draggable" draggable="true" data-obj="carre">🟦 Carré</div>
+        <div class="draggable" draggable="true" data-obj="triangle">🔺 Triangle</div>
+      </div>
+      <div class="dropzone" aria-label="Zone de dépôt">Dépose ici</div>
+    `,
+    memory:()=>`
+      <h2 id="h-memory">Jeu de Mémoire</h2>
+      <p>Retrouve les paires (🍎🍎, 🐶🐶, 🔵🔵)</p>
+      <div class="memory" aria-label="Grille memory"></div>
+    `,
+    puzzle:()=>`
+      <h2 id="h-puzzle">Puzzle</h2>
+      <p>Place les 4 pièces dans le carré.</p>
+      <div class="puzzle-stage" id="p-stage" aria-label="Plateau de puzzle" role="application"></div>
+    `,
+    maze:()=>`
+      <h2 id="h-maze">Labyrinthe</h2>
+      <p>Atteins la case dorée (flèches ou glisser le doigt).</p>
+      <div class="maze" id="maze" aria-label="Labyrinthe"></div>
+    `,
+    sort:()=>`
+      <h2 id="h-sort">Tri par catégorie</h2>
+      <p>Dépose les <strong>fruits</strong> dans la boîte Fruits et les <strong>légumes</strong> dans Légumes.</p>
+      <div class="bins">
+        <div class="bin" data-bin="fruit" aria-label="Boîte Fruits">Fruits</div>
+        <div class="bin" data-bin="legume" aria-label="Boîte Légumes">Légumes</div>
+      </div>
+      <div style="margin-top:.5rem">
+        <span class="badge draggable" draggable="true" data-type="fruit">🍓</span>
+        <span class="badge draggable" draggable="true" data-type="legume">🥦</span>
+        <span class="badge draggable" draggable="true" data-type="fruit">🍐</span>
+        <span class="badge draggable" draggable="true" data-type="legume">🌽</span>
+      </div>
+    `,
+    treasure:()=>`
+      <h2 id="h-treasure">Trésor</h2>
+      <p>Bravo ! Tu as trouvé le lapin magique !</p>
+      <div class="cards">
+        <div class="card" id="lapin" style="font-size:2.2rem">✨🐰✨</div>
+      </div>
+    `
+  },
+  /* ------------------------- Initialisation jeux ------------------------- */
+  inits:{
+    home(){
+      const b=App.qs('#start'); const h=()=>App.nav.next();
+      b.addEventListener('click',h);
+      return ()=>b.removeEventListener('click',h);
+    },
+    colors(){
+      const root=App.qs('#colors');
+      const cards=App.qsa('.card', root);
+      const hintBtn=App.qs('#c-hint', root);
+      const onClick=(e)=>{
+        const c=e.currentTarget.getAttribute('data-color');
+        App.state.tries++;
+        if(c==='blue'){ e.currentTarget.classList.add('success'); App.audio.positive(); App.markDone('colors'); }
+        else { App.audio.error(); App.ui.toast(App.i18n.t('try')); App.state.frustrationScore++; }
+      };
+      cards.forEach(c=>c.addEventListener('click', onClick));
+      hintBtn.addEventListener('click', ()=>App.hint(cards[1]));
+      return ()=>{ cards.forEach(c=>c.removeEventListener('click', onClick)); };
+    },
+    letters(){
+      const root=App.qs('#letters');
+      const cards=App.qsa('.card', root);
+      const onClick=(e)=>{
+        const l=e.currentTarget.getAttribute('data-letter'); App.state.tries++;
+        if(l==='A'){ e.currentTarget.classList.add('success'); App.audio.positive(); App.markDone('letters'); }
+        else { App.audio.error(); App.state.frustrationScore++; }
+      };
+      cards.forEach(c=>c.addEventListener('click', onClick));
+      return ()=>cards.forEach(c=>c.removeEventListener('click', onClick));
+    },
+    animals(){
+      const root=App.qs('#animals');
+      const cards=App.qsa('.card', root);
+      const onClick=(e)=>{
+        const a=e.currentTarget.getAttribute('data-animal'); App.state.tries++;
+        // “meuh” = vache
+        if(a==='cow'){ App.audio.positive(); e.currentTarget.classList.add('success'); App.markDone('animals'); }
+        else { App.audio.error(); App.state.frustrationScore++; }
+      };
+      cards.forEach(c=>c.addEventListener('click', onClick));
+      return ()=>cards.forEach(c=>c.removeEventListener('click', onClick));
+    },
+    fruits(){
+      const root=App.qs('#fruits'); const cards=App.qsa('.card', root);
+      const onClick=(e)=>{
+        const t=e.currentTarget.getAttribute('data-fruit'); App.state.tries++;
+        if(t==='pomme' || t==='banane'){ App.audio.positive(); e.currentTarget.classList.add('success'); App.markDone('fruits'); }
+        else { App.audio.error(); App.state.frustrationScore++; }
+      };
+      cards.forEach(c=>c.addEventListener('click', onClick));
+      return ()=>cards.forEach(c=>c.removeEventListener('click', onClick));
+    },
+    seasons(){
+      const root=App.qs('#seasons'); const cards=App.qsa('.card', root);
+      const onClick=(e)=>{
+        const s=e.currentTarget.getAttribute('data-season'); App.state.tries++;
+        if(s==='hiver'){ App.audio.positive(); e.currentTarget.classList.add('success'); App.markDone('seasons'); }
+        else { App.audio.error(); App.state.frustrationScore++; }
+      };
+      cards.forEach(c=>c.addEventListener('click', onClick));
+      return ()=>cards.forEach(c=>c.removeEventListener('click', onClick));
+    },
+    drag(){
+      const root=App.qs('#drag');
+      const dz=App.qs('.dropzone', root);
+      const drags=App.qsa('.draggable', root);
+      let count=0, needed=drags.length;
+
+      const ondragstart=e=>{
+        e.dataTransfer.setData('text/plain', e.target.getAttribute('data-obj'));
+      };
+      const ondragover=e=>{ e.preventDefault(); dz.classList.add('drop-ok'); };
+      const ondragleave=()=>dz.classList.remove('drop-ok');
+      const ondrop=e=>{
+        e.preventDefault(); dz.classList.remove('drop-ok');
+        const obj=e.dataTransfer.getData('text/plain');
+        if(obj){ count++; dz.textContent=`Déposés : ${count}/${needed}`; App.audio.positive(); }
+        if(count>=needed){ App.markDone('drag'); }
+      };
+      drags.forEach(d=>d.addEventListener('dragstart', ondragstart));
+      dz.addEventListener('dragover', ondragover);
+      dz.addEventListener('dragleave', ondragleave);
+      dz.addEventListener('drop', ondrop);
+      return ()=>{ drags.forEach(d=>d.removeEventListener('dragstart', ondragstart));
+                   dz.removeEventListener('dragover', ondragover);
+                   dz.removeEventListener('dragleave', ondragleave);
+                   dz.removeEventListener('drop', ondrop); };
+    },
+    memory(){
+      const grid=App.qs('.memory');
+      const items=['🍎','🍎','🐶','🐶','🔵','🔵'].sort(()=>Math.random()-0.5);
+      items.forEach((it,i)=>{
+        const c=document.createElement('button');
+        c.className='card-mem'; c.setAttribute('data-id',i); c.setAttribute('aria-pressed','false');
+        c.textContent='?'; c.addEventListener('click', onClick);
+        grid.appendChild(c); c._val=it;
+      });
+      let first=null, lock=false, matched=0;
+      function reveal(btn){ btn.classList.add('revealed'); btn.textContent=btn._val; btn.setAttribute('aria-pressed','true'); }
+      function hide(btn){ btn.classList.remove('revealed'); btn.textContent='?'; btn.setAttribute('aria-pressed','false'); }
+      function onClick(e){
+        if(lock) return; const b=e.currentTarget; if(b.classList.contains('matched')||b.classList.contains('revealed')) return;
+        reveal(b); App.state.tries++;
+        if(!first){ first=b; return; }
+        lock=true;
+        if(first._val===b._val){
+          App.audio.positive();
+          setTimeout(()=>{ b.classList.add('matched'); first.classList.add('matched'); matched+=2; lock=false; first=null;
+            if(matched===items.length){ App.markDone('memory'); }
+          },250);
+        }else{
+          App.audio.error(); setTimeout(()=>{ hide(b); hide(first); lock=false; first=null; },450);
+        }
+      }
+      return ()=>{ App.qsa('.card-mem',grid).forEach(c=>c.replaceWith(c.cloneNode(true))); };
+    },
+    puzzle(){
+      const stage=App.qs('#p-stage');
+      // target grid 2x2 zones
+      const targets=[
+        {x:30,y:30},{x:150,y:30},{x:30,y:150},{x:150,y:150}
+      ];
+      targets.forEach(t=>{
+        const ph=document.createElement('div'); ph.className='piece snap'; ph.style.left=t.x+'px'; ph.style.top=t.y+'px'; ph.textContent='□';
+        ph.style.opacity=.3; stage.appendChild(ph);
+      });
+      let placed=0;
+      for(let i=0;i<4;i++){
+        const p=document.createElement('div'); p.className='piece'; p.textContent=String(i+1);
+        p.style.left=(10+i*65)+'px'; p.style.top=(10+i*20)+'px';
+        stage.appendChild(p);
+        dragPiece(p, i);
+      }
+      function dragPiece(el, idx){
+        let sx=0, sy=0, ox=0, oy=0, moving=false;
+        const down=(e)=>{ moving=true; sx=e.clientX||e.touches?.[0].clientX; sy=e.clientY||e.touches?.[0].clientY; ox=parseInt(el.style.left); oy=parseInt(el.style.top); el.setPointerCapture?.(e.pointerId); };
+        const move=(e)=>{ if(!moving) return; const cx=e.clientX||e.touches?.[0].clientX, cy=e.clientY||e.touches?.[0].clientY; el.style.left=(ox+(cx-sx))+'px'; el.style.top=(oy+(cy-sy))+'px'; };
+        const up=()=>{ if(!moving) return; moving=false;
+          // snap to nearest target
+          const t=targets[idx]; const dx=parseInt(el.style.left)-t.x, dy=parseInt(el.style.top)-t.y; const dist=Math.hypot(dx,dy);
+          if(dist<30){ el.style.left=t.x+'px'; el.style.top=t.y+'px'; el.style.background='#a7f3d0'; el.style.cursor='default';
+            el.onpointerdown=null; el.ontouchstart=null; placed++; App.audio.positive(); if(placed===4) App.markDone('puzzle');
+          }else{ App.audio.error(); }
+        };
+        el.onpointerdown=down; el.onpointermove=move; el.onpointerup=up; el.ontouchstart=down; el.ontouchmove=move; el.ontouchend=up;
+      }
+      return ()=>{ stage.innerHTML=''; };
+    },
+    maze(){
+      const root=App.qs('#maze');
+      const N=8;
+      root.style.setProperty('--n', N);
+      // simple static maze: 0 empty, 1 wall
+      const walls=new Set(['1,1','1,2','1,3','2,3','3,3','4,3','5,3','5,2','5,1','3,5','3,6','4,6','5,6']);
+      let cursor=[0,0], goal=[7,7];
+      for(let y=0;y<N;y++){
+        for(let x=0;x<N;x++){
+          const c=document.createElement('div'); c.className='cell';
+          if(walls.has(`${x},${y}`)) c.classList.add('wall');
+          if(x===0&&y===0) c.classList.add('start');
+          if(x===goal[0]&&y===goal[1]) c.classList.add('goal');
+          c.id=`mz-${x}-${y}`; root.appendChild(c);
+        }
+      }
+      draw();
+      const onKey=(e)=>{
+        const k=e.key; let [x,y]=cursor; let nx=x, ny=y;
+        if(k==='ArrowUp') ny=Math.max(0,y-1);
+        if(k==='ArrowDown') ny=Math.min(N-1,y+1);
+        if(k==='ArrowLeft') nx=Math.max(0,x-1);
+        if(k==='ArrowRight') nx=Math.min(N-1,x+1);
+        if(nx!==x||ny!==y){ step(nx,ny); e.preventDefault(); }
+      };
+      function step(nx,ny){
+        if(walls.has(`${nx},${ny}`)) { App.audio.error(); return; }
+        cursor=[nx,ny]; draw(); App.state.tries++;
+        if(nx===goal[0] && ny===goal[1]){ App.audio.positive(); App.markDone('maze'); }
+      }
+      function draw(){
+        App.qsa('.cell.cursor', root).forEach(c=>c.classList.remove('cursor'));
+        App.qs(`#mz-${cursor[0]}-${cursor[1]}`).classList.add('cursor');
+      }
+      document.addEventListener('keydown', onKey);
+      // touch swipe
+      let sx=0, sy=0; root.addEventListener('touchstart',e=>{ sx=e.touches[0].clientX; sy=e.touches[0].clientY; },{passive:true});
+      root.addEventListener('touchend',e=>{
+        const dx=(e.changedTouches[0].clientX-sx), dy=(e.changedTouches[0].clientY-sy);
+        if(Math.abs(dx)>Math.abs(dy)){ step(cursor[0]+(dx>0?1:-1), cursor[1]); } else { step(cursor[0], cursor[1]+(dy>0?1:-1)); }
+      });
+      return ()=>{ document.removeEventListener('keydown', onKey); root.innerHTML=''; };
+    },
+    sort(){
+      const bins=App.qsa('.bin'); const items=App.qsa('.badge');
+      let ok=0, need=items.length;
+      items.forEach(i=>i.addEventListener('dragstart', e=>e.dataTransfer.setData('text/plain', i.getAttribute('data-type'))));
+      bins.forEach(b=>{
+        b.addEventListener('dragover', e=>{ e.preventDefault(); b.classList.add('drop-ok'); });
+        b.addEventListener('dragleave', ()=>b.classList.remove('drop-ok'));
+        b.addEventListener('drop', e=>{
+          e.preventDefault(); const t=e.dataTransfer.getData('text/plain'); b.classList.remove('drop-ok');
+          const expect=b.getAttribute('data-bin');
+          if(t===expect){ ok++; b.appendChild(document.querySelector(`.badge[draggable="true"][data-type="${t}"]`)); App.audio.positive(); }
+          else { App.audio.error(); App.state.frustrationScore++; }
+          if(ok>=need){ App.markDone('sort'); }
+        });
+      });
+      return ()=>{};
+    },
+    treasure(){
+      const lap=App.qs('#lapin'); let toggled=false;
+      const onClick=()=>{ toggled=!toggled; lap.style.transform=toggled?'scale(1.2) rotate(5deg)':'none'; App.audio.positive(); };
+      lap.addEventListener('click', onClick);
+      // marquer final done
+      setTimeout(()=>App.markDone('treasure'), 300);
+      return ()=>lap.removeEventListener('click', onClick);
+    }
+  },
+  /* ------------------------------ Aide parentale ------------------------- */
+  help:{
+    open(v){
+      const p=App.qs('#parental-help'); const btn=App.qs('#btn-help');
+      p.classList.toggle('open', v); btn.setAttribute('aria-expanded', v?'true':'false');
+      if(v){ p.focus(); } else { btn.focus(); }
+      if(App.state.frustrationScore>3){ App.ui.toast('Astuce : proposez une petite pause et un indice.'); }
+    }
+  },
+  /* -------------------------------- Reset -------------------------------- */
+  reset(){
+    App.state.completed={}; App.state.tries=0; App.state.hints=0; App.state.frustrationScore=0;
+    App.state.elapsed=0; App.timer.start(); App.ui.updateProgress(); App.nav.go(0);
+  }
+};
+
+/* --------------------------- Génération dynamique --------------------------- */
+document.addEventListener('DOMContentLoaded', ()=>{
+  // Inject next/prev controls into each section except home/treasure
+  const main=document.getElementById('main');
+  // mount first to create sections
+  App.mount();
+
+  // Build nav labels
+  const nav=document.querySelector('nav');
+  nav.innerHTML='';
+  App.steps.forEach((s,i)=>{
+    const a=document.createElement('a'); a.href='#'; a.textContent=s.label; a.setAttribute('data-i',i);
+    a.addEventListener('click',e=>{e.preventDefault(); App.nav.go(i);});
+    nav.appendChild(a);
+  });
+
+  // Add next/prev buttons
+  App.steps.forEach((s,i)=>{
+    const sec=document.getElementById(s.id);
+    const ctr=document.createElement('div'); ctr.className='controls'; ctr.style.marginTop='1rem';
+    if(i>0){ const bprev=document.createElement('button'); bprev.className='btn secondary'; bprev.textContent='Précédent'; bprev.addEventListener('click', App.nav.prev); ctr.appendChild(bprev); }
+    if(i<App.steps.length-1){ const bnext=document.createElement('button'); bnext.className='btn'; bnext.textContent='Suivant'; bnext.addEventListener('click', App.nav.next); ctr.appendChild(bnext); }
+    sec.appendChild(ctr);
+  });
+
+  // Restore last step if available (optional)
+  try{
+    const last=Number(localStorage.getItem('ct_last_step'));
+    if(Number.isInteger(last) && last>0 && last<App.steps.length){ App.nav.go(last); }
+  }catch(e){}
+});
+</script>
+</body>
+</html>

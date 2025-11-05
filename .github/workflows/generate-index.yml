@@ -1,7 +1,9 @@
 name: Génération index_global.json
+
 on:
+  workflow_dispatch:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
 
 jobs:
   build:

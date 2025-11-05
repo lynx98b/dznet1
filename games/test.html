@@ -103,8 +103,13 @@
 <script>
 function parseFilename(){
   const file = window.location.pathname.split('/').pop();
+
+  // cas où la page n'a pas de numéro → on désactive la nav
+  if(!/\d+/.test(file)) return null;
+
   const match = file.match(/^([a-zA-Z_-]*?)(\d+)\.html$/);
   if(!match) return null;
+
   return {
     prefix: match[1],
     num: parseInt(match[2],10),

@@ -1825,7 +1825,14 @@ Créer un contenu pédagogique interactif pour **dznet1.com**, totalement **resp
   <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" alt="Publicité partenaire" />
 </div>
 ~~~
-et un footer source  : https://dznet1.com/intranet/footer.html
+et un footer source  : https://dznet1.com/intranet/footer.html utilise :  
+<div id="footer-placeholder"></div>
+<script>
+  fetch("https://dznet1.com/intranet/footer.html")
+  .then(res => res.text())
+  .then(html => document.getElementById("footer-placeholder").innerHTML = html)
+<script>
+</body>
 
 
 

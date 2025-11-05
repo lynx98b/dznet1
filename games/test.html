@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Ma Page</title>
+
+<style>
+  body {
+    margin: 0;
+    padding-bottom: 90px; /* pour éviter que le contenu touche la barre */
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: #ddd;
+  }
+
+  main {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    text-align: center;
+  }
+
+  /* === Barre de navigation FIXE responsive === */
+  .nav-fixed {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    padding: 10px 18px;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 14px;
+    box-shadow: 0 8px 26px rgba(90,60,255,0.35);
+    z-index: 9999;
+  }
+
+  .btn-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #6a5af9, #a66cff, #46c1ff);
+    box-shadow: 0 4px 16px rgba(90,60,255,.45);
+    transition: 0.25s ease;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .btn-nav:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 26px rgba(90,60,255,.6);
+  }
+
+  .btn-nav svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+  }
+
+  @media (max-width: 480px) {
+    .nav-fixed {
+      gap: 8px;
+      padding: 8px 14px;
+    }
+    .btn-nav {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+<main>
+  <h1>TITRE DE LA PAGE</h1>
+  <p>Contenu ici...</p>
+</main>
+
+<!-- === Barre de navigation === -->
+<div class="nav-fixed">
+  <button class="btn-nav" onclick="goPrev()">
+    <svg viewBox='0 0 24 24'><path d='M15 18l-6-6 6-6'/></svg>
+    Précédent
+  </button>
+
+  <button class="btn-nav" onclick="goNext()">
+    Suivant
+    <svg viewBox='0 0 24 24'><path d='M9 6l6 6-6 6'/></svg>
+  </button>
+</div>
+
+<script>
+function parseFilename(){
+  const file = window.location.pathname.split('/').pop();
+  const match = file.match(/^([a-zA-Z_-]*?)(\d+)\.html$/);
+  if(!match) return null;
+  return {
+    prefix: match[1],
+    num: parseInt(match[2],10),
+    digits: match[2].length
+  };
+}
+
+function goNext(){
+  const i = parseFilename(); if(!i) return;
+  const n = i.num + 1;
+  const s = String(n).padStart(i.digits,'0');
+  window.location.href = i.prefix + s + '.html';
+}
+
+function goPrev(){
+  const i = parseFilename(); if(!i) return;
+  const n = i.num - 1; if(n < 0) return;
+  const s = String(n).padStart(i.digits,'0');
+  window.location.href = i.prefix + s + '.html';
+}
+</script>
+
+</body>
+</html>

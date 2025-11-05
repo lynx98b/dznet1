@@ -1,0 +1,1095 @@
+<!-- ==========================================================
+ Générateur de Prompt - Contenu HTML Enfant
+ Version : v1.011 (intégration du sélecteur Type de contenu + presets auto + champs grisés)
+========================================================== -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CRRK6Z4D1X');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Générateur de prompt pour contenu HTML enfant - Version professionnelle" />
+  <title>Générateur Prompt Contenu Enfant - v1.011</title>
+
+  <style>
+    /* ===== VARIABLES & RESET ===== */
+    :root{
+      --primary:#4A90E2;--success:#27AE60;--warning:#F39C12;--danger:#E74C3C;--info:#3498DB;
+      --bg-light:#F8F9FA;--text-dark:#2C3E50;--border:#DFE6E9;--shadow:rgba(0,0,0,0.1);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      min-height:100vh;padding:20px;color:var(--text-dark)
+    }
+    .container{max-width:1000px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden}
+    header{background:linear-gradient(135deg,var(--primary) 0%,#357ABD 100%);color:#fff;padding:30px;text-align:center;position:relative}
+    header h1{font-size:26px;margin-bottom:10px}
+    header p{font-size:14px;opacity:.95}
+    .version-badge{position:absolute;top:15px;right:15px;background:rgba(255,255,255,.2);padding:5px 15px;border-radius:20px;font-size:12px;font-weight:600}
+    .help-btn{position:absolute;top:15px;left:15px;background:var(--warning);color:#fff;border:none;padding:10px 20px;border-radius:25px;cursor:pointer;font-weight:600;font-size:14px;transition:.3s;display:flex;align-items:center;gap:8px}
+    .help-btn:hover{background:#E67E22;transform:scale(1.05)}
+    .modal{display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.7);animation:fadeIn .3s;overflow-y:auto;padding:20px}
+    .modal.active{display:flex;align-items:center;justify-content:center}
+    .modal-content{background:#fff;padding:40px;border-radius:16px;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;position:relative;animation:slideDown .4s}
+    .modal-content.large{max-width:900px}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes slideDown{from{transform:translateY(-50px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .modal-close{position:absolute;top:15px;right:15px;background:var(--danger);color:#fff;border:none;width:35px;height:35px;border-radius:50%;cursor:pointer;font-size:20px;font-weight:700;transition:.3s}
+    .modal-close:hover{background:#C0392B;transform:rotate(90deg)}
+    .modal-content h2{color:var(--primary);margin-bottom:20px;font-size:24px}
+    .modal-content h3{color:var(--success);margin-top:25px;margin-bottom:15px;font-size:18px}
+    .stat-box{background:var(--bg-light);padding:15px;border-radius:8px;margin:15px 0;border-left:4px solid var(--primary)}
+    .stat-box strong{color:var(--primary);font-size:18px}
+    .example-box{background:#E8F8F5;padding:15px;border-radius:8px;margin:10px 0;border-left:4px solid var(--success)}
+    .result-modal .modal-content{padding:0;overflow:hidden}
+    .result-header{background:linear-gradient(135deg,var(--success) 0%,#229954 100%);color:#fff;padding:25px 40px;text-align:center}
+    .result-header h2{color:#fff;margin:0 0 10px 0;font-size:26px}
+    .result-body{padding:30px 40px;max-height:60vh;overflow-y:auto}
+    #promptOutputModal{background:#F8F9FA;padding:20px;border-radius:8px;border:2px solid var(--border);font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-wrap:break-word;max-height:400px;overflow-y:auto}
+    .result-actions{padding:20px 40px 30px 40px;background:var(--bg-light);display:flex;gap:15px;flex-wrap:wrap}
+
+    .form-wrapper{padding:40px}
+    .metadata-section{background:#FFF9E6;padding:20px;border-radius:12px;margin-bottom:30px;border:2px solid var(--warning)}
+    .metadata-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:15px}
+    .section{margin-bottom:40px;padding-bottom:30px;border-bottom:2px solid var(--border)}
+    .section:last-child{border-bottom:none}
+    .section-title{font-size:20px;color:var(--primary);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+    .form-group{margin-bottom:20px;position:relative}
+    label{display:block;font-weight:600;margin-bottom:8px;font-size:15px}
+    label.required::after{content:" *";color:var(--danger)}
+
+    .error-message{display:none;color:var(--danger);font-size:13px;font-weight:600;margin-top:5px;padding:8px 12px;background:#FADBD8;border-radius:4px;border-left:3px solid var(--danger)}
+    .form-group.has-error .error-message{display:block;animation:shake .5s}
+    @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+    .form-group.has-error input,.form-group.has-error select,.form-group.has-error textarea{border-color:var(--danger);background:#FADBD8}
+    .form-group.has-error .checkbox-group,.form-group.has-error .radio-group{border:3px solid var(--danger);border-radius:8px;padding:10px;background:#FADBD8}
+
+    input[type="text"],input[type="date"],select,textarea{width:100%;padding:12px;border:2px solid var(--border);border-radius:8px;font-size:14px;transition:.3s;font-family:inherit}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(74,144,226,.1)}
+    textarea{min-height:80px;resize:vertical}
+
+    .checkbox-group,.radio-group{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+    .checkbox-item,.radio-item{display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg-light);border-radius:8px;cursor:pointer;transition:.3s;border:2px solid transparent}
+    .checkbox-item:hover,.radio-item:hover{background:#E8F4F8;border-color:var(--primary)}
+    .checkbox-item input:checked ~ span,.radio-item input:checked ~ span{font-weight:600;color:var(--primary)}
+    input[type="checkbox"],input[type="radio"]{width:20px;height:20px;cursor:pointer;flex-shrink:0}
+
+    .color-palette{display:flex;gap:10px;align-items:center;padding:10px;background:#fff;border-radius:8px;border:2px solid var(--border)}
+    .color-palette input[type="radio"]{margin-right:10px}
+    .color-swatch{width:30px;height:30px;border-radius:4px;border:2px solid #ddd}
+    .palette-name{font-weight:600;flex:1}
+
+    .button-group{display:flex;gap:15px;flex-wrap:wrap;margin-top:30px}
+    button{padding:15px 30px;font-size:16px;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:.3s;display:flex;align-items:center;gap:10px;justify-content:center}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    .btn-primary{background:var(--primary);color:#fff;flex:1;min-width:200px}
+    .btn-primary:hover:not(:disabled){background:#357ABD;transform:translateY(-2px);box-shadow:0 5px 15px rgba(74,144,226,.4)}
+    .btn-success{background:var(--success);color:#fff;flex:1;min-width:200px}
+    .btn-success:hover:not(:disabled){background:#229954;transform:translateY(-2px);box-shadow:0 5px 15px rgba(39,174,96,.4)}
+    .btn-secondary{background:var(--border);color:var(--text-dark)}
+    .btn-secondary:hover{background:#BDC3C7}
+    .spinner{display:none;width:20px;height:20px;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    button.loading .spinner{display:block}
+    button.loading span:not(.spinner){display:none}
+    .helper-text{font-size:13px;color:#7F8C8D;margin-top:5px;font-style:italic}
+    .info-banner{background:#E3F2FD;border-left:4px solid var(--info);padding:15px;margin:20px 0;border-radius:4px;font-size:14px}
+    .feature-badge{display:inline-block;background:var(--success);color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600;margin-left:8px}
+
+    .format-toggle{display:flex;gap:10px;margin-bottom:20px;background:var(--bg-light);padding:15px;border-radius:8px}
+    .format-option{flex:1;text-align:center;padding:10px;border-radius:6px;cursor:pointer;transition:.3s;border:2px solid transparent}
+    .format-option.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+    .format-option:not(.active):hover{background:#E8F4F8;border-color:var(--primary)}
+    .json-preview{background:#2C3E50;color:#ECF0F1;padding:15px;border-radius:8px;font-family:'Courier New',monospace;font-size:12px;max-height:200px;overflow-y:auto;margin-top:10px;display:none}
+    .json-key{color:#3498DB}.json-string{color:#27AE60}.json-number{color:#E74C3C}.json-boolean{color:#9B59B6}
+
+    .preset-hint{display:inline-block;margin-left:8px;font-size:12px;color:#2d6cdf;background:#E8F0FE;border:1px solid #BFD1FF;border-radius:999px;padding:2px 8px}
+    .tiny{font-size:12px;opacity:.8}
+
+    /* Styles pour champs grisés */
+    .form-group.disabled-field {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    .form-group.disabled-field label {
+        color: #95a5a6;
+    }
+
+    .form-group.disabled-field .helper-text {
+        color: #bdc3c7;
+    }
+
+    .form-group.disabled-field .checkbox-item,
+    .form-group.disabled-field .radio-item {
+        background: #f8f9fa;
+        border-color: #ecf0f1;
+        color: #95a5a6;
+    }
+
+    .form-group.disabled-field .checkbox-item:hover,
+    .form-group.disabled-field .radio-item:hover {
+        background: #f8f9fa;
+        border-color: #ecf0f1;
+        cursor: not-allowed;
+    }
+
+    @media (max-width:768px){
+      body{padding:10px}
+      .form-wrapper{padding:20px}
+      header h1{font-size:20px}
+      .help-btn,.version-badge{position:static;margin:10px auto}
+      header{padding:20px}
+      .button-group{flex-direction:column}
+      .btn-primary,.btn-success{width:100%}
+      .checkbox-group,.radio-group{grid-template-columns:1fr}
+      .modal-content{padding:25px;margin:20px;max-height:90vh}
+      .result-header,.result-body,.result-actions{padding:20px}
+      .metadata-grid{grid-template-columns:1fr}
+    }
+    button:focus,input:focus,select:focus,textarea:focus{outline:3px solid var(--primary);outline-offset:2px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <header>
+      <button class="help-btn" onclick="openHelpModal()">
+        <span>❓</span><span>Guide Parents</span>
+      </button>
+      <span class="version-badge">v1.011</span>
+      <h1>🎨 Générateur de Prompt - Contenu HTML Enfant</h1>
+      <p>Créez des expériences éducatives interactives sécurisées et cohérentes</p>
+      <p class="tiny">✅ JSON optimisé | 🔒 RGPD/COPPA | ♿ Accessible</p>
+    </header>
+
+    <!-- MODAL AIDE -->
+    <div id="helpModal" class="modal">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeHelpModal()">×</button>
+        <h2>📘 Guide rapide</h2>
+        <p>Choisissez le <strong>Type de contenu</strong> et cliquez sur <strong>Appliquer le preset</strong> pour pré-remplir les interactions, objectifs et style. Puis, générez le prompt.</p>
+        <div class="info-banner"><strong>Astuce :</strong> Les champs non pertinents sont automatiquement grisés selon le type de contenu.</div>
+        <button class="btn-primary" onclick="closeHelpModal()" style="margin-top: 16px; width: 100%;">OK</button>
+      </div>
+    </div>
+
+    <!-- MODAL RÉSULTAT -->
+    <div id="resultModal" class="modal result-modal">
+      <div class="modal-content large">
+        <button class="modal-close" onclick="closeResultModal()">×</button>
+        <div class="result-header">
+          <h2>🎉 Prompt Généré</h2>
+          <p class="tiny" style="margin:0;">Copiez ou exportez en .txt</p>
+        </div>
+        <div class="result-body">
+          <div id="promptOutputModal"></div>
+        </div>
+        <div class="result-actions">
+          <button id="copyBtnModal" class="btn-success"><span class="spinner"></span><span>📋 Copier</span></button>
+          <button id="downloadBtnModal" class="btn-primary"><span>💾 Exporter (.txt)</span></button>
+          <button onclick="closeResultModal()" class="btn-secondary">✖️ Fermer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMULAIRE -->
+    <div class="form-wrapper">
+      <div class="format-toggle">
+        <div class="format-option active" data-format="json">🚀 Format JSON (Recommandé)</div>
+        <div class="format-option" data-format="text">📝 Format Texte (Ancien)</div>
+      </div>
+      <div id="jsonPreview" class="json-preview"></div>
+
+      <form id="promptForm">
+        <!-- MÉTADONNÉES -->
+        <div class="metadata-section">
+          <h3 style="color:var(--warning);margin-bottom:15px;">📝 Informations du Projet</h3>
+          <div class="metadata-grid">
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="creatorName" class="required">Votre nom / Prénom</label>
+              <input type="text" id="creatorName" placeholder="Ex: Marie Dupont" required>
+              <div class="error-message">❌ Champ obligatoire</div>
+              <span class="helper-text">Sauvegardé automatiquement</span>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label for="projectVersion">Version du projet</label>
+              <input type="text" id="projectVersion" value="v1.011" placeholder="v1.011">
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label>Date de création</label>
+              <input type="text" id="creationDate" readonly style="background:#f0f0f0;">
+            </div>
+          </div>
+        </div>
+
+        <!-- NOUVEAU : TYPE DE CONTENU + PRESETS -->
+        <div class="section">
+          <h2 class="section-title">🎯 Type de contenu <span class="feature-badge">PRESETS</span></h2>
+          <div class="form-group" id="contentTypeGroup">
+            <label class="required" for="contentType">Choisir un type</label>
+            <select id="contentType" required>
+              <option value="">— Sélectionner —</option>
+              <option value="histoire">Histoire</option>
+              <option value="jeu_educatif">Jeu éducatif</option>
+              <option value="encyclopedie">Encyclopédie</option>
+              <option value="exercice">Exercice pratique</option>
+              <option value="lecon_vie">Leçon de vie</option>
+              <option value="quiz">Quiz interactif</option>
+              <option value="coloriage">Coloriage / Dessin</option>
+              <option value="puzzle">Puzzles</option>
+              <option value="memoire">Jeu de mémoire</option>
+              <option value="aventure_choix">Aventure à choix</option>
+              <option value="labyrinthe">Labyrinthe</option>
+              <option value="tri_categorie">Tri / Catégorisation</option>
+            </select>
+            <div class="error-message">❌ Choisissez un type</div>
+            <div class="helper-text">Cliquez ensuite sur "Appliquer le preset" pour pré-remplir.</div>
+          </div>
+          <div class="button-group" style="margin-top:5px;">
+            <button type="button" id="applyPresetBtn" class="btn-success" title="Remplit les interactions, objectifs et style selon le type choisi">⚡ Appliquer le preset</button>
+            <button type="button" id="clearSelectionsBtn" class="btn-secondary" title="Effacer les sélections auto">🧹 Effacer les sélections</button>
+            <span id="presetHint" class="preset-hint" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <!-- PUBLIC CIBLE -->
+        <div class="section">
+          <h2 class="section-title">👥 Public Cible</h2>
+          <div class="form-group" id="ageGroup">
+            <label class="required">Tranches d'âge (multiple)</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="3-4 ans (Petite section)"><span>3-4 ans</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="5-6 ans (Grande section/CP)"><span>5-6 ans</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="7-8 ans (CE1/CE2)"><span>7-8 ans</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="9-10 ans (CM1/CM2)"><span>9-10 ans</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="11-12 ans (Collège)"><span>11-12 ans</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="13-14 ans (Collège)"><span>13-14 ans</span></label>
+            </div>
+            <div class="error-message">❌ Sélectionnez au moins une tranche d'âge</div>
+          </div>
+
+          <div class="form-group" id="readingGroup">
+            <label class="required">Niveau de lecture</label>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="readingLevel" value="Pré-lecteur (images/audio/pictogrammes)" required><span>Pré-lecteur</span></label>
+              <label class="radio-item"><input type="radio" name="readingLevel" value="Lecteur débutant (phrases courtes max 8 mots)"><span>Lecteur débutant</span></label>
+              <label class="radio-item"><input type="radio" name="readingLevel" value="Lecteur autonome (textes structurés)"><span>Lecteur autonome</span></label>
+            </div>
+            <div class="error-message">❌ Sélectionnez un niveau de lecture</div>
+          </div>
+
+          <div class="form-group">
+            <label>Supervision adulte</label>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="supervision" value="Adulte présent obligatoire" checked><span>Adulte présent</span></label>
+              <label class="radio-item"><input type="radio" name="supervision" value="Semi-autonome (adulte à proximité)"><span>Semi-autonome</span></label>
+              <label class="radio-item"><input type="radio" name="supervision" value="Totalement autonome"><span>Totalement autonome</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- LANGUES -->
+        <div class="section">
+          <h2 class="section-title">🌍 Langue du Contenu</h2>
+          <div class="form-group">
+            <label>Langue(s) (multiple)</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox" name="languages" value="Français" checked><span>🇫🇷 Français</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="languages" value="Arabe"><span>🇩🇿 العربية</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="languages" value="Anglais"><span>🇬🇧 English</span></label>
+            </div>
+            <span class="helper-text">Sélectionner plusieurs pour contenu bilingue/trilingue</span>
+          </div>
+          <div class="form-group">
+            <label>Disposition multilingue</label>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="languageLayout" value="Sélecteur de langue (bouton pour changer)" checked><span>Sélecteur</span></label>
+              <label class="radio-item"><input type="radio" name="languageLayout" value="Affichage simultané côte à côte"><span>Côte à côte</span></label>
+              <label class="radio-item"><input type="radio" name="languageLayout" value="Bilingue avec traduction au survol"><span>Traduction au survol</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- THÈME & CONTENU -->
+        <div class="section">
+          <h2 class="section-title">🖌️ Thème et Contenu</h2>
+          <div class="form-group" id="themeGroup">
+            <label for="theme" class="required">Sujet principal</label>
+            <input type="text" id="theme" placeholder="Ex: Apprentissage des couleurs primaires" required>
+            <div class="error-message">❌ Décrivez le sujet</div>
+            <span class="helper-text">1 phrase claire</span>
+          </div>
+
+          <div class="form-group" id="goalsGroup">
+            <label class="required">Objectifs pédagogiques</label>
+            <div class="checkbox-group" id="goalsBox">
+              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Reconnaissance des couleurs primaires/secondaires"><span>Reconnaissance couleurs</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Identification des formes géométriques"><span>Formes</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Apprentissage des chiffres et comptage 1-10/1-20"><span>Chiffres/comptage</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Reconnaissance alphabet et lettres"><span>Alphabet</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Découverte des animaux et leurs cris"><span>Animaux/cris</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Parties du corps humain"><span>Corps humain</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Émotions et gestion"><span>Émotions</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Lecture de l'heure"><span>Lire l'heure</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Logique et raisonnement"><span>Logique</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Partage, coopération, empathie"><span>Valeurs sociales</span></label>
+            </div>
+            <div class="error-message">❌ Choisissez au moins un objectif ou utilisez le champ libre</div>
+          </div>
+
+          <div class="form-group">
+            <label for="customGoals">Autres objectifs (optionnel)</label>
+            <textarea id="customGoals" placeholder="Un objectif par ligne"></textarea>
+          </div>
+
+          <div class="form-group" id="narrativeStyleGroup">
+            <label for="narrativeStyle">Style narratif</label>
+            <select id="narrativeStyle">
+              <option value="Éducatif neutre avec voix off bienveillante">Éducatif neutre</option>
+              <option value="Aventure avec personnage héros enfant">Aventure (héros enfant)</option>
+              <option value="Ludique avec mascotte animale attachante">Ludique (mascotte)</option>
+              <option value="Conte interactif façon livre dont vous êtes le héros">Conte interactif</option>
+              <option value="Documentaire style reportage enfant (type C'est pas sorcier)">Documentaire enfant</option>
+              <option value="Jeu vidéo éducatif avec niveaux progressifs">Jeu vidéo à niveaux</option>
+              <option value="Exploration libre monde ouvert">Exploration libre</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="additionalContextGroup">
+            <label for="additionalContext">Précisions (optionnel)</label>
+            <textarea id="additionalContext" placeholder="Préférences, sensibilités, thèmes favoris…"></textarea>
+          </div>
+        </div>
+
+        <!-- INTERACTIVITÉ -->
+        <div class="section">
+          <h2 class="section-title">🎮 Interactivité</h2>
+          <div class="form-group">
+            <label>Types d'interactions</label>
+            <div class="checkbox-group" id="interactionsBox">
+              <label class="checkbox-item"><input type="checkbox" name="interactions" value="Quiz/QCM avec choix multiples"><span>Quiz/QCM</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="interactions" value="Glisser-déposer (drag & drop)"><span>Glisser-déposer</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="interactions" value="Colorier/Dessiner sur canvas HTML5"><span>Colorier/Dessiner</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="interactions" value="Jeux de mémoire (paires, memory)"><span>Mémoire</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="interactions" value="Animations déclenchées au clic"><span>Animations au clic</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="interactions" value="Histoire à choix multiples (embranchements)"><span>Histoire à choix</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="interactions" value="Puzzles et assemblage"><span>Puzzles</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="interactions" value="Jeux de sons (associer son à image)"><span>Jeux de sons</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="interactions" value="Labyrinthe avec navigation clavier/tactile"><span>Labyrinthe</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="interactions" value="Tri et catégorisation (ranger par catégorie)"><span>Tri/Catégories</span></label>
+            </div>
+            <span class="helper-text">Le preset coche automatiquement certains éléments.</span>
+          </div>
+
+          <div class="form-group" id="rewardsGroup">
+            <label>Système de récompenses</label>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="rewards" value="Sons positifs + animations joyeuses" checked><span>Sons + animations</span></label>
+              <label class="radio-item"><input type="radio" name="rewards" value="Étoiles/badges visuels collectionnables"><span>Étoiles/badges</span></label>
+              <label class="radio-item"><input type="radio" name="rewards" value="Messages encourageants avec emojis"><span>Messages encourageants</span></label>
+              <label class="radio-item"><input type="radio" name="rewards" value="Déblocage progressif de contenus bonus"><span>Déblocage de bonus</span></label>
+            </div>
+          </div>
+
+          <div class="form-group" id="errorHandlingGroup">
+            <label>Gestion des erreurs</label>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="errorHandling" value="Réessayer sans pénalité avec indices progressifs" checked><span>Réessayer + indices</span></label>
+              <label class="radio-item"><input type="radio" name="errorHandling" value="Afficher solution après 3 tentatives"><span>Solution après 3 essais</span></label>
+              <label class="radio-item"><input type="radio" name="errorHandling" value="Apprentissage par l'erreur : expliquer pourquoi c'est faux"><span>Expliquer l'erreur</span></label>
+              <label class="radio-item"><input type="radio" name="errorHandling" value="Jamais bloquer, toujours positif, passer à la suite"><span>Toujours positif</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ANALYTICS -->
+        <div class="section">
+          <h2 class="section-title">📊 Suivi & Analytics</h2>
+          <div class="form-group" id="timerGroup">
+            <label>Chronomètre temps de jeu</label>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="timer" value="Oui - Afficher chronomètre visible en permanence" checked><span>Visibile</span></label>
+              <label class="radio-item"><input type="radio" name="timer" value="Oui - Chronomètre discret (petit coin d'écran)"><span>Discret</span></label>
+              <label class="radio-item"><input type="radio" name="timer" value="Non - Pas de chronomètre (apprentissage sans pression)"><span>Pas de chrono</span></label>
+            </div>
+            <span class="helper-text">Aide à gérer le temps d'écran</span>
+          </div>
+
+          <div class="form-group" id="statsGroup">
+            <label>Statistiques & progression</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox" name="stats" value="Afficher score en temps réel"><span>Score temps réel</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="stats" value="Barre de progression visuelle"><span>Barre progression</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="stats" value="Compteur réussites/erreurs"><span>Succès/erreurs</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="stats" value="Récapitulatif détaillé à la fin"><span>Récap final</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="stats" value="Graphique d'évolution (si plusieurs sessions)"><span>Graphique d'évolution</span></label>
+            </div>
+            <span class="helper-text">Stockage temporaire en sessionStorage</span>
+          </div>
+        </div>
+
+        <!-- ASSISTANCE PARENTALE -->
+        <div class="section">
+          <h2 class="section-title">👨‍👩‍👧 Assistance Parentale</h2>
+          <div class="form-group">
+            <label>Conseils contextuels</label>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="parentalGuidance" value="Oui - Panneau d'aide discret avec conseils en temps réel" checked><span>Panneau d'aide</span></label>
+              <label class="radio-item"><input type="radio" name="parentalGuidance" value="Oui - Notifications subtiles selon réactions enfant"><span>Notifications</span></label>
+              <label class="radio-item"><input type="radio" name="parentalGuidance" value="Non - Enfant en totale autonomie"><span>Autonomie</span></label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Type de conseils</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox" name="guidanceTypes" value="Comment encourager après une erreur"><span>Encourager après erreur</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="guidanceTypes" value="Quand féliciter (timing optimal)"><span>Quand féliciter</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="guidanceTypes" value="Détecter frustration et comment intervenir"><span>Gérer frustration</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="guidanceTypes" value="Proposer pauses si temps écoulé long"><span>Proposer pauses</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="guidanceTypes" value="Identifier points forts et axes d'amélioration"><span>Forces & axes</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="guidanceTypes" value="Questions de discussion post-activité"><span>Questions discussion</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- DESIGN -->
+        <div class="section">
+          <h2 class="section-title">🎨 Design et Couleurs</h2>
+          <div class="form-group" id="colorPaletteGroup">
+            <label class="required">Palette de couleurs</label>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <label class="color-palette">
+                <input type="radio" name="colorPalette" value="Pastel Doux (#FFE4E1, #E0F2F7, #FFF9C4, #D1F2EB)" checked>
+                <div style="display:flex;gap:5px;">
+                  <div class="color-swatch" style="background:#FFE4E1"></div>
+                  <div class="color-swatch" style="background:#E0F2F7"></div>
+                  <div class="color-swatch" style="background:#FFF9C4"></div>
+                  <div class="color-swatch" style="background:#D1F2EB"></div>
+                </div>
+                <span class="palette-name">Pastel Doux</span>
+              </label>
+              <label class="color-palette">
+                <input type="radio" name="colorPalette" value="Océan Calme (#B3E5FC, #81D4FA, #4FC3F7, #29B6F6)">
+                <div style="display:flex;gap:5px;">
+                  <div class="color-swatch" style="background:#B3E5FC"></div>
+                  <div class="color-swatch" style="background:#81D4FA"></div>
+                  <div class="color-swatch" style="background:#4FC3F7"></div>
+                  <div class="color-swatch" style="background:#29B6F6"></div>
+                </div>
+                <span class="palette-name">Océan Calme</span>
+              </label>
+              <label class="color-palette">
+                <input type="radio" name="colorPalette" value="Forêt Enchantée (#C8E6C9, #A5D6A7, #81C784, #66BB6A)">
+                <div style="display:flex;gap:5px;">
+                  <div class="color-swatch" style="background:#C8E6C9"></div>
+                  <div class="color-swatch" style="background:#A5D6A7"></div>
+                  <div class="color-swatch" style="background:#81C784"></div>
+                  <div class="color-swatch" style="background:#66BB6A"></div>
+                </div>
+                <span class="palette-name">Forêt Enchantée</span>
+              </label>
+              <label class="color-palette">
+                <input type="radio" name="colorPalette" value="Neutre Moderne (#F5F5F5, #E0E0E0, #BDBDBD, #9E9E9E)">
+                <div style="display:flex;gap:5px;">
+                  <div class="color-swatch" style="background:#F5F5F5"></div>
+                  <div class="color-swatch" style="background:#E0E0E0"></div>
+                  <div class="color-swatch" style="background:#BDBDBD"></div>
+                  <div class="color-swatch" style="background:#9E9E9E"></div>
+                </div>
+                <span class="palette-name">Neutre Moderne</span>
+              </label>
+              <label class="color-palette">
+                <input type="radio" name="colorPalette" value="Arc-en-ciel Doux (#FFE0B2, #FFF9C4, #C8E6C9, #B3E5FC, #E1BEE7)">
+                <div style="display:flex;gap:5px;">
+                  <div class="color-swatch" style="background:#FFE0B2"></div>
+                  <div class="color-swatch" style="background:#FFF9C4"></div>
+                  <div class="color-swatch" style="background:#C8E6C9"></div>
+                  <div class="color-swatch" style="background:#B3E5FC"></div>
+                  <div class="color-swatch" style="background:#E1BEE7"></div>
+                </div>
+                <span class="palette-name">Arc-en-ciel Doux</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACCESSIBILITÉ -->
+        <div class="section">
+          <h2 class="section-title">♿ Accessibilité</h2>
+          <div class="info-banner">Responsive + WCAG 2.1 AA minimum par défaut.</div>
+          <div class="form-group">
+            <label>Options</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox" name="accessibility" value="Support mobilité réduite (gros boutons 60x60px, espacement large)"><span>Gros boutons</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="accessibility" value="Navigation complète au clavier (Tab/Flèches/Enter/Espace)"><span>Clavier complet</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="accessibility" value="Support lecteurs d'écran (NVDA, VoiceOver, JAWS)"><span>Lecteurs d'écran</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="accessibility" value="Contrastes renforcés WCAG AAA (ratio 7:1)"><span>Contraste AAA</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="accessibility" value="Police dyslexie-friendly (OpenDyslexic ou équivalent)"><span>Police dyslexie</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="accessibility" value="Mode sombre/clair commutable"><span>Mode sombre/clair</span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOUTONS -->
+        <div class="button-group">
+          <button type="submit" id="submitBtn" class="btn-primary"><span class="spinner"></span><span>🚀 Générer le Prompt</span></button>
+          <button type="reset" class="btn-secondary">🔄 Réinitialiser</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ===== VERSION & CONFIG =====
+    const VERSION = "v1.011";
+    const STORAGE_KEY_NAME = 'prompt_generator_creator_name';
+    let currentFormat = 'json';
+
+    // ===== PRESETS PAR TYPE =====
+    const PRESETS = {
+      histoire: {
+        narrativeStyle: "Conte interactif façon livre dont vous êtes le héros",
+        goals: ["Émotions et gestion","Valeurs sociales"],
+        interactions: ["Histoire à choix multiples (embranchements)","Animations déclenchées au clic"]
+      },
+      jeu_educatif: {
+        narrativeStyle: "Jeu vidéo éducatif avec niveaux progressifs",
+        goals: ["Logique et raisonnement","Chiffres/comptage"],
+        interactions: ["Quiz/QCM avec choix multiples","Glisser-déposer (drag & drop)","Puzzles et assemblage"]
+      },
+      encyclopedie: {
+        narrativeStyle: "Documentaire style reportage enfant (type C'est pas sorcier)",
+        goals: ["Alphabet","Corps humain"],
+        interactions: ["Quiz/QCM avec choix multiples","Animations déclenchées au clic"]
+      },
+      exercice: {
+        narrativeStyle: "Éducatif neutre avec voix off bienveillante",
+        goals: ["Chiffres/comptage","Logique et raisonnement"],
+        interactions: ["Quiz/QCM avec choix multiples","Puzzles et assemblage"]
+      },
+      lecon_vie: {
+        narrativeStyle: "Ludique avec mascotte animale attachante",
+        goals: ["Valeurs sociales","Émotions et gestion"],
+        interactions: ["Histoire à choix multiples (embranchements)","Animations déclenchées au clic"]
+      },
+      quiz: {
+        narrativeStyle: "Éducatif neutre avec voix off bienveillante",
+        goals: ["Alphabet","Chiffres/comptage"],
+        interactions: ["Quiz/QCM avec choix multiples"]
+      },
+      coloriage: {
+        narrativeStyle: "Ludique avec mascotte animale attachante",
+        goals: ["Reconnaissance des couleurs primaires/secondaires","Formes"],
+        interactions: ["Colorier/Dessiner sur canvas HTML5","Animations déclenchées au clic"]
+      },
+      puzzle: {
+        narrativeStyle: "Exploration libre monde ouvert",
+        goals: ["Logique et raisonnement"],
+        interactions: ["Puzzles et assemblage","Glisser-déposer (drag & drop)"]
+      },
+      memoire: {
+        narrativeStyle: "Ludique avec mascotte animale attachante",
+        goals: ["Logique et raisonnement","Émotions et gestion"],
+        interactions: ["Jeux de mémoire (paires, memory)","Jeux de sons (associer son à image)"]
+      },
+      aventure_choix: {
+        narrativeStyle: "Conte interactif façon livre dont vous êtes le héros",
+        goals: ["Valeurs sociales","Logique et raisonnement"],
+        interactions: ["Histoire à choix multiples (embranchements)","Animations déclenchées au clic"]
+      },
+      labyrinthe: {
+        narrativeStyle: "Exploration libre monde ouvert",
+        goals: ["Logique et raisonnement","Lecture de l'heure"],
+        interactions: ["Labyrinthe avec navigation clavier/tactile","Animations déclenchées au clic"]
+      },
+      tri_categorie: {
+        narrativeStyle: "Éducatif neutre avec voix off bienveillante",
+        goals: ["Tri/Catégorisation","Reconnaissance des couleurs primaires/secondaires"],
+        interactions: ["Tri et catégorisation (ranger par catégorie)","Glisser-déposer (drag & drop)"]
+      }
+    };
+
+    // ===== FONCTIONS POUR GRISER LES CHAMPS =====
+    function updateFieldVisibility(contentType) {
+        // Réinitialiser tous les champs
+        document.querySelectorAll('.form-group').forEach(group => {
+            group.classList.remove('disabled-field');
+            group.querySelectorAll('input, select, textarea').forEach(field => {
+                field.disabled = false;
+            });
+        });
+
+        // Définir les champs à griser par type de contenu
+        const disabledFields = {
+            histoire: ['timerGroup', 'statsGroup', 'colorPaletteGroup'],
+            jeu_educatif: ['additionalContextGroup'],
+            encyclopedie: ['rewardsGroup', 'errorHandlingGroup'],
+            exercice: ['narrativeStyleGroup', 'additionalContextGroup'],
+            lecon_vie: ['timerGroup', 'statsGroup'],
+            quiz: ['colorPaletteGroup', 'additionalContextGroup'],
+            coloriage: ['readingGroup', 'timerGroup'],
+            puzzle: ['narrativeStyleGroup', 'additionalContextGroup'],
+            memoire: ['narrativeStyleGroup'],
+            aventure_choix: ['timerGroup', 'statsGroup'],
+            labyrinthe: ['narrativeStyleGroup'],
+            tri_categorie: ['narrativeStyleGroup', 'additionalContextGroup']
+        };
+
+        // Griser les champs spécifiques
+        if (disabledFields[contentType]) {
+            disabledFields[contentType].forEach(fieldGroup => {
+                const group = document.getElementById(fieldGroup);
+                if (group) {
+                    group.classList.add('disabled-field');
+                    group.querySelectorAll('input, select, textarea').forEach(field => {
+                        field.disabled = true;
+                    });
+                }
+            });
+        }
+    }
+
+    // ===== INITIALISATION =====
+    window.addEventListener('DOMContentLoaded', function(){
+      document.getElementById('creationDate').value = new Date().toLocaleDateString('fr-FR',{year:'numeric',month:'long',day:'numeric'});
+      const savedName = localStorage.getItem(STORAGE_KEY_NAME);
+      if(savedName){ document.getElementById('creatorName').value = savedName; }
+      initFormatSelector();
+      attachLivePreview();
+      updateJsonPreview();
+      
+      // Boutons preset
+      document.getElementById('applyPresetBtn').addEventListener('click', applyPreset);
+      document.getElementById('clearSelectionsBtn').addEventListener('click', clearSelections);
+      
+      // Événement sur le changement de type de contenu
+      document.getElementById('contentType').addEventListener('change', function() {
+        if (this.value && PRESETS[this.value]) {
+            updateFieldVisibility(this.value);
+        }
+      });
+    });
+
+    function initFormatSelector(){
+      const options = document.querySelectorAll('.format-option');
+      options.forEach(opt=>{
+        opt.addEventListener('click',function(){
+          options.forEach(o=>o.classList.remove('active'));
+          this.classList.add('active');
+          currentFormat = this.dataset.format;
+          const box = document.getElementById('jsonPreview');
+          if(currentFormat==='json'){ box.style.display='block'; updateJsonPreview(); }
+          else{ box.style.display='none'; }
+        });
+      });
+    }
+
+    function attachLivePreview(){
+      document.querySelectorAll('input,select,textarea').forEach(el=>{
+        el.addEventListener('change',updateJsonPreview);
+        el.addEventListener('input',updateJsonPreview);
+      });
+      document.getElementById('creatorName').addEventListener('blur',function(){
+        const name = this.value.trim(); if(name){ localStorage.setItem(STORAGE_KEY_NAME,name); }
+        updateJsonPreview();
+      });
+    }
+
+    // ===== PRESET HELPERS =====
+    function setSelectValue(id, value){
+      const sel = document.getElementById(id);
+      if(!sel) return;
+      const exists = Array.from(sel.options).some(o=>o.value===value);
+      if(exists){ sel.value = value; }
+    }
+    
+    function checkBoxesByValues(containerId, inputName, values){
+      const box = document.getElementById(containerId);
+      if(!box) return;
+      const inputs = box.querySelectorAll(`input[name="${inputName}"]`);
+      inputs.forEach(i=>{ i.checked = values.includes(i.value); });
+    }
+    
+    function clearSelections(){
+      // Réinitialiser tous les champs
+      document.querySelectorAll('.form-group').forEach(group => {
+          group.classList.remove('disabled-field');
+          group.querySelectorAll('input, select, textarea').forEach(field => {
+              field.disabled = false;
+          });
+      });
+      
+      // Interactions & Goals uniquement
+      document.querySelectorAll('#interactionsBox input[type="checkbox"]').forEach(i=>i.checked=false);
+      document.querySelectorAll('#goalsBox input[type="checkbox"]').forEach(i=>i.checked=false);
+      document.getElementById('presetHint').textContent = 'Sélections nettoyées.';
+      updateJsonPreview();
+    }
+    
+    function applyPreset(){
+      const type = document.getElementById('contentType').value;
+      if(!type || !PRESETS[type]){ 
+        document.getElementById('presetHint').textContent='Sélectionnez un type valide.'; 
+        return; 
+      }
+      
+      const p = PRESETS[type];
+      setSelectValue('narrativeStyle', p.narrativeStyle);
+      
+      // Coche objectifs
+      const goalLabels = {
+        "Reconnaissance des couleurs primaires/secondaires":"Reconnaissance des couleurs primaires/secondaires",
+        "Formes":"Identification des formes géométriques",
+        "Chiffres/comptage":"Apprentissage des chiffres et comptage 1-10/1-20",
+        "Alphabet":"Reconnaissance alphabet et lettres",
+        "Animaux/cris":"Découverte des animaux et leurs cris",
+        "Corps humain":"Parties du corps humain",
+        "Émotions et gestion":"Reconnaissance et gestion des émotions",
+        "Lecture de l'heure":"Lecture de l'heure",
+        "Logique et raisonnement":"Logique et raisonnement",
+        "Valeurs sociales":"Partage, coopération, empathie",
+        "Tri/Catégorisation":"Respect de l'environnement et recyclage"
+      };
+      
+      const mappedGoals = p.goals.map(g => goalLabels[g] || g);
+      document.querySelectorAll('#goalsBox input[type="checkbox"]').forEach(i=>i.checked=false);
+      document.querySelectorAll('#goalsBox input[type="checkbox"]').forEach(i=>{
+        if(mappedGoals.includes(i.value)) i.checked = true;
+      });
+      
+      // Interactions
+      document.querySelectorAll('#interactionsBox input[type="checkbox"]').forEach(i=>i.checked=false);
+      checkBoxesByValues('interactionsBox','interactions', p.interactions);
+      
+      // Mettre à jour la visibilité des champs
+      updateFieldVisibility(type);
+      
+      document.getElementById('presetHint').textContent = 'Preset appliqué : ' + type.replace('_',' ');
+      updateJsonPreview();
+    }
+
+    // ===== JSON PREVIEW =====
+    function syntaxHighlight(json){
+      json = json.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (m){
+        let cls = 'json-number';
+        if(/^"/.test(m)){ cls = (/:$/.test(m)) ? 'json-key' : 'json-string'; }
+        else if(/true|false/.test(m)){ cls = 'json-boolean'; }
+        else if(/null/.test(m)){ cls = 'json-null'; }
+        return '<span class="'+cls+'">'+m+'</span>';
+      });
+    }
+
+    function getCheckedValues(name){
+      return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb=>cb.value);
+    }
+
+    function updateJsonPreview(){
+      if(currentFormat!=='json') return;
+
+      const creatorName = (document.getElementById('creatorName').value||'').trim() || "Votre nom";
+      const theme = (document.getElementById('theme').value||'').trim() || "Thème du projet";
+      const contentType = document.getElementById('contentType').value || "non défini";
+
+      const jsonPreview = {
+        metadata:{
+          creator: creatorName,
+          version: document.getElementById('projectVersion').value,
+          date: document.getElementById('creationDate').value,
+          generator: `Formulaire ${VERSION}`
+        },
+        target:{
+          age: getCheckedValues('ageRange'),
+          readingLevel: (document.querySelector('input[name="readingLevel"]:checked')||{}).value || null,
+          supervision: (document.querySelector('input[name="supervision"]:checked')||{}).value || null
+        },
+        language:{
+          languages: getCheckedValues('languages'),
+          layout: (document.querySelector('input[name="languageLayout"]:checked')||{}).value || null
+        },
+        content:{
+          type: contentType,
+          theme: theme,
+          narrativeStyle: document.getElementById('narrativeStyle').value,
+          educationalGoals: [...getCheckedValues('pedGoals'), ...String(document.getElementById('customGoals').value||'').split('\n').map(s=>s.trim()).filter(Boolean)],
+          additionalContext: (document.getElementById('additionalContext').value||'').trim() || undefined
+        },
+        interactivity:{
+          interactionTypes: getCheckedValues('interactions'),
+          rewardSystem: (document.querySelector('input[name="rewards"]:checked')||{}).value || null,
+          errorHandling: (document.querySelector('input[name="errorHandling"]:checked')||{}).value || null
+        },
+        analytics:{
+          timer: (document.querySelector('input[name="timer"]:checked')||{}).value || null,
+          statistics: getCheckedValues('stats')
+        },
+        parentalAssistance:{
+          guidanceType: (document.querySelector('input[name="parentalGuidance"]:checked')||{}).value || null,
+          guidanceTopics: getCheckedValues('guidanceTypes')
+        },
+        design:{ colorPalette: (document.querySelector('input[name="colorPalette"]:checked')||{}).value || null },
+        accessibility:{ features: getCheckedValues('accessibility') }
+      };
+
+      document.getElementById('jsonPreview').innerHTML = syntaxHighlight(JSON.stringify(jsonPreview,null,2));
+    }
+
+    // ===== MODALS =====
+    function openHelpModal(){ document.getElementById('helpModal').classList.add('active'); document.body.style.overflow='hidden'; }
+    function closeHelpModal(){ document.getElementById('helpModal').classList.remove('active'); document.body.style.overflow='auto'; }
+    function openResultModal(){ document.getElementById('resultModal').classList.add('active'); document.body.style.overflow='hidden'; }
+    function closeResultModal(){ document.getElementById('resultModal').classList.remove('active'); document.body.style.overflow='auto'; }
+    document.getElementById('helpModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeHelpModal(); });
+    document.getElementById('resultModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeResultModal(); });
+
+    // ===== VALIDATION =====
+    function clearErrors(){ document.querySelectorAll('.form-group.has-error').forEach(g=>g.classList.remove('has-error')); }
+    function showError(groupId, message){
+      const g = document.getElementById(groupId); if(!g) return;
+      g.classList.add('has-error');
+      const e = g.querySelector('.error-message'); if(e && message) e.textContent = '❌ ' + message;
+    }
+    function validateForm(){
+      clearErrors(); let ok = true; let first = null;
+      const creatorName = document.getElementById('creatorName').value.trim();
+      if(!creatorName){ const grp = document.querySelector('#creatorName').closest('.form-group'); grp.classList.add('has-error'); ok=false; first=first||grp; }
+      if(!(document.getElementById('contentType').value)){ showError('contentTypeGroup','Choisissez un type'); ok=false; first=first||document.getElementById('contentTypeGroup'); }
+      if(document.querySelectorAll('input[name="ageRange"]:checked').length===0){ showError('ageGroup','Au moins une tranche d\'âge'); ok=false; first=first||document.getElementById('ageGroup'); }
+      if(!document.querySelector('input[name="readingLevel"]:checked')){ showError('readingGroup','Niveau de lecture requis'); ok=false; first=first||document.getElementById('readingGroup'); }
+      const theme = document.getElementById('theme').value.trim();
+      if(!theme){ showError('themeGroup','Décrivez le sujet'); ok=false; first=first||document.getElementById('themeGroup'); }
+      const goalsChecked = document.querySelectorAll('input[name="pedGoals"]:checked').length;
+      const customGoals = document.getElementById('customGoals').value.trim();
+      if(goalsChecked===0 && !customGoals){ showError('goalsGroup','Choisir au moins un objectif ou remplir le champ libre'); ok=false; first=first||document.getElementById('goalsGroup'); }
+      if(!ok && first){ first.scrollIntoView({behavior:'smooth',block:'center'}); }
+      return ok;
+    }
+
+    // ===== SUBMIT =====
+    document.getElementById('promptForm').addEventListener('submit',function(e){
+      e.preventDefault();
+      if(!validateForm()) return;
+      const btn = document.getElementById('submitBtn');
+      btn.classList.add('loading'); btn.disabled = true;
+      setTimeout(()=>{ generatePrompt(); btn.classList.remove('loading'); btn.disabled=false; }, 500);
+    });
+
+    // ===== RESET =====
+    document.getElementById('promptForm').addEventListener('reset', function(){
+      setTimeout(()=>{
+        clearErrors();
+        document.getElementById('creationDate').value = new Date().toLocaleDateString('fr-FR',{year:'numeric',month:'long',day:'numeric'});
+        const savedName = localStorage.getItem(STORAGE_KEY_NAME);
+        if(savedName){ document.getElementById('creatorName').value = savedName; }
+        document.getElementById('presetHint').textContent = '';
+        
+        // Réactiver tous les champs
+        document.querySelectorAll('.form-group').forEach(group => {
+            group.classList.remove('disabled-field');
+            group.querySelectorAll('input, select, textarea').forEach(field => {
+                field.disabled = false;
+            });
+        });
+        
+        updateJsonPreview();
+      },100);
+    });
+
+    // ===== GENERATION =====
+    function generatePrompt(){
+      if(currentFormat==='json'){ generateJsonPrompt(); }
+      else { generateTextPrompt(); }
+    }
+
+    function generateJsonPrompt(){
+      // Métadonnées
+      const creatorName = document.getElementById('creatorName').value.trim();
+      const projectVersion = document.getElementById('projectVersion').value;
+      const creationDate = document.getElementById('creationDate').value;
+      localStorage.setItem(STORAGE_KEY_NAME, creatorName);
+
+      // Collecte
+      const contentType = document.getElementById('contentType').value;
+      const ageRanges = Array.from(document.querySelectorAll('input[name="ageRange"]:checked')).map(cb=>cb.value);
+      const readingLevel = (document.querySelector('input[name="readingLevel"]:checked')||{}).value;
+      const supervision = (document.querySelector('input[name="supervision"]:checked')||{}).value;
+      const languages = Array.from(document.querySelectorAll('input[name="languages"]:checked')).map(cb=>cb.value);
+      const languageLayout = (document.querySelector('input[name="languageLayout"]:checked')||{}).value;
+      const theme = document.getElementById('theme').value;
+      const narrativeStyle = document.getElementById('narrativeStyle').value;
+      const additionalContext = (document.getElementById('additionalContext').value||'').trim();
+
+      const pedGoals = Array.from(document.querySelectorAll('input[name="pedGoals"]:checked')).map(cb=>cb.value);
+      const customGoals = (document.getElementById('customGoals').value||'').trim();
+      let allGoals = [...pedGoals];
+      if(customGoals){
+        allGoals = [...allGoals, ...customGoals.split('\n').map(s=>s.trim()).filter(Boolean)];
+      }
+
+      const interactions = Array.from(document.querySelectorAll('input[name="interactions"]:checked')).map(cb=>cb.value);
+      const rewards = (document.querySelector('input[name="rewards"]:checked')||{}).value;
+      const errorHandling = (document.querySelector('input[name="errorHandling"]:checked')||{}).value;
+
+      const timer = (document.querySelector('input[name="timer"]:checked')||{}).value;
+      const stats = Array.from(document.querySelectorAll('input[name="stats"]:checked')).map(cb=>cb.value);
+
+      const parentalGuidance = (document.querySelector('input[name="parentalGuidance"]:checked')||{}).value;
+      const guidanceTypes = Array.from(document.querySelectorAll('input[name="guidanceTypes"]:checked')).map(cb=>cb.value);
+
+      const colorPalette = (document.querySelector('input[name="colorPalette"]:checked')||{}).value;
+      const accessibility = Array.from(document.querySelectorAll('input[name="accessibility"]:checked')).map(cb=>cb.value);
+
+      // Blueprint depuis preset
+      const presetUsed = PRESETS[contentType] ? {
+        narrativeStyle: PRESETS[contentType].narrativeStyle,
+        goals: PRESETS[contentType].goals,
+        interactions: PRESETS[contentType].interactions
+      } : null;
+
+      const promptData = {
+        metadata: { creator: creatorName, projectVersion, creationDate, generator: `Formulaire ${VERSION}` },
+        targetAudience: { ageRanges, readingLevel, supervision },
+        language: { languages, layout: languageLayout },
+        content: { type: contentType, theme, narrativeStyle, educationalGoals: allGoals, additionalContext: additionalContext || undefined },
+        interactivity: { interactionTypes: interactions, rewardSystem: rewards, errorHandling },
+        analytics: { timer, statistics: stats },
+        parentalAssistance: { guidanceType: parentalGuidance, guidanceTopics: guidanceTypes },
+        design: { colorPalette },
+        accessibility: { features: accessibility },
+        technicalRequirements: {
+          format: "HTML5 standalone",
+          fileSize: "< 350 KB",
+          responsive: true,
+          offline: true,
+          compatibility: ["Chrome 90+","Firefox 88+","Safari 14+","Edge 90+"],
+          accessibility: "WCAG 2.1 AA minimum"
+        },
+        security: {
+          noExternalLinks: true,
+          noTracking: true,
+          noPersonalData: true,
+          noAds: true,
+          gdprCompliant: true
+        },
+        workflow: {
+          step1: "Analyze this JSON specification",
+          step2: "Propose a detailed plan in TXT format",
+          step3: "Wait for explicit approval before generating HTML",
+          step4: "Generate complete standalone HTML file after approval"
+        },
+        blueprint: presetUsed
+      };
+
+      // Prompt final
+      const prompt =
+`# 🎯 PROMPT CRÉATION CONTENU HTML INTERACTIF ENFANT - FORMAT JSON
+
+## OBJECTIF
+Créer un contenu pédagogique interactif pour **dznet1.com**, totalement **responsive**, **accessible**, **SEO**, compatible **PC/Mobile** (sans débordement), avec **zone publicitaire**.
+
+## EXIGENCES
+- SEO : 1 H1, H2/H3 hiérarchisés, meta-description 150–160c, mots-clés naturels, CTA final
+- Logo (sticky) : https://dznet1.com/images/logo.png
+- Titre/H1 suffixe : « {Titre} — Catégorie : {Categorie} — Âge : {Age}+ »
+- Metas :
+  <meta name="content-category" content="{Categorie}">
+  <meta name="content-age" content="{Age}">
+- JSON-LD :
+  "educationalUse": "{Categorie}",
+  "typicalAgeRange": "{Age}+"
+
+### Publicité (après header)
+<div class="ad-banner">
+  <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" alt="Publicité partenaire" />
+</div>
+
+### Footer distant
+<div id="footer-placeholder"></div>
+<script>
+fetch("https://dznet1.com/intranet/footer.html").then(r=>r.text()).then(h=>{document.getElementById("footer-placeholder").innerHTML=h}).catch(()=>{});
+<script>
+
+### Médias (CDN obligatoire)
+Base : https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/{type}/
+Types: img|wav|video|PUB ; images .png/.jpeg ; sons .mp3 ; vidéos .mp4
+Nommage: YYYYMMDD_nom_simplifie.ext
+Générer un tableau (sans HTML) : Élément | FR | EN | AR | Image | Audio FR | Audio EN | Audio AR
+
+### i18n
+Par défaut FR/EN/AR (Algérie) + sélecteur de langue (drapeaux).
+
+### Analytics (head)
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"><script>
+/<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CRRK6Z4D1X');
+/script>
+
+### Responsive / anti-débordement
+Feuille distante : https://dznet1.com/assets/css/main.css
+
+### Accessibilité
+Navigation clavier, focus visible, aria-label, alt descriptifs, contraste ≥ 4.5:1.
+
+### Robustesse média
+Ajouter une fonction JS globale qui remplace toute ressource (img/audio/video) en erreur par une icône de remplacement, sans bloquer l'exécution (via onerror).
+
+---
+
+## SPÉCIFICATIONS DU PROJET (JSON)
+${JSON.stringify(promptData, null, 2)}
+
+- [ ] Afficher Version ${projectVersion}
+- Après validation du plan, générer le **fichier HTML final complet**.`;
+
+      document.getElementById('promptOutputModal').textContent = prompt;
+      openResultModal();
+    }
+
+    function generateTextPrompt(){
+      const prompt = `# PROMPT TEXTE (ANCIEN FORMAT)
+Utiliser le format JSON pour de meilleurs résultats.`;
+      document.getElementById('promptOutputModal').textContent = prompt;
+      openResultModal();
+    }
+
+    // ===== COPIE / EXPORT =====
+    document.getElementById('copyBtnModal').addEventListener('click', function(){
+      const txt = document.getElementById('promptOutputModal').textContent;
+      const btn = this; btn.classList.add('loading'); btn.disabled = true;
+      navigator.clipboard.writeText(txt).then(()=>{
+        setTimeout(()=>{
+          btn.classList.remove('loading'); btn.classList.add('copy-success');
+          btn.innerHTML = '<span>✅ Copié</span>';
+          setTimeout(()=>{ btn.classList.remove('copy-success'); btn.innerHTML = '<span class="spinner"></span><span>📋 Copier</span>'; btn.disabled=false; }, 2000);
+        },300);
+      }).catch(()=>{
+        btn.classList.remove('loading'); btn.disabled=false; alert('❌ Erreur de copie. Sélectionnez manuellement le texte.');
+      });
+    });
+
+    document.getElementById('downloadBtnModal').addEventListener('click', function(){
+      const txt = document.getElementById('promptOutputModal').textContent;
+      const blob = new Blob([txt], {type:'text/plain;charset=utf-8'});
+      const url = URL.createObjectURL(blob); const a = document.createElement('a');
+      const theme = (document.getElementById('theme').value||'').replace(/[^a-z0-9]/gi,'_').toLowerCase();
+      const creator = (document.getElementById('creatorName').value||'').replace(/[^a-z0-9]/gi,'_').toLowerCase();
+      const version = (document.getElementById('projectVersion').value||'').replace(/[^a-z0-9.]/gi,'');
+      const ts = new Date().toISOString().slice(0,10);
+      a.href = url; a.download = `prompt_${theme}_${creator}_${version}_${ts}.txt`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>

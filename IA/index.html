@@ -1856,7 +1856,17 @@ Base CDN :
 - Sons : .mp3
 - Vidéos : .mp4
 - **Nommage automatique** des nouveaux fichiers : \`YYYYMMDD<code>.<ext>\`
+Génère le tableau des médias pour chaque élément pédagogique avec :
+- Nom FR, EN, AR
+- 1 image par élément
+- 1 fichier audio par langue (FR, EN, AR)
+- Nommage des fichiers = YYYYMMDD_nom_simplifié.ext
+- Format du tableau = colonnes : Élément | FR | EN | AR | Image | Audio FR | Audio EN | Audio AR
+- Base CDN = https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/
+ À la fin, génère uniquement le tableau sans HTML.
 
+
+ 
 ### 🌍 Multilingue (i18n)
 - Si langue non précisée → générer **FR / EN / AR (Algérie)**.
 - Ajouter **sélecteur langue** avec drapeaux FR / EN / DZ.
@@ -1891,7 +1901,7 @@ une fontion javasctipt  pour que si les fichier images ou son ou video sont pas 
  
 - 
 - [ ] Version \${projectVersion} affichée
--  **ENSUITE SEULEMENT** → Générer **le fichier HTML final complet**, prêt à publier.et une fois tesrminité  tu me donne les nom des fichiers medias que tu as utilisé
+-  **ENSUITE SEULEMENT** → Générer **le fichier HTML final complet**, prêt à publier. 
 `;
  
 

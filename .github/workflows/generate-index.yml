@@ -3,27 +3,22 @@ name: Génération index_global.json
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: "3.11"
 
-      - run: pip install beautifulsoup4
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
-      - name: Générer index
+      - name: Run script
         run: python generate_index_global.py
-
-      - name: Commit & push
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add index_global.json
-          git commit -m "🔄 update index_global.json" || echo "No changes"
-          git push || echo "No push"

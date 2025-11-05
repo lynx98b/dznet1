@@ -1841,29 +1841,30 @@ Base CDN :
 - Ajouter **sélecteur langue** avec drapeaux FR / EN / DZ.
 
 ### 📈 Google Analytics (OBLIGATOIRE dans <head>)
+### 📈 Google Analytics (désactivé temporairement — affichage sûr GitHub)
 
 ```html
-<!-- 📈 Google Analytics (désactivé temporairement)
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
-<script>
+&lt;!--
+&lt;script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"&gt;&lt;/script&gt;
+&lt;script&gt;
   window.dataLayer = window.dataLayer || [];
   function gtag(){ dataLayer.push(arguments); }
   gtag('js', new Date());
   gtag('config', 'G-CRRK6Z4D1X');
-</script>
--->
+&lt;/script&gt;
+--&gt;
 ```
 
-
 ### 📱 Responsive + Anti-Débordement (PC / Mobile)
-~~~css
+
+```css
 html, body { margin:0; padding:0; width:100%; max-width:100%; overflow-x:hidden; }
 img, video { max-width:100%; height:auto; display:block; }
 .container { max-width:1200px; margin:auto; padding:0 16px; }
 body { font-family:sans-serif; font-size:clamp(14px,1.2vw,19px); line-height:1.5; }
 .ad-banner { width:100%; max-width:100%; margin:16px auto; padding:8px; text-align:center; }
 .ad-banner img { max-width:100%; height:auto; display:block; margin:auto; }
-~~~
+```
 
 ### ♿ Accessibilité
 - Navigation clavier, focus visible, aria-label, alt clair, contraste ≥ 4.5:1.

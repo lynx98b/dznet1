@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="description" content="Découvre formes et couleurs avec un mini-jeu interactif, accessible et sans publicité intrusive. Idéal pour enfants de 4 ans et plus." />
+  <meta name="keywords" content="formes, couleurs, jeu éducatif, enfants, apprentissage, interactif" />
+  <meta name="content-category" content="Éducation" />
+  <meta name="content-age" content="4" />
+
+  <title>Apprendre les formes et les couleurs — Catégorie : Éducation — Âge : 4+</title>
+
+  <!-- JSON-LD SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Apprendre les formes et les couleurs — Catégorie : Éducation — Âge : 4+",
+    "inLanguage": ["fr","en","ar-DZ"],
+    "about": ["formes","couleurs","jeu éducatif","enfants"],
+    "educationalUse": "Éducation",
+    "typicalAgeRange": "4+",
+    "audience": { "@type": "EducationalAudience", "educationalRole": "learner" },
+    "isAccessibleForFree": true,
+    "publisher": { "@type": "Organization", "name": "dznet1.com" }
+  }
+  </script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-CRRK6Z4D1X');
+  </script>
+
+  <!-- Site CSS -->
+  <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css" />
+
+  <!-- Anti-débordement minimal + ajustements locaux -->
+  <style>
+    :root { --maxw: 1000px; }
+    body { overflow-x: hidden; }
+    header.topbar {
+      position: sticky; top: 0; z-index: 1000; background: #fff;
+      border-bottom: 1px solid #e6e6e6;
+    }
+    header .wrap {
+      max-width: var(--maxw); margin: 0 auto; display: flex; align-items: center; gap: 1rem; padding: .5rem 1rem;
+    }
+    header img.logo { height: 42px; width: auto; }
+    .version-badge { margin-left: auto; font-size: .85rem; background: #eef6ff; padding: .25rem .5rem; border-radius: .5rem; }
+    .ad-banner { max-width: var(--maxw); margin: .5rem auto 1rem; padding: 0 1rem; }
+    .ad-banner img { width: 100%; height: auto; display: block; border-radius: .5rem; }
+    main { max-width: var(--maxw); margin: 0 auto; padding: 1rem; }
+    .lang-switch { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+    .lang-switch button {
+      border: 1px solid #ddd; background: #fff; padding: .4rem .6rem; border-radius: .5rem; cursor: pointer;
+    }
+    .lang-switch button[aria-pressed="true"] { outline: 3px solid #0a66ff; }
+    h1 { margin-top: .5rem; }
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem;
+    }
+    .card {
+      border: 1px solid #eee; border-radius: .75rem; padding: 1rem; background: #fff;
+    }
+    .actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      border: 1px solid #ddd; background: #fafafa; padding: .5rem .75rem; border-radius: .5rem; cursor: pointer;
+    }
+    .visually-hidden {
+      position: absolute !important; height: 1px; width: 1px; overflow: hidden;
+      clip: rect(1px, 1px, 1px, 1px); white-space: nowrap;
+    }
+    /* Fallback “icônes” CSS non bloquantes */
+    .fallback-icon { 
+      display: grid; place-items: center; width: 100%; min-height: 140px; border: 1px dashed #ccc; border-radius: .5rem;
+      font-size: 2rem;
+    }
+    figure { margin: 0; }
+    figcaption { font-size: .9rem; color: #444; margin-top: .25rem; }
+    .footer-host { margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <!-- Header avec logo sticky -->
+  <header class="topbar" role="banner">
+    <div class="wrap">
+      <a href="/" aria-label="Accueil dznet1.com">
+        <img class="logo" src="https://dznet1.com/images/logo.png" alt="Logo dznet1.com" />
+      </a>
+      <nav class="lang-switch" aria-label="Sélecteur de langue">
+        <span id="lang-label">Langue:</span>
+        <button type="button" class="lang-btn" data-lang="fr" aria-pressed="true" aria-label="Français">🇫🇷 FR</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="false" aria-label="English">🇬🇧 EN</button>
+        <button type="button" class="lang-btn" data-lang="ar-DZ" aria-pressed="false" aria-label="العربية">🇩🇿 AR</button>
+      </nav>
+      <div class="version-badge" aria-label="Version">Version v1.000</div>
+    </div>
+  </header>
+
+  <!-- Zone Publicitaire (non intrusive) -->
+  <div class="ad-banner" role="complementary" aria-label="Bannière publicitaire">
+    <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" alt="Publicité partenaire" />
+  </div>
+
+  <main id="main" role="main" tabindex="-1">
+    <h1 id="title">
+      Apprendre les formes et les couleurs — Catégorie : Éducation — Âge : 4+
+    </h1>
+
+    <section class="card" aria-labelledby="intro-title">
+      <h2 id="intro-title" data-i18n="intro.title">Découvre les formes et les couleurs</h2>
+      <p data-i18n="intro.lead">
+        Clique sur une forme, écoute son nom et apprends sa couleur. Prêt(e) à jouer ?
+      </p>
+      <div class="actions">
+        <button class="btn" id="play-audio" data-i18n="actions.sound" aria-label="Activer le son">🔊 Activer le son</button>
+        <button class="btn" id="reset" data-i18n="actions.reset" aria-label="Recommencer">↻ Recommencer</button>
+      </div>
+    </section>
+
+    <section class="grid" aria-labelledby="game-title">
+      <h2 id="game-title" class="visually-hidden">Jeu interactif formes et couleurs</h2>
+
+      <article class="card" aria-labelledby="shape1-title">
+        <h3 id="shape1-title" data-i18n="shapes.circle.title">Cercle rouge</h3>
+        <figure>
+          <img
+            src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/20251105A.png"
+            alt="Cercle rouge"
+            class="media-watch"
+            data-kind="image"
+            width="320" height="240"
+          />
+          <figcaption data-i18n="shapes.circle.caption">Tape ou clique pour entendre « Cercle rouge »</figcaption>
+        </figure>
+        <div class="actions">
+          <button class="btn speak" data-text-fr="Cercle rouge" data-text-en="Red circle" data-text-ar="دائرة حمراء" aria-label="Prononcer le nom">🗣️ <span data-i18n="actions.say">Dire le nom</span></button>
+        </div>
+      </article>
+
+      <article class="card" aria-labelledby="shape2-title">
+        <h3 id="shape2-title" data-i18n="shapes.square.title">Carré bleu</h3>
+        <figure>
+          <img
+            src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/20251105A.png"
+            alt="Carré bleu"
+            class="media-watch"
+            data-kind="image"
+            width="320" height="240"
+          />
+          <figcaption data-i18n="shapes.square.caption">Tape ou clique pour entendre « Carré bleu »</figcaption>
+        </figure>
+        <div class="actions">
+          <button class="btn speak" data-text-fr="Carré bleu" data-text-en="Blue square" data-text-ar="مربع أزرق" aria-label="Prononcer le nom">🗣️ <span data-i18n="actions.say">Dire le nom</span></button>
+        </div>
+      </article>
+
+      <article class="card" aria-labelledby="shape3-title">
+        <h3 id="shape3-title" data-i18n="shapes.triangle.title">Triangle jaune</h3>
+        <figure>
+          <img
+            src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/20251105A.png"
+            alt="Triangle jaune"
+            class="media-watch"
+            data-kind="image"
+            width="320" height="240"
+          />
+          <figcaption data-i18n="shapes.triangle.caption">Tape ou clique pour entendre « Triangle jaune »</figcaption>
+        </figure>
+        <div class="actions">
+          <button class="btn speak" data-text-fr="Triangle jaune" data-text-en="Yellow triangle" data-text-ar="مثلث أصفر" aria-label="Prononcer le nom">🗣️ <span data-i18n="actions.say">Dire le nom</span></button>
+        </div>
+      </article>
+    </section>
+
+    <section class="card" aria-labelledby="tips-title">
+      <h2 id="tips-title" data-i18n="tips.title">Conseil du jour</h2>
+      <p data-i18n="tips.text">Fais une pause de 30 secondes entre chaque activité pour mieux mémoriser.</p>
+    </section>
+  </main>
+
+  <!-- Footer distant -->
+  <div id="footer-placeholder" class="footer-host" role="contentinfo" aria-label="Pied de page"></div>
+  <script>
+    fetch("https://dznet1.com/intranet/footer.html")
+      .then(res => res.text())
+      .then(html => { document.getElementById("footer-placeholder").innerHTML = html; })
+      .catch(() => { /* silencieux: footer non bloquant */ });
+  </script>
+
+  <!-- i18n + accessibilité + résilience médias -->
+  <script>
+    (function() {
+      const CDN_IMG = "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/";
+      const CDN_WAV = "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/wav/";
+
+      // Textes multilingues
+      const STR = {
+        "fr": {
+          "intro.title": "Découvre les formes et les couleurs",
+          "intro.lead": "Clique sur une forme, écoute son nom et apprends sa couleur. Prêt(e) à jouer ?",
+          "actions.sound": "Activer le son",
+          "actions.reset": "Recommencer",
+          "actions.say": "Dire le nom",
+          "shapes.circle.title": "Cercle rouge",
+          "shapes.circle.caption": "Tape ou clique pour entendre « Cercle rouge »",
+          "shapes.square.title": "Carré bleu",
+          "shapes.square.caption": "Tape ou clique pour entendre « Carré bleu »",
+          "shapes.triangle.title": "Triangle jaune",
+          "shapes.triangle.caption": "Tape ou clique pour entendre « Triangle jaune »",
+          "tips.title": "Conseil du jour",
+          "tips.text": "Fais une pause de 30 secondes entre chaque activité pour mieux mémoriser."
+        },
+        "en": {
+          "intro.title": "Discover shapes and colors",
+          "intro.lead": "Tap a shape, hear its name and learn its color. Ready to play?",
+          "actions.sound": "Enable sound",
+          "actions.reset": "Restart",
+          "actions.say": "Say the name",
+          "shapes.circle.title": "Red circle",
+          "shapes.circle.caption": "Tap or click to hear “Red circle”",
+          "shapes.square.title": "Blue square",
+          "shapes.square.caption": "Tap or click to hear “Blue square”",
+          "shapes.triangle.title": "Yellow triangle",
+          "shapes.triangle.caption": "Tap or click to hear “Yellow triangle”",
+          "tips.title": "Tip of the day",
+          "tips.text": "Take a 30-second break between activities to remember better."
+        },
+        "ar-DZ": {
+          "intro.title": "اكتشف الأشكال والألوان",
+          "intro.lead": "اضغط على شكل لسماع اسمه وتعلّم لونه. هل أنت مستعد؟",
+          "actions.sound": "تفعيل الصوت",
+          "actions.reset": "إعادة البدء",
+          "actions.say": "قل الاسم",
+          "shapes.circle.title": "دائرة حمراء",
+          "shapes.circle.caption": "اضغط لسماع « دائرة حمراء »",
+          "shapes.square.title": "مربع أزرق",
+          "shapes.square.caption": "اضغط لسماع « مربع أزرق »",
+          "shapes.triangle.title": "مثلث أصفر",
+          "shapes.triangle.caption": "اضغط لسماع « مثلث أصفر »",
+          "tips.title": "نصيحة اليوم",
+          "tips.text": "خذ استراحة لمدة 30 ثانية بين الأنشطة لتحسين التذكر."
+        }
+      };
+
+      let currentLang = "fr";
+      const applyI18n = (lang) => {
+        currentLang = lang;
+        document.documentElement.lang = lang.startsWith("ar") ? "ar" : lang;
+        document.documentElement.dir  = lang.startsWith("ar") ? "rtl" : "ltr";
+        document.querySelectorAll("[data-i18n]").forEach(node => {
+          const key = node.getAttribute("data-i18n");
+          if (STR[lang] && STR[lang][key]) node.textContent = STR[lang][key];
+        });
+        // Mettre à jour les boutons langue (accessibilité)
+        document.querySelectorAll(".lang-btn").forEach(btn => {
+          btn.setAttribute("aria-pressed", btn.dataset.lang === lang ? "true" : "false");
+        });
+        // Mettre à jour le H1 (titre reste localisé implicitement via la page; on laisse le H1 SEO constant)
+      };
+
+      // Sélecteur de langue
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", () => applyI18n(btn.dataset.lang));
+      });
+
+      // Résilience médias: remplacer images/sons/vidéos injoignables par un bloc non bloquant
+      function replaceWithIcon(el, iconText) {
+        if (el && !el.dataset.fallbackDone) {
+          const holder = document.createElement("div");
+          holder.className = "fallback-icon";
+          holder.setAttribute("role", "img");
+          holder.setAttribute("aria-label", "Média indisponible");
+          holder.textContent = iconText;
+          el.replaceWith(holder);
+          el.dataset.fallbackDone = "1";
+        }
+      }
+      function watchMedia() {
+        document.querySelectorAll(".media-watch").forEach(el => {
+          el.addEventListener("error", () => {
+            const kind = el.dataset.kind || "image";
+            replaceWithIcon(el, kind === "image" ? "🖼️" : kind === "audio" ? "🎵" : "🎬");
+          }, { once: true });
+        });
+      }
+
+      // Audio & synthèse vocale
+      const audioUrl = CDN_WAV + "20251105B.mp3";
+      let audio;
+      const playBtn = document.getElementById("play-audio");
+      if (playBtn) {
+        playBtn.addEventListener("click", () => {
+          if (!audio) audio = new Audio(audioUrl);
+          audio.play().catch(() => {/* silencieux, peut être bloqué par navigateur */});
+        });
+      }
+
+      // Boutons “Dire le nom” via Web Speech API (fallback no-op si indisponible)
+      function speak(text) {
+        if ("speechSynthesis" in window) {
+          const u = new SpeechSynthesisUtterance(text);
+          u.lang = currentLang.startsWith("ar") ? "ar-DZ" : (currentLang === "en" ? "en-US" : "fr-FR");
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(u);
+        }
+      }
+      document.querySelectorAll(".speak").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const t = currentLang === "en" ? btn.dataset.textEn
+                 : (currentLang.startsWith("ar") ? btn.dataset.textAr : btn.dataset.textFr);
+          speak(t || "");
+        });
+      });
+
+      // Réinitialiser
+      const resetBtn = document.getElementById("reset");
+      if (resetBtn) resetBtn.addEventListener("click", () => {
+        document.getElementById("main").focus();
+      });
+
+      // Init
+      watchMedia();
+      applyI18n("fr");
+    })();
+  </script>
+</body>
+</html>

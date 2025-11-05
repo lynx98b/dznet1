@@ -1802,57 +1802,107 @@
             const prompt = `# 🎯 PROMPT CRÉATION CONTENU HTML INTERACTIF ENFANT - FORMAT JSON
 
 ## 📋 INSTRUCTIONS POUR L'IA
+ 
+## 📌 OBJECTIF
+Créer un contenu pédagogique interactif pour **dznet1.com**, totalement **responsive**, **accessible**, **optimisé SEO**, et compatible **PC + Téléphone (sans débordement horizontal)**, avec **zone publicitaire intégrée**.
 
-**WORKFLOW OBLIGATOIRE :**
+## ⚙️ EXIGENCES GÉNÉRALES (OBLIGATOIRES)
+- Contenu clair, fluide, facile à comprendre.
+- **SEO optimisé** :
+  - 1 seul **H1** (mot-clé principal)
+  - H2/H3 hiérarchisés
+  - Méta-description 150–160 caractères
+  - Mots-clés naturels + CTA final
+- **Logo obligatoire** : https://dznet1.com/images/logo.png
 
-1. **ANALYSE** cette spécification JSON complète
-2. **PROPOSE-MOI** d'abord un **PLAN DÉTAILLÉ** en format TXT contenant :
-   - Structure HTML (sections principales, navigation)
-   - Mécaniques d'interactions (avec justifications techniques)
-   - Approche CSS responsive (mobile-first, breakpoints)
-   - Architecture JavaScript (fonctions principales, gestion événements)
-   - Implémentation chronomètre et statistiques
-   - Système d'assistance parentale
-   - Points de vigilance sécurité/accessibilité
-   - Estimation poids final (<150 KB)
+### 📢 Zone Publicitaire (Bannières)
+- Chaque page doit inclure **une zone de bannière publicitaire**.
+- Emplacement recommandé : **juste après le header**.
+- Doit être **non intrusive**, **responsive**, **sans débordement**.
+- Forme HTML à respecter :
+~~~html
+<div class="ad-banner">
+  <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" alt="Publicité partenaire" />
+</div>
+~~~
 
-3. **ATTENDS MON APPROBATION EXPLICITE** avant de générer le HTML
+### 🎨 Médias (CDN dznet1.com OBLIGATOIRE)
+Base CDN :
+\`https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/{type}/\`
 
-4. **SEULEMENT APRÈS MON "OK"** → Génère le fichier HTML complet standalone
+- {type} = **img**, **wav**, **video**, **PUB**
+- Images : .png / .jpeg
+- Sons : .mp3
+- Vidéos : .mp4
+- **Nommage automatique** des nouveaux fichiers : \`YYYYMMDD<code>.<ext>\`
+
+### 🌍 Multilingue (i18n)
+- Si langue non précisée → générer **FR / EN / AR (Algérie)**.
+- Ajouter **sélecteur langue** avec drapeaux FR / EN / DZ.
+
+### 📈 Google Analytics (OBLIGATOIRE dans <head>)
+
+```html
+<!-- 📈 Google Analytics (désactivé temporairement)
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-CRRK6Z4D1X');
+</script>
+-->
+```
+
+
+### 📱 Responsive + Anti-Débordement (PC / Mobile)
+~~~css
+html, body { margin:0; padding:0; width:100%; max-width:100%; overflow-x:hidden; }
+img, video { max-width:100%; height:auto; display:block; }
+.container { max-width:1200px; margin:auto; padding:0 16px; }
+body { font-family:sans-serif; font-size:clamp(14px,1.2vw,19px); line-height:1.5; }
+.ad-banner { width:100%; max-width:100%; margin:16px auto; padding:8px; text-align:center; }
+.ad-banner img { max-width:100%; height:auto; display:block; margin:auto; }
+~~~
+
+### ♿ Accessibilité
+- Navigation clavier, focus visible, aria-label, alt clair, contraste ≥ 4.5:1.
 
 ---
-
-## 🎯 SPÉCIFICATIONS DU PROJET (JSON)
-
-\`\`\`json
-${JSON.stringify(promptData, null, 2)}
-\`\`\`
+## 🛠️ WORKFLOW OBLIGATOIRE
+1) **ANALYSE** le JSON fourni.
+2) **PROPOSE D’ABORD UN PLAN DÉTAILLÉ (TXT)** comprenant :
+   - Structure HTML + navigation
+   - Position de la bannière publicitaire
+   - Interactions
+   - CSS responsive mobile-first
+   - Architecture JS
+   - Plan SEO (H1, mots-clés, méta)
+   - Plan i18n FR/EN/AR
+3) **ATTENDS MON “OK”**
+4) **ENSUITE SEULEMENT** → Générer **le fichier HTML final complet**, prêt à publier.
 
 ---
+## 📦 SPÉCIFICATIONS DU PROJET (JSON)
+\`\${JSON.stringify(promptData, null, 2)}\`
 
-## ✅ CHECKLIST VALIDATION FINALE
+---
+## ✅ CHECKLIST FINALE (À COCHER)
+- [ ] HTML valide W3C
+- [ ] Responsive 320 / 768 / 1920
+- [ ] **Aucun débordement horizontal**
+- [ ] Publicité affichée correctement + non intrusive
+- [ ] Navigation clavier OK
+- [ ] Contraste ≥ 4.5:1
+- [ ] Google Analytics inclus (ou commenté proprement)
+- [ ] CDN dznet1 respecté
+- [ ] Langues FR / EN / AR implémentées
+- [ ] H1 + méta-description + mots-clés OK
+- [ ] Version \${projectVersion} affichée
+`;
+ 
 
-Vérifie ces points et liste-les dans ta réponse :
-- [ ] HTML valide W3C (0 erreur sur validator.w3.org)
-- [ ] Responsive testé : 320px / 768px / 1920px
-- [ ] Navigation clavier fonctionnelle (Tab, Enter)
-- [ ] Contrastes couleurs ≥4.5:1 (WebAIM Contrast Checker)
-- [ ] Poids total < 150 KB
-- [ ] Aucune dépendance externe (CDN, Google Fonts)
-- [ ] Fonctionne offline à 100%
-- [ ] Tous objectifs pédagogiques intégrés
-- [ ] Contenu adapté à l'âge ${ageRanges.join(', ')}
-- [ ] Langue(s) ${languages.join(', ')} implémentée(s) correctement
-- [ ] Chronomètre fonctionnel (si activé)
-- [ ] Statistiques opérationnelles (si activées)
-- [ ] Assistance parentale accessible et pertinente (si activée)
-- [ ] Commentaires en-tête présents et complets
-- [ ] Version ${projectVersion} mentionnée dans code
-si je ne spécifi pas la langue tu doit le faire ne 3 langue ARAB / FRNCAI /ENGLAIS , avec 3 icon soufor de drapeau , arab c'est algerie 
-tous mes fichiers multimédias (images, sons, vidéos, animations) doivent provenir de mon CDN dznet1.com : Images : /img/ Sons : /wav/ Vidéos : /video/  Tu dois toujours utiliser les URLs suivantes : https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/{type}/ Les vidéos sont toujours en .mp4, 
-les sons en .mp3, et les images en .png ou .jpeg. Chaque fichier doit être nommé automatiquement avec la date + code unique (ex. 20251104VD12.mp4) 
 
-**⏩ COMMENCE MAINTENANT le html ! le fichier doit fontioner meme si il manque d autre fichier qui sont relier ,comme des image ou des fichier de son ...**`;
             
             // Affichage dans modal
             document.getElementById('promptOutputModal').textContent = prompt;

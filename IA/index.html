@@ -1814,6 +1814,17 @@ Créer un contenu pédagogique interactif pour **dznet1.com**, totalement **resp
   - Méta-description 150–160 caractères
   - Mots-clés naturels + CTA final
 - **Logo obligatoire** : https://dznet1.com/images/logo.png   "Ajoute un en-tête en haut de la page avec un logo  src ' https://dznet1.com/images/logo.png'  position sticky pour qu'il reste visible au scroll"
+Ajouter automatiquement à la fin du titre principal (H1 + <title>) la catégorie du contenu et l’âge cible, sous la forme :
+« {Titre} — Catégorie : {Categorie} — Âge : {Age}+ ».
+
+Exemple : « Apprendre les formes et les couleurs — Catégorie : Éducation — Âge : 4+ ».
+
+Ajouter aussi une meta-data structurée :
+<meta name="content-category" content="{Categorie}">
+<meta name="content-age" content="{Age}">
+et dans le JSON-LD, ajouter :
+"educationalUse": "{Categorie}",
+"typicalAgeRange": "{Age}+"
 
 ### 📢 Zone Publicitaire (Bannières)
 - Chaque page doit inclure **une zone de bannière publicitaire**.

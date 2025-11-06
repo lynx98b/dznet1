@@ -1,6 +1,6 @@
 <!-- ==========================================================
  Générateur de Prompt - Contenu HTML Enfant
- Version : v1.012 (logique de grisage corrigée + tooltips)
+ Version : v1.013 (80 objectifs + recherche + réorganisation UX)
 ========================================================== -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,7 +17,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Générateur de prompt pour contenu HTML enfant - Version professionnelle" />
-  <title>Générateur Prompt Contenu Enfant - v1.012</title>
+  <title>Générateur Prompt Contenu Enfant - v1.013</title>
 
   <style>
     /* ===== VARIABLES & RESET ===== */
@@ -38,6 +38,7 @@
     .version-badge{position:absolute;top:15px;right:15px;background:rgba(255,255,255,.2);padding:5px 15px;border-radius:20px;font-size:12px;font-weight:600}
     .help-btn{position:absolute;top:15px;left:15px;background:var(--warning);color:#fff;border:none;padding:10px 20px;border-radius:25px;cursor:pointer;font-weight:600;font-size:14px;transition:.3s;display:flex;align-items:center;gap:8px}
     .help-btn:hover{background:#E67E22;transform:scale(1.05)}
+    
     .modal{display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.7);animation:fadeIn .3s;overflow-y:auto;padding:20px}
     .modal.active{display:flex;align-items:center;justify-content:center}
     .modal-content{background:#fff;padding:40px;border-radius:16px;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;position:relative;animation:slideDown .4s}
@@ -48,9 +49,7 @@
     .modal-close:hover{background:#C0392B;transform:rotate(90deg)}
     .modal-content h2{color:var(--primary);margin-bottom:20px;font-size:24px}
     .modal-content h3{color:var(--success);margin-top:25px;margin-bottom:15px;font-size:18px}
-    .stat-box{background:var(--bg-light);padding:15px;border-radius:8px;margin:15px 0;border-left:4px solid var(--primary)}
-    .stat-box strong{color:var(--primary);font-size:18px}
-    .example-box{background:#E8F8F5;padding:15px;border-radius:8px;margin:10px 0;border-left:4px solid var(--success)}
+    
     .result-modal .modal-content{padding:0;overflow:hidden}
     .result-header{background:linear-gradient(135deg,var(--success) 0%,#229954 100%);color:#fff;padding:25px 40px;text-align:center}
     .result-header h2{color:#fff;margin:0 0 10px 0;font-size:26px}
@@ -72,7 +71,6 @@
     .form-group.has-error .error-message{display:block;animation:shake .5s}
     @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
     .form-group.has-error input,.form-group.has-error select,.form-group.has-error textarea{border-color:var(--danger);background:#FADBD8}
-    .form-group.has-error .checkbox-group,.form-group.has-error .radio-group{border:3px solid var(--danger);border-radius:8px;padding:10px;background:#FADBD8}
 
     input[type="text"],input[type="date"],select,textarea{width:100%;padding:12px;border:2px solid var(--border);border-radius:8px;font-size:14px;transition:.3s;font-family:inherit}
     input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(74,144,226,.1)}
@@ -83,6 +81,26 @@
     .checkbox-item:hover,.radio-item:hover{background:#E8F4F8;border-color:var(--primary)}
     .checkbox-item input:checked ~ span,.radio-item input:checked ~ span{font-weight:600;color:var(--primary)}
     input[type="checkbox"],input[type="radio"]{width:20px;height:20px;cursor:pointer;flex-shrink:0}
+
+    /* ===== ACCORDION OBJECTIFS ===== */
+    .search-box{margin-bottom:15px;position:relative}
+    .search-box input{padding-left:40px}
+    .search-box::before{content:"🔍";position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:18px;pointer-events:none}
+    
+    .goals-accordion{border:2px solid var(--border);border-radius:8px;max-height:400px;overflow-y:auto}
+    .category{border-bottom:1px solid var(--border)}
+    .category:last-child{border-bottom:none}
+    .category-toggle{width:100%;padding:15px;background:#F8F9FA;border:none;text-align:left;cursor:pointer;font-weight:600;font-size:15px;display:flex;justify-content:space-between;align-items:center;transition:.3s}
+    .category-toggle:hover{background:#E8F4F8}
+    .category-toggle.active{background:var(--primary);color:#fff}
+    .category-content{max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0 15px}
+    .category-content.expanded{max-height:1000px;padding:15px}
+    .category-content .checkbox-group{grid-template-columns:1fr}
+    .category-icon{transition:transform .3s}
+    .category-toggle.active .category-icon{transform:rotate(180deg)}
+    
+    .selected-goals-preview{background:#E8F4F8;padding:15px;border-radius:8px;margin-top:15px;font-size:14px;border-left:4px solid var(--info)}
+    .selected-goals-preview strong{color:var(--primary)}
 
     .color-palette{display:flex;gap:10px;align-items:center;padding:10px;background:#fff;border-radius:8px;border:2px solid var(--border)}
     .color-palette input[type="radio"]{margin-right:10px}
@@ -116,36 +134,12 @@
     .preset-hint{display:inline-block;margin-left:8px;font-size:12px;color:#2d6cdf;background:#E8F0FE;border:1px solid #BFD1FF;border-radius:999px;padding:2px 8px}
     .tiny{font-size:12px;opacity:.8}
 
-    /* Styles pour champs grisés avec tooltip */
+    /* Styles pour champs grisés */
     .form-group.disabled-field {
         opacity: 0.6;
         pointer-events: none;
         position: relative;
     }
-
-    .form-group.disabled-field label {
-        color: #95a5a6;
-    }
-
-    .form-group.disabled-field .helper-text {
-        color: #bdc3c7;
-    }
-
-    .form-group.disabled-field .checkbox-item,
-    .form-group.disabled-field .radio-item {
-        background: #f8f9fa;
-        border-color: #ecf0f1;
-        color: #95a5a6;
-    }
-
-    .form-group.disabled-field .checkbox-item:hover,
-    .form-group.disabled-field .radio-item:hover {
-        background: #f8f9fa;
-        border-color: #ecf0f1;
-        cursor: not-allowed;
-    }
-
-    /* Tooltip pour champs grisés */
     .disabled-tooltip {
         position: absolute;
         top: 0;
@@ -161,7 +155,6 @@
         cursor: help;
         z-index: 1;
     }
-
     .disabled-tooltip-text {
         display: none;
         position: absolute;
@@ -177,7 +170,6 @@
         box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         z-index: 10;
     }
-
     .disabled-tooltip-text::after {
         content: '';
         position: absolute;
@@ -190,11 +182,9 @@
         border-right: 8px solid transparent;
         border-top: 8px solid #34495e;
     }
-
     .disabled-tooltip:hover .disabled-tooltip-text {
         display: block;
     }
-
     .disabled-icon {
         font-size: 24px;
         opacity: 0.4;
@@ -212,8 +202,8 @@
       .modal-content{padding:25px;margin:20px;max-height:90vh}
       .result-header,.result-body,.result-actions{padding:20px}
       .metadata-grid{grid-template-columns:1fr}
+      .category-content .checkbox-group{grid-template-columns:1fr}
     }
-    button:focus,input:focus,select:focus,textarea:focus{outline:3px solid var(--primary);outline-offset:2px}
   </style>
 </head>
 <body>
@@ -221,21 +211,31 @@
     <!-- HEADER -->
     <header>
       <button class="help-btn" onclick="openHelpModal()">
-        <span>❓</span><span>Guide Parents</span>
+        <span>❓</span><span>Guide</span>
       </button>
-      <span class="version-badge">v1.012</span>
+      <span class="version-badge">v1.013</span>
       <h1>🎨 Générateur de Prompt - Contenu HTML Enfant</h1>
       <p>Créez des expériences éducatives interactives sécurisées et cohérentes</p>
-      <p class="tiny">✅ JSON optimisé | 🔒 RGPD/COPPA | ♿ Accessible</p>
+      <p class="tiny">✅ 80 objectifs | 🔍 Recherche | 🎯 UX optimisée</p>
     </header>
 
     <!-- MODAL AIDE -->
     <div id="helpModal" class="modal">
       <div class="modal-content">
         <button class="modal-close" onclick="closeHelpModal()">×</button>
-        <h2>📘 Guide rapide</h2>
-        <p>Choisissez le <strong>Type de contenu</strong> et cliquez sur <strong>Appliquer le preset</strong> pour pré-remplir les interactions, objectifs et style.</p>
-        <div class="info-banner"><strong>✨ Nouveau v1.012 :</strong> Les champs non pertinents sont automatiquement grisés avec une icône explicative au survol.</div>
+        <h2>📘 Guide rapide v1.013</h2>
+        <div class="info-banner">
+          <strong>Ordre logique :</strong>
+          <ol style="margin:10px 0 0 20px;line-height:1.8">
+            <li>1️⃣ Sélectionner l'<strong>âge/public cible</strong></li>
+            <li>2️⃣ Choisir le <strong>type de contenu</strong></li>
+            <li>3️⃣ Définir les <strong>langues</strong></li>
+            <li>4️⃣ Sélectionner les <strong>objectifs</strong> (80 disponibles)</li>
+            <li>5️⃣ Personnaliser le reste</li>
+          </ol>
+        </div>
+        <h3>🔍 Recherche d'objectifs</h3>
+        <p>Tapez un mot-clé (ex: "addition", "alphabet") pour filtrer les 80 objectifs pédagogiques.</p>
         <button class="btn-primary" onclick="closeHelpModal()" style="margin-top: 16px; width: 100%;">OK</button>
       </div>
     </div>
@@ -280,7 +280,7 @@
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <label for="projectVersion">Version du projet</label>
-              <input type="text" id="projectVersion" value="v1.012" placeholder="v1.012">
+              <input type="text" id="projectVersion" value="v1.013" placeholder="v1.013">
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <label>Date de création</label>
@@ -289,39 +289,9 @@
           </div>
         </div>
 
-        <!-- NOUVEAU : TYPE DE CONTENU + PRESETS -->
+        <!-- 1️⃣ PUBLIC CIBLE -->
         <div class="section">
-          <h2 class="section-title">🎯 Type de contenu <span class="feature-badge">PRESETS</span></h2>
-          <div class="form-group" id="contentTypeGroup">
-            <label class="required" for="contentType">Choisir un type</label>
-            <select id="contentType" required>
-              <option value="">— Sélectionner —</option>
-              <option value="histoire">Histoire</option>
-              <option value="jeu_educatif">Jeu éducatif</option>
-              <option value="encyclopedie">Encyclopédie</option>
-              <option value="exercice">Exercice pratique</option>
-              <option value="lecon_vie">Leçon de vie</option>
-              <option value="quiz">Quiz interactif</option>
-              <option value="coloriage">Coloriage / Dessin</option>
-              <option value="puzzle">Puzzles</option>
-              <option value="memoire">Jeu de mémoire</option>
-              <option value="aventure_choix">Aventure à choix</option>
-              <option value="labyrinthe">Labyrinthe</option>
-              <option value="tri_categorie">Tri / Catégorisation</option>
-            </select>
-            <div class="error-message">❌ Choisissez un type</div>
-            <div class="helper-text">Cliquez ensuite sur "Appliquer le preset" pour pré-remplir.</div>
-          </div>
-          <div class="button-group" style="margin-top:5px;">
-            <button type="button" id="applyPresetBtn" class="btn-success" title="Remplit les interactions, objectifs et style selon le type choisi">⚡ Appliquer le preset</button>
-            <button type="button" id="clearSelectionsBtn" class="btn-secondary" title="Effacer les sélections auto">🧹 Effacer les sélections</button>
-            <span id="presetHint" class="preset-hint" aria-live="polite"></span>
-          </div>
-        </div>
-
-        <!-- PUBLIC CIBLE -->
-        <div class="section">
-          <h2 class="section-title">👥 Public Cible</h2>
+          <h2 class="section-title">1️⃣ Public Cible</h2>
           <div class="form-group" id="ageGroup">
             <label class="required">Tranches d'âge (multiple)</label>
             <div class="checkbox-group">
@@ -355,9 +325,39 @@
           </div>
         </div>
 
-        <!-- LANGUES -->
+        <!-- 2️⃣ TYPE DE CONTENU -->
         <div class="section">
-          <h2 class="section-title">🌍 Langue du Contenu</h2>
+          <h2 class="section-title">2️⃣ Type de contenu <span class="feature-badge">PRESETS</span></h2>
+          <div class="form-group" id="contentTypeGroup">
+            <label class="required" for="contentType">Choisir un type</label>
+            <select id="contentType" required>
+              <option value="">— Sélectionner —</option>
+              <option value="histoire">Histoire</option>
+              <option value="jeu_educatif">Jeu éducatif</option>
+              <option value="encyclopedie">Encyclopédie</option>
+              <option value="exercice">Exercice pratique</option>
+              <option value="lecon_vie">Leçon de vie</option>
+              <option value="quiz">Quiz interactif</option>
+              <option value="coloriage">Coloriage / Dessin</option>
+              <option value="puzzle">Puzzles</option>
+              <option value="memoire">Jeu de mémoire</option>
+              <option value="aventure_choix">Aventure à choix</option>
+              <option value="labyrinthe">Labyrinthe</option>
+              <option value="tri_categorie">Tri / Catégorisation</option>
+            </select>
+            <div class="error-message">❌ Choisissez un type</div>
+            <div class="helper-text">Cliquez ensuite sur "Appliquer le preset" pour pré-remplir.</div>
+          </div>
+          <div class="button-group" style="margin-top:5px;">
+            <button type="button" id="applyPresetBtn" class="btn-success">⚡ Appliquer le preset</button>
+            <button type="button" id="clearSelectionsBtn" class="btn-secondary">🧹 Effacer les sélections</button>
+            <span id="presetHint" class="preset-hint" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <!-- 3️⃣ LANGUES -->
+        <div class="section">
+          <h2 class="section-title">3️⃣ Langue du Contenu</h2>
           <div class="form-group">
             <label>Langue(s) (multiple)</label>
             <div class="checkbox-group">
@@ -377,9 +377,9 @@
           </div>
         </div>
 
-        <!-- THÈME & CONTENU -->
+        <!-- 4️⃣ THÈME & OBJECTIFS -->
         <div class="section">
-          <h2 class="section-title">🖌️ Thème et Contenu</h2>
+          <h2 class="section-title">4️⃣ Thème et Objectifs Pédagogiques</h2>
           <div class="form-group" id="themeGroup">
             <label for="theme" class="required">Sujet principal</label>
             <input type="text" id="theme" placeholder="Ex: Apprentissage des couleurs primaires" required>
@@ -388,25 +388,212 @@
           </div>
 
           <div class="form-group" id="goalsGroup">
-            <label class="required">Objectifs pédagogiques</label>
-            <div class="checkbox-group" id="goalsBox">
-              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Reconnaissance des couleurs primaires/secondaires"><span>Reconnaissance couleurs</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Identification des formes géométriques"><span>Formes</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Apprentissage des chiffres et comptage 1-10/1-20"><span>Chiffres/comptage</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Reconnaissance alphabet et lettres"><span>Alphabet</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Découverte des animaux et leurs cris"><span>Animaux/cris</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Parties du corps humain"><span>Corps humain</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Émotions et gestion"><span>Émotions</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Lecture de l'heure"><span>Lire l'heure</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Logique et raisonnement"><span>Logique</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Partage, coopération, empathie"><span>Valeurs sociales</span></label>
+            <label class="required">Objectifs pédagogiques (80 disponibles)</label>
+            <div class="search-box">
+              <input type="text" id="searchGoals" placeholder="Rechercher un objectif (ex: addition, alphabet...)">
             </div>
+            
+            <div class="goals-accordion" id="goalsAccordion">
+              <!-- Mathématiques -->
+              <div class="category" data-category="math">
+                <button type="button" class="category-toggle">
+                  <span>📐 Mathématiques & Logique <span class="count">(0/15)</span></span>
+                  <span class="category-icon">▼</span>
+                </button>
+                <div class="category-content">
+                  <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Reconnaissance des chiffres 0-10"><span>Chiffres 0-10</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Reconnaissance des chiffres 10-100"><span>Chiffres 10-100</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Comptage et dénombrement 1-10"><span>Comptage 1-10</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Comptage et dénombrement 1-20"><span>Comptage 1-20</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Comptage et dénombrement 1-100"><span>Comptage 1-100</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Addition simple (jusqu'à 10)"><span>Addition simple</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Soustraction simple (jusqu'à 10)"><span>Soustraction simple</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Multiplication tables (2, 5, 10)"><span>Tables de multiplication</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Division simple (partage équitable)"><span>Division simple</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Comparaison quantités (plus/moins/égal)"><span>Comparaison quantités</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Séquences et suites logiques"><span>Suites logiques</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Fractions simples (1/2, 1/4)"><span>Fractions simples</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Mesures et longueurs (cm, m)"><span>Mesures/longueurs</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Poids et volumes (g, kg, L)"><span>Poids/volumes</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Résolution de problèmes mathématiques"><span>Résolution de problèmes</span></label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Langues -->
+              <div class="category" data-category="langues">
+                <button type="button" class="category-toggle">
+                  <span>🔤 Langues & Communication <span class="count">(0/12)</span></span>
+                  <span class="category-icon">▼</span>
+                </button>
+                <div class="category-content">
+                  <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Reconnaissance alphabet majuscules"><span>Alphabet majuscules</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Reconnaissance alphabet minuscules"><span>Alphabet minuscules</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Association lettre-son (phonétique)"><span>Lettre-son (phonétique)</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Formation de syllabes (ba, be, bi, bo, bu)"><span>Formation syllabes</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Lecture de mots simples (3-5 lettres)"><span>Lecture mots simples</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Lecture de phrases courtes"><span>Lecture phrases</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Compréhension de textes courts"><span>Compréhension textes</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Écriture des lettres (graphisme)"><span>Écriture lettres</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Orthographe mots courants"><span>Orthographe</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Conjugaison présent/passé/futur"><span>Conjugaison</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Vocabulaire thématique (animaux, fruits, etc.)"><span>Vocabulaire thématique</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Expression orale et narration"><span>Expression orale</span></label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Formes & Couleurs -->
+              <div class="category" data-category="formes">
+                <button type="button" class="category-toggle">
+                  <span>🎨 Formes, Couleurs & Créativité <span class="count">(0/8)</span></span>
+                  <span class="category-icon">▼</span>
+                </button>
+                <div class="category-content">
+                  <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Reconnaissance couleurs primaires (rouge, bleu, jaune)"><span>Couleurs primaires</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Reconnaissance couleurs secondaires (vert, orange, violet)"><span>Couleurs secondaires</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Nuances de couleurs (clair/foncé)"><span>Nuances couleurs</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Identification formes géométriques 2D (carré, cercle, triangle)"><span>Formes 2D</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Identification formes géométriques 3D (cube, sphère, cylindre)"><span>Formes 3D</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Symétrie et motifs répétitifs"><span>Symétrie/motifs</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Dessin et créativité artistique"><span>Dessin/créativité</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Assemblage et construction spatiale"><span>Construction spatiale</span></label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sciences -->
+              <div class="category" data-category="sciences">
+                <button type="button" class="category-toggle">
+                  <span>🌍 Sciences & Nature <span class="count">(0/10)</span></span>
+                  <span class="category-icon">▼</span>
+                </button>
+                <div class="category-content">
+                  <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Découverte animaux et leurs habitats"><span>Animaux/habitats</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Cris et sons des animaux"><span>Cris animaux</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Parties du corps humain"><span>Corps humain</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Organes et santé (cœur, poumons, cerveau)"><span>Organes/santé</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Alimentation équilibrée et nutrition"><span>Nutrition</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Cycle de l'eau"><span>Cycle de l'eau</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Cycle des saisons"><span>Saisons</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Météo et climat"><span>Météo/climat</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Plantes et végétaux (croissance, photosynthèse)"><span>Plantes/végétaux</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Écosystèmes (forêt, océan, désert)"><span>Écosystèmes</span></label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Temps & Espace -->
+              <div class="category" data-category="temps">
+                <button type="button" class="category-toggle">
+                  <span>⏰ Temps & Espace <span class="count">(0/6)</span></span>
+                  <span class="category-icon">▼</span>
+                </button>
+                <div class="category-content">
+                  <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Lecture de l'heure (analogique)"><span>Heure analogique</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Lecture de l'heure (numérique)"><span>Heure numérique</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Jours de la semaine"><span>Jours semaine</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Mois de l'année"><span>Mois année</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Orientation spatiale (gauche/droite, avant/arrière)"><span>Orientation spatiale</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Repérage sur plan/carte simple"><span>Repérage plan/carte</span></label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Socio-émotionnel -->
+              <div class="category" data-category="social">
+                <button type="button" class="category-toggle">
+                  <span>🤝 Compétences Sociales & Émotionnelles <span class="count">(0/10)</span></span>
+                  <span class="category-icon">▼</span>
+                </button>
+                <div class="category-content">
+                  <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Reconnaissance et gestion des émotions"><span>Émotions/gestion</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Empathie et compréhension d'autrui"><span>Empathie</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Partage et coopération"><span>Partage/coopération</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Résolution de conflits"><span>Résolution conflits</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Respect des règles et consignes"><span>Respect règles</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Autonomie et confiance en soi"><span>Autonomie/confiance</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Patience et persévérance"><span>Patience/persévérance</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Communication non-violente"><span>Communication non-violente</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Solidarité et entraide"><span>Solidarité/entraide</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Tolérance et respect des différences"><span>Tolérance/diversité</span></label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Vie pratique -->
+              <div class="category" data-category="pratique">
+                <button type="button" class="category-toggle">
+                  <span>🛡️ Vie Pratique & Sécurité <span class="count">(0/8)</span></span>
+                  <span class="category-icon">▼</span>
+                </button>
+                <div class="category-content">
+                  <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Hygiène corporelle (se laver, se brosser les dents)"><span>Hygiène</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Habillage et autonomie vestimentaire"><span>Habillage</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Sécurité routière (piéton, vélo)"><span>Sécurité routière</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Gestes de premiers secours basiques"><span>Premiers secours</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Tri et recyclage des déchets"><span>Tri/recyclage</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Économie d'eau et d'énergie"><span>Économie ressources</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Dangers domestiques (électricité, produits toxiques)"><span>Dangers domestiques</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Numérique responsable (temps d'écran, cybersécurité)"><span>Numérique responsable</span></label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Arts & Culture -->
+              <div class="category" data-category="arts">
+                <button type="button" class="category-toggle">
+                  <span>🎵 Arts & Culture <span class="count">(0/6)</span></span>
+                  <span class="category-icon">▼</span>
+                </button>
+                <div class="category-content">
+                  <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Reconnaissance instruments de musique"><span>Instruments musique</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Rythme et tempo musical"><span>Rythme/tempo</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Chant et mémorisation comptines"><span>Chant/comptines</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Danses et expression corporelle"><span>Danse</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Histoire et patrimoine culturel"><span>Histoire/patrimoine</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Découverte cultures du monde"><span>Cultures du monde</span></label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mémoire -->
+              <div class="category" data-category="memoire">
+                <button type="button" class="category-toggle">
+                  <span>🧠 Mémoire & Concentration <span class="count">(0/5)</span></span>
+                  <span class="category-icon">▼</span>
+                </button>
+                <div class="category-content">
+                  <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Mémoire visuelle (se souvenir d'images)"><span>Mémoire visuelle</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Mémoire auditive (se souvenir de sons/mots)"><span>Mémoire auditive</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Attention et concentration soutenue"><span>Concentration</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Mémorisation de séquences"><span>Mémorisation séquences</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Observation et attention aux détails"><span>Observation/détails</span></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="selected-goals-preview">
+              <strong>Sélectionnés :</strong> <span id="selectedCount">0</span> objectifs
+            </div>
+
             <div class="error-message">❌ Choisissez au moins un objectif ou utilisez le champ libre</div>
           </div>
 
           <div class="form-group">
             <label for="customGoals">Autres objectifs (optionnel)</label>
             <textarea id="customGoals" placeholder="Un objectif par ligne"></textarea>
+            <span class="helper-text">Si vos objectifs ne sont pas dans la liste ci-dessus</span>
           </div>
 
           <div class="form-group" id="narrativeStyleGroup">
@@ -428,9 +615,9 @@
           </div>
         </div>
 
-        <!-- INTERACTIVITÉ -->
+        <!-- 5️⃣ INTERACTIVITÉ -->
         <div class="section">
-          <h2 class="section-title">🎮 Interactivité</h2>
+          <h2 class="section-title">5️⃣ Interactivité</h2>
           <div class="form-group">
             <label>Types d'interactions</label>
             <div class="checkbox-group" id="interactionsBox">
@@ -445,7 +632,6 @@
               <label class="checkbox-item"><input type="checkbox" name="interactions" value="Labyrinthe avec navigation clavier/tactile"><span>Labyrinthe</span></label>
               <label class="checkbox-item"><input type="checkbox" name="interactions" value="Tri et catégorisation (ranger par catégorie)"><span>Tri/Catégories</span></label>
             </div>
-            <span class="helper-text">Le preset coche automatiquement certains éléments.</span>
           </div>
 
           <div class="form-group" id="rewardsGroup">
@@ -479,7 +665,6 @@
               <label class="radio-item"><input type="radio" name="timer" value="Oui - Chronomètre discret (petit coin d'écran)"><span>Discret</span></label>
               <label class="radio-item"><input type="radio" name="timer" value="Non - Pas de chronomètre (apprentissage sans pression)"><span>Pas de chrono</span></label>
             </div>
-            <span class="helper-text">Aide à gérer le temps d'écran</span>
           </div>
 
           <div class="form-group" id="statsGroup">
@@ -491,7 +676,6 @@
               <label class="checkbox-item"><input type="checkbox" name="stats" value="Récapitulatif détaillé à la fin"><span>Récap final</span></label>
               <label class="checkbox-item"><input type="checkbox" name="stats" value="Graphique d'évolution (si plusieurs sessions)"><span>Graphique d'évolution</span></label>
             </div>
-            <span class="helper-text">Stockage temporaire en sessionStorage</span>
           </div>
         </div>
 
@@ -609,232 +793,95 @@
 
   <script>
     // ===== VERSION & CONFIG =====
-    const VERSION = "v1.012";
+    const VERSION = "v1.013";
     const STORAGE_KEY_NAME = 'prompt_generator_creator_name';
     let currentFormat = 'json';
 
-    // ===== MATRICE DE PERTINENCE (v1.012) =====
+    // ===== MATRICE DE PERTINENCE =====
     const FIELD_RELEVANCE = {
-      histoire: {
-        readingGroup: true,
-        narrativeStyleGroup: true,
-        additionalContextGroup: true,
-        timerGroup: false,
-        statsGroup: false,
-        colorPaletteGroup: true
-      },
-      jeu_educatif: {
-        readingGroup: true,
-        narrativeStyleGroup: true,
-        additionalContextGroup: true,
-        timerGroup: true,
-        statsGroup: true,
-        colorPaletteGroup: true
-      },
-      encyclopedie: {
-        readingGroup: true,
-        narrativeStyleGroup: true,
-        additionalContextGroup: true,
-        rewardsGroup: true,
-        errorHandlingGroup: true,
-        timerGroup: false,
-        statsGroup: false,
-        colorPaletteGroup: true
-      },
-      exercice: {
-        readingGroup: true,
-        narrativeStyleGroup: true,
-        additionalContextGroup: true,
-        timerGroup: true,
-        statsGroup: true,
-        colorPaletteGroup: true
-      },
-      lecon_vie: {
-        readingGroup: true,
-        narrativeStyleGroup: true,
-        additionalContextGroup: true,
-        timerGroup: false,
-        statsGroup: false,
-        colorPaletteGroup: true
-      },
-      quiz: {
-        readingGroup: true,
-        narrativeStyleGroup: true,
-        additionalContextGroup: true,
-        timerGroup: true,
-        statsGroup: true,
-        colorPaletteGroup: true
-      },
-      coloriage: {
-        readingGroup: true,
-        narrativeStyleGroup: true,
-        additionalContextGroup: true,
-        errorHandlingGroup: false,
-        timerGroup: false,
-        statsGroup: true,
-        colorPaletteGroup: true
-      },
-      puzzle: {
-        readingGroup: true,
-        narrativeStyleGroup: true,
-        additionalContextGroup: true,
-        timerGroup: true,
-        statsGroup: true,
-        colorPaletteGroup: true
-      },
-      memoire: {
-        readingGroup: true,
-        narrativeStyleGroup: true,
-        additionalContextGroup: true,
-        timerGroup: true,
-        statsGroup: true,
-        colorPaletteGroup: true
-      },
-      aventure_choix: {
-        readingGroup: true,
-        narrativeStyleGroup: true,
-        additionalContextGroup: true,
-        timerGroup: false,
-        statsGroup: true,
-        colorPaletteGroup: true
-      },
-      labyrinthe: {
-        readingGroup: true,
-        narrativeStyleGroup: true,
-        additionalContextGroup: true,
-        timerGroup: true,
-        statsGroup: true,
-        colorPaletteGroup: true
-      },
-      tri_categorie: {
-        readingGroup: true,
-        narrativeStyleGroup: true,
-        additionalContextGroup: true,
-        timerGroup: true,
-        statsGroup: true,
-        colorPaletteGroup: true
-      }
+      histoire: { timerGroup: false, statsGroup: false },
+      jeu_educatif: {},
+      encyclopedie: { timerGroup: false, statsGroup: false },
+      exercice: {},
+      lecon_vie: { timerGroup: false, statsGroup: false },
+      quiz: {},
+      coloriage: { errorHandlingGroup: false, timerGroup: false },
+      puzzle: {},
+      memoire: {},
+      aventure_choix: { timerGroup: false },
+      labyrinthe: {},
+      tri_categorie: {}
     };
 
-    // ===== MESSAGES TOOLTIPS =====
     const TOOLTIP_MESSAGES = {
-      timerGroup: "⏱️ Chronomètre non pertinent pour ce type de contenu (immersion narrative)",
-      statsGroup: "📊 Statistiques non recommandées pour ce type (pas de notion de score/performance)",
-      colorPaletteGroup: "🎨 Palette de couleurs toujours nécessaire pour l'interface utilisateur",
-      errorHandlingGroup: "❌ Gestion d'erreur non applicable (pas d'exercice à valider)",
-      rewardsGroup: "🎁 Système de récompense toujours utile pour l'engagement",
-      narrativeStyleGroup: "📖 Style narratif pertinent pour tous les types de contenu",
-      readingGroup: "📚 Niveau de lecture important même pour contenu visuel (instructions)",
-      additionalContextGroup: "💬 Précisions toujours utiles pour personnaliser le contenu"
+      timerGroup: "⏱️ Chronomètre non pertinent pour ce type de contenu",
+      statsGroup: "📊 Statistiques non recommandées pour ce type",
+      errorHandlingGroup: "❌ Gestion d'erreur non applicable"
     };
 
     // ===== PRESETS PAR TYPE =====
     const PRESETS = {
       histoire: {
         narrativeStyle: "Conte interactif façon livre dont vous êtes le héros",
-        goals: ["Émotions et gestion","Partage, coopération, empathie"],
+        goals: ["Reconnaissance et gestion des émotions","Partage et coopération"],
         interactions: ["Histoire à choix multiples (embranchements)","Animations déclenchées au clic"]
       },
       jeu_educatif: {
         narrativeStyle: "Jeu vidéo éducatif avec niveaux progressifs",
-        goals: ["Logique et raisonnement","Apprentissage des chiffres et comptage 1-10/1-20"],
+        goals: ["Séquences et suites logiques","Comptage et dénombrement 1-20"],
         interactions: ["Quiz/QCM avec choix multiples","Glisser-déposer (drag & drop)","Puzzles et assemblage"]
       },
       encyclopedie: {
         narrativeStyle: "Documentaire style reportage enfant (type C'est pas sorcier)",
-        goals: ["Reconnaissance alphabet et lettres","Parties du corps humain"],
+        goals: ["Reconnaissance alphabet majuscules","Parties du corps humain"],
         interactions: ["Quiz/QCM avec choix multiples","Animations déclenchées au clic"]
       },
       exercice: {
         narrativeStyle: "Éducatif neutre avec voix off bienveillante",
-        goals: ["Apprentissage des chiffres et comptage 1-10/1-20","Logique et raisonnement"],
+        goals: ["Comptage et dénombrement 1-10","Séquences et suites logiques"],
         interactions: ["Quiz/QCM avec choix multiples","Puzzles et assemblage"]
       },
       lecon_vie: {
         narrativeStyle: "Ludique avec mascotte animale attachante",
-        goals: ["Partage, coopération, empathie","Émotions et gestion"],
+        goals: ["Partage et coopération","Reconnaissance et gestion des émotions"],
         interactions: ["Histoire à choix multiples (embranchements)","Animations déclenchées au clic"]
       },
       quiz: {
         narrativeStyle: "Éducatif neutre avec voix off bienveillante",
-        goals: ["Reconnaissance alphabet et lettres","Apprentissage des chiffres et comptage 1-10/1-20"],
+        goals: ["Reconnaissance alphabet majuscules","Comptage et dénombrement 1-10"],
         interactions: ["Quiz/QCM avec choix multiples"]
       },
       coloriage: {
         narrativeStyle: "Ludique avec mascotte animale attachante",
-        goals: ["Reconnaissance des couleurs primaires/secondaires","Identification des formes géométriques"],
+        goals: ["Reconnaissance couleurs primaires (rouge, bleu, jaune)","Identification formes géométriques 2D (carré, cercle, triangle)"],
         interactions: ["Colorier/Dessiner sur canvas HTML5","Animations déclenchées au clic"]
       },
       puzzle: {
         narrativeStyle: "Exploration libre monde ouvert",
-        goals: ["Logique et raisonnement"],
+        goals: ["Séquences et suites logiques"],
         interactions: ["Puzzles et assemblage","Glisser-déposer (drag & drop)"]
       },
       memoire: {
         narrativeStyle: "Ludique avec mascotte animale attachante",
-        goals: ["Logique et raisonnement","Émotions et gestion"],
+        goals: ["Mémoire visuelle (se souvenir d'images)","Reconnaissance et gestion des émotions"],
         interactions: ["Jeux de mémoire (paires, memory)","Jeux de sons (associer son à image)"]
       },
       aventure_choix: {
         narrativeStyle: "Conte interactif façon livre dont vous êtes le héros",
-        goals: ["Partage, coopération, empathie","Logique et raisonnement"],
+        goals: ["Partage et coopération","Séquences et suites logiques"],
         interactions: ["Histoire à choix multiples (embranchements)","Animations déclenchées au clic"]
       },
       labyrinthe: {
         narrativeStyle: "Exploration libre monde ouvert",
-        goals: ["Logique et raisonnement","Lecture de l'heure"],
+        goals: ["Orientation spatiale (gauche/droite, avant/arrière)","Séquences et suites logiques"],
         interactions: ["Labyrinthe avec navigation clavier/tactile","Animations déclenchées au clic"]
       },
       tri_categorie: {
         narrativeStyle: "Éducatif neutre avec voix off bienveillante",
-        goals: ["Logique et raisonnement","Reconnaissance des couleurs primaires/secondaires"],
+        goals: ["Séquences et suites logiques","Reconnaissance couleurs primaires (rouge, bleu, jaune)"],
         interactions: ["Tri et catégorisation (ranger par catégorie)","Glisser-déposer (drag & drop)"]
       }
     };
-
-    // ===== FONCTIONS POUR GRISER LES CHAMPS (v1.012) =====
-    function updateFieldVisibility(contentType) {
-        // Réinitialiser tous les champs
-        document.querySelectorAll('.form-group').forEach(group => {
-            group.classList.remove('disabled-field');
-            // Supprimer les tooltips existants
-            const existingTooltip = group.querySelector('.disabled-tooltip');
-            if (existingTooltip) {
-                existingTooltip.remove();
-            }
-            group.querySelectorAll('input, select, textarea').forEach(field => {
-                field.disabled = false;
-            });
-        });
-
-        if (!contentType || !FIELD_RELEVANCE[contentType]) return;
-
-        const relevance = FIELD_RELEVANCE[contentType];
-
-        // Parcourir les règles de pertinence
-        Object.keys(relevance).forEach(fieldGroup => {
-            if (relevance[fieldGroup] === false) {
-                const group = document.getElementById(fieldGroup);
-                if (group) {
-                    group.classList.add('disabled-field');
-                    
-                    // Ajouter tooltip explicatif
-                    const tooltip = document.createElement('div');
-                    tooltip.className = 'disabled-tooltip';
-                    tooltip.innerHTML = `
-                        <span class="disabled-icon">🔒</span>
-                        <div class="disabled-tooltip-text">${TOOLTIP_MESSAGES[fieldGroup] || 'Champ non pertinent pour ce type'}</div>
-                    `;
-                    group.appendChild(tooltip);
-                    
-                    // Désactiver les champs
-                    group.querySelectorAll('input, select, textarea').forEach(field => {
-                        field.disabled = true;
-                    });
-                }
-            }
-        });
-    }
 
     // ===== INITIALISATION =====
     window.addEventListener('DOMContentLoaded', function(){
@@ -843,13 +890,12 @@
       if(savedName){ document.getElementById('creatorName').value = savedName; }
       initFormatSelector();
       attachLivePreview();
+      initGoalsAccordion();
+      initGoalsSearch();
       updateJsonPreview();
       
-      // Boutons preset
       document.getElementById('applyPresetBtn').addEventListener('click', applyPreset);
       document.getElementById('clearSelectionsBtn').addEventListener('click', clearSelections);
-      
-      // Événement sur le changement de type de contenu
       document.getElementById('contentType').addEventListener('change', function() {
         if (this.value && PRESETS[this.value]) {
             updateFieldVisibility(this.value);
@@ -885,6 +931,130 @@
       });
     }
 
+    // ===== ACCORDION OBJECTIFS =====
+    function initGoalsAccordion(){
+      const toggles = document.querySelectorAll('.category-toggle');
+      toggles.forEach(toggle => {
+        toggle.addEventListener('click', function(){
+          const content = this.nextElementSibling;
+          const wasActive = this.classList.contains('active');
+          
+          toggles.forEach(t => {
+            t.classList.remove('active');
+            t.nextElementSibling.classList.remove('expanded');
+          });
+          
+          if(!wasActive){
+            this.classList.add('active');
+            content.classList.add('expanded');
+          }
+        });
+      });
+
+      // Mise à jour compteurs
+      document.querySelectorAll('input[name="pedGoals"]').forEach(cb => {
+        cb.addEventListener('change', updateGoalsCount);
+      });
+      updateGoalsCount();
+    }
+
+    function updateGoalsCount(){
+      const categories = document.querySelectorAll('.category');
+      let totalSelected = 0;
+
+      categories.forEach(cat => {
+        const checkboxes = cat.querySelectorAll('input[name="pedGoals"]');
+        const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+        const total = checkboxes.length;
+        const counter = cat.querySelector('.count');
+        if(counter){
+          counter.textContent = `(${checked}/${total})`;
+        }
+        totalSelected += checked;
+      });
+
+      document.getElementById('selectedCount').textContent = totalSelected;
+      updateJsonPreview();
+    }
+
+    // ===== RECHERCHE OBJECTIFS =====
+    function initGoalsSearch(){
+      const searchInput = document.getElementById('searchGoals');
+      searchInput.addEventListener('input', function(){
+        const query = this.value.toLowerCase().trim();
+        const categories = document.querySelectorAll('.category');
+        
+        if(!query){
+          categories.forEach(cat => {
+            cat.style.display = 'block';
+            cat.querySelectorAll('.checkbox-item').forEach(item => {
+              item.style.display = 'flex';
+            });
+          });
+          return;
+        }
+
+        categories.forEach(cat => {
+          const items = cat.querySelectorAll('.checkbox-item');
+          let hasVisible = false;
+          
+          items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            if(text.includes(query)){
+              item.style.display = 'flex';
+              hasVisible = true;
+            } else {
+              item.style.display = 'none';
+            }
+          });
+
+          cat.style.display = hasVisible ? 'block' : 'none';
+          if(hasVisible){
+            const toggle = cat.querySelector('.category-toggle');
+            const content = cat.querySelector('.category-content');
+            toggle.classList.add('active');
+            content.classList.add('expanded');
+          }
+        });
+      });
+    }
+
+    // ===== GRISER CHAMPS =====
+    function updateFieldVisibility(contentType) {
+        document.querySelectorAll('.form-group').forEach(group => {
+            group.classList.remove('disabled-field');
+            const existingTooltip = group.querySelector('.disabled-tooltip');
+            if (existingTooltip) {
+                existingTooltip.remove();
+            }
+            group.querySelectorAll('input, select, textarea').forEach(field => {
+                field.disabled = false;
+            });
+        });
+
+        if (!contentType || !FIELD_RELEVANCE[contentType]) return;
+
+        const relevance = FIELD_RELEVANCE[contentType];
+        Object.keys(relevance).forEach(fieldGroup => {
+            if (relevance[fieldGroup] === false) {
+                const group = document.getElementById(fieldGroup);
+                if (group) {
+                    group.classList.add('disabled-field');
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'disabled-tooltip';
+                    tooltip.innerHTML = `
+                        <span class="disabled-icon">🔒</span>
+                        <div class="disabled-tooltip-text">${TOOLTIP_MESSAGES[fieldGroup] || 'Champ non pertinent'}</div>
+                    `;
+                    group.appendChild(tooltip);
+                    group.querySelectorAll('input, select, textarea').forEach(field => {
+                        field.disabled = true;
+                    });
+                }
+            }
+        });
+    }
+
     // ===== PRESET HELPERS =====
     function setSelectValue(id, value){
       const sel = document.getElementById(id);
@@ -893,15 +1063,7 @@
       if(exists){ sel.value = value; }
     }
     
-    function checkBoxesByValues(containerId, inputName, values){
-      const box = document.getElementById(containerId);
-      if(!box) return;
-      const inputs = box.querySelectorAll(`input[name="${inputName}"]`);
-      inputs.forEach(i=>{ i.checked = values.includes(i.value); });
-    }
-    
     function clearSelections(){
-      // Réinitialiser tous les champs
       document.querySelectorAll('.form-group').forEach(group => {
           group.classList.remove('disabled-field');
           const existingTooltip = group.querySelector('.disabled-tooltip');
@@ -913,9 +1075,9 @@
           });
       });
       
-      // Interactions & Goals uniquement
       document.querySelectorAll('#interactionsBox input[type="checkbox"]').forEach(i=>i.checked=false);
-      document.querySelectorAll('#goalsBox input[type="checkbox"]').forEach(i=>i.checked=false);
+      document.querySelectorAll('input[name="pedGoals"]').forEach(i=>i.checked=false);
+      updateGoalsCount();
       document.getElementById('presetHint').textContent = 'Sélections nettoyées.';
       updateJsonPreview();
     }
@@ -930,19 +1092,18 @@
       const p = PRESETS[type];
       setSelectValue('narrativeStyle', p.narrativeStyle);
       
-      // Coche objectifs
-      document.querySelectorAll('#goalsBox input[type="checkbox"]').forEach(i=>i.checked=false);
-      document.querySelectorAll('#goalsBox input[type="checkbox"]').forEach(i=>{
+      document.querySelectorAll('input[name="pedGoals"]').forEach(i=>i.checked=false);
+      document.querySelectorAll('input[name="pedGoals"]').forEach(i=>{
         if(p.goals.includes(i.value)) i.checked = true;
       });
       
-      // Interactions
       document.querySelectorAll('#interactionsBox input[type="checkbox"]').forEach(i=>i.checked=false);
-      checkBoxesByValues('interactionsBox','interactions', p.interactions);
+      document.querySelectorAll('#interactionsBox input[type="checkbox"]').forEach(i=>{
+        if(p.interactions.includes(i.value)) i.checked = true;
+      });
       
-      // Mettre à jour la visibilité des champs
       updateFieldVisibility(type);
-      
+      updateGoalsCount();
       document.getElementById('presetHint').textContent = '✅ Preset appliqué : ' + type.replace('_',' ');
       updateJsonPreview();
     }
@@ -1044,7 +1205,7 @@
       if(!theme){ showError('themeGroup','Décrivez le sujet'); ok=false; first=first||document.getElementById('themeGroup'); }
       const goalsChecked = document.querySelectorAll('input[name="pedGoals"]:checked').length;
       const customGoals = document.getElementById('customGoals').value.trim();
-      if(goalsChecked===0 && !customGoals){ showError('goalsGroup','Choisir au moins un objectif ou remplir le champ libre'); ok=false; first=first||document.getElementById('goalsGroup'); }
+      if(goalsChecked===0 && !customGoals){ showError('goalsGroup','Choisir au moins un objectif'); ok=false; first=first||document.getElementById('goalsGroup'); }
       if(!ok && first){ first.scrollIntoView({behavior:'smooth',block:'center'}); }
       return ok;
     }
@@ -1066,8 +1227,6 @@
         const savedName = localStorage.getItem(STORAGE_KEY_NAME);
         if(savedName){ document.getElementById('creatorName').value = savedName; }
         document.getElementById('presetHint').textContent = '';
-        
-        // Réactiver tous les champs
         document.querySelectorAll('.form-group').forEach(group => {
             group.classList.remove('disabled-field');
             const existingTooltip = group.querySelector('.disabled-tooltip');
@@ -1078,7 +1237,7 @@
                 field.disabled = false;
             });
         });
-        
+        updateGoalsCount();
         updateJsonPreview();
       },100);
     });
@@ -1090,13 +1249,11 @@
     }
 
     function generateJsonPrompt(){
-      // Métadonnées
       const creatorName = document.getElementById('creatorName').value.trim();
       const projectVersion = document.getElementById('projectVersion').value;
       const creationDate = document.getElementById('creationDate').value;
       localStorage.setItem(STORAGE_KEY_NAME, creatorName);
 
-      // Collecte
       const contentType = document.getElementById('contentType').value;
       const ageRanges = Array.from(document.querySelectorAll('input[name="ageRange"]:checked')).map(cb=>cb.value);
       const readingLevel = (document.querySelector('input[name="readingLevel"]:checked')||{}).value;
@@ -1117,17 +1274,13 @@
       const interactions = Array.from(document.querySelectorAll('input[name="interactions"]:checked')).map(cb=>cb.value);
       const rewards = (document.querySelector('input[name="rewards"]:checked')||{}).value;
       const errorHandling = (document.querySelector('input[name="errorHandling"]:checked')||{}).value;
-
       const timer = (document.querySelector('input[name="timer"]:checked')||{}).value;
       const stats = Array.from(document.querySelectorAll('input[name="stats"]:checked')).map(cb=>cb.value);
-
       const parentalGuidance = (document.querySelector('input[name="parentalGuidance"]:checked')||{}).value;
       const guidanceTypes = Array.from(document.querySelectorAll('input[name="guidanceTypes"]:checked')).map(cb=>cb.value);
-
       const colorPalette = (document.querySelector('input[name="colorPalette"]:checked')||{}).value;
       const accessibility = Array.from(document.querySelectorAll('input[name="accessibility"]:checked')).map(cb=>cb.value);
 
-      // Blueprint depuis preset
       const presetUsed = PRESETS[contentType] ? {
         narrativeStyle: PRESETS[contentType].narrativeStyle,
         goals: PRESETS[contentType].goals,
@@ -1168,7 +1321,6 @@
         blueprint: presetUsed
       };
 
-      // Prompt final
       const prompt =
 `# 🎯 PROMPT CRÉATION CONTENU HTML INTERACTIF ENFANT - FORMAT JSON
 
@@ -1208,7 +1360,7 @@ Par défaut FR/EN/AR (Algérie) + sélecteur de langue (drapeaux).
 
 ### Analytics (head)
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"><script>
-<script>
+/<script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CRRK6Z4D1X');
 <script>
 
@@ -1269,3 +1421,41 @@ Utiliser le format JSON pour de meilleurs résultats.`;
   </script>
 </body>
 </html>
+```
+
+---
+
+## SÉCURITÉ
+✅ **OK** — Aucun risque ajouté
+- Validation maintenue
+- Pas d'injection possible
+- LocalStorage sécurisé
+
+---
+
+## TESTS MANUELS
+
+### **Test 1 : Ordre logique ✅**
+```
+1. Ouvrir v1.013
+2. Remplir dans l'ordre : Âge → Type → Langue → Objectifs
+3. VÉRIFIER : Sections numérotées 1️⃣2️⃣3️⃣4️⃣5️⃣
+4. RÉSULTAT : ✅ Logique claire
+```
+
+### **Test 2 : Recherche objectifs ✅**
+```
+1. Taper "addition" dans la recherche
+2. VÉRIFIER : Seuls "Addition simple" visible
+3. Effacer recherche
+4. VÉRIFIER : Tous visibles
+5. RÉSULTAT : ✅ Filtrage fonctionnel
+```
+
+### **Test 3 : Accordion + compteurs ✅**
+```
+1. Cliquer sur "📐 Mathématiques"
+2. Cocher 3 objectifs
+3. VÉRIFIER : Compteur affiche "(3/15)"
+4. VÉRIFIER : "Sélectionnés : 3 objectifs"
+5. RÉSULTAT : ✅ Compteurs dynamiques

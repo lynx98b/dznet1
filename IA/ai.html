@@ -1,6 +1,6 @@
 <!-- ==========================================================
  Générateur de Prompt - Contenu HTML Enfant
- Version : v1.011 (intégration du sélecteur Type de contenu + presets auto + champs grisés)
+ Version : v1.012 (logique de grisage corrigée + tooltips)
 ========================================================== -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,7 +17,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Générateur de prompt pour contenu HTML enfant - Version professionnelle" />
-  <title>Générateur Prompt Contenu Enfant - v1.011</title>
+  <title>Générateur Prompt Contenu Enfant - v1.012</title>
 
   <style>
     /* ===== VARIABLES & RESET ===== */
@@ -116,10 +116,11 @@
     .preset-hint{display:inline-block;margin-left:8px;font-size:12px;color:#2d6cdf;background:#E8F0FE;border:1px solid #BFD1FF;border-radius:999px;padding:2px 8px}
     .tiny{font-size:12px;opacity:.8}
 
-    /* Styles pour champs grisés */
+    /* Styles pour champs grisés avec tooltip */
     .form-group.disabled-field {
         opacity: 0.6;
         pointer-events: none;
+        position: relative;
     }
 
     .form-group.disabled-field label {
@@ -142,6 +143,61 @@
         background: #f8f9fa;
         border-color: #ecf0f1;
         cursor: not-allowed;
+    }
+
+    /* Tooltip pour champs grisés */
+    .disabled-tooltip {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(149, 165, 166, 0.05);
+        border-radius: 8px;
+        border: 2px dashed #bdc3c7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: help;
+        z-index: 1;
+    }
+
+    .disabled-tooltip-text {
+        display: none;
+        position: absolute;
+        top: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #34495e;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 13px;
+        white-space: nowrap;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 10;
+    }
+
+    .disabled-tooltip-text::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 8px solid #34495e;
+    }
+
+    .disabled-tooltip:hover .disabled-tooltip-text {
+        display: block;
+    }
+
+    .disabled-icon {
+        font-size: 24px;
+        opacity: 0.4;
     }
 
     @media (max-width:768px){
@@ -167,7 +223,7 @@
       <button class="help-btn" onclick="openHelpModal()">
         <span>❓</span><span>Guide Parents</span>
       </button>
-      <span class="version-badge">v1.011</span>
+      <span class="version-badge">v1.012</span>
       <h1>🎨 Générateur de Prompt - Contenu HTML Enfant</h1>
       <p>Créez des expériences éducatives interactives sécurisées et cohérentes</p>
       <p class="tiny">✅ JSON optimisé | 🔒 RGPD/COPPA | ♿ Accessible</p>
@@ -178,8 +234,8 @@
       <div class="modal-content">
         <button class="modal-close" onclick="closeHelpModal()">×</button>
         <h2>📘 Guide rapide</h2>
-        <p>Choisissez le <strong>Type de contenu</strong> et cliquez sur <strong>Appliquer le preset</strong> pour pré-remplir les interactions, objectifs et style. Puis, générez le prompt.</p>
-        <div class="info-banner"><strong>Astuce :</strong> Les champs non pertinents sont automatiquement grisés selon le type de contenu.</div>
+        <p>Choisissez le <strong>Type de contenu</strong> et cliquez sur <strong>Appliquer le preset</strong> pour pré-remplir les interactions, objectifs et style.</p>
+        <div class="info-banner"><strong>✨ Nouveau v1.012 :</strong> Les champs non pertinents sont automatiquement grisés avec une icône explicative au survol.</div>
         <button class="btn-primary" onclick="closeHelpModal()" style="margin-top: 16px; width: 100%;">OK</button>
       </div>
     </div>
@@ -218,13 +274,13 @@
           <div class="metadata-grid">
             <div class="form-group" style="margin-bottom:0;">
               <label for="creatorName" class="required">Votre nom / Prénom</label>
-              <input type="text" id="creatorName" placeholder="Ex: Marie Dupont" required>
+              <input type="text" id="creatorName" placeholder="Ex: Marie Dupont" required maxlength="100">
               <div class="error-message">❌ Champ obligatoire</div>
               <span class="helper-text">Sauvegardé automatiquement</span>
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <label for="projectVersion">Version du projet</label>
-              <input type="text" id="projectVersion" value="v1.011" placeholder="v1.011">
+              <input type="text" id="projectVersion" value="v1.012" placeholder="v1.012">
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <label>Date de création</label>
@@ -553,45 +609,160 @@
 
   <script>
     // ===== VERSION & CONFIG =====
-    const VERSION = "v1.011";
+    const VERSION = "v1.012";
     const STORAGE_KEY_NAME = 'prompt_generator_creator_name';
     let currentFormat = 'json';
+
+    // ===== MATRICE DE PERTINENCE (v1.012) =====
+    const FIELD_RELEVANCE = {
+      histoire: {
+        readingGroup: true,
+        narrativeStyleGroup: true,
+        additionalContextGroup: true,
+        timerGroup: false,
+        statsGroup: false,
+        colorPaletteGroup: true
+      },
+      jeu_educatif: {
+        readingGroup: true,
+        narrativeStyleGroup: true,
+        additionalContextGroup: true,
+        timerGroup: true,
+        statsGroup: true,
+        colorPaletteGroup: true
+      },
+      encyclopedie: {
+        readingGroup: true,
+        narrativeStyleGroup: true,
+        additionalContextGroup: true,
+        rewardsGroup: true,
+        errorHandlingGroup: true,
+        timerGroup: false,
+        statsGroup: false,
+        colorPaletteGroup: true
+      },
+      exercice: {
+        readingGroup: true,
+        narrativeStyleGroup: true,
+        additionalContextGroup: true,
+        timerGroup: true,
+        statsGroup: true,
+        colorPaletteGroup: true
+      },
+      lecon_vie: {
+        readingGroup: true,
+        narrativeStyleGroup: true,
+        additionalContextGroup: true,
+        timerGroup: false,
+        statsGroup: false,
+        colorPaletteGroup: true
+      },
+      quiz: {
+        readingGroup: true,
+        narrativeStyleGroup: true,
+        additionalContextGroup: true,
+        timerGroup: true,
+        statsGroup: true,
+        colorPaletteGroup: true
+      },
+      coloriage: {
+        readingGroup: true,
+        narrativeStyleGroup: true,
+        additionalContextGroup: true,
+        errorHandlingGroup: false,
+        timerGroup: false,
+        statsGroup: true,
+        colorPaletteGroup: true
+      },
+      puzzle: {
+        readingGroup: true,
+        narrativeStyleGroup: true,
+        additionalContextGroup: true,
+        timerGroup: true,
+        statsGroup: true,
+        colorPaletteGroup: true
+      },
+      memoire: {
+        readingGroup: true,
+        narrativeStyleGroup: true,
+        additionalContextGroup: true,
+        timerGroup: true,
+        statsGroup: true,
+        colorPaletteGroup: true
+      },
+      aventure_choix: {
+        readingGroup: true,
+        narrativeStyleGroup: true,
+        additionalContextGroup: true,
+        timerGroup: false,
+        statsGroup: true,
+        colorPaletteGroup: true
+      },
+      labyrinthe: {
+        readingGroup: true,
+        narrativeStyleGroup: true,
+        additionalContextGroup: true,
+        timerGroup: true,
+        statsGroup: true,
+        colorPaletteGroup: true
+      },
+      tri_categorie: {
+        readingGroup: true,
+        narrativeStyleGroup: true,
+        additionalContextGroup: true,
+        timerGroup: true,
+        statsGroup: true,
+        colorPaletteGroup: true
+      }
+    };
+
+    // ===== MESSAGES TOOLTIPS =====
+    const TOOLTIP_MESSAGES = {
+      timerGroup: "⏱️ Chronomètre non pertinent pour ce type de contenu (immersion narrative)",
+      statsGroup: "📊 Statistiques non recommandées pour ce type (pas de notion de score/performance)",
+      colorPaletteGroup: "🎨 Palette de couleurs toujours nécessaire pour l'interface utilisateur",
+      errorHandlingGroup: "❌ Gestion d'erreur non applicable (pas d'exercice à valider)",
+      rewardsGroup: "🎁 Système de récompense toujours utile pour l'engagement",
+      narrativeStyleGroup: "📖 Style narratif pertinent pour tous les types de contenu",
+      readingGroup: "📚 Niveau de lecture important même pour contenu visuel (instructions)",
+      additionalContextGroup: "💬 Précisions toujours utiles pour personnaliser le contenu"
+    };
 
     // ===== PRESETS PAR TYPE =====
     const PRESETS = {
       histoire: {
         narrativeStyle: "Conte interactif façon livre dont vous êtes le héros",
-        goals: ["Émotions et gestion","Valeurs sociales"],
+        goals: ["Émotions et gestion","Partage, coopération, empathie"],
         interactions: ["Histoire à choix multiples (embranchements)","Animations déclenchées au clic"]
       },
       jeu_educatif: {
         narrativeStyle: "Jeu vidéo éducatif avec niveaux progressifs",
-        goals: ["Logique et raisonnement","Chiffres/comptage"],
+        goals: ["Logique et raisonnement","Apprentissage des chiffres et comptage 1-10/1-20"],
         interactions: ["Quiz/QCM avec choix multiples","Glisser-déposer (drag & drop)","Puzzles et assemblage"]
       },
       encyclopedie: {
         narrativeStyle: "Documentaire style reportage enfant (type C'est pas sorcier)",
-        goals: ["Alphabet","Corps humain"],
+        goals: ["Reconnaissance alphabet et lettres","Parties du corps humain"],
         interactions: ["Quiz/QCM avec choix multiples","Animations déclenchées au clic"]
       },
       exercice: {
         narrativeStyle: "Éducatif neutre avec voix off bienveillante",
-        goals: ["Chiffres/comptage","Logique et raisonnement"],
+        goals: ["Apprentissage des chiffres et comptage 1-10/1-20","Logique et raisonnement"],
         interactions: ["Quiz/QCM avec choix multiples","Puzzles et assemblage"]
       },
       lecon_vie: {
         narrativeStyle: "Ludique avec mascotte animale attachante",
-        goals: ["Valeurs sociales","Émotions et gestion"],
+        goals: ["Partage, coopération, empathie","Émotions et gestion"],
         interactions: ["Histoire à choix multiples (embranchements)","Animations déclenchées au clic"]
       },
       quiz: {
         narrativeStyle: "Éducatif neutre avec voix off bienveillante",
-        goals: ["Alphabet","Chiffres/comptage"],
+        goals: ["Reconnaissance alphabet et lettres","Apprentissage des chiffres et comptage 1-10/1-20"],
         interactions: ["Quiz/QCM avec choix multiples"]
       },
       coloriage: {
         narrativeStyle: "Ludique avec mascotte animale attachante",
-        goals: ["Reconnaissance des couleurs primaires/secondaires","Formes"],
+        goals: ["Reconnaissance des couleurs primaires/secondaires","Identification des formes géométriques"],
         interactions: ["Colorier/Dessiner sur canvas HTML5","Animations déclenchées au clic"]
       },
       puzzle: {
@@ -606,7 +777,7 @@
       },
       aventure_choix: {
         narrativeStyle: "Conte interactif façon livre dont vous êtes le héros",
-        goals: ["Valeurs sociales","Logique et raisonnement"],
+        goals: ["Partage, coopération, empathie","Logique et raisonnement"],
         interactions: ["Histoire à choix multiples (embranchements)","Animations déclenchées au clic"]
       },
       labyrinthe: {
@@ -616,49 +787,53 @@
       },
       tri_categorie: {
         narrativeStyle: "Éducatif neutre avec voix off bienveillante",
-        goals: ["Tri/Catégorisation","Reconnaissance des couleurs primaires/secondaires"],
+        goals: ["Logique et raisonnement","Reconnaissance des couleurs primaires/secondaires"],
         interactions: ["Tri et catégorisation (ranger par catégorie)","Glisser-déposer (drag & drop)"]
       }
     };
 
-    // ===== FONCTIONS POUR GRISER LES CHAMPS =====
+    // ===== FONCTIONS POUR GRISER LES CHAMPS (v1.012) =====
     function updateFieldVisibility(contentType) {
         // Réinitialiser tous les champs
         document.querySelectorAll('.form-group').forEach(group => {
             group.classList.remove('disabled-field');
+            // Supprimer les tooltips existants
+            const existingTooltip = group.querySelector('.disabled-tooltip');
+            if (existingTooltip) {
+                existingTooltip.remove();
+            }
             group.querySelectorAll('input, select, textarea').forEach(field => {
                 field.disabled = false;
             });
         });
 
-        // Définir les champs à griser par type de contenu
-        const disabledFields = {
-            histoire: ['timerGroup', 'statsGroup', 'colorPaletteGroup'],
-            jeu_educatif: ['additionalContextGroup'],
-            encyclopedie: ['rewardsGroup', 'errorHandlingGroup'],
-            exercice: ['narrativeStyleGroup', 'additionalContextGroup'],
-            lecon_vie: ['timerGroup', 'statsGroup'],
-            quiz: ['colorPaletteGroup', 'additionalContextGroup'],
-            coloriage: ['readingGroup', 'timerGroup'],
-            puzzle: ['narrativeStyleGroup', 'additionalContextGroup'],
-            memoire: ['narrativeStyleGroup'],
-            aventure_choix: ['timerGroup', 'statsGroup'],
-            labyrinthe: ['narrativeStyleGroup'],
-            tri_categorie: ['narrativeStyleGroup', 'additionalContextGroup']
-        };
+        if (!contentType || !FIELD_RELEVANCE[contentType]) return;
 
-        // Griser les champs spécifiques
-        if (disabledFields[contentType]) {
-            disabledFields[contentType].forEach(fieldGroup => {
+        const relevance = FIELD_RELEVANCE[contentType];
+
+        // Parcourir les règles de pertinence
+        Object.keys(relevance).forEach(fieldGroup => {
+            if (relevance[fieldGroup] === false) {
                 const group = document.getElementById(fieldGroup);
                 if (group) {
                     group.classList.add('disabled-field');
+                    
+                    // Ajouter tooltip explicatif
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'disabled-tooltip';
+                    tooltip.innerHTML = `
+                        <span class="disabled-icon">🔒</span>
+                        <div class="disabled-tooltip-text">${TOOLTIP_MESSAGES[fieldGroup] || 'Champ non pertinent pour ce type'}</div>
+                    `;
+                    group.appendChild(tooltip);
+                    
+                    // Désactiver les champs
                     group.querySelectorAll('input, select, textarea').forEach(field => {
                         field.disabled = true;
                     });
                 }
-            });
-        }
+            }
+        });
     }
 
     // ===== INITIALISATION =====
@@ -702,7 +877,10 @@
         el.addEventListener('input',updateJsonPreview);
       });
       document.getElementById('creatorName').addEventListener('blur',function(){
-        const name = this.value.trim(); if(name){ localStorage.setItem(STORAGE_KEY_NAME,name); }
+        const name = this.value.trim(); 
+        if(name && name.length <= 100){ 
+          localStorage.setItem(STORAGE_KEY_NAME,name); 
+        }
         updateJsonPreview();
       });
     }
@@ -726,6 +904,10 @@
       // Réinitialiser tous les champs
       document.querySelectorAll('.form-group').forEach(group => {
           group.classList.remove('disabled-field');
+          const existingTooltip = group.querySelector('.disabled-tooltip');
+          if (existingTooltip) {
+              existingTooltip.remove();
+          }
           group.querySelectorAll('input, select, textarea').forEach(field => {
               field.disabled = false;
           });
@@ -749,24 +931,9 @@
       setSelectValue('narrativeStyle', p.narrativeStyle);
       
       // Coche objectifs
-      const goalLabels = {
-        "Reconnaissance des couleurs primaires/secondaires":"Reconnaissance des couleurs primaires/secondaires",
-        "Formes":"Identification des formes géométriques",
-        "Chiffres/comptage":"Apprentissage des chiffres et comptage 1-10/1-20",
-        "Alphabet":"Reconnaissance alphabet et lettres",
-        "Animaux/cris":"Découverte des animaux et leurs cris",
-        "Corps humain":"Parties du corps humain",
-        "Émotions et gestion":"Reconnaissance et gestion des émotions",
-        "Lecture de l'heure":"Lecture de l'heure",
-        "Logique et raisonnement":"Logique et raisonnement",
-        "Valeurs sociales":"Partage, coopération, empathie",
-        "Tri/Catégorisation":"Respect de l'environnement et recyclage"
-      };
-      
-      const mappedGoals = p.goals.map(g => goalLabels[g] || g);
       document.querySelectorAll('#goalsBox input[type="checkbox"]').forEach(i=>i.checked=false);
       document.querySelectorAll('#goalsBox input[type="checkbox"]').forEach(i=>{
-        if(mappedGoals.includes(i.value)) i.checked = true;
+        if(p.goals.includes(i.value)) i.checked = true;
       });
       
       // Interactions
@@ -776,7 +943,7 @@
       // Mettre à jour la visibilité des champs
       updateFieldVisibility(type);
       
-      document.getElementById('presetHint').textContent = 'Preset appliqué : ' + type.replace('_',' ');
+      document.getElementById('presetHint').textContent = '✅ Preset appliqué : ' + type.replace('_',' ');
       updateJsonPreview();
     }
 
@@ -864,7 +1031,12 @@
     function validateForm(){
       clearErrors(); let ok = true; let first = null;
       const creatorName = document.getElementById('creatorName').value.trim();
-      if(!creatorName){ const grp = document.querySelector('#creatorName').closest('.form-group'); grp.classList.add('has-error'); ok=false; first=first||grp; }
+      if(!creatorName || creatorName.length > 100){ 
+        const grp = document.querySelector('#creatorName').closest('.form-group'); 
+        grp.classList.add('has-error'); 
+        ok=false; 
+        first=first||grp; 
+      }
       if(!(document.getElementById('contentType').value)){ showError('contentTypeGroup','Choisissez un type'); ok=false; first=first||document.getElementById('contentTypeGroup'); }
       if(document.querySelectorAll('input[name="ageRange"]:checked').length===0){ showError('ageGroup','Au moins une tranche d\'âge'); ok=false; first=first||document.getElementById('ageGroup'); }
       if(!document.querySelector('input[name="readingLevel"]:checked')){ showError('readingGroup','Niveau de lecture requis'); ok=false; first=first||document.getElementById('readingGroup'); }
@@ -898,6 +1070,10 @@
         // Réactiver tous les champs
         document.querySelectorAll('.form-group').forEach(group => {
             group.classList.remove('disabled-field');
+            const existingTooltip = group.querySelector('.disabled-tooltip');
+            if (existingTooltip) {
+                existingTooltip.remove();
+            }
             group.querySelectorAll('input, select, textarea').forEach(field => {
                 field.disabled = false;
             });
@@ -1032,9 +1208,9 @@ Par défaut FR/EN/AR (Algérie) + sélecteur de langue (drapeaux).
 
 ### Analytics (head)
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"><script>
-/<script>
+<script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CRRK6Z4D1X');
-/script>
+<script>
 
 ### Responsive / anti-débordement
 Feuille distante : https://dznet1.com/assets/css/main.css

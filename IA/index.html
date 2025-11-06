@@ -1349,9 +1349,18 @@ Créer un contenu pédagogique interactif pour **dznet1.com**, totalement **resp
 fetch("https://dznet1.com/intranet/footer.html").then(r=>r.text()).then(h=>{document.getElementById("footer-placeholder").innerHTML=h}).catch(()=>{});
 <script>
 
-### Médias (CDN obligatoire)
-Base : https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/{type}/
-Types: img|wav|video|PUB ; images .png/.jpeg ; sons .mp3 ; vidéos .mp4
+### Médias  
+excemple de structure 
+exemple_page_web/
+│ ma_mage_001.html          ← La page web 
+│ ma_mage_002.html          ← La page web 
+│
+├── images/
+│   └── exemple.jpg   ← Une image d’exemple
+│
+└── audio/
+    └── exemple.wav   ← Un son .wav d’exemple
+    
 Nommage: YYYYMMDD_nom_simplifie.ext
 Générer un tableau (sans HTML) : Élément | FR | EN | AR | Image | Audio FR | Audio EN | Audio AR
 
@@ -1422,4 +1431,4 @@ Utiliser le format JSON pour de meilleurs résultats.`;
 </body>
 </html>
 ```
- 
+  

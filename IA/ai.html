@@ -1349,9 +1349,18 @@ Créer un contenu pédagogique interactif pour **dznet1.com**, totalement **resp
 fetch("https://dznet1.com/intranet/footer.html").then(r=>r.text()).then(h=>{document.getElementById("footer-placeholder").innerHTML=h}).catch(()=>{});
 <script>
 
-### Médias (CDN obligatoire)
-Base : https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/{type}/
-Types: img|wav|video|PUB ; images .png/.jpeg ; sons .mp3 ; vidéos .mp4
+### Médias  
+excemple de structure 
+exemple_page_web/
+│ ma_mage_001.html          ← La page web 
+│ ma_mage_002.html          ← La page web 
+│
+├── images/
+│   └── exemple.jpg   ← Une image d’exemple
+│
+└── audio/
+    └── exemple.wav   ← Un son .wav d’exemple
+    
 Nommage: YYYYMMDD_nom_simplifie.ext
 Générer un tableau (sans HTML) : Élément | FR | EN | AR | Image | Audio FR | Audio EN | Audio AR
 
@@ -1422,40 +1431,4 @@ Utiliser le format JSON pour de meilleurs résultats.`;
 </body>
 </html>
 ```
-
----
-
-## SÉCURITÉ
-✅ **OK** — Aucun risque ajouté
-- Validation maintenue
-- Pas d'injection possible
-- LocalStorage sécurisé
-
----
-
-## TESTS MANUELS
-
-### **Test 1 : Ordre logique ✅**
-```
-1. Ouvrir v1.013
-2. Remplir dans l'ordre : Âge → Type → Langue → Objectifs
-3. VÉRIFIER : Sections numérotées 1️⃣2️⃣3️⃣4️⃣5️⃣
-4. RÉSULTAT : ✅ Logique claire
-```
-
-### **Test 2 : Recherche objectifs ✅**
-```
-1. Taper "addition" dans la recherche
-2. VÉRIFIER : Seuls "Addition simple" visible
-3. Effacer recherche
-4. VÉRIFIER : Tous visibles
-5. RÉSULTAT : ✅ Filtrage fonctionnel
-```
-
-### **Test 3 : Accordion + compteurs ✅**
-```
-1. Cliquer sur "📐 Mathématiques"
-2. Cocher 3 objectifs
-3. VÉRIFIER : Compteur affiche "(3/15)"
-4. VÉRIFIER : "Sélectionnés : 3 objectifs"
-5. RÉSULTAT : ✅ Compteurs dynamiques
+  

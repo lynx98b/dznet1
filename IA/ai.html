@@ -1,6 +1,6 @@
 <!-- ==========================================================
  Générateur de Prompt - Contenu HTML Enfant
- Version : v1.013 (80 objectifs + recherche + réorganisation UX)
+ Version : v1.014 (80 objectifs + recherche + mode test local)
 ========================================================== -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,7 +17,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Générateur de prompt pour contenu HTML enfant - Version professionnelle" />
-  <title>Générateur Prompt Contenu Enfant - v1.013</title>
+  <title>Générateur Prompt Contenu Enfant - v1.014</title>
 
   <style>
     /* ===== VARIABLES & RESET ===== */
@@ -134,7 +134,6 @@
     .preset-hint{display:inline-block;margin-left:8px;font-size:12px;color:#2d6cdf;background:#E8F0FE;border:1px solid #BFD1FF;border-radius:999px;padding:2px 8px}
     .tiny{font-size:12px;opacity:.8}
 
-    /* Styles pour champs grisés */
     .form-group.disabled-field {
         opacity: 0.6;
         pointer-events: none;
@@ -213,17 +212,17 @@
       <button class="help-btn" onclick="openHelpModal()">
         <span>❓</span><span>Guide</span>
       </button>
-      <span class="version-badge">v1.013</span>
+      <span class="version-badge">v1.014</span>
       <h1>🎨 Générateur de Prompt - Contenu HTML Enfant</h1>
       <p>Créez des expériences éducatives interactives sécurisées et cohérentes</p>
-      <p class="tiny">✅ 80 objectifs | 🔍 Recherche | 🎯 UX optimisée</p>
+      <p class="tiny">✅ 80 objectifs | 🔍 Recherche | 🧪 Mode test local</p>
     </header>
 
     <!-- MODAL AIDE -->
     <div id="helpModal" class="modal">
       <div class="modal-content">
         <button class="modal-close" onclick="closeHelpModal()">×</button>
-        <h2>📘 Guide rapide v1.013</h2>
+        <h2>📘 Guide rapide v1.014</h2>
         <div class="info-banner">
           <strong>Ordre logique :</strong>
           <ol style="margin:10px 0 0 20px;line-height:1.8">
@@ -234,6 +233,8 @@
             <li>5️⃣ Personnaliser le reste</li>
           </ol>
         </div>
+        <h3>🧪 Mode test local</h3>
+        <p>Coché par défaut : génère des chemins locaux (/images/, /audio/) pour tester sur PC. Décoché : utilise les CDN distants.</p>
         <h3>🔍 Recherche d'objectifs</h3>
         <p>Tapez un mot-clé (ex: "addition", "alphabet") pour filtrer les 80 objectifs pédagogiques.</p>
         <button class="btn-primary" onclick="closeHelpModal()" style="margin-top: 16px; width: 100%;">OK</button>
@@ -271,6 +272,20 @@
         <!-- MÉTADONNÉES -->
         <div class="metadata-section">
           <h3 style="color:var(--warning);margin-bottom:15px;">📝 Informations du Projet</h3>
+          
+          <!-- CHECKBOX VERSION TEST -->
+          <div class="form-group" style="margin-bottom:20px;background:#E8F4F8;padding:15px;border-radius:8px;border:2px solid var(--info);">
+            <label class="checkbox-item" style="margin:0;cursor:pointer;background:transparent;">
+              <input type="checkbox" id="testMode" name="testMode" checked style="width:24px;height:24px;">
+              <span style="font-weight:700;color:var(--info);flex:1;">
+                🧪 Version test (chemins locaux)
+                <span class="helper-text" style="display:block;margin-top:5px;font-weight:400;font-style:italic;">
+                  Coché : médias dans /images/ et /audio/ pour test PC local. Décoché : utilise les CDN distants. Fallback automatique si média introuvable.
+                </span>
+              </span>
+            </label>
+          </div>
+
           <div class="metadata-grid">
             <div class="form-group" style="margin-bottom:0;">
               <label for="creatorName" class="required">Votre nom / Prénom</label>
@@ -280,7 +295,7 @@
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <label for="projectVersion">Version du projet</label>
-              <input type="text" id="projectVersion" value="v1.013" placeholder="v1.013">
+              <input type="text" id="projectVersion" value="v1.014" placeholder="v1.014">
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <label>Date de création</label>
@@ -793,9 +808,10 @@
 
   <script>
     // ===== VERSION & CONFIG =====
-    const VERSION = "v1.013";
+    const VERSION = "v1.014";
     const STORAGE_KEY_NAME = 'prompt_generator_creator_name';
     let currentFormat = 'json';
+    let testModeEnabled = true;
 
     // ===== MATRICE DE PERTINENCE =====
     const FIELD_RELEVANCE = {
@@ -894,6 +910,12 @@
       initGoalsSearch();
       updateJsonPreview();
       
+      document.getElementById('testMode').addEventListener('change', function(){
+        testModeEnabled = this.checked;
+        updateJsonPreview();
+        console.log(`🧪 Mode test ${testModeEnabled ? 'ACTIVÉ (local)' : 'DÉSACTIVÉ (CDN)'}`);
+      });
+      
       document.getElementById('applyPresetBtn').addEventListener('click', applyPreset);
       document.getElementById('clearSelectionsBtn').addEventListener('click', clearSelections);
       document.getElementById('contentType').addEventListener('change', function() {
@@ -951,7 +973,6 @@
         });
       });
 
-      // Mise à jour compteurs
       document.querySelectorAll('input[name="pedGoals"]').forEach(cb => {
         cb.addEventListener('change', updateGoalsCount);
       });
@@ -1130,13 +1151,15 @@
       const creatorName = (document.getElementById('creatorName').value||'').trim() || "Votre nom";
       const theme = (document.getElementById('theme').value||'').trim() || "Thème du projet";
       const contentType = document.getElementById('contentType').value || "non défini";
+      const testMode = document.getElementById('testMode').checked;
 
       const jsonPreview = {
         metadata:{
           creator: creatorName,
           version: document.getElementById('projectVersion').value,
           date: document.getElementById('creationDate').value,
-          generator: `Formulaire ${VERSION}`
+          generator: `Formulaire ${VERSION}`,
+          testMode: testMode
         },
         target:{
           age: getCheckedValues('ageRange'),
@@ -1227,6 +1250,8 @@
         const savedName = localStorage.getItem(STORAGE_KEY_NAME);
         if(savedName){ document.getElementById('creatorName').value = savedName; }
         document.getElementById('presetHint').textContent = '';
+        document.getElementById('testMode').checked = true;
+        testModeEnabled = true;
         document.querySelectorAll('.form-group').forEach(group => {
             group.classList.remove('disabled-field');
             const existingTooltip = group.querySelector('.disabled-tooltip');
@@ -1252,6 +1277,7 @@
       const creatorName = document.getElementById('creatorName').value.trim();
       const projectVersion = document.getElementById('projectVersion').value;
       const creationDate = document.getElementById('creationDate').value;
+      const testMode = document.getElementById('testMode').checked;
       localStorage.setItem(STORAGE_KEY_NAME, creatorName);
 
       const contentType = document.getElementById('contentType').value;
@@ -1288,7 +1314,7 @@
       } : null;
 
       const promptData = {
-        metadata: { creator: creatorName, projectVersion, creationDate, generator: `Formulaire ${VERSION}` },
+        metadata: { creator: creatorName, projectVersion, creationDate, generator: `Formulaire ${VERSION}`, testMode },
         targetAudience: { ageRanges, readingLevel, supervision },
         language: { languages, layout: languageLayout },
         content: { type: contentType, theme, narrativeStyle, educationalGoals: allGoals, additionalContext: additionalContext || undefined },
@@ -1314,9 +1340,8 @@
         },
         workflow: {
           step1: "Analyze this JSON specification",
-          step2: "Propose a detailed plan in TXT format",
-          step3: "Wait for explicit approval before generating HTML",
-          step4: "Generate complete standalone HTML file after approval"
+          step2: "Propose small plan in TXT format",
+          step3: "generating HTML"          
         },
         blueprint: presetUsed
       };
@@ -1326,6 +1351,20 @@
 
 ## OBJECTIF
 Créer un contenu pédagogique interactif pour **dznet1.com**, totalement **responsive**, **accessible**, **SEO**, compatible **PC/Mobile** (sans débordement), avec **zone publicitaire**.
+
+${testMode ? `
+⚠️ **MODE TEST ACTIVÉ** ⚠️
+- Chemins médias : /images/ et /audio/ (locaux) pour test PC
+- Structure attendue : dossier /images/ et /audio/ à côté du HTML
+- Fallback automatique : si média introuvable → affiche le nom du fichier
+  Exemple: <img src="images/ALGER.jpg" alt="ALGER.jpg" onerror="this.outerHTML='<span>❌ ALGER.jpg</span>'">
+- Pour audio : <audio src="audio/exemple.wav" onerror="this.outerHTML='<span>🔇 exemple.wav</span>'"></audio>
+- Génère un tableau de médias attendus (sans HTML) : Élément | FR | EN | AR | Image | Audio FR | Audio EN | Audio AR
+` : `
+🌐 **MODE PRODUCTION**
+- Utiliser les CDN distants (https://dznet1.com/cdn-cgi/image/...)
+- Nommage: YYYYMMDD_nom_simplifie.ext
+`}
 
 ## EXIGENCES
 - SEO : 1 H1, H2/H3 hiérarchisés, meta-description 150–160c, mots-clés naturels, CTA final
@@ -1349,27 +1388,49 @@ Créer un contenu pédagogique interactif pour **dznet1.com**, totalement **resp
 fetch("https://dznet1.com/intranet/footer.html").then(r=>r.text()).then(h=>{document.getElementById("footer-placeholder").innerHTML=h}).catch(()=>{});
 <script>
 
-### Médias  
-excemple de structure 
-exemple_page_web/
-│ ma_mage_001.html          ← La page web 
-│ ma_mage_002.html          ← La page web 
-│
-├── images/
-│   └── exemple.jpg   ← Une image d’exemple
-│
-└── audio/
-    └── exemple.wav   ← Un son .wav d’exemple
-    
-Nommage: YYYYMMDD_nom_simplifie.ext
-Générer un tableau (sans HTML) : Élément | FR | EN | AR | Image | Audio FR | Audio EN | Audio AR
+${testMode ? `
+### Gestion d'erreur média (MODE TEST)
+Ajouter ce script global AVANT le </body> :
+
+<script>
+// Fallback global pour images
+document.querySelectorAll('img').forEach(img => {
+  img.onerror = function() {
+    const filename = this.src.split('/').pop();
+    this.outerHTML = '<span class="media-fallback">❌ ' + filename + '</span>';
+  };
+});
+
+// Fallback global pour audio
+document.querySelectorAll('audio').forEach(audio => {
+  audio.addEventListener('error', function() {
+    const filename = this.src.split('/').pop();
+    this.outerHTML = '<span class="media-fallback">🔇 ' + filename + '</span>';
+  });
+});
+<script>
+
+<style>
+.media-fallback {
+  display: inline-block;
+  background: #FFF3CD;
+  border: 2px dashed #FFB938;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: #856404;
+  font-weight: 600;
+  font-family: monospace;
+  font-size: 13px;
+}
+<style>
+` : ''}
 
 ### i18n
 Par défaut FR/EN/AR (Algérie) + sélecteur de langue (drapeaux).
 
 ### Analytics (head)
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"><script>
-/<script>
+<script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CRRK6Z4D1X');
 <script>
 
@@ -1379,16 +1440,14 @@ Feuille distante : https://dznet1.com/assets/css/main.css
 ### Accessibilité
 Navigation clavier, focus visible, aria-label, alt descriptifs, contraste ≥ 4.5:1.
 
-### Robustesse média
-Ajouter une fonction JS globale qui remplace toute ressource (img/audio/video) en erreur par une icône de remplacement, sans bloquer l'exécution (via onerror).
-
 ---
 
 ## SPÉCIFICATIONS DU PROJET (JSON)
 ${JSON.stringify(promptData, null, 2)}
 
 - [ ] Afficher Version ${projectVersion}
-- Après validation du plan, générer le **fichier HTML final complet**.`;
+- [ ] ${testMode ? 'Générer tableau médias attendus (TXT, pas HTML)' : 'Utiliser CDN distant'}
+- [ ] Générer le **fichier HTML final complet**.`;
 
       document.getElementById('promptOutputModal').textContent = prompt;
       openResultModal();
@@ -1430,5 +1489,3 @@ Utiliser le format JSON pour de meilleurs résultats.`;
   </script>
 </body>
 </html>
-```
-  

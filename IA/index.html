@@ -1249,133 +1249,82 @@
     }
 
     function generateJsonPrompt(){
-  const creatorName = document.getElementById('creatorName').value.trim();
-  const projectVersion = document.getElementById('projectVersion').value;
-  const creationDate = document.getElementById('creationDate').value;
-  const testMode = document.getElementById('testMode').checked;
-  localStorage.setItem(STORAGE_KEY_NAME, creatorName);
+      const creatorName = document.getElementById('creatorName').value.trim();
+      const projectVersion = document.getElementById('projectVersion').value;
+      const creationDate = document.getElementById('creationDate').value;
+      localStorage.setItem(STORAGE_KEY_NAME, creatorName);
 
-  const contentType = document.getElementById('contentType').value;
-  const ageRanges = Array.from(document.querySelectorAll('input[name="ageRange"]:checked')).map(cb=>cb.value);
-  const readingLevel = (document.querySelector('input[name="readingLevel"]:checked')||{}).value;
-  const supervision = (document.querySelector('input[name="supervision"]:checked')||{}).value;
-  const languages = Array.from(document.querySelectorAll('input[name="languages"]:checked')).map(cb=>cb.value);
-  const languageLayout = (document.querySelector('input[name="languageLayout"]:checked')||{}).value;
-  const theme = document.getElementById('theme').value;
-  const narrativeStyle = document.getElementById('narrativeStyle').value;
-  const additionalContext = (document.getElementById('additionalContext').value||'').trim();
+      const contentType = document.getElementById('contentType').value;
+      const ageRanges = Array.from(document.querySelectorAll('input[name="ageRange"]:checked')).map(cb=>cb.value);
+      const readingLevel = (document.querySelector('input[name="readingLevel"]:checked')||{}).value;
+      const supervision = (document.querySelector('input[name="supervision"]:checked')||{}).value;
+      const languages = Array.from(document.querySelectorAll('input[name="languages"]:checked')).map(cb=>cb.value);
+      const languageLayout = (document.querySelector('input[name="languageLayout"]:checked')||{}).value;
+      const theme = document.getElementById('theme').value;
+      const narrativeStyle = document.getElementById('narrativeStyle').value;
+      const additionalContext = (document.getElementById('additionalContext').value||'').trim();
 
-  const pedGoals = Array.from(document.querySelectorAll('input[name="pedGoals"]:checked')).map(cb=>cb.value);
-  const customGoals = (document.getElementById('customGoals').value||'').trim();
-  let allGoals = [...pedGoals];
-  if(customGoals){
-    allGoals = [...allGoals, ...customGoals.split('\n').map(s=>s.trim()).filter(Boolean)];
-  }
+      const pedGoals = Array.from(document.querySelectorAll('input[name="pedGoals"]:checked')).map(cb=>cb.value);
+      const customGoals = (document.getElementById('customGoals').value||'').trim();
+      let allGoals = [...pedGoals];
+      if(customGoals){
+        allGoals = [...allGoals, ...customGoals.split('\n').map(s=>s.trim()).filter(Boolean)];
+      }
 
-  const interactions = Array.from(document.querySelectorAll('input[name="interactions"]:checked')).map(cb=>cb.value);
-  const rewards = (document.querySelector('input[name="rewards"]:checked')||{}).value;
-  const errorHandling = (document.querySelector('input[name="errorHandling"]:checked')||{}).value;
-  const timer = (document.querySelector('input[name="timer"]:checked')||{}).value;
-  const stats = Array.from(document.querySelectorAll('input[name="stats"]:checked')).map(cb=>cb.value);
-  const parentalGuidance = (document.querySelector('input[name="parentalGuidance"]:checked')||{}).value;
-  const guidanceTypes = Array.from(document.querySelectorAll('input[name="guidanceTypes"]:checked')).map(cb=>cb.value);
-  const colorPalette = (document.querySelector('input[name="colorPalette"]:checked')||{}).value;
-  const accessibility = Array.from(document.querySelectorAll('input[name="accessibility"]:checked')).map(cb=>cb.value);
+      const interactions = Array.from(document.querySelectorAll('input[name="interactions"]:checked')).map(cb=>cb.value);
+      const rewards = (document.querySelector('input[name="rewards"]:checked')||{}).value;
+      const errorHandling = (document.querySelector('input[name="errorHandling"]:checked')||{}).value;
+      const timer = (document.querySelector('input[name="timer"]:checked')||{}).value;
+      const stats = Array.from(document.querySelectorAll('input[name="stats"]:checked')).map(cb=>cb.value);
+      const parentalGuidance = (document.querySelector('input[name="parentalGuidance"]:checked')||{}).value;
+      const guidanceTypes = Array.from(document.querySelectorAll('input[name="guidanceTypes"]:checked')).map(cb=>cb.value);
+      const colorPalette = (document.querySelector('input[name="colorPalette"]:checked')||{}).value;
+      const accessibility = Array.from(document.querySelectorAll('input[name="accessibility"]:checked')).map(cb=>cb.value);
 
-  const presetUsed = PRESETS[contentType] ? {
-    narrativeStyle: PRESETS[contentType].narrativeStyle,
-    goals: PRESETS[contentType].goals,
-    interactions: PRESETS[contentType].interactions
-  } : null;
+      const presetUsed = PRESETS[contentType] ? {
+        narrativeStyle: PRESETS[contentType].narrativeStyle,
+        goals: PRESETS[contentType].goals,
+        interactions: PRESETS[contentType].interactions
+      } : null;
 
-  const promptData = {
-    metadata: { creator: creatorName, projectVersion, creationDate, generator: `Formulaire ${VERSION}`, testMode },
-    targetAudience: { ageRanges, readingLevel, supervision },
-    language: { languages, layout: languageLayout },
-    content: { type: contentType, theme, narrativeStyle, educationalGoals: allGoals, additionalContext: additionalContext || undefined },
-    interactivity: { interactionTypes: interactions, rewardSystem: rewards, errorHandling },
-    analytics: { timer, statistics: stats },
-    parentalAssistance: { guidanceType: parentalGuidance, guidanceTopics: guidanceTypes },
-    design: { colorPalette },
-    accessibility: { features: accessibility },
-    technicalRequirements: {
-      format: "HTML5 standalone",
-      fileSize: "< 350 KB",
-      responsive: true,
-      offline: true,
-      compatibility: ["Chrome 90+","Firefox 88+","Safari 14+","Edge 90+"],
-      accessibility: "WCAG 2.1 AA minimum"
-    },
-    security: {
-      noExternalLinks: true,
-      noTracking: true,
-      noPersonalData: true,
-      noAds: true,
-      gdprCompliant: true
-    },
-    workflow: {
-      step1: "Analyze this JSON specification",
-      step2: "Propose small plan in TXT format",
-      step3: "generating HTML"          
-    },
-    blueprint: presetUsed
-  };
+      const promptData = {
+        metadata: { creator: creatorName, projectVersion, creationDate, generator: `Formulaire ${VERSION}` },
+        targetAudience: { ageRanges, readingLevel, supervision },
+        language: { languages, layout: languageLayout },
+        content: { type: contentType, theme, narrativeStyle, educationalGoals: allGoals, additionalContext: additionalContext || undefined },
+        interactivity: { interactionTypes: interactions, rewardSystem: rewards, errorHandling },
+        analytics: { timer, statistics: stats },
+        parentalAssistance: { guidanceType: parentalGuidance, guidanceTopics: guidanceTypes },
+        design: { colorPalette },
+        accessibility: { features: accessibility },
+        technicalRequirements: {
+          format: "HTML5 standalone",
+          fileSize: "< 350 KB",
+          responsive: true,
+          offline: true,
+          compatibility: ["Chrome 90+","Firefox 88+","Safari 14+","Edge 90+"],
+          accessibility: "WCAG 2.1 AA minimum"
+        },
+        security: {
+          noExternalLinks: true,
+          noTracking: true,
+          noPersonalData: true,
+          noAds: true,
+          gdprCompliant: true
+        },
+        workflow: {
+          step1: "Analyze this JSON specification",
+          step2: "Propose small plan in TXT format",
+          step3: "generating HTML"          
+        },
+        blueprint: presetUsed
+      };
 
-  const modeInstructions = testMode ? `
-⚠️ **MODE TEST ACTIVÉ** ⚠️
-- Chemins médias : /images/ et /audio/ (locaux) pour test PC
-- Structure attendue : dossier /images/ et /audio/ à côté du HTML
-- Fallback automatique : si média introuvable → affiche le nom du fichier
-  Exemple: <img src="images/ALGER.jpg" alt="ALGER.jpg" onerror="this.outerHTML='<span>❌ ALGER.jpg</span>'">
-- Pour audio: <audio src="audio/exemple.wav" onerror="this.outerHTML='<span>🔇 exemple.wav</span>'"><audio>
-- Générer un tableau de médias attendus (sans HTML) : Élément | FR | EN | AR | Image | Audio FR | Audio EN | Audio AR
-` : `
-🌐 **MODE PRODUCTION**
-- Utiliser les CDN distants (https://dznet1.com/cdn-cgi/image/...)
-- Nommage: YYYYMMDD_nom_simplifie.ext
-`;
-
-  const fallbackCode = testMode ? `
-
-### Gestion d'erreur média (MODE TEST)
-Ajouter ce script global AVANT le body final :
-
-<script>
-document.querySelectorAll('img').forEach(img => {
-  img.onerror = function() {
-    const filename = this.src.split('/').pop();
-    this.outerHTML = '<span class="media-fallback">❌ ' + filename + '</span>';
-  };
-});
-document.querySelectorAll('audio').forEach(audio => {
-  audio.addEventListener('error', function() {
-    const filename = this.src.split('/').pop();
-    this.outerHTML = '<span class="media-fallback">🔇 ' + filename + '</span>';
-  });
-});
-<script>
-
-<style>
-.media-fallback {
-  display: inline-block;
-  background: #FFF3CD;
-  border: 2px dashed #FFB938;
-  padding: 8px 12px;
-  border-radius: 6px;
-  color: #856404;
-  font-weight: 600;
-  font-family: monospace;
-  font-size: 13px;
-}
-</style>
-` : '';
-
-  const prompt =
+      const prompt =
 `# 🎯 PROMPT CRÉATION CONTENU HTML INTERACTIF ENFANT - FORMAT JSON
 
 ## OBJECTIF
 Créer un contenu pédagogique interactif pour **dznet1.com**, totalement **responsive**, **accessible**, **SEO**, compatible **PC/Mobile** (sans débordement), avec **zone publicitaire**.
-${modeInstructions}
 
 ## EXIGENCES
 - SEO : 1 H1, H2/H3 hiérarchisés, meta-description 150–160c, mots-clés naturels, CTA final
@@ -1398,14 +1347,28 @@ ${modeInstructions}
 <script>
 fetch("https://dznet1.com/intranet/footer.html").then(r=>r.text()).then(h=>{document.getElementById("footer-placeholder").innerHTML=h}).catch(()=>{});
 <script>
-${fallbackCode}
+
+### Médias  
+excemple de structure du fichier que tu me fournis a fin que je teste sur mon pc localement  
+exemple_page_web/
+│ ma_mage_001.html          ← La page web 
+│ ma_mage_002.html          ← La page web 
+│
+├── images/
+│   └── exemple.jpg   ← Une image d’exemple
+│
+└── audio/
+    └── exemple.wav   ← Un son .wav d’exemple
+    
+Nommage: YYYYMMDD_nom_simplifie.ext
+Générer un tableau (sans HTML) : Élément | FR | EN | AR | Image | Audio FR | Audio EN | Audio AR
 
 ### i18n
 Par défaut FR/EN/AR (Algérie) + sélecteur de langue (drapeaux).
 
 ### Analytics (head)
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"><script>
-<script>
+/<script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CRRK6Z4D1X');
 <script>
 
@@ -1415,15 +1378,56 @@ Feuille distante : https://dznet1.com/assets/css/main.css
 ### Accessibilité
 Navigation clavier, focus visible, aria-label, alt descriptifs, contraste ≥ 4.5:1.
 
+### Robustesse média
+Ajouter une fonction JS globale qui remplace toute ressource (img/audio/video) en erreur par une icône de remplacement, sans bloquer l'exécution (via onerror).
+
 ---
 
 ## SPÉCIFICATIONS DU PROJET (JSON)
 ${JSON.stringify(promptData, null, 2)}
 
 - [ ] Afficher Version ${projectVersion}
-- [ ] ${testMode ? 'Mode TEST : Générer tableau médias + chemins locaux' : 'Mode PROD : Utiliser CDN distant'}
-- [ ] Générer le **fichier HTML final complet**.`;
+- générer le **fichier HTML final complet**.`;
 
-  document.getElementById('promptOutputModal').textContent = prompt;
-  openResultModal();
-}
+      document.getElementById('promptOutputModal').textContent = prompt;
+      openResultModal();
+    }
+
+    function generateTextPrompt(){
+      const prompt = `# PROMPT TEXTE (ANCIEN FORMAT)
+Utiliser le format JSON pour de meilleurs résultats.`;
+      document.getElementById('promptOutputModal').textContent = prompt;
+      openResultModal();
+    }
+
+    // ===== COPIE / EXPORT =====
+    document.getElementById('copyBtnModal').addEventListener('click', function(){
+      const txt = document.getElementById('promptOutputModal').textContent;
+      const btn = this; btn.classList.add('loading'); btn.disabled = true;
+      navigator.clipboard.writeText(txt).then(()=>{
+        setTimeout(()=>{
+          btn.classList.remove('loading'); btn.classList.add('copy-success');
+          btn.innerHTML = '<span>✅ Copié</span>';
+          setTimeout(()=>{ btn.classList.remove('copy-success'); btn.innerHTML = '<span class="spinner"></span><span>📋 Copier</span>'; btn.disabled=false; }, 2000);
+        },300);
+      }).catch(()=>{
+        btn.classList.remove('loading'); btn.disabled=false; alert('❌ Erreur de copie. Sélectionnez manuellement le texte.');
+      });
+    });
+
+    document.getElementById('downloadBtnModal').addEventListener('click', function(){
+      const txt = document.getElementById('promptOutputModal').textContent;
+      const blob = new Blob([txt], {type:'text/plain;charset=utf-8'});
+      const url = URL.createObjectURL(blob); const a = document.createElement('a');
+      const theme = (document.getElementById('theme').value||'').replace(/[^a-z0-9]/gi,'_').toLowerCase();
+      const creator = (document.getElementById('creatorName').value||'').replace(/[^a-z0-9]/gi,'_').toLowerCase();
+      const version = (document.getElementById('projectVersion').value||'').replace(/[^a-z0-9.]/gi,'');
+      const ts = new Date().toISOString().slice(0,10);
+      a.href = url; a.download = `prompt_${theme}_${creator}_${version}_${ts}.txt`;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>
+```
+  

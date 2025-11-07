@@ -1,6 +1,11 @@
+# FICHIER COMPLET v2.1 FINAL + Version Papier
+
+**Fichier : generateur-prompt-v2.1-final-complet.html**
+
+```html
 <!-- ==========================================================
  Générateur de Prompt - Contenu HTML Enfant
- Version : v2.1 COMPLET (Production ready)
+ Version : v2.1 FINAL (Analyse auto + Version papier)
 ========================================================== -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,7 +22,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Générateur de prompt pour contenu HTML enfant - Version professionnelle avec IA contextuelle" />
-  <title>Générateur Prompt Contenu Enfant - v2.1 COMPLET</title>
+  <title>Générateur Prompt Contenu Enfant - v2.1 FINAL</title>
 
   <style>
     /* ===== VARIABLES & RESET ===== */
@@ -101,36 +106,6 @@
     
     .selected-goals-preview{background:#E8F4F8;padding:15px;border-radius:8px;margin-top:15px;font-size:14px;border-left:4px solid var(--info)}
     .selected-goals-preview strong{color:var(--primary)}
-
-    /* ===== MEDIA CHECK INTELLIGENT ===== */
-    .media-check-section{background:#E8F4F8;padding:20px;border-radius:12px;margin:20px 0;border:2px solid var(--info);position:relative}
-    .media-check-section.needs-check{background:#FFF3CD;border-color:var(--warning);animation:pulse 2s infinite}
-    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(243,156,18,0.4)}50%{box-shadow:0 0 0 10px rgba(243,156,18,0)}}
-    .media-check-banner{background:var(--warning);color:#fff;padding:12px;border-radius:8px;margin-bottom:15px;font-weight:600;text-align:center;display:none}
-    .media-check-banner.visible{display:block}
-    .media-check-btn{background:var(--info);color:#fff;padding:12px 24px;border:none;border-radius:8px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:10px;transition:.3s;margin:0 auto}
-    .media-check-btn:hover:not(:disabled){background:#2C81BA;transform:translateY(-2px)}
-    .media-check-btn:disabled{opacity:.6;cursor:not-allowed}
-    
-    .media-results{margin-top:15px;padding:15px;background:#fff;border-radius:8px;display:none}
-    .media-results.visible{display:block}
-    .media-item{padding:8px 12px;margin:5px 0;border-radius:6px;display:flex;align-items:center;gap:10px;font-size:13px;font-family:monospace}
-    .media-item.relevant{background:#D1F2EB;border-left:4px solid var(--success);font-weight:600}
-    .media-item.suggested{background:#D4EDDA;border-left:4px solid var(--success)}
-    .media-item.available{background:#E8F4F8;border-left:4px solid var(--info)}
-    
-    .relevance-badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;margin-left:8px}
-    .relevance-badge.high{background:var(--success);color:#fff}
-    .relevance-badge.medium{background:var(--warning);color:#fff}
-    
-    .media-stats{display:flex;gap:20px;margin-bottom:15px;padding:15px;background:var(--bg-light);border-radius:8px;flex-wrap:wrap}
-    .media-stat{text-align:center;flex:1;min-width:100px}
-    .media-stat-number{font-size:24px;font-weight:700;color:var(--primary)}
-    .media-stat-label{font-size:12px;color:#7F8C8D;margin-top:5px}
-    
-    .intelligence-log{background:#FFF9E6;padding:12px;border-radius:8px;margin-top:15px;font-size:13px;border-left:4px solid var(--warning)}
-    .intelligence-log h4{color:var(--warning);margin-bottom:8px;font-size:14px}
-    .intelligence-log ul{margin-left:20px;line-height:1.8}
 
     .color-palette{display:flex;gap:10px;align-items:center;padding:10px;background:#fff;border-radius:8px;border:2px solid var(--border)}
     .color-palette input[type="radio"]{margin-right:10px}
@@ -219,6 +194,14 @@
         opacity: 0.4;
     }
 
+    /* ===== VERSION PAPIER ===== */
+    .paper-version-section{background:#FFF9E6;padding:20px;border-radius:12px;margin:20px 0;border:2px solid var(--warning)}
+    .paper-version-section h3{color:var(--warning);margin-bottom:15px;display:flex;align-items:center;gap:10px}
+    .paper-formats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:15px}
+    .paper-format-item{padding:12px;background:#fff;border-radius:8px;border:2px solid var(--border);cursor:pointer;transition:.3s}
+    .paper-format-item:hover{border-color:var(--warning);background:#FFFBF0}
+    .paper-format-item input:checked ~ div{border-color:var(--warning);background:#FFFBF0}
+
     @media (max-width:768px){
       body{padding:10px}
       .form-wrapper{padding:20px}
@@ -232,7 +215,7 @@
       .result-header,.result-body,.result-actions{padding:20px}
       .metadata-grid{grid-template-columns:1fr}
       .category-content .checkbox-group{grid-template-columns:1fr}
-      .media-stats{flex-direction:column;gap:10px}
+      .paper-formats{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -243,33 +226,35 @@
       <button class="help-btn" onclick="openHelpModal()">
         <span>❓</span><span>Guide</span>
       </button>
-      <span class="version-badge">v2.1 COMPLET</span>
+      <span class="version-badge">v2.1 FINAL</span>
       <h1>🎨 Générateur de Prompt - Contenu HTML Enfant</h1>
-      <p>Créez des expériences éducatives interactives sécurisées et cohérentes</p>
-      <p class="tiny">✅ 80 objectifs | 🧠 IA contextuelle | 💾 Cache 1h | 🔗 API GitHub</p>
+      <p>Créez des expériences éducatives interactives + Version papier imprimable</p>
+      <p class="tiny">✅ 80 objectifs | 🧠 IA auto | 💾 Cache 1h | 📄 Version papier</p>
     </header>
 
     <!-- MODAL AIDE -->
     <div id="helpModal" class="modal">
       <div class="modal-content">
         <button class="modal-close" onclick="closeHelpModal()">×</button>
-        <h2>📘 Guide rapide v2.1 COMPLET</h2>
+        <h2>📘 Guide rapide v2.1 FINAL</h2>
         <div class="info-banner">
-          <strong>Ordre logique :</strong>
-          <ol style="margin:10px 0 0 20px;line-height:1.8">
-            <li>1️⃣ Sélectionner l'<strong>âge/public cible</strong></li>
-            <li>2️⃣ Choisir le <strong>type de contenu</strong></li>
-            <li>3️⃣ Définir les <strong>langues</strong></li>
-            <li>4️⃣ Saisir le <strong>thème</strong> → Cliquer "Analyser médias"</li>
-            <li>5️⃣ Sélectionner les <strong>objectifs</strong> (80 disponibles)</li>
-            <li>6️⃣ Personnaliser le reste</li>
-          </ol>
+          <strong>✨ Nouveautés v2.1 :</strong>
+          <ul style="margin:10px 0 0 20px;line-height:1.8">
+            <li>🧠 <strong>Analyse automatique</strong> au moment de générer</li>
+            <li>🎯 Détection intelligente : thème + objectifs + interactions + récompenses</li>
+            <li>📄 <strong>Version papier</strong> : génère aussi un document imprimable (PDF/DOCX)</li>
+            <li>💾 Cache 1h pour optimiser les performances</li>
+          </ul>
         </div>
-        <h3>🧠 Intelligence Contextuelle</h3>
-        <p>L'IA analyse automatiquement votre thème, type de contenu et objectifs pour suggérer les médias les plus pertinents depuis le repo GitHub.</p>
-        <p><strong>Exemple :</strong> Thème "Les capitales de l'Algérie" → détecte ALGER, ORAN, CONSTANTINE...</p>
-        <h3>💾 Cache 1h</h3>
-        <p>Les médias sont mis en cache 1 heure pour éviter les appels API répétés.</p>
+        <h3>📄 Version papier</h3>
+        <p>Si vous cochez "Générer version papier", l'IA créera également un document Word/PDF téléchargeable avec :</p>
+        <ul style="margin:10px 0 0 20px;line-height:1.8">
+          <li>✏️ Exercices à remplir (pour quiz/exercices)</li>
+          <li>🎨 Images à colorier (pour coloriage)</li>
+          <li>📖 Histoire complète (pour histoires)</li>
+          <li>🧩 Puzzles/jeux à découper (pour puzzles)</li>
+          <li>📊 Corrections détaillées pour parents/enseignants</li>
+        </ul>
         <button class="btn-primary" onclick="closeHelpModal()" style="margin-top: 16px; width: 100%;">OK</button>
       </div>
     </div>
@@ -313,7 +298,7 @@
               <span style="font-weight:700;color:var(--info);flex:1;">
                 🧪 Version test (chemins locaux)
                 <span class="helper-text" style="display:block;margin-top:5px;font-weight:400;font-style:italic;">
-                  Coché : médias dans /images/ et /audio/ pour test PC local. Décoché : utilise les CDN distants. Fallback automatique si média introuvable.
+                  Coché : médias dans /images/ et /audio/ pour test PC local. Décoché : utilise les CDN distants.
                 </span>
               </span>
             </label>
@@ -425,55 +410,22 @@
           </div>
         </div>
 
-        <!-- 4️⃣ THÈME & OBJECTIFS + MÉDIAS INTELLIGENTS -->
+        <!-- 4️⃣ THÈME & OBJECTIFS -->
         <div class="section">
-          <h2 class="section-title">4️⃣ Thème et Objectifs Pédagogiques <span class="feature-badge">IA v2.1</span></h2>
-          <div class="form-group" id="themeGroup">
-            <label for="theme" class="required">Sujet principal</label>
-            <input type="text" id="theme" placeholder="Ex: Apprentissage des couleurs primaires" required>
-            <div class="error-message">❌ Décrivez le sujet</div>
-            <span class="helper-text">1 phrase claire - L'IA l'analysera pour suggérer médias pertinents</span>
+          <h2 class="section-title">4️⃣ Thème et Objectifs <span class="feature-badge">IA AUTO</span></h2>
+          
+          <!-- INFO ANALYSE AUTO -->
+          <div class="info-banner">
+            <strong>🧠 Analyse Intelligente Automatique :</strong><br>
+            Au moment de générer le prompt, le système analysera automatiquement GitHub pour détecter les médias pertinents selon votre thème, objectifs, interactions et récompenses.
+            <br><small style="opacity:0.8;">⚡ Cache 1h | 🎯 Détection étoiles/badges/puzzles/cartes...</small>
           </div>
 
-          <!-- VÉRIFICATION INTELLIGENTE MÉDIAS GITHUB -->
-          <div class="media-check-section" id="mediaCheckSection">
-            <div class="media-check-banner" id="mediaCheckBanner">
-              ⚠️ Cliquez sur "Analyser médias" pour optimiser votre contenu avec l'IA
-            </div>
-            
-            <h3 style="color:var(--info);margin-bottom:15px;">🧠 Analyse Intelligente des Médias GitHub</h3>
-            <p style="margin-bottom:15px;font-size:14px;color:#7F8C8D;">
-              L'IA analyse votre thème, type de contenu et objectifs pédagogiques pour suggérer les médias les plus pertinents disponibles dans le repo GitHub.
-            </p>
-            
-            <button type="button" id="checkMediaBtn" class="media-check-btn">
-              <span class="spinner"></span>
-              <span>🔍 Analyser médias disponibles</span>
-            </button>
-            
-            <div id="mediaResults" class="media-results">
-              <div class="media-stats">
-                <div class="media-stat">
-                  <div class="media-stat-number" id="totalMedia">0</div>
-                  <div class="media-stat-label">Total fichiers</div>
-                </div>
-                <div class="media-stat">
-                  <div class="media-stat-number" id="relevantMedia" style="color:var(--success)">0</div>
-                  <div class="media-stat-label">Pertinents</div>
-                </div>
-                <div class="media-stat">
-                  <div class="media-stat-number" id="suggestedMedia" style="color:var(--warning)">0</div>
-                  <div class="media-stat-label">Suggérés</div>
-                </div>
-                <div class="media-stat">
-                  <div class="media-stat-number" id="otherMedia" style="color:var(--info)">0</div>
-                  <div class="media-stat-label">Autres</div>
-                </div>
-              </div>
-              
-              <div class="intelligence-log" id="intelligenceLog"></div>
-              <div id="mediaList"></div>
-            </div>
+          <div class="form-group" id="themeGroup">
+            <label for="theme" class="required">Sujet principal</label>
+            <input type="text" id="theme" placeholder="Ex: Les capitales de l'Algérie" required>
+            <div class="error-message">❌ Décrivez le sujet</div>
+            <span class="helper-text">L'IA analysera ce thème pour suggérer médias pertinents</span>
           </div>
 
           <!-- OBJECTIFS PÉDAGOGIQUES (80 COMPLETS) -->
@@ -794,6 +746,62 @@
           </div>
         </div>
 
+        <!-- VERSION PAPIER -->
+        <div class="section">
+          <h2 class="section-title">📄 Version Papier <span class="feature-badge">NOUVEAU</span></h2>
+          
+          <div class="paper-version-section">
+            <h3>🖨️ Générer aussi une version imprimable</h3>
+            <p style="margin-bottom:15px;font-size:14px;line-height:1.6;">
+              En cochant cette option, l'IA générera également un document Word (.docx) ou PDF téléchargeable avec le contenu adapté pour impression : exercices à remplir, images à colorier, puzzles à découper, etc.
+            </p>
+            
+            <div class="form-group">
+              <label class="checkbox-item" style="background:#fff;padding:15px;border:2px solid var(--warning);border-radius:8px;margin:0;">
+                <input type="checkbox" id="generatePaperVersion" name="generatePaperVersion" style="width:24px;height:24px;">
+                <span style="font-weight:700;color:var(--warning);flex:1;">
+                  ✅ Oui, générer une version papier téléchargeable
+                  <span class="helper-text" style="display:block;margin-top:5px;font-weight:400;font-style:italic;color:#7F8C8D;">
+                    Idéal pour les parents/enseignants qui veulent une version physique à imprimer
+                  </span>
+                </span>
+              </label>
+            </div>
+
+            <div id="paperOptionsGroup" style="margin-top:20px;display:none;">
+              <label style="font-weight:600;margin-bottom:10px;display:block;">Format du document</label>
+              <div class="paper-formats">
+                <label class="paper-format-item">
+                  <input type="radio" name="paperFormat" value="PDF A4 (prêt à imprimer)" checked>
+                  <div style="padding:10px;">
+                    <strong>📄 PDF A4</strong>
+                    <div class="helper-text">Format universel, prêt à imprimer</div>
+                  </div>
+                </label>
+                <label class="paper-format-item">
+                  <input type="radio" name="paperFormat" value="Word .docx (éditable)">
+                  <div style="padding:10px;">
+                    <strong>📝 Word DOCX</strong>
+                    <div class="helper-text">Modifiable, personnalisable</div>
+                  </div>
+                </label>
+              </div>
+
+              <div style="margin-top:15px;">
+                <label style="font-weight:600;margin-bottom:10px;display:block;">Options d'impression</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-item"><input type="checkbox" name="paperOptions" value="Images en noir & blanc pour coloriage" checked><span>Images N&B (coloriage)</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="paperOptions" value="Grilles de réponses vierges" checked><span>Grilles réponses</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="paperOptions" value="Corrigé pour parents/enseignants" checked><span>Corrigé inclus</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="paperOptions" value="Espace pour notes libres"><span>Espace notes</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="paperOptions" value="Numérotation des pages"><span>Numérotation pages</span></label>
+                  <label class="checkbox-item"><input type="checkbox" name="paperOptions" value="QR code vers version interactive"><span>QR code → HTML</span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- DESIGN -->
         <div class="section">
           <h2 class="section-title">🎨 Design et Couleurs</h2>
@@ -901,6 +909,9 @@ Ces commentaires sont nécessaires pour la compatibilité GitHub API
       theme: '',
       contentType: '',
       goals: [],
+      interactions: [],
+      rewards: '',
+      narrativeStyle: '',
       keywords: []
     };
 
@@ -1038,6 +1049,65 @@ Ces commentaires sont nécessaires pour la compatibilité GitHub API
       return Array.from(keywords);
     }
 
+    function buildCompleteContext() {
+      const context = {
+        theme: document.getElementById('theme').value.trim(),
+        contentType: document.getElementById('contentType').value,
+        goals: Array.from(document.querySelectorAll('input[name="pedGoals"]:checked')).map(cb => cb.value),
+        interactions: Array.from(document.querySelectorAll('input[name="interactions"]:checked')).map(cb => cb.value),
+        rewards: (document.querySelector('input[name="rewards"]:checked') || {}).value || '',
+        narrativeStyle: document.getElementById('narrativeStyle').value,
+        keywords: new Set()
+      };
+
+      // Extraire mots-clés du thème
+      extractKeywords(context.theme).forEach(k => context.keywords.add(k));
+
+      // Extraire des objectifs
+      context.goals.forEach(goal => {
+        extractKeywords(goal).forEach(k => context.keywords.add(k));
+      });
+
+      // Détecter besoins selon interactions
+      context.interactions.forEach(interaction => {
+        if (interaction.includes('mémoire') || interaction.includes('memory')) {
+          context.keywords.add('card'); context.keywords.add('carte'); context.keywords.add('memory');
+        }
+        if (interaction.includes('puzzle')) {
+          context.keywords.add('puzzle'); context.keywords.add('piece'); context.keywords.add('jigsaw');
+        }
+        if (interaction.includes('Labyrinthe')) {
+          context.keywords.add('maze'); context.keywords.add('labyrinthe'); context.keywords.add('arrow');
+        }
+        if (interaction.includes('Quiz') || interaction.includes('QCM')) {
+          context.keywords.add('quiz'); context.keywords.add('question'); context.keywords.add('check');
+        }
+        if (interaction.includes('Colorier') || interaction.includes('Dessiner')) {
+          context.keywords.add('coloring'); context.keywords.add('coloriage'); context.keywords.add('crayon');
+        }
+      });
+
+      // Détecter besoins selon récompenses
+      if (context.rewards.includes('Étoiles') || context.rewards.includes('badges')) {
+        context.keywords.add('star'); context.keywords.add('etoile'); context.keywords.add('badge');
+        context.keywords.add('medal'); context.keywords.add('trophy'); context.keywords.add('award');
+        context.keywords.add('coin'); context.keywords.add('gem'); context.keywords.add('diamond');
+      }
+      if (context.rewards.includes('animations')) {
+        context.keywords.add('confetti'); context.keywords.add('celebration'); context.keywords.add('happy');
+        context.keywords.add('firework'); context.keywords.add('sparkle');
+      }
+
+      // Détecter selon style narratif
+      if (context.narrativeStyle.includes('mascotte')) {
+        context.keywords.add('mascot'); context.keywords.add('character'); context.keywords.add('avatar');
+        context.keywords.add('pet'); context.keywords.add('companion');
+      }
+
+      context.keywords = Array.from(context.keywords);
+      return context;
+    }
+
     function calculateRelevance(filename, context) {
       const filenameNorm = filename.toLowerCase()
         .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -1045,13 +1115,15 @@ Ces commentaires sont nécessaires pour la compatibilité GitHub API
       let score = 0;
       let reasons = [];
 
+      // Correspondance mots-clés contexte (thème + objectifs + interactions + récompenses)
       context.keywords.forEach(kw => {
         if (filenameNorm.includes(kw.toLowerCase())) {
           score += 10;
-          reasons.push(`Thème: ${kw}`);
+          reasons.push(`Contexte: ${kw}`);
         }
       });
 
+      // Correspondance type de contenu
       const folder = getFolderFromFilename(filename);
       const priority = TYPE_MEDIA_PRIORITY[context.contentType] || [];
       
@@ -1060,17 +1132,32 @@ Ces commentaires sont nécessaires pour la compatibilité GitHub API
         reasons.push(`Type: ${context.contentType}`);
       }
 
-      context.goals.forEach(goal => {
-        const goalWords = goal.toLowerCase().split(/\s+/);
-        goalWords.forEach(gw => {
-          if (gw.length > 3 && filenameNorm.includes(gw)) {
-            score += 3;
-            reasons.push(`Objectif: ${gw}`);
-          }
-        });
+      // Bonus pour récompenses spécifiques
+      if (context.rewards.includes('Étoiles') || context.rewards.includes('badges')) {
+        const rewardKeywords = ['star', 'etoile', 'badge', 'medal', 'trophy', 'award', 'coin', 'gem', 'diamond'];
+        if (rewardKeywords.some(rw => filenameNorm.includes(rw))) {
+          score += 15; // Score élevé car besoin explicite
+          reasons.push(`Récompense: ${context.rewards}`);
+        }
+      }
+
+      // Bonus pour interactions spécifiques
+      context.interactions.forEach(interaction => {
+        if (interaction.includes('mémoire') && (filenameNorm.includes('card') || filenameNorm.includes('memory'))) {
+          score += 12;
+          reasons.push('Interaction: mémoire');
+        }
+        if (interaction.includes('puzzle') && filenameNorm.includes('puzzle')) {
+          score += 12;
+          reasons.push('Interaction: puzzle');
+        }
       });
 
-      return { score, reasons, level: score >= 10 ? 'high' : score >= 5 ? 'medium' : 'low' };
+      return { 
+        score, 
+        reasons, 
+        level: score >= 15 ? 'high' : score >= 8 ? 'medium' : 'low' 
+      };
     }
 
     function getFolderFromFilename(filename) {
@@ -1119,20 +1206,7 @@ Ces commentaires sont nécessaires pour la compatibilité GitHub API
 /*
 NE PAS SUPPRIMER CES COMMENTAIRES - COMPATIBILITÉ GITHUB
 */
-    async function fetchGitHubMedia() {
-      const btn = document.getElementById('checkMediaBtn');
-      btn.classList.add('loading');
-      btn.disabled = true;
-
-      const cached = getCachedMedia();
-      if (cached) {
-        githubMediaCache = cached;
-        processIntelligentFilter();
-        btn.classList.remove('loading');
-        btn.disabled = false;
-        return;
-      }
-
+    async function fetchGitHubMediaSilent() {
       const allMedia = {
         img: [],
         sounds: [],
@@ -1165,116 +1239,15 @@ HEADER GITHUB API v3 - REQUIS
 
         githubMediaCache = allMedia;
         setCachedMedia(allMedia);
-        processIntelligentFilter();
         
       } catch (error) {
         console.error('Erreur API GitHub:', error);
-        alert('❌ Erreur lors de la récupération des médias GitHub');
-      } finally {
-        btn.classList.remove('loading');
-        btn.disabled = false;
+        throw error;
       }
     }
 /*
 FIN SECTION CRITIQUE GITHUB
 */
-
-    function processIntelligentFilter() {
-      if (!githubMediaCache) return;
-
-      intelligenceContext = {
-        theme: document.getElementById('theme').value.trim(),
-        contentType: document.getElementById('contentType').value,
-        goals: Array.from(document.querySelectorAll('input[name="pedGoals"]:checked')).map(cb => cb.value),
-        keywords: extractKeywords(document.getElementById('theme').value + ' ' + 
-                  Array.from(document.querySelectorAll('input[name="pedGoals"]:checked')).map(cb => cb.value).join(' '))
-      };
-
-      const allFiles = [];
-      for (const [folder, files] of Object.entries(githubMediaCache)) {
-        files.forEach(file => {
-          const relevance = calculateRelevance(file, intelligenceContext);
-          allFiles.push({
-            folder,
-            name: file,
-            relevance: relevance.score,
-            level: relevance.level,
-            reasons: relevance.reasons
-          });
-        });
-      }
-
-      allFiles.sort((a, b) => b.relevance - a.relevance);
-      displayIntelligentResults(allFiles);
-    }
-
-    function displayIntelligentResults(files) {
-      const resultsDiv = document.getElementById('mediaResults');
-      const listDiv = document.getElementById('mediaList');
-      const logDiv = document.getElementById('intelligenceLog');
-      
-      const relevant = files.filter(f => f.level === 'high');
-      const suggested = files.filter(f => f.level === 'medium');
-      const others = files.filter(f => f.level === 'low');
-      
-      document.getElementById('totalMedia').textContent = files.length;
-      document.getElementById('relevantMedia').textContent = relevant.length;
-      document.getElementById('suggestedMedia').textContent = suggested.length;
-      document.getElementById('otherMedia').textContent = others.length;
-
-      let logHtml = '<h4>🧠 Analyse contextuelle :</h4><ul>';
-      logHtml += `<li><strong>Thème :</strong> ${intelligenceContext.theme || 'Non défini'}</li>`;
-      logHtml += `<li><strong>Type :</strong> ${intelligenceContext.contentType || 'Non défini'}</li>`;
-      logHtml += `<li><strong>Mots-clés détectés :</strong> ${intelligenceContext.keywords.slice(0, 8).join(', ') || 'Aucun'}</li>`;
-      logHtml += `<li><strong>Objectifs :</strong> ${intelligenceContext.goals.length} sélectionnés</li>`;
-      logHtml += '</ul>';
-      logDiv.innerHTML = logHtml;
-
-      let html = '';
-      
-      if (relevant.length > 0) {
-        html += '<h4 style="margin:15px 0 10px 0;color:var(--success);">🎯 Médias très pertinents :</h4>';
-        relevant.slice(0, 15).forEach(file => {
-          html += `<div class="media-item relevant">
-            ✅ ${file.folder}/${file.name}
-            <span class="relevance-badge high">PERTINENT</span>
-            <span style="font-size:11px;color:#7F8C8D;margin-left:8px;">${file.reasons.slice(0, 2).join(', ')}</span>
-          </div>`;
-        });
-        if (relevant.length > 15) {
-          html += `<div style="color:#7F8C8D;font-size:12px;margin:5px 0;">... et ${relevant.length - 15} autres</div>`;
-        }
-      }
-
-      if (suggested.length > 0) {
-        html += '<h4 style="margin:15px 0 10px 0;color:var(--warning);">💡 Médias suggérés :</h4>';
-        suggested.slice(0, 10).forEach(file => {
-          html += `<div class="media-item suggested">
-            ✓ ${file.folder}/${file.name}
-            <span class="relevance-badge medium">SUGGÉRÉ</span>
-          </div>`;
-        });
-        if (suggested.length > 10) {
-          html += `<div style="color:#7F8C8D;font-size:12px;margin:5px 0;">... et ${suggested.length - 10} autres</div>`;
-        }
-      }
-
-      if (others.length > 0 && others.length < 50) {
-        html += '<h4 style="margin:15px 0 10px 0;color:var(--info);">📁 Autres disponibles :</h4>';
-        others.slice(0, 5).forEach(file => {
-          html += `<div class="media-item available">○ ${file.folder}/${file.name}</div>`;
-        });
-        if (others.length > 5) {
-          html += `<div style="color:#7F8C8D;font-size:12px;margin:5px 0;">... et ${others.length - 5} autres</div>`;
-        }
-      }
-
-      listDiv.innerHTML = html;
-      resultsDiv.classList.add('visible');
-      
-      document.getElementById('mediaCheckBanner').classList.remove('visible');
-      document.getElementById('mediaCheckSection').classList.remove('needs-check');
-    }
 
     // ===== INITIALISATION =====
     window.addEventListener('DOMContentLoaded', function(){
@@ -1293,15 +1266,9 @@ FIN SECTION CRITIQUE GITHUB
         updateJsonPreview();
       });
 
-      document.getElementById('checkMediaBtn').addEventListener('click', fetchGitHubMedia);
-      
-      document.getElementById('theme').addEventListener('blur', function(){
-        if (this.value.trim() && !githubMediaCache) {
-          setTimeout(() => {
-            document.getElementById('mediaCheckBanner').classList.add('visible');
-            document.getElementById('mediaCheckSection').classList.add('needs-check');
-          }, 500);
-        }
+      // Afficher/masquer options version papier
+      document.getElementById('generatePaperVersion').addEventListener('change', function(){
+        document.getElementById('paperOptionsGroup').style.display = this.checked ? 'block' : 'none';
       });
 
       document.getElementById('applyPresetBtn').addEventListener('click', applyPreset);
@@ -1535,6 +1502,7 @@ FIN SECTION CRITIQUE GITHUB
       const theme = (document.getElementById('theme').value||'').trim() || "Thème du projet";
       const contentType = document.getElementById('contentType').value || "non défini";
       const testMode = document.getElementById('testMode').checked;
+      const paperVersion = document.getElementById('generatePaperVersion').checked;
 
       const jsonPreview = {
         metadata:{
@@ -1574,7 +1542,12 @@ FIN SECTION CRITIQUE GITHUB
           guidanceTopics: getCheckedValues('guidanceTypes')
         },
         design:{ colorPalette: (document.querySelector('input[name="colorPalette"]:checked')||{}).value || null },
-        accessibility:{ features: getCheckedValues('accessibility') }
+        accessibility:{ features: getCheckedValues('accessibility') },
+        paperVersion: paperVersion ? {
+          enabled: true,
+          format: (document.querySelector('input[name="paperFormat"]:checked')||{}).value || null,
+          options: getCheckedValues('paperOptions')
+        } : { enabled: false }
       };
 
       document.getElementById('jsonPreview').innerHTML = syntaxHighlight(JSON.stringify(jsonPreview,null,2));
@@ -1614,20 +1587,39 @@ FIN SECTION CRITIQUE GITHUB
       return ok;
     }
 
-    document.getElementById('promptForm').addEventListener('submit',function(e){
+    // ===== SUBMIT AVEC ANALYSE AUTO =====
+    document.getElementById('promptForm').addEventListener('submit', async function(e){
       e.preventDefault();
       
-      if (!githubMediaCache && document.getElementById('theme').value.trim()) {
-        if (confirm('⚠️ Médias non vérifiés. Voulez-vous analyser maintenant pour optimiser votre contenu ?')) {
-          fetchGitHubMedia();
-          return;
+      if(!validateForm()) return;
+      
+      const btn = document.getElementById('submitBtn');
+      btn.classList.add('loading'); 
+      btn.disabled = true;
+      
+      // Construire contexte complet
+      intelligenceContext = buildCompleteContext();
+      
+      // Vérifier cache ou faire appel API
+      const cached = getCachedMedia();
+      if (!cached) {
+        try {
+          btn.innerHTML = '<span class="spinner"></span><span>🔍 Analyse médias GitHub...</span>';
+          await fetchGitHubMediaSilent();
+          btn.innerHTML = '<span class="spinner"></span><span>📝 Génération prompt...</span>';
+        } catch(error) {
+          console.error('Erreur analyse médias:', error);
         }
+      } else {
+        githubMediaCache = cached;
       }
       
-      if(!validateForm()) return;
-      const btn = document.getElementById('submitBtn');
-      btn.classList.add('loading'); btn.disabled = true;
-      setTimeout(()=>{ generatePrompt(); btn.classList.remove('loading'); btn.disabled=false; }, 500);
+      setTimeout(()=>{ 
+        generatePrompt(); 
+        btn.classList.remove('loading'); 
+        btn.disabled = false;
+        btn.innerHTML = '<span>🚀 Générer le Prompt</span>';
+      }, 500);
     });
 
     document.getElementById('promptForm').addEventListener('reset', function(){
@@ -1640,7 +1632,9 @@ FIN SECTION CRITIQUE GITHUB
         document.getElementById('testMode').checked = true;
         testModeEnabled = true;
         githubMediaCache = null;
-        intelligenceContext = { theme: '', contentType: '', goals: [], keywords: [] };
+        intelligenceContext = { theme: '', contentType: '', goals: [], interactions: [], rewards: '', narrativeStyle: '', keywords: [] };
+        document.getElementById('generatePaperVersion').checked = false;
+        document.getElementById('paperOptionsGroup').style.display = 'none';
         document.querySelectorAll('.form-group').forEach(group => {
           group.classList.remove('disabled-field');
           const existingTooltip = group.querySelector('.disabled-tooltip');
@@ -1651,9 +1645,6 @@ FIN SECTION CRITIQUE GITHUB
             field.disabled = false;
           });
         });
-        document.getElementById('mediaResults').classList.remove('visible');
-        document.getElementById('mediaCheckBanner').classList.remove('visible');
-        document.getElementById('mediaCheckSection').classList.remove('needs-check');
         updateGoalsCount();
         updateJsonPreview();
       },100);
@@ -1698,6 +1689,11 @@ FIN SECTION CRITIQUE GITHUB
       const colorPalette = (document.querySelector('input[name="colorPalette"]:checked')||{}).value;
       const accessibility = Array.from(document.querySelectorAll('input[name="accessibility"]:checked')).map(cb=>cb.value);
 
+      // VERSION PAPIER
+      const generatePaper = document.getElementById('generatePaperVersion').checked;
+      const paperFormat = generatePaper ? (document.querySelector('input[name="paperFormat"]:checked')||{}).value : null;
+      const paperOptions = generatePaper ? Array.from(document.querySelectorAll('input[name="paperOptions"]:checked')).map(cb=>cb.value) : [];
+
       const presetUsed = PRESETS[contentType] ? {
         narrativeStyle: PRESETS[contentType].narrativeStyle,
         goals: PRESETS[contentType].goals,
@@ -1714,6 +1710,7 @@ FIN SECTION CRITIQUE GITHUB
         parentalAssistance: { guidanceType: parentalGuidance, guidanceTopics: guidanceTypes },
         design: { colorPalette },
         accessibility: { features: accessibility },
+        paperVersion: generatePaper ? { enabled: true, format: paperFormat, options: paperOptions } : { enabled: false },
         technicalRequirements: {
           format: "HTML5 standalone",
           fileSize: "< 350 KB",
@@ -1732,7 +1729,7 @@ FIN SECTION CRITIQUE GITHUB
         workflow: {
           step1: "Analyze this JSON specification",
           step2: "Propose small plan in TXT format",
-          step3: "generating HTML"          
+          step3: "generating HTML" + (generatePaper ? " + paper document" : "")
         },
         blueprint: presetUsed
       };
@@ -1743,130 +1740,178 @@ FIN SECTION CRITIQUE GITHUB
         for (const [folder, files] of Object.entries(githubMediaCache)) {
           files.forEach(file => {
             const relevance = calculateRelevance(file, intelligenceContext);
-            if (relevance.score >= 5) {
-              allFiles.push({ folder, name: file, relevance: relevance.score, level: relevance.level });
+            if (relevance.score >= 8) {
+              allFiles.push({ 
+                folder, 
+                name: file, 
+                relevance: relevance.score, 
+                level: relevance.level,
+                reasons: relevance.reasons 
+              });
             }
           });
         }
         allFiles.sort((a, b) => b.relevance - a.relevance);
         
-        mediaTableSection = `\n### 🎯 MÉDIAS PERTINENTS DÉTECTÉS (${allFiles.length})\n\n`;
-        const top25 = allFiles.slice(0, 25);
-        top25.forEach(f => {
-          const badge = f.level === 'high' ? '🎯 TRÈS PERTINENT' : '💡 SUGGÉRÉ';
-          mediaTableSection += `${badge} → ${f.folder}/${f.name}\n`;
-        });
-        if (allFiles.length > 25) {
-          mediaTableSection += `\n... et ${allFiles.length - 25} autres médias disponibles\n`;
+        mediaTableSection = `
+### 🧠 ANALYSE INTELLIGENTE AUTOMATIQUE
+
+**Contexte détecté :**
+- Thème : ${intelligenceContext.theme || 'Non défini'}
+- Type : ${intelligenceContext.contentType || 'Non défini'}
+- Objectifs : ${intelligenceContext.goals.length} sélectionnés
+- Interactions : ${intelligenceContext.interactions.join(', ') || 'Aucune'}
+- Récompenses : ${intelligenceContext.rewards || 'Non défini'}
+- Mots-clés : ${intelligenceContext.keywords.slice(0, 12).join(', ')}
+
+### 🎯 MÉDIAS PERTINENTS (${allFiles.length} trouvés)
+
+`;
+        
+        const highRelevance = allFiles.filter(f => f.level === 'high');
+        const mediumRelevance = allFiles.filter(f => f.level === 'medium');
+        
+        if (highRelevance.length > 0) {
+          mediaTableSection += `**🎯 TRÈS PERTINENTS (${highRelevance.length}) :**\n`;
+          highRelevance.slice(0, 20).forEach(f => {
+            mediaTableSection += `  ✅ ${f.folder}/${f.name} — ${f.reasons.slice(0, 2).join(', ')}\n`;
+          });
+          if (highRelevance.length > 20) {
+            mediaTableSection += `  ... et ${highRelevance.length - 20} autres\n`;
+          }
+          mediaTableSection += '\n';
         }
-        mediaTableSection += `\n**Instruction :** Utilise prioritairement les médias listés ci-dessus. Si un média manque, affiche-le dans le tableau final.\n`;
+        
+        if (mediumRelevance.length > 0) {
+          mediaTableSection += `**💡 SUGGÉRÉS (${mediumRelevance.length}) :**\n`;
+          mediumRelevance.slice(0, 15).forEach(f => {
+            mediaTableSection += `  ✓ ${f.folder}/${f.name}\n`;
+          });
+          if (mediumRelevance.length > 15) {
+            mediaTableSection += `  ... et ${mediumRelevance.length - 15} autres\n`;
+          }
+        }
+        
+        mediaTableSection += `\n**📋 Instruction :** Utilise prioritairement les médias TRÈS PERTINENTS, puis les SUGGÉRÉS si besoin.\n`;
       } else {
-        mediaTableSection = `\n### ⚠️ Vérification médias non effectuée\nClique sur "🔍 Analyser médias" avant de générer pour optimiser.\n`;
+        mediaTableSection = `\n⚠️ Analyse médias échouée (erreur réseau ou cache vide)\n`;
+      }
+
+      // SECTION VERSION PAPIER
+      let paperVersionSection = '';
+      if (generatePaper) {
+        paperVersionSection = `
+## 📄 GÉNÉRATION VERSION PAPIER (OBLIGATOIRE)
+
+**Format demandé :** ${paperFormat}
+**Options :** ${paperOptions.join(', ') || 'Aucune'}
+
+### Instructions pour la version papier :
+
+1. **Structure du document :**
+   - Format A4 (21cm x 29.7cm)
+   - Marges : 2cm sur tous les côtés
+   - Police adaptée enfants : Comic Sans MS ou Arial 14pt minimum
+   - En-tête avec titre du contenu + âge recommandé
+   - Pied de page avec numérotation + "dznet1.com"
+
+2. **Contenu adapté selon le type :**
+   ${contentType === 'quiz' || contentType === 'exercice' ? `
+   - Questions clairement numérotées (1, 2, 3...)
+   - Espace de réponse (3-4 lignes) sous chaque question
+   - Grille de réponses vierge en dernière page
+   - Corrigé détaillé sur page séparée` : ''}
+   
+   ${contentType === 'coloriage' ? `
+   - Images en noir & blanc (contours épais 2-3pt)
+   - Zones de coloriage bien délimitées
+   - Légendes sous chaque image
+   - Palette de couleurs suggérées en bas de page` : ''}
+   
+   ${contentType === 'histoire' ? `
+   - Texte complet de l'histoire
+   - Illustrations noir & blanc à colorier
+   - Questions de compréhension à la fin
+   - Espace pour dessiner sa propre fin` : ''}
+   
+   ${contentType === 'puzzle' || contentType === 'labyrinthe' ? `
+   - Puzzle/labyrinthe en grand format (A4 complet)
+   - Lignes de découpage en pointillés
+   - Instructions de montage/résolution
+   - Solution en page séparée` : ''}
+
+3. **Éléments obligatoires :**
+   ${paperOptions.includes('Images en noir & blanc pour coloriage') ? '- Toutes images converties en noir & blanc (contours nets)\n   ' : ''}
+   ${paperOptions.includes('Grilles de réponses vierges') ? '- Grille de réponses format tableau (Question | Réponse)\n   ' : ''}
+   ${paperOptions.includes('Corrigé pour parents/enseignants') ? '- Page CORRIGÉ avec : réponses + explications + objectifs pédagogiques\n   ' : ''}
+   ${paperOptions.includes('Espace pour notes libres') ? '- Section "Notes libres" (5-6 lignes) en fin de document\n   ' : ''}
+   ${paperOptions.includes('Numérotation des pages') ? '- Numérotation format "Page X sur Y" en pied de page\n   ' : ''}
+   ${paperOptions.includes('QR code vers version interactive') ? '- QR code pointant vers dznet1.com (taille 3x3cm, coin supérieur droit)\n   ' : ''}
+
+4. **Format de livraison :**
+   ${paperFormat && paperFormat.includes('PDF') ? `
+   - Générer avec python-docx puis convertir en PDF via pypdf2
+   - PDF/A-1b (archivage long terme)
+   - Pas de formulaires interactifs (pour impression)
+   ` : ''}
+   
+   ${paperFormat && paperFormat.includes('DOCX') ? `
+   - Utiliser python-docx
+   - Styles prédéfinis : Titre1, Titre2, Normal
+   - Tableaux avec bordures visibles
+   - Images ancrées au paragraphe
+   ` : ''}
+
+5. **Code Python pour générer le document :**
+   - Utiliser python-docx pour DOCX
+   - Utiliser reportlab ou fpdf pour PDF direct
+   - Inclure le code complet avec commentaires
+   - Fonction principale : generate_paper_version()
+
+**IMPORTANT :** La version papier DOIT être générée automatiquement par le code Python fourni. Ne pas se contenter de décrire, PRODUIRE le document.
+`;
       }
 
       const prompt =
-`# 🎯 PROMPT CRÉATION CONTENU HTML INTERACTIF ENFANT - v2.1 COMPLET
+`# 🎯 PROMPT CRÉATION CONTENU HTML INTERACTIF ENFANT - v2.1 FINAL
 
 ## OBJECTIF
-Créer un contenu pédagogique interactif pour **dznet1.com**, totalement **responsive**, **accessible**, **SEO**, compatible **PC/Mobile** (sans débordement), avec **zone publicitaire**.
+Créer un contenu pédagogique interactif pour **dznet1.com**, totalement **responsive**, **accessible**, **SEO**, compatible **PC/Mobile**${generatePaper ? ' + **Version papier imprimable**' : ''}.
 
 ${mediaTableSection}
 
 ${testMode ? `
 ⚠️ **MODE TEST ACTIVÉ** ⚠️
 - Chemins médias : /images/ et /audio/ (locaux) pour test PC
-- Structure attendue : dossier /images/ et /audio/ à côté du HTML
 - Fallback automatique : si média introuvable → affiche le nom du fichier
-  Exemple: <img src="images/ALGER.jpg" alt="ALGER.jpg" onerror="this.outerHTML='<span>❌ ALGER.jpg</span>'">
-- Pour audio : <audio src="audio/exemple.wav" onerror="this.outerHTML='<span>🔇 exemple.wav</span>'"></audio>
-- Génère un tableau bien structuré visuellement de médias attendus (sans HTML) : Élément | FR | EN | AR | Image | Audio FR | Audio EN | Audio AR
+- Génère un tableau bien structuré visuellement de médias attendus (sans HTML)
 ` : `
 🌐 **MODE PRODUCTION**
 - Utiliser les CDN distants (https://dznet1.com/cdn-cgi/image/...)
-- Nommage: YYYYMMDD_nom_simplifie.ext
 `}
 
-## EXIGENCES
-- SEO : 1 H1, H2/H3 hiérarchisés, meta-description 150–160c, mots-clés naturels, CTA final
+${paperVersionSection}
+
+## EXIGENCES TECHNIQUES
+- SEO : 1 H1, H2/H3, meta-description, mots-clés naturels
 - Logo (sticky) : https://dznet1.com/images/logo.png
-- Titre/H1 suffixe : « {Titre} — Catégorie : {Categorie} — Âge : {Age}+ »
-- Metas :
-  <meta name="content-category" content="{Categorie}">
-  <meta name="content-age" content="{Age}">
-- JSON-LD :
-  "educationalUse": "{Categorie}",
-  "typicalAgeRange": "{Age}+"
-
-### Publicité (après header)
-<div class="ad-banner">
-  <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" alt="Publicité partenaire" />
-</div>
-
-### Footer distant
-<div id="footer-placeholder"></div>
-<script>
-fetch("https://dznet1.com/intranet/footer.html").then(r=>r.text()).then(h=>{document.getElementById("footer-placeholder").innerHTML=h}).catch(()=>{});
-<script>
-
-### i18n
-Par défaut FR/EN/AR (Algérie) + sélecteur de langue (drapeaux).
-
-### Analytics (head)
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"><script>
-<script>
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CRRK6Z4D1X');
-<script>
-
-### Responsive / anti-débordement
-Feuille distante : https://dznet1.com/assets/css/main.css
-
-### Accessibilité
-Navigation clavier, focus visible, aria-label, alt descriptifs, contraste ≥ 4.5:1.
-
-${testMode ? `
-### Gestion d'erreur média (MODE TEST)
-Ajouter ce script global AVANT le </body> :
-<script>
-// Fallback global pour images
-document.querySelectorAll('img').forEach(img => {
-  img.onerror = function() {
-    const filename = this.src.split('/').pop();
-    this.outerHTML = '<span class="media-fallback">❌ ' + filename + '</span>';
-  };
-});
-
-// Fallback global pour audio
-document.querySelectorAll('audio').forEach(audio => {
-  audio.addEventListener('error', function() {
-    const filename = this.src.split('/').pop();
-    this.outerHTML = '<span class="media-fallback">🔇 ' + filename + '</span>';
-  });
-});
-
-
-<style>
-.media-fallback {
-  display: inline-block;
-  background: #FFF3CD;
-  border: 2px dashed #FFB938;
-  padding: 8px 12px;
-  border-radius: 6px;
-  color: #856404;
-  font-weight: 600;
-  font-family: monospace;
-  font-size: 13px;
-}
-</style>
-` : ''}
+- Analytics : gtag.js (G-CRRK6Z4D1X)
+- Responsive : https://dznet1.com/assets/css/main.css
+- Footer distant : https://dznet1.com/intranet/footer.html
+- i18n : FR/EN/AR + sélecteur drapeaux
+- Accessibilité : WCAG 2.1 AA, navigation clavier, aria-label
 
 ---
 
 ## SPÉCIFICATIONS DU PROJET (JSON)
 ${JSON.stringify(promptData, null, 2)}
 
-- [ ] Afficher Version ${projectVersion}
-- [ ] ${githubMediaCache ? 'Utiliser médias pertinents listés' : 'Générer sans vérification médias'}
-- [ ] Générer le **fichier HTML final complet**.`;
+---
+
+**[ ] Afficher Version ${projectVersion}**
+**[ ] ${githubMediaCache ? 'Utiliser médias pertinents listés' : 'Générer sans vérification médias'}**
+${generatePaper ? '**[ ] Générer version papier avec code Python complet**\n' : ''}
+**[ ] Générer le fichier HTML final complet**`;
 
       document.getElementById('promptOutputModal').textContent = prompt;
       openResultModal();
@@ -1907,3 +1952,9 @@ Utiliser le format JSON pour de meilleurs résultats.`;
   </script>
 </body>
 </html>
+```
+
+---
+ 
+
+**Teste et confirme si tout fonctionne !** 🚀

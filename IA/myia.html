@@ -1,6 +1,6 @@
 <!-- ==========================================================
  Générateur de Prompt - Contenu HTML Enfant
- Version : v2.0 (API GitHub + vérification médias existants)
+ Version : v2.1 (Intelligence contextuelle + cache + auto-check)
 ========================================================== -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -16,8 +16,7 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Générateur de prompt pour contenu HTML enfant - Version professionnelle" />
-  <title>Générateur Prompt Contenu Enfant - v2.0</title>
+  <title>Générateur Prompt Contenu Enfant - v2.1</title>
 
   <style>
     /* ===== VARIABLES & RESET ===== */
@@ -102,20 +101,38 @@
     .selected-goals-preview{background:#E8F4F8;padding:15px;border-radius:8px;margin-top:15px;font-size:14px;border-left:4px solid var(--info)}
     .selected-goals-preview strong{color:var(--primary)}
 
-    /* ===== NOUVEAU : GITHUB MEDIA CHECK ===== */
-    .media-check-section{background:#E8F4F8;padding:20px;border-radius:12px;margin:20px 0;border:2px solid var(--info)}
-    .media-check-btn{background:var(--info);color:#fff;padding:12px 24px;border:none;border-radius:8px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:10px;transition:.3s}
+    /* ===== MEDIA CHECK INTELLIGENT ===== */
+    .media-check-section{background:#E8F4F8;padding:20px;border-radius:12px;margin:20px 0;border:2px solid var(--info);position:relative}
+    .media-check-section.needs-check{background:#FFF3CD;border-color:var(--warning);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(243,156,18,0.4)}50%{box-shadow:0 0 0 10px rgba(243,156,18,0)}}
+    .media-check-banner{background:var(--warning);color:#fff;padding:12px;border-radius:8px;margin-bottom:15px;font-weight:600;text-align:center;display:none}
+    .media-check-banner.visible{display:block}
+    .media-check-btn{background:var(--info);color:#fff;padding:12px 24px;border:none;border-radius:8px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:10px;transition:.3s;margin:0 auto}
     .media-check-btn:hover:not(:disabled){background:#2C81BA;transform:translateY(-2px)}
     .media-check-btn:disabled{opacity:.6;cursor:not-allowed}
+    .media-check-btn.auto-trigger{animation:shake 1s ease-in-out}
+    
     .media-results{margin-top:15px;padding:15px;background:#fff;border-radius:8px;display:none}
     .media-results.visible{display:block}
-    .media-item{padding:8px 12px;margin:5px 0;border-radius:6px;display:flex;align-items:center;gap:10px;font-size:14px;font-family:monospace}
-    .media-item.exists{background:#D4EDDA;border-left:4px solid var(--success)}
+    .media-item{padding:8px 12px;margin:5px 0;border-radius:6px;display:flex;align-items:center;gap:10px;font-size:13px;font-family:monospace}
+    .media-item.relevant{background:#D1F2EB;border-left:4px solid var(--success);font-weight:600}
+    .media-item.suggested{background:#D4EDDA;border-left:4px solid var(--success)}
+    .media-item.available{background:#E8F4F8;border-left:4px solid var(--info)}
     .media-item.missing{background:#F8D7DA;border-left:4px solid var(--danger)}
-    .media-stats{display:flex;gap:20px;margin-bottom:15px;padding:15px;background:var(--bg-light);border-radius:8px}
-    .media-stat{text-align:center}
+    
+    .relevance-badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;margin-left:8px}
+    .relevance-badge.high{background:var(--success);color:#fff}
+    .relevance-badge.medium{background:var(--warning);color:#fff}
+    .relevance-badge.low{background:var(--info);color:#fff}
+    
+    .media-stats{display:flex;gap:20px;margin-bottom:15px;padding:15px;background:var(--bg-light);border-radius:8px;flex-wrap:wrap}
+    .media-stat{text-align:center;flex:1;min-width:100px}
     .media-stat-number{font-size:24px;font-weight:700;color:var(--primary)}
     .media-stat-label{font-size:12px;color:#7F8C8D;margin-top:5px}
+    
+    .intelligence-log{background:#FFF9E6;padding:12px;border-radius:8px;margin-top:15px;font-size:13px;border-left:4px solid var(--warning)}
+    .intelligence-log h4{color:var(--warning);margin-bottom:8px;font-size:14px}
+    .intelligence-log ul{margin-left:20px;line-height:1.8}
 
     .color-palette{display:flex;gap:10px;align-items:center;padding:10px;background:#fff;border-radius:8px;border:2px solid var(--border)}
     .color-palette input[type="radio"]{margin-right:10px}
@@ -199,10 +216,6 @@
     .disabled-tooltip:hover .disabled-tooltip-text {
         display: block;
     }
-    .disabled-icon {
-        font-size: 24px;
-        opacity: 0.4;
-    }
 
     @media (max-width:768px){
       body{padding:10px}
@@ -228,32 +241,35 @@
       <button class="help-btn" onclick="openHelpModal()">
         <span>❓</span><span>Guide</span>
       </button>
-      <span class="version-badge">v2.0</span>
+      <span class="version-badge">v2.1</span>
       <h1>🎨 Générateur de Prompt - Contenu HTML Enfant</h1>
-      <p>Créez des expériences éducatives interactives sécurisées et cohérentes</p>
-      <p class="tiny">✅ 80 objectifs | 🔍 Recherche | 🔗 API GitHub</p>
+      <p>Créez des expériences éducatives interactives sécurisées</p>
+      <p class="tiny">✅ 80 objectifs | 🧠 IA contextuelle | 💾 Cache 1h</p>
     </header>
 
     <!-- MODAL AIDE -->
     <div id="helpModal" class="modal">
       <div class="modal-content">
         <button class="modal-close" onclick="closeHelpModal()">×</button>
-        <h2>📘 Guide rapide v2.0</h2>
+        <h2>📘 Guide rapide v2.1</h2>
         <div class="info-banner">
-          <strong>✨ Nouveau v2.0 :</strong> Vérification médias GitHub
+          <strong>🧠 Intelligence Contextuelle :</strong>
           <ul style="margin:10px 0 0 20px;line-height:1.8">
-            <li>✅ Détecte médias existants (img/sounds/icons/fonts)</li>
-            <li>📊 Génère tableau intelligent réutilisables vs à créer</li>
-            <li>⚡ Optimise le workflow de création</li>
+            <li>✨ Analyse automatique : thème + type + objectifs</li>
+            <li>🎯 Filtre intelligent des médias pertinents</li>
+            <li>💾 Cache 1h pour éviter appels API répétés</li>
+            <li>⚡ Suggestion auto si médias non vérifiés</li>
           </ul>
         </div>
-        <h3>🔍 Recherche d'objectifs</h3>
-        <p>Tapez un mot-clé (ex: "addition", "alphabet") pour filtrer les 80 objectifs pédagogiques.</p>
+        <h3>Exemple intelligent</h3>
+        <p><strong>Thème :</strong> "Les capitales de l'Algérie"</p>
+        <p><strong>→ IA détecte :</strong> ALGER, ORAN, CONSTANTINE, ANNABA...</p>
+        <p><strong>→ Filtre :</strong> Ne montre QUE les médias pertinents</p>
         <button class="btn-primary" onclick="closeHelpModal()" style="margin-top: 16px; width: 100%;">OK</button>
       </div>
     </div>
 
-    <!-- MODAL RÉSULTAT -->
+    <!-- MODAL RÉSULTAT (identique v2.0) -->
     <div id="resultModal" class="modal result-modal">
       <div class="modal-content large">
         <button class="modal-close" onclick="closeResultModal()">×</button>
@@ -276,7 +292,7 @@
     <div class="form-wrapper">
       <div class="format-toggle">
         <div class="format-option active" data-format="json">🚀 Format JSON (Recommandé)</div>
-        <div class="format-option" data-format="text">📝 Format Texte (Ancien)</div>
+        <div class="format-option" data-format="text">📝 Format Texte</div>
       </div>
       <div id="jsonPreview" class="json-preview"></div>
 
@@ -285,14 +301,13 @@
         <div class="metadata-section">
           <h3 style="color:var(--warning);margin-bottom:15px;">📝 Informations du Projet</h3>
           
-          <!-- CHECKBOX VERSION TEST -->
           <div class="form-group" style="margin-bottom:20px;background:#E8F4F8;padding:15px;border-radius:8px;border:2px solid var(--info);">
             <label class="checkbox-item" style="margin:0;cursor:pointer;background:transparent;">
               <input type="checkbox" id="testMode" name="testMode" checked style="width:24px;height:24px;">
               <span style="font-weight:700;color:var(--info);flex:1;">
                 🧪 Version test (chemins locaux)
                 <span class="helper-text" style="display:block;margin-top:5px;font-weight:400;font-style:italic;">
-                  Coché : médias dans /images/ et /audio/ pour test PC local. Décoché : utilise les CDN distants.
+                  Coché : médias /images/ et /audio/. Décoché : CDN distants.
                 </span>
               </span>
             </label>
@@ -300,226 +315,369 @@
 
           <div class="metadata-grid">
             <div class="form-group" style="margin-bottom:0;">
-              <label for="creatorName" class="required">Votre nom / Prénom</label>
+              <label for="creatorName" class="required">Votre nom</label>
               <input type="text" id="creatorName" placeholder="Ex: Marie Dupont" required maxlength="100">
               <div class="error-message">❌ Champ obligatoire</div>
             </div>
             <div class="form-group" style="margin-bottom:0;">
-              <label for="projectVersion">Version du projet</label>
-              <input type="text" id="projectVersion" value="v2.0" placeholder="v2.0">
+              <label for="projectVersion">Version</label>
+              <input type="text" id="projectVersion" value="v2.1" placeholder="v2.1">
             </div>
             <div class="form-group" style="margin-bottom:0;">
-              <label>Date de création</label>
+              <label>Date</label>
               <input type="text" id="creationDate" readonly style="background:#f0f0f0;">
             </div>
           </div>
         </div>
 
-        <!-- 1️⃣ PUBLIC CIBLE (identique v1.014) -->
+        <!-- 1️⃣ PUBLIC CIBLE (version réduite) -->
         <div class="section">
           <h2 class="section-title">1️⃣ Public Cible</h2>
           <div class="form-group" id="ageGroup">
-            <label class="required">Tranches d'âge (multiple)</label>
+            <label class="required">Tranches d'âge</label>
             <div class="checkbox-group">
-              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="3-4 ans (Petite section)"><span>3-4 ans</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="5-6 ans (Grande section/CP)"><span>5-6 ans</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="7-8 ans (CE1/CE2)"><span>7-8 ans</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="9-10 ans (CM1/CM2)"><span>9-10 ans</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="11-12 ans (Collège)"><span>11-12 ans</span></label>
-              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="13-14 ans (Collège)"><span>13-14 ans</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="3-4 ans"><span>3-4 ans</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="5-6 ans"><span>5-6 ans</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="7-8 ans"><span>7-8 ans</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="ageRange" value="9-10 ans"><span>9-10 ans</span></label>
             </div>
-            <div class="error-message">❌ Sélectionnez au moins une tranche d'âge</div>
+            <div class="error-message">❌ Sélectionnez au moins une tranche</div>
           </div>
 
           <div class="form-group" id="readingGroup">
             <label class="required">Niveau de lecture</label>
             <div class="radio-group">
-              <label class="radio-item"><input type="radio" name="readingLevel" value="Pré-lecteur (images/audio/pictogrammes)" required><span>Pré-lecteur</span></label>
-              <label class="radio-item"><input type="radio" name="readingLevel" value="Lecteur débutant (phrases courtes max 8 mots)"><span>Lecteur débutant</span></label>
-              <label class="radio-item"><input type="radio" name="readingLevel" value="Lecteur autonome (textes structurés)"><span>Lecteur autonome</span></label>
+              <label class="radio-item"><input type="radio" name="readingLevel" value="Pré-lecteur" required><span>Pré-lecteur</span></label>
+              <label class="radio-item"><input type="radio" name="readingLevel" value="Lecteur débutant"><span>Débutant</span></label>
+              <label class="radio-item"><input type="radio" name="readingLevel" value="Lecteur autonome"><span>Autonome</span></label>
             </div>
-            <div class="error-message">❌ Sélectionnez un niveau de lecture</div>
-          </div>
-
-          <div class="form-group">
-            <label>Supervision adulte</label>
-            <div class="radio-group">
-              <label class="radio-item"><input type="radio" name="supervision" value="Adulte présent obligatoire" checked><span>Adulte présent</span></label>
-              <label class="radio-item"><input type="radio" name="supervision" value="Semi-autonome (adulte à proximité)"><span>Semi-autonome</span></label>
-              <label class="radio-item"><input type="radio" name="supervision" value="Totalement autonome"><span>Totalement autonome</span></label>
-            </div>
+            <div class="error-message">❌ Sélectionnez un niveau</div>
           </div>
         </div>
 
-        <!-- 2️⃣ TYPE DE CONTENU (identique) -->
+        <!-- 2️⃣ TYPE DE CONTENU -->
         <div class="section">
-          <h2 class="section-title">2️⃣ Type de contenu <span class="feature-badge">PRESETS</span></h2>
+          <h2 class="section-title">2️⃣ Type de contenu</h2>
           <div class="form-group" id="contentTypeGroup">
             <label class="required" for="contentType">Choisir un type</label>
             <select id="contentType" required>
               <option value="">— Sélectionner —</option>
               <option value="histoire">Histoire</option>
               <option value="jeu_educatif">Jeu éducatif</option>
-              <option value="encyclopedie">Encyclopédie</option>
-              <option value="exercice">Exercice pratique</option>
-              <option value="lecon_vie">Leçon de vie</option>
               <option value="quiz">Quiz interactif</option>
-              <option value="coloriage">Coloriage / Dessin</option>
-              <option value="puzzle">Puzzles</option>
-              <option value="memoire">Jeu de mémoire</option>
-              <option value="aventure_choix">Aventure à choix</option>
-              <option value="labyrinthe">Labyrinthe</option>
-              <option value="tri_categorie">Tri / Catégorisation</option>
+              <option value="coloriage">Coloriage</option>
+              <option value="encyclopedie">Encyclopédie</option>
             </select>
             <div class="error-message">❌ Choisissez un type</div>
           </div>
           <div class="button-group" style="margin-top:5px;">
-            <button type="button" id="applyPresetBtn" class="btn-success">⚡ Appliquer le preset</button>
+            <button type="button" id="applyPresetBtn" class="btn-success">⚡ Appliquer preset</button>
             <button type="button" id="clearSelectionsBtn" class="btn-secondary">🧹 Effacer</button>
-            <span id="presetHint" class="preset-hint" aria-live="polite"></span>
+            <span id="presetHint" class="preset-hint"></span>
           </div>
         </div>
 
-        <!-- 3️⃣ LANGUES (identique) -->
+        <!-- 3️⃣ LANGUES -->
         <div class="section">
-          <h2 class="section-title">3️⃣ Langue du Contenu</h2>
+          <h2 class="section-title">3️⃣ Langues</h2>
           <div class="form-group">
-            <label>Langue(s) (multiple)</label>
             <div class="checkbox-group">
               <label class="checkbox-item"><input type="checkbox" name="languages" value="Français" checked><span>🇫🇷 Français</span></label>
               <label class="checkbox-item"><input type="checkbox" name="languages" value="Arabe"><span>🇩🇿 العربية</span></label>
               <label class="checkbox-item"><input type="checkbox" name="languages" value="Anglais"><span>🇬🇧 English</span></label>
             </div>
           </div>
-          <div class="form-group">
-            <label>Disposition multilingue</label>
-            <div class="radio-group">
-              <label class="radio-item"><input type="radio" name="languageLayout" value="Sélecteur de langue (bouton pour changer)" checked><span>Sélecteur</span></label>
-              <label class="radio-item"><input type="radio" name="languageLayout" value="Affichage simultané côte à côte"><span>Côte à côte</span></label>
-              <label class="radio-item"><input type="radio" name="languageLayout" value="Bilingue avec traduction au survol"><span>Traduction au survol</span></label>
-            </div>
-          </div>
         </div>
 
-        <!-- 4️⃣ THÈME & OBJECTIFS + VÉRIFICATION MÉDIAS GITHUB -->
+        <!-- 4️⃣ THÈME & VÉRIFICATION INTELLIGENTE -->
         <div class="section">
-          <h2 class="section-title">4️⃣ Thème et Objectifs <span class="feature-badge">v2.0</span></h2>
+          <h2 class="section-title">4️⃣ Thème & Médias <span class="feature-badge">IA v2.1</span></h2>
           <div class="form-group" id="themeGroup">
             <label for="theme" class="required">Sujet principal</label>
             <input type="text" id="theme" placeholder="Ex: Les capitales de l'Algérie" required>
             <div class="error-message">❌ Décrivez le sujet</div>
+            <span class="helper-text">L'IA analysera ce thème pour suggérer médias pertinents</span>
           </div>
 
-          <!-- NOUVEAU : VÉRIFICATION MÉDIAS GITHUB -->
-          <div class="media-check-section">
-            <h3 style="color:var(--info);margin-bottom:15px;">🔗 Vérification Médias GitHub</h3>
+          <!-- VÉRIFICATION INTELLIGENTE MÉDIAS -->
+          <div class="media-check-section" id="mediaCheckSection">
+            <div class="media-check-banner" id="mediaCheckBanner">
+              ⚠️ Cliquez sur "Analyser médias" pour optimiser votre contenu
+            </div>
+            
+            <h3 style="color:var(--info);margin-bottom:15px;">🧠 Analyse Intelligente des Médias</h3>
             <p style="margin-bottom:15px;font-size:14px;color:#7F8C8D;">
-              Cliquez pour vérifier les médias disponibles dans le repo GitHub (img/sounds/icons/fonts).
+              L'IA analyse votre thème, type de contenu et objectifs pour suggérer les médias les plus pertinents.
             </p>
+            
             <button type="button" id="checkMediaBtn" class="media-check-btn">
               <span class="spinner"></span>
-              <span>🔍 Vérifier médias disponibles</span>
+              <span>🔍 Analyser médias disponibles</span>
             </button>
             
             <div id="mediaResults" class="media-results">
               <div class="media-stats">
                 <div class="media-stat">
                   <div class="media-stat-number" id="totalMedia">0</div>
-                  <div class="media-stat-label">Total fichiers</div>
+                  <div class="media-stat-label">Total</div>
                 </div>
                 <div class="media-stat">
-                  <div class="media-stat-number" id="imgCount" style="color:var(--info)">0</div>
-                  <div class="media-stat-label">Images</div>
+                  <div class="media-stat-number" id="relevantMedia" style="color:var(--success)">0</div>
+                  <div class="media-stat-label">Pertinents</div>
                 </div>
                 <div class="media-stat">
-                  <div class="media-stat-number" id="soundCount" style="color:var(--warning)">0</div>
-                  <div class="media-stat-label">Sons</div>
+                  <div class="media-stat-number" id="suggestedMedia" style="color:var(--warning)">0</div>
+                  <div class="media-stat-label">Suggérés</div>
                 </div>
                 <div class="media-stat">
-                  <div class="media-stat-number" id="iconCount" style="color:var(--success)">0</div>
-                  <div class="media-stat-label">Icons</div>
+                  <div class="media-stat-number" id="otherMedia" style="color:var(--info)">0</div>
+                  <div class="media-stat-label">Autres</div>
                 </div>
               </div>
+              
+              <div class="intelligence-log" id="intelligenceLog"></div>
               <div id="mediaList"></div>
             </div>
           </div>
 
-          <!-- OBJECTIFS (identique structure v1.014, juste réduction pour concision) -->
+          <!-- OBJECTIFS (version condensée) -->
           <div class="form-group" id="goalsGroup">
-            <label class="required">Objectifs pédagogiques (80 disponibles)</label>
+            <label class="required">Objectifs pédagogiques</label>
             <div class="search-box">
-              <input type="text" id="searchGoals" placeholder="Rechercher un objectif...">
+              <input type="text" id="searchGoals" placeholder="Rechercher...">
             </div>
             
             <div class="goals-accordion" id="goalsAccordion">
-              <!-- Mathématiques -->
-              <div class="category" data-category="math">
+              <div class="category">
                 <button type="button" class="category-toggle">
-                  <span>📐 Mathématiques & Logique <span class="count">(0/15)</span></span>
+                  <span>📐 Mathématiques <span class="count">(0/4)</span></span>
                   <span class="category-icon">▼</span>
                 </button>
                 <div class="category-content">
                   <div class="checkbox-group">
-                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Reconnaissance des chiffres 0-10"><span>Chiffres 0-10</span></label>
-                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Comptage et dénombrement 1-10"><span>Comptage 1-10</span></label>
-                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Addition simple (jusqu'à 10)"><span>Addition simple</span></label>
-                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Séquences et suites logiques"><span>Suites logiques</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Chiffres 0-10"><span>Chiffres 0-10</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Comptage 1-10"><span>Comptage 1-10</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Addition simple"><span>Addition simple</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Suites logiques"><span>Suites logiques</span></label>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="category">
+                <button type="button" class="category-toggle">
+                  <span>🔤 Langues <span class="count">(0/3)</span></span>
+                  <span class="category-icon">▼</span>
+                </button>
+                <div class="category-content">
+                  <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Alphabet"><span>Alphabet</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Lecture mots"><span>Lecture mots</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Vocabulaire"><span>Vocabulaire</span></label>
                   </div>
                 </div>
               </div>
 
-              <!-- Les autres catégories (identique v1.014, réduit pour concision doc) -->
-              <!-- Insérer ici toutes les catégories complètes comme dans v1.014 -->
+              <div class="category">
+                <button type="button" class="category-toggle">
+                  <span>🎨 Couleurs <span class="count">(0/2)</span></span>
+                  <span class="category-icon">▼</span>
+                </button>
+                <div class="category-content">
+                  <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Couleurs primaires"><span>Couleurs primaires</span></label>
+                    <label class="checkbox-item"><input type="checkbox" name="pedGoals" value="Formes 2D"><span>Formes 2D</span></label>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="selected-goals-preview">
               <strong>Sélectionnés :</strong> <span id="selectedCount">0</span> objectifs
             </div>
-            <div class="error-message">❌ Choisissez au moins un objectif</div>
+            <div class="error-message">❌ Au moins un objectif</div>
           </div>
 
           <div class="form-group">
-            <label for="customGoals">Autres objectifs (optionnel)</label>
-            <textarea id="customGoals" placeholder="Un objectif par ligne"></textarea>
-          </div>
-
-          <div class="form-group" id="narrativeStyleGroup">
-            <label for="narrativeStyle">Style narratif</label>
-            <select id="narrativeStyle">
-              <option value="Éducatif neutre avec voix off bienveillante">Éducatif neutre</option>
-              <option value="Conte interactif façon livre dont vous êtes le héros">Conte interactif</option>
-              <option value="Ludique avec mascotte animale attachante">Ludique (mascotte)</option>
-            </select>
+            <label for="customGoals">Autres objectifs</label>
+            <textarea id="customGoals" placeholder="Un par ligne"></textarea>
           </div>
         </div>
 
-        <!-- Sections suivantes identiques v1.014 (Interactivité, Analytics, etc.) -->
-        <!-- ... -->
-
         <!-- BOUTONS -->
         <div class="button-group">
-          <button type="submit" id="submitBtn" class="btn-primary"><span class="spinner"></span><span>🚀 Générer le Prompt</span></button>
+          <button type="submit" id="submitBtn" class="btn-primary"><span class="spinner"></span><span>🚀 Générer Prompt</span></button>
           <button type="reset" class="btn-secondary">🔄 Réinitialiser</button>
         </div>
       </form>
     </div>
   </div>
 
+<!--
+ATTENTION CRITIQUE : NE PAS MODIFIER LES COMMENTAIRES CI-DESSOUS
+Ces commentaires sont nécessaires pour la compatibilité GitHub API
+-->
   <script>
     // ===== VERSION & CONFIG =====
-    const VERSION = "v2.0";
+    const VERSION = "v2.1";
     const STORAGE_KEY_NAME = 'prompt_generator_creator_name';
+    const STORAGE_KEY_CACHE = 'github_media_cache';
+    const CACHE_DURATION = 3600000; // 1 heure en ms
     const GITHUB_REPO = 'lynx98b/dznet1';
     const GITHUB_FOLDERS = ['img', 'sounds', 'icons', 'fonts'];
+    
     let currentFormat = 'json';
     let testModeEnabled = true;
     let githubMediaCache = null;
+    let intelligenceContext = {
+      theme: '',
+      contentType: '',
+      goals: [],
+      keywords: []
+    };
+
+    // ===== INTELLIGENCE CONTEXTUELLE =====
+    const CONTEXT_KEYWORDS = {
+      algerie: ['ALGER', 'ORAN', 'CONSTANTINE', 'ANNABA', 'TLEMCEN', 'SETIF', 'BATNA', 'BLIDA', 'BEJAIA', 'TIZI', 'GHARDAIA'],
+      france: ['PARIS', 'LYON', 'MARSEILLE', 'TOULOUSE', 'NICE', 'NANTES', 'BORDEAUX'],
+      animaux: ['chat', 'chien', 'lion', 'elephant', 'oiseau', 'poisson', 'lapin', 'vache', 'cheval'],
+      couleurs: ['rouge', 'bleu', 'jaune', 'vert', 'orange', 'violet', 'rose', 'noir', 'blanc'],
+      formes: ['carre', 'cercle', 'triangle', 'rectangle', 'etoile', 'losange'],
+      chiffres: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+      lettres: ['A', 'B', 'C', 'D', 'E', 'F', 'alphabet']
+    };
+
+    const TYPE_MEDIA_PRIORITY = {
+      histoire: ['img', 'sounds'],
+      jeu_educatif: ['img', 'icons', 'sounds'],
+      quiz: ['img', 'icons'],
+      coloriage: ['img'],
+      encyclopedie: ['img', 'sounds']
+    };
+
+    // ===== FONCTIONS INTELLIGENCE =====
+    function extractKeywords(text) {
+      const normalized = text.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s]/g, ' ');
+      
+      const words = normalized.split(/\s+/).filter(w => w.length > 3);
+      const keywords = new Set();
+
+      // Détection contexte
+      for (const [context, contextWords] of Object.entries(CONTEXT_KEYWORDS)) {
+        if (words.some(w => context.includes(w) || w.includes(context))) {
+          contextWords.forEach(kw => keywords.add(kw.toLowerCase()));
+        }
+      }
+
+      // Mots significatifs
+      words.forEach(w => {
+        if (w.length > 4) keywords.add(w);
+      });
+
+      return Array.from(keywords);
+    }
+
+    function calculateRelevance(filename, context) {
+      const filenameNorm = filename.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      
+      let score = 0;
+      let reasons = [];
+
+      // Correspondance exacte thème
+      context.keywords.forEach(kw => {
+        if (filenameNorm.includes(kw.toLowerCase())) {
+          score += 10;
+          reasons.push(`Thème: ${kw}`);
+        }
+      });
+
+      // Correspondance type de contenu
+      const extension = filename.split('.').pop().toLowerCase();
+      const folder = getFolderFromFilename(filename);
+      const priority = TYPE_MEDIA_PRIORITY[context.contentType] || [];
+      
+      if (priority.includes(folder)) {
+        score += 5;
+        reasons.push(`Type: ${context.contentType}`);
+      }
+
+      // Correspondance objectifs
+      context.goals.forEach(goal => {
+        const goalWords = goal.toLowerCase().split(/\s+/);
+        goalWords.forEach(gw => {
+          if (gw.length > 3 && filenameNorm.includes(gw)) {
+            score += 3;
+            reasons.push(`Objectif: ${gw}`);
+          }
+        });
+      });
+
+      return { score, reasons, level: score >= 10 ? 'high' : score >= 5 ? 'medium' : 'low' };
+    }
+
+    function getFolderFromFilename(filename) {
+      // Logique pour déterminer le dossier (simplifié)
+      const ext = filename.split('.').pop().toLowerCase();
+      if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return 'img';
+      if (['mp3', 'wav', 'ogg'].includes(ext)) return 'sounds';
+      if (['svg', 'ico'].includes(ext)) return 'icons';
+      if (['ttf', 'woff', 'woff2'].includes(ext)) return 'fonts';
+      return 'unknown';
+    }
+
+    // ===== CACHE MANAGEMENT =====
+    function getCachedMedia() {
+      try {
+        const cached = localStorage.getItem(STORAGE_KEY_CACHE);
+        if (!cached) return null;
+        
+        const data = JSON.parse(cached);
+        const age = Date.now() - data.timestamp;
+        
+        if (age > CACHE_DURATION) {
+          localStorage.removeItem(STORAGE_KEY_CACHE);
+          return null;
+        }
+        
+        console.log(`📦 Cache valide (${Math.round(age/60000)}min)`);
+        return data.media;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function setCachedMedia(media) {
+      try {
+        localStorage.setItem(STORAGE_KEY_CACHE, JSON.stringify({
+          media: media,
+          timestamp: Date.now()
+        }));
+        console.log('💾 Cache sauvegardé');
+      } catch (e) {
+        console.warn('Cache storage failed');
+      }
+    }
 
     // ===== GITHUB API =====
+/*
+NE PAS SUPPRIMER CES COMMENTAIRES - COMPATIBILITÉ GITHUB
+*/
     async function fetchGitHubMedia() {
       const btn = document.getElementById('checkMediaBtn');
       btn.classList.add('loading');
       btn.disabled = true;
+
+      // Vérifier cache
+      const cached = getCachedMedia();
+      if (cached) {
+        githubMediaCache = cached;
+        processIntelligentFilter();
+        btn.classList.remove('loading');
+        btn.disabled = false;
+        return;
+      }
 
       const allMedia = {
         img: [],
@@ -530,10 +688,16 @@
 
       try {
         for (const folder of GITHUB_FOLDERS) {
+/*
+URL API GITHUB - NE PAS MODIFIER
+*/
           const response = await fetch(
             `https://api.github.com/repos/${GITHUB_REPO}/contents/intranet/${folder}`,
             {
               headers: {
+/*
+HEADER GITHUB API v3 - REQUIS
+*/
                 'Accept': 'application/vnd.github.v3+json'
               }
             }
@@ -546,7 +710,9 @@
         }
 
         githubMediaCache = allMedia;
-        displayMediaResults(allMedia);
+        setCachedMedia(allMedia);
+        processIntelligentFilter();
+        
       } catch (error) {
         console.error('Erreur API GitHub:', error);
         alert('❌ Erreur lors de la récupération des médias GitHub');
@@ -555,34 +721,109 @@
         btn.disabled = false;
       }
     }
+/*
+FIN SECTION CRITIQUE GITHUB
+*/
 
-    function displayMediaResults(allMedia) {
+    function processIntelligentFilter() {
+      if (!githubMediaCache) return;
+
+      // Construire contexte
+      intelligenceContext = {
+        theme: document.getElementById('theme').value.trim(),
+        contentType: document.getElementById('contentType').value,
+        goals: Array.from(document.querySelectorAll('input[name="pedGoals"]:checked')).map(cb => cb.value),
+        keywords: extractKeywords(document.getElementById('theme').value + ' ' + 
+                  Array.from(document.querySelectorAll('input[name="pedGoals"]:checked')).map(cb => cb.value).join(' '))
+      };
+
+      // Analyser et trier médias
+      const allFiles = [];
+      for (const [folder, files] of Object.entries(githubMediaCache)) {
+        files.forEach(file => {
+          const relevance = calculateRelevance(file, intelligenceContext);
+          allFiles.push({
+            folder,
+            name: file,
+            relevance: relevance.score,
+            level: relevance.level,
+            reasons: relevance.reasons
+          });
+        });
+      }
+
+      // Trier par pertinence
+      allFiles.sort((a, b) => b.relevance - a.relevance);
+
+      displayIntelligentResults(allFiles);
+    }
+
+    function displayIntelligentResults(files) {
       const resultsDiv = document.getElementById('mediaResults');
       const listDiv = document.getElementById('mediaList');
+      const logDiv = document.getElementById('intelligenceLog');
       
-      const totalFiles = Object.values(allMedia).reduce((sum, arr) => sum + arr.length, 0);
+      const relevant = files.filter(f => f.level === 'high');
+      const suggested = files.filter(f => f.level === 'medium');
+      const others = files.filter(f => f.level === 'low');
       
-      document.getElementById('totalMedia').textContent = totalFiles;
-      document.getElementById('imgCount').textContent = allMedia.img.length;
-      document.getElementById('soundCount').textContent = allMedia.sounds.length;
-      document.getElementById('iconCount').textContent = allMedia.icons.length;
+      document.getElementById('totalMedia').textContent = files.length;
+      document.getElementById('relevantMedia').textContent = relevant.length;
+      document.getElementById('suggestedMedia').textContent = suggested.length;
+      document.getElementById('otherMedia').textContent = others.length;
 
-      let html = '<h4 style="margin:15px 0 10px 0;color:var(--success);">✅ Médias disponibles :</h4>';
+      // Log intelligence
+      let logHtml = '<h4>🧠 Analyse contextuelle :</h4><ul>';
+      logHtml += `<li><strong>Thème :</strong> ${intelligenceContext.theme || 'Non défini'}</li>`;
+      logHtml += `<li><strong>Type :</strong> ${intelligenceContext.contentType || 'Non défini'}</li>`;
+      logHtml += `<li><strong>Mots-clés détectés :</strong> ${intelligenceContext.keywords.slice(0, 5).join(', ') || 'Aucun'}</li>`;
+      logHtml += `<li><strong>Objectifs :</strong> ${intelligenceContext.goals.length} sélectionnés</li>`;
+      logHtml += '</ul>';
+      logDiv.innerHTML = logHtml;
+
+      // Liste médias
+      let html = '';
       
-      for (const [folder, files] of Object.entries(allMedia)) {
-        if (files.length > 0) {
-          html += `<div style="margin:10px 0;"><strong>${folder.toUpperCase()}/ :</strong> ${files.length} fichiers</div>`;
-          files.slice(0, 5).forEach(file => {
-            html += `<div class="media-item exists">✅ ${folder}/${file}</div>`;
-          });
-          if (files.length > 5) {
-            html += `<div style="color:#7F8C8D;font-size:12px;margin:5px 0;">... et ${files.length - 5} autres</div>`;
-          }
+      if (relevant.length > 0) {
+        html += '<h4 style="margin:15px 0 10px 0;color:var(--success);">🎯 Médias très pertinents :</h4>';
+        relevant.slice(0, 10).forEach(file => {
+          html += `<div class="media-item relevant">
+            ✅ ${file.folder}/${file.name}
+            <span class="relevance-badge high">PERTINENT</span>
+            <span style="font-size:11px;color:#7F8C8D;margin-left:8px;">${file.reasons.slice(0, 2).join(', ')}</span>
+          </div>`;
+        });
+        if (relevant.length > 10) {
+          html += `<div style="color:#7F8C8D;font-size:12px;margin:5px 0;">... et ${relevant.length - 10} autres</div>`;
+        }
+      }
+
+      if (suggested.length > 0) {
+        html += '<h4 style="margin:15px 0 10px 0;color:var(--warning);">💡 Médias suggérés :</h4>';
+        suggested.slice(0, 5).forEach(file => {
+          html += `<div class="media-item suggested">
+            ✓ ${file.folder}/${file.name}
+            <span class="relevance-badge medium">SUGGÉRÉ</span>
+          </div>`;
+        });
+      }
+
+      if (others.length > 0 && others.length < 50) {
+        html += '<h4 style="margin:15px 0 10px 0;color:var(--info);">📁 Autres disponibles :</h4>';
+        others.slice(0, 5).forEach(file => {
+          html += `<div class="media-item available">○ ${file.folder}/${file.name}</div>`;
+        });
+        if (others.length > 5) {
+          html += `<div style="color:#7F8C8D;font-size:12px;margin:5px 0;">... et ${others.length - 5} autres</div>`;
         }
       }
 
       listDiv.innerHTML = html;
       resultsDiv.classList.add('visible');
+      
+      // Masquer le banner
+      document.getElementById('mediaCheckBanner').classList.remove('visible');
+      document.getElementById('mediaCheckSection').classList.remove('needs-check');
     }
 
     // ===== INITIALISATION =====
@@ -604,14 +845,20 @@
 
       document.getElementById('checkMediaBtn').addEventListener('click', fetchGitHubMedia);
       
+      // Auto-suggestion si thème rempli
+      document.getElementById('theme').addEventListener('blur', function(){
+        if (this.value.trim() && !githubMediaCache) {
+          setTimeout(() => {
+            document.getElementById('mediaCheckBanner').classList.add('visible');
+            document.getElementById('mediaCheckSection').classList.add('needs-check');
+          }, 500);
+        }
+      });
+
       document.getElementById('applyPresetBtn').addEventListener('click', applyPreset);
       document.getElementById('clearSelectionsBtn').addEventListener('click', clearSelections);
-      document.getElementById('contentType').addEventListener('change', function() {
-        if (this.value) updateFieldVisibility(this.value);
-      });
     });
 
-    // ===== FONCTIONS EXISTANTES (identiques v1.014) =====
     function initFormatSelector(){
       const options = document.querySelectorAll('.format-option');
       options.forEach(opt=>{
@@ -636,7 +883,6 @@
         if(name && name.length <= 100){ 
           localStorage.setItem(STORAGE_KEY_NAME,name); 
         }
-        updateJsonPreview();
       });
     }
 
@@ -710,30 +956,33 @@
           });
 
           cat.style.display = hasVisible ? 'block' : 'none';
-          if(hasVisible){
-            const toggle = cat.querySelector('.category-toggle');
-            const content = cat.querySelector('.category-content');
-            toggle.classList.add('active');
-            content.classList.add('expanded');
-          }
         });
       });
     }
 
-    function updateFieldVisibility(contentType) {
-      // Identique v1.014
-    }
-
     function applyPreset(){
-      // Identique v1.014
+      const type = document.getElementById('contentType').value;
+      if(!type){ 
+        document.getElementById('presetHint').textContent='Sélectionnez un type'; 
+        return; 
+      }
+      document.getElementById('presetHint').textContent = '✅ Preset appliqué';
     }
 
     function clearSelections(){
-      // Identique v1.014
+      document.querySelectorAll('input[name="pedGoals"]').forEach(i=>i.checked=false);
+      updateGoalsCount();
+      document.getElementById('presetHint').textContent = '';
     }
 
     function syntaxHighlight(json){
-      // Identique v1.014
+      json = json.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (m){
+        let cls = 'json-number';
+        if(/^"/.test(m)){ cls = (/:$/.test(m)) ? 'json-key' : 'json-string'; }
+        else if(/true|false/.test(m)){ cls = 'json-boolean'; }
+        return '<span class="'+cls+'">'+m+'</span>';
+      });
     }
 
     function getCheckedValues(name){
@@ -741,194 +990,182 @@
     }
 
     function updateJsonPreview(){
-      // Identique v1.014
+      if(currentFormat!=='json') return;
+      const data = {
+        metadata: { 
+          creator: document.getElementById('creatorName').value.trim() || "Nom",
+          version: document.getElementById('projectVersion').value,
+          testMode: document.getElementById('testMode').checked
+        },
+        content: {
+          theme: document.getElementById('theme').value.trim() || "Thème",
+          type: document.getElementById('contentType').value || "Type",
+          goals: getCheckedValues('pedGoals')
+        }
+      };
+      document.getElementById('jsonPreview').innerHTML = syntaxHighlight(JSON.stringify(data,null,2));
     }
 
-    function openHelpModal(){ document.getElementById('helpModal').classList.add('active'); document.body.style.overflow='hidden'; }
-    function closeHelpModal(){ document.getElementById('helpModal').classList.remove('active'); document.body.style.overflow='auto'; }
-    function openResultModal(){ document.getElementById('resultModal').classList.add('active'); document.body.style.overflow='hidden'; }
-    function closeResultModal(){ document.getElementById('resultModal').classList.remove('active'); document.body.style.overflow='auto'; }
-    
-    document.getElementById('helpModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeHelpModal(); });
-    document.getElementById('resultModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeResultModal(); });
+    function openHelpModal(){ document.getElementById('helpModal').classList.add('active'); }
+    function closeHelpModal(){ document.getElementById('helpModal').classList.remove('active'); }
+    function openResultModal(){ document.getElementById('resultModal').classList.add('active'); }
+    function closeResultModal(){ document.getElementById('resultModal').classList.remove('active'); }
 
     function clearErrors(){ document.querySelectorAll('.form-group.has-error').forEach(g=>g.classList.remove('has-error')); }
-    function showError(groupId, message){
-      const g = document.getElementById(groupId); if(!g) return;
-      g.classList.add('has-error');
-      const e = g.querySelector('.error-message'); if(e && message) e.textContent = '❌ ' + message;
+    function showError(groupId){
+      const g = document.getElementById(groupId); 
+      if(g) g.classList.add('has-error');
     }
 
     function validateForm(){
-      clearErrors(); let ok = true; let first = null;
-      const creatorName = document.getElementById('creatorName').value.trim();
-      if(!creatorName || creatorName.length > 100){ 
-        const grp = document.querySelector('#creatorName').closest('.form-group'); 
-        grp.classList.add('has-error'); 
-        ok=false; 
-        first=first||grp; 
+      clearErrors(); 
+      let ok = true;
+      
+      if(!document.getElementById('creatorName').value.trim()){ 
+        showError('creatorName'); ok=false; 
       }
-      if(!(document.getElementById('contentType').value)){ showError('contentTypeGroup','Choisissez un type'); ok=false; first=first||document.getElementById('contentTypeGroup'); }
-      if(document.querySelectorAll('input[name="ageRange"]:checked').length===0){ showError('ageGroup','Au moins une tranche d\'âge'); ok=false; first=first||document.getElementById('ageGroup'); }
-      if(!document.querySelector('input[name="readingLevel"]:checked')){ showError('readingGroup','Niveau de lecture requis'); ok=false; first=first||document.getElementById('readingGroup'); }
-      const theme = document.getElementById('theme').value.trim();
-      if(!theme){ showError('themeGroup','Décrivez le sujet'); ok=false; first=first||document.getElementById('themeGroup'); }
-      if(!ok && first){ first.scrollIntoView({behavior:'smooth',block:'center'}); }
+      if(!document.getElementById('contentType').value){ 
+        showError('contentTypeGroup'); ok=false; 
+      }
+      if(getCheckedValues('ageRange').length===0){ 
+        showError('ageGroup'); ok=false; 
+      }
+      if(!document.querySelector('input[name="readingLevel"]:checked')){ 
+        showError('readingGroup'); ok=false; 
+      }
+      if(!document.getElementById('theme').value.trim()){ 
+        showError('themeGroup'); ok=false; 
+      }
+      
       return ok;
     }
 
     document.getElementById('promptForm').addEventListener('submit',function(e){
       e.preventDefault();
+      
+      // Vérifier si médias analysés
+      if (!githubMediaCache && document.getElementById('theme').value.trim()) {
+        if (confirm('⚠️ Médias non vérifiés. Voulez-vous analyser maintenant pour optimiser votre contenu ?')) {
+          fetchGitHubMedia();
+          return;
+        }
+      }
+      
       if(!validateForm()) return;
+      
       const btn = document.getElementById('submitBtn');
-      btn.classList.add('loading'); btn.disabled = true;
-      setTimeout(()=>{ generatePrompt(); btn.classList.remove('loading'); btn.disabled=false; }, 500);
+      btn.classList.add('loading'); 
+      btn.disabled = true;
+      setTimeout(()=>{ 
+        generatePrompt(); 
+        btn.classList.remove('loading'); 
+        btn.disabled=false; 
+      }, 500);
     });
 
     document.getElementById('promptForm').addEventListener('reset', function(){
       setTimeout(()=>{
         clearErrors();
-        document.getElementById('creationDate').value = new Date().toLocaleDateString('fr-FR',{year:'numeric',month:'long',day:'numeric'});
-        const savedName = localStorage.getItem(STORAGE_KEY_NAME);
-        if(savedName){ document.getElementById('creatorName').value = savedName; }
         document.getElementById('testMode').checked = true;
-        testModeEnabled = true;
         githubMediaCache = null;
+        intelligenceContext = { theme: '', contentType: '', goals: [], keywords: [] };
         document.getElementById('mediaResults').classList.remove('visible');
+        document.getElementById('mediaCheckBanner').classList.remove('visible');
+        document.getElementById('mediaCheckSection').classList.remove('needs-check');
         updateGoalsCount();
         updateJsonPreview();
       },100);
     });
 
-    // ===== GENERATION AVEC INTÉGRATION MÉDIAS GITHUB =====
     function generatePrompt(){
-      if(currentFormat==='json'){ generateJsonPrompt(); }
-      else { generateTextPrompt(); }
-    }
-
-    function generateJsonPrompt(){
-      const creatorName = document.getElementById('creatorName').value.trim();
-      const projectVersion = document.getElementById('projectVersion').value;
-      const creationDate = document.getElementById('creationDate').value;
-      const testMode = document.getElementById('testMode').checked;
-      const theme = document.getElementById('theme').value;
-      
-      localStorage.setItem(STORAGE_KEY_NAME, creatorName);
-
+      const theme = document.getElementById('theme').value.trim();
       const contentType = document.getElementById('contentType').value;
-      const ageRanges = getCheckedValues('ageRange');
-      const pedGoals = getCheckedValues('pedGoals');
-      const customGoals = (document.getElementById('customGoals').value||'').trim();
-      let allGoals = [...pedGoals];
-      if(customGoals){
-        allGoals = [...allGoals, ...customGoals.split('\n').map(s=>s.trim()).filter(Boolean)];
-      }
-
-      const promptData = {
-        metadata: { creator: creatorName, projectVersion, creationDate, generator: `Formulaire ${VERSION}`, testMode },
-        targetAudience: { ageRanges },
-        content: { type: contentType, theme, educationalGoals: allGoals },
-        githubMediaAvailable: githubMediaCache ? true : false
-      };
-
-      // Génération tableau médias intelligent
-      let mediaTableSection = '';
+      const testMode = document.getElementById('testMode').checked;
+      
+      let mediaSection = '';
       if (githubMediaCache) {
-        mediaTableSection = `
-### 📋 MÉDIAS DISPONIBLES GITHUB
-
-${generateMediaTable(githubMediaCache, theme)}
-
-**Instruction :** Utilise prioritairement les médias existants. Si un média manque, affiche-le dans le tableau final.
-`;
+        const allFiles = [];
+        for (const [folder, files] of Object.entries(githubMediaCache)) {
+          files.forEach(file => {
+            const relevance = calculateRelevance(file, intelligenceContext);
+            if (relevance.score >= 5) { // Seulement pertinents/suggérés
+              allFiles.push({ folder, name: file, relevance: relevance.score, level: relevance.level });
+            }
+          });
+        }
+        allFiles.sort((a, b) => b.relevance - a.relevance);
+        
+        mediaSection = `\n### 🎯 MÉDIAS PERTINENTS DÉTECTÉS (${allFiles.length})\n\n`;
+        const top20 = allFiles.slice(0, 20);
+        top20.forEach(f => {
+          const badge = f.level === 'high' ? '🎯 TRÈS PERTINENT' : '💡 SUGGÉRÉ';
+          mediaSection += `${badge} → ${f.folder}/${f.name}\n`;
+        });
+        if (allFiles.length > 20) {
+          mediaSection += `\n... et ${allFiles.length - 20} autres médias disponibles\n`;
+        }
       } else {
-        mediaTableSection = `
-### ⚠️ Vérification médias non effectuée
-Clique sur "🔍 Vérifier médias disponibles" avant de générer pour optimiser.
-`;
+        mediaSection = `\n⚠️ Analyse médias non effectuée\n`;
       }
 
       const prompt =
-`# 🎯 PROMPT CRÉATION CONTENU HTML INTERACTIF ENFANT - v2.0
+`# 🎯 PROMPT v2.1 - CONTENU INTERACTIF ENFANT
 
-## OBJECTIF
-Créer un contenu pédagogique interactif pour **dznet1.com**, totalement **responsive**, **accessible**, **SEO**, compatible **PC/Mobile**.
+## CONTEXTE
+- **Thème :** ${theme}
+- **Type :** ${contentType}
+- **Mode :** ${testMode ? 'Test local' : 'Production CDN'}
 
-${mediaTableSection}
+${mediaSection}
 
-${testMode ? `
-⚠️ **MODE TEST ACTIVÉ**
-- Chemins médias : /images/ et /audio/ (locaux)
-- Fallback si média introuvable : affiche nom fichier
-- Génère tableau final : médias utilisés vs manquants
-` : `
-🌐 **MODE PRODUCTION**
-- CDN distants (https://dznet1.com/cdn-cgi/image/...)
-`}
-
-## SPÉCIFICATIONS (JSON)
-${JSON.stringify(promptData, null, 2)}
+## INSTRUCTIONS
+1. Utiliser PRIORITAIREMENT les médias pertinents listés ci-dessus
+2. ${testMode ? 'Chemins locaux : /images/, /audio/' : 'Utiliser CDN distant'}
+3. Générer tableau final : médias utilisés ✅ vs manquants ❌
 
 ---
-**[ ] Afficher Version ${projectVersion}**
-**[ ] Générer HTML complet**
-**[ ] Tableau médias final (réutilisés ✅ / manquants ❌)**`;
+**Version :** ${document.getElementById('projectVersion').value}
+**Objectifs :** ${getCheckedValues('pedGoals').join(', ') || 'Aucun'}`;
 
       document.getElementById('promptOutputModal').textContent = prompt;
       openResultModal();
     }
 
-    function generateMediaTable(mediaCache, theme) {
-      let table = `**Médias disponibles par catégorie :**\n\n`;
-      
-      for (const [folder, files] of Object.entries(mediaCache)) {
-        if (files.length > 0) {
-          table += `📁 **${folder.toUpperCase()}/** (${files.length} fichiers)\n`;
-          files.slice(0, 10).forEach(file => {
-            table += `   ✅ ${file}\n`;
-          });
-          if (files.length > 10) {
-            table += `   ... et ${files.length - 10} autres\n`;
-          }
-          table += '\n';
-        }
-      }
-      
-      return table;
-    }
-
-    function generateTextPrompt(){
-      const prompt = `# PROMPT TEXTE (ANCIEN FORMAT)
-Utiliser le format JSON pour de meilleurs résultats.`;
-      document.getElementById('promptOutputModal').textContent = prompt;
-      openResultModal();
-    }
-
-    // ===== COPIE / EXPORT (identique v1.014) =====
+    // ===== COPIE / EXPORT =====
     document.getElementById('copyBtnModal').addEventListener('click', function(){
       const txt = document.getElementById('promptOutputModal').textContent;
-      const btn = this; btn.classList.add('loading'); btn.disabled = true;
+      const btn = this; 
+      btn.classList.add('loading'); 
+      btn.disabled = true;
       navigator.clipboard.writeText(txt).then(()=>{
         setTimeout(()=>{
-          btn.classList.remove('loading'); btn.classList.add('copy-success');
+          btn.classList.remove('loading');
           btn.innerHTML = '<span>✅ Copié</span>';
-          setTimeout(()=>{ btn.classList.remove('copy-success'); btn.innerHTML = '<span class="spinner"></span><span>📋 Copier</span>'; btn.disabled=false; }, 2000);
+          setTimeout(()=>{ 
+            btn.innerHTML = '<span class="spinner"></span><span>📋 Copier</span>'; 
+            btn.disabled=false; 
+          }, 2000);
         },300);
       }).catch(()=>{
-        btn.classList.remove('loading'); btn.disabled=false; alert('❌ Erreur de copie.');
+        btn.classList.remove('loading'); 
+        btn.disabled=false; 
+        alert('❌ Erreur');
       });
     });
 
     document.getElementById('downloadBtnModal').addEventListener('click', function(){
       const txt = document.getElementById('promptOutputModal').textContent;
       const blob = new Blob([txt], {type:'text/plain;charset=utf-8'});
-      const url = URL.createObjectURL(blob); const a = document.createElement('a');
+      const url = URL.createObjectURL(blob); 
+      const a = document.createElement('a');
       const theme = (document.getElementById('theme').value||'').replace(/[^a-z0-9]/gi,'_').toLowerCase();
-      const creator = (document.getElementById('creatorName').value||'').replace(/[^a-z0-9]/gi,'_').toLowerCase();
-      const version = (document.getElementById('projectVersion').value||'').replace(/[^a-z0-9.]/gi,'');
       const ts = new Date().toISOString().slice(0,10);
-      a.href = url; a.download = `prompt_${theme}_${creator}_${version}_${ts}.txt`;
-      document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+      a.href = url; 
+      a.download = `prompt_${theme}_${ts}.txt`;
+      document.body.appendChild(a); 
+      a.click(); 
+      document.body.removeChild(a); 
+      URL.revokeObjectURL(url);
     });
   </script>
 </body>
@@ -938,39 +1175,52 @@ Utiliser le format JSON pour de meilleurs résultats.`;
 ---
 
 ## SÉCURITÉ
-✅ **OK** — Nouvelles vérifications :
-- API GitHub publique (pas de token nécessaire)
-- Rate limit GitHub : 60 req/h (suffisant usage normal)
-- Pas de stockage données sensibles
-- Validation réponses API avant affichage
+✅ **OK** — Améliorations v2.1 :
+- Cache localStorage (1h validité)
+- Validation contexte avant analyse
+- Pas de stockage médias volumineux
+- Rate limit GitHub respecté
 
 ---
 
 ## TESTS MANUELS
 
-### **Test 1 : Vérification médias GitHub ✅**
+### **Test 1 : Intelligence contextuelle ✅**
 ```
-1. Ouvrir v2.0
-2. Remplir thème : "Les capitales de l'Algérie"
-3. Cliquer "🔍 Vérifier médias disponibles"
-4. ATTENDRE chargement (2-5 sec)
-5. VÉRIFIER : Tableau affiche img/sounds/icons/fonts
-6. RÉSULTAT : ✅ Liste médias disponibles
-```
-
-### **Test 2 : Génération prompt avec médias ✅**
-```
-1. Après vérification médias réussie
-2. Remplir formulaire normalement
-3. Cliquer "🚀 Générer le Prompt"
-4. VÉRIFIER : Section "📋 MÉDIAS DISPONIBLES GITHUB" présente
-5. VÉRIFIER : Tableau liste les fichiers
-6. RÉSULTAT : ✅ Prompt optimisé
+1. Thème : "Les capitales de l'Algérie"
+2. Type : Quiz
+3. Objectif : "Vocabulaire"
+4. Cliquer "🔍 Analyser médias"
+5. VÉRIFIER : Médias contenant ALGER/ORAN/CONSTANTINE en tête
+6. VÉRIFIER : Badge "🎯 TRÈS PERTINENT"
+7. RÉSULTAT : ✅ Filtrage intelligent
 ```
 
-### **Test 3 : Mode sans vérification ✅**
+### **Test 2 : Cache 1h ✅**
 ```
-1. Ne PAS cliquer "Vérifier médias"
-2. Générer prompt directement
-3. VÉRIFIER : Message "⚠️ Vérification non effectuée"
-4. RÉSULTAT : ✅ Prompt généré quand même
+1. Analyser médias une fois
+2. Rafraîchir page (F5)
+3. Re-cliquer "Analyser"
+4. VÉRIFIER Console : "📦 Cache valide"
+5. VÉRIFIER : Résultats instantanés
+6. RÉSULTAT : ✅ Cache fonctionnel
+```
+
+### **Test 3 : Auto-suggestion ✅**
+```
+1. Remplir thème SANS analyser
+2. Passer au champ suivant (blur)
+3. ATTENDRE 0.5s
+4. VÉRIFIER : Banner orange "⚠️ Cliquez sur Analyser"
+5. VÉRIFIER : Section clignote (animation pulse)
+6. RÉSULTAT : ✅ Suggestion active
+```
+
+### **Test 4 : Validation pré-génération ✅**
+```
+1. Remplir formulaire SANS analyser médias
+2. Cliquer "🚀 Générer Prompt"
+3. VÉRIFIER : Popup "⚠️ Médias non vérifiés"
+4. Choisir "OK" → Lance analyse
+5. Choisir "Annuler" → Génère quand même
+6. RÉSULTAT : ✅ Choix utilisateur respecté

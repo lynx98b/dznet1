@@ -1,6 +1,6 @@
 <!-- ==========================================================
  Générateur de Prompt - Contenu HTML Enfant
- Version : v1.015 (Export/Import + Historique)
+ Version : v1.014 (80 objectifs + recherche + mode test local)
 ========================================================== -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,7 +17,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Générateur de prompt pour contenu HTML enfant - Version professionnelle" />
-  <title>Générateur Prompt Contenu Enfant - v1.015</title>
+  <title>Générateur Prompt Contenu Enfant - v1.014</title>
 
   <style>
     /* ===== VARIABLES & RESET ===== */
@@ -116,9 +116,6 @@
     .btn-success:hover:not(:disabled){background:#229954;transform:translateY(-2px);box-shadow:0 5px 15px rgba(39,174,96,.4)}
     .btn-secondary{background:var(--border);color:var(--text-dark)}
     .btn-secondary:hover{background:#BDC3C7}
-    .btn-small{padding:8px 15px;font-size:13px;min-width:auto;}
-    .btn-danger{background:var(--danger);color:#fff;}
-    .btn-danger:hover{background:#C0392B;}
     .spinner{display:none;width:20px;height:20px;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
     button.loading .spinner{display:block}
@@ -192,55 +189,6 @@
         opacity: 0.4;
     }
 
-    /* ===== HISTORIQUE ===== */
-    .history-item {
-      background: var(--bg-light);
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      border: 2px solid var(--border);
-      transition: .3s;
-    }
-    .history-item:hover {
-      border-color: var(--primary);
-      box-shadow: 0 4px 12px rgba(74,144,226,.2);
-    }
-    .history-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .history-title {
-      font-weight: 700;
-      color: var(--primary);
-      font-size: 16px;
-    }
-    .history-date {
-      font-size: 12px;
-      color: #7F8C8D;
-    }
-    .history-meta {
-      display: flex;
-      gap: 15px;
-      font-size: 13px;
-      color: #7F8C8D;
-      margin-bottom: 10px;
-    }
-    .history-actions {
-      display: flex;
-      gap: 8px;
-    }
-    .empty-history {
-      text-align: center;
-      padding: 40px;
-      color: #95A5A6;
-    }
-    .empty-history-icon {
-      font-size: 48px;
-      margin-bottom: 15px;
-    }
-
     @media (max-width:768px){
       body{padding:10px}
       .form-wrapper{padding:20px}
@@ -264,25 +212,29 @@
       <button class="help-btn" onclick="openHelpModal()">
         <span>❓</span><span>Guide</span>
       </button>
-      <span class="version-badge">v1.015</span>
+      <span class="version-badge">v1.014</span>
       <h1>🎨 Générateur de Prompt - Contenu HTML Enfant</h1>
       <p>Créez des expériences éducatives interactives sécurisées et cohérentes</p>
-      <p class="tiny">✅ Export/Import | 📚 Historique | 🧪 Mode test</p>
+      <p class="tiny">✅ 80 objectifs | 🔍 Recherche | 🧪 Mode test local</p>
     </header>
 
     <!-- MODAL AIDE -->
     <div id="helpModal" class="modal">
       <div class="modal-content">
         <button class="modal-close" onclick="closeHelpModal()">×</button>
-        <h2>📘 Guide rapide v1.015</h2>
+        <h2>📘 Guide rapide v1.014</h2>
         <div class="info-banner">
-          <strong>Nouveautés v1.015 :</strong>
-          <ul style="margin:10px 0 0 20px;line-height:1.8">
-            <li>💾 Export/Import de configurations complètes</li>
-            <li>📚 Historique des 10 derniers prompts</li>
-            <li>🔄 Rechargement rapide depuis l'historique</li>
-          </ul>
+          <strong>Ordre logique :</strong>
+          <ol style="margin:10px 0 0 20px;line-height:1.8">
+            <li>1️⃣ Sélectionner l'<strong>âge/public cible</strong></li>
+            <li>2️⃣ Choisir le <strong>type de contenu</strong></li>
+            <li>3️⃣ Définir les <strong>langues</strong></li>
+            <li>4️⃣ Sélectionner les <strong>objectifs</strong> (80 disponibles)</li>
+            <li>5️⃣ Personnaliser le reste</li>
+          </ol>
         </div>
+        <h3>🧪 Mode test local</h3>
+        <p>Coché par défaut : génère des chemins locaux (/images/, /audio/) pour tester sur PC. Décoché : utilise les CDN distants.</p>
         <h3>🔍 Recherche d'objectifs</h3>
         <p>Tapez un mot-clé (ex: "addition", "alphabet") pour filtrer les 80 objectifs pédagogiques.</p>
         <button class="btn-primary" onclick="closeHelpModal()" style="margin-top: 16px; width: 100%;">OK</button>
@@ -304,41 +256,6 @@
           <button id="copyBtnModal" class="btn-success"><span class="spinner"></span><span>📋 Copier</span></button>
           <button id="downloadBtnModal" class="btn-primary"><span>💾 Exporter (.txt)</span></button>
           <button onclick="closeResultModal()" class="btn-secondary">✖️ Fermer</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- MODAL HISTORIQUE -->
-    <div id="historyModal" class="modal">
-      <div class="modal-content large">
-        <button class="modal-close" onclick="closeHistoryModal()">×</button>
-        <h2>📚 Historique des Prompts</h2>
-        <div class="info-banner">
-          Les 10 derniers prompts générés sont sauvegardés automatiquement.
-        </div>
-        <div id="historyList" style="margin-top:20px;"></div>
-        <div style="margin-top:20px;display:flex;gap:10px;">
-          <button class="btn-danger" onclick="if(confirm('Supprimer tout l\'historique ?')) { historyManager.clear(); renderHistoryList(); }">
-            🗑️ Effacer tout
-          </button>
-          <button class="btn-secondary" onclick="closeHistoryModal()">Fermer</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- MODAL IMPORT CONFIG -->
-    <div id="importModal" class="modal">
-      <div class="modal-content">
-        <button class="modal-close" onclick="closeImportModal()">×</button>
-        <h2>📥 Importer une Configuration</h2>
-        <div style="margin-top:20px;">
-          <input type="file" id="importFileInput" accept=".json" style="display:none;">
-          <button class="btn-primary" onclick="document.getElementById('importFileInput').click()" style="width:100%;">
-            📂 Choisir un fichier JSON
-          </button>
-          <p class="helper-text" style="margin-top:10px;">
-            Sélectionnez un fichier de configuration précédemment exporté.
-          </p>
         </div>
       </div>
     </div>
@@ -378,7 +295,7 @@
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <label for="projectVersion">Version du projet</label>
-              <input type="text" id="projectVersion" value="v1.015" placeholder="v1.015">
+              <input type="text" id="projectVersion" value="v1.014" placeholder="v1.014">
             </div>
             <div class="form-group" style="margin-bottom:0;">
               <label>Date de création</label>
@@ -882,18 +799,7 @@
 
         <!-- BOUTONS -->
         <div class="button-group">
-          <button type="button" onclick="openHistoryModal()" class="btn-secondary" style="flex:0;">
-            📚 Historique
-          </button>
-          <button type="button" onclick="openImportModal()" class="btn-secondary" style="flex:0;">
-            📥 Importer
-          </button>
-          <button type="button" onclick="exportConfig()" class="btn-secondary" style="flex:0;">
-            💾 Exporter Config
-          </button>
-          <button type="submit" id="submitBtn" class="btn-primary">
-            <span class="spinner"></span><span>🚀 Générer le Prompt</span>
-          </button>
+          <button type="submit" id="submitBtn" class="btn-primary"><span class="spinner"></span><span>🚀 Générer le Prompt</span></button>
           <button type="reset" class="btn-secondary">🔄 Réinitialiser</button>
         </div>
       </form>
@@ -902,78 +808,10 @@
 
   <script>
     // ===== VERSION & CONFIG =====
-    const VERSION = "v1.015";
+    const VERSION = "v1.014";
     const STORAGE_KEY_NAME = 'prompt_generator_creator_name';
-    const STORAGE_KEY_HISTORY = 'prompt_generator_history';
-    const MAX_HISTORY = 10;
     let currentFormat = 'json';
     let testModeEnabled = true;
-
-    // ===== HISTORY MANAGER =====
-    class HistoryManager {
-      constructor() {
-        this.history = this.load();
-      }
-
-      load() {
-        try {
-          const data = localStorage.getItem(STORAGE_KEY_HISTORY);
-          return data ? JSON.parse(data) : [];
-        } catch(e) {
-          console.error('Erreur chargement historique:', e);
-          return [];
-        }
-      }
-
-      save() {
-        try {
-          localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(this.history));
-        } catch(e) {
-          console.error('Erreur sauvegarde historique:', e);
-        }
-      }
-
-      add(config, prompt) {
-        const entry = {
-          id: Date.now(),
-          timestamp: new Date().toISOString(),
-          config: config,
-          prompt: prompt,
-          preview: {
-            theme: config.content.theme,
-            type: config.content.type,
-            creator: config.metadata.creator
-          }
-        };
-        
-        this.history.unshift(entry);
-        if(this.history.length > MAX_HISTORY) {
-          this.history = this.history.slice(0, MAX_HISTORY);
-        }
-        this.save();
-        return entry;
-      }
-
-      get(id) {
-        return this.history.find(h => h.id === id);
-      }
-
-      delete(id) {
-        this.history = this.history.filter(h => h.id !== id);
-        this.save();
-      }
-
-      clear() {
-        this.history = [];
-        this.save();
-      }
-
-      getAll() {
-        return this.history;
-      }
-    }
-
-    const historyManager = new HistoryManager();
 
     // ===== MATRICE DE PERTINENCE =====
     const FIELD_RELEVANCE = {
@@ -1083,25 +921,6 @@
       document.getElementById('contentType').addEventListener('change', function() {
         if (this.value && PRESETS[this.value]) {
             updateFieldVisibility(this.value);
-        }
-      });
-
-      // Import file handler
-      document.getElementById('importFileInput').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if(file) {
-          const reader = new FileReader();
-          reader.onload = function(event) {
-            try {
-              const config = JSON.parse(event.target.result);
-              loadConfig(config);
-              closeImportModal();
-              alert('✅ Configuration importée avec succès !');
-            } catch(err) {
-              alert('❌ Erreur : fichier JSON invalide');
-            }
-          };
-          reader.readAsText(file);
         }
       });
     });
@@ -1310,278 +1129,6 @@
       updateJsonPreview();
     }
 
-    // ===== BUILD CONFIG OBJECT =====
-    function buildConfigObject() {
-      const creatorName = document.getElementById('creatorName').value.trim();
-      const testMode = document.getElementById('testMode').checked;
-      const contentType = document.getElementById('contentType').value;
-      
-      const pedGoals = Array.from(document.querySelectorAll('input[name="pedGoals"]:checked')).map(cb=>cb.value);
-      const customGoals = (document.getElementById('customGoals').value||'').trim();
-      let allGoals = [...pedGoals];
-      if(customGoals){
-        allGoals = [...allGoals, ...customGoals.split('\n').map(s=>s.trim()).filter(Boolean)];
-      }
-
-      return {
-        metadata: { 
-          creator: creatorName,
-          projectVersion: document.getElementById('projectVersion').value,
-          creationDate: document.getElementById('creationDate').value,
-          generator: `Formulaire ${VERSION}`,
-          testMode
-        },
-        targetAudience: { 
-          ageRanges: getCheckedValues('ageRange'),
-          readingLevel: (document.querySelector('input[name="readingLevel"]:checked')||{}).value,
-          supervision: (document.querySelector('input[name="supervision"]:checked')||{}).value
-        },
-        language: { 
-          languages: getCheckedValues('languages'),
-          layout: (document.querySelector('input[name="languageLayout"]:checked')||{}).value
-        },
-        content: {
-          type: contentType,
-          theme: document.getElementById('theme').value,
-          narrativeStyle: document.getElementById('narrativeStyle').value,
-          educationalGoals: allGoals,
-          additionalContext: (document.getElementById('additionalContext').value||'').trim() || undefined
-        },
-        interactivity: { 
-          interactionTypes: getCheckedValues('interactions'),
-          rewardSystem: (document.querySelector('input[name="rewards"]:checked')||{}).value,
-          errorHandling: (document.querySelector('input[name="errorHandling"]:checked')||{}).value
-        },
-        analytics: { 
-          timer: (document.querySelector('input[name="timer"]:checked')||{}).value,
-          statistics: getCheckedValues('stats')
-        },
-        parentalAssistance: { 
-          guidanceType: (document.querySelector('input[name="parentalGuidance"]:checked')||{}).value,
-          guidanceTopics: getCheckedValues('guidanceTypes')
-        },
-        design: { 
-          colorPalette: (document.querySelector('input[name="colorPalette"]:checked')||{}).value
-        },
-        accessibility: { 
-          features: getCheckedValues('accessibility')
-        }
-      };
-    }
-
-    // ===== LOAD CONFIG =====
-    function loadConfig(config) {
-      // Metadata
-      if(config.metadata) {
-        if(config.metadata.creator) document.getElementById('creatorName').value = config.metadata.creator;
-        if(config.metadata.projectVersion) document.getElementById('projectVersion').value = config.metadata.projectVersion;
-        if(config.metadata.testMode !== undefined) {
-          document.getElementById('testMode').checked = config.metadata.testMode;
-          testModeEnabled = config.metadata.testMode;
-        }
-      }
-
-      // Target audience
-      if(config.targetAudience) {
-        document.querySelectorAll('input[name="ageRange"]').forEach(cb => {
-          cb.checked = config.targetAudience.ageRanges && config.targetAudience.ageRanges.includes(cb.value);
-        });
-        if(config.targetAudience.readingLevel) {
-          const radio = document.querySelector(`input[name="readingLevel"][value="${config.targetAudience.readingLevel}"]`);
-          if(radio) radio.checked = true;
-        }
-        if(config.targetAudience.supervision) {
-          const radio = document.querySelector(`input[name="supervision"][value="${config.targetAudience.supervision}"]`);
-          if(radio) radio.checked = true;
-        }
-      }
-
-      // Language
-      if(config.language) {
-        document.querySelectorAll('input[name="languages"]').forEach(cb => {
-          cb.checked = config.language.languages && config.language.languages.includes(cb.value);
-        });
-        if(config.language.layout) {
-          const radio = document.querySelector(`input[name="languageLayout"][value="${config.language.layout}"]`);
-          if(radio) radio.checked = true;
-        }
-      }
-
-      // Content
-      if(config.content) {
-        if(config.content.type) document.getElementById('contentType').value = config.content.type;
-        if(config.content.theme) document.getElementById('theme').value = config.content.theme;
-        if(config.content.narrativeStyle) document.getElementById('narrativeStyle').value = config.content.narrativeStyle;
-        if(config.content.additionalContext) document.getElementById('additionalContext').value = config.content.additionalContext;
-        
-        if(config.content.educationalGoals) {
-          document.querySelectorAll('input[name="pedGoals"]').forEach(cb => {
-            cb.checked = config.content.educationalGoals.includes(cb.value);
-          });
-        }
-      }
-
-      // Interactivity
-      if(config.interactivity) {
-        document.querySelectorAll('input[name="interactions"]').forEach(cb => {
-          cb.checked = config.interactivity.interactionTypes && config.interactivity.interactionTypes.includes(cb.value);
-        });
-        if(config.interactivity.rewardSystem) {
-          const radio = document.querySelector(`input[name="rewards"][value="${config.interactivity.rewardSystem}"]`);
-          if(radio) radio.checked = true;
-        }
-        if(config.interactivity.errorHandling) {
-          const radio = document.querySelector(`input[name="errorHandling"][value="${config.interactivity.errorHandling}"]`);
-          if(radio) radio.checked = true;
-        }
-      }
-
-      // Analytics
-      if(config.analytics) {
-        if(config.analytics.timer) {
-          const radio = document.querySelector(`input[name="timer"][value="${config.analytics.timer}"]`);
-          if(radio) radio.checked = true;
-        }
-        document.querySelectorAll('input[name="stats"]').forEach(cb => {
-          cb.checked = config.analytics.statistics && config.analytics.statistics.includes(cb.value);
-        });
-      }
-
-      // Parental assistance
-      if(config.parentalAssistance) {
-        if(config.parentalAssistance.guidanceType) {
-          const radio = document.querySelector(`input[name="parentalGuidance"][value="${config.parentalAssistance.guidanceType}"]`);
-          if(radio) radio.checked = true;
-        }
-        document.querySelectorAll('input[name="guidanceTypes"]').forEach(cb => {
-          cb.checked = config.parentalAssistance.guidanceTopics && config.parentalAssistance.guidanceTopics.includes(cb.value);
-        });
-      }
-
-      // Design
-      if(config.design && config.design.colorPalette) {
-        const radio = document.querySelector(`input[name="colorPalette"][value="${config.design.colorPalette}"]`);
-        if(radio) radio.checked = true;
-      }
-
-      // Accessibility
-      if(config.accessibility) {
-        document.querySelectorAll('input[name="accessibility"]').forEach(cb => {
-          cb.checked = config.accessibility.features && config.accessibility.features.includes(cb.value);
-        });
-      }
-
-      updateGoalsCount();
-      updateJsonPreview();
-    }
-
-    // ===== EXPORT CONFIG =====
-    function exportConfig() {
-      const config = buildConfigObject();
-      const blob = new Blob([JSON.stringify(config, null, 2)], {type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      const theme = (document.getElementById('theme').value||'config').replace(/[^a-z0-9]/gi,'_').toLowerCase();
-      const ts = new Date().toISOString().slice(0,10);
-      a.href = url;
-      a.download = `config_${theme}_${ts}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      alert('✅ Configuration exportée avec succès !');
-    }
-
-    // ===== HISTORY FUNCTIONS =====
-    function openHistoryModal() {
-      renderHistoryList();
-      document.getElementById('historyModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeHistoryModal() {
-      document.getElementById('historyModal').classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-
-    function openImportModal() {
-      document.getElementById('importModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeImportModal() {
-      document.getElementById('importModal').classList.remove('active');
-      document.body.style.overflow = 'auto';
-      document.getElementById('importFileInput').value = '';
-    }
-
-    function renderHistoryList() {
-      const container = document.getElementById('historyList');
-      const history = historyManager.getAll();
-
-      if(history.length === 0) {
-        container.innerHTML = `
-          <div class="empty-history">
-            <div class="empty-history-icon">📭</div>
-            <p>Aucun prompt dans l'historique</p>
-            <p class="helper-text">Générez votre premier prompt pour le voir apparaître ici !</p>
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = history.map(entry => {
-        const date = new Date(entry.timestamp);
-        const dateStr = date.toLocaleDateString('fr-FR', {day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'});
-        
-        return `
-          <div class="history-item">
-            <div class="history-header">
-              <div class="history-title">${entry.preview.theme || 'Sans titre'}</div>
-              <div class="history-date">${dateStr}</div>
-            </div>
-            <div class="history-meta">
-              <span>📁 ${entry.preview.type || 'N/A'}</span>
-              <span>👤 ${entry.preview.creator || 'Anonyme'}</span>
-            </div>
-            <div class="history-actions">
-              <button class="btn-primary btn-small" onclick="loadFromHistory(${entry.id})">
-                🔄 Charger
-              </button>
-              <button class="btn-secondary btn-small" onclick="viewPromptFromHistory(${entry.id})">
-                👁️ Voir prompt
-              </button>
-              <button class="btn-danger btn-small" onclick="if(confirm('Supprimer cet historique ?')) { historyManager.delete(${entry.id}); renderHistoryList(); }">
-                🗑️
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function loadFromHistory(id) {
-      const entry = historyManager.get(id);
-      if(!entry) {
-        alert('❌ Entrée introuvable');
-        return;
-      }
-      loadConfig(entry.config);
-      closeHistoryModal();
-      alert('✅ Configuration chargée depuis l\'historique !');
-    }
-
-    function viewPromptFromHistory(id) {
-      const entry = historyManager.get(id);
-      if(!entry) {
-        alert('❌ Entrée introuvable');
-        return;
-      }
-      document.getElementById('promptOutputModal').textContent = entry.prompt;
-      closeHistoryModal();
-      openResultModal();
-    }
-
     // ===== JSON PREVIEW =====
     function syntaxHighlight(json){
       json = json.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -1606,8 +1153,48 @@
       const contentType = document.getElementById('contentType').value || "non défini";
       const testMode = document.getElementById('testMode').checked;
 
-      const config = buildConfigObject();
-      document.getElementById('jsonPreview').innerHTML = syntaxHighlight(JSON.stringify(config,null,2));
+      const jsonPreview = {
+        metadata:{
+          creator: creatorName,
+          version: document.getElementById('projectVersion').value,
+          date: document.getElementById('creationDate').value,
+          generator: `Formulaire ${VERSION}`,
+          testMode: testMode
+        },
+        target:{
+          age: getCheckedValues('ageRange'),
+          readingLevel: (document.querySelector('input[name="readingLevel"]:checked')||{}).value || null,
+          supervision: (document.querySelector('input[name="supervision"]:checked')||{}).value || null
+        },
+        language:{
+          languages: getCheckedValues('languages'),
+          layout: (document.querySelector('input[name="languageLayout"]:checked')||{}).value || null
+        },
+        content:{
+          type: contentType,
+          theme: theme,
+          narrativeStyle: document.getElementById('narrativeStyle').value,
+          educationalGoals: [...getCheckedValues('pedGoals'), ...String(document.getElementById('customGoals').value||'').split('\n').map(s=>s.trim()).filter(Boolean)],
+          additionalContext: (document.getElementById('additionalContext').value||'').trim() || undefined
+        },
+        interactivity:{
+          interactionTypes: getCheckedValues('interactions'),
+          rewardSystem: (document.querySelector('input[name="rewards"]:checked')||{}).value || null,
+          errorHandling: (document.querySelector('input[name="errorHandling"]:checked')||{}).value || null
+        },
+        analytics:{
+          timer: (document.querySelector('input[name="timer"]:checked')||{}).value || null,
+          statistics: getCheckedValues('stats')
+        },
+        parentalAssistance:{
+          guidanceType: (document.querySelector('input[name="parentalGuidance"]:checked')||{}).value || null,
+          guidanceTopics: getCheckedValues('guidanceTypes')
+        },
+        design:{ colorPalette: (document.querySelector('input[name="colorPalette"]:checked')||{}).value || null },
+        accessibility:{ features: getCheckedValues('accessibility') }
+      };
+
+      document.getElementById('jsonPreview').innerHTML = syntaxHighlight(JSON.stringify(jsonPreview,null,2));
     }
 
     // ===== MODALS =====
@@ -1617,8 +1204,6 @@
     function closeResultModal(){ document.getElementById('resultModal').classList.remove('active'); document.body.style.overflow='auto'; }
     document.getElementById('helpModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeHelpModal(); });
     document.getElementById('resultModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeResultModal(); });
-    document.getElementById('historyModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeHistoryModal(); });
-    document.getElementById('importModal').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeImportModal(); });
 
     // ===== VALIDATION =====
     function clearErrors(){ document.querySelectorAll('.form-group.has-error').forEach(g=>g.classList.remove('has-error')); }
@@ -1654,13 +1239,7 @@
       if(!validateForm()) return;
       const btn = document.getElementById('submitBtn');
       btn.classList.add('loading'); btn.disabled = true;
-      setTimeout(()=>{ 
-        const config = buildConfigObject();
-        const prompt = generateJsonPrompt(config);
-        historyManager.add(config, prompt);
-        btn.classList.remove('loading'); 
-        btn.disabled=false; 
-      }, 500);
+      setTimeout(()=>{ generatePrompt(); btn.classList.remove('loading'); btn.disabled=false; }, 500);
     });
 
     // ===== RESET =====
@@ -1689,20 +1268,61 @@
     });
 
     // ===== GENERATION =====
-    function generateJsonPrompt(config){
-      const creatorName = config.metadata.creator;
-      const projectVersion = config.metadata.projectVersion;
-      const testMode = config.metadata.testMode;
+    function generatePrompt(){
+      if(currentFormat==='json'){ generateJsonPrompt(); }
+      else { generateTextPrompt(); }
+    }
+
+    function generateJsonPrompt(){
+      const creatorName = document.getElementById('creatorName').value.trim();
+      const projectVersion = document.getElementById('projectVersion').value;
+      const creationDate = document.getElementById('creationDate').value;
+      const testMode = document.getElementById('testMode').checked;
       localStorage.setItem(STORAGE_KEY_NAME, creatorName);
 
-      const presetUsed = PRESETS[config.content.type] ? {
-        narrativeStyle: PRESETS[config.content.type].narrativeStyle,
-        goals: PRESETS[config.content.type].goals,
-        interactions: PRESETS[config.content.type].interactions
+      const contentType = document.getElementById('contentType').value;
+      const ageRanges = Array.from(document.querySelectorAll('input[name="ageRange"]:checked')).map(cb=>cb.value);
+      const readingLevel = (document.querySelector('input[name="readingLevel"]:checked')||{}).value;
+      const supervision = (document.querySelector('input[name="supervision"]:checked')||{}).value;
+      const languages = Array.from(document.querySelectorAll('input[name="languages"]:checked')).map(cb=>cb.value);
+      const languageLayout = (document.querySelector('input[name="languageLayout"]:checked')||{}).value;
+      const theme = document.getElementById('theme').value;
+      const narrativeStyle = document.getElementById('narrativeStyle').value;
+      const additionalContext = (document.getElementById('additionalContext').value||'').trim();
+
+      const pedGoals = Array.from(document.querySelectorAll('input[name="pedGoals"]:checked')).map(cb=>cb.value);
+      const customGoals = (document.getElementById('customGoals').value||'').trim();
+      let allGoals = [...pedGoals];
+      if(customGoals){
+        allGoals = [...allGoals, ...customGoals.split('\n').map(s=>s.trim()).filter(Boolean)];
+      }
+
+      const interactions = Array.from(document.querySelectorAll('input[name="interactions"]:checked')).map(cb=>cb.value);
+      const rewards = (document.querySelector('input[name="rewards"]:checked')||{}).value;
+      const errorHandling = (document.querySelector('input[name="errorHandling"]:checked')||{}).value;
+      const timer = (document.querySelector('input[name="timer"]:checked')||{}).value;
+      const stats = Array.from(document.querySelectorAll('input[name="stats"]:checked')).map(cb=>cb.value);
+      const parentalGuidance = (document.querySelector('input[name="parentalGuidance"]:checked')||{}).value;
+      const guidanceTypes = Array.from(document.querySelectorAll('input[name="guidanceTypes"]:checked')).map(cb=>cb.value);
+      const colorPalette = (document.querySelector('input[name="colorPalette"]:checked')||{}).value;
+      const accessibility = Array.from(document.querySelectorAll('input[name="accessibility"]:checked')).map(cb=>cb.value);
+
+      const presetUsed = PRESETS[contentType] ? {
+        narrativeStyle: PRESETS[contentType].narrativeStyle,
+        goals: PRESETS[contentType].goals,
+        interactions: PRESETS[contentType].interactions
       } : null;
 
       const promptData = {
-        ...config,
+        metadata: { creator: creatorName, projectVersion, creationDate, generator: `Formulaire ${VERSION}`, testMode },
+        targetAudience: { ageRanges, readingLevel, supervision },
+        language: { languages, layout: languageLayout },
+        content: { type: contentType, theme, narrativeStyle, educationalGoals: allGoals, additionalContext: additionalContext || undefined },
+        interactivity: { interactionTypes: interactions, rewardSystem: rewards, errorHandling },
+        analytics: { timer, statistics: stats },
+        parentalAssistance: { guidanceType: parentalGuidance, guidanceTopics: guidanceTypes },
+        design: { colorPalette },
+        accessibility: { features: accessibility },
         technicalRequirements: {
           format: "HTML5 standalone",
           fileSize: "< 350 KB",
@@ -1809,10 +1429,10 @@ document.querySelectorAll('audio').forEach(audio => {
 Par défaut FR/EN/AR (Algérie) + sélecteur de langue (drapeaux).
 
 ### Analytics (head)
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
-<script>
+script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"><script>
+script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CRRK6Z4D1X');
-</script>
+<script>
 
 ### Responsive / anti-débordement
 Feuille distante : https://dznet1.com/assets/css/main.css
@@ -1831,7 +1451,13 @@ ${JSON.stringify(promptData, null, 2)}
 
       document.getElementById('promptOutputModal').textContent = prompt;
       openResultModal();
-      return prompt;
+    }
+
+    function generateTextPrompt(){
+      const prompt = `# PROMPT TEXTE (ANCIEN FORMAT)
+Utiliser le format JSON pour de meilleurs résultats.`;
+      document.getElementById('promptOutputModal').textContent = prompt;
+      openResultModal();
     }
 
     // ===== COPIE / EXPORT =====

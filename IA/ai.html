@@ -1386,11 +1386,25 @@ ${testMode ? `
 <div id="footer-placeholder"></div>
 <script>
 fetch("https://dznet1.com/intranet/footer.html").then(r=>r.text()).then(h=>{document.getElementById("footer-placeholder").innerHTML=h}).catch(()=>{});
-</script>
+<script>
 
 ${testMode ? `
 ### Gestion d'erreur média (MODE TEST)
 Ajouter ce script global AVANT le </body> :
+### i18n
+Par défaut FR/EN/AR (Algérie) + sélecteur de langue (drapeaux).
+
+### Analytics (head)
+script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X">script>
+script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CRRK6Z4D1X');
+
+
+### Responsive / anti-débordement
+Feuille distante : https://dznet1.com/assets/css/main.css
+
+### Accessibilité
+Navigation clavier, focus visible, aria-label, alt descriptifs, contraste ≥ 4.5:1.
 
 <script>
 // Fallback global pour images
@@ -1408,7 +1422,7 @@ document.querySelectorAll('audio').forEach(audio => {
     this.outerHTML = '<span class="media-fallback">🔇 ' + filename + '</span>';
   });
 });
-</script>
+
 
 <style>
 .media-fallback {
@@ -1425,21 +1439,7 @@ document.querySelectorAll('audio').forEach(audio => {
 </style>
 ` : ''}
 
-### i18n
-Par défaut FR/EN/AR (Algérie) + sélecteur de langue (drapeaux).
-
-### Analytics (head)
-script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
-script>
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CRRK6Z4D1X');
-
-
-### Responsive / anti-débordement
-Feuille distante : https://dznet1.com/assets/css/main.css
-
-### Accessibilité
-Navigation clavier, focus visible, aria-label, alt descriptifs, contraste ≥ 4.5:1.
-
+</script>
 ---
 <script>
 ## SPÉCIFICATIONS DU PROJET (JSON)

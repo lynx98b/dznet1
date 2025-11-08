@@ -783,11 +783,11 @@
 
 ## 📊 TABLEAU MÉDIAS ATTENDUS (MODE ${testMode ? 'TEST' : 'PRODUCTION'})
 ${testMode ? `
-| Élément | FR | EN | AR | Image | Audio FR | Audio EN | Audio AR |
-|---------|----|----|-------|--------|----------|----------|----------|
-| Titre   | ${theme} | Title EN | عنوان | images/titre.jpg | audio/titre_fr.mp3 | audio/titre_en.mp3 | audio/titre_ar.mp3 |
-| Item 1  | Nom FR | Name EN | اسم | images/item1.jpg | audio/item1_fr.mp3 | audio/item1_en.mp3 | audio/item1_ar.mp3 |
-| Item 2  | Nom FR | Name EN | اسم | images/item2.jpg | audio/item2_fr.mp3 | audio/item2_en.mp3 | audio/item2_ar.mp3 |
+RÈGLE PERMANENTE :
+Toujours fournir le tableau complet des médias à préparer (images + audios FR/EN/AR)
+avant la fin de la réponse.
+Format du tableau :
+| Élément | Image | Audio FR | Audio EN | Audio AR |
 ` : `
 Utiliser CDN: https://dznet1.com/cdn-cgi/image/width=XXX,quality=85,format=auto/...
 `}
@@ -810,7 +810,7 @@ Générer document A4 adapté ${age} ans avec :
 - [ ] Accessibilité WCAG 2.1 AA
 - [ ] ${limits.pages} page(s) maximum respectées
 - [ ] ${limits.words} mots maximum respectés
-
+ .
 **🚨 GÉNÉRER MAINTENANT LE HTML COMPLET**`;
 
       return prompt;

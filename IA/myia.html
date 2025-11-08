@@ -13,7 +13,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Générateur intelligent dznet1.com - Contenu éducatif avec SEO, publicité, i18n FR/EN/AR, analytics" />
-  <title>Générateur v4.0 COMPLET - dznet1.com</title>
+  <title>Générateur v4.1 COMPLET - dznet1.com</title>
 
   <style>
     /* ===== VARIABLES & RESET ===== */
@@ -175,6 +175,8 @@
     .btn-success{background:var(--success);color:#fff}
     .btn-warning{background:var(--warning);color:#fff}
     .btn-secondary{background:var(--border);color:var(--text-dark)}
+    .btn-copy{background:var(--info);color:#fff;flex:1;min-width:200px}
+    .btn-copy:hover:not(:disabled){background:#2980B9;transform:translateY(-2px);box-shadow:0 5px 15px rgba(52,152,219,.4)}
     
     .spinner{display:none;width:20px;height:20px;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
@@ -206,6 +208,31 @@
       font-weight: bold;
     }
     
+    /* ===== TOAST NOTIFICATION ===== */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--success);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      font-weight: 600;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .toast.error {
+      background: var(--danger);
+    }
+    
     @media (max-width:768px){
       body{padding:10px}
       .form-wrapper{padding:20px}
@@ -213,6 +240,12 @@
       .button-group{flex-direction:column}
       button{width:100%}
       .mode-toggle{flex-direction:column}
+      .toast {
+        bottom: 20px;
+        right: 20px;
+        left: 20px;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -220,7 +253,7 @@
   <div class="container">
     <!-- HEADER -->
     <header>
-      <span class="version-badge">v4.0 COMPLET</span>
+      <span class="version-badge">v4.1 COMPLET</span>
       <h1>🚀 Générateur dznet1.com - Version COMPLÈTE</h1>
       <div class="subtitle">
         SEO • Publicité • i18n FR/EN/AR • Analytics • Footer distant • Mode Test/Production
@@ -471,6 +504,9 @@
             <span class="spinner"></span>
             <span>🚀 Générer le Prompt Complet</span>
           </button>
+          <button type="button" class="btn-copy" id="copyBtn">
+            <span>📋 Copier le Prompt</span>
+          </button>
           <button type="reset" class="btn-secondary">🔄 Réinitialiser</button>
         </div>
       </form>
@@ -479,7 +515,7 @@
 
   <script>
     // ===== CONFIGURATION =====
-    const VERSION = "v4.0";
+    const VERSION = "v4.1";
     const STORAGE_KEY = 'dznet1_generator_v4';
     let currentMode = 'test'; // test ou production
     
@@ -563,16 +599,16 @@
       "name": "dznet1.com"
     }
   }
-  <script>
+  <\/script>
   
   <!-- Google Analytics OBLIGATOIRE -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"><script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"><\/script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-CRRK6Z4D1X');
-  <script>
+  <\/script>
   
   <!-- CSS Responsive dznet1 -->
   <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css">
@@ -740,7 +776,7 @@
       });
     });
     ` : ''}
-  <script>
+  <\/script>
 </body>
 </html>
 \`\`\`
@@ -780,6 +816,30 @@ Générer document A4 adapté ${age} ans avec :
       return prompt;
     }
     
+    // ===== [v4.1.001] TOAST NOTIFICATION =====
+    function showToast(message, type = 'success') {
+      // Supprimer toast existant
+      const existingToast = document.querySelector('.toast');
+      if (existingToast) {
+        existingToast.remove();
+      }
+      
+      // Créer nouveau toast
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      // Animation d'apparition
+      setTimeout(() => toast.classList.add('show'), 10);
+      
+      // Auto-disparition après 3s
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+    
     // ===== EVENT LISTENERS =====
     document.addEventListener('DOMContentLoaded', function() {
       // Mode toggle
@@ -796,6 +856,58 @@ Générer document A4 adapté ${age} ans avec :
         const preview = document.getElementById('promptPreview');
         preview.textContent = generateCompletePrompt();
         preview.classList.add('active');
+      });
+      
+      // ===== [v4.1.002] COPIER PROMPT =====
+      document.getElementById('copyBtn').addEventListener('click', async function() {
+        try {
+          // Validation rapide
+          if (!document.getElementById('creatorName').value.trim()) {
+            showToast('⚠️ Complète le formulaire avant de copier', 'error');
+            return;
+          }
+          if (!document.getElementById('theme').value.trim()) {
+            showToast('⚠️ Le thème est requis', 'error');
+            return;
+          }
+          
+          // Générer le prompt
+          const prompt = generateCompletePrompt();
+          
+          // Copier dans le presse-papier
+          if (navigator.clipboard && window.isSecureContext) {
+            // Méthode moderne (HTTPS requis)
+            await navigator.clipboard.writeText(prompt);
+            showToast('✅ Prompt copié dans le presse-papier !', 'success');
+          } else {
+            // Fallback pour HTTP ou navigateurs anciens
+            const textarea = document.createElement('textarea');
+            textarea.value = prompt;
+            textarea.style.position = 'fixed';
+            textarea.style.left = '-9999px';
+            textarea.style.top = '0';
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            
+            try {
+              const success = document.execCommand('copy');
+              if (success) {
+                showToast('✅ Prompt copié (mode compatibilité)', 'success');
+              } else {
+                throw new Error('execCommand failed');
+              }
+            } catch (err) {
+              showToast('❌ Erreur: copie manuelle requise', 'error');
+              console.error('Copy fallback failed:', err);
+            } finally {
+              document.body.removeChild(textarea);
+            }
+          }
+        } catch (error) {
+          showToast('❌ Erreur lors de la copie', 'error');
+          console.error('Copy error:', error);
+        }
       });
       
       // Form submit
@@ -824,7 +936,7 @@ Générer document A4 adapté ${age} ans avec :
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         
-        alert('✅ Prompt complet généré et téléchargé !');
+        showToast('✅ Prompt complet généré et téléchargé !', 'success');
       });
       
       // Reset
@@ -848,5 +960,6 @@ Générer document A4 adapté ${age} ans avec :
       });
     });
   </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"cf89ad275539459598e882a51804daf3","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>

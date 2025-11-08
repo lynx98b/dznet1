@@ -12,15 +12,14 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Générateur intelligent de contenu éducatif avec adaptation automatique selon l'âge - 1 à 3 pages maximum" />
-  <title>Générateur Intelligent v3.0 - Contenu Éducatif Adaptatif</title>
+  <meta name="description" content="Générateur intelligent dznet1.com - Contenu éducatif avec SEO, publicité, i18n FR/EN/AR, analytics" />
+  <title>Générateur v4.0 COMPLET - dznet1.com</title>
 
   <style>
     /* ===== VARIABLES & RESET ===== */
     :root{
       --primary:#4A90E2;--success:#27AE60;--warning:#F39C12;--danger:#E74C3C;--info:#3498DB;
       --bg-light:#F8F9FA;--text-dark:#2C3E50;--border:#DFE6E9;--shadow:rgba(0,0,0,0.1);
-      --age-3-4:#FFE4E1;--age-5-6:#E0F2F7;--age-7-8:#FFF9C4;--age-9-10:#D1F2EB;--age-11-12:#E1BEE7;
     }
     *{margin:0;padding:0;box-sizing:border-box}
     body{
@@ -29,150 +28,86 @@
       min-height:100vh;padding:20px;color:var(--text-dark)
     }
     
-    /* ===== INDICATEUR D'INTELLIGENCE ===== */
-    .intelligence-indicator {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: white;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      z-index: 1000;
-      min-width: 200px;
-    }
-    .intelligence-indicator h4 {
-      margin: 0 0 10px 0;
-      color: var(--primary);
-      font-size: 14px;
-    }
-    .intelligence-status {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .status-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-    .status-dot.active {
-      background: var(--success);
-    }
-    .status-dot.inactive {
-      background: var(--border);
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.2); opacity: 0.8; }
-    }
-    .age-badge {
-      display: inline-block;
-      padding: 4px 12px;
-      background: var(--info);
-      color: white;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    
-    .container{max-width:1000px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden}
+    .container{max-width:1100px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden}
     header{background:linear-gradient(135deg,var(--primary) 0%,#357ABD 100%);color:#fff;padding:30px;text-align:center;position:relative}
     header h1{font-size:26px;margin-bottom:10px}
-    header p{font-size:14px;opacity:.95}
+    header .subtitle{font-size:13px;opacity:.9;background:rgba(255,255,255,0.2);padding:5px 15px;border-radius:20px;display:inline-block;margin-top:10px}
     .version-badge{position:absolute;top:15px;right:15px;background:rgba(255,255,255,.2);padding:5px 15px;border-radius:20px;font-size:12px;font-weight:600}
     
-    /* ===== ALERTE ADAPTATIVE ===== */
-    .adaptive-alert {
-      background: linear-gradient(135deg, #FFF9E6 0%, #FFE4B5 100%);
-      border-left: 5px solid var(--warning);
+    /* ===== ALERTE IMPORTANTE ===== */
+    .critical-alert {
+      background: linear-gradient(135deg, #FFE4E1 0%, #FFCCCB 100%);
+      border-left: 5px solid var(--danger);
       padding: 20px;
       margin: 20px;
       border-radius: 8px;
-      display: none;
     }
-    .adaptive-alert.active {
-      display: block;
-      animation: slideDown 0.4s ease;
-    }
-    .adaptive-alert h3 {
-      color: var(--warning);
+    .critical-alert h3 {
+      color: var(--danger);
       margin: 0 0 10px 0;
       font-size: 18px;
     }
-    .adaptive-alert ul {
-      margin: 10px 0;
-      padding-left: 20px;
-    }
-    .adaptive-alert li {
+    .requirement-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       margin: 5px 0;
-      font-size: 14px;
-    }
-    .constraint-tag {
-      display: inline-block;
+      padding: 8px;
       background: white;
-      padding: 3px 10px;
-      border-radius: 12px;
+      border-radius: 6px;
+    }
+    .check-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 12px;
-      font-weight: 600;
-      margin-right: 8px;
-    }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    /* ===== CHAMPS DÉSACTIVÉS INTELLIGENTS ===== */
-    .field-disabled-auto {
-      position: relative;
-      opacity: 0.5;
-      pointer-events: none;
-    }
-    .field-disabled-auto::after {
-      content: attr(data-reason);
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(231, 76, 60, 0.9);
       color: white;
-      padding: 8px 16px;
+    }
+    .check-icon.yes {
+      background: var(--success);
+    }
+    .check-icon.no {
+      background: var(--danger);
+    }
+    
+    /* ===== MODE TEST/PROD ===== */
+    .mode-selector {
+      background: var(--warning);
+      color: white;
+      padding: 15px;
+      margin: 20px;
       border-radius: 8px;
-      font-size: 12px;
+      text-align: center;
+    }
+    .mode-toggle {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      justify-content: center;
+    }
+    .mode-option {
+      flex: 1;
+      padding: 10px 20px;
+      background: white;
+      color: var(--text-dark);
+      border: 2px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
       font-weight: 600;
-      white-space: nowrap;
-      z-index: 10;
-      opacity: 0;
-      transition: opacity 0.3s;
     }
-    .field-disabled-auto:hover::after {
-      opacity: 1;
+    .mode-option.active {
+      background: var(--text-dark);
+      color: white;
+      border-color: white;
     }
-    
-    /* ===== CHAMPS RECOMMANDÉS ===== */
-    .field-recommended {
-      background: linear-gradient(135deg, #E8F4F8 0%, #D4E9F3 100%);
-      border: 2px solid var(--info);
-      border-radius: 8px;
-      padding: 2px;
-    }
-    .field-forced {
-      background: linear-gradient(135deg, #FFF9E6 0%, #FFE4B5 100%);
-      border: 2px solid var(--warning);
-    }
-    
-    .modal{display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.7);animation:fadeIn .3s;overflow-y:auto;padding:20px}
-    .modal.active{display:flex;align-items:center;justify-content:center}
-    .modal-content{background:#fff;padding:40px;border-radius:16px;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;position:relative;animation:slideDown .4s}
-    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-    @keyframes slideDown{from{transform:translateY(-50px);opacity:0}to{transform:translateY(0);opacity:1}}
-    .modal-close{position:absolute;top:15px;right:15px;background:var(--danger);color:#fff;border:none;width:35px;height:35px;border-radius:50%;cursor:pointer;font-size:20px;font-weight:700;transition:.3s}
-    .modal-close:hover{background:#C0392B;transform:rotate(90deg)}
     
     .form-wrapper{padding:40px}
     .metadata-section{background:#FFF9E6;padding:20px;border-radius:12px;margin-bottom:30px;border:2px solid var(--warning)}
+    .technical-section{background:#E3F2FD;padding:20px;border-radius:12px;margin-bottom:30px;border:2px solid var(--info)}
     .section{margin-bottom:40px;padding-bottom:30px;border-bottom:2px solid var(--border)}
     .section:last-child{border-bottom:none}
     .section-title{font-size:20px;color:var(--primary);margin-bottom:20px;display:flex;align-items:center;gap:10px}
@@ -184,25 +119,62 @@
     .form-group.has-error .error-message{display:block;animation:shake .5s}
     @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
     
-    input[type="text"],input[type="date"],select,textarea{width:100%;padding:12px;border:2px solid var(--border);border-radius:8px;font-size:14px;transition:.3s;font-family:inherit}
+    input[type="text"],select,textarea{width:100%;padding:12px;border:2px solid var(--border);border-radius:8px;font-size:14px;transition:.3s;font-family:inherit}
     input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(74,144,226,.1)}
     textarea{min-height:80px;resize:vertical}
     
     .checkbox-group,.radio-group{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
     .checkbox-item,.radio-item{display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg-light);border-radius:8px;cursor:pointer;transition:.3s;border:2px solid transparent}
     .checkbox-item:hover,.radio-item:hover{background:#E8F4F8;border-color:var(--primary)}
-    .checkbox-item input:checked ~ span,.radio-item input:checked ~ span{font-weight:600;color:var(--primary)}
     input[type="checkbox"],input[type="radio"]{width:20px;height:20px;cursor:pointer;flex-shrink:0}
+    
+    /* ===== CHECKLIST EXIGENCES ===== */
+    .requirements-checklist {
+      background: white;
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .requirements-checklist h4 {
+      color: var(--primary);
+      margin: 0 0 15px 0;
+    }
+    .req-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .req-item:last-child {
+      border-bottom: none;
+    }
+    .req-checkbox {
+      width: 24px;
+      height: 24px;
+    }
+    .req-label {
+      flex: 1;
+      font-size: 14px;
+    }
+    .req-tag {
+      background: var(--bg-light);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--primary);
+    }
     
     .button-group{display:flex;gap:15px;flex-wrap:wrap;margin-top:30px}
     button{padding:15px 30px;font-size:16px;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:.3s;display:flex;align-items:center;gap:10px;justify-content:center}
     button:disabled{opacity:.5;cursor:not-allowed}
     .btn-primary{background:var(--primary);color:#fff;flex:1;min-width:200px}
     .btn-primary:hover:not(:disabled){background:#357ABD;transform:translateY(-2px);box-shadow:0 5px 15px rgba(74,144,226,.4)}
-    .btn-success{background:var(--success);color:#fff;flex:1;min-width:200px}
+    .btn-success{background:var(--success);color:#fff}
+    .btn-warning{background:var(--warning);color:#fff}
     .btn-secondary{background:var(--border);color:var(--text-dark)}
-    .btn-intelligence{background:linear-gradient(135deg,var(--warning) 0%,#E67E22 100%);color:#fff}
-    .btn-intelligence:hover{transform:scale(1.05);box-shadow:0 5px 20px rgba(243,156,18,.5)}
     
     .spinner{display:none;width:20px;height:20px;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
@@ -213,68 +185,25 @@
     .info-banner{background:#E3F2FD;border-left:4px solid var(--info);padding:15px;margin:20px 0;border-radius:4px;font-size:14px}
     .warning-banner{background:#FFF3CD;border-left:4px solid var(--warning);padding:15px;margin:20px 0;border-radius:4px;font-size:14px}
     
-    /* ===== COMPTEURS VISUELS ===== */
-    .visual-counters {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 15px;
-      margin: 20px 0;
-    }
-    .counter-card {
-      background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
-      padding: 15px;
-      border-radius: 12px;
-      text-align: center;
-      border: 2px solid transparent;
-      transition: 0.3s;
-    }
-    .counter-card.active {
-      border-color: var(--primary);
-      background: linear-gradient(135deg, #E8F4F8 0%, #D4E9F3 100%);
-    }
-    .counter-value {
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--primary);
-    }
-    .counter-label {
+    /* ===== PREVIEW PROMPT ===== */
+    .prompt-preview {
+      background: #2C3E50;
+      color: #ECF0F1;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
       font-size: 12px;
-      color: var(--text-dark);
-      margin-top: 5px;
-    }
-    
-    /* ===== PREVIEW TEMPS RÉEL ===== */
-    .live-preview {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: white;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      max-width: 300px;
+      max-height: 400px;
+      overflow-y: auto;
+      margin: 20px 0;
       display: none;
     }
-    .live-preview.active {
+    .prompt-preview.active {
       display: block;
     }
-    .preview-title {
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 10px;
-      font-size: 14px;
-    }
-    .preview-content {
-      font-size: 12px;
-      line-height: 1.6;
-    }
-    .preview-tag {
-      display: inline-block;
-      padding: 2px 8px;
-      background: var(--bg-light);
-      border-radius: 12px;
-      margin: 2px;
-      font-size: 11px;
+    .prompt-highlight {
+      color: #F39C12;
+      font-weight: bold;
     }
     
     @media (max-width:768px){
@@ -282,213 +211,265 @@
       .form-wrapper{padding:20px}
       header h1{font-size:20px}
       .button-group{flex-direction:column}
-      .btn-primary,.btn-success{width:100%}
-      .intelligence-indicator{position:static;margin:20px;width:auto}
-      .live-preview{position:static;margin:20px;max-width:100%}
+      button{width:100%}
+      .mode-toggle{flex-direction:column}
     }
   </style>
 </head>
 <body>
-  <!-- INDICATEUR D'INTELLIGENCE -->
-  <div class="intelligence-indicator" id="intelligenceIndicator">
-    <h4>🧠 Intelligence Adaptative</h4>
-    <div class="intelligence-status">
-      <span class="status-dot inactive" id="statusDot"></span>
-      <span id="statusText">Non activée</span>
-    </div>
-    <div id="ageDetected" style="margin-top:10px;display:none;">
-      <span class="age-badge" id="ageBadge">-</span>
-    </div>
-  </div>
-
   <div class="container">
     <!-- HEADER -->
     <header>
-      <span class="version-badge">v3.0 INTELLIGENT</span>
-      <h1>🧠 Générateur Intelligent - Contenu Éducatif Adaptatif</h1>
-      <p>✨ Auto-adaptation selon l'âge • 📄 1-3 pages maximum • 🎯 Templates optimisés</p>
+      <span class="version-badge">v4.0 COMPLET</span>
+      <h1>🚀 Générateur dznet1.com - Version COMPLÈTE</h1>
+      <div class="subtitle">
+        SEO • Publicité • i18n FR/EN/AR • Analytics • Footer distant • Mode Test/Production
+      </div>
     </header>
 
-    <!-- ALERTE ADAPTATIVE -->
-    <div class="adaptive-alert" id="adaptiveAlert">
-      <h3>🎯 Intelligence Activée</h3>
-      <div id="alertContent"></div>
+    <!-- ALERTE CRITIQUE -->
+    <div class="critical-alert">
+      <h3>⚠️ EXIGENCES OBLIGATOIRES dznet1.com</h3>
+      <div class="requirement-check">
+        <span class="check-icon yes">✓</span>
+        <span>SEO complet (H1, metas, JSON-LD)</span>
+      </div>
+      <div class="requirement-check">
+        <span class="check-icon yes">✓</span>
+        <span>Zone publicitaire après header</span>
+      </div>
+      <div class="requirement-check">
+        <span class="check-icon yes">✓</span>
+        <span>Logo sticky + Footer distant</span>
+      </div>
+      <div class="requirement-check">
+        <span class="check-icon yes">✓</span>
+        <span>i18n FR/EN/AR avec sélecteur</span>
+      </div>
+      <div class="requirement-check">
+        <span class="check-icon yes">✓</span>
+        <span>Analytics Google (gtag.js)</span>
+      </div>
+      <div class="requirement-check">
+        <span class="check-icon yes">✓</span>
+        <span>1-3 pages MAX selon âge</span>
+      </div>
+    </div>
+
+    <!-- MODE TEST/PRODUCTION -->
+    <div class="mode-selector">
+      <h3>🔧 Mode de génération</h3>
+      <div class="mode-toggle">
+        <div class="mode-option active" data-mode="test" id="modeTest">
+          🧪 TEST LOCAL
+          <br><small>Chemins /images/ et /audio/</small>
+        </div>
+        <div class="mode-option" data-mode="production" id="modeProduction">
+          🌐 PRODUCTION
+          <br><small>CDN dznet1.com</small>
+        </div>
+      </div>
     </div>
 
     <!-- FORMULAIRE -->
     <div class="form-wrapper">
-      <!-- BOUTON INTELLIGENCE -->
-      <div class="button-group" style="margin-bottom:30px;">
-        <button type="button" class="btn-intelligence" id="activateIntelligence">
-          <span>🧠</span>
-          <span>Activer l'Intelligence Auto-Adaptative</span>
-        </button>
-      </div>
-
       <form id="promptForm">
-        <!-- MÉTADONNÉES -->
+        
+        <!-- INFORMATIONS PROJET -->
         <div class="metadata-section">
-          <h3 style="color:var(--warning);margin-bottom:15px;">📝 Informations du Projet</h3>
+          <h3 style="color:var(--warning);">📝 Informations du Projet</h3>
           <div class="form-group">
-            <label for="creatorName" class="required">Votre nom</label>
-            <input type="text" id="creatorName" placeholder="Ex: Marie Dupont" required>
+            <label for="creatorName" class="required">Créateur</label>
+            <input type="text" id="creatorName" placeholder="Votre nom" required>
+            <div class="error-message">Champ obligatoire</div>
+          </div>
+          <div class="form-group">
+            <label for="projectCategory" class="required">Catégorie (pour SEO)</label>
+            <select id="projectCategory" required>
+              <option value="">— Sélectionner —</option>
+              <option value="Éducatif">Éducatif</option>
+              <option value="Ludique">Ludique</option>
+              <option value="Créatif">Créatif</option>
+              <option value="Scientifique">Scientifique</option>
+              <option value="Linguistique">Linguistique</option>
+              <option value="Mathématique">Mathématique</option>
+            </select>
             <div class="error-message">Champ obligatoire</div>
           </div>
         </div>
 
-        <!-- 1️⃣ PUBLIC CIBLE - DÉCLENCHEUR INTELLIGENCE -->
-        <div class="section">
-          <h2 class="section-title">
-            1️⃣ Public Cible 
-            <span style="background:var(--warning);color:white;padding:2px 8px;border-radius:4px;font-size:12px;">
-              DÉCLENCHEUR IA
-            </span>
-          </h2>
-          
-          <div class="warning-banner">
-            <strong>⚡ Sélectionnez l'âge EN PREMIER !</strong><br>
-            Le système adaptera automatiquement TOUS les autres champs selon l'âge choisi.
+        <!-- EXIGENCES TECHNIQUES -->
+        <div class="technical-section">
+          <h3 style="color:var(--info);">⚙️ Configuration Technique dznet1.com</h3>
+          <div class="requirements-checklist">
+            <h4>Éléments obligatoires à inclure :</h4>
+            <div class="req-item">
+              <input type="checkbox" class="req-checkbox" id="reqSEO" checked disabled>
+              <label class="req-label" for="reqSEO">SEO optimisé (H1 suffixé, metas, JSON-LD)</label>
+              <span class="req-tag">AUTO</span>
+            </div>
+            <div class="req-item">
+              <input type="checkbox" class="req-checkbox" id="reqPub" checked disabled>
+              <label class="req-label" for="reqPub">Publicité partenaire après header</label>
+              <span class="req-tag">AUTO</span>
+            </div>
+            <div class="req-item">
+              <input type="checkbox" class="req-checkbox" id="reqLogo" checked disabled>
+              <label class="req-label" for="reqLogo">Logo dznet1.com sticky</label>
+              <span class="req-tag">AUTO</span>
+            </div>
+            <div class="req-item">
+              <input type="checkbox" class="req-checkbox" id="reqFooter" checked disabled>
+              <label class="req-label" for="reqFooter">Footer distant chargé dynamiquement</label>
+              <span class="req-tag">AUTO</span>
+            </div>
+            <div class="req-item">
+              <input type="checkbox" class="req-checkbox" id="reqI18n" checked>
+              <label class="req-label" for="reqI18n">Multilingue FR/EN/AR avec drapeaux</label>
+            </div>
+            <div class="req-item">
+              <input type="checkbox" class="req-checkbox" id="reqAnalytics" checked disabled>
+              <label class="req-label" for="reqAnalytics">Google Analytics (G-CRRK6Z4D1X)</label>
+              <span class="req-tag">AUTO</span>
+            </div>
+            <div class="req-item">
+              <input type="checkbox" class="req-checkbox" id="reqResponsive" checked disabled>
+              <label class="req-label" for="reqResponsive">CSS responsive dznet1.com</label>
+              <span class="req-tag">AUTO</span>
+            </div>
+            <div class="req-item">
+              <input type="checkbox" class="req-checkbox" id="reqAccessibility" checked>
+              <label class="req-label" for="reqAccessibility">Accessibilité WCAG 2.1 AA</label>
+            </div>
           </div>
+        </div>
 
+        <!-- 1️⃣ PUBLIC CIBLE -->
+        <div class="section">
+          <h2 class="section-title">1️⃣ Public Cible (détermine les limites)</h2>
           <div class="form-group" id="ageGroup">
-            <label class="required">Tranche d'âge (détermine tout le reste)</label>
+            <label class="required">Tranche d'âge</label>
             <div class="radio-group">
               <label class="radio-item">
-                <input type="radio" name="ageRange" value="3-4" data-label="3-4 ans (Petite section)">
-                <span>👶 3-4 ans (1 page max)</span>
+                <input type="radio" name="ageRange" value="3-4" required>
+                <span>👶 3-4 ans (1 page, 300 mots max)</span>
               </label>
               <label class="radio-item">
-                <input type="radio" name="ageRange" value="5-6" data-label="5-6 ans (Grande section/CP)">
-                <span>🧒 5-6 ans (2 pages max)</span>
+                <input type="radio" name="ageRange" value="5-6">
+                <span>🧒 5-6 ans (2 pages, 500 mots max)</span>
               </label>
               <label class="radio-item">
-                <input type="radio" name="ageRange" value="7-8" data-label="7-8 ans (CE1/CE2)">
-                <span>👦 7-8 ans (2 pages max)</span>
+                <input type="radio" name="ageRange" value="7-8">
+                <span>👦 7-8 ans (2 pages, 800 mots max)</span>
               </label>
               <label class="radio-item">
-                <input type="radio" name="ageRange" value="9-10" data-label="9-10 ans (CM1/CM2)">
-                <span>👧 9-10 ans (3 pages max)</span>
+                <input type="radio" name="ageRange" value="9-10">
+                <span>👧 9-10 ans (3 pages, 1200 mots max)</span>
               </label>
               <label class="radio-item">
-                <input type="radio" name="ageRange" value="11-12" data-label="11-12 ans (Collège)">
-                <span>🧑 11-12 ans (3 pages max)</span>
+                <input type="radio" name="ageRange" value="11-12">
+                <span>🧑 11-12 ans (3 pages, 1500 mots max)</span>
               </label>
             </div>
             <div class="error-message">Sélectionnez une tranche d'âge</div>
           </div>
-
-          <!-- COMPTEURS VISUELS -->
-          <div class="visual-counters">
-            <div class="counter-card" id="pagesCounter">
-              <div class="counter-value">-</div>
-              <div class="counter-label">Pages max</div>
-            </div>
-            <div class="counter-card" id="wordsCounter">
-              <div class="counter-value">-</div>
-              <div class="counter-label">Mots/page</div>
-            </div>
-            <div class="counter-card" id="complexityCounter">
-              <div class="counter-value">-</div>
-              <div class="counter-label">Complexité</div>
-            </div>
-            <div class="counter-card" id="visualCounter">
-              <div class="counter-value">-</div>
-              <div class="counter-label">% Visuel</div>
-            </div>
-          </div>
-
-          <div class="form-group" id="readingGroup">
-            <label class="required">Niveau de lecture (auto-adapté)</label>
-            <div class="radio-group">
-              <label class="radio-item">
-                <input type="radio" name="readingLevel" value="Pré-lecteur">
-                <span>Pré-lecteur (images/audio)</span>
-              </label>
-              <label class="radio-item">
-                <input type="radio" name="readingLevel" value="Lecteur débutant">
-                <span>Lecteur débutant</span>
-              </label>
-              <label class="radio-item">
-                <input type="radio" name="readingLevel" value="Lecteur autonome">
-                <span>Lecteur autonome</span>
-              </label>
-            </div>
-            <div class="error-message">Sélectionnez un niveau</div>
-          </div>
         </div>
 
-        <!-- 2️⃣ TYPE & THÈME -->
+        <!-- 2️⃣ CONTENU -->
         <div class="section">
           <h2 class="section-title">2️⃣ Contenu Principal</h2>
-          
-          <div class="form-group" id="contentTypeGroup">
-            <label class="required">Type de contenu (filtré par âge)</label>
+          <div class="form-group">
+            <label for="contentType" class="required">Type de contenu</label>
             <select id="contentType" required>
               <option value="">— Sélectionner —</option>
-              <option value="histoire">📖 Histoire</option>
-              <option value="jeu_educatif">🎮 Jeu éducatif</option>
-              <option value="quiz">❓ Quiz</option>
-              <option value="coloriage">🎨 Coloriage</option>
-              <option value="puzzle">🧩 Puzzle</option>
-              <option value="memoire">🧠 Mémoire</option>
-              <option value="exercice">✏️ Exercice</option>
+              <option value="histoire">Histoire interactive</option>
+              <option value="jeu_educatif">Jeu éducatif</option>
+              <option value="quiz">Quiz/QCM</option>
+              <option value="coloriage">Coloriage</option>
+              <option value="exercice">Exercice</option>
             </select>
             <div class="error-message">Choisissez un type</div>
           </div>
-
-          <div class="form-group" id="themeGroup">
-            <label for="theme" class="required">Sujet/Thème (simple et clair)</label>
-            <input type="text" id="theme" placeholder="Ex: Les animaux, Les couleurs, Les planètes" required maxlength="50">
-            <div class="error-message">Décrivez le sujet</div>
-            <span class="helper-text">Maximum 50 caractères - Soyez précis</span>
-          </div>
-        </div>
-
-        <!-- 3️⃣ OBJECTIFS SIMPLIFIÉS -->
-        <div class="section">
-          <h2 class="section-title">3️⃣ Objectifs Pédagogiques (auto-filtrés)</h2>
           
-          <div class="info-banner" id="objectivesInfo">
-            Les objectifs sont automatiquement filtrés selon l'âge sélectionné
-          </div>
-
-          <div class="form-group" id="goalsGroup">
-            <label>Objectifs disponibles</label>
-            <div class="checkbox-group" id="goalsContainer">
-              <!-- Généré dynamiquement selon l'âge -->
-            </div>
-            <div class="error-message">Choisissez au moins un objectif</div>
-          </div>
-        </div>
-
-        <!-- 4️⃣ INTERACTIONS -->
-        <div class="section">
-          <h2 class="section-title">4️⃣ Interactions (adaptées à l'âge)</h2>
           <div class="form-group">
-            <label>Types d'interactions</label>
-            <div class="checkbox-group" id="interactionsContainer">
-              <!-- Généré dynamiquement selon l'âge -->
+            <label for="theme" class="required">Thème/Sujet</label>
+            <input type="text" id="theme" placeholder="Ex: Les animaux de la ferme" required maxlength="60">
+            <div class="error-message">Décrivez le thème</div>
+            <span class="helper-text">Ce titre sera utilisé pour le SEO et le H1</span>
+          </div>
+
+          <div class="form-group">
+            <label for="metaDescription">Meta description SEO (150-160 caractères)</label>
+            <textarea id="metaDescription" maxlength="160" placeholder="Description courte pour Google..."></textarea>
+            <span class="helper-text">Si vide, sera générée automatiquement</span>
+          </div>
+        </div>
+
+        <!-- 3️⃣ OBJECTIFS -->
+        <div class="section">
+          <h2 class="section-title">3️⃣ Objectifs Pédagogiques</h2>
+          <div class="form-group">
+            <label>Objectifs principaux (max 5)</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item">
+                <input type="checkbox" name="objectives" value="Reconnaissance couleurs">
+                <span>Reconnaissance couleurs</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="objectives" value="Comptage nombres">
+                <span>Comptage nombres</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="objectives" value="Alphabet et lettres">
+                <span>Alphabet et lettres</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="objectives" value="Formes géométriques">
+                <span>Formes géométriques</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="objectives" value="Vocabulaire">
+                <span>Vocabulaire</span>
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" name="objectives" value="Logique et séquences">
+                <span>Logique et séquences</span>
+              </label>
             </div>
           </div>
         </div>
 
-        <!-- 5️⃣ VERSION PAPIER -->
+        <!-- 4️⃣ OPTIONS -->
         <div class="section">
-          <h2 class="section-title">5️⃣ Version Papier</h2>
+          <h2 class="section-title">4️⃣ Options Supplémentaires</h2>
           <div class="form-group">
             <label class="checkbox-item">
               <input type="checkbox" id="generatePaper" name="generatePaper">
-              <span>📄 Générer aussi une version Word/PDF imprimable</span>
+              <span>📄 Générer version papier Word/PDF</span>
             </label>
-            <span class="helper-text">Document adapté à l'âge avec exercices, coloriages, corrigés</span>
           </div>
+          <div class="form-group">
+            <label class="checkbox-item">
+              <input type="checkbox" id="includeAudio" name="includeAudio" checked>
+              <span>🔊 Inclure narration audio</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- PREVIEW -->
+        <div class="section">
+          <h2 class="section-title">👁️ Aperçu du Prompt</h2>
+          <button type="button" class="btn-warning" id="previewBtn">
+            <span>Afficher l'aperçu</span>
+          </button>
+          <div class="prompt-preview" id="promptPreview"></div>
         </div>
 
         <!-- BOUTONS -->
         <div class="button-group">
           <button type="submit" class="btn-primary">
             <span class="spinner"></span>
-            <span>🚀 Générer le Prompt Intelligent</span>
+            <span>🚀 Générer le Prompt Complet</span>
           </button>
           <button type="reset" class="btn-secondary">🔄 Réinitialiser</button>
         </div>
@@ -496,551 +477,376 @@
     </div>
   </div>
 
-  <!-- PREVIEW TEMPS RÉEL -->
-  <div class="live-preview" id="livePreview">
-    <div class="preview-title">📊 Aperçu Temps Réel</div>
-    <div class="preview-content" id="previewContent"></div>
-  </div>
-
   <script>
-    // ===== CONFIGURATION INTELLIGENCE v3.0 =====
-    const VERSION = "v3.0";
-    const STORAGE_KEY = 'intelligent_generator_v3';
+    // ===== CONFIGURATION =====
+    const VERSION = "v4.0";
+    const STORAGE_KEY = 'dznet1_generator_v4';
+    let currentMode = 'test'; // test ou production
     
-    // ===== DÉFINITIONS INTELLIGENTES PAR ÂGE =====
-    const AGE_PROFILES = {
-      '3-4': {
-        label: '3-4 ans (Petite section)',
-        readingLevel: 'Pré-lecteur',
-        maxPages: 1,
-        maxWordsPerPage: 300,
-        complexity: 1,
-        visualRatio: 70,
-        fontSize: '24px',
-        supervision: 'Adulte présent obligatoire',
-        
-        allowedTypes: ['coloriage', 'histoire', 'memoire'],
-        disallowedTypes: ['quiz', 'exercice', 'puzzle'],
-        
-        objectives: [
-          'Reconnaissance des couleurs primaires',
-          'Identification formes simples (rond, carré, triangle)',
-          'Comptage 1-5',
-          'Reconnaissance animaux familiers',
-          'Coordination main-œil'
-        ],
-        
-        interactions: [
-          'Clic sur image = son',
-          'Colorier grandes zones',
-          'Glisser 2-3 objets maximum'
-        ],
-        
-        template: `
-=== CONTENU 3-4 ANS (1 PAGE MAX) ===
-- TITRE COURT : {THEME} (max 3 mots)
-- STRUCTURE : 70% images, 30% texte
-- INSTRUCTIONS : 3-5 mots max par phrase
-- ACTIVITÉS : 3-4 maximum, très simples
-- SONS : Obligatoires pour chaque action
-- MASCOTTE : Grande et souriante
-- PAS DE TEXTE SEUL - toujours avec images`,
-        
-        paperTemplate: `
-PAGE UNIQUE A4 - FORMAT 3-4 ANS
-┌────────────────────────────┐
-│    GRANDE IMAGE CENTRALE    │
-│      À COLORIER (15x15cm)   │
-└────────────────────────────┘
-Instruction: {INSTRUCTION_3_MOTS}
-
-[Zone Parent]: Encouragez après chaque réussite`
-      },
-      
-      '5-6': {
-        label: '5-6 ans (Grande section/CP)',
-        readingLevel: 'Lecteur débutant',
-        maxPages: 2,
-        maxWordsPerPage: 250,
-        complexity: 2,
-        visualRatio: 50,
-        fontSize: '20px',
-        supervision: 'Semi-autonome',
-        
-        allowedTypes: ['histoire', 'jeu_educatif', 'coloriage', 'puzzle', 'memoire'],
-        disallowedTypes: ['exercice'],
-        
-        objectives: [
-          'Reconnaissance alphabet majuscules',
-          'Comptage 1-20',
-          'Couleurs primaires et secondaires',
-          'Formes géométriques de base',
-          'Syllabes simples',
-          'Séquences logiques simples',
-          'Reconnaissance sons/lettres'
-        ],
-        
-        interactions: [
-          'Quiz 3 choix avec images',
-          'Puzzle 6-9 pièces',
-          'Memory 4-6 paires',
-          'Glisser-déposer simple',
-          'Coloriage guidé'
-        ],
-        
-        template: `
-=== CONTENU 5-6 ANS (2 PAGES MAX) ===
-PAGE 1 : DÉCOUVERTE
-- Titre attractif
-- Personnage guide
-- 3 éléments à découvrir
-- Phrases 6-8 mots
-
-PAGE 2 : ACTIVITÉ  
-- Quiz 3-4 questions
-- Récompense visuelle
-- Sons encourageants`,
-        
-        paperTemplate: `
-DOCUMENT 2 PAGES - CP
-Page 1: Histoire + images
-Page 2: 3 exercices simples
-Corrigé pour parents inclus`
-      },
-      
-      '7-8': {
-        label: '7-8 ans (CE1/CE2)',
-        readingLevel: 'Lecteur autonome',
-        maxPages: 2,
-        maxWordsPerPage: 400,
-        complexity: 3,
-        visualRatio: 40,
-        fontSize: '18px',
-        supervision: 'Semi-autonome',
-        
-        allowedTypes: ['tous'],
-        disallowedTypes: [],
-        
-        objectives: [
-          'Lecture phrases complètes',
-          'Addition/soustraction simples',
-          'Compréhension de texte',
-          'Vocabulaire élargi',
-          'Notions temps/espace',
-          'Sciences basiques',
-          'Résolution problèmes simples'
-        ],
-        
-        interactions: [
-          'Quiz 5-6 questions',
-          'Histoire à choix multiples',
-          'Labyrinthe simple',
-          'Tri par catégories',
-          'Puzzle 12-16 pièces'
-        ],
-        
-        template: `
-=== CONTENU 7-8 ANS (2 PAGES) ===
-- Texte structuré
-- Mini-jeux intégrés
-- Défis progressifs
-- Auto-évaluation`,
-        
-        paperTemplate: `
-CE1/CE2 - Document structuré
-Exercices variés + solutions`
-      },
-      
-      '9-10': {
-        label: '9-10 ans (CM1/CM2)',
-        readingLevel: 'Lecteur autonome',
-        maxPages: 3,
-        maxWordsPerPage: 400,
-        complexity: 4,
-        visualRatio: 30,
-        fontSize: '16px',
-        supervision: 'Totalement autonome',
-        
-        allowedTypes: ['tous'],
-        disallowedTypes: [],
-        
-        objectives: [
-          'Tous les objectifs disponibles',
-          'Multiplication/division',
-          'Fractions simples',
-          'Sciences avancées',
-          'Histoire/géographie',
-          'Raisonnement logique'
-        ],
-        
-        interactions: [
-          'QCM 8-10 questions',
-          'Exercices de réflexion',
-          'Mini-projets',
-          'Création de contenu'
-        ],
-        
-        template: `
-=== CONTENU 9-10 ANS (3 PAGES) ===
-Structure complète avec sommaire
-Évaluation finale
-Ressources supplémentaires`,
-        
-        paperTemplate: `
-CM1/CM2 - Document complet
-Théorie + Pratique + Projet`
-      },
-      
-      '11-12': {
-        label: '11-12 ans (Collège)',
-        readingLevel: 'Lecteur autonome',
-        maxPages: 3,
-        maxWordsPerPage: 500,
-        complexity: 5,
-        visualRatio: 20,
-        fontSize: '14px',
-        supervision: 'Totalement autonome',
-        
-        allowedTypes: ['tous'],
-        disallowedTypes: [],
-        
-        objectives: ['Tous les objectifs'],
-        interactions: ['Toutes les interactions'],
-        
-        template: `
-=== CONTENU COLLÈGE (3 PAGES MAX) ===
-Format libre, gamification avancée`,
-        
-        paperTemplate: `
-COLLÈGE - Format académique`
-      }
+    // ===== PROFILS PAR ÂGE =====
+    const AGE_LIMITS = {
+      '3-4': { pages: 1, words: 300, visual: 70 },
+      '5-6': { pages: 2, words: 500, visual: 50 },
+      '7-8': { pages: 2, words: 800, visual: 40 },
+      '9-10': { pages: 3, words: 1200, visual: 30 },
+      '11-12': { pages: 3, words: 1500, visual: 20 }
     };
     
-    // ===== VARIABLES GLOBALES =====
-    let currentAgeProfile = null;
-    let intelligenceActive = false;
-    
-    // ===== FONCTION INTELLIGENCE PRINCIPALE =====
-    function activateIntelligence() {
-      const selectedAge = document.querySelector('input[name="ageRange"]:checked');
-      
-      if (!selectedAge) {
-        alert('⚠️ Sélectionnez d\'abord une tranche d\'âge !');
-        document.getElementById('ageGroup').scrollIntoView({behavior: 'smooth'});
-        return;
-      }
-      
-      const ageKey = selectedAge.value;
-      currentAgeProfile = AGE_PROFILES[ageKey];
-      
-      if (!currentAgeProfile) return;
-      
-      intelligenceActive = true;
-      
-      // Mise à jour indicateur
-      const statusDot = document.getElementById('statusDot');
-      const statusText = document.getElementById('statusText');
-      const ageDetected = document.getElementById('ageDetected');
-      const ageBadge = document.getElementById('ageBadge');
-      
-      statusDot.className = 'status-dot active';
-      statusText.textContent = 'Intelligence activée';
-      ageDetected.style.display = 'block';
-      ageBadge.textContent = currentAgeProfile.label;
-      
-      // Mise à jour compteurs visuels
-      document.getElementById('pagesCounter').classList.add('active');
-      document.querySelector('#pagesCounter .counter-value').textContent = currentAgeProfile.maxPages;
-      
-      document.getElementById('wordsCounter').classList.add('active');
-      document.querySelector('#wordsCounter .counter-value').textContent = currentAgeProfile.maxWordsPerPage;
-      
-      document.getElementById('complexityCounter').classList.add('active');
-      document.querySelector('#complexityCounter .counter-value').textContent = currentAgeProfile.complexity + '/5';
-      
-      document.getElementById('visualCounter').classList.add('active');
-      document.querySelector('#visualCounter .counter-value').textContent = currentAgeProfile.visualRatio + '%';
-      
-      // Auto-sélectionner niveau lecture
-      const readingRadio = document.querySelector(`input[name="readingLevel"][value="${currentAgeProfile.readingLevel}"]`);
-      if (readingRadio) {
-        readingRadio.checked = true;
-        readingRadio.closest('.radio-item').classList.add('field-forced');
-      }
-      
-      // Filtrer types de contenu
-      const contentSelect = document.getElementById('contentType');
-      Array.from(contentSelect.options).forEach(option => {
-        if (option.value && currentAgeProfile.disallowedTypes.includes(option.value)) {
-          option.disabled = true;
-          option.style.color = '#999';
-          option.text = option.text + ' (Non adapté)';
-        } else {
-          option.disabled = false;
-          option.style.color = '';
-        }
-      });
-      
-      // Générer objectifs filtrés
-      const goalsContainer = document.getElementById('goalsContainer');
-      goalsContainer.innerHTML = '';
-      currentAgeProfile.objectives.forEach(obj => {
-        const label = document.createElement('label');
-        label.className = 'checkbox-item';
-        label.innerHTML = `
-          <input type="checkbox" name="goals" value="${obj}">
-          <span>${obj}</span>
-        `;
-        goalsContainer.appendChild(label);
-      });
-      
-      // Générer interactions adaptées
-      const interactionsContainer = document.getElementById('interactionsContainer');
-      interactionsContainer.innerHTML = '';
-      currentAgeProfile.interactions.forEach(inter => {
-        const label = document.createElement('label');
-        label.className = 'checkbox-item';
-        label.innerHTML = `
-          <input type="checkbox" name="interactions" value="${inter}">
-          <span>${inter}</span>
-        `;
-        interactionsContainer.appendChild(label);
-      });
-      
-      // Afficher alerte adaptative
-      const alert = document.getElementById('adaptiveAlert');
-      const alertContent = document.getElementById('alertContent');
-      
-      alertContent.innerHTML = `
-        <ul>
-          <li><strong>Pages maximum :</strong> 
-            <span class="constraint-tag">${currentAgeProfile.maxPages} page(s)</span>
-          </li>
-          <li><strong>Mots par page :</strong> 
-            <span class="constraint-tag">${currentAgeProfile.maxWordsPerPage} mots max</span>
-          </li>
-          <li><strong>Ratio visuel :</strong> 
-            <span class="constraint-tag">${currentAgeProfile.visualRatio}% images</span>
-          </li>
-          <li><strong>Complexité :</strong> 
-            <span class="constraint-tag">Niveau ${currentAgeProfile.complexity}/5</span>
-          </li>
-          <li><strong>Police recommandée :</strong> 
-            <span class="constraint-tag">${currentAgeProfile.fontSize}</span>
-          </li>
-        </ul>
-      `;
-      
-      alert.classList.add('active');
-      
-      // Activer preview
-      updateLivePreview();
-      
-      // Scroll vers le formulaire
-      setTimeout(() => {
-        document.getElementById('contentTypeGroup').scrollIntoView({behavior: 'smooth', block: 'center'});
-      }, 500);
-    }
-    
-    // ===== MISE À JOUR PREVIEW =====
-    function updateLivePreview() {
-      if (!intelligenceActive || !currentAgeProfile) return;
-      
-      const preview = document.getElementById('livePreview');
-      const content = document.getElementById('previewContent');
-      
-      const theme = document.getElementById('theme').value || 'Non défini';
-      const type = document.getElementById('contentType').value || 'Non défini';
-      
-      content.innerHTML = `
-        <p><strong>Âge :</strong> ${currentAgeProfile.label}</p>
-        <p><strong>Thème :</strong> ${theme}</p>
-        <p><strong>Type :</strong> ${type}</p>
-        <div style="margin-top:10px;">
-          <span class="preview-tag">${currentAgeProfile.maxPages} page(s)</span>
-          <span class="preview-tag">${currentAgeProfile.maxWordsPerPage} mots</span>
-          <span class="preview-tag">${currentAgeProfile.visualRatio}% visuel</span>
-        </div>
-      `;
-      
-      preview.classList.add('active');
-    }
-    
-    // ===== GÉNÉRATION PROMPT INTELLIGENT =====
-    function generateIntelligentPrompt() {
-      if (!currentAgeProfile) {
-        alert('⚠️ Activez d\'abord l\'intelligence adaptative !');
-        return null;
-      }
-      
-      const creatorName = document.getElementById('creatorName').value;
-      const theme = document.getElementById('theme').value;
+    // ===== TEMPLATE PROMPT COMPLET =====
+    function generateCompletePrompt() {
+      const creator = document.getElementById('creatorName').value.trim();
+      const category = document.getElementById('projectCategory').value;
+      const age = document.querySelector('input[name="ageRange"]:checked')?.value || '7-8';
       const contentType = document.getElementById('contentType').value;
+      const theme = document.getElementById('theme').value.trim();
+      const metaDesc = document.getElementById('metaDescription').value.trim() || 
+                       `${theme} - Contenu éducatif interactif pour enfants ${age} ans. Apprentissage ludique sur dznet1.com`;
+      
+      const objectives = Array.from(document.querySelectorAll('input[name="objectives"]:checked'))
+                              .map(cb => cb.value);
+      
+      const limits = AGE_LIMITS[age];
+      const includeI18n = document.getElementById('reqI18n').checked;
+      const includeAudio = document.getElementById('includeAudio').checked;
       const generatePaper = document.getElementById('generatePaper').checked;
       
-      const selectedGoals = Array.from(document.querySelectorAll('input[name="goals"]:checked'))
-        .map(cb => cb.value);
-      const selectedInteractions = Array.from(document.querySelectorAll('input[name="interactions"]:checked'))
-        .map(cb => cb.value);
+      const testMode = currentMode === 'test';
       
-      let prompt = `# 🧠 PROMPT INTELLIGENT - ${theme.toUpperCase()}
-## Version: ${VERSION} | Âge: ${currentAgeProfile.label}
-## ⚠️ CONTRAINTES STRICTES D'ÂGE
+      const prompt = `# 🚀 PROMPT COMPLET dznet1.com - ${theme.toUpperCase()}
+## Version: ${VERSION} | Mode: ${testMode ? 'TEST LOCAL' : 'PRODUCTION'} | Âge: ${age} ans
 
-### LIMITES ABSOLUES
-- **PAGES:** ${currentAgeProfile.maxPages} MAXIMUM
-- **MOTS/PAGE:** ${currentAgeProfile.maxWordsPerPage} MAXIMUM  
-- **VISUEL:** ${currentAgeProfile.visualRatio}% images, ${100 - currentAgeProfile.visualRatio}% texte
-- **POLICE:** ${currentAgeProfile.fontSize} minimum
-- **COMPLEXITÉ:** Niveau ${currentAgeProfile.complexity}/5
+## ⚠️ CONTRAINTES STRICTES
+- **PAGES:** ${limits.pages} MAXIMUM
+- **MOTS TOTAL:** ${limits.words} MAXIMUM
+- **RATIO VISUEL:** ${limits.visual}% images, ${100-limits.visual}% texte
 
-${currentAgeProfile.template}
+## 📋 STRUCTURE HTML OBLIGATOIRE
 
-## PROJET
-- Créateur: ${creatorName}
-- Thème: ${theme}
-- Type: ${contentType}
-- Date: ${new Date().toLocaleDateString('fr-FR')}
+### 1. HEAD complet
+\`\`\`html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO OBLIGATOIRE -->
+  <title>${theme} — Catégorie : ${category} — Âge : ${age}+ | dznet1.com</title>
+  <meta name="description" content="${metaDesc}">
+  <meta name="keywords" content="${theme}, ${category}, éducatif, enfants, ${age} ans, dznet1">
+  <meta name="author" content="${creator}">
+  <meta name="content-category" content="${category}">
+  <meta name="content-age" content="${age}">
+  
+  <!-- OpenGraph -->
+  <meta property="og:title" content="${theme} - ${category} - ${age}+">
+  <meta property="og:description" content="${metaDesc}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dznet1.com/content/${theme.toLowerCase().replace(/\s/g,'-')}.html">
+  
+  <!-- JSON-LD Structuré -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalResource",
+    "name": "${theme}",
+    "description": "${metaDesc}",
+    "educationalUse": "${category}",
+    "typicalAgeRange": "${age}+",
+    "inLanguage": ["fr-FR"${includeI18n ? ', "en-US", "ar-DZ"' : ''}],
+    "author": {
+      "@type": "Person",
+      "name": "${creator}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "dznet1.com"
+    }
+  }
+  </script>
+  
+  <!-- Google Analytics OBLIGATOIRE -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CRRK6Z4D1X');
+  </script>
+  
+  <!-- CSS Responsive dznet1 -->
+  <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css">
+  
+  <style>
+    /* Styles spécifiques ${age} ans */
+    body { font-size: ${age === '3-4' ? '24px' : age === '5-6' ? '20px' : age === '7-8' ? '18px' : '16px'}; }
+    .container { max-width: 100%; padding: 20px; }
+    
+    /* Logo sticky OBLIGATOIRE */
+    .logo-sticky {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      width: 80px;
+      background: white;
+      padding: 5px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    /* Zone pub */
+    .ad-banner {
+      text-align: center;
+      padding: 20px;
+      background: #f0f0f0;
+      margin: 20px 0;
+    }
+    
+    ${includeI18n ? `
+    /* Sélecteur langue */
+    .language-selector {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .lang-btn {
+      cursor: pointer;
+      opacity: 0.6;
+      transition: 0.3s;
+      font-size: 24px;
+    }
+    .lang-btn.active {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    ` : ''}
+    
+    ${testMode ? `
+    /* Mode test - fallback médias */
+    .media-fallback {
+      display: inline-block;
+      background: #FFF3CD;
+      border: 2px dashed #FFB938;
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: #856404;
+      font-weight: 600;
+      font-family: monospace;
+      font-size: 13px;
+    }
+    ` : ''}
+  </style>
+</head>
+\`\`\`
 
-## OBJECTIFS (${selectedGoals.length})
-${selectedGoals.map((g, i) => `${i+1}. ${g}`).join('\n')}
+### 2. BODY avec structure complète
+\`\`\`html
+<body>
+  <!-- Logo sticky OBLIGATOIRE -->
+  <img src="https://dznet1.com/images/logo.png" alt="dznet1" class="logo-sticky">
+  
+  ${includeI18n ? `
+  <!-- Sélecteur langue -->
+  <div class="language-selector">
+    <span class="lang-btn active" data-lang="fr" title="Français">🇫🇷</span>
+    <span class="lang-btn" data-lang="en" title="English">🇬🇧</span>
+    <span class="lang-btn" data-lang="ar" title="العربية">🇩🇿</span>
+  </div>
+  ` : ''}
+  
+  <div class="container">
+    <!-- Header principal -->
+    <header>
+      <h1>${theme} — Catégorie : ${category} — Âge : ${age}+</h1>
+    </header>
+    
+    <!-- ZONE PUBLICITAIRE OBLIGATOIRE -->
+    <div class="ad-banner">
+      <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" 
+           alt="Publicité partenaire" />
+    </div>
+    
+    <!-- CONTENU PRINCIPAL (${limits.pages} page(s) max) -->
+    <main id="content">
+      ${testMode ? `
+      <!-- MODE TEST: Structure médias locaux -->
+      <!-- Utiliser chemins: images/nom.jpg et audio/nom.mp3 -->
+      ` : `
+      <!-- MODE PRODUCTION: CDN dznet1.com -->
+      `}
+      
+      <!-- GÉNÉRER ICI LE CONTENU ${contentType.toUpperCase()} -->
+      <!-- Objectifs: ${objectives.join(', ') || 'Général'} -->
+      <!-- Limites: ${limits.pages} pages, ${limits.words} mots total -->
+      
+    </main>
+    
+    <!-- FOOTER DISTANT OBLIGATOIRE -->
+    <div id="footer-placeholder"></div>
+  </div>
+  
+  <!-- Scripts finaux -->
+  <script>
+    // Chargement footer distant
+    fetch("https://dznet1.com/intranet/footer.html")
+      .then(r => r.text())
+      .then(h => {
+        document.getElementById("footer-placeholder").innerHTML = h;
+      })
+      .catch(() => {
+        console.log("Footer non disponible");
+      });
+    
+    ${includeI18n ? `
+    // Système i18n
+    const translations = {
+      fr: { /* traductions FR */ },
+      en: { /* traductions EN */ },
+      ar: { /* traductions AR */ }
+    };
+    
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const lang = this.dataset.lang;
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        // Implémenter changement langue
+        document.documentElement.lang = lang;
+      });
+    });
+    ` : ''}
+    
+    ${testMode ? `
+    // Fallback médias mode test
+    document.querySelectorAll('img').forEach(img => {
+      img.onerror = function() {
+        const filename = this.src.split('/').pop();
+        this.outerHTML = '<span class="media-fallback">❌ ' + filename + '</span>';
+      };
+    });
+    
+    document.querySelectorAll('audio').forEach(audio => {
+      audio.addEventListener('error', function() {
+        const filename = this.src.split('/').pop();
+        this.outerHTML = '<span class="media-fallback">🔇 ' + filename + '</span>';
+      });
+    });
+    ` : ''}
+  <script>
+</body>
+</html>
+\`\`\`
 
-## INTERACTIONS
-${selectedInteractions.map(i => `• ${i}`).join('\n')}
-`;
+## 📊 TABLEAU MÉDIAS ATTENDUS (MODE ${testMode ? 'TEST' : 'PRODUCTION'})
+${testMode ? `
+| Élément | FR | EN | AR | Image | Audio FR | Audio EN | Audio AR |
+|---------|----|----|-------|--------|----------|----------|----------|
+| Titre   | ${theme} | Title EN | عنوان | images/titre.jpg | audio/titre_fr.mp3 | audio/titre_en.mp3 | audio/titre_ar.mp3 |
+| Item 1  | Nom FR | Name EN | اسم | images/item1.jpg | audio/item1_fr.mp3 | audio/item1_en.mp3 | audio/item1_ar.mp3 |
+| Item 2  | Nom FR | Name EN | اسم | images/item2.jpg | audio/item2_fr.mp3 | audio/item2_en.mp3 | audio/item2_ar.mp3 |
+` : `
+Utiliser CDN: https://dznet1.com/cdn-cgi/image/width=XXX,quality=85,format=auto/...
+`}
 
-      if (generatePaper) {
-        prompt += `
+${generatePaper ? `
+## 📄 VERSION PAPIER WORD/PDF
+Générer document A4 adapté ${age} ans avec :
+- Exercices imprimables
+- Images noir & blanc pour coloriage
+- Corrigé pour parents
+` : ''}
 
-## 📄 VERSION PAPIER OBLIGATOIRE
-${currentAgeProfile.paperTemplate}
+## ✅ CHECKLIST FINALE
+- [ ] SEO complet (H1 suffixé, metas, JSON-LD)
+- [ ] Publicité après header
+- [ ] Logo sticky + Footer distant
+- [ ] Analytics gtag.js
+- [ ] ${includeI18n ? 'i18n FR/EN/AR avec sélecteur' : 'Monolingue FR'}
+- [ ] Responsive sans débordement
+- [ ] Accessibilité WCAG 2.1 AA
+- [ ] ${limits.pages} page(s) maximum respectées
+- [ ] ${limits.words} mots maximum respectés
 
-GÉNÉRER:
-1. HTML complet (${currentAgeProfile.maxPages} page max)
-2. Code Python pour Word/PDF adapté ${currentAgeProfile.label}
-`;
-      }
-
-      prompt += `
-
-## 🚨 GÉNÉRATION IMMÉDIATE
-Produis MAINTENANT le code HTML complet en respectant STRICTEMENT les ${currentAgeProfile.maxPages} page(s) maximum et ${currentAgeProfile.maxWordsPerPage} mots par page.
-`;
+**🚨 GÉNÉRER MAINTENANT LE HTML COMPLET**`;
 
       return prompt;
     }
     
-    // ===== VALIDATION =====
-    function validateForm() {
-      let valid = true;
-      
-      // Vérifier nom
-      if (!document.getElementById('creatorName').value.trim()) {
-        document.getElementById('creatorName').closest('.form-group').classList.add('has-error');
-        valid = false;
-      }
-      
-      // Vérifier âge
-      if (!document.querySelector('input[name="ageRange"]:checked')) {
-        document.getElementById('ageGroup').classList.add('has-error');
-        valid = false;
-      }
-      
-      // Vérifier thème
-      if (!document.getElementById('theme').value.trim()) {
-        document.getElementById('themeGroup').classList.add('has-error');
-        valid = false;
-      }
-      
-      return valid;
-    }
-    
     // ===== EVENT LISTENERS =====
     document.addEventListener('DOMContentLoaded', function() {
-      // Bouton intelligence
-      document.getElementById('activateIntelligence').addEventListener('click', activateIntelligence);
-      
-      // Changement d'âge
-      document.querySelectorAll('input[name="ageRange"]').forEach(radio => {
-        radio.addEventListener('change', function() {
-          if (intelligenceActive) {
-            activateIntelligence();
-          }
+      // Mode toggle
+      document.querySelectorAll('.mode-option').forEach(option => {
+        option.addEventListener('click', function() {
+          document.querySelectorAll('.mode-option').forEach(o => o.classList.remove('active'));
+          this.classList.add('active');
+          currentMode = this.dataset.mode;
         });
       });
       
-      // Mise à jour preview
-      document.getElementById('theme').addEventListener('input', updateLivePreview);
-      document.getElementById('contentType').addEventListener('change', updateLivePreview);
+      // Preview button
+      document.getElementById('previewBtn').addEventListener('click', function() {
+        const preview = document.getElementById('promptPreview');
+        preview.textContent = generateCompletePrompt();
+        preview.classList.add('active');
+      });
       
-      // Submit form
+      // Form submit
       document.getElementById('promptForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        if (!validateForm()) {
-          alert('⚠️ Veuillez remplir tous les champs obligatoires');
+        // Validation
+        if (!document.getElementById('creatorName').value.trim()) {
+          alert('Nom créateur requis');
+          return;
+        }
+        if (!document.getElementById('theme').value.trim()) {
+          alert('Thème requis');
           return;
         }
         
-        if (!intelligenceActive) {
-          alert('⚠️ Activez d\'abord l\'intelligence adaptative !');
-          return;
-        }
+        // Générer et télécharger
+        const prompt = generateCompletePrompt();
+        const blob = new Blob([prompt], {type: 'text/plain'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `prompt_dznet1_${currentMode}_${Date.now()}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
         
-        const prompt = generateIntelligentPrompt();
-        
-        if (prompt) {
-          // Créer et télécharger le fichier
-          const blob = new Blob([prompt], {type: 'text/plain'});
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `prompt_intelligent_${currentAgeProfile.label.replace(/\s/g, '_')}_${Date.now()}.txt`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-          
-          alert('✅ Prompt intelligent généré et téléchargé !');
-        }
+        alert('✅ Prompt complet généré et téléchargé !');
       });
       
-      // Reset form
+      // Reset
       document.getElementById('promptForm').addEventListener('reset', function() {
         setTimeout(() => {
-          intelligenceActive = false;
-          currentAgeProfile = null;
-          document.getElementById('statusDot').className = 'status-dot inactive';
-          document.getElementById('statusText').textContent = 'Non activée';
-          document.getElementById('ageDetected').style.display = 'none';
-          document.getElementById('adaptiveAlert').classList.remove('active');
-          document.getElementById('livePreview').classList.remove('active');
-          document.querySelectorAll('.counter-card').forEach(card => {
-            card.classList.remove('active');
-            card.querySelector('.counter-value').textContent = '-';
-          });
-          document.querySelectorAll('.has-error').forEach(el => {
-            el.classList.remove('has-error');
-          });
+          document.getElementById('promptPreview').classList.remove('active');
         }, 100);
       });
       
-      // Charger nom sauvegardé
+      // Load saved name
       const savedName = localStorage.getItem(STORAGE_KEY);
       if (savedName) {
         document.getElementById('creatorName').value = savedName;
       }
       
-      // Sauvegarder nom
+      // Save name
       document.getElementById('creatorName').addEventListener('blur', function() {
-        const name = this.value.trim();
-        if (name) {
-          localStorage.setItem(STORAGE_KEY, name);
+        if (this.value.trim()) {
+          localStorage.setItem(STORAGE_KEY, this.value.trim());
         }
       });
     });
-    
-    console.log('✅ Intelligence Adaptative v3.0 chargée');
   </script>
 </body>
 </html>

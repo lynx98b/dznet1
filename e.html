@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Espace Enfants - v1.5</title>
+
+<style>
+  body {
+    margin:0;
+    font-family: "Comic Sans MS", Arial, sans-serif;
+    display:flex;
+    height:100vh;
+    background:#fcefff;
+  }
+
+  /* BARRE GAUCHE MENU KIDS */
+  .sidebar {
+    width:5cm;
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    background:linear-gradient(180deg, #ffdfdf, #ffd4fa);
+    border-right:3px solid #ff9acf;
+    overflow-y:auto;
+  }
+
+  .sidebar button {
+    margin:6px 0;
+    padding:10px;
+    border:none;
+    border-radius:15px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#ffffff;
+    box-shadow:0 3px 6px rgba(0,0,0,0.12);
+    transition:transform .15s, background .25s;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .sidebar button:hover {
+    transform:scale(1.08);
+    background:#ffeefc;
+  }
+
+  /* Zone Centrale */
+  .center {
+    flex:1;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* HEADER */
+  header {
+    text-align:center;
+    padding:14px;
+    background:#ffb347;
+    color:white;
+    font-weight:bold;
+    font-size:24px;
+    border-bottom:3px solid #ff8c42;
+  }
+
+  /* IFRAME */
+  iframe {
+    flex:1;
+    width:100%;
+    border:none;
+    background:white;
+  }
+
+  /* BARRE DROITE */
+  .sidebar.right {
+    border-right:none;
+    border-left:3px solid #9ad1ff;
+    background:linear-gradient(180deg, #d3f1ff, #d4ffe2);
+  }
+
+  .info-block {
+    background:white;
+    border-radius:12px;
+    padding:10px;
+    margin:10px 0;
+    text-align:center;
+    box-shadow:0 2px 5px rgba(0,0,0,0.12);
+  }
+
+  /* RESPONSIVE MOBILE */
+  @media (max-width:900px) {
+    .sidebar { width:3cm; }
+    .sidebar button { font-size:0; justify-content:center; }
+    .sidebar button span.emoji { font-size:24px; }
+  }
+</style>
+
+</head>
+<body>
+
+<!-- BARRE GAUCHE : MENU PRINCIPAL -->
+<div class="sidebar">
+  <button onclick="loadPage('pages/histoire.html')"><span class="emoji">📚</span> Histoire</button>
+  <button onclick="loadPage('pages/jeux.html')"><span class="emoji">🎮</span> Jeux</button>
+  <button onclick="loadPage('pages/encyclopedie.html')"><span class="emoji">🌍</span> Encyclopédie</button>
+  <button onclick="loadPage('pages/concours.html')"><span class="emoji">🏆</span> Concours</button>
+  <button onclick="loadPage('pages/chanson.html')"><span class="emoji">🎵</span> Musique</button>
+  <button onclick="loadPage('pages/bricolage.html')"><span class="emoji">✂️</span> Bricolage</button>
+  <button onclick="loadPage('pages/dessin.html')"><span class="emoji">🎨</span> Dessin</button>
+
+  <hr style="border:0; border-top:2px dashed #ff8cda; margin:12px 0;">
+  <button class="quit" onclick="alert('Au revoir 👋')">Quitter ✖</button>
+</div>
+
+<!-- ZONE CENTRALE AVEC IFRAME -->
+<div class="center">
+  <header>Bienvenue dans ton Monde Magique ✨</header>
+  <iframe id="frame" src="https://dznet1.com/demo.html"></iframe>
+</div>
+
+<!-- BARRE DROITE : INFO / SCORE / HEURE -->
+<div class="sidebar right">
+  <div class="info-block">
+    <strong>Conseil 🌈</strong><br>
+    Sois curieux et amuse-toi !
+  </div>
+
+  <div class="info-block">
+    <strong>Score ⭐</strong><br>
+    <span id="score">0</span>/100
+  </div>
+
+  <div class="info-block">
+    <strong>Date & Heure 🕒</strong><br>
+    <span id="time"></span>
+  </div>
+</div>
+
+<script>
+function loadPage(url){
+  document.getElementById("frame").src = url;
+}
+
+function clock(){
+  document.getElementById("time").textContent = new Date().toLocaleString();
+}
+setInterval(clock,1000); clock();
+</script>
+
+</body>
+</html>

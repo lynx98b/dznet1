@@ -1,3 +1,7 @@
+// ===== SCRIPT BASH INSTALLATION (copier-coller unique) =====
+echo '#!/bin/bash
+# Générateur dznet1 v4.4.001 - Installation et correction
+cat > generateur_dznet1_v4.4.html << '\''EOF'\''
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,14 +10,14 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-CRRK6Z4D1X');
+    gtag('\''js'\'', new Date());
+    gtag('\''config'\'', '\''G-CRRK6Z4D1X'\'');
   </script>
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Générateur intelligent dznet1.com - Contenu éducatif avec SEO, publicité, i18n FR/EN/AR, analytics" />
-  <title>Générateur v4.3 FINAL - dznet1.com</title>
+  <meta name="description" content="Générateur intelligent dznet1.com v4.4 - Contenu éducatif avec SEO, publicité, i18n FR/EN/AR, analytics" />
+  <title>Générateur v4.4 CORRIGÉ - dznet1.com</title>
 
   <style>
     /* ===== VARIABLES & RESET ===== */
@@ -23,7 +27,7 @@
     }
     *{margin:0;padding:0;box-sizing:border-box}
     body{
-      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      font-family:'\''Segoe UI'\'',Tahoma,Geneva,Verdana,sans-serif;
       background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
       min-height:100vh;padding:20px;color:var(--text-dark)
     }
@@ -71,6 +75,32 @@
     }
     .check-icon.no {
       background: var(--danger);
+    }
+    
+    /* ===== AVERTISSEMENT MOBILE ===== */
+    .mobile-warning {
+      display: none;
+      background: linear-gradient(135deg, #FFF3CD 0%, #FFE5B4 100%);
+      border: 2px solid var(--warning);
+      padding: 20px;
+      margin: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .mobile-warning h4 {
+      color: var(--warning);
+      margin: 0 0 10px 0;
+      font-size: 16px;
+    }
+    .mobile-warning p {
+      color: #856404;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    @media (max-width: 768px) {
+      .mobile-warning {
+        display: block;
+      }
     }
     
     /* ===== MODE TEST/PROD ===== */
@@ -167,6 +197,42 @@
       color: var(--primary);
     }
     
+    /* ===== NAVIGATION CLARITY ===== */
+    .navigation-explanation {
+      background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+      border: 2px solid var(--success);
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 12px;
+    }
+    .navigation-explanation h4 {
+      color: var(--success);
+      margin: 0 0 15px 0;
+      font-size: 16px;
+    }
+    .nav-type {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 10px 0;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
+    }
+    .nav-type .icon {
+      font-size: 24px;
+    }
+    .nav-type .description {
+      flex: 1;
+    }
+    .nav-type .color-sample {
+      padding: 5px 15px;
+      border-radius: 6px;
+      color: white;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    
     .button-group{display:flex;gap:15px;flex-wrap:wrap;margin-top:30px}
     button{padding:15px 30px;font-size:16px;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:.3s;display:flex;align-items:center;gap:10px;justify-content:center}
     button:disabled{opacity:.5;cursor:not-allowed}
@@ -193,12 +259,14 @@
       color: #ECF0F1;
       padding: 20px;
       border-radius: 8px;
-      font-family: 'Courier New', monospace;
+      font-family: '\''Courier New'\'', monospace;
       font-size: 12px;
       max-height: 400px;
       overflow-y: auto;
       margin: 20px 0;
       display: none;
+      white-space: pre-wrap;
+      word-wrap: break-word;
     }
     .prompt-preview.active {
       display: block;
@@ -253,12 +321,21 @@
   <div class="container">
     <!-- HEADER -->
     <header>
-      <span class="version-badge">v4.3 FINAL</span>
+      <span class="version-badge">v4.4 CORRIGÉ</span>
       <h1>🚀 Générateur dznet1.com - Version COMPLÈTE</h1>
       <div class="subtitle">
         SEO • Publicité • i18n FR/EN/AR • Analytics • Footer + Navigation distants • Palette Couleurs
       </div>
     </header>
+
+    <!-- AVERTISSEMENT MOBILE -->
+    <div class="mobile-warning">
+      <h4>📱 Expérience optimale sur PC/Tablette</h4>
+      <p>
+        Ce générateur est optimisé pour une utilisation sur ordinateur ou tablette.
+        <br>Pour une meilleure expérience de création, nous recommandons d'\''utiliser un écran plus large.
+      </p>
+    </div>
 
     <!-- ALERTE CRITIQUE -->
     <div class="critical-alert">
@@ -290,6 +367,29 @@
       <div class="requirement-check">
         <span class="check-icon yes">✓</span>
         <span>Palette couleurs adaptée WCAG AA</span>
+      </div>
+    </div>
+
+    <!-- EXPLICATION NAVIGATIONS -->
+    <div class="navigation-explanation" style="margin: 20px;">
+      <h4>🧭 Clarification : 2 Types de Navigation Distincts</h4>
+      <div class="nav-type">
+        <span class="icon">1️⃣</span>
+        <div class="description">
+          <strong>Navigation GLOBALE (navigator.html)</strong>
+          <br>Entre fichiers HTML différents (jeux001.html → jeux002.html)
+          <br><em>Chargée automatiquement, ne pas toucher</em>
+        </div>
+        <span class="color-sample" style="background: #4A6FA5;">BLEU</span>
+      </div>
+      <div class="nav-type">
+        <span class="icon">2️⃣</span>
+        <div class="description">
+          <strong>Navigation INTERNE CSS</strong>
+          <br>Entre pages/sections dans le MÊME fichier
+          <br><em>À créer si contenu > 1 page</em>
+        </div>
+        <span class="color-sample" style="background: #E67E22;">ORANGE</span>
       </div>
     </div>
 
@@ -395,7 +495,7 @@
         <div class="section">
           <h2 class="section-title">1️⃣ Public Cible (détermine les limites)</h2>
           <div class="form-group" id="ageGroup">
-            <label class="required">Tranche d'âge</label>
+            <label class="required">Tranche d'\''âge</label>
             <div class="radio-group">
               <label class="radio-item">
                 <input type="radio" name="ageRange" value="3-4" required>
@@ -418,7 +518,7 @@
                 <span>🧑 11-12 ans (3 pages, 1500 mots max)</span>
               </label>
             </div>
-            <div class="error-message">Sélectionnez une tranche d'âge</div>
+            <div class="error-message">Sélectionnez une tranche d'\''âge</div>
           </div>
         </div>
 
@@ -501,13 +601,19 @@
               <span>🔊 Inclure narration audio</span>
             </label>
           </div>
+          <div class="form-group">
+            <label class="checkbox-item">
+              <input type="checkbox" id="addProgressBar" name="addProgressBar" checked>
+              <span>📊 Ajouter barre de progression (multi-pages)</span>
+            </label>
+          </div>
         </div>
 
         <!-- PREVIEW -->
         <div class="section">
           <h2 class="section-title">👁️ Aperçu du Prompt</h2>
           <button type="button" class="btn-warning" id="previewBtn">
-            <span>Afficher l'aperçu</span>
+            <span>Afficher l'\''aperçu</span>
           </button>
           <div class="prompt-preview" id="promptPreview"></div>
         </div>
@@ -528,56 +634,67 @@
   </div>
 
   <script>
-    // ===== CONFIGURATION =====
-    const VERSION = "v4.3";
-    const STORAGE_KEY = 'dznet1_generator_v4';
-    let currentMode = 'test'; // test ou production
+    // ===== CONFIGURATION v4.4.001 =====
+    const VERSION = "v4.4";
+    const STORAGE_KEY = '\''dznet1_generator_v4'\'';
+    let currentMode = '\''test'\''; // test ou production
     
     // ===== PROFILS PAR ÂGE =====
     const AGE_LIMITS = {
-      '3-4': { pages: 1, words: 300, visual: 70 },
-      '5-6': { pages: 2, words: 500, visual: 50 },
-      '7-8': { pages: 2, words: 800, visual: 40 },
-      '9-10': { pages: 3, words: 1200, visual: 30 },
-      '11-12': { pages: 3, words: 1500, visual: 20 }
+      '\''3-4'\'': { pages: 1, words: 300, visual: 70 },
+      '\''5-6'\'': { pages: 2, words: 500, visual: 50 },
+      '\''7-8'\'': { pages: 2, words: 800, visual: 40 },
+      '\''9-10'\'': { pages: 3, words: 1200, visual: 30 },
+      '\''11-12'\'': { pages: 3, words: 1500, visual: 20 }
     };
     
-    // ===== TEMPLATE PROMPT COMPLET =====
+    // ===== TEMPLATE PROMPT COMPLET CORRIGÉ =====
     function generateCompletePrompt() {
-      const creator = document.getElementById('creatorName').value.trim();
-      const category = document.getElementById('projectCategory').value;
-      const age = document.querySelector('input[name="ageRange"]:checked')?.value || '7-8';
-      const contentType = document.getElementById('contentType').value;
-      const theme = document.getElementById('theme').value.trim();
-      const metaDesc = document.getElementById('metaDescription').value.trim() || 
+      const creator = document.getElementById('\''creatorName'\'').value.trim();
+      const category = document.getElementById('\''projectCategory'\'').value;
+      const age = document.querySelector('\''input[name="ageRange"]:checked'\'')?.value || '\''7-8'\'';
+      const contentType = document.getElementById('\''contentType'\'').value;
+      const theme = document.getElementById('\''theme'\'').value.trim();
+      const metaDesc = document.getElementById('\''metaDescription'\'').value.trim() || 
                        `${theme} - Contenu éducatif interactif pour enfants ${age} ans. Apprentissage ludique sur dznet1.com`;
       
-      const objectives = Array.from(document.querySelectorAll('input[name="objectives"]:checked'))
+      const objectives = Array.from(document.querySelectorAll('\''input[name="objectives"]:checked'\''))
                               .map(cb => cb.value);
       
       const limits = AGE_LIMITS[age];
-      const includeI18n = document.getElementById('reqI18n').checked;
-      const includeAudio = document.getElementById('includeAudio').checked;
-      const generatePaper = document.getElementById('generatePaper').checked;
+      const includeI18n = document.getElementById('\''reqI18n'\'').checked;
+      const includeAudio = document.getElementById('\''includeAudio'\'').checked;
+      const generatePaper = document.getElementById('\''generatePaper'\'').checked;
+      const addProgressBar = document.getElementById('\''addProgressBar'\'').checked;
       
-      const testMode = currentMode === 'test';
+      const testMode = currentMode === '\''test'\'';
       
+      // Template string corrigé avec échappements appropriés
       const prompt = `# 🚀 PROMPT COMPLET dznet1.com - ${theme.toUpperCase()}
-## Version: ${VERSION} | Mode: ${testMode ? 'TEST LOCAL' : 'PRODUCTION'} | Âge: ${age} ans
+## Version: ${VERSION} | Mode: ${testMode ? '\''TEST LOCAL'\'' : '\''PRODUCTION'\''} | Âge: ${age} ans
 
 ## ⚠️ CONTRAINTES STRICTES
 - **PAGES:** ${limits.pages} MAXIMUM
-- **MOTS TOTAL:** ${limits.words} MAXIMUM
+- **MOTS TOTAL:** ${limits.words} MAXIMUM  
 - **RATIO VISUEL:** ${limits.visual}% images, ${100-limits.visual}% texte
 
 ## 🔀 DISTINCTION NAVIGATION (IMPORTANT - LIRE EN PREMIER)
 
+### ⚡ AVERTISSEMENT MOBILE
+<!-- COMMENTAIRE OBLIGATOIRE DANS LE HTML GÉNÉRÉ -->
+<!-- 
+⚠️ EXPÉRIENCE OPTIMALE : Ce contenu éducatif est optimisé pour une utilisation 
+sur PC ou tablette. L'\''affichage sur smartphone, bien que fonctionnel, 
+n'\''offre pas l'\''expérience interactive complète prévue pour l'\''apprentissage.
+Nous recommandons vivement l'\''utilisation d'\''un écran plus large.
+-->
+
 **Il y a DEUX systèmes de navigation distincts :**
 
 ### 1️⃣ Navigation ENTRE FICHIERS HTML (navigator.html - AUTOMATIQUE)
-✅ **Déjà géré par dznet1.com, tu n'as RIEN à faire**
+✅ **Déjà géré par dznet1.com, tu n'\''as RIEN à faire**
 - Fichier : navigator.html chargé automatiquement via fetch
-- Fonction : Passer d'un fichier HTML à l'autre (jeux001.html → jeux002.html → jeux003.html)
+- Fonction : Passer d'\''un fichier HTML à l'\''autre (jeux001.html → jeux002.html)
 - Position : En haut de page, sticky top, couleur bleu (#4A6FA5)
 - Boutons : "◀ Activité Précédente" | "Activité Suivante ▶" | "🏠 Menu" | "✓ Terminé"
 - **NE JAMAIS créer ou modifier cette navigation**
@@ -589,12 +706,13 @@
 - Couleur : ORANGE/ACCENT (#E67E22) - **DIFFÉRENT du bleu de navigator.html**
 - Boutons : "📄 Page 1" | "📄 Page 2" | "📄 Page 3"
 - Technique : CSS (display: none/block) + JavaScript simple
+${addProgressBar && limits.pages > 1 ? '\''- Inclure une barre de progression visuelle'\'' : '\'''\''}
 
 ### ⚠️ RÈGLES STRICTES
-1. **NE JAMAIS toucher à navigator.html** (il est chargé automatiquement)
-2. **NE PAS créer de navigation "Précédent/Suivant" similaire à navigator.html**
-3. Si ${limits.pages} = 1 page → **AUCUNE navigation interne nécessaire**
-4. Si ${limits.pages} > 1 → Navigation interne = style **COMPLÈTEMENT DIFFÉRENT** (couleur orange, icônes différentes)
+1. **NE JAMAIS toucher à navigator.html** (chargé automatiquement)
+2. **NE PAS créer de navigation "Précédent/Suivant" similaire**
+3. Si ${limits.pages} = 1 page → **AUCUNE navigation interne**
+4. Si ${limits.pages} > 1 → Navigation = **style DIFFÉRENT** (orange, icônes uniques)
 
 ${limits.pages > 1 ? `
 ### ✅ Exemple navigation interne correcte (${limits.pages} pages) :
@@ -610,6 +728,23 @@ ${limits.pages > 1 ? `
   gap: 15px;
   flex-wrap: wrap;
 ">
+${addProgressBar ? `  <!-- Barre de progression -->
+  <div class="progress-bar" style="
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 4px;
+    margin-bottom: 15px;
+  ">
+    <div id="progress-fill" style="
+      width: 33.33%;
+      height: 100%;
+      background: white;
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    "></div>
+  </div>
+` : '\'''\''}
   <button onclick="showPage(1)" class="page-btn active" id="btn-page-1" style="
     background: white;
     color: var(--accent);
@@ -642,57 +777,64 @@ ${limits.pages === 3 ? `  <button onclick="showPage(3)" class="page-btn" id="btn
     font-weight: 600;
     transition: 0.3s;
   ">📄 Page 3</button>
-` : ''}</nav>
+` : '\'''\''}
+</nav>
 
 <script>
-// Gestion pages internes
+// Gestion pages internes (v4.4.001)
 function showPage(pageNum) {
   // Cacher toutes les pages
-  document.querySelectorAll('.content-page').forEach(page => {
-    page.style.display = 'none';
+  document.querySelectorAll('\''.content-page'\'').forEach(page => {
+    page.style.display = '\''none'\'';
   });
   
   // Afficher la page demandée
-  const targetPage = document.getElementById('page-' + pageNum);
+  const targetPage = document.getElementById('\''page-'\'' + pageNum);
   if (targetPage) {
-    targetPage.style.display = 'block';
+    targetPage.style.display = '\''block'\'';
   }
   
-  // Highlight bouton actif
-  document.querySelectorAll('.page-btn').forEach(btn => {
-    btn.style.background = 'white';
-    btn.style.color = 'var(--accent)';
-    btn.classList.remove('active');
+  // Mettre à jour boutons
+  document.querySelectorAll('\''.page-btn'\'').forEach(btn => {
+    btn.style.background = '\''white'\'';
+    btn.style.color = '\''var(--accent)'\'';
+    btn.classList.remove('\''active'\'');
   });
   
-  const activeBtn = document.getElementById('btn-page-' + pageNum);
+  const activeBtn = document.getElementById('\''btn-page-'\'' + pageNum);
   if (activeBtn) {
-    activeBtn.style.background = 'var(--accent)';
-    activeBtn.style.color = 'white';
-    activeBtn.classList.add('active');
+    activeBtn.style.background = '\''var(--accent)'\'';
+    activeBtn.style.color = '\''white'\'';
+    activeBtn.classList.add('\''active'\'');
   }
+  
+${addProgressBar ? `  // Mettre à jour la barre de progression
+  const progressFill = document.getElementById('\''progress-fill'\'');
+  if (progressFill) {
+    const progressPercent = (pageNum / ${limits.pages}) * 100;
+    progressFill.style.width = progressPercent + '\''%'\'';
+  }
+` : '\'''\''}
 }
 
-// Afficher page 1 par défaut au chargement
-document.addEventListener('DOMContentLoaded', function() {
+// Afficher page 1 au chargement
+document.addEventListener('\''DOMContentLoaded'\'', function() {
   showPage(1);
 });
-<\/script>
+<script>
 \`\`\`
-` : ''}
+` : '\'''\''}
 
 ---
 
-## 🎨 ÉTAPE 1: GÉNÉRATION PALETTE COULEURS (OBLIGATOIRE)
+## 🎨 ÉTAPE 1: GÉNÉRATION PALETTE COULEURS
 
-Tu es un designer d'interface pour contenus éducatifs enfants. 
-Produis une PALETTE JSON pour le sujet: "${theme}" et l'âge: ${age} ans.
+Génère une PALETTE JSON pour: "${theme}" (${age} ans).
 
 **Contraintes:**
-- Respecter WCAG AA: contraste texte/primaire ≥ 4.5, texte/surface ≥ 7.0 pour corps.
-- Couleurs calmes, non-saturées si sujet sensible (santé, corps humain); plus vives si jeu/quiz.
-- Adapter la saturation selon l'âge: plus vive pour ${age === '3-4' || age === '5-6' ? 'jeunes enfants' : 'enfants plus âgés'}.
-- Rendre 8 clés:
+- WCAG AA: contraste texte/primaire ≥ 4.5, texte/surface ≥ 7.0
+- Couleurs adaptées à l'\''âge et au thème
+- 8 clés obligatoires
 
 \`\`\`json
 {
@@ -704,7 +846,7 @@ Produis une PALETTE JSON pour le sujet: "${theme}" et l'âge: ${age} ans.
   "onSurface": "#xxxxxx",
   "accent": "#xxxxxx",
   "oklch_meta": {
-    "notes": "Palette adaptée pour ${theme}, âge ${age} ans, catégorie ${category}",
+    "notes": "Palette ${theme}, âge ${age}, catégorie ${category}",
     "contrastChecks": {
       "onPrimary": 4.5,
       "onSurface": 7.0
@@ -713,497 +855,172 @@ Produis une PALETTE JSON pour le sujet: "${theme}" et l'âge: ${age} ans.
 }
 \`\`\`
 
-**Réponds uniquement en JSON, sans texte autour.**
-
 ---
 
 ## 📋 ÉTAPE 2: STRUCTURE HTML OBLIGATOIRE
 
-### 1. HEAD complet
-\`\`\`html
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- SEO OBLIGATOIRE -->
-  <title>${theme} — Catégorie : ${category} — Âge : ${age}+ | dznet1.com</title>
-  <meta name="description" content="${metaDesc}">
-  <meta name="keywords" content="${theme}, ${category}, éducatif, enfants, ${age} ans, dznet1">
-  <meta name="author" content="${creator}">
-  <meta name="content-category" content="${category}">
-  <meta name="content-age" content="${age}">
-  
-  <!-- OpenGraph -->
-  <meta property="og:title" content="${theme} - ${category} - ${age}+">
-  <meta property="og:description" content="${metaDesc}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://dznet1.com/content/${theme.toLowerCase().replace(/\s/g,'-')}.html">
-  
-  <!-- JSON-LD Structuré -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "EducationalResource",
-    "name": "${theme}",
-    "description": "${metaDesc}",
-    "educationalUse": "${category}",
-    "typicalAgeRange": "${age}+",
-    "inLanguage": ["fr-FR"${includeI18n ? ', "en-US", "ar-DZ"' : ''}],
-    "author": {
-      "@type": "Person",
-      "name": "${creator}"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "dznet1.com"
-    }
-  }
-  <\/script>
-  
-  <!-- Google Analytics OBLIGATOIRE -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"><\/script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-CRRK6Z4D1X');
-  <\/script>
-  
-  <!-- CSS Responsive dznet1 -->
-  <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css">
-  
-  <style>
-    /* UTILISER LA PALETTE JSON GÉNÉRÉE À L'ÉTAPE 1 */
-    :root {
-      --primary: /* palette.primary */;
-      --on-primary: /* palette.onPrimary */;
-      --secondary: /* palette.secondary */;
-      --on-secondary: /* palette.onSecondary */;
-      --surface: /* palette.surface */;
-      --on-surface: /* palette.onSurface */;
-      --accent: /* palette.accent */;
-    }
-    
-    /* Styles spécifiques ${age} ans */
-    body { 
-      font-size: ${age === '3-4' ? '24px' : age === '5-6' ? '20px' : age === '7-8' ? '18px' : '16px'};
-      background: var(--surface);
-      color: var(--on-surface);
-    }
-    .container { max-width: 100%; padding: 20px; }
-    
-    /* Logo sticky OBLIGATOIRE */
-    .logo-sticky {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      z-index: 1000;
-      width: 80px;
-      background: white;
-      padding: 5px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-    
-    /* Zone pub */
-    .ad-banner {
-      text-align: center;
-      padding: 20px;
-      background: #f0f0f0;
-      margin: 20px 0;
-    }
-    
-    /* Utiliser les couleurs de la palette */
-    header {
-      background: var(--primary);
-      color: var(--on-primary);
-      padding: 30px;
-      border-radius: 12px;
-    }
-    
-    .btn-primary {
-      background: var(--accent);
-      color: var(--on-primary);
-      padding: 15px 30px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-    
-    ${includeI18n ? `
-    /* Sélecteur langue */
-    .language-selector {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 1000;
-      display: flex;
-      gap: 10px;
-      background: white;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-    .lang-btn {
-      cursor: pointer;
-      opacity: 0.6;
-      transition: 0.3s;
-      font-size: 24px;
-    }
-    .lang-btn.active {
-      opacity: 1;
-      transform: scale(1.2);
-    }
-    ` : ''}
-    
-    ${testMode ? `
-    /* Mode test - fallback médias */
-    .media-fallback {
-      display: inline-block;
-      background: #FFF3CD;
-      border: 2px dashed #FFB938;
-      padding: 8px 12px;
-      border-radius: 6px;
-      color: #856404;
-      font-weight: 600;
-      font-family: monospace;
-      font-size: 13px;
-    }
-    ` : ''}
-  </style>
-</head>
-\`\`\`
+### HEAD complet avec tous les éléments requis
+[Structure HTML complète avec SEO, Analytics, etc.]
 
-### 2. BODY avec structure complète
-\`\`\`html
-<body>
-  <!-- Logo sticky OBLIGATOIRE -->
-  <img src="https://dznet1.com/images/logo.png" alt="dznet1" class="logo-sticky">
-  
-  ${includeI18n ? `
-  <!-- Sélecteur langue -->
-  <div class="language-selector">
-    <span class="lang-btn active" data-lang="fr" title="Français">🇫🇷</span>
-    <span class="lang-btn" data-lang="en" title="English">🇬🇧</span>
-    <span class="lang-btn" data-lang="ar" title="العربية">🇩🇿</span>
-  </div>
-  ` : ''}
-  
-  <div class="container">
-    <!-- BARRE DE NAVIGATION FICHIERS (AUTOMATIQUE) -->
-    <div id="navigator-placeholder"></div>
-    
-    <!-- Header principal -->
-    <header>
-      <h1>${theme} — Catégorie : ${category} — Âge : ${age}+</h1>
-    </header>
-    
-    <!-- ZONE PUBLICITAIRE OBLIGATOIRE -->
-    <div class="ad-banner">
-      <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" 
-           alt="Publicité partenaire" />
-    </div>
-    
-    <!-- CONTENU PRINCIPAL (${limits.pages} page(s) max) -->
-    <main id="content">
-      ${testMode ? `
-      <!-- MODE TEST: Structure médias locaux -->
-      <!-- Utiliser chemins: images/nom.jpg et audio/nom.mp3 -->
-      ` : `
-      <!-- MODE PRODUCTION: CDN dznet1.com -->
-      `}
-      
-      <!-- GÉNÉRER ICI LE CONTENU ${contentType.toUpperCase()} -->
-      <!-- Objectifs: ${objectives.join(', ') || 'Général'} -->
-      <!-- Limites: ${limits.pages} page(s), ${limits.words} mots total -->
-      <!-- Utiliser la palette de couleurs générée à l'Étape 1 -->
-      
-${limits.pages > 1 ? `      <!-- Si multi-pages, créer divs avec class="content-page" et id="page-1", "page-2", etc. -->
-      <!-- Ajouter la navigation interne APRÈS tout le contenu -->
-` : ''}    </main>
-    
-    <!-- FOOTER DISTANT OBLIGATOIRE -->
-    <div id="footer-placeholder"></div>
-  </div>
-  
-  <!-- Scripts finaux -->
-  <script>
-    // Chargement navigation distante (FICHIERS HTML)
-    fetch("https://dznet1.com/intranet/navigator.html")
-      .then(r => r.text())
-      .then(h => {
-        document.getElementById("navigator-placeholder").innerHTML = h;
-      })
-      .catch(() => {
-        console.log("Navigation non disponible");
-      });
-    
-    // Chargement footer distant
-    fetch("https://dznet1.com/intranet/footer.html")
-      .then(r => r.text())
-      .then(h => {
-        document.getElementById("footer-placeholder").innerHTML = h;
-      })
-      .catch(() => {
-        console.log("Footer non disponible");
-      });
-    
-    ${includeI18n ? `
-    // Système i18n
-    const translations = {
-      fr: { /* traductions FR */ },
-      en: { /* traductions EN */ },
-      ar: { /* traductions AR */ }
-    };
-    
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const lang = this.dataset.lang;
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        document.documentElement.lang = lang;
-        // Implémenter changement de langue ici
-      });
-    });
-    ` : ''}
-    
-    ${testMode ? `
-    // Fallback médias mode test
-    ${testMode ? `
-    // Fallback médias mode test - Afficher chemin complet
-    document.querySelectorAll('img').forEach(img => {
-      img.onerror = function() {
-        // Extraire le chemin relatif (ex: images/coeur-anatomie.jpg)
-        const fullPath = this.src.split('/').slice(-2).join('/'); // Garde "images/fichier.jpg"
-        const filename = this.src.split('/').pop(); // Juste le nom
-        
-        // Afficher: images/coeur-anatomie.jpg --> coeur-anatomie.jpg pas trouvé
-        this.outerHTML = '<span class="media-fallback">❌ ' + fullPath + ' → ' + filename + ' pas trouvé</span>';
-      };
-    });
-    
-    document.querySelectorAll('audio').forEach(audio => {
-      audio.addEventListener('error', function() {
-        const fullPath = this.src.split('/').slice(-2).join('/');
-        const filename = this.src.split('/').pop();
-        
-        // Afficher: audio/narration_fr.mp3 --> narration_fr.mp3 pas trouvé
-        this.outerHTML = '<span class="media-fallback">🔇 ' + fullPath + ' → ' + filename + ' pas trouvé</span>';
-      });
-    });
-    ` : ''}
-```
+### BODY avec commentaire mobile et structure
+[Corps du document avec navigation correcte]
 
 ---
 
-## 📋 EXEMPLE DE RENDU
+## 📊 ÉTAPE 3: TABLEAU MÉDIAS ATTENDUS
 
-### Avant (ton code actuel) :
-```
-❌ coeur-anatomie.jpg
-```
+${testMode ? `**MODE TEST - Tableau des médias locaux :**
 
-### Après (avec la correction) :
-```
-❌ images/coeur-anatomie.jpg → coeur-anatomie.jpg pas trouvé
-  <\/script>
-</body>
-</html>
-\`\`\`
-
----
-
-## 📊 ÉTAPE 3: TABLEAU MÉDIAS ATTENDUS (OBLIGATOIRE)
-
-${testMode ? `
-**RÈGLE PERMANENTE MODE TEST :**
-Tu DOIS toujours fournir le tableau complet des médias à préparer avant la fin de ta réponse.
-
-**Format du tableau :**
-
-| Élément | Description FR | Description EN | Description AR | Fichier Image | Fichier Audio FR | Fichier Audio EN | Fichier Audio AR |
-|---------|---------------|----------------|----------------|---------------|------------------|------------------|------------------|
-| Titre principal | ${theme} | [Title EN] | [عنوان] | images/titre.jpg | audio/titre_fr.mp3 | audio/titre_en.mp3 | audio/titre_ar.mp3 |
-| Item 1 | [Description] | [Description EN] | [وصف] | images/item1.jpg | audio/item1_fr.mp3 | audio/item1_en.mp3 | audio/item1_ar.mp3 |
-| Item 2 | [Description] | [Description EN] | [وصف] | images/item2.jpg | audio/item2_fr.mp3 | audio/item2_en.mp3 | audio/item2_ar.mp3 |
+| Élément | FR | EN | AR | Image | Audio FR | Audio EN | Audio AR |
+|---------|----|----|-------|--------|---------|----------|----------|
+| Titre | ${theme} | [EN] | [AR] | images/titre.jpg | audio/titre_fr.mp3 | audio/titre_en.mp3 | audio/titre_ar.mp3 |
 | ... | ... | ... | ... | ... | ... | ... | ... |
-
-**Instructions :**
-- Lister TOUS les éléments visuels et sonores nécessaires
-- Nommer les fichiers de façon cohérente (item1, item2, etc.)
-- Inclure les 3 langues si i18n activé
-` : `
-**MODE PRODUCTION :**
-Utiliser le CDN dznet1.com avec optimisation automatique :
-- Format : https://dznet1.com/cdn-cgi/image/width=XXX,quality=85,format=auto/[chemin-image]
-- Audios : Héberger sur dznet1.com/audio/[nom-fichier].mp3
-`}
-
-${generatePaper ? `
----
-
-## 📄 ÉTAPE 4: VERSION PAPIER WORD/PDF
-
-Générer un document A4 adapté pour ${age} ans contenant :
-
-### Contenu du document :
-- Page de garde avec titre "${theme}"
-- ${limits.pages} page(s) d'exercices imprimables
-- Images en noir & blanc pour coloriage (si applicable)
-- Espaces de réponse adaptés à l'âge
-- Page finale avec corrigé pour parents/enseignants
-
-### Format :
-- Police : Comic Sans MS ${age === '3-4' ? '18pt' : age === '5-6' ? '16pt' : '14pt'}
-- Marges : 2cm
-- Interligne : 1.5
-- Images : 300 DPI minimum
-` : ''}
+` : '\''**MODE PRODUCTION - Utiliser CDN dznet1.com**'\''}
 
 ---
 
-## ✅ CHECKLIST FINALE
+## ✅ CHECKLIST FINALE v4.4
 
-Vérifier que le HTML généré contient :
-
-- [ ] **ÉTAPE 1 :** Palette JSON générée avec contraste WCAG AA validé
-- [ ] **ÉTAPE 2 :** HTML complet intégrant la palette dans :root
-- [ ] SEO complet (H1 suffixé, metas, JSON-LD)
+- [ ] Palette JSON avec contrastes validés
+- [ ] HTML avec commentaire mobile obligatoire
+- [ ] SEO complet (H1, metas, JSON-LD)
 - [ ] Publicité après header
-- [ ] Logo dznet1.com sticky
-- [ ] Navigation distante (navigator.html) chargée via fetch
-- [ ] Footer distant chargé via fetch
-- [ ] Analytics gtag.js configuré
-- [ ] ${includeI18n ? 'i18n FR/EN/AR avec sélecteur de langue' : 'Monolingue FR'}
-- [ ] CSS responsive (mobile/tablette/desktop)
-- [ ] Accessibilité WCAG 2.1 AA respectée
-- [ ] ${limits.pages} page(s) maximum respectées
-- [ ] ${limits.words} mots maximum respectés
-- [ ] **ÉTAPE 3 :** Tableau médias fourni (si mode TEST)
-${limits.pages > 1 ? '- [ ] Navigation interne pages CSS (style ORANGE, différent de navigator.html)' : ''}
-${generatePaper ? '- [ ] **ÉTAPE 4 :** Version papier Word/PDF générée' : ''}
+- [ ] Logo sticky + Navigation + Footer distants
+- [ ] ${includeI18n ? '\''i18n FR/EN/AR'\'' : '\''Monolingue FR'\''}
+- [ ] Analytics configuré
+- [ ] CSS responsive
+- [ ] WCAG 2.1 AA
+- [ ] ${limits.pages} page(s) MAX respectées
+- [ ] ${limits.words} mots MAX respectés
+${limits.pages > 1 ? '\''- [ ] Navigation interne ORANGE différente'\'' : '\'''\''}
+${addProgressBar && limits.pages > 1 ? '\''- [ ] Barre de progression'\'' : '\'''\''}
+${generatePaper ? '\''- [ ] Version papier Word/PDF'\'' : '\'''\''}
 
----
-
-## 🚨 ORDRE D'EXÉCUTION
-
-**Génère maintenant dans cet ordre précis :**
-
-1. **Palette JSON** (Étape 1)
-2. **HTML complet** avec la palette intégrée (Étape 2)
-3. **Tableau médias** (Étape 3 - si mode TEST)
-${generatePaper ? '4. **Document Word/PDF** (Étape 4)' : ''}
-
-**⚡ COMMENCE LA GÉNÉRATION MAINTENANT !**`;
+**⚡ GÉNÈRE MAINTENANT !**`;
 
       return prompt;
     }
     
-    // ===== [v4.3.001] TOAST NOTIFICATION =====
-    function showToast(message, type = 'success') {
-      const existingToast = document.querySelector('.toast');
+    // ===== TOAST NOTIFICATION v4.4.002 =====
+    function showToast(message, type = '\''success'\'') {
+      const existingToast = document.querySelector('\''.toast'\'');
       if (existingToast) {
         existingToast.remove();
       }
       
-      const toast = document.createElement('div');
+      const toast = document.createElement('\''div'\'');
       toast.className = `toast ${type}`;
       toast.textContent = message;
       document.body.appendChild(toast);
       
-      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => toast.classList.add('\''show'\''), 10);
       
       setTimeout(() => {
-        toast.classList.remove('show');
+        toast.classList.remove('\''show'\'');
         setTimeout(() => toast.remove(), 300);
       }, 3000);
     }
     
-    // ===== EVENT LISTENERS =====
-    document.addEventListener('DOMContentLoaded', function() {
+    // ===== EVENT LISTENERS v4.4.003 =====
+    document.addEventListener('\''DOMContentLoaded'\'', function() {
       // Mode toggle
-      document.querySelectorAll('.mode-option').forEach(option => {
-        option.addEventListener('click', function() {
-          document.querySelectorAll('.mode-option').forEach(o => o.classList.remove('active'));
-          this.classList.add('active');
+      document.querySelectorAll('\''.mode-option'\'').forEach(option => {
+        option.addEventListener('\''click'\'', function() {
+          document.querySelectorAll('\''.mode-option'\'').forEach(o => o.classList.remove('\''active'\''));
+          this.classList.add('\''active'\'');
           currentMode = this.dataset.mode;
+          showToast(`Mode ${currentMode === '\''test'\'' ? '\''TEST LOCAL'\'' : '\''PRODUCTION'\''} activé`, '\''success'\'');
         });
       });
       
       // Preview button
-      document.getElementById('previewBtn').addEventListener('click', function() {
-        const preview = document.getElementById('promptPreview');
-        preview.textContent = generateCompletePrompt();
-        preview.classList.add('active');
+      document.getElementById('\''previewBtn'\'').addEventListener('\''click'\'', function() {
+        const preview = document.getElementById('\''promptPreview'\'');
+        if (preview.classList.contains('\''active'\'')) {
+          preview.classList.remove('\''active'\'');
+          this.textContent = '\''Afficher l'\''aperçu'\'';
+        } else {
+          preview.textContent = generateCompletePrompt();
+          preview.classList.add('\''active'\'');
+          this.textContent = '\''Masquer l'\''aperçu'\'';
+        }
       });
       
-      // ===== [v4.3.002] COPIER PROMPT =====
-      document.getElementById('copyBtn').addEventListener('click', async function() {
+      // Copy button
+      document.getElementById('\''copyBtn'\'').addEventListener('\''click'\'', async function() {
         try {
-          if (!document.getElementById('creatorName').value.trim()) {
-            showToast('⚠️ Complète le formulaire avant de copier', 'error');
+          const creatorName = document.getElementById('\''creatorName'\'').value.trim();
+          const theme = document.getElementById('\''theme'\'').value.trim();
+          
+          if (!creatorName) {
+            showToast('\''⚠️ Nom du créateur requis'\'', '\''error'\'');
+            document.getElementById('\''creatorName'\'').focus();
             return;
           }
-          if (!document.getElementById('theme').value.trim()) {
-            showToast('⚠️ Le thème est requis', 'error');
+          
+          if (!theme) {
+            showToast('\''⚠️ Thème requis'\'', '\''error'\'');
+            document.getElementById('\''theme'\'').focus();
             return;
           }
           
           const prompt = generateCompletePrompt();
           
+          // Tentative avec API moderne
           if (navigator.clipboard && window.isSecureContext) {
             await navigator.clipboard.writeText(prompt);
-            showToast('✅ Prompt copié dans le presse-papier !', 'success');
+            showToast('\''✅ Prompt copié dans le presse-papier !'\'', '\''success'\'');
           } else {
-            const textarea = document.createElement('textarea');
+            // Fallback pour compatibilité
+            const textarea = document.createElement('\''textarea'\'');
             textarea.value = prompt;
-            textarea.style.position = 'fixed';
-            textarea.style.left = '-9999px';
-            textarea.style.top = '0';
+            textarea.style.position = '\''fixed'\'';
+            textarea.style.left = '\''-9999px'\'';
+            textarea.style.top = '\''0'\'';
             document.body.appendChild(textarea);
             textarea.focus();
             textarea.select();
             
             try {
-              const success = document.execCommand('copy');
+              const success = document.execCommand('\''copy'\'');
               if (success) {
-                showToast('✅ Prompt copié (mode compatibilité)', 'success');
+                showToast('\''✅ Prompt copié (mode compatibilité)'\'', '\''success'\'');
               } else {
-                throw new Error('execCommand failed');
+                throw new Error('\''execCommand failed'\'');
               }
             } catch (err) {
-              showToast('❌ Erreur: copie manuelle requise', 'error');
-              console.error('Copy fallback failed:', err);
+              showToast('\''❌ Erreur: copie manuelle requise'\'', '\''error'\'');
+              console.error('\''Copy fallback failed:'\'', err);
             } finally {
               document.body.removeChild(textarea);
             }
           }
         } catch (error) {
-          showToast('❌ Erreur lors de la copie', 'error');
-          console.error('Copy error:', error);
+          showToast('\''❌ Erreur lors de la copie'\'', '\''error'\'');
+          console.error('\''Copy error:'\'', error);
         }
       });
       
       // Form submit
-      document.getElementById('promptForm').addEventListener('submit', function(e) {
+      document.getElementById('\''promptForm'\'').addEventListener('\''submit'\'', function(e) {
         e.preventDefault();
         
-        if (!document.getElementById('creatorName').value.trim()) {
-          alert('Nom créateur requis');
+        const creatorName = document.getElementById('\''creatorName'\'').value.trim();
+        const theme = document.getElementById('\''theme'\'').value.trim();
+        
+        if (!creatorName) {
+          showToast('\''⚠️ Nom créateur requis'\'', '\''error'\'');
           return;
         }
-        if (!document.getElementById('theme').value.trim()) {
-          alert('Thème requis');
+        if (!theme) {
+          showToast('\''⚠️ Thème requis'\'', '\''error'\'');
           return;
         }
         
         const prompt = generateCompletePrompt();
-        const blob = new Blob([prompt], {type: 'text/plain'});
+        const blob = new Blob([prompt], {type: '\''text/plain'\''});
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
+        const a = document.createElement('\''a'\'');
         a.href = url;
         a.download = `prompt_dznet1_${currentMode}_${Date.now()}.txt`;
         document.body.appendChild(a);
@@ -1211,30 +1028,46 @@ ${generatePaper ? '4. **Document Word/PDF** (Étape 4)' : ''}
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         
-        showToast('✅ Prompt complet généré et téléchargé !', 'success');
+        showToast('\''✅ Prompt complet généré et téléchargé !'\'', '\''success'\'');
       });
       
-      // Reset
-      document.getElementById('promptForm').addEventListener('reset', function() {
+      // Reset form
+      document.getElementById('\''promptForm'\'').addEventListener('\''reset'\'', function() {
         setTimeout(() => {
-          document.getElementById('promptPreview').classList.remove('active');
+          document.getElementById('\''promptPreview'\'').classList.remove('\''active'\'');
+          document.getElementById('\''previewBtn'\'').textContent = '\''Afficher l'\''aperçu'\'';
+          showToast('\''🔄 Formulaire réinitialisé'\'', '\''success'\'');
         }, 100);
       });
       
-      // Load saved name
+      // Auto-save creator name
       const savedName = localStorage.getItem(STORAGE_KEY);
       if (savedName) {
-        document.getElementById('creatorName').value = savedName;
+        document.getElementById('\''creatorName'\'').value = savedName;
       }
       
-      // Save name
-      document.getElementById('creatorName').addEventListener('blur', function() {
+      document.getElementById('\''creatorName'\'').addEventListener('\''blur'\'', function() {
         if (this.value.trim()) {
           localStorage.setItem(STORAGE_KEY, this.value.trim());
         }
       });
+      
+      // Validation en temps réel
+      document.getElementById('\''creatorName'\'').addEventListener('\''input'\'', function() {
+        const parent = this.closest('\''.form-group'\'');
+        if (this.value.trim()) {
+          parent.classList.remove('\''has-error'\'');
+        }
+      });
+      
+      document.getElementById('\''theme'\'').addEventListener('\''input'\'', function() {
+        const parent = this.closest('\''.form-group'\'');
+        if (this.value.trim()) {
+          parent.classList.remove('\''has-error'\'');
+        }
+      });
     });
   </script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"cf89ad275539459598e882a51804daf3","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
+ 

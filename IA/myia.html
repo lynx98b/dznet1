@@ -807,6 +807,19 @@ Produis une PALETTE JSON pour le sujet: "${theme}" et l'âge: ${age} ans.
   </div>
   
   <!-- Scripts finaux -->
+  // Chargement navigation distante
+    fetch("https://dznet1.com/intranet/navigator.html")
+      .then(r => r.text())
+      .then(h => {
+        document.getElementById("navigator-placeholder").innerHTML = h;
+      })
+      .catch(() => {
+        console.log("Navigation non disponible");
+      });
+    
+
+
+  
   <script>
     // Chargement footer distant
     fetch("https://dznet1.com/intranet/footer.html")
@@ -817,7 +830,10 @@ Produis une PALETTE JSON pour le sujet: "${theme}" et l'âge: ${age} ans.
       .catch(() => {
         console.log("Footer non disponible");
       });
-    
+   et uassi la base de navigation : navigator.html
+
+
+   
     ${includeI18n ? `
     // Système i18n
     const translations = {
@@ -890,7 +906,7 @@ Générer document A4 adapté ${age} ans avec :
 - [ ] Accessibilité WCAG 2.1 AA
 - [ ] ${limits.pages} page(s) maximum respectées
 - [ ] ${limits.words} mots maximum respectés
-- [] la page html doit contenir un boutton Terminé qui permet de revenir au menu précédent
+- [ ] Barre de navigation distante chargée
 **🚨 GÉNÉRER MAINTENANT:**
 1. D'ABORD le JSON de palette (Étape 1)
 2. ENSUITE le HTML complet utilisant cette palette (Étape 2)  et 3. affiche TABLEAU MÉDIAS       `

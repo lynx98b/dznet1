@@ -972,20 +972,43 @@ ${limits.pages > 1 ? `      <!-- Si multi-pages, créer divs avec class="content
     
     ${testMode ? `
     // Fallback médias mode test
+    ${testMode ? `
+    // Fallback médias mode test - Afficher chemin complet
     document.querySelectorAll('img').forEach(img => {
       img.onerror = function() {
-        const filename = this.src.split('/').pop();
-        this.outerHTML = '<span class="media-fallback">❌ ' + filename + '</span>';
+        // Extraire le chemin relatif (ex: images/coeur-anatomie.jpg)
+        const fullPath = this.src.split('/').slice(-2).join('/'); // Garde "images/fichier.jpg"
+        const filename = this.src.split('/').pop(); // Juste le nom
+        
+        // Afficher: images/coeur-anatomie.jpg --> coeur-anatomie.jpg pas trouvé
+        this.outerHTML = '<span class="media-fallback">❌ ' + fullPath + ' → ' + filename + ' pas trouvé</span>';
       };
     });
     
     document.querySelectorAll('audio').forEach(audio => {
       audio.addEventListener('error', function() {
+        const fullPath = this.src.split('/').slice(-2).join('/');
         const filename = this.src.split('/').pop();
-        this.outerHTML = '<span class="media-fallback">🔇 ' + filename + '</span>';
+        
+        // Afficher: audio/narration_fr.mp3 --> narration_fr.mp3 pas trouvé
+        this.outerHTML = '<span class="media-fallback">🔇 ' + fullPath + ' → ' + filename + ' pas trouvé</span>';
       });
     });
     ` : ''}
+```
+
+---
+
+## 📋 EXEMPLE DE RENDU
+
+### Avant (ton code actuel) :
+```
+❌ coeur-anatomie.jpg
+```
+
+### Après (avec la correction) :
+```
+❌ images/coeur-anatomie.jpg → coeur-anatomie.jpg pas trouvé
   <\/script>
 </body>
 </html>

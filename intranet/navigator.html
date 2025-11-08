@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barre de Navigation - dznet1.com</title>
+    <style>
+        /* Barre de navigation */
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--primary, #4A6FA5);
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin: 30px 0 20px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            min-width: 60px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .nav-btn.hidden {
+            display: none !important;
+        }
+
+        .nav-prev {
+            background: var(--secondary, #6B8C42);
+            color: var(--on-secondary, #FFFFFF);
+        }
+
+        .nav-next {
+            background: var(--accent, #E67E22);
+            color: var(--on-primary, #FFFFFF);
+        }
+
+        .nav-menu {
+            background: #6c757d;
+            color: white;
+        }
+
+        .nav-finish {
+            background: #28a745;
+            color: white;
+        }
+
+        .page-indicator {
+            color: var(--on-primary, #FFFFFF);
+            font-weight: bold;
+            font-size: 18px;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .nav-text {
+            display: none;
+        }
+
+        /* Version desktop - afficher le texte */
+        @media (min-width: 769px) {
+            .nav-btn {
+                min-width: 120px;
+                gap: 8px;
+            }
+            
+            .nav-text {
+                display: inline;
+                font-size: 14px;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-bar {
+                flex-direction: row;
+                justify-content: space-around;
+                gap: 5px;
+                padding: 10px;
+            }
+            
+            .nav-btn {
+                flex: 1;
+                min-width: auto;
+                height: 45px;
+                padding: 10px;
+            }
+            
+            .page-indicator {
+                order: -1;
+                flex: 0 0 100%;
+                justify-content: center;
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- BARRE DE NAVIGATION INTELLIGENTE -->
+    <div class="nav-bar" id="navigation-bar">
+        <button class="nav-btn nav-prev hidden" onclick="Navigation.goToPrevious()" id="nav-prev-btn" title="Activité précédente">
+            <span class="nav-icon">◀</span>
+            <span class="nav-text">Précédent</span>
+        </button>
+        
+        <button class="nav-btn nav-next hidden" onclick="Navigation.goToNext()" id="nav-next-btn" title="Activité suivante">
+            <span class="nav-icon">▶</span>
+            <span class="nav-text">Suivant</span>
+        </button>
+        
+        <button class="nav-btn nav-menu" onclick="Navigation.goToMainMenu()" title="Menu principal">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-text">Menu</span>
+        </button>
+        
+        <button class="nav-btn nav-finish" onclick="Navigation.finishActivity()" id="nav-finish-btn" title="Terminer l'activité">
+            <span class="nav-icon">✓</span>
+            <span class="nav-text">Terminé</span>
+        </button>
+        
+        <div class="page-indicator" title="Activité actuelle">
+            <span class="nav-icon">📁</span>
+            <span id="nav-current-file">...</span>
+        </div>
+    </div>
+
+    <script>
+        // Système de Navigation Intelligente
+        const Navigation = {
+            currentFile: '',
+            filePattern: '',
+            fileNumber: 0,
+            filePrefix: '',
+            fileExtension: '.html',
+            
+            // Initialisation automatique
+            init: function() {
+                this.detectCurrentFile();
+                this.detectFilePattern();
+                this.updateNavigation();
+            },
+            
+            // Détecter le fichier courant
+            detectCurrentFile: function() {
+                const path = window.location.pathname;
+                this.currentFile = path.split('/').pop() || 'index.html';
+                document.getElementById('nav-current-file').textContent = this.currentFile;
+            },
+            
+            // Détecter le pattern de nommage
+            detectFilePattern: function() {
+                const filename = this.currentFile;
+                
+                // Patterns supportés: jeux001.html, L_gest001.html, activite001.html, etc.
+                const match = filename.match(/^([a-zA-Z_]*)(\d+)\.html$/);
+                
+                if (match) {
+                    this.filePrefix = match[1]; // "jeux", "L_gest", etc.
+                    this.fileNumber = parseInt(match[2]); // 1, 2, 3, etc.
+                    this.filePattern = this.filePrefix + '###.html';
+                } else {
+                    // Fallback pour les fichiers sans numéro
+                    this.filePrefix = '';
+                    this.fileNumber = 0;
+                    this.filePattern = '';
+                }
+            },
+            
+            // Générer le nom de fichier avec un numéro donné
+            generateFilename: function(number) {
+                if (!this.filePattern) return null;
+                
+                const numStr = number.toString().padStart(3, '0');
+                return this.filePattern.replace('###', numStr);
+            },
+            
+            // Vérifier si un fichier existe
+            checkFileExists: function(filename, callback) {
+                fetch(filename, { method: 'HEAD' })
+                    .then(response => {
+                        callback(response.status === 200);
+                    })
+                    .catch(() => {
+                        callback(false);
+                    });
+            },
+            
+            // Mettre à jour la navigation
+            updateNavigation: function() {
+                const prevBtn = document.getElementById('nav-prev-btn');
+                const nextBtn = document.getElementById('nav-next-btn');
+                
+                // Réinitialiser
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+                
+                if (!this.filePattern) {
+                    console.log('Pattern de fichier non détecté');
+                    return;
+                }
+                
+                // Vérifier fichier précédent
+                const prevFileNumber = this.fileNumber - 1;
+                if (prevFileNumber >= 1) {
+                    const prevFilename = this.generateFilename(prevFileNumber);
+                    this.checkFileExists(prevFilename, (exists) => {
+                        if (exists) {
+                            prevBtn.classList.remove('hidden');
+                            prevBtn.title = `Activité précédente: ${prevFilename}`;
+                        }
+                    });
+                }
+                
+                // Vérifier fichier suivant
+                const nextFileNumber = this.fileNumber + 1;
+                const nextFilename = this.generateFilename(nextFileNumber);
+                this.checkFileExists(nextFilename, (exists) => {
+                    if (exists) {
+                        nextBtn.classList.remove('hidden');
+                        nextBtn.title = `Activité suivante: ${nextFilename}`;
+                    }
+                });
+            },
+            
+            // Aller au fichier précédent
+            goToPrevious: function() {
+                const prevFileNumber = this.fileNumber - 1;
+                if (prevFileNumber >= 1) {
+                    const prevFilename = this.generateFilename(prevFileNumber);
+                    window.location.href = prevFilename;
+                }
+            },
+            
+            // Aller au fichier suivant
+            goToNext: function() {
+                const nextFileNumber = this.fileNumber + 1;
+                const nextFilename = this.generateFilename(nextFileNumber);
+                this.checkFileExists(nextFilename, (exists) => {
+                    if (exists) {
+                        window.location.href = nextFilename;
+                    }
+                });
+            },
+            
+            // Aller au menu principal
+            goToMainMenu: function() {
+                window.location.href = 'index.html';
+            },
+            
+            // Terminer l'activité
+            finishActivity: function() {
+                // Essayer d'aller au fichier suivant automatiquement
+                const nextFileNumber = this.fileNumber + 1;
+                const nextFilename = this.generateFilename(nextFileNumber);
+                
+                this.checkFileExists(nextFilename, (exists) => {
+                    if (exists) {
+                        if (confirm('Bravo ! Passer à l\'activité suivante ?')) {
+                            window.location.href = nextFilename;
+                        }
+                    } else {
+                        if (confirm('Bravo ! Vous avez terminé toutes les activités. Retourner au menu ?')) {
+                            this.goToMainMenu();
+                        }
+                    }
+                });
+            },
+            
+            // Forcer un pattern spécifique (optionnel)
+            setCustomPattern: function(prefix, currentNumber) {
+                this.filePrefix = prefix;
+                this.fileNumber = currentNumber;
+                this.filePattern = prefix + '###.html';
+                this.updateNavigation();
+            }
+        };
+
+        // Initialiser automatiquement au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            Navigation.init();
+            
+            // Option: forcer un pattern spécifique si nécessaire
+            if (typeof window.navigationPattern !== 'undefined') {
+                Navigation.setCustomPattern(window.navigationPattern.prefix, window.navigationPattern.currentNumber);
+            }
+        });
+    </script>
+</body>
+</html>

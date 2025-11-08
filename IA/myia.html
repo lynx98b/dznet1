@@ -13,7 +13,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Générateur intelligent dznet1.com - Contenu éducatif avec SEO, publicité, i18n FR/EN/AR, analytics" />
-  <title>Générateur v4.1 COMPLET - dznet1.com</title>
+  <title>Générateur v4.2 COMPLET - dznet1.com</title>
 
   <style>
     /* ===== VARIABLES & RESET ===== */
@@ -253,10 +253,10 @@
   <div class="container">
     <!-- HEADER -->
     <header>
-      <span class="version-badge">v4.1 COMPLET</span>
+      <span class="version-badge">v4.2 PALETTE</span>
       <h1>🚀 Générateur dznet1.com - Version COMPLÈTE</h1>
       <div class="subtitle">
-        SEO • Publicité • i18n FR/EN/AR • Analytics • Footer distant • Mode Test/Production
+        SEO • Publicité • i18n FR/EN/AR • Analytics • Footer distant • Palette Couleurs
       </div>
     </header>
 
@@ -286,6 +286,10 @@
       <div class="requirement-check">
         <span class="check-icon yes">✓</span>
         <span>1-3 pages MAX selon âge</span>
+      </div>
+      <div class="requirement-check">
+        <span class="check-icon yes">✓</span>
+        <span>Palette couleurs adaptée WCAG AA</span>
       </div>
     </div>
 
@@ -373,6 +377,11 @@
             <div class="req-item">
               <input type="checkbox" class="req-checkbox" id="reqAccessibility" checked>
               <label class="req-label" for="reqAccessibility">Accessibilité WCAG 2.1 AA</label>
+            </div>
+            <div class="req-item">
+              <input type="checkbox" class="req-checkbox" id="reqPalette" checked disabled>
+              <label class="req-label" for="reqPalette">Palette couleurs adaptée au sujet</label>
+              <span class="req-tag">AUTO</span>
             </div>
           </div>
         </div>
@@ -515,7 +524,7 @@
 
   <script>
     // ===== CONFIGURATION =====
-    const VERSION = "v4.1";
+    const VERSION = "v4.2";
     const STORAGE_KEY = 'dznet1_generator_v4';
     let currentMode = 'test'; // test ou production
     
@@ -556,7 +565,41 @@
 - **MOTS TOTAL:** ${limits.words} MAXIMUM
 - **RATIO VISUEL:** ${limits.visual}% images, ${100-limits.visual}% texte
 
-## 📋 STRUCTURE HTML OBLIGATOIRE
+## 🎨 ÉTAPE 1: GÉNÉRATION PALETTE COULEURS (OBLIGATOIRE)
+
+Tu es un designer d'interface pour contenus éducatifs enfants. 
+Produis une PALETTE JSON pour le sujet: "${theme}" et l'âge: ${age} ans.
+
+**Contraintes:**
+- Respecter WCAG AA: contraste texte/primaire ≥ 4.5, texte/surface ≥ 7.0 pour corps.
+- Couleurs calmes, non-saturées si sujet sensible (santé, corps humain); plus vives si jeu/quiz.
+- Adapter la saturation selon l'âge: plus vive pour ${age === '3-4' || age === '5-6' ? 'jeunes enfants' : 'enfants plus âgés'}.
+- Rendre 8 clés:
+
+\`\`\`json
+{
+  "primary": "#xxxxxx",
+  "onPrimary": "#xxxxxx",
+  "secondary": "#xxxxxx",
+  "onSecondary": "#xxxxxx",
+  "surface": "#xxxxxx",
+  "onSurface": "#xxxxxx",
+  "accent": "#xxxxxx",
+  "oklch_meta": {
+    "notes": "Palette adaptée pour ${theme}, âge ${age} ans, catégorie ${category}",
+    "contrastChecks": {
+      "onPrimary": 4.5,
+      "onSurface": 7.0
+    }
+  }
+}
+\`\`\`
+
+**Réponds uniquement en JSON, sans texte autour.**
+
+---
+
+## 📋 ÉTAPE 2: STRUCTURE HTML OBLIGATOIRE
 
 ### 1. HEAD complet
 \`\`\`html
@@ -614,8 +657,23 @@
   <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css">
   
   <style>
+    /* UTILISER LA PALETTE JSON GÉNÉRÉE À L'ÉTAPE 1 */
+    :root {
+      --primary: /* palette.primary */;
+      --on-primary: /* palette.onPrimary */;
+      --secondary: /* palette.secondary */;
+      --on-secondary: /* palette.onSecondary */;
+      --surface: /* palette.surface */;
+      --on-surface: /* palette.onSurface */;
+      --accent: /* palette.accent */;
+    }
+    
     /* Styles spécifiques ${age} ans */
-    body { font-size: ${age === '3-4' ? '24px' : age === '5-6' ? '20px' : age === '7-8' ? '18px' : '16px'}; }
+    body { 
+      font-size: ${age === '3-4' ? '24px' : age === '5-6' ? '20px' : age === '7-8' ? '18px' : '16px'};
+      background: var(--surface);
+      color: var(--on-surface);
+    }
     .container { max-width: 100%; padding: 20px; }
     
     /* Logo sticky OBLIGATOIRE */
@@ -637,6 +695,24 @@
       padding: 20px;
       background: #f0f0f0;
       margin: 20px 0;
+    }
+    
+    /* Utiliser les couleurs de la palette */
+    header {
+      background: var(--primary);
+      color: var(--on-primary);
+      padding: 30px;
+      border-radius: 12px;
+    }
+    
+    .btn-primary {
+      background: var(--accent);
+      color: var(--on-primary);
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
     }
     
     ${includeI18n ? `
@@ -722,6 +798,7 @@
       <!-- GÉNÉRER ICI LE CONTENU ${contentType.toUpperCase()} -->
       <!-- Objectifs: ${objectives.join(', ') || 'Général'} -->
       <!-- Limites: ${limits.pages} pages, ${limits.words} mots total -->
+      <!-- Utiliser la palette de couleurs générée à l'Étape 1 -->
       
     </main>
     
@@ -788,6 +865,7 @@ Toujours fournir le tableau complet des médias à préparer (images + audios FR
 avant la fin de la réponse.
 Format du tableau :
 | Élément | Image | Audio FR | Audio EN | Audio AR |
+
 ` : `
 Utiliser CDN: https://dznet1.com/cdn-cgi/image/width=XXX,quality=85,format=auto/...
 `}
@@ -801,6 +879,8 @@ Générer document A4 adapté ${age} ans avec :
 ` : ''}
 
 ## ✅ CHECKLIST FINALE
+- [ ] ÉTAPE 1: Palette JSON générée avec contraste WCAG AA validé
+- [ ] ÉTAPE 2: HTML intégrant la palette dans :root et tous les éléments
 - [ ] SEO complet (H1 suffixé, metas, JSON-LD)
 - [ ] Publicité après header
 - [ ] Logo sticky + Footer distant
@@ -810,13 +890,15 @@ Générer document A4 adapté ${age} ans avec :
 - [ ] Accessibilité WCAG 2.1 AA
 - [ ] ${limits.pages} page(s) maximum respectées
 - [ ] ${limits.words} mots maximum respectés
- .
-**🚨 GÉNÉRER MAINTENANT LE HTML COMPLET**`;
+
+**🚨 GÉNÉRER MAINTENANT:**
+1. D'ABORD le JSON de palette (Étape 1)
+2. ENSUITE le HTML complet utilisant cette palette (Étape 2)`;
 
       return prompt;
     }
     
-    // ===== [v4.1.001] TOAST NOTIFICATION =====
+    // ===== [v4.2.001] TOAST NOTIFICATION =====
     function showToast(message, type = 'success') {
       // Supprimer toast existant
       const existingToast = document.querySelector('.toast');
@@ -858,7 +940,7 @@ Générer document A4 adapté ${age} ans avec :
         preview.classList.add('active');
       });
       
-      // ===== [v4.1.002] COPIER PROMPT =====
+      // ===== [v4.2.002] COPIER PROMPT =====
       document.getElementById('copyBtn').addEventListener('click', async function() {
         try {
           // Validation rapide

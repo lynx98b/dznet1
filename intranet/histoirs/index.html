@@ -11,7 +11,7 @@
   </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Histoires et Livres - Espace Enfants</title>
+    <title>Bibliothèque Magique - Histoires et Livres</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -24,7 +24,7 @@
         body {
             background: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
             color: #333;
-            min-height: 1080px;
+            min-height: 100vh;
             overflow-x: hidden;
         }
         
@@ -33,10 +33,10 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            min-height: 1080px;
+            min-height: 100vh;
         }
         
-        /* ZONE EN-TÊTE (BUB) */
+        /* ZONE EN-TÊTE */
         .zone-entete-bub {
             background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
             height: 80px;
@@ -175,13 +175,47 @@
             color: white;
         }
         
-        .stats {
+        /* FILTRES AVANCÉS */
+        .filters-advanced {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px 30px;
             background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            justify-content: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .filter-group label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #5a189a;
+            text-align: center;
+        }
+        
+        .filter-select {
+            padding: 8px 15px;
+            border: 2px solid #4cc9f0;
+            border-radius: 20px;
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+            min-width: 150px;
+        }
+        
+        .stats {
+            background: linear-gradient(135deg, #5a189a 0%, #7b2cbf 100%);
             padding: 15px;
             text-align: center;
-            border-bottom: 1px solid #dee2e6;
+            color: white;
             font-size: 18px;
-            color: #5a189a;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         /* ZONE CONTENU PRINCIPAL */
@@ -212,7 +246,7 @@
         
         .grille-livres {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
         }
         
@@ -221,15 +255,29 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s ease;
             cursor: pointer;
             border: 3px solid transparent;
+            position: relative;
         }
         
         .carte-livre:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
             border-color: #4cc9f0;
+        }
+        
+        .story-breadcrumb {
+            font-size: 0.8rem;
+            color: #666;
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.9);
+            border-bottom: 1px solid #eee;
+        }
+        
+        .story-breadcrumb .folder {
+            color: #4361ee;
+            font-weight: bold;
         }
         
         .image-livre {
@@ -239,7 +287,6 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 60px;
             position: relative;
             overflow: hidden;
         }
@@ -248,13 +295,16 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .carte-livre:hover .image-livre img {
+            transform: scale(1.1);
         }
         
         .default-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            font-size: 60px;
+            opacity: 0.8;
         }
         
         .contenu-livre {
@@ -264,7 +314,8 @@
         .contenu-livre h3 {
             font-size: 20px;
             color: #5a189a;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            line-height: 1.3;
         }
         
         .contenu-livre p {
@@ -272,6 +323,10 @@
             font-size: 14px;
             margin-bottom: 15px;
             line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         
         .metadonnees {
@@ -287,6 +342,7 @@
             border-radius: 15px;
             font-size: 12px;
             font-weight: bold;
+            white-space: nowrap;
         }
         
         .badge-age {
@@ -304,41 +360,54 @@
             color: white;
         }
         
-        .etoiles {
-            color: #ff9e00;
-            margin-bottom: 10px;
-        }
-        
-        .bouton-lire {
-            background: #06d6a0;
+        .badge-audio {
+            background: #ff9e00;
             color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 15px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-        }
-        
-        .bouton-lire:hover {
-            background: #05b989;
         }
         
         .file-name {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #999;
             margin-top: 10px;
             font-family: monospace;
             text-align: center;
+            background: #f1f3f4;
+            padding: 5px;
+            border-radius: 5px;
+            word-break: break-all;
+        }
+        
+        .bouton-lire {
+            background: linear-gradient(135deg, #06d6a0 0%, #05b989 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-weight: bold;
+            box-shadow: 0 4px 0 #049c75;
+        }
+        
+        .bouton-lire:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #049c75;
         }
         
         /* États de chargement et erreur */
         .loading {
             text-align: center;
-            padding: 40px;
+            padding: 60px 20px;
             color: #666;
             font-size: 18px;
+        }
+        
+        .loading-spinner {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #4cc9f0;
         }
         
         .empty-state {
@@ -346,6 +415,9 @@
             padding: 60px 20px;
             color: #666;
             font-size: 18px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px dashed #dee2e6;
         }
         
         .error-state {
@@ -443,10 +515,19 @@
             animation: float 5s ease-in-out infinite;
         }
         
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+        
         /* Responsive */
         @media (max-width: 1400px) {
             .grille-livres {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             }
         }
         
@@ -468,12 +549,21 @@
             .zone-recherche {
                 max-width: 100%;
             }
+            
+            .filters-advanced {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-select {
+                min-width: 200px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- ZONE EN-TÊTE (BUB) -->
+        <!-- ZONE EN-TÊTE -->
         <header class="zone-entete-bub">
             <div class="zone-logo">
                 <div class="logo-icone flottant">
@@ -493,14 +583,14 @@
         
         <!-- ZONE TITRE PRINCIPAL -->
         <section class="zone-titre-principal">
-            <h1>Bibliothèque Magique</h1>
+            <h1>📚 Bibliothèque Magique</h1>
             <p>Découvre des histoires captivantes, des livres interactifs et des contes audio!</p>
         </section>
         
         <!-- ZONE RECHERCHE ET FILTRES -->
         <section class="zone-recherche-filtres">
             <div class="zone-recherche">
-                <input type="text" class="champ-recherche" id="champRecherche" placeholder="Rechercher une histoire...">
+                <input type="text" class="champ-recherche" id="champRecherche" placeholder="🔍 Rechercher une histoire...">
                 <button class="bouton-recherche" id="boutonRecherche">
                     <i class="fas fa-search"></i>
                 </button>
@@ -510,23 +600,46 @@
             <button class="bouton-filtre" data-filtre="age-3-5">3-5 ans</button>
             <button class="bouton-filtre" data-filtre="age-6-8">6-8 ans</button>
             <button class="bouton-filtre" data-filtre="age-9-12">9-12 ans</button>
-            <button class="bouton-filtre" data-filtre="categorie-contes">Contes</button>
-            <button class="bouton-filtre" data-filtre="categorie-aventures">Aventures</button>
-            <button class="bouton-filtre" data-filtre="categorie-animaux">Animaux</button>
         </section>
         
+        <!-- FILTRES AVANCÉS -->
+        <div class="filters-advanced">
+            <div class="filter-group">
+                <label for="filterCategory"><i class="fas fa-tags"></i> Catégorie</label>
+                <select id="filterCategory" class="filter-select">
+                    <option value="all">Toutes les catégories</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="filterType"><i class="fas fa-bookmark"></i> Type</label>
+                <select id="filterType" class="filter-select">
+                    <option value="all">Tous les types</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="filterFolder"><i class="fas fa-folder"></i> Dossier</label>
+                <select id="filterFolder" class="filter-select">
+                    <option value="all">Tous les dossiers</option>
+                </select>
+            </div>
+        </div>
+        
         <div class="stats" id="stats">
-            <span id="livreCount">Scan des histoires en cours...</span>
+            <span id="livreCount"><i class="fas fa-sync-alt spin"></i> Chargement de la bibliothèque...</span>
         </div>
         
         <!-- ZONE CONTENU PRINCIPAL -->
         <main class="zone-contenu-principal">
-            <!-- Section livres -->
             <section class="section-livres">
-                <h2>Nos Histoires</h2>
+                <h2><i class="fas fa-star"></i> Nos Histoires <i class="fas fa-star"></i></h2>
                 <div class="grille-livres" id="grilleLivres">
                     <div class="loading">
-                        <p>Recherche automatique des histoires...</p>
+                        <div class="loading-spinner">
+                            <i class="fas fa-sync-alt spin"></i>
+                        </div>
+                        <p>Exploration de la bibliothèque magique...</p>
                     </div>
                 </div>
             </section>
@@ -554,271 +667,180 @@
             </div>
             
             <div class="copyright">
-                &copy; 2023 Espace Enfants - Tous droits réservés | Conçu avec <i class="fas fa-heart" style="color:#ff6b6b"></i> pour les enfants
+                &copy; 2024 Espace Enfants - Tous droits réservés | Conçu avec <i class="fas fa-heart" style="color:#ff6b6b"></i> pour les enfants
             </div>
         </footer>
     </div>
 
     <script>
         // Configuration
-        const EXCLUDED_FILES = ['index.html', 'sommaire.html', 'histoires.html']; // Fichiers à ignorer
-        const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+        const METADATA_URL = 'stories-metadata.json';
         
         // État des filtres
         let filtresActifs = {
             age: 'all',
             categorie: 'all',
+            type: 'all',
+            dossier: 'all',
             recherche: ''
         };
         
         let toutesLesHistoires = [];
+        let categoriesUniques = new Set();
+        let typesUniques = new Set();
+        let dossiersUniques = new Set();
 
-        // Fonction pour détecter tous les fichiers HTML du dossier
-        async function discoverHTMLFiles() {
+        // Charger les métadonnées
+        async function loadStoriesMetadata() {
+            const grilleLivres = document.getElementById('grilleLivres');
+            const statsElement = document.getElementById('livreCount');
+            
             try {
-                console.log('🔍 Début du scan des fichiers HTML...');
+                statsElement.innerHTML = '<i class="fas fa-sync-alt spin"></i> Chargement des histoires...';
                 
-                // Stratégie 1: Essayer de récupérer la liste via fetch (pour GitHub Pages)
-                let allFiles = [];
+                const response = await fetch(METADATA_URL);
+                if (!response.ok) throw new Error('Fichier de métadonnées non trouvé');
                 
-                try {
-                    // Cette méthode fonctionne sur certains serveurs
-                    const response = await fetch('./');
-                    const text = await response.text();
-                    
-                    // Parser le HTML de la page d'index pour trouver les liens
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(text, 'text/html');
-                    const links = doc.querySelectorAll('a[href$=".html"]');
-                    
-                    allFiles = Array.from(links)
-                        .map(link => link.getAttribute('href'))
-                        .filter(file => !EXCLUDED_FILES.includes(file));
-                        
-                    console.log(`📁 Fichiers trouvés via scan:`, allFiles);
-                    
-                } catch (error) {
-                    console.log('❌ Scan automatique échoué, utilisation de la détection par pattern');
-                }
+                const data = await response.json();
+                toutesLesHistoires = data.stories;
                 
-                // Si pas de fichiers trouvés, utiliser la détection par pattern
-                if (allFiles.length === 0) {
-                    allFiles = await detectFilesByPattern();
-                }
+                // Extraire les filtres uniques
+                extraireFiltresUniques();
                 
-                return allFiles;
+                // Peupler les menus déroulants
+                peuplerFiltresAvances();
+                
+                // Afficher toutes les histoires
+                afficherHistoires(toutesLesHistoires);
+                
+                // Mettre à jour les stats
+                const lastUpdate = new Date(data.generatedAt).toLocaleDateString('fr-FR');
+                const histoiresAvecImages = toutesLesHistoires.filter(h => h.logoUrl).length;
+                
+                statsElement.innerHTML = 
+                    `📚 ${data.totalStories} histoires • 🖼️ ${histoiresAvecImages} avec images • 📅 Mise à jour: ${lastUpdate}`;
                 
             } catch (error) {
-                console.error('Erreur lors de la découverte des fichiers:', error);
-                return [];
+                console.error('Erreur:', error);
+                statsElement.innerHTML = '<span style="color:#ff6b6b"><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</span>';
+                grilleLivres.innerHTML = `
+                    <div class="error-state">
+                        <h2><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</h2>
+                        <p>Impossible de charger la bibliothèque des histoires.</p>
+                        <p>Vérifiez que le fichier stories-metadata.json est présent.</p>
+                        <button onclick="loadStoriesMetadata()" class="bouton-lire" style="margin-top:15px; width:auto;">
+                            <i class="fas fa-redo"></i> Réessayer
+                        </button>
+                    </div>
+                `;
             }
         }
 
-        // Fonction pour détecter les fichiers par pattern (histoire1, histoire2, etc.)
-        async function detectFilesByPattern() {
-            console.log('🎯 Détection par pattern...');
-            const patterns = [
-                'histoire', 'hist', 'conte', 'livre', 'story'
-            ];
-            
-            const discoveredFiles = [];
-            
-            // Tester les patterns avec numéros (histoire1.html, histoire2.html, etc.)
-            for (let i = 0; i <= 20; i++) {
-                for (const pattern of patterns) {
-                    const filename = `${pattern}${i}.html`;
-                    if (await fileExists(filename)) {
-                        discoveredFiles.push(filename);
-                        console.log(`✅ Trouvé: ${filename}`);
-                    }
+        function extraireFiltresUniques() {
+            toutesLesHistoires.forEach(histoire => {
+                categoriesUniques.add(histoire.categorie);
+                typesUniques.add(histoire.type);
+                if (histoire.directory && histoire.directory !== '.') {
+                    dossiersUniques.add(histoire.directory);
                 }
-            }
-            
-            // Tester les patterns sans numéros
-            for (const pattern of patterns) {
-                const filename = `${pattern}.html`;
-                if (await fileExists(filename)) {
-                    discoveredFiles.push(filename);
-                    console.log(`✅ Trouvé: ${filename}`);
-                }
-            }
-            
-            // Chercher aussi les fichiers avec underscores
-            for (const pattern of patterns) {
-                const variations = ['aventure', 'conte', 'animaux', 'magique', 'dragon', 'princesse'];
-                for (const variation of variations) {
-                    const filename = `${pattern}_${variation}.html`;
-                    if (await fileExists(filename)) {
-                        discoveredFiles.push(filename);
-                        console.log(`✅ Trouvé: ${filename}`);
-                    }
-                }
-            }
-            
-            return discoveredFiles;
-        }
-
-        // Fonction pour vérifier si un fichier existe
-        async function fileExists(url) {
-            try {
-                const response = await fetch(url, { method: 'HEAD' });
-                return response.ok;
-            } catch (error) {
-                return false;
-            }
-        }
-
-        // Fonction pour vérifier si une image existe
-        function checkImageExists(imageUrl) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                const timeout = setTimeout(() => resolve(false), 2000);
-                
-                img.onload = () => {
-                    clearTimeout(timeout);
-                    resolve(true);
-                };
-                img.onerror = () => {
-                    clearTimeout(timeout);
-                    resolve(false);
-                };
-                img.src = imageUrl;
             });
         }
 
-        // Fonction pour trouver le logo d'une histoire
-        async function findStoryLogo(baseFilename) {
-            const baseName = baseFilename.replace('.html', '');
+        function peuplerFiltresAvances() {
+            const categorySelect = document.getElementById('filterCategory');
+            const typeSelect = document.getElementById('filterType');
+            const folderSelect = document.getElementById('filterFolder');
             
-            // Tester toutes les extensions d'image
-            for (const ext of imageExtensions) {
-                const imageUrl = `${baseName}${ext}`;
-                const exists = await checkImageExists(imageUrl);
-                if (exists) {
-                    return imageUrl;
-                }
-            }
+            // Catégories
+            [...categoriesUniques].sort().forEach(categorie => {
+                const option = document.createElement('option');
+                option.value = categorie;
+                option.textContent = categorie.charAt(0).toUpperCase() + categorie.slice(1);
+                categorySelect.appendChild(option);
+            });
             
-            return null;
+            // Types
+            [...typesUniques].sort().forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+                typeSelect.appendChild(option);
+            });
+            
+            // Dossiers
+            [...dossiersUniques].sort().forEach(dossier => {
+                const option = document.createElement('option');
+                option.value = dossier;
+                option.textContent = dossier;
+                folderSelect.appendChild(option);
+            });
         }
 
-        // Fonction pour extraire les métadonnées d'un fichier HTML
-        async function extractFileInfo(filename) {
-            try {
-                const response = await fetch(filename);
-                const html = await response.text();
+        function filtrerHistoires() {
+            const searchTerm = document.getElementById('champRecherche').value.toLowerCase();
+            const category = document.getElementById('filterCategory').value;
+            const type = document.getElementById('filterType').value;
+            const folder = document.getElementById('filterFolder').value;
+            const ageFilter = document.querySelector('.bouton-filtre.actif')?.dataset.filtre || 'all';
+            
+            return toutesLesHistoires.filter(histoire => {
+                // Filtre recherche
+                if (searchTerm && 
+                    !histoire.title.toLowerCase().includes(searchTerm) && 
+                    !histoire.description.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
                 
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
+                // Filtre catégorie
+                if (category !== 'all' && histoire.categorie !== category) {
+                    return false;
+                }
                 
-                // Extraire le titre
-                const title = doc.querySelector('title')?.textContent || 
-                             filename.replace('.html', '')
-                                    .replace(/_/g, ' ')
-                                    .replace(/([a-z])([A-Z])/g, '$1 $2')
-                                    .replace(/\b\w/g, l => l.toUpperCase());
+                // Filtre type
+                if (type !== 'all' && histoire.type !== type) {
+                    return false;
+                }
                 
-                // Extraire la description
-                let description = doc.querySelector('meta[name="description"]')?.getAttribute('content') || '';
-                
-                if (!description) {
-                    const firstParagraph = doc.querySelector('p');
-                    if (firstParagraph) {
-                        description = firstParagraph.textContent.substring(0, 120) + '...';
-                    } else {
-                        const firstH1 = doc.querySelector('h1');
-                        description = firstH1 ? firstH1.textContent + " - Histoire pour enfants" : "Histoire pour enfants";
+                // Filtre dossier
+                if (folder !== 'all') {
+                    if (folder === 'racine') {
+                        if (histoire.directory !== '.') return false;
+                    } else if (histoire.directory !== folder) {
+                        return false;
                     }
                 }
                 
-                // Extraire les métadonnées personnalisées
-                const age = doc.querySelector('meta[name="age"]')?.getAttribute('content') || '3-5';
-                const categorie = doc.querySelector('meta[name="categorie"]')?.getAttribute('content') || 'contes';
-                const type = doc.querySelector('meta[name="type"]')?.getAttribute('content') || 'histoire';
-                
-                // Chercher le logo
-                const logoUrl = await findStoryLogo(filename);
-                
-                return {
-                    filename,
-                    title,
-                    description,
-                    url: filename,
-                    logoUrl,
-                    age,
-                    categorie,
-                    type
-                };
-            } catch (error) {
-                console.error(`Erreur avec ${filename}:`, error);
-                return {
-                    filename,
-                    title: filename.replace('.html', '')
-                                  .replace(/_/g, ' ')
-                                  .replace(/([a-z])([A-Z])/g, '$1 $2')
-                                  .replace(/\b\w/g, l => l.toUpperCase()),
-                    description: "Histoire pour enfants",
-                    url: filename,
-                    logoUrl: null,
-                    age: '3-5',
-                    categorie: 'contes',
-                    type: 'histoire'
-                };
-            }
-        }
-
-        // Fonction pour filtrer les histoires
-        function filtrerHistoires(histoires) {
-            return histoires.filter(histoire => {
-                // Filtre par âge
-                if (filtresActifs.age !== 'all' && !histoire.age.includes(filtresActifs.age.replace('age-', ''))) {
+                // Filtre âge
+                if (ageFilter !== 'all' && !histoire.age.includes(ageFilter.replace('age-', ''))) {
                     return false;
-                }
-                
-                // Filtre par catégorie
-                if (filtresActifs.categorie !== 'all' && !histoire.categorie.includes(filtresActifs.categorie.replace('categorie-', ''))) {
-                    return false;
-                }
-                
-                // Filtre par recherche
-                if (filtresActifs.recherche) {
-                    const termeRecherche = filtresActifs.recherche.toLowerCase();
-                    return histoire.title.toLowerCase().includes(termeRecherche) || 
-                           histoire.description.toLowerCase().includes(termeRecherche);
                 }
                 
                 return true;
             });
         }
 
-        // Fonction pour afficher les histoires
         function afficherHistoires(histoires) {
             const grilleLivres = document.getElementById('grilleLivres');
-            const statsElement = document.getElementById('livreCount');
             
             if (histoires.length === 0) {
                 grilleLivres.innerHTML = `
                     <div class="empty-state">
-                        <i class="fas fa-book" style="font-size: 50px; margin-bottom: 20px; color: #ccc;"></i>
+                        <i class="fas fa-search" style="font-size: 50px; margin-bottom: 20px; color: #ccc;"></i>
                         <h3>Aucune histoire trouvée</h3>
                         <p>Aucune histoire ne correspond à vos critères de recherche.</p>
                         <p>Essayez de modifier vos filtres ou votre recherche.</p>
                     </div>
                 `;
-                statsElement.textContent = `📚 0 histoire(s) trouvée(s)`;
                 return;
             }
             
-            // Trier par nom de fichier
-            histoires.sort((a, b) => a.filename.localeCompare(b.filename));
-            
-            // Mettre à jour les statistiques
-            const histoiresAvecLogos = histoires.filter(histoire => histoire.logoUrl).length;
-            statsElement.textContent = `📚 ${histoires.length} histoire(s) trouvée(s) • 🖼️ ${histoiresAvecLogos} avec illustration`;
-            
-            // Afficher les histoires
             grilleLivres.innerHTML = histoires.map(histoire => `
                 <div class="carte-livre" onclick="window.location.href='${histoire.url}'">
+                    ${histoire.directory && histoire.directory !== '.' ? 
+                        `<div class="story-breadcrumb">
+                            <i class="fas fa-folder"></i> <span class="folder">${histoire.directory}</span>
+                        </div>` : ''
+                    }
                     <div class="image-livre">
                         ${histoire.logoUrl ? 
                             `<img src="${histoire.logoUrl}" alt="${histoire.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -827,108 +849,56 @@
                         }
                     </div>
                     <div class="contenu-livre">
-                        <h3 class="game-title">${histoire.title}</h3>
+                        <h3>${histoire.title}</h3>
                         <div class="metadonnees">
                             <span class="badge badge-age">${histoire.age} ans</span>
                             <span class="badge badge-categorie">${histoire.categorie}</span>
                             <span class="badge badge-type">${histoire.type}</span>
+                            ${histoire.audioFiles && histoire.audioFiles.length > 0 ? 
+                                '<span class="badge badge-audio"><i class="fas fa-volume-up"></i> Audio</span>' : ''
+                            }
                         </div>
-                        <p class="game-description">${histoire.description}</p>
-                        <a href="${histoire.url}" class="bouton-lire">Lire l'histoire</a>
+                        <p>${histoire.description}</p>
+                        <a href="${histoire.url}" class="bouton-lire" onclick="event.stopPropagation()">
+                            <i class="fas fa-book-open"></i> Lire l'histoire
+                        </a>
                         <div class="file-name">${histoire.filename}</div>
                     </div>
                 </div>
             `).join('');
         }
 
-        // Fonction principale
-        async function loadAllStoriesAutomatically() {
-            const grilleLivres = document.getElementById('grilleLivres');
-            const statsElement = document.getElementById('livreCount');
-            
-            try {
-                statsElement.textContent = '🔍 Recherche des fichiers HTML...';
-                
-                // Découvrir automatiquement les fichiers
-                const discoveredFiles = await discoverHTMLFiles();
-                
-                if (discoveredFiles.length === 0) {
-                    statsElement.textContent = '❌ Aucun fichier HTML trouvé';
-                    grilleLivres.innerHTML = `
-                        <div class="error-state">
-                            <h2>Aucune histoire trouvée</h2>
-                            <p>Le système n'a pas pu détecter automatiquement les fichiers HTML.</p>
-                            <p>Vérifiez que vos fichiers suivent la convention de nommage (histoire1.html, histoire2.html, etc.)</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                statsElement.textContent = `📁 ${discoveredFiles.length} histoire(s) détectée(s) - Chargement...`;
-                
-                // Charger les informations de chaque fichier
-                const storiesPromises = discoveredFiles.map(extractFileInfo);
-                toutesLesHistoires = await Promise.all(storiesPromises);
-                
-                // Afficher toutes les histoires initialement
-                afficherHistoires(toutesLesHistoires);
-                
-            } catch (error) {
-                console.error('Erreur générale:', error);
-                statsElement.textContent = '❌ Erreur lors du chargement';
-                grilleLivres.innerHTML = `
-                    <div class="error-state">
-                        <h2>Erreur de chargement</h2>
-                        <p>Une erreur est survenue lors de la détection automatique des histoires.</p>
-                        <p>Vérifiez la console pour plus de détails.</p>
-                    </div>
-                `;
-            }
-        }
-
-        // Gestion des filtres
-        document.querySelectorAll('.bouton-filtre').forEach(bouton => {
-            bouton.addEventListener('click', function() {
-                // Mettre à jour l'état actif
-                document.querySelectorAll('.bouton-filtre').forEach(btn => {
-                    btn.classList.remove('actif');
-                });
+        // Gestion des événements
+        document.querySelectorAll('.bouton-filtre').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.bouton-filtre').forEach(b => b.classList.remove('actif'));
                 this.classList.add('actif');
-                
-                // Mettre à jour les filtres
-                const filtre = this.getAttribute('data-filtre');
-                if (filtre.startsWith('age-')) {
-                    filtresActifs.age = filtre;
-                } else if (filtre.startsWith('categorie-')) {
-                    filtresActifs.categorie = filtre;
-                } else if (filtre === 'all') {
-                    filtresActifs.age = 'all';
-                    filtresActifs.categorie = 'all';
-                }
-                
-                // Appliquer les filtres
-                const histoiresFiltrees = filtrerHistoires(toutesLesHistoires);
-                afficherHistoires(histoiresFiltrees);
+                afficherHistoires(filtrerHistoires());
             });
         });
 
-        // Gestion de la recherche
-        document.getElementById('boutonRecherche').addEventListener('click', function() {
-            filtresActifs.recherche = document.getElementById('champRecherche').value;
-            const histoiresFiltrees = filtrerHistoires(toutesLesHistoires);
-            afficherHistoires(histoiresFiltrees);
+        document.getElementById('boutonRecherche').addEventListener('click', () => {
+            afficherHistoires(filtrerHistoires());
         });
 
-        document.getElementById('champRecherche').addEventListener('keyup', function(event) {
-            if (event.key === 'Enter') {
-                filtresActifs.recherche = this.value;
-                const histoiresFiltrees = filtrerHistoires(toutesLesHistoires);
-                afficherHistoires(histoiresFiltrees);
-            }
+        document.getElementById('champRecherche').addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') afficherHistoires(filtrerHistoires());
         });
 
-        // Démarrer automatiquement au chargement
-        document.addEventListener('DOMContentLoaded', loadAllStoriesAutomatically);
+        document.getElementById('filterCategory').addEventListener('change', () => {
+            afficherHistoires(filtrerHistoires());
+        });
+
+        document.getElementById('filterType').addEventListener('change', () => {
+            afficherHistoires(filtrerHistoires());
+        });
+
+        document.getElementById('filterFolder').addEventListener('change', () => {
+            afficherHistoires(filtrerHistoires());
+        });
+
+        // Démarrer au chargement
+        document.addEventListener('DOMContentLoaded', loadStoriesMetadata);
     </script>
 </body>
 </html>

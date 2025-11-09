@@ -11,10 +11,10 @@
   </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bibliothèque Magique - jeuxs et Livres</title>
+    <title>Arcade Magique - Jeux et Livres</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* TOUT VOTRE CSS ICI (identique à avant) */
+        /* VOTRE CSS EXISTANT - JE GARDE TOUT */
         * {
             margin: 0;
             padding: 0;
@@ -568,9 +568,9 @@
         <header class="zone-entete-bub">
             <div class="zone-logo">
                 <div class="logo-icone flottant">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fas fa-gamepad"></i>
                 </div>
-                <div class="texte-logo">jeuxs et Livres</div>
+                <div class="texte-logo">Jeux et Activités</div>
             </div>
             <div class="zone-navigation">
                 <button class="bouton-navigation" onclick="window.location.href='index.html'">
@@ -584,14 +584,14 @@
         
         <!-- ZONE TITRE PRINCIPAL -->
         <section class="zone-titre-principal">
-            <h1>📚 Bibliothèque Magique</h1>
-            <p>Découvre des jeuxs captivantes, des livres interactifs et des contes audio!</p>
+            <h1>🎮 Arcade Magique</h1>
+            <p>Découvre des jeux amusants et éducatifs!</p>
         </section>
         
         <!-- ZONE RECHERCHE ET FILTRES -->
         <section class="zone-recherche-filtres">
             <div class="zone-recherche">
-                <input type="text" class="champ-recherche" id="champRecherche" placeholder="🔍 Rechercher une jeux...">
+                <input type="text" class="champ-recherche" id="champRecherche" placeholder="🔍 Rechercher un jeu...">
                 <button class="bouton-recherche" id="boutonRecherche">
                     <i class="fas fa-search"></i>
                 </button>
@@ -621,19 +621,19 @@
         </div>
         
         <div class="stats" id="stats">
-            <span id="livreCount"><i class="fas fa-sync-alt spin"></i> Chargement de la bibliothèque...</span>
+            <span id="livreCount"><i class="fas fa-sync-alt spin"></i> Chargement des jeux...</span>
         </div>
-        <!--  -->
+        
         <!-- ZONE CONTENU PRINCIPAL -->
         <main class="zone-contenu-principal">
             <section class="section-livres">
-                <h2><i class="fas fa-star"></i> Nos jeuxs <i class="fas fa-star"></i></h2>
+                <h2><i class="fas fa-star"></i> Nos Jeux <i class="fas fa-star"></i></h2>
                 <div class="grille-livres" id="grilleLivres">
                     <div class="loading">
                         <div class="loading-spinner">
                             <i class="fas fa-sync-alt spin"></i>
                         </div>
-                        <p>Exploration de la bibliothèque magique...</p>
+                        <p>Exploration de l'arcade magique...</p>
                     </div>
                 </div>
             </section>
@@ -671,7 +671,7 @@
         const METADATA_URL = '/stories-metadata.json';
         const DOSSIER_CIBLE = 'intranet/games';
         
-        let toutesLesjeuxs = [];
+        let tousLesJeux = [];
         let categoriesUniques = new Set();
         let typesUniques = new Set();
 
@@ -681,20 +681,27 @@
             const statsElement = document.getElementById('livreCount');
             
             try {
-                statsElement.innerHTML = '<i class="fas fa-sync-alt spin"></i> Chargement des jeuxs...';
+                statsElement.innerHTML = '<i class="fas fa-sync-alt spin"></i> Chargement des jeux...';
                 
                 const response = await fetch(METADATA_URL);
                 if (!response.ok) throw new Error('Fichier de métadonnées non trouvé');
                 
                 const data = await response.json();
                 
-                // Filtrer uniquement le dossier intranet/histoirs
-                toutesLesjeuxs = data.stories.filter(jeux => 
-                    jeux.directory === DOSSIER_CIBLE || 
-                    jeux.filename.startsWith(DOSSIER_CIBLE + '/')
+                // Filtrer uniquement le dossier intranet/games
+                tousLesJeux = data.stories.filter(jeu => 
+                    jeu.directory === DOSSIER_CIBLE || 
+                    jeu.filename.startsWith(DOSSIER_CIBLE + '/')
                 );
                 
-                console.log(`📁 jeuxs trouvées dans ${DOSSIER_CIBLE}:`, toutesLesjeuxs.length);
+                console.log(`📁 Jeux trouvés dans ${DOSSIER_CIBLE}:`, tousLesJeux.length);
+                
+                // Debug des images
+                console.log("🖼️ DEBUG IMAGES:");
+                tousLesJeux.forEach((jeu, index) => {
+                    console.log(`${index + 1}. ${jeu.title}`);
+                    console.log(`   URL Image originale: ${jeu.logoUrl}`);
+                });
                 
                 // Extraire les filtres uniques
                 extraireFiltresUniques();
@@ -702,15 +709,15 @@
                 // Peupler les menus déroulants
                 peuplerFiltresAvances();
                 
-                // Afficher les jeuxs
-                afficherjeuxs(toutesLesjeuxs);
+                // Afficher les jeux
+                afficherJeux(tousLesJeux);
                 
                 // Mettre à jour les stats
                 const lastUpdate = new Date(data.generatedAt).toLocaleDateString('fr-FR');
-                const jeuxsAvecImages = toutesLesjeuxs.filter(h => h.logoUrl).length;
+                const jeuxAvecImages = tousLesJeux.filter(h => h.logoUrl).length;
                 
                 statsElement.innerHTML = 
-                    `📚 ${toutesLesjeuxs.length} jeuxs • 🖼️ ${jeuxsAvecImages} avec images • 📅 Mise à jour: ${lastUpdate}`;
+                    `🎮 ${tousLesJeux.length} jeux • 🖼️ ${jeuxAvecImages} avec images • 📅 Mise à jour: ${lastUpdate}`;
                     
             } catch (error) {
                 console.error('Erreur:', error);
@@ -718,7 +725,7 @@
                 grilleLivres.innerHTML = `
                     <div class="error-state">
                         <h2><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</h2>
-                        <p>Impossible de charger la bibliothèque des jeuxs.</p>
+                        <p>Impossible de charger la bibliothèque des jeux.</p>
                         <p>Vérifiez que le fichier stories-metadata.json est présent.</p>
                         <button onclick="loadStoriesMetadata()" class="bouton-lire" style="margin-top:15px; width:auto;">
                             <i class="fas fa-redo"></i> Réessayer
@@ -729,9 +736,9 @@
         }
 
         function extraireFiltresUniques() {
-            toutesLesjeuxs.forEach(jeux => {
-                categoriesUniques.add(jeux.categorie);
-                typesUniques.add(jeux.type);
+            tousLesJeux.forEach(jeu => {
+                categoriesUniques.add(jeu.categorie);
+                typesUniques.add(jeu.type);
             });
         }
 
@@ -756,32 +763,32 @@
             });
         }
 
-        function filtrerjeuxs() {
+        function filtrerJeux() {
             const searchTerm = document.getElementById('champRecherche').value.toLowerCase();
             const category = document.getElementById('filterCategory').value;
             const type = document.getElementById('filterType').value;
             const ageFilter = document.querySelector('.bouton-filtre.actif')?.dataset.filtre || 'all';
             
-            return toutesLesjeuxs.filter(jeux => {
+            return tousLesJeux.filter(jeu => {
                 // Filtre recherche
                 if (searchTerm && 
-                    !jeux.title.toLowerCase().includes(searchTerm) && 
-                    !jeux.description.toLowerCase().includes(searchTerm)) {
+                    !jeu.title.toLowerCase().includes(searchTerm) && 
+                    !jeu.description.toLowerCase().includes(searchTerm)) {
                     return false;
                 }
                 
                 // Filtre catégorie
-                if (category !== 'all' && jeux.categorie !== category) {
+                if (category !== 'all' && jeu.categorie !== category) {
                     return false;
                 }
                 
                 // Filtre type
-                if (type !== 'all' && jeux.type !== type) {
+                if (type !== 'all' && jeu.type !== type) {
                     return false;
                 }
                 
                 // Filtre âge
-                if (ageFilter !== 'all' && !jeux.age.includes(ageFilter.replace('age-', ''))) {
+                if (ageFilter !== 'all' && !jeu.age.includes(ageFilter.replace('age-', ''))) {
                     return false;
                 }
                 
@@ -789,47 +796,59 @@
             });
         }
 
-        function afficherjeuxs(jeuxs) {
+        function afficherJeux(jeux) {
             const grilleLivres = document.getElementById('grilleLivres');
             
-            if (jeuxs.length === 0) {
+            if (jeux.length === 0) {
                 grilleLivres.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-search" style="font-size: 50px; margin-bottom: 20px; color: #ccc;"></i>
-                        <h3>Aucune jeux  trouvée</h3>
-                        <p>Aucune jeux ne correspond à vos critères de recherche.</p>
+                        <h3>Aucun jeu trouvé</h3>
+                        <p>Aucun jeu ne correspond à vos critères de recherche.</p>
                         <p>Essayez de modifier vos filtres ou votre recherche.</p>
                     </div>
                 `;
                 return;
             }
             
-            grilleLivres.innerHTML = jeuxs.map(jeux => {
-                let url = jeux.url;
+            grilleLivres.innerHTML = jeux.map(jeu => {
+                // Corriger l'URL de la page
+                let url = jeu.url;
                 if (!url.startsWith('/')) {
                     url = '/' + url;
                 }
                 url = url.replace(/\/\//g, '/');
                 
+                // CORRECTION DES IMAGES - Utiliser le domaine complet
+                let imageUrl = jeu.logoUrl;
+                if (imageUrl) {
+                    if (!imageUrl.startsWith('http')) {
+                        imageUrl = 'https://dznet1.com' + (imageUrl.startsWith('/') ? imageUrl : '/' + imageUrl);
+                    }
+                }
+                
+                console.log(`🖼️ ${jeu.title} -> ${imageUrl}`);
+                
                 return `
                     <div class="carte-livre" onclick="window.location.href='${url}'">
                         <div class="image-livre">
-                            ${jeux.logoUrl ? 
-                                `<img src="${jeux.logoUrl}" alt="${jeux.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                                 <div class="default-icon" style="display:none;">📖</div>` :
-                                `<div class="default-icon">📖</div>`
+                            ${imageUrl ? 
+                                `<img src="${imageUrl}" alt="${jeu.title}" 
+                                      onerror="console.error('❌ Image non chargée:', this.src); this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                 <div class="default-icon" style="display:none;">🎮</div>` :
+                                `<div class="default-icon">🎮</div>`
                             }
                         </div>
                         <div class="contenu-livre">
-                            <h3>${jeux.title}</h3>
+                            <h3>${jeu.title}</h3>
                             <div class="metadonnees">
-                                <span class="badge badge-age">${jeux.age} ans</span>
-                                <span class="badge badge-categorie">${jeux.categorie}</span>
-                                <span class="badge badge-type">${jeux.type}</span>
+                                <span class="badge badge-age">${jeu.age} ans</span>
+                                <span class="badge badge-categorie">${jeu.categorie}</span>
+                                <span class="badge badge-type">${jeu.type}</span>
                             </div>
-                            <p>${jeux.description}</p>
+                            <p>${jeu.description}</p>
                             <a href="${url}" class="bouton-lire" onclick="event.stopPropagation()">
-                                <i class="fas fa-book-open"></i> Lire l'jeux
+                                <i class="fas fa-gamepad"></i> Jouer
                             </a>
                         </div>
                     </div>
@@ -842,24 +861,24 @@
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.bouton-filtre').forEach(b => b.classList.remove('actif'));
                 this.classList.add('actif');
-                afficherjeuxs(filtrerjeuxs());
+                afficherJeux(filtrerJeux());
             });
         });
 
         document.getElementById('boutonRecherche').addEventListener('click', () => {
-            afficherjeuxs(filtrerjeuxs());
+            afficherJeux(filtrerJeux());
         });
 
         document.getElementById('champRecherche').addEventListener('keyup', (e) => {
-            if (e.key === 'Enter') afficherjeuxs(filtrerjeuxs());
+            if (e.key === 'Enter') afficherJeux(filtrerJeux());
         });
 
         document.getElementById('filterCategory').addEventListener('change', () => {
-            afficherjeuxs(filtrerjeuxs());
+            afficherJeux(filtrerJeux());
         });
 
         document.getElementById('filterType').addEventListener('change', () => {
-            afficherjeuxs(filtrerjeuxs());
+            afficherJeux(filtrerJeux());
         });
 
         // Démarrer

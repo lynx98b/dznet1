@@ -6,26 +6,35 @@ on:
       - '**.html'
       - '**.jpg'
       - '**.png'
-  workflow_dispatch:
+      - '**.jpeg'
+      - '**.webp'
+  workflow_dispatch:  # Permet de lancer manuellement
+  schedule:
+    - cron: '0 2 * * 0'  # Tous les dimanches à 2h du matin
 
 jobs:
   generate-metadata:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # ← ESSENTIEL pour pouvoir push
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # ← ESSENTIEL pour les permissions
           
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           
-      - name: Generate metadata
+      - name: Generate stories metadata
         run: node generate-metadata.js
         
-      - name: Show results
+      - name: Commit and push automatically
         run: |
-          echo "✅ Métadonnées générées avec succès !"
-          echo "📊 Total d'histoires: $(jq '.totalStories' stories-metadata.json)"
-          echo "📄 Fichier stories-metadata.json créé"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add stories-metadata.json
+          git diff --staged --quiet || (git commit -m "🤖 Auto-update: stories metadata [skip ci]" && git push)

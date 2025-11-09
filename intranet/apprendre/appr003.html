@@ -4,43 +4,420 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Découvre les villes d'Algérie — Catégorie : Géographie — Âge : 5+</title>
-
+  
   <meta name="description" content="Jeu éducatif interactif pour découvrir les grandes villes d'Algérie : Alger, Constantine, Oran et Tamanrasset. Reconnaissance visuelle et auditive pour enfants.">
   <meta name="content-category" content="Géographie">
   <meta name="content-age" content="5">
   <meta name="keywords" content="Algérie, villes, géographie, enfants, éducatif, interactif, Alger, Constantine, Oran, Tamanrasset">
-
-  <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css">
-
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  
   <style>
+    /* [v1.018] Palette couleurs nationales algériennes + design harmonieux */
+    
     :root {
-      --c1: #FFE4E1; --c2: #E0F2F7; --c3: #FFF9C4; --c4: #D1F2EB;
-      --p: #4A90E2; --s: #5CB85C; --w: #F0AD4E; --d: #D9534F;
+      /* Couleurs nationales Algérie */
+      --alg-green: #006233;
+      --alg-white: #FFFFFF;
+      --alg-red: #D21034;
+      
+      /* Palette étendue harmonieuse */
+      --green-light: #E8F5E9;
+      --green-medium: #4CAF50;
+      --red-light: #FFEBEE;
+      --cream: #FFF9E6;
+      --sand: #F5E6D3;
+      
+      /* Fonctionnels */
+      --success: #4CAF50;
+      --error: #D21034;
+      --warning: #FF9800;
+      --info: #2196F3;
+      
+      /* Neutres */
+      --gray-50: #FAFAFA;
+      --gray-100: #F5F5F5;
+      --gray-200: #EEEEEE;
+      --gray-400: #BDBDBD;
+      --gray-600: #757575;
+      --gray-800: #424242;
+      --gray-900: #212121;
+      
+      /* Ombres */
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.16);
+      
+      /* Bordures */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
     }
-    body { font-family: 'Comic Sans MS', sans-serif; background: var(--c2); margin:0; }
-    header { background: linear-gradient(135deg, var(--c1), var(--c3)); padding: 15px; position: sticky; top:0; z-index:10; }
-    .container { max-width: 1200px; margin: auto; padding: 0 15px; }
-    .header-content { display:flex; justify-content:space-between; align-items:center; }
-    .logo { height:60px; }
-    .lang-btn { border:2px solid var(--p); border-radius:50%; width:40px; height:40px; cursor:pointer; }
-    .lang-btn.active, .lang-btn:hover { background: var(--p); color:white; }
-    .ad-banner { background:white; text-align:center; padding:10px 0; border-bottom:1px solid #ccc; }
-    main { padding:20px 0; }
-    h1,h2 { color:var(--p); text-align:center; }
-    .intro { background:var(--c4); padding:15px; border-radius:10px; text-align:center; }
-    .quiz-container { background:white; padding:20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); margin-top:20px; }
-    .question-image img { max-width:100%; max-height:300px; border-radius:10px; }
-    .options-container { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; margin-top:20px; }
-    .option-btn { padding:15px; border-radius:10px; background:var(--c1); font-weight:bold; cursor:pointer; }
-    .option-btn.correct { background:var(--s); color:white; }
-    .option-btn.incorrect { background:var(--d); color:white; }
-    .feedback { text-align:center; margin-top:15px; font-size:1.3rem; font-weight:bold; display:none; }
-    .feedback.correct { color:var(--s); display:block; }
-    .feedback.incorrect { color:var(--d); display:block; }
-    .navigation { display:flex; justify-content:space-between; margin-top:20px; }
-    .nav-btn { background:var(--p); color:white; border:none; padding:12px 25px; border-radius:10px; cursor:pointer; font-weight:bold; }
-    .parent-help { background:var(--c3); padding:15px; border-left:5px solid var(--w); border-radius:10px; margin-top:20px; }
-    .version { text-align:center; margin-top:20px; color:#777; }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', 'Comic Sans MS', sans-serif;
+      background: linear-gradient(135deg, var(--green-light) 0%, var(--cream) 50%, var(--sand) 100%);
+      background-attachment: fixed;
+      color: var(--gray-800);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    /* Header avec drapeau stylisé */
+    header {
+      background: linear-gradient(135deg, var(--alg-green) 0%, var(--alg-green) 45%, var(--alg-white) 45%, var(--alg-white) 55%, var(--alg-red) 55%, var(--alg-red) 100%);
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.95);
+      padding: 15px 25px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .logo {
+      height: 60px;
+      filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+    }
+    
+    .language-selector {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .lang-btn {
+      width: 45px;
+      height: 45px;
+      border: 2px solid var(--alg-green);
+      border-radius: 50%;
+      background: var(--alg-white);
+      color: var(--alg-green);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .lang-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      background: var(--green-light);
+    }
+    
+    .lang-btn.active {
+      background: var(--alg-green);
+      color: var(--alg-white);
+      transform: scale(1.1);
+    }
+    
+    /* Bannière pub améliorée */
+    .ad-banner {
+      background: var(--alg-white);
+      text-align: center;
+      padding: 15px 0;
+      border-bottom: 3px solid var(--alg-green);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .ad-banner img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius-sm);
+    }
+    
+    /* Main content */
+    main {
+      padding: 40px 0;
+    }
+    
+    h1 {
+      color: var(--alg-green);
+      text-align: center;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    h2 {
+      color: var(--alg-green);
+      text-align: center;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    
+    /* Intro card */
+    .intro {
+      background: linear-gradient(135deg, var(--alg-white) 0%, var(--green-light) 100%);
+      padding: 25px;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--alg-green);
+      border: 2px solid var(--alg-green);
+      box-shadow: var(--shadow-md);
+      margin-bottom: 30px;
+    }
+    
+    /* Timer */
+    .timer-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    #timer {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--alg-green), var(--green-medium));
+      color: var(--alg-white);
+      padding: 12px 30px;
+      border-radius: var(--radius-xl);
+      font-size: 1.5rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-md);
+      letter-spacing: 2px;
+    }
+    
+    /* Quiz container */
+    .quiz-container {
+      background: var(--alg-white);
+      padding: 35px;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      border-top: 5px solid var(--alg-green);
+      border-bottom: 5px solid var(--alg-red);
+    }
+    
+    /* Question image */
+    .question-image {
+      text-align: center;
+      margin: 25px 0;
+    }
+    
+    .question-image img {
+      max-width: 100%;
+      max-height: 400px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      object-fit: cover;
+      border: 4px solid var(--alg-white);
+      outline: 2px solid var(--alg-green);
+    }
+    
+    /* Audio player */
+    #audio-player {
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    #audio-player audio {
+      width: 100%;
+      max-width: 400px;
+      border-radius: var(--radius-md);
+      outline: 2px solid var(--alg-green);
+    }
+    
+    /* Options grid */
+    .options-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .option-btn {
+      padding: 20px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--green-light), var(--alg-white));
+      border: 3px solid var(--alg-green);
+      color: var(--alg-green);
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .option-btn:hover:not(:disabled) {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      background: linear-gradient(135deg, var(--alg-green), var(--green-medium));
+      color: var(--alg-white);
+    }
+    
+    .option-btn:active:not(:disabled) {
+      transform: translateY(-2px);
+    }
+    
+    .option-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    
+    .option-btn.correct {
+      background: linear-gradient(135deg, var(--success), var(--green-medium));
+      color: var(--alg-white);
+      border-color: var(--success);
+      animation: correctPulse 0.5s ease;
+    }
+    
+    .option-btn.incorrect {
+      background: linear-gradient(135deg, var(--error), var(--alg-red));
+      color: var(--alg-white);
+      border-color: var(--error);
+      animation: shake 0.5s ease;
+    }
+    
+    @keyframes correctPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+    
+    /* Feedback */
+    .feedback {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 2rem;
+      font-weight: 700;
+      display: none;
+      padding: 15px;
+      border-radius: var(--radius-md);
+    }
+    
+    .feedback.correct {
+      color: var(--success);
+      background: var(--green-light);
+      display: block;
+      border: 2px solid var(--success);
+    }
+    
+    .feedback.incorrect {
+      color: var(--error);
+      background: var(--red-light);
+      display: block;
+      border: 2px solid var(--error);
+    }
+    
+    /* Navigation buttons */
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .nav-btn {
+      flex: 1;
+      background: linear-gradient(135deg, var(--alg-green), var(--green-medium));
+      color: var(--alg-white);
+      border: none;
+      padding: 15px 30px;
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .nav-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      background: linear-gradient(135deg, var(--green-medium), var(--alg-green));
+    }
+    
+    .nav-btn:disabled {
+      background: var(--gray-400);
+      cursor: not-allowed;
+      opacity: 0.5;
+      transform: none;
+    }
+    
+    /* Parent help section */
+    .parent-help {
+      background: linear-gradient(135deg, var(--cream), var(--sand));
+      padding: 20px;
+      border-left: 5px solid var(--warning);
+      border-radius: var(--radius-md);
+      margin-top: 30px;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .parent-help strong {
+      color: var(--alg-green);
+      font-size: 1.1rem;
+    }
+    
+    /* Version */
+    .version {
+      text-align: center;
+      margin-top: 30px;
+      color: var(--gray-600);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    /* Responsive amélioré */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+      
+      .quiz-container {
+        padding: 20px;
+      }
+      
+      .options-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .navigation {
+        flex-direction: column;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+    
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .options-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
   </style>
 </head>
 
@@ -48,24 +425,26 @@
 
 <header>
   <div class="container header-content">
-    <img src="https://dznet1.com/images/logo.png" class="logo" alt="logo">
+    <img src="https://dznet1.com/images/logo.png" class="logo" alt="DZNet1 Logo">
     <div class="language-selector">
-      <button class="lang-btn active" data-lang="fr">FR</button>
-      <button class="lang-btn" data-lang="en">EN</button>
-      <button class="lang-btn" data-lang="ar">AR</button>
+      <button class="lang-btn active" data-lang="fr" aria-label="Français">FR</button>
+      <button class="lang-btn" data-lang="en" aria-label="English">EN</button>
+      <button class="lang-btn" data-lang="ar" aria-label="العربية">AR</button>
     </div>
   </div>
 </header>
 
 <div class="ad-banner">
-  <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png">
+  <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" alt="Publicité">
 </div>
 
 <main class="container">
 
-  <h1>Découvre les villes d'Algérie — Géographie — Âge : 5+</h1>
+  <h1>🇩🇿 Découvre les villes d'Algérie — Géographie — Âge : 5+</h1>
 
-  <div class="intro">Bienvenue ! Écoute, regarde et devine la ville.</div>
+  <div class="intro">
+    🎯 Bienvenue dans l'aventure ! Écoute, regarde et devine la ville.
+  </div>
 
   <div class="timer-container">
     <span id="timer">00:00</span>
@@ -78,22 +457,23 @@
     <div id="options-container" class="options-container"></div>
     <div id="feedback" class="feedback"></div>
     <div class="navigation">
-      <button id="prev-btn" class="nav-btn" disabled>Précédent</button>
-      <button id="next-btn" class="nav-btn">Suivant</button>
+      <button id="prev-btn" class="nav-btn" disabled>◀ Précédent</button>
+      <button id="next-btn" class="nav-btn">Suivant ▶</button>
     </div>
   </div>
 
   <div class="parent-help">
-    <strong>Conseil :</strong> Encouragez et félicitez votre enfant !
+    <strong>💡 Conseil aux parents :</strong> Encouragez et félicitez votre enfant à chaque étape !
   </div>
 
-  <div class="version">v1.017</div>
+  <div class="version">v1.018 — Thème national harmonieux</div>
 
 </main>
 
 <script>
+// [v1.018] JavaScript conservé identique (logique fonctionnelle)
 const CDN_IMG = "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/";
-const CDN_AUDIO = "https://dznet1.com/intranet/sounds/"; // ✅ demandé
+const CDN_AUDIO = "https://dznet1.com/intranet/sounds/";
 
 const cities = [
   { name:{fr:"Alger",en:"Algiers",ar:"الجزائر"}, image:CDN_IMG+"alger.jpg", audio:{fr:CDN_AUDIO+"alger_fr.mp3",en:CDN_AUDIO+"alger_en.mp3",ar:CDN_AUDIO+"alger_ar.mp3"} },
@@ -109,7 +489,7 @@ fb=document.getElementById('feedback'), p=document.getElementById('prev-btn'),n=
 
 function load(){const c=cities[i];
 q.textContent= L==='fr'?"De quelle ville s'agit-il ?":L==='en'?"Which city is this?":"ما هي هذه المدينة؟";
-im.innerHTML=`<img src="${c.image}">`;
+im.innerHTML=`<img src="${c.image}" alt="${c.name[L]}">`;
 au.innerHTML=`<audio controls src="${c.audio[L]}"></audio>`;
 op.innerHTML='';
 cities.slice().sort(()=>Math.random()-0.5).forEach(v=>{
@@ -119,23 +499,23 @@ b.onclick=()=>answer(v===c,b);
 op.appendChild(b);
 });
 fb.className='feedback';
-p.disabled=i===0;n.textContent=i===cities.length-1?(L==='fr'?"Terminer":L==='en'?"Finish":"إنهاء"):(L==='fr'?"Suivant":L==='en'?"Next":"التالي");
+p.disabled=i===0;n.textContent=i===cities.length-1?(L==='fr'?"Terminer ✓":L==='en'?"Finish ✓":"إنهاء ✓"):(L==='fr'?"Suivant ▶":L==='en'?"Next ▶":"التالي ◀");
 }
 function answer(c,b){
 document.querySelectorAll('.option-btn').forEach(x=>x.disabled=true);
 b.classList.add(c?'correct':'incorrect');
-if(c){s++;fb.textContent="✔";fb.className='feedback correct';}
-else{fb.textContent="✖";fb.className='feedback incorrect';}
+if(c){s++;fb.textContent="✔ Bravo !";fb.className='feedback correct';}
+else{fb.textContent="✖ Essaie encore !";fb.className='feedback incorrect';}
 new Audio(CDN_AUDIO+(c?"correct.mp3":"incorrect.mp3")).play();
 }
 function next(){i<cities.length-1?(i++,load()):end();}
 function prev(){i>0?(i--,load()):0;}
 function end(){
 clearInterval(T);
-q.textContent=`Score : ${s}/${cities.length}`;
+q.textContent=`🏆 Score : ${s}/${cities.length}`;
 im.innerHTML='';au.innerHTML='';op.innerHTML='';
-fb.textContent=`Temps : ${Math.floor((Date.now()-t)/1000)} s`;fb.className='feedback correct';
-p.style.display='none';n.textContent="Recommencer";n.onclick=()=>location.reload();
+fb.textContent=`⏱️ Temps : ${Math.floor((Date.now()-t)/1000)} secondes`;fb.className='feedback correct';
+p.style.display='none';n.textContent="🔄 Recommencer";n.onclick=()=>location.reload();
 }
 document.addEventListener('DOMContentLoaded',()=>{load();T=setInterval(()=>{document.getElementById('timer').textContent=String(Math.floor((Date.now()-t)/1000)).padStart(2,"0")},1000);});
 p.onclick=prev;n.onclick=next;

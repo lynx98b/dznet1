@@ -6,7 +6,6 @@ on:
       - '**.html'
       - '**.jpg'
       - '**.png'
-      - '**.jpeg'
   workflow_dispatch:
 
 jobs:
@@ -16,53 +15,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          
-      - name: List files (debug)
-        run: |
-          echo "📁 Contenu du repo:"
-          ls -la
-          echo "📁 Contenu racine:"
-          ls -la *.js *.json || echo "Aucun fichier JS/JSON trouvé"
-          
+        
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
           
-      - name: Generate stories metadata
-        run: |
-          if [ -f "generate-metadata.js" ]; then
-            echo "✅ Fichier generate-metadata.js trouvé"
-            node generate-metadata.js
-          else
-            echo "❌ Fichier generate-metadata.js NON TROUVÉ"
-            echo "📁 Liste des fichiers:"
-            find . -name "*.js" -o -name "*.json" | head -20
-            exit 1
-          fi
-          
-      - name: Show results
-        run: |
-          if [ -f "stories-metadata.json" ]; then
-            echo "✅ Fichier généré avec succès"
-            echo "📊 Résumé:"
-            cat stories-metadata.json | jq '.scanSummary'
-          else
-            echo "❌ stories-metadata.json non généré"
-            exit 1
-          fi
-          
-      - name: Commit and push
+      - name: Generate metadata
+        run: node generate-metadata.js
+        
+      - name: Commit results
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add stories-metadata.json
-          if git diff --staged --quiet; then
-            echo "⏩ Aucun changement à commiter"
-          else
-            git commit -m "Auto-update stories metadata"
-            git push
-          fi
+          git diff --staged --quiet || (git commit -m "Update stories metadata" && git push)

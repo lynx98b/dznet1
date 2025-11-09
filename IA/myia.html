@@ -775,34 +775,8 @@ ${limits.pages === 3 ? `  <button onclick="showPage(3)" class="page-btn" id="btn
   ">📄 Page 3</button>
 ` : ''}
 </nav>
-
-<script>
-// Gestion pages internes (v4.4.001)
-function showPage(pageNum) {
-  // Cacher toutes les pages
-  document.querySelectorAll('.content-page').forEach(page => {
-    page.style.display = 'none';
-  });
-  
-  // Afficher la page demandée
-  const targetPage = document.getElementById('page-' + pageNum);
-  if (targetPage) {
-    targetPage.style.display = 'block';
-  }
-  
-  // Mettre à jour boutons
-  document.querySelectorAll('.page-btn').forEach(btn => {
-    btn.style.background = 'white';
-    btn.style.color = 'var(--accent)';
-    btn.classList.remove('active');
-  });
-  
-  const activeBtn = document.getElementById('btn-page-' + pageNum);
-  if (activeBtn) {
-    activeBtn.style.background = 'var(--accent)';
-    activeBtn.style.color = 'white';
-    activeBtn.classList.add('active');
-  }
+ 
+ 
   
 ${addProgressBar ? `  // Mettre à jour la barre de progression
   const progressFill = document.getElementById('progress-fill');

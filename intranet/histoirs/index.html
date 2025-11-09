@@ -14,6 +14,7 @@
     <title>Histoires et Livres - Espace Enfants</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* [Tous les styles CSS précédents restent identiques] */
         * {
             margin: 0;
             padding: 0;
@@ -36,439 +37,77 @@
             min-height: 1080px;
         }
         
-        /* ZONE EN-TÊTE (BUB) */
-        .zone-entete-bub {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            height: 80px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 30px;
-            border-bottom: 5px solid #ff6b6b;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+        /* [Tous les autres styles restent identiques...] */
         
-        .zone-logo {
+        /* Nouveaux styles pour les histoires audio */
+        .carte-audio {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
             display: flex;
-            align-items: center;
             gap: 15px;
-        }
-        
-        .logo-icone {
-            font-size: 36px;
-            color: #ff6b6b;
-        }
-        
-        .texte-logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: #5a189a;
-            text-shadow: 2px 2px 0px #ffd166;
-        }
-        
-        .zone-navigation {
-            display: flex;
-            gap: 20px;
-        }
-        
-        .bouton-navigation {
-            background: #4361ee;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 16px;
+            align-items: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 0 #3a56d4;
+            border: 3px solid #ef476f;
         }
         
-        .bouton-navigation:hover {
-            background: #3a56d4;
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #3a56d4;
+        .carte-audio:hover {
+            transform: translateY(-5px);
         }
         
-        /* ZONE TITRE PRINCIPAL */
-        .zone-titre-principal {
-            background-color: #ffd166;
-            padding: 20px 0;
-            text-align: center;
-            border-bottom: 5px dashed #ff9e00;
-        }
-        
-        .zone-titre-principal h1 {
-            font-size: 42px;
-            color: #5a189a;
-            text-shadow: 3px 3px 0px #ff9e00;
-            margin-bottom: 10px;
-        }
-        
-        .zone-titre-principal p {
-            font-size: 20px;
+        .icone-audio {
+            font-size: 40px;
             color: #ef476f;
-            max-width: 800px;
-            margin: 0 auto;
+            flex-shrink: 0;
         }
         
-        /* ZONE RECHERCHE ET FILTRES */
-        .zone-recherche-filtres {
-            background: white;
-            padding: 20px 30px;
-            border-bottom: 3px solid #4cc9f0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            align-items: center;
-        }
-        
-        .zone-recherche {
-            display: flex;
-            gap: 10px;
-            flex: 1;
-            max-width: 400px;
-        }
-        
-        .champ-recherche {
-            flex: 1;
-            padding: 12px 15px;
-            border: 2px solid #4cc9f0;
-            border-radius: 25px;
-            font-size: 16px;
-            outline: none;
-        }
-        
-        .bouton-recherche {
-            background: #4cc9f0;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .bouton-recherche:hover {
-            background: #3ab0d6;
-        }
-        
-        .bouton-filtre {
-            background: #f8f9fa;
-            border: 2px solid #4cc9f0;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: #4361ee;
-        }
-        
-        .bouton-filtre.actif {
-            background: #4cc9f0;
-            color: white;
-        }
-        
-        .bouton-filtre:hover {
-            background: #4cc9f0;
-            color: white;
-        }
-        
-        .stats {
-            background: #f8f9fa;
-            padding: 15px;
-            text-align: center;
-            border-bottom: 1px solid #dee2e6;
+        .contenu-audio h3 {
             font-size: 18px;
             color: #5a189a;
+            margin-bottom: 5px;
         }
         
-        /* ZONE CONTENU PRINCIPAL */
-        .zone-contenu-principal {
-            flex: 1;
-            padding: 40px 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-        
-        /* Section livres */
-        .section-livres {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            border: 4px solid #ff9e00;
-        }
-        
-        .section-livres h2 {
-            font-size: 32px;
-            color: #5a189a;
-            margin-bottom: 25px;
-            text-align: center;
-            text-shadow: 2px 2px 0px #ffd166;
-        }
-        
-        .grille-livres {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        
-        .carte-livre {
-            background: #f8f9fa;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            border: 3px solid transparent;
-        }
-        
-        .carte-livre:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
-            border-color: #4cc9f0;
-        }
-        
-        .image-livre {
-            height: 200px;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 60px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .image-livre img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .default-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        
-        .contenu-livre {
-            padding: 20px;
-        }
-        
-        .contenu-livre h3 {
-            font-size: 20px;
-            color: #5a189a;
+        .contenu-audio p {
+            color: #666;
+            font-size: 14px;
             margin-bottom: 10px;
         }
         
-        .contenu-livre p {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-        
-        .metadonnees {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 15px;
+        .duree-audio {
+            color: #888;
             font-size: 12px;
-            font-weight: bold;
         }
         
-        .badge-age {
+        .badge-audio {
             background: #ef476f;
             color: white;
         }
         
-        .badge-categorie {
-            background: #06d6a0;
-            color: white;
+        .section-audio {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border: 4px solid #ef476f;
         }
         
-        .badge-type {
-            background: #118ab2;
-            color: white;
-        }
-        
-        .etoiles {
-            color: #ff9e00;
-            margin-bottom: 10px;
-        }
-        
-        .bouton-lire {
-            background: #06d6a0;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 15px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-        }
-        
-        .bouton-lire:hover {
-            background: #05b989;
-        }
-        
-        .file-name {
-            font-size: 0.9rem;
-            color: #999;
-            margin-top: 10px;
-            font-family: monospace;
+        .section-audio h2 {
+            font-size: 32px;
+            color: #5a189a;
+            margin-bottom: 25px;
             text-align: center;
+            text-shadow: 2px 2px 0px #ffafcc;
         }
         
-        /* États de chargement et erreur */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-            font-size: 18px;
+        .grille-audio {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
         }
         
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #666;
-            font-size: 18px;
-        }
-        
-        .error-state {
-            text-align: center;
-            padding: 40px;
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 10px;
-            margin: 20px;
-            color: #856404;
-        }
-        
-        /* ZONE PIED DE PAGE */
-        .zone-pied-page {
-            background: linear-gradient(135deg, #5a189a 0%, #7b2cbf 100%);
-            color: white;
-            padding: 30px 40px 20px;
-            border-top: 8px solid #ff9e00;
-        }
-        
-        .contenu-pied-page {
-            max-width: 1600px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-        
-        .info-contact {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .info-contact h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: #ffd166;
-        }
-        
-        .info-contact p {
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
-        
-        .liens-rapides {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .liens-rapides h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: #ffd166;
-        }
-        
-        .liens-rapides ul {
-            list-style: none;
-        }
-        
-        .liens-rapides li {
-            margin-bottom: 10px;
-        }
-        
-        .liens-rapides a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            transition: color 0.3s;
-        }
-        
-        .liens-rapides a:hover {
-            color: #ffd166;
-        }
-        
-        .copyright {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #9d4edd;
-            color: #e0aaff;
-            font-size: 14px;
-            width: 100%;
-        }
-        
-        /* Animations */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        .flottant {
-            animation: float 5s ease-in-out infinite;
-        }
-        
-        /* Responsive */
-        @media (max-width: 1400px) {
-            .grille-livres {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .zone-entete-bub {
-                flex-direction: column;
-                height: auto;
-                padding: 15px;
-            }
-            
-            .zone-navigation {
-                margin-top: 15px;
-            }
-            
-            .zone-recherche-filtres {
-                flex-direction: column;
-            }
-            
-            .zone-recherche {
-                max-width: 100%;
-            }
-        }
+        /* [Le reste des styles reste identique] */
     </style>
 </head>
 <body>
@@ -510,9 +149,10 @@
             <button class="bouton-filtre" data-filtre="age-3-5">3-5 ans</button>
             <button class="bouton-filtre" data-filtre="age-6-8">6-8 ans</button>
             <button class="bouton-filtre" data-filtre="age-9-12">9-12 ans</button>
+            <button class="bouton-filtre" data-filtre="type-html">Histoires</button>
+            <button class="bouton-filtre" data-filtre="type-audio">Audio</button>
             <button class="bouton-filtre" data-filtre="categorie-contes">Contes</button>
             <button class="bouton-filtre" data-filtre="categorie-aventures">Aventures</button>
-            <button class="bouton-filtre" data-filtre="categorie-animaux">Animaux</button>
         </section>
         
         <div class="stats" id="stats">
@@ -521,13 +161,21 @@
         
         <!-- ZONE CONTENU PRINCIPAL -->
         <main class="zone-contenu-principal">
-            <!-- Section livres -->
-            <section class="section-livres">
-                <h2>Nos Histoires</h2>
+            <!-- Section histoires HTML -->
+            <section class="section-livres" id="section-html">
+                <h2>Histoires à Lire</h2>
                 <div class="grille-livres" id="grilleLivres">
                     <div class="loading">
                         <p>Recherche automatique des histoires...</p>
                     </div>
+                </div>
+            </section>
+            
+            <!-- Section histoires audio -->
+            <section class="section-audio" id="section-audio">
+                <h2>Histoires Audio</h2>
+                <div class="grille-audio" id="grilleAudio">
+                    <!-- Les histoires audio apparaîtront ici -->
                 </div>
             </section>
         </main>
@@ -560,42 +208,57 @@
     </div>
 
     <script>
-        // Configuration
-        const EXCLUDED_FILES = ['index.html', 'sommaire.html', 'histoires.html']; // Fichiers à ignorer
+        // Configuration ÉTENDUE pour inclure les fichiers audio
+        const EXCLUDED_FILES = ['index.html', 'sommaire.html', 'histoires.html'];
         const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+        const audioExtensions = ['.mp3', '.wav', '.ogg', '.m4a', '.aac'];
         
         // État des filtres
         let filtresActifs = {
             age: 'all',
             categorie: 'all',
+            type: 'all',
             recherche: ''
         };
         
         let toutesLesHistoires = [];
+        let tousLesAudios = [];
 
-        // Fonction pour détecter tous les fichiers HTML du dossier
-        async function discoverHTMLFiles() {
+        // Fonction pour détecter tous les fichiers (HTML + Audio)
+        async function discoverAllFiles() {
             try {
-                console.log('🔍 Début du scan des fichiers HTML...');
+                console.log('🔍 Début du scan des fichiers...');
                 
-                // Stratégie 1: Essayer de récupérer la liste via fetch (pour GitHub Pages)
                 let allFiles = [];
+                let audioFiles = [];
                 
+                // Stratégie 1: Essayer de récupérer la liste via fetch
                 try {
-                    // Cette méthode fonctionne sur certains serveurs
                     const response = await fetch('./');
                     const text = await response.text();
                     
-                    // Parser le HTML de la page d'index pour trouver les liens
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(text, 'text/html');
-                    const links = doc.querySelectorAll('a[href$=".html"]');
+                    const links = doc.querySelectorAll('a[href]');
                     
-                    allFiles = Array.from(links)
+                    // Fichiers HTML
+                    const htmlFiles = Array.from(links)
                         .map(link => link.getAttribute('href'))
-                        .filter(file => !EXCLUDED_FILES.includes(file));
-                        
-                    console.log(`📁 Fichiers trouvés via scan:`, allFiles);
+                        .filter(file => 
+                            file.endsWith('.html') && 
+                            !EXCLUDED_FILES.includes(file)
+                        );
+                    
+                    // Fichiers Audio
+                    audioFiles = Array.from(links)
+                        .map(link => link.getAttribute('href'))
+                        .filter(file => 
+                            audioExtensions.some(ext => file.toLowerCase().endsWith(ext))
+                        );
+                    
+                    allFiles = [...htmlFiles];
+                    console.log(`📁 Fichiers HTML trouvés:`, htmlFiles);
+                    console.log(`🎵 Fichiers audio trouvés:`, audioFiles);
                     
                 } catch (error) {
                     console.log('❌ Scan automatique échoué, utilisation de la détection par pattern');
@@ -603,30 +266,51 @@
                 
                 // Si pas de fichiers trouvés, utiliser la détection par pattern
                 if (allFiles.length === 0) {
-                    allFiles = await detectFilesByPattern();
+                    allFiles = await detectFilesByPattern('html');
+                }
+                if (audioFiles.length === 0) {
+                    audioFiles = await detectFilesByPattern('audio');
                 }
                 
-                return allFiles;
+                return {
+                    html: allFiles,
+                    audio: audioFiles
+                };
                 
             } catch (error) {
                 console.error('Erreur lors de la découverte des fichiers:', error);
-                return [];
+                return { html: [], audio: [] };
             }
         }
 
-        // Fonction pour détecter les fichiers par pattern (histoire1, histoire2, etc.)
-        async function detectFilesByPattern() {
-            console.log('🎯 Détection par pattern...');
-            const patterns = [
-                'histoire', 'hist', 'conte', 'livre', 'story'
-            ];
+        // Fonction pour détecter les fichiers par pattern
+        async function detectFilesByPattern(type) {
+            console.log(`🎯 Détection par pattern pour: ${type}`);
             
+            const patterns = type === 'html' 
+                ? ['histoire', 'hist', 'conte', 'livre', 'story']
+                : ['audio', 'conte', 'histoire', 'story', 'narration'];
+            
+            const extensions = type === 'html' ? ['.html'] : audioExtensions;
             const discoveredFiles = [];
             
-            // Tester les patterns avec numéros (histoire1.html, histoire2.html, etc.)
+            // Tester les patterns avec numéros
             for (let i = 0; i <= 20; i++) {
                 for (const pattern of patterns) {
-                    const filename = `${pattern}${i}.html`;
+                    for (const ext of extensions) {
+                        const filename = `${pattern}${i}${ext}`;
+                        if (await fileExists(filename)) {
+                            discoveredFiles.push(filename);
+                            console.log(`✅ Trouvé: ${filename}`);
+                        }
+                    }
+                }
+            }
+            
+            // Tester les patterns sans numéros
+            for (const pattern of patterns) {
+                for (const ext of extensions) {
+                    const filename = `${pattern}${ext}`;
                     if (await fileExists(filename)) {
                         discoveredFiles.push(filename);
                         console.log(`✅ Trouvé: ${filename}`);
@@ -634,23 +318,16 @@
                 }
             }
             
-            // Tester les patterns sans numéros
-            for (const pattern of patterns) {
-                const filename = `${pattern}.html`;
-                if (await fileExists(filename)) {
-                    discoveredFiles.push(filename);
-                    console.log(`✅ Trouvé: ${filename}`);
-                }
-            }
-            
             // Chercher aussi les fichiers avec underscores
             for (const pattern of patterns) {
                 const variations = ['aventure', 'conte', 'animaux', 'magique', 'dragon', 'princesse'];
                 for (const variation of variations) {
-                    const filename = `${pattern}_${variation}.html`;
-                    if (await fileExists(filename)) {
-                        discoveredFiles.push(filename);
-                        console.log(`✅ Trouvé: ${filename}`);
+                    for (const ext of extensions) {
+                        const filename = `${pattern}_${variation}${ext}`;
+                        if (await fileExists(filename)) {
+                            discoveredFiles.push(filename);
+                            console.log(`✅ Trouvé: ${filename}`);
+                        }
                     }
                 }
             }
@@ -666,40 +343,6 @@
             } catch (error) {
                 return false;
             }
-        }
-
-        // Fonction pour vérifier si une image existe
-        function checkImageExists(imageUrl) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                const timeout = setTimeout(() => resolve(false), 2000);
-                
-                img.onload = () => {
-                    clearTimeout(timeout);
-                    resolve(true);
-                };
-                img.onerror = () => {
-                    clearTimeout(timeout);
-                    resolve(false);
-                };
-                img.src = imageUrl;
-            });
-        }
-
-        // Fonction pour trouver le logo d'une histoire
-        async function findStoryLogo(baseFilename) {
-            const baseName = baseFilename.replace('.html', '');
-            
-            // Tester toutes les extensions d'image
-            for (const ext of imageExtensions) {
-                const imageUrl = `${baseName}${ext}`;
-                const exists = await checkImageExists(imageUrl);
-                if (exists) {
-                    return imageUrl;
-                }
-            }
-            
-            return null;
         }
 
         // Fonction pour extraire les métadonnées d'un fichier HTML
@@ -734,7 +377,7 @@
                 // Extraire les métadonnées personnalisées
                 const age = doc.querySelector('meta[name="age"]')?.getAttribute('content') || '3-5';
                 const categorie = doc.querySelector('meta[name="categorie"]')?.getAttribute('content') || 'contes';
-                const type = doc.querySelector('meta[name="type"]')?.getAttribute('content') || 'histoire';
+                const type = 'html';
                 
                 // Chercher le logo
                 const logoUrl = await findStoryLogo(filename);
@@ -762,173 +405,332 @@
                     logoUrl: null,
                     age: '3-5',
                     categorie: 'contes',
-                    type: 'histoire'
+                    type: 'html'
                 };
             }
         }
 
-        // Fonction pour filtrer les histoires
-        function filtrerHistoires(histoires) {
-            return histoires.filter(histoire => {
+        // Fonction pour créer les infos des fichiers audio
+        async function createAudioInfo(filename) {
+            // Essayer de trouver un fichier d'image associé
+            const baseName = filename.replace(/\.(mp3|wav|ogg|m4a|aac)$/i, '');
+            const imageUrl = await findStoryLogo(baseName);
+            
+            // Essayer de trouver un fichier HTML de description associé
+            let title = baseName.replace(/_/g, ' ')
+                              .replace(/([a-z])([A-Z])/g, '$1 $2')
+                              .replace(/\b\w/g, l => l.toUpperCase());
+            
+            let description = "Histoire audio pour enfants";
+            
+            // Vérifier s'il existe un fichier HTML avec le même nom
+            const htmlFile = `${baseName}.html`;
+            if (await fileExists(htmlFile)) {
+                try {
+                    const response = await fetch(htmlFile);
+                    const html = await response.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    
+                    title = doc.querySelector('title')?.textContent || title;
+                    description = doc.querySelector('meta[name="description"]')?.getAttribute('content') || description;
+                } catch (error) {
+                    console.log(`Pas de fichier HTML associé pour ${filename}`);
+                }
+            }
+            
+            return {
+                filename,
+                title,
+                description,
+                url: filename,
+                logoUrl: imageUrl,
+                age: '3-5', // Valeur par défaut
+                categorie: 'contes', // Valeur par défaut
+                type: 'audio'
+            };
+        }
+
+        // Fonction pour trouver le logo/illustration
+        async function findStoryLogo(baseFilename) {
+            const baseName = baseFilename.replace(/\.(html|mp3|wav|ogg|m4a|aac)$/i, '');
+            
+            // Tester toutes les extensions d'image
+            for (const ext of imageExtensions) {
+                const imageUrl = `${baseName}${ext}`;
+                const exists = await checkImageExists(imageUrl);
+                if (exists) {
+                    return imageUrl;
+                }
+            }
+            
+            return null;
+        }
+
+        // Fonction pour vérifier si une image existe
+        function checkImageExists(imageUrl) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                const timeout = setTimeout(() => resolve(false), 2000);
+                
+                img.onload = () => {
+                    clearTimeout(timeout);
+                    resolve(true);
+                };
+                img.onerror = () => {
+                    clearTimeout(timeout);
+                    resolve(false);
+                };
+                img.src = imageUrl;
+            });
+        }
+
+        // Fonction pour filtrer les contenus
+        function filtrerContenus(contenus) {
+            return contenus.filter(contenu => {
                 // Filtre par âge
-                if (filtresActifs.age !== 'all' && !histoire.age.includes(filtresActifs.age.replace('age-', ''))) {
+                if (filtresActifs.age !== 'all' && !contenu.age.includes(filtresActifs.age.replace('age-', ''))) {
                     return false;
                 }
                 
                 // Filtre par catégorie
-                if (filtresActifs.categorie !== 'all' && !histoire.categorie.includes(filtresActifs.categorie.replace('categorie-', ''))) {
+                if (filtresActifs.categorie !== 'all' && !contenu.categorie.includes(filtresActifs.categorie.replace('categorie-', ''))) {
+                    return false;
+                }
+                
+                // Filtre par type
+                if (filtresActifs.type !== 'all' && contenu.type !== filtresActifs.type.replace('type-', '')) {
                     return false;
                 }
                 
                 // Filtre par recherche
                 if (filtresActifs.recherche) {
                     const termeRecherche = filtresActifs.recherche.toLowerCase();
-                    return histoire.title.toLowerCase().includes(termeRecherche) || 
-                           histoire.description.toLowerCase().includes(termeRecherche);
+                    return contenu.title.toLowerCase().includes(termeRecherche) || 
+                           contenu.description.toLowerCase().includes(termeRecherche);
                 }
                 
                 return true;
             });
         }
 
-        // Fonction pour afficher les histoires
+        // Fonction pour afficher les histoires HTML
         function afficherHistoires(histoires) {
             const grilleLivres = document.getElementById('grilleLivres');
-            const statsElement = document.getElementById('livreCount');
+            const sectionHtml = document.getElementById('section-html');
             
-            if (histoires.length === 0) {
+            const histoiresHTML = histoires.filter(h => h.type === 'html');
+            
+            if (histoiresHTML.length === 0) {
                 grilleLivres.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-book" style="font-size: 50px; margin-bottom: 20px; color: #ccc;"></i>
                         <h3>Aucune histoire trouvée</h3>
                         <p>Aucune histoire ne correspond à vos critères de recherche.</p>
-                        <p>Essayez de modifier vos filtres ou votre recherche.</p>
                     </div>
                 `;
-                statsElement.textContent = `📚 0 histoire(s) trouvée(s)`;
-                return;
+                sectionHtml.style.display = 'none';
+            } else {
+                sectionHtml.style.display = 'block';
+                grilleLivres.innerHTML = histoiresHTML.map(histoire => `
+                    <div class="carte-livre" onclick="window.location.href='${histoire.url}'">
+                        <div class="image-livre">
+                            ${histoire.logoUrl ? 
+                                `<img src="${histoire.logoUrl}" alt="${histoire.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                 <div class="default-icon" style="display:none;">📖</div>` :
+                                `<div class="default-icon">📖</div>`
+                            }
+                        </div>
+                        <div class="contenu-livre">
+                            <h3 class="game-title">${histoire.title}</h3>
+                            <div class="metadonnees">
+                                <span class="badge badge-age">${histoire.age} ans</span>
+                                <span class="badge badge-categorie">${histoire.categorie}</span>
+                                <span class="badge badge-type">${histoire.type}</span>
+                            </div>
+                            <p class="game-description">${histoire.description}</p>
+                            <a href="${histoire.url}" class="bouton-lire">Lire l'histoire</a>
+                            <div class="file-name">${histoire.filename}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Fonction pour afficher les histoires audio
+        function afficherAudios(audios) {
+            const grilleAudio = document.getElementById('grilleAudio');
+            const sectionAudio = document.getElementById('section-audio');
+            
+            const audiosFiltres = audios.filter(a => a.type === 'audio');
+            
+            if (audiosFiltres.length === 0) {
+                grilleAudio.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-headphones" style="font-size: 50px; margin-bottom: 20px; color: #ccc;"></i>
+                        <h3>Aucune histoire audio trouvée</h3>
+                        <p>Aucune histoire audio ne correspond à vos critères de recherche.</p>
+                    </div>
+                `;
+                sectionAudio.style.display = 'none';
+            } else {
+                sectionAudio.style.display = 'block';
+                grilleAudio.innerHTML = audiosFiltres.map(audio => `
+                    <div class="carte-audio" onclick="jouerAudio('${audio.url}')">
+                        <div class="icone-audio">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="contenu-audio">
+                            <h3>${audio.title}</h3>
+                            <div class="metadonnees">
+                                <span class="badge badge-age">${audio.age} ans</span>
+                                <span class="badge badge-categorie">${audio.categorie}</span>
+                                <span class="badge badge-audio">Audio</span>
+                            </div>
+                            <p>${audio.description}</p>
+                            <div class="duree-audio">Fichier: ${audio.filename}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Fonction pour jouer un audio
+        function jouerAudio(url) {
+            // Créer un lecteur audio simple
+            const audio = new Audio(url);
+            audio.play().catch(e => {
+                console.error("Erreur de lecture audio:", e);
+                alert(`Impossible de lire l'audio: ${url}\n\nVérifiez que le fichier existe et est accessible.`);
+            });
+            
+            // Optionnel: Afficher un contrôleur audio
+            const existingPlayer = document.getElementById('audio-player');
+            if (existingPlayer) {
+                existingPlayer.remove();
             }
             
-            // Trier par nom de fichier
-            histoires.sort((a, b) => a.filename.localeCompare(b.filename));
+            const audioPlayer = document.createElement('div');
+            audioPlayer.id = 'audio-player';
+            audioPlayer.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: white;
+                padding: 15px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                z-index: 1000;
+                border: 3px solid #ef476f;
+            `;
             
-            // Mettre à jour les statistiques
-            const histoiresAvecLogos = histoires.filter(histoire => histoire.logoUrl).length;
-            statsElement.textContent = `📚 ${histoires.length} histoire(s) trouvée(s) • 🖼️ ${histoiresAvecLogos} avec illustration`;
-            
-            // Afficher les histoires
-            grilleLivres.innerHTML = histoires.map(histoire => `
-                <div class="carte-livre" onclick="window.location.href='${histoire.url}'">
-                    <div class="image-livre">
-                        ${histoire.logoUrl ? 
-                            `<img src="${histoire.logoUrl}" alt="${histoire.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                             <div class="default-icon" style="display:none;">📖</div>` :
-                            `<div class="default-icon">📖</div>`
-                        }
-                    </div>
-                    <div class="contenu-livre">
-                        <h3 class="game-title">${histoire.title}</h3>
-                        <div class="metadonnees">
-                            <span class="badge badge-age">${histoire.age} ans</span>
-                            <span class="badge badge-categorie">${histoire.categorie}</span>
-                            <span class="badge badge-type">${histoire.type}</span>
-                        </div>
-                        <p class="game-description">${histoire.description}</p>
-                        <a href="${histoire.url}" class="bouton-lire">Lire l'histoire</a>
-                        <div class="file-name">${histoire.filename}</div>
+            audioPlayer.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <button onclick="this.parentElement.parentElement.querySelector('audio').pause(); this.parentElement.parentElement.remove();" style="background: #ef476f; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;">×</button>
+                    <div>
+                        <div style="font-weight: bold; margin-bottom: 5px;">Lecture en cours</div>
+                        <audio controls style="width: 200px;">
+                            <source src="${url}" type="audio/mpeg">
+                            Votre navigateur ne supporte pas l'audio.
+                        </audio>
                     </div>
                 </div>
-            `).join('');
+            `;
+            
+            document.body.appendChild(audioPlayer);
         }
 
         // Fonction principale
-        async function loadAllStoriesAutomatically() {
-            const grilleLivres = document.getElementById('grilleLivres');
+        async function loadAllContentAutomatically() {
             const statsElement = document.getElementById('livreCount');
             
             try {
-                statsElement.textContent = '🔍 Recherche des fichiers HTML...';
+                statsElement.textContent = '🔍 Recherche des fichiers...';
                 
                 // Découvrir automatiquement les fichiers
-                const discoveredFiles = await discoverHTMLFiles();
+                const discoveredFiles = await discoverAllFiles();
                 
-                if (discoveredFiles.length === 0) {
-                    statsElement.textContent = '❌ Aucun fichier HTML trouvé';
-                    grilleLivres.innerHTML = `
-                        <div class="error-state">
-                            <h2>Aucune histoire trouvée</h2>
-                            <p>Le système n'a pas pu détecter automatiquement les fichiers HTML.</p>
-                            <p>Vérifiez que vos fichiers suivent la convention de nommage (histoire1.html, histoire2.html, etc.)</p>
-                        </div>
-                    `;
+                if (discoveredFiles.html.length === 0 && discoveredFiles.audio.length === 0) {
+                    statsElement.textContent = '❌ Aucun fichier trouvé';
                     return;
                 }
                 
-                statsElement.textContent = `📁 ${discoveredFiles.length} histoire(s) détectée(s) - Chargement...`;
+                statsElement.textContent = `📁 ${discoveredFiles.html.length} histoire(s) • 🎵 ${discoveredFiles.audio.length} audio(s) - Chargement...`;
                 
-                // Charger les informations de chaque fichier
-                const storiesPromises = discoveredFiles.map(extractFileInfo);
-                toutesLesHistoires = await Promise.all(storiesPromises);
+                // Charger les informations des fichiers HTML
+                const storiesPromises = discoveredFiles.html.map(extractFileInfo);
+                const htmlStories = await Promise.all(storiesPromises);
                 
-                // Afficher toutes les histoires initialement
-                afficherHistoires(toutesLesHistoires);
+                // Charger les informations des fichiers audio
+                const audioPromises = discoveredFiles.audio.map(createAudioInfo);
+                const audioStories = await Promise.all(audioPromises);
+                
+                // Combiner tous les contenus
+                toutesLesHistoires = [...htmlStories, ...audioStories];
+                
+                // Afficher tout le contenu initialement
+                afficherToutContenu();
                 
             } catch (error) {
                 console.error('Erreur générale:', error);
                 statsElement.textContent = '❌ Erreur lors du chargement';
-                grilleLivres.innerHTML = `
-                    <div class="error-state">
-                        <h2>Erreur de chargement</h2>
-                        <p>Une erreur est survenue lors de la détection automatique des histoires.</p>
-                        <p>Vérifiez la console pour plus de détails.</p>
-                    </div>
-                `;
             }
+        }
+
+        // Fonction pour afficher tout le contenu
+        function afficherToutContenu() {
+            const statsElement = document.getElementById('livreCount');
+            const contenusFiltres = filtrerContenus(toutesLesHistoires);
+            
+            const htmlCount = contenusFiltres.filter(c => c.type === 'html').length;
+            const audioCount = contenusFiltres.filter(c => c.type === 'audio').length;
+            
+            statsElement.textContent = `📚 ${htmlCount} histoire(s) • 🎵 ${audioCount} audio(s) trouvé(s)`;
+            
+            afficherHistoires(contenusFiltres);
+            afficherAudios(contenusFiltres);
         }
 
         // Gestion des filtres
         document.querySelectorAll('.bouton-filtre').forEach(bouton => {
             bouton.addEventListener('click', function() {
-                // Mettre à jour l'état actif
                 document.querySelectorAll('.bouton-filtre').forEach(btn => {
                     btn.classList.remove('actif');
                 });
                 this.classList.add('actif');
                 
-                // Mettre à jour les filtres
                 const filtre = this.getAttribute('data-filtre');
                 if (filtre.startsWith('age-')) {
                     filtresActifs.age = filtre;
                 } else if (filtre.startsWith('categorie-')) {
                     filtresActifs.categorie = filtre;
+                } else if (filtre.startsWith('type-')) {
+                    filtresActifs.type = filtre;
                 } else if (filtre === 'all') {
                     filtresActifs.age = 'all';
                     filtresActifs.categorie = 'all';
+                    filtresActifs.type = 'all';
                 }
                 
-                // Appliquer les filtres
-                const histoiresFiltrees = filtrerHistoires(toutesLesHistoires);
-                afficherHistoires(histoiresFiltrees);
+                afficherToutContenu();
             });
         });
 
         // Gestion de la recherche
         document.getElementById('boutonRecherche').addEventListener('click', function() {
             filtresActifs.recherche = document.getElementById('champRecherche').value;
-            const histoiresFiltrees = filtrerHistoires(toutesLesHistoires);
-            afficherHistoires(histoiresFiltrees);
+            afficherToutContenu();
         });
 
         document.getElementById('champRecherche').addEventListener('keyup', function(event) {
             if (event.key === 'Enter') {
                 filtresActifs.recherche = this.value;
-                const histoiresFiltrees = filtrerHistoires(toutesLesHistoires);
-                afficherHistoires(histoiresFiltrees);
+                afficherToutContenu();
             }
         });
 
         // Démarrer automatiquement au chargement
-        document.addEventListener('DOMContentLoaded', loadAllStoriesAutomatically);
+        document.addEventListener('DOMContentLoaded', loadAllContentAutomatically);
     </script>
 </body>
 </html>

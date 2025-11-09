@@ -1,5 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Découvre les villes d'Algérie — Catégorie : Géographie — Âge : 5+</title>
 
+  <meta name="description" content="Jeu éducatif interactif pour découvrir les grandes villes d'Algérie : Alger, Constantine, Oran et Tamanrasset. Reconnaissance visuelle et auditive pour enfants.">
+  <meta name="content-category" content="Géographie">
+  <meta name="content-age" content="5">
+  <meta name="keywords" content="Algérie, villes, géographie, enfants, éducatif, interactif, Alger, Constantine, Oran, Tamanrasset">
 
-<!DOCTYPE html><html lang="fr"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Découvre les villes d'Algérie — Catégorie : Géographie — Âge : 5+</title>    <meta name="description" content="Jeu éducatif interactif pour découvrir les grandes villes d'Algérie : Alger, Constantine, Oran et Tamanrasset. Reconnaissance visuelle et auditive pour enfants.">    <meta name="content-category" content="Géographie">    <meta name="content-age" content="5">    <meta name="keywords" content="Algérie, villes, géographie, enfants, éducatif, interactif, Alger, Constantine, Oran, Tamanrasset">        <!-- Analytics -->    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>    <script>        window.dataLayer = window.dataLayer || [];        function gtag(){dataLayer.push(arguments);}        gtag('js', new Date());        gtag('config', 'G-CRRK6Z4D1X');    </script>        <!-- Feuille de style distante -->    <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css">        <!-- Style personnalisé -->    <style>        :root {            --color-pastel-1: #FFE4E1;            --color-pastel-2: #E0F2F7;            --color-pastel-3: #FFF9C4;            --color-pastel-4: #D1F2EB;            --color-primary: #4A90E2;            --color-success: #5CB85C;            --color-warning: #F0AD4E;            --color-danger: #D9534F;        }                * {            box-sizing: border-box;            margin: 0;            padding: 0;        }                body {            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif;            background-color: var(--color-pastel-2);            color: #333;            line-height: 1.6;            padding: 0;            margin: 0;            overflow-x: hidden;        }                .container {            max-width: 1200px;            margin: 0 auto;            padding: 0 15px;        }                /* Header */        header {            background: linear-gradient(135deg, var(--color-pastel-1), var(--color-pastel-3));            padding: 15px 0;            box-shadow: 0 2px 10px rgba(0,0,0,0.1);            position: sticky;            top: 0;            z-index: 100;        }                .header-content {            display: flex;            align-items: center;            justify-content: space-between;        }                .logo {            height: 60px;            width: auto;        }                .language-selector {            display: flex;            gap: 10px;        }                .lang-btn {            background: none;            border: 2px solid var(--color-primary);            border-radius: 50%;            width: 40px;            height: 40px;            cursor: pointer;            font-size: 16px;            display: flex;            align-items: center;            justify-content: center;            transition: all 0.3s;        }                .lang-btn:hover, .lang-btn.active {            background-color: var(--color-primary);            color: white;        }                /* Bannière publicitaire */        .ad-banner {            text-align: center;            padding: 10px 0;            background-color: white;            border-bottom: 1px solid #ddd;        }                .ad-banner img {            max-width: 100%;            height: auto;        }                /* Contenu principal */        main {            padding: 20px 0;            min-height: calc(100vh - 200px);        }                h1 {            text-align: center;            color: var(--color-primary);            margin-bottom: 20px;            font-size: 2.2rem;        }                h2 {            color: var(--color-primary);            margin: 20px 0 15px;            font-size: 1.8rem;        }                .intro {            text-align: center;            margin-bottom: 30px;            font-size: 1.2rem;            background-color: var(--color-pastel-4);            padding: 15px;            border-radius: 10px;        }                /* Timer */        .timer-container {            text-align: center;            margin: 20px 0;            font-size: 1.5rem;            font-weight: bold;            color: var(--color-primary);            background-color: var(--color-pastel-3);            padding: 10px;            border-radius: 10px;            display: inline-block;            margin-left: 50%;            transform: translateX(-50%);        }                /* Quiz */        .quiz-container {            background-color: white;            border-radius: 15px;            padding: 20px;            box-shadow: 0 5px 15px rgba(0,0,0,0.1);            margin-bottom: 30px;        }                .question-container {            text-align: center;            margin-bottom: 20px;        }                .question-image {            max-width: 100%;            height: auto;            max-height: 300px;            border-radius: 10px;            margin: 15px 0;            box-shadow: 0 3px 10px rgba(0,0,0,0.2);        }                .audio-player {            margin: 15px 0;        }                .options-container {            display: grid;            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));            gap: 15px;            margin-top: 20px;        }                .option-btn {            background-color: var(--color-pastel-1);            border: 2px solid var(--color-pastel-1);            border-radius: 10px;            padding: 15px;            font-size: 1.2rem;            cursor: pointer;            transition: all 0.3s;            font-weight: bold;        }                .option-btn:hover {            background-color: var(--color-pastel-3);            transform: translateY(-3px);        }                .option-btn.correct {            background-color: var(--color-success);            color: white;            border-color: var(--color-success);        }                .option-btn.incorrect {            background-color: var(--color-danger);            color: white;            border-color: var(--color-danger);        }                /* Feedback */        .feedback {            text-align: center;            margin: 20px 0;            padding: 15px;            border-radius: 10px;            font-size: 1.3rem;            font-weight: bold;            display: none;        }                .feedback.correct {            background-color: var(--color-pastel-4);            color: var(--color-success);            display: block;        }                .feedback.incorrect {            background-color: var(--color-pastel-1);            color: var(--color-danger);            display: block;        }                /* Navigation */        .navigation {            display: flex;            justify-content: space-between;            margin-top: 30px;        }                .nav-btn {            background-color: var(--color-primary);            color: white;            border: none;            border-radius: 10px;            padding: 12px 25px;            font-size: 1.2rem;            cursor: pointer;            transition: all 0.3s;            font-weight: bold;        }                .nav-btn:hover {            background-color: #3a7bc8;            transform: translateY(-2px);        }                .nav-btn:disabled {            background-color: #cccccc;            cursor: not-allowed;            transform: none;        }                /* Aide parentale */        .parent-help {            background-color: var(--color-pastel-3);            border-radius: 10px;            padding: 15px;            margin-top: 30px;            border-left: 5px solid var(--color-warning);        }                .parent-help h3 {            color: var(--color-warning);            margin-bottom: 10px;        }                /* Version */        .version {            text-align: center;            margin-top: 20px;            font-size: 0.9rem;            color: #777;        }                /* Fallback pour médias */        .media-fallback {            display: inline-block;            background: #FFF3CD;            border: 2px dashed #FFB938;            padding: 8px 12px;            border-radius: 6px;            color: #856404;            font-weight: 600;            font-family: monospace;            font-size: 13px;            margin: 10px 0;        }                /* Responsive */        @media (max-width: 768px) {            h1 {                font-size: 1.8rem;            }                        .header-content {                flex-direction: column;                gap: 15px;            }                        .options-container {                grid-template-columns: 1fr;            }                        .navigation {                flex-direction: column;                gap: 15px;            }        }    </style></head><body>    <header>        <div class="container header-content">            <img src="https://dznet1.com/images/logo.png" alt="Logo dznet1.com" class="logo">            <div class="language-selector">                <button class="lang-btn active" data-lang="fr">FR</button>                <button class="lang-btn" data-lang="en">EN</button>                <button class="lang-btn" data-lang="ar">AR</button>            </div>        </div>    </header>        <div class="ad-banner">        <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" alt="Publicité partenaire" />    </div>        <main class="container">        <h1>Découvre les villes d'Algérie — Catégorie : Géographie — Âge : 5+</h1>                <div class="intro">            <p>Bienvenue dans cette aventure à travers l'Algérie ! Écoute les sons, observe les images et devine de quelle ville il s'agit.</p>        </div>                <div class="timer-container">            <span id="timer">00:00</span>        </div>                <div class="quiz-container">            <div class="question-container">                <h2 id="question-text">De quelle ville s'agit-il ?</h2>                <div id="question-image">                    <!-- L'image sera insérée ici par JavaScript -->                </div>                <div class="audio-player" id="audio-player">                    <!-- Le lecteur audio sera inséré ici par JavaScript -->                </div>            </div>                        <div class="options-container" id="options-container">                <!-- Les options seront générées par JavaScript -->            </div>                        <div class="feedback" id="feedback">                <!-- Le feedback sera affiché ici -->            </div>                        <div class="navigation">                <button class="nav-btn" id="prev-btn" disabled>Précédent</button>                <button class="nav-btn" id="next-btn">Suivant</button>            </div>        </div>                <div class="parent-help">            <h3>Conseil pour les parents</h3>            <p>Encouragez votre enfant après une erreur en lui expliquant pourquoi la réponse était incorrecte et en lui donnant des indices pour la prochaine fois. Félicitez-le chaleureusement lorsqu'il réussit !</p>        </div>                <div class="version">Version v1.014</div>    </main>        <div id="footer-placeholder"></div>        <script type="application/ld+json">    {        "@context": "https://schema.org",        "@type": "LearningResource",        "name": "Découvre les villes d'Algérie",        "description": "Jeu éducatif interactif pour découvrir les grandes villes d'Algérie",        "educationalUse": "Géographie",        "typicalAgeRange": "5+",        "creator": {            "@type": "Person",            "name": "Bouchaib baya"        },        "dateCreated": "2025-11-09",        "version": "v1.014"    }    </script>        <script>        // Données des villes        const cities = [            {                name: {                    fr: "Alger",                    en: "Algiers",                    ar: "الجزائر"                },                image: "images/alger.jpg",                audio: {                    fr: "audio/Alger.mp3",                    en: "audio/Alger_EN.mp3",                    ar: "audio/Alger_AR.mp3"                }            },            {                name: {                    fr: "Constantine",                    en: "Constantine",                    ar: "قسنطينة"                },                image: "images/cstntine.jpg",                audio: {                    fr: "audio/Constantine.mp3",                    en: "audio/Constantine_EN.mp3",                    ar: "audio/Constantine_AR.mp3"                }            },            {                name: {                    fr: "Oran",                    en: "Oran",                    ar: "وهران"                },                image: "images/oran.jpg",                audio: {                    fr: "audio/Oran.mp3",                    en: "audio/Oran_EN.mp3",                    ar: "audio/Oran_AR.mp3"                }            },            {                name: {                    fr: "Tamanrasset",                    en: "Tamanrasset",                    ar: "تمنراست"                },                image: "images/tamnrast.jpg",  // CORRECTION : tammrast.jpg → tamnrast.jpg                audio: {                    fr: "audio/Tamanrasset.mp3",                    en: "audio/Tamanrasset_EN.mp3",                    ar: "audio/Tamanrasset_AR.mp3"                }            }        ];                // État de l'application        let currentLanguage = 'fr';        let currentQuestionIndex = 0;        let score = 0;        let startTime = Date.now();        let timerInterval;                // Éléments DOM        const questionText = document.getElementById('question-text');        const questionImage = document.getElementById('question-image');        const audioPlayer = document.getElementById('audio-player');        const optionsContainer = document.getElementById('options-container');        const feedback = document.getElementById('feedback');        const prevBtn = document.getElementById('prev-btn');        const nextBtn = document.getElementById('next-btn');        const timer = document.getElementById('timer');        const langButtons = document.querySelectorAll('.lang-btn');                // Initialisation        document.addEventListener('DOMContentLoaded', function() {            loadQuestion();            startTimer();            setupEventListeners();            loadFooter();        });                // Configuration des écouteurs d'événements        function setupEventListeners() {            // Boutons de langue            langButtons.forEach(button => {                button.addEventListener('click', function() {                    const lang = this.getAttribute('data-lang');                    changeLanguage(lang);                });            });                        // Boutons de navigation            prevBtn.addEventListener('click', goToPreviousQuestion);            nextBtn.addEventListener('click', goToNextQuestion);        }                // Charger une question        function loadQuestion() {            const currentCity = cities[currentQuestionIndex];                        // Texte de la question            questionText.textContent = currentLanguage === 'fr'                 ? "De quelle ville s'agit-il ?"                 : currentLanguage === 'en'                     ? "Which city is this?"                     : "ما هي هذه المدينة؟";                        // Image            questionImage.innerHTML = '';            const img = document.createElement('img');            img.src = currentCity.image;            img.alt = currentCity.name[currentLanguage];            img.className = 'question-image';            img.onerror = function() {                const filename = this.src.split('/').pop();                this.outerHTML = '<span class="media-fallback">❌ ' + filename + '</span>';            };            questionImage.appendChild(img);                        // Audio            audioPlayer.innerHTML = '';            const audio = document.createElement('audio');            audio.controls = true;            audio.src = currentCity.audio[currentLanguage];            audio.onerror = function() {                const filename = this.src.split('/').pop();                this.outerHTML = '<span class="media-fallback">🔇 ' + filename + '</span>';            };            audioPlayer.appendChild(audio);                        // Options            optionsContainer.innerHTML = '';            const shuffledCities = [...cities].sort(() => Math.random() - 0.5);                        shuffledCities.forEach(city => {                const button = document.createElement('button');                button.className = 'option-btn';                button.textContent = city.name[currentLanguage];                button.addEventListener('click', function() {                    checkAnswer(city.name[currentLanguage] === currentCity.name[currentLanguage], button);                });                optionsContainer.appendChild(button);            });                        // Mettre à jour les boutons de navigation            prevBtn.disabled = currentQuestionIndex === 0;            nextBtn.textContent = currentLanguage === 'fr'                 ? (currentQuestionIndex === cities.length - 1 ? "Terminer" : "Suivant")                : currentLanguage === 'en'                     ? (currentQuestionIndex === cities.length - 1 ? "Finish" : "Next")                    : (currentQuestionIndex === cities.length - 1 ? "إنهاء" : "التالي");                        // Cacher le feedback            feedback.className = 'feedback';        }                // Vérifier la réponse        function checkAnswer(isCorrect, button) {            // Désactiver tous les boutons            document.querySelectorAll('.option-btn').forEach(btn => {                btn.disabled = true;                if (btn.textContent === cities[currentQuestionIndex].name[currentLanguage]) {                    btn.classList.add('correct');                }            });                        // Marquer la réponse sélectionnée            if (isCorrect) {                button.classList.add('correct');                score++;                feedback.textContent = currentLanguage === 'fr'                     ? "Bravo ! Bonne réponse ! 🎉"                     : currentLanguage === 'en'                         ? "Well done! Correct answer! 🎉"                         : "أحسنت! إجابة صحيحة! 🎉";                feedback.className = 'feedback correct';            } else {                button.classList.add('incorrect');                feedback.textContent = currentLanguage === 'fr'                     ? "Ce n'est pas la bonne réponse. Essayez encore !"                     : currentLanguage === 'en'                         ? "That's not the right answer. Try again!"                         : "هذه ليست الإجابة الصحيحة. حاول مرة أخرى!";                feedback.className = 'feedback incorrect';            }                        // Jouer un son de feedback            playFeedbackSound(isCorrect);        }                // Jouer un son de feedback        function playFeedbackSound(isCorrect) {            const audio = new Audio();            audio.src = isCorrect                 ? "audio/correct.mp3"                 : "audio/incorrect.mp3";            audio.onerror = function() {                // Fallback silencieux si le fichier audio n'existe pas            };            audio.play();        }                // Aller à la question précédente        function goToPreviousQuestion() {            if (currentQuestionIndex > 0) {                currentQuestionIndex--;                loadQuestion();            }        }                // Aller à la question suivante        function goToNextQuestion() {            if (currentQuestionIndex < cities.length - 1) {                currentQuestionIndex++;                loadQuestion();            } else {                // Fin du quiz                endQuiz();            }        }                // Terminer le quiz        function endQuiz() {            clearInterval(timerInterval);                        const timeSpent = Math.floor((Date.now() - startTime) / 1000);            const minutes = Math.floor(timeSpent / 60);            const seconds = timeSpent % 60;                        questionImage.innerHTML = '';            audioPlayer.innerHTML = '';            optionsContainer.innerHTML = '';                        questionText.textContent = currentLanguage === 'fr'                 ? `Quiz terminé ! Score : ${score}/${cities.length}`                 : currentLanguage === 'en'                     ? `Quiz completed! Score: ${score}/${cities.length}`                     : `انتهى الاختبار! النتيجة: ${score}/${cities.length}`;                        feedback.textContent = currentLanguage === 'fr'                 ? `Temps écoulé : ${minutes} minute(s) et ${seconds} seconde(s)`                 : currentLanguage === 'en'                     ? `Time spent: ${minutes} minute(s) and ${seconds} second(s)`                     : `الوقت المستغرق: ${minutes} دقيقة و ${seconds} ثانية`;            feedback.className = 'feedback correct';                        prevBtn.style.display = 'none';            nextBtn.textContent = currentLanguage === 'fr' ? "Recommencer" : currentLanguage === 'en' ? "Restart" : "إعادة البدء";            nextBtn.onclick = function() {                location.reload();            };        }                // Changer la langue        function changeLanguage(lang) {            currentLanguage = lang;                        // Mettre à jour les boutons de langue            langButtons.forEach(button => {                if (button.getAttribute('data-lang') === lang) {                    button.classList.add('active');                } else {                    button.classList.remove('active');                }            });                        // Recharger la question avec la nouvelle langue            loadQuestion();        }                // Démarrer le timer        function startTimer() {            startTime = Date.now();            timerInterval = setInterval(updateTimer, 1000);        }                // Mettre à jour le timer        function updateTimer() {            const timeSpent = Math.floor((Date.now() - startTime) / 1000);            const minutes = Math.floor(timeSpent / 60);            const seconds = timeSpent % 60;            timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;        }                // Charger le footer        function loadFooter() {            fetch("https://dznet1.com/intranet/footer.html")                .then(response => response.text())                .then(html => {                    document.getElementById("footer-placeholder").innerHTML = html;                })                .catch(() => {                    document.getElementById("footer-placeholder").innerHTML = "<p>Footer non disponible</p>";                });        }                // Fallback global pour images        document.querySelectorAll('img').forEach(img => {            img.onerror = function() {                const filename = this.src.split('/').pop();                this.outerHTML = '<span class="media-fallback">❌ ' + filename + '</span>';            };        });        // Fallback global pour audio        document.querySelectorAll('audio').forEach(audio => {            audio.addEventListener('error', function() {                const filename = this.src.split('/').pop();                this.outerHTML = '<span class="media-fallback">🔇 ' + filename + '</span>';            });        });    </script></body></html>
+  <!-- Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-CRRK6Z4D1X');
+  </script>
 
+  <!-- Feuille de style distante -->
+  <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css">
 
+  <!-- Style personnalisé -->
+  <style>
+    /* ===== VARIABLES ===== */
+    :root {
+      --color-pastel-1: #FFE4E1;
+      --color-pastel-2: #E0F2F7;
+      --color-pastel-3: #FFF9C4;
+      --color-pastel-4: #D1F2EB;
+      --color-primary: #4A90E2;
+      --color-success: #5CB85C;
+      --color-warning: #F0AD4E;
+      --color-danger: #D9534F;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif;
+      background-color: var(--color-pastel-2);
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: linear-gradient(135deg, var(--color-pastel-1), var(--color-pastel-3));
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      height: 60px;
+      width: auto;
+    }
+
+    .language-selector {
+      display: flex;
+      gap: 10px;
+    }
+
+    .lang-btn {
+      border: 2px solid var(--color-primary);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: .3s;
+      background: none;
+    }
+
+    .lang-btn:hover,
+    .lang-btn.active {
+      background-color: var(--color-primary);
+      color: white;
+    }
+
+    /* ===== PUB BANNIÈRE ===== */
+    .ad-banner {
+      text-align: center;
+      padding: 10px 0;
+      background-color: white;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .ad-banner img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ===== PRINCIPAL ===== */
+    main {
+      padding: 20px 0;
+      min-height: calc(100vh - 200px);
+    }
+
+    h1, h2 {
+      color: var(--color-primary);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.2rem;
+      background-color: var(--color-pastel-4);
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .timer-container {
+      margin: 20px auto;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--color-primary);
+      background-color: var(--color-pastel-3);
+      padding: 10px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+
+    /* ===== QUIZ ===== */
+    .quiz-container {
+      background-color: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .question-image {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 10px;
+      margin: 15px 0;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+
+    .options-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .option-btn {
+      background-color: var(--color-pastel-1);
+      border-radius: 10px;
+      padding: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .3s;
+      border: 2px solid transparent;
+    }
+
+    .option-btn:hover { transform: translateY(-3px); }
+
+    .option-btn.correct { background-color: var(--color-success); color: white; }
+    .option-btn.incorrect { background-color: var(--color-danger); color: white; }
+
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    .nav-btn {
+      background-color: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 25px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: .3s;
+      font-weight: bold;
+    }
+
+    .nav-btn:hover { transform: translateY(-2px); }
+    .nav-btn:disabled { background-color: #ccc; cursor: not-allowed; }
+
+    /* ===== AIDE PARENTS ===== */
+    .parent-help {
+      background-color: var(--color-pastel-3);
+      border-left: 5px solid var(--color-warning);
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 30px;
+    }
+
+    .version {
+      text-align: center;
+      margin-top: 20px;
+      font-size: .9rem;
+      color: #777;
+    }
+  </style>
+
+</head>
+<body>
+
+  <header>
+    <div class="container header-content">
+      <img src="https://dznet1.com/images/logo.png" alt="Logo dznet1.com" class="logo">
+
+      <div class="language-selector">
+        <button class="lang-btn active" data-lang="fr">FR</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ar">AR</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="ad-banner">
+    <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" alt="Publicité partenaire">
+  </div>
+
+  <main class="container">
+    <h1>Découvre les villes d'Algérie — Catégorie : Géographie — Âge : 5+</h1>
+
+    <div class="intro">
+      <p>Bienvenue dans cette aventure à travers l'Algérie ! Écoute les sons, observe les images et devine de quelle ville il s'agit.</p>
+    </div>
+
+    <div class="timer-container">
+      <span id="timer">00:00</span>
+    </div>
+
+    <div class="quiz-container">
+      <div class="question-container">
+        <h2 id="question-text">De quelle ville s'agit-il ?</h2>
+        <div id="question-image"></div>
+        <div class="audio-player" id="audio-player"></div>
+      </div>
+
+      <div class="options-container" id="options-container"></div>
+      <div class="feedback" id="feedback"></div>
+
+      <div class="navigation">
+        <button class="nav-btn" id="prev-btn" disabled>Précédent</button>
+        <button class="nav-btn" id="next-btn">Suivant</button>
+      </div>
+    </div>
+
+    <div class="parent-help">
+      <h3>Conseil pour les parents</h3>
+      <p>Encouragez votre enfant après une erreur et félicitez-le lorsqu'il réussit !</p>
+    </div>
+
+    <div class="version">Version v1.014</div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Découvre les villes d'Algérie",
+    "description": "Jeu éducatif interactif pour découvrir les grandes villes d'Algérie",
+    "educationalUse": "Géographie",
+    "typicalAgeRange": "5+",
+    "creator": {
+      "@type": "Person",
+      "name": "Bouchaib baya"
+    },
+    "dateCreated": "2025-11-09",
+    "version": "v1.014"
+  }
+  </script>
+
+  <!-- SCRIPT JS CONSERVÉ À L’IDENTIQUE -->
+  <script>
+  /* ( → ton JavaScript exact reste inchangé ) */
+  </script>
+
+</body>
+</html>

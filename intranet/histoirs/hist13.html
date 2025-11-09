@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Boucle d'Or et les Trois Ours - Histoire audio avec effets sonores">
+    <meta name="age" content="3-5">
+    <meta name="categorie" content="contes">
+    <meta name="type" content="audio">
+    <title>Boucle d'Or - Histoire Audio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            color: #333;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            border-bottom: 8px solid #ff6b6b;
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #5a189a;
+            text-shadow: 3px 3px 0px #ffd166;
+        }
+        
+        .header p {
+            font-size: 1.3rem;
+            color: #5a189a;
+            opacity: 0.9;
+        }
+        
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: #5a189a;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        
+        /* Illustration */
+        .illustration-container {
+            padding: 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+        }
+        
+        .illustration {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: #ff9a9e;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 8px solid #ffd166;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Lecteur Audio */
+        .lecteur-audio {
+            padding: 40px;
+            background: white;
+        }
+        
+        .controles-principaux {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .bouton-principal {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        
+        .bouton-principal:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.6);
+        }
+        
+        .bouton-secondaire {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: none;
+            background: #4cc9f0;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .bouton-secondaire:hover {
+            transform: scale(1.1);
+            background: #3ab0d6;
+        }
+        
+        /* Barre de progression */
+        .progression {
+            margin: 30px 0;
+        }
+        
+        .temps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #666;
+        }
+        
+        .barre-progression {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .progression-remplissage {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.1s linear;
+            position: relative;
+        }
+        
+        .progression-remplissage::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        /* Contrôles supplémentaires */
+        .controles-supplementaires {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .bouton-controle {
+            background: #f8f9fa;
+            border: 3px solid #4cc9f0;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .bouton-controle:hover {
+            background: #4cc9f0;
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* Section partage */
+        .partage {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 3px dashed #4cc9f0;
+        }
+        
+        .partage h3 {
+            color: #5a189a;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .boutons-partage {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .bouton-partage {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .bouton-partage.facebook { background: #3b5998; }
+        .bouton-partage.whatsapp { background: #25D366; }
+        .bouton-partage.link { background: #6c757d; }
+        
+        .bouton-partage:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #5a189a 0%, #7b2cbf 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .liens-footer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .liens-footer a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .liens-footer a:hover {
+            color: #ffd166;
+        }
+        
+        .copyright {
+            margin-top: 15px;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 10px 20px rgba(255, 107, 107, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 30px rgba(255, 107, 107, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 10px 20px rgba(255, 107, 107, 0.4); }
+        }
+        
+        .personnage {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .illustration {
+                width: 250px;
+                height: 250px;
+                font-size: 6rem;
+            }
+            
+            .controles-principaux {
+                gap: 20px;
+            }
+            
+            .bouton-principal {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+            
+            .bouton-secondaire {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .illustration {
+                width: 200px;
+                height: 200px;
+                font-size: 5rem;
+            }
+            
+            .controles-principaux {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête -->
+        <header class="header">
+            <h1>Boucle d'Or et les Trois Ours</h1>
+            <p>Histoire audio avec effets sonores amusants</p>
+            <div class="badges">
+                <span class="badge">3-5 ans</span>
+                <span class="badge">Conte classique</span>
+                <span class="badge">15 minutes</span>
+            </div>
+        </header>
+        
+        <!-- Illustration -->
+        <div class="illustration-container">
+            <div class="illustration">
+                <i class="fas fa-bear personnage"></i>
+            </div>
+        </div>
+        
+        <!-- Lecteur Audio -->
+        <section class="lecteur-audio">
+            <!-- Audio élément (caché) -->
+            <audio id="audio-player">
+                <!-- REMPLACEZ CE FICHIER PAR VOTRE MP3 -->
+                <source src="boucle-dor-audio.mp3" type="audio/mpeg">
+                Votre navigateur ne supporte pas l'audio.
+            </audio>
+            
+            <!-- Contrôles principaux -->
+            <div class="controles-principaux">
+                <button class="bouton-secondaire" id="btn-rewind">
+                    <i class="fas fa-backward"></i>
+                </button>
+                
+                <button class="bouton-principal" id="btn-play-pause">
+                    <i class="fas fa-play" id="play-icon"></i>
+                </button>
+                
+                <button class="bouton-secondaire" id="btn-forward">
+                    <i class="fas fa-forward"></i>
+                </button>
+            </div>
+            
+            <!-- Barre de progression -->
+            <div class="progression">
+                <div class="temps">
+                    <span id="temps-actuel">0:00</span>
+                    <span id="temps-total">0:00</span>
+                </div>
+                <div class="barre-progression">
+                    <div class="progression-remplissage" id="progression-remplissage"></div>
+                </div>
+            </div>
+            
+            <!-- Contrôles supplémentaires -->
+            <div class="controles-supplementaires">
+                <button class="bouton-controle" id="btn-volume">
+                    <i class="fas fa-volume-up"></i>
+                    Volume
+                </button>
+                <button class="bouton-controle" id="btn-vitesse">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Vitesse 1x
+                </button>
+                <button class="bouton-controle" id="btn-recommencer">
+                    <i class="fas fa-redo"></i>
+                    Recommencer
+                </button>
+            </div>
+        </section>
+        
+        <!-- Section partage -->
+        <section class="partage">
+            <h3>Partager cette histoire</h3>
+            <div class="boutons-partage">
+                <button class="bouton-partage facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="bouton-partage whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </button>
+                <button class="bouton-partage link" id="btn-copy-link">
+                    <i class="fas fa-link"></i>
+                </button>
+            </div>
+        </section>
+        
+        <!-- Pied de page -->
+        <footer class="footer">
+            <div class="liens-footer">
+                <a href="histoires-audio.html">
+                    <i class="fas fa-arrow-left"></i> Retour aux histoires audio
+                </a>
+                <a href="index.html">
+                    <i class="fas fa-home"></i> Accueil
+                </a>
+                <a href="#" id="btn-download">
+                    <i class="fas fa-download"></i> Télécharger
+                </a>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Espace Enfants - Conçu avec <i class="fas fa-heart"></i> pour les enfants
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Éléments audio
+        const audioPlayer = document.getElementById('audio-player');
+        const btnPlayPause = document.getElementById('btn-play-pause');
+        const playIcon = document.getElementById('play-icon');
+        const btnRewind = document.getElementById('btn-rewind');
+        const btnForward = document.getElementById('btn-forward');
+        const progressionRemplissage = document.getElementById('progression-remplissage');
+        const tempsActuel = document.getElementById('temps-actuel');
+        const tempsTotal = document.getElementById('temps-total');
+        const btnVolume = document.getElementById('btn-volume');
+        const btnVitesse = document.getElementById('btn-vitesse');
+        const btnRecommencer = document.getElementById('btn-recommencer');
+        const btnCopyLink = document.getElementById('btn-copy-link');
+        const btnDownload = document.getElementById('btn-download');
+
+        // États
+        let isPlaying = false;
+        let currentSpeed = 1;
+        let currentVolume = 1;
+
+        // Formatage du temps (mm:ss)
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Mise à jour de la progression
+        function updateProgress() {
+            if (audioPlayer.duration) {
+                const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                progressionRemplissage.style.width = `${progress}%`;
+                tempsActuel.textContent = formatTime(audioPlayer.currentTime);
+            }
+        }
+
+        // Mise à jour du temps total
+        function updateTotalTime() {
+            if (audioPlayer.duration) {
+                tempsTotal.textContent = formatTime(audioPlayer.duration);
+            }
+        }
+
+        // Lecture/Pause
+        btnPlayPause.addEventListener('click', () => {
+            if (isPlaying) {
+                audioPlayer.pause();
+                playIcon.className = 'fas fa-play';
+                btnPlayPause.style.animation = 'none';
+            } else {
+                audioPlayer.play().catch(e => {
+                    console.error("Erreur de lecture:", e);
+                    alert("Le fichier audio n'est pas disponible. En production, votre MP3 jouera ici!");
+                });
+                playIcon.className = 'fas fa-pause';
+                btnPlayPause.style.animation = 'pulse 2s infinite';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Retour en arrière (10 secondes)
+        btnRewind.addEventListener('click', () => {
+            audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - 10);
+        });
+
+        // Avance rapide (10 secondes)
+        btnForward.addEventListener('click', () => {
+            audioPlayer.currentTime = Math.min(audioPlayer.duration, audioPlayer.currentTime + 10);
+        });
+
+        // Recommencer
+        btnRecommencer.addEventListener('click', () => {
+            audioPlayer.currentTime = 0;
+            if (!isPlaying) {
+                audioPlayer.play();
+                playIcon.className = 'fas fa-pause';
+                btnPlayPause.style.animation = 'pulse 2s infinite';
+                isPlaying = true;
+            }
+        });
+
+        // Contrôle du volume
+        btnVolume.addEventListener('click', () => {
+            currentVolume = currentVolume === 1 ? 0.5 : currentVolume === 0.5 ? 0 : 1;
+            audioPlayer.volume = currentVolume;
+            
+            const icon = btnVolume.querySelector('i');
+            if (currentVolume === 1) {
+                icon.className = 'fas fa-volume-up';
+                btnVolume.innerHTML = '<i class="fas fa-volume-up"></i> Volume';
+            } else if (currentVolume === 0.5) {
+                icon.className = 'fas fa-volume-down';
+                btnVolume.innerHTML = '<i class="fas fa-volume-down"></i> Volume Moyen';
+            } else {
+                icon.className = 'fas fa-volume-mute';
+                btnVolume.innerHTML = '<i class="fas fa-volume-mute"></i> Muet';
+            }
+        });
+
+        // Contrôle de la vitesse
+        btnVitesse.addEventListener('click', () => {
+            const speeds = [0.75, 1, 1.25, 1.5];
+            const currentIndex = speeds.indexOf(currentSpeed);
+            currentSpeed = speeds[(currentIndex + 1) % speeds.length];
+            audioPlayer.playbackRate = currentSpeed;
+            btnVitesse.innerHTML = `<i class="fas fa-tachometer-alt"></i> Vitesse ${currentSpeed}x`;
+        });
+
+        // Clic sur la barre de progression
+        progressionRemplissage.parentElement.addEventListener('click', (e) => {
+            const rect = e.target.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            audioPlayer.currentTime = percent * audioPlayer.duration;
+        });
+
+        // Copier le lien
+        btnCopyLink.addEventListener('click', () => {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('Lien copié ! Partagez cette histoire audio avec vos amis !');
+            });
+        });
+
+        // Téléchargement (simulé)
+        btnDownload.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('En production, cela téléchargerait le fichier MP3 de l\'histoire !');
+        });
+
+        // Événements audio
+        audioPlayer.addEventListener('loadedmetadata', updateTotalTime);
+        audioPlayer.addEventListener('timeupdate', updateProgress);
+        audioPlayer.addEventListener('ended', () => {
+            isPlaying = false;
+            playIcon.className = 'fas fa-play';
+            btnPlayPause.style.animation = 'none';
+            
+            // Animation de félicitations à la fin
+            setTimeout(() => {
+                alert('🎉 Bravo ! Tu as écouté toute l\'histoire de Boucle d\'Or !');
+            }, 500);
+        });
+
+        // Initialisation
+        console.log('Lecteur audio Boucle d\'Or initialisé!');
+        console.log('Métadonnées: âge=3-5, catégorie=contes, type=audio');
+
+        // Simulation pour la démo
+        setTimeout(() => {
+            if (audioPlayer.duration === Infinity || isNaN(audioPlayer.duration)) {
+                tempsTotal.textContent = '15:00';
+                alert("💡 En production, votre fichier MP3 se chargera automatiquement !");
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

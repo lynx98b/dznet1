@@ -667,16 +667,19 @@
     </div>
 
     <script>
-        // Animation simple au chargement de la page
-        document.addEventListener('DOMContentLoaded', function() {
-            const cartes = document.querySelectorAll('.carte-activite');
-            cartes.forEach((carte, index) => {
-                carte.style.animationDelay = `${index * 0.2}s`;
-            });
+    // Animation simple au chargement de la page
+    document.addEventListener('DOMContentLoaded', function() {
+        const cartes = document.querySelectorAll('.carte-activite');
+        cartes.forEach((carte, index) => {
+            carte.style.animationDelay = `${index * 0.2}s`;
         });
-    
+        
+        // ⭐⭐ AJOUTE CETTE LIGNE ⭐⭐
+        loadDecouvertesSemaine();
+    });
+
     // Charger les découvertes de la semaine
-        async function loadDecouvertesSemaine() {
+    async function loadDecouvertesSemaine() {
         try {
             const response = await fetch('/stories-metadata.json');
             const data = await response.json();
@@ -773,7 +776,6 @@
         };
         return icons[type] || '🌟';
     }
-
-    </script>
+</script>
 </body>
 </html>

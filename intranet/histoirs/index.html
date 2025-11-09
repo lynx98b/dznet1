@@ -672,233 +672,214 @@
         </footer>
     </div>
 
+    
     <script>
-        // Configuration
-        const METADATA_URL =  '/stories-metadata.json';
+    // Configuration
+    const METADATA_URL = './stories-metadata.json';
+    const DOSSIER_CIBLE = 'main/intranet/histoirs'; // ← DOSSIER LIMITE
+    
+    // État des filtres
+    let filtresActifs = {
+        age: 'all',
+        categorie: 'all',
+        type: 'all',
+        recherche: ''
+    };
+    
+    let toutesLesHistoires = [];
+    let categoriesUniques = new Set();
+    let typesUniques = new Set();
+
+    // Charger les métadonnées
+    async function loadStoriesMetadata() {
+        const grilleLivres = document.getElementById('grilleLivres');
+        const statsElement = document.getElementById('livreCount');
         
-        // État des filtres
-        let filtresActifs = {
-            age: 'all',
-            categorie: 'all',
-            type: 'all',
-            dossier: 'all',
-            recherche: ''
-        };
-        
-        let toutesLesHistoires = [];
-        let categoriesUniques = new Set();
-        let typesUniques = new Set();
-        let dossiersUniques = new Set();
-
-        // Charger les métadonnées
-        async function loadStoriesMetadata() {
-            const grilleLivres = document.getElementById('grilleLivres');
-            const statsElement = document.getElementById('livreCount');
+        try {
+            statsElement.innerHTML = '<i class="fas fa-sync-alt spin"></i> Chargement des histoires...';
             
-            try {
-                statsElement.innerHTML = '<i class="fas fa-sync-alt spin"></i> Chargement des histoires...';
-                
-                const response = await fetch(METADATA_URL);
-                if (!response.ok) throw new Error('Fichier de métadonnées non trouvé');
-                
-                const data = await response.json();
-                toutesLesHistoires = data.stories;
-                
-                // Extraire les filtres uniques
-                extraireFiltresUniques();
-                
-                // Peupler les menus déroulants
-                peuplerFiltresAvances();
-                
-                // Afficher toutes les histoires
-                afficherHistoires(toutesLesHistoires);
-                
-                // Mettre à jour les stats
-                const lastUpdate = new Date(data.generatedAt).toLocaleDateString('fr-FR');
-                const histoiresAvecImages = toutesLesHistoires.filter(h => h.logoUrl).length;
-                
-                statsElement.innerHTML = 
-                    `📚 ${data.totalStories} histoires • 🖼️ ${histoiresAvecImages} avec images • 📅 Mise à jour: ${lastUpdate}`;
-                
-            } catch (error) {
-                console.error('Erreur:', error);
-                statsElement.innerHTML = '<span style="color:#ff6b6b"><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</span>';
-                grilleLivres.innerHTML = `
-                    <div class="error-state">
-                        <h2><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</h2>
-                        <p>Impossible de charger la bibliothèque des histoires.</p>
-                        <p>Vérifiez que le fichier stories-metadata.json est présent.</p>
-                        <button onclick="loadStoriesMetadata()" class="bouton-lire" style="margin-top:15px; width:auto;">
-                            <i class="fas fa-redo"></i> Réessayer
-                        </button>
-                    </div>
-                `;
-            }
-        }
-
-        function extraireFiltresUniques() {
-            toutesLesHistoires.forEach(histoire => {
-                categoriesUniques.add(histoire.categorie);
-                typesUniques.add(histoire.type);
-                if (histoire.directory && histoire.directory !== '.') {
-                    dossiersUniques.add(histoire.directory);
-                }
-            });
-        }
-
-        function peuplerFiltresAvances() {
-            const categorySelect = document.getElementById('filterCategory');
-            const typeSelect = document.getElementById('filterType');
-            const folderSelect = document.getElementById('filterFolder');
+            const response = await fetch(METADATA_URL);
+            if (!response.ok) throw new Error('Fichier de métadonnées non trouvé');
             
-            // Catégories
-            [...categoriesUniques].sort().forEach(categorie => {
-                const option = document.createElement('option');
-                option.value = categorie;
-                option.textContent = categorie.charAt(0).toUpperCase() + categorie.slice(1);
-                categorySelect.appendChild(option);
-            });
+            const data = await response.json();
             
-            // Types
-            [...typesUniques].sort().forEach(type => {
-                const option = document.createElement('option');
-                option.value = type;
-                option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
-                typeSelect.appendChild(option);
-            });
+            // FILTRER UNIQUEMENT LE DOSSIER main/intranet/histoirs
+            toutesLesHistoires = data.stories.filter(histoire => 
+                histoire.directory === DOSSIER_CIBLE || 
+                histoire.filename.startsWith(DOSSIER_CIBLE + '/')
+            );
             
-            // Dossiers
-            [...dossiersUniques].sort().forEach(dossier => {
-                const option = document.createElement('option');
-                option.value = dossier;
-                option.textContent = dossier;
-                folderSelect.appendChild(option);
-            });
-        }
-
-        function filtrerHistoires() {
-            const searchTerm = document.getElementById('champRecherche').value.toLowerCase();
-            const category = document.getElementById('filterCategory').value;
-            const type = document.getElementById('filterType').value;
-            const folder = document.getElementById('filterFolder').value;
-            const ageFilter = document.querySelector('.bouton-filtre.actif')?.dataset.filtre || 'all';
+            console.log(`📁 Histoires trouvées dans ${DOSSIER_CIBLE}:`, toutesLesHistoires.length);
             
-            return toutesLesHistoires.filter(histoire => {
-                // Filtre recherche
-                if (searchTerm && 
-                    !histoire.title.toLowerCase().includes(searchTerm) && 
-                    !histoire.description.toLowerCase().includes(searchTerm)) {
-                    return false;
-                }
-                
-                // Filtre catégorie
-                if (category !== 'all' && histoire.categorie !== category) {
-                    return false;
-                }
-                
-                // Filtre type
-                if (type !== 'all' && histoire.type !== type) {
-                    return false;
-                }
-                
-                // Filtre dossier
-                if (folder !== 'all') {
-                    if (folder === 'racine') {
-                        if (histoire.directory !== '.') return false;
-                    } else if (histoire.directory !== folder) {
-                        return false;
-                    }
-                }
-                
-                // Filtre âge
-                if (ageFilter !== 'all' && !histoire.age.includes(ageFilter.replace('age-', ''))) {
-                    return false;
-                }
-                
-                return true;
-            });
-        }
-
-        function afficherHistoires(histoires) {
-            const grilleLivres = document.getElementById('grilleLivres');
+            // Extraire les filtres uniques
+            extraireFiltresUniques();
             
-            if (histoires.length === 0) {
-                grilleLivres.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-search" style="font-size: 50px; margin-bottom: 20px; color: #ccc;"></i>
-                        <h3>Aucune histoire trouvée</h3>
-                        <p>Aucune histoire ne correspond à vos critères de recherche.</p>
-                        <p>Essayez de modifier vos filtres ou votre recherche.</p>
-                    </div>
-                `;
-                return;
-            }
+            // Peupler les menus déroulants
+            peuplerFiltresAvances();
             
-            grilleLivres.innerHTML = histoires.map(histoire => `
-                <div class="carte-livre" onclick="window.location.href='${histoire.url}'">
-                    ${histoire.directory && histoire.directory !== '.' ? 
-                        `<div class="story-breadcrumb">
-                            <i class="fas fa-folder"></i> <span class="folder">${histoire.directory}</span>
-                        </div>` : ''
-                    }
-                    <div class="image-livre">
-                        ${histoire.logoUrl ? 
-                            `<img src="${histoire.logoUrl}" alt="${histoire.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                             <div class="default-icon" style="display:none;">📖</div>` :
-                            `<div class="default-icon">📖</div>`
-                        }
-                    </div>
-                    <div class="contenu-livre">
-                        <h3>${histoire.title}</h3>
-                        <div class="metadonnees">
-                            <span class="badge badge-age">${histoire.age} ans</span>
-                            <span class="badge badge-categorie">${histoire.categorie}</span>
-                            <span class="badge badge-type">${histoire.type}</span>
-                            ${histoire.audioFiles && histoire.audioFiles.length > 0 ? 
-                                '<span class="badge badge-audio"><i class="fas fa-volume-up"></i> Audio</span>' : ''
-                            }
-                        </div>
-                        <p>${histoire.description}</p>
-                        <a href="${histoire.url}" class="bouton-lire" onclick="event.stopPropagation()">
-                            <i class="fas fa-book-open"></i> Lire l'histoire
-                        </a>
-                        <div class="file-name">${histoire.filename}</div>
-                    </div>
+            // Afficher les histoires
+            afficherHistoires(toutesLesHistoires);
+            
+            // Mettre à jour les stats
+            const lastUpdate = new Date(data.generatedAt).toLocaleDateString('fr-FR');
+            const histoiresAvecImages = toutesLesHistoires.filter(h => h.logoUrl).length;
+            
+            statsElement.innerHTML = 
+                `📚 ${toutesLesHistoires.length} histoires • 🖼️ ${histoiresAvecImages} avec images • 📅 Mise à jour: ${lastUpdate}`;
+            
+        } catch (error) {
+            console.error('Erreur:', error);
+            statsElement.innerHTML = '<span style="color:#ff6b6b"><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</span>';
+            grilleLivres.innerHTML = `
+                <div class="error-state">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</h2>
+                    <p>Impossible de charger la bibliothèque des histoires.</p>
+                    <p>Vérifiez que le fichier stories-metadata.json est présent.</p>
+                    <button onclick="loadStoriesMetadata()" class="bouton-lire" style="margin-top:15px; width:auto;">
+                        <i class="fas fa-redo"></i> Réessayer
+                    </button>
                 </div>
-            `).join('');
+            `;
         }
+    }
 
-        // Gestion des événements
-        document.querySelectorAll('.bouton-filtre').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.bouton-filtre').forEach(b => b.classList.remove('actif'));
-                this.classList.add('actif');
-                afficherHistoires(filtrerHistoires());
-            });
+    function extraireFiltresUniques() {
+        toutesLesHistoires.forEach(histoire => {
+            categoriesUniques.add(histoire.categorie);
+            typesUniques.add(histoire.type);
         });
+    }
 
-        document.getElementById('boutonRecherche').addEventListener('click', () => {
+    function peuplerFiltresAvances() {
+        const categorySelect = document.getElementById('filterCategory');
+        const typeSelect = document.getElementById('filterType');
+        const folderSelect = document.getElementById('filterFolder');
+        
+        // Vider les selects
+        categorySelect.innerHTML = '<option value="all">Toutes les catégories</option>';
+        typeSelect.innerHTML = '<option value="all">Tous les types</option>';
+        folderSelect.innerHTML = '<option value="all">Tous les dossiers</option>';
+        
+        // Catégories
+        [...categoriesUniques].sort().forEach(categorie => {
+            const option = document.createElement('option');
+            option.value = categorie;
+            option.textContent = categorie.charAt(0).toUpperCase() + categorie.slice(1);
+            categorySelect.appendChild(option);
+        });
+        
+        // Types
+        [...typesUniques].sort().forEach(type => {
+            const option = document.createElement('option');
+            option.value = type;
+            option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+            typeSelect.appendChild(option);
+        });
+        
+        // Cacher le filtre dossier puisqu'on n'a qu'un seul dossier
+        document.querySelector('.filters-advanced').style.display = 'none';
+    }
+
+    function filtrerHistoires() {
+        const searchTerm = document.getElementById('champRecherche').value.toLowerCase();
+        const category = document.getElementById('filterCategory').value;
+        const type = document.getElementById('filterType').value;
+        const ageFilter = document.querySelector('.bouton-filtre.actif')?.dataset.filtre || 'all';
+        
+        return toutesLesHistoires.filter(histoire => {
+            // Filtre recherche
+            if (searchTerm && 
+                !histoire.title.toLowerCase().includes(searchTerm) && 
+                !histoire.description.toLowerCase().includes(searchTerm)) {
+                return false;
+            }
+            
+            // Filtre catégorie
+            if (category !== 'all' && histoire.categorie !== category) {
+                return false;
+            }
+            
+            // Filtre type
+            if (type !== 'all' && histoire.type !== type) {
+                return false;
+            }
+            
+            // Filtre âge
+            if (ageFilter !== 'all' && !histoire.age.includes(ageFilter.replace('age-', ''))) {
+                return false;
+            }
+            
+            return true;
+        });
+    }
+
+    function afficherHistoires(histoires) {
+        const grilleLivres = document.getElementById('grilleLivres');
+        
+        if (histoires.length === 0) {
+            grilleLivres.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-search" style="font-size: 50px; margin-bottom: 20px; color: #ccc;"></i>
+                    <h3>Aucune histoire trouvée</h3>
+                    <p>Aucune histoire ne correspond à vos critères de recherche dans le dossier ${DOSSIER_CIBLE}.</p>
+                    <p>Essayez de modifier vos filtres ou votre recherche.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        grilleLivres.innerHTML = histoires.map(histoire => `
+            <div class="carte-livre" onclick="window.location.href='${histoire.url}'">
+                <div class="image-livre">
+                    ${histoire.logoUrl ? 
+                        `<img src="${histoire.logoUrl}" alt="${histoire.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                         <div class="default-icon" style="display:none;">📖</div>` :
+                        `<div class="default-icon">📖</div>`
+                    }
+                </div>
+                <div class="contenu-livre">
+                    <h3>${histoire.title}</h3>
+                    <div class="metadonnees">
+                        <span class="badge badge-age">${histoire.age} ans</span>
+                        <span class="badge badge-categorie">${histoire.categorie}</span>
+                        <span class="badge badge-type">${histoire.type}</span>
+                    </div>
+                    <p>${histoire.description}</p>
+                    <a href="${histoire.url}" class="bouton-lire" onclick="event.stopPropagation()">
+                        <i class="fas fa-book-open"></i> Lire l'histoire
+                    </a>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Gestion des événements
+    document.querySelectorAll('.bouton-filtre').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.bouton-filtre').forEach(b => b.classList.remove('actif'));
+            this.classList.add('actif');
             afficherHistoires(filtrerHistoires());
         });
+    });
 
-        document.getElementById('champRecherche').addEventListener('keyup', (e) => {
-            if (e.key === 'Enter') afficherHistoires(filtrerHistoires());
-        });
+    document.getElementById('boutonRecherche').addEventListener('click', () => {
+        afficherHistoires(filtrerHistoires());
+    });
 
-        document.getElementById('filterCategory').addEventListener('change', () => {
-            afficherHistoires(filtrerHistoires());
-        });
+    document.getElementById('champRecherche').addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') afficherHistoires(filtrerHistoires());
+    });
 
-        document.getElementById('filterType').addEventListener('change', () => {
-            afficherHistoires(filtrerHistoires());
-        });
+    document.getElementById('filterCategory').addEventListener('change', () => {
+        afficherHistoires(filtrerHistoires());
+    });
 
-        document.getElementById('filterFolder').addEventListener('change', () => {
-            afficherHistoires(filtrerHistoires());
-        });
+    document.getElementById('filterType').addEventListener('change', () => {
+        afficherHistoires(filtrerHistoires());
+    });
 
-        // Démarrer au chargement
-        document.addEventListener('DOMContentLoaded', loadStoriesMetadata);
-    </script>
+    // Démarrer au chargement
+    document.addEventListener('DOMContentLoaded', loadStoriesMetadata);
+</script> 
 </body>
 </html>

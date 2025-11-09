@@ -7,156 +7,418 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-CRRK6Z4D1X');
   </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sommaire des histoirs - DZNet</title>
+    <title>Bibliothèque Magique - jeuxs et Livres</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* TOUT VOTRE CSS ICI (identique à avant) */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
             color: #333;
             min-height: 100vh;
-            padding: 20px;
+            overflow-x: hidden;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1920px;
             margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         
-        header {
-            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        /* ZONE EN-TÊTE */
+        .zone-entete-bub {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            border-bottom: 5px solid #ff6b6b;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .zone-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icone {
+            font-size: 36px;
+            color: #ff6b6b;
+        }
+        
+        .texte-logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #5a189a;
+            text-shadow: 2px 2px 0px #ffd166;
+        }
+        
+        .zone-navigation {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .bouton-navigation {
+            background: #4361ee;
             color: white;
-            padding: 30px;
-            text-align: center;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 0 #3a56d4;
         }
         
-        h1 {
-            font-size: 2.5rem;
+        .bouton-navigation:hover {
+            background: #3a56d4;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #3a56d4;
+        }
+        
+        /* ZONE TITRE PRINCIPAL */
+        .zone-titre-principal {
+            background-color: #ffd166;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 5px dashed #ff9e00;
+        }
+        
+        .zone-titre-principal h1 {
+            font-size: 42px;
+            color: #5a189a;
+            text-shadow: 3px 3px 0px #ff9e00;
             margin-bottom: 10px;
         }
         
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
+        .zone-titre-principal p {
+            font-size: 20px;
+            color: #ef476f;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* ZONE RECHERCHE ET FILTRES */
+        .zone-recherche-filtres {
+            background: white;
+            padding: 20px 30px;
+            border-bottom: 3px solid #4cc9f0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .zone-recherche {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+            max-width: 400px;
+        }
+        
+        .champ-recherche {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #4cc9f0;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .bouton-recherche {
+            background: #4cc9f0;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .bouton-recherche:hover {
+            background: #3ab0d6;
+        }
+        
+        .bouton-filtre {
+            background: #f8f9fa;
+            border: 2px solid #4cc9f0;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #4361ee;
+        }
+        
+        .bouton-filtre.actif {
+            background: #4cc9f0;
+            color: white;
+        }
+        
+        .bouton-filtre:hover {
+            background: #4cc9f0;
+            color: white;
+        }
+        
+        /* FILTRES AVANCÉS */
+        .filters-advanced {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            justify-content: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .filter-group label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #5a189a;
+            text-align: center;
+        }
+        
+        .filter-select {
+            padding: 8px 15px;
+            border: 2px solid #4cc9f0;
+            border-radius: 20px;
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+            min-width: 150px;
         }
         
         .stats {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #5a189a 0%, #7b2cbf 100%);
             padding: 15px;
             text-align: center;
-            border-bottom: 1px solid #dee2e6;
+            color: white;
+            font-size: 18px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
-        .games-grid {
+        /* ZONE CONTENU PRINCIPAL */
+        .zone-contenu-principal {
+            flex: 1;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        /* Section livres */
+        .section-livres {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border: 4px solid #ff9e00;
+        }
+        
+        .section-livres h2 {
+            font-size: 32px;
+            color: #5a189a;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 2px 2px 0px #ffd166;
+        }
+        
+        .grille-livres {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            padding: 30px;
+            gap: 30px;
         }
         
-        .game-card {
-            background: white;
-            border-radius: 10px;
+        .carte-livre {
+            background: #f8f9fa;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
-            border: 1px solid #e1e8ed;
+            cursor: pointer;
+            border: 3px solid transparent;
+            position: relative;
         }
         
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        .carte-livre:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            border-color: #4cc9f0;
         }
         
-        .game-icon {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            height: 120px;
+        .story-breadcrumb {
+            font-size: 0.8rem;
+            color: #666;
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.9);
+            border-bottom: 1px solid #eee;
+        }
+        
+        .story-breadcrumb .folder {
+            color: #4361ee;
+            font-weight: bold;
+        }
+        
+        .image-livre {
+            height: 200px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            color: white;
             position: relative;
             overflow: hidden;
         }
         
-        .game-icon img {
+        .image-livre img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
         }
         
-        .game-icon .default-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .carte-livre:hover .image-livre img {
+            transform: scale(1.1);
         }
         
-        .game-content {
+        .default-icon {
+            font-size: 60px;
+            opacity: 0.8;
+        }
+        
+        .contenu-livre {
             padding: 20px;
         }
         
-        .game-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #2c3e50;
+        .contenu-livre h3 {
+            font-size: 20px;
+            color: #5a189a;
+            margin-bottom: 12px;
+            line-height: 1.3;
         }
         
-        .game-description {
+        .contenu-livre p {
             color: #666;
+            font-size: 14px;
             margin-bottom: 15px;
             line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         
-        .game-link {
+        .metadonnees {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .badge {
             display: inline-block;
-            background: #3498db;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
         }
         
-        .game-link:hover {
-            background: #2980b9;
+        .badge-age {
+            background: #ef476f;
+            color: white;
+        }
+        
+        .badge-categorie {
+            background: #06d6a0;
+            color: white;
+        }
+        
+        .badge-type {
+            background: #118ab2;
+            color: white;
+        }
+        
+        .badge-audio {
+            background: #ff9e00;
+            color: white;
         }
         
         .file-name {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #999;
             margin-top: 10px;
             font-family: monospace;
+            text-align: center;
+            background: #f1f3f4;
+            padding: 5px;
+            border-radius: 5px;
+            word-break: break-all;
         }
         
+        .bouton-lire {
+            background: linear-gradient(135deg, #06d6a0 0%, #05b989 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-weight: bold;
+            box-shadow: 0 4px 0 #049c75;
+        }
+        
+        .bouton-lire:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #049c75;
+        }
+        
+        /* États de chargement et erreur */
         .loading {
             text-align: center;
-            padding: 40px;
+            padding: 60px 20px;
             color: #666;
+            font-size: 18px;
+        }
+        
+        .loading-spinner {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #4cc9f0;
         }
         
         .empty-state {
             text-align: center;
             padding: 60px 20px;
             color: #666;
+            font-size: 18px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px dashed #dee2e6;
         }
         
         .error-state {
@@ -169,287 +431,439 @@
             color: #856404;
         }
         
+        /* ZONE PIED DE PAGE */
+        .zone-pied-page {
+            background: linear-gradient(135deg, #5a189a 0%, #7b2cbf 100%);
+            color: white;
+            padding: 30px 40px 20px;
+            border-top: 8px solid #ff9e00;
+        }
+        
+        .contenu-pied-page {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .info-contact {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .info-contact h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #ffd166;
+        }
+        
+        .info-contact p {
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .liens-rapides {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .liens-rapides h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #ffd166;
+        }
+        
+        .liens-rapides ul {
+            list-style: none;
+        }
+        
+        .liens-rapides li {
+            margin-bottom: 10px;
+        }
+        
+        .liens-rapides a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .liens-rapides a:hover {
+            color: #ffd166;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #9d4edd;
+            color: #e0aaff;
+            font-size: 14px;
+            width: 100%;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .flottant {
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .grille-livres {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
         @media (max-width: 768px) {
-            .games-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                padding: 20px;
+            .zone-entete-bub {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+            }
+            
+            .zone-navigation {
+                margin-top: 15px;
+            }
+            
+            .zone-recherche-filtres {
+                flex-direction: column;
+            }
+            
+            .zone-recherche {
+                max-width: 100%;
+            }
+            
+            .filters-advanced {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-select {
+                min-width: 200px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>🎮 histoirs de Culture Générale</h1>
-            <p class="subtitle">Découvrez tous nos histoirs éducatifs et testez vos connaissances</p>
+        <!-- ZONE EN-TÊTE -->
+        <header class="zone-entete-bub">
+            <div class="zone-logo">
+                <div class="logo-icone flottant">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="texte-logo">jeuxs et Livres</div>
+            </div>
+            <div class="zone-navigation">
+                <button class="bouton-navigation" onclick="window.location.href='index.html'">
+                    <i class="fas fa-home"></i> Accueil
+                </button>
+                <button class="bouton-navigation">
+                    <i class="fas fa-user"></i> Mon Compte
+                </button>
+            </div>
         </header>
         
-        <div class="stats" id="stats">
-            <span id="gameCount">Scan des fichiers en cours...</span>
-        </div>
+        <!-- ZONE TITRE PRINCIPAL -->
+        <section class="zone-titre-principal">
+            <h1>📚 Bibliothèque Magique</h1>
+            <p>Découvre des jeuxs captivantes, des livres interactifs et des contes audio!</p>
+        </section>
         
-        <div class="games-grid" id="gamesGrid">
-            <div class="loading">
-                <p>Recherche automatique des histoirs...</p>
+        <!-- ZONE RECHERCHE ET FILTRES -->
+        <section class="zone-recherche-filtres">
+            <div class="zone-recherche">
+                <input type="text" class="champ-recherche" id="champRecherche" placeholder="🔍 Rechercher une jeux...">
+                <button class="bouton-recherche" id="boutonRecherche">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <button class="bouton-filtre actif" data-filtre="all">Tous</button>
+            <button class="bouton-filtre" data-filtre="age-3-5">3-5 ans</button>
+            <button class="bouton-filtre" data-filtre="age-6-8">6-8 ans</button>
+            <button class="bouton-filtre" data-filtre="age-9-12">9-12 ans</button>
+        </section>
+        
+        <!-- FILTRES AVANCÉS -->
+        <div class="filters-advanced">
+            <div class="filter-group">
+                <label for="filterCategory"><i class="fas fa-tags"></i> Catégorie</label>
+                <select id="filterCategory" class="filter-select">
+                    <option value="all">Toutes les catégories</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="filterType"><i class="fas fa-bookmark"></i> Type</label>
+                <select id="filterType" class="filter-select">
+                    <option value="all">Tous les types</option>
+                </select>
             </div>
         </div>
+        
+        <div class="stats" id="stats">
+            <span id="livreCount"><i class="fas fa-sync-alt spin"></i> Chargement de la bibliothèque...</span>
+        </div>
+        <!--  -->
+        <!-- ZONE CONTENU PRINCIPAL -->
+        <main class="zone-contenu-principal">
+            <section class="section-livres">
+                <h2><i class="fas fa-star"></i> Nos jeuxs <i class="fas fa-star"></i></h2>
+                <div class="grille-livres" id="grilleLivres">
+                    <div class="loading">
+                        <div class="loading-spinner">
+                            <i class="fas fa-sync-alt spin"></i>
+                        </div>
+                        <p>Exploration de la bibliothèque magique...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- ZONE PIED DE PAGE -->
+        <footer class="zone-pied-page">
+            <div class="contenu-pied-page">
+                <div class="info-contact">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-envelope"></i> enfants@monintranet.fr</p>
+                    <p><i class="fas fa-phone"></i> 01 23 45 67 89</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Rue des Enfants, Paris</p>
+                </div>
+                
+                <div class="liens-rapides">
+                    <h3>Liens Rapides</h3>
+                    <ul>
+                        <li><a href="index.html">Retour à l'accueil</a></li>
+                        <li><a href="#">Jeux Éducatifs</a></li>
+                        <li><a href="#">Atelier Créatif</a></li>
+                        <li><a href="#">Espace Musique</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2024 Espace Enfants - Tous droits réservés | Conçu avec <i class="fas fa-heart" style="color:#ff6b6b"></i> pour les enfants
+            </div>
+        </footer>
     </div>
 
     <script>
         // Configuration
-        const EXCLUDED_FILES = ['index.html', 'sommaire.html']; // Fichiers à ignorer
-        const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+        const METADATA_URL = '/stories-metadata.json';
+        const DOSSIER_CIBLE = 'intranet/games';
+        
+        let toutesLesjeuxs = [];
+        let categoriesUniques = new Set();
+        let typesUniques = new Set();
 
-        // Fonction pour détecter tous les fichiers HTML du dossier
-        async function discoverHTMLFiles() {
+        // Charger les métadonnées
+        async function loadStoriesMetadata() {
+            const grilleLivres = document.getElementById('grilleLivres');
+            const statsElement = document.getElementById('livreCount');
+            
             try {
-                console.log('🔍 Début du scan des fichiers HTML...');
+                statsElement.innerHTML = '<i class="fas fa-sync-alt spin"></i> Chargement des jeuxs...';
                 
-                // Stratégie 1: Essayer de récupérer la liste via fetch (pour GitHub Pages)
-                let allFiles = [];
+                const response = await fetch(METADATA_URL);
+                if (!response.ok) throw new Error('Fichier de métadonnées non trouvé');
                 
-                try {
-                    // Cette méthode fonctionne sur certains serveurs
-                    const response = await fetch('./');
-                    const text = await response.text();
+                const data = await response.json();
+                
+                // Filtrer uniquement le dossier intranet/histoirs
+                toutesLesjeuxs = data.stories.filter(jeux => 
+                    jeux.directory === DOSSIER_CIBLE || 
+                    jeux.filename.startsWith(DOSSIER_CIBLE + '/')
+                );
+                
+                console.log(`📁 jeuxs trouvées dans ${DOSSIER_CIBLE}:`, toutesLesjeuxs.length);
+                
+                // Extraire les filtres uniques
+                extraireFiltresUniques();
+                
+                // Peupler les menus déroulants
+                peuplerFiltresAvances();
+                
+                // Afficher les jeuxs
+                afficherjeuxs(toutesLesjeuxs);
+                
+                // Mettre à jour les stats
+                const lastUpdate = new Date(data.generatedAt).toLocaleDateString('fr-FR');
+                const jeuxsAvecImages = toutesLesjeuxs.filter(h => h.logoUrl).length;
+                
+                statsElement.innerHTML = 
+                    `📚 ${toutesLesjeuxs.length} jeuxs • 🖼️ ${jeuxsAvecImages} avec images • 📅 Mise à jour: ${lastUpdate}`;
                     
-                    // Parser le HTML de la page d'index pour trouver les liens
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(text, 'text/html');
-                    const links = doc.querySelectorAll('a[href$=".html"]');
-                    
-                    allFiles = Array.from(links)
-                        .map(link => link.getAttribute('href'))
-                        .filter(file => !EXCLUDED_FILES.includes(file));
-                        
-                    console.log(`📁 Fichiers trouvés via scan:`, allFiles);
-                    
-                } catch (error) {
-                    console.log('❌ Scan automatique échoué, utilisation de la détection par pattern');
-                }
-                
-                // Si pas de fichiers trouvés, utiliser la détection par pattern
-                if (allFiles.length === 0) {
-                    allFiles = await detectFilesByPattern();
-                }
-                
-                return allFiles;
-                
             } catch (error) {
-                console.error('Erreur lors de la découverte des fichiers:', error);
-                return [];
-            }
-        }
-
-        // Fonction pour détecter les fichiers par pattern (histoirs1, histoirs2, etc.)
-        async function detectFilesByPattern() {
-            console.log('🎯 Détection par pattern...');
-            const patterns = [
-                'jeux'  // Spécial pour votre fichier existant
-            ];
-            
-            const discoveredFiles = [];
-            
-            // Tester les patterns avec numéros (histoirs1.html, histoirs2.html, etc.)
-            for (let i = 0; i <= 20; i++) {
-                for (const pattern of patterns) {
-                    const filename = `${pattern}${i}.html`;
-                    if (await fileExists(filename)) {
-                        discoveredFiles.push(filename);
-                        console.log(`✅ Trouvé: ${filename}`);
-                    }
-                }
-            }
-            
-            // Tester les patterns sans numéros
-            for (const pattern of patterns) {
-                const filename = `${pattern}.html`;
-                if (await fileExists(filename)) {
-                    discoveredFiles.push(filename);
-                    console.log(`✅ Trouvé: ${filename}`);
-                }
-            }
-            
-            // Chercher aussi les fichiers avec underscores
-            for (const pattern of patterns) {
-                const filename = `${pattern}_culture.html`;
-                if (await fileExists(filename)) {
-                    discoveredFiles.push(filename);
-                    console.log(`✅ Trouvé: ${filename}`);
-                }
-            }
-            
-            return discoveredFiles;
-        }
-
-        // Fonction pour vérifier si un fichier existe
-        async function fileExists(url) {
-            try {
-                const response = await fetch(url, { method: 'HEAD' });
-                return response.ok;
-            } catch (error) {
-                return false;
-            }
-        }
-
-        // Fonction pour vérifier si une image existe
-        function checkImageExists(imageUrl) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                const timeout = setTimeout(() => resolve(false), 2000);
-                
-                img.onload = () => {
-                    clearTimeout(timeout);
-                    resolve(true);
-                };
-                img.onerror = () => {
-                    clearTimeout(timeout);
-                    resolve(false);
-                };
-                img.src = imageUrl;
-            });
-        }
-
-        // Fonction pour trouver le logo d'un jeu
-        async function findGameLogo(baseFilename) {
-            const baseName = baseFilename.replace('.html', '');
-            
-            // Tester toutes les extensions d'image
-            for (const ext of imageExtensions) {
-                const imageUrl = `${baseName}${ext}`;
-                const exists = await checkImageExists(imageUrl);
-                if (exists) {
-                    return imageUrl;
-                }
-            }
-            
-            return null;
-        }
-
-        // Fonction pour extraire les métadonnées d'un fichier HTML
-        async function extractFileInfo(filename) {
-            try {
-                const response = await fetch(filename);
-                const html = await response.text();
-                
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                
-                // Extraire le titre
-                const title = doc.querySelector('title')?.textContent || 
-                             filename.replace('.html', '')
-                                    .replace(/_/g, ' ')
-                                    .replace(/([a-z])([A-Z])/g, '$1 $2')
-                                    .replace(/\b\w/g, l => l.toUpperCase());
-                
-                // Extraire la description
-                let description = doc.querySelector('meta[name="description"]')?.getAttribute('content') || '';
-                
-                if (!description) {
-                    const firstParagraph = doc.querySelector('p');
-                    if (firstParagraph) {
-                        description = firstParagraph.textContent.substring(0, 120) + '...';
-                    } else {
-                        const firstH1 = doc.querySelector('h1');
-                        description = firstH1 ? firstH1.textContent + " - Jeu de culture générale" : "Jeu de culture générale - Testez vos connaissances";
-                    }
-                }
-                
-                // Chercher le logo
-                const logoUrl = await findGameLogo(filename);
-                
-                return {
-                    filename,
-                    title,
-                    description,
-                    url: filename,
-                    logoUrl
-                };
-            } catch (error) {
-                console.error(`Erreur avec ${filename}:`, error);
-                return {
-                    filename,
-                    title: filename.replace('.html', '')
-                                  .replace(/_/g, ' ')
-                                  .replace(/([a-z])([A-Z])/g, '$1 $2')
-                                  .replace(/\b\w/g, l => l.toUpperCase()),
-                    description: "Jeu de culture générale",
-                    url: filename,
-                    logoUrl: null
-                };
-            }
-        }
-
-        // Fonction principale
-        async function loadAllGamesAutomatically() {
-            const gamesGrid = document.getElementById('gamesGrid');
-            const statsElement = document.getElementById('gameCount');
-            
-            try {
-                statsElement.textContent = '🔍 Recherche des fichiers HTML...';
-                
-                // Découvrir automatiquement les fichiers
-                const discoveredFiles = await discoverHTMLFiles();
-                
-                if (discoveredFiles.length === 0) {
-                    statsElement.textContent = '❌ Aucun fichier HTML trouvé';
-                    gamesGrid.innerHTML = `
-                        <div class="error-state">
-                            <h2>Aucun jeu trouvé</h2>
-                            <p>Le système n'a pas pu détecter automatiquement les fichiers HTML.</p>
-                            <p>Vérifiez que vos fichiers suivent la convention de nommage (histoirs1.html, histoirs2.html, etc.)</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                statsElement.textContent = `📁 ${discoveredFiles.length} jeu(x) détecté(s) - Chargement...`;
-                
-                // Charger les informations de chaque fichier
-                const gamesPromises = discoveredFiles.map(extractFileInfo);
-                const games = await Promise.all(gamesPromises);
-                
-                // Trier par nom de fichier
-                games.sort((a, b) => a.filename.localeCompare(b.filename));
-                
-                // Mettre à jour les statistiques
-                const gamesWithLogos = games.filter(game => game.logoUrl).length;
-                statsElement.textContent = `🎮 ${games.length} jeu(x) trouvé(s) • 🖼️ ${gamesWithLogos} avec logo`;
-                
-                // Afficher les histoirs
-                gamesGrid.innerHTML = games.map(game => `
-                    <div class="game-card">
-                        <div class="game-icon">
-                            ${game.logoUrl ? 
-                                `<img src="${game.logoUrl}" alt="${game.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                                 <div class="default-icon" style="display:none;">🎯</div>` :
-                                `<div class="default-icon">🎯</div>`
-                            }
-                        </div>
-                        <div class="game-content">
-                            <h3 class="game-title">${game.title}</h3>
-                            <p class="game-description">${game.description}</p>
-                            <a href="${game.url}" class="game-link">Jouer maintenant</a>
-                            <div class="file-name">${game.filename}</div>
-                        </div>
-                    </div>
-                `).join('');
-                
-            } catch (error) {
-                console.error('Erreur générale:', error);
-                statsElement.textContent = '❌ Erreur lors du chargement';
-                gamesGrid.innerHTML = `
+                console.error('Erreur:', error);
+                statsElement.innerHTML = '<span style="color:#ff6b6b"><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</span>';
+                grilleLivres.innerHTML = `
                     <div class="error-state">
-                        <h2>Erreur de chargement</h2>
-                        <p>Une erreur est survenue lors de la détection automatique des histoirs.</p>
-                        <p>Vérifiez la console pour plus de détails.</p>
+                        <h2><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</h2>
+                        <p>Impossible de charger la bibliothèque des jeuxs.</p>
+                        <p>Vérifiez que le fichier stories-metadata.json est présent.</p>
+                        <button onclick="loadStoriesMetadata()" class="bouton-lire" style="margin-top:15px; width:auto;">
+                            <i class="fas fa-redo"></i> Réessayer
+                        </button>
                     </div>
                 `;
             }
         }
 
-        // Démarrer automatiquement au chargement
-        document.addEventListener('DOMContentLoaded', loadAllGamesAutomatically);
+        function extraireFiltresUniques() {
+            toutesLesjeuxs.forEach(jeux => {
+                categoriesUniques.add(jeux.categorie);
+                typesUniques.add(jeux.type);
+            });
+        }
+
+        function peuplerFiltresAvances() {
+            const categorySelect = document.getElementById('filterCategory');
+            const typeSelect = document.getElementById('filterType');
+            
+            // Catégories
+            [...categoriesUniques].sort().forEach(categorie => {
+                const option = document.createElement('option');
+                option.value = categorie;
+                option.textContent = categorie.charAt(0).toUpperCase() + categorie.slice(1);
+                categorySelect.appendChild(option);
+            });
+            
+            // Types
+            [...typesUniques].sort().forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+                typeSelect.appendChild(option);
+            });
+        }
+
+        function filtrerjeuxs() {
+            const searchTerm = document.getElementById('champRecherche').value.toLowerCase();
+            const category = document.getElementById('filterCategory').value;
+            const type = document.getElementById('filterType').value;
+            const ageFilter = document.querySelector('.bouton-filtre.actif')?.dataset.filtre || 'all';
+            
+            return toutesLesjeuxs.filter(jeux => {
+                // Filtre recherche
+                if (searchTerm && 
+                    !jeux.title.toLowerCase().includes(searchTerm) && 
+                    !jeux.description.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+                
+                // Filtre catégorie
+                if (category !== 'all' && jeux.categorie !== category) {
+                    return false;
+                }
+                
+                // Filtre type
+                if (type !== 'all' && jeux.type !== type) {
+                    return false;
+                }
+                
+                // Filtre âge
+                if (ageFilter !== 'all' && !jeux.age.includes(ageFilter.replace('age-', ''))) {
+                    return false;
+                }
+                
+                return true;
+            });
+        }
+
+        function afficherjeuxs(jeuxs) {
+            const grilleLivres = document.getElementById('grilleLivres');
+            
+            if (jeuxs.length === 0) {
+                grilleLivres.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search" style="font-size: 50px; margin-bottom: 20px; color: #ccc;"></i>
+                        <h3>Aucune jeux  trouvée</h3>
+                        <p>Aucune jeux ne correspond à vos critères de recherche.</p>
+                        <p>Essayez de modifier vos filtres ou votre recherche.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grilleLivres.innerHTML = jeuxs.map(jeux => {
+                let url = jeux.url;
+                if (!url.startsWith('/')) {
+                    url = '/' + url;
+                }
+                url = url.replace(/\/\//g, '/');
+                
+                return `
+                    <div class="carte-livre" onclick="window.location.href='${url}'">
+                        <div class="image-livre">
+                            ${jeux.logoUrl ? 
+                                `<img src="${jeux.logoUrl}" alt="${jeux.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                 <div class="default-icon" style="display:none;">📖</div>` :
+                                `<div class="default-icon">📖</div>`
+                            }
+                        </div>
+                        <div class="contenu-livre">
+                            <h3>${jeux.title}</h3>
+                            <div class="metadonnees">
+                                <span class="badge badge-age">${jeux.age} ans</span>
+                                <span class="badge badge-categorie">${jeux.categorie}</span>
+                                <span class="badge badge-type">${jeux.type}</span>
+                            </div>
+                            <p>${jeux.description}</p>
+                            <a href="${url}" class="bouton-lire" onclick="event.stopPropagation()">
+                                <i class="fas fa-book-open"></i> Lire l'jeux
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Événements
+        document.querySelectorAll('.bouton-filtre').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.bouton-filtre').forEach(b => b.classList.remove('actif'));
+                this.classList.add('actif');
+                afficherjeuxs(filtrerjeuxs());
+            });
+        });
+
+        document.getElementById('boutonRecherche').addEventListener('click', () => {
+            afficherjeuxs(filtrerjeuxs());
+        });
+
+        document.getElementById('champRecherche').addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') afficherjeuxs(filtrerjeuxs());
+        });
+
+        document.getElementById('filterCategory').addEventListener('change', () => {
+            afficherjeuxs(filtrerjeuxs());
+        });
+
+        document.getElementById('filterType').addEventListener('change', () => {
+            afficherjeuxs(filtrerjeuxs());
+        });
+
+        // Démarrer
+        document.addEventListener('DOMContentLoaded', loadStoriesMetadata);
     </script>
 </body>
 </html>

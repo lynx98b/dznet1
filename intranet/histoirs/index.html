@@ -718,30 +718,46 @@
             peuplerFiltresAvances();
             
             // Afficher les histoires
-            afficherHistoires(toutesLesHistoires);
+            function afficherHistoires(histoires) {
+            const grilleLivres = document.getElementById('grilleLivres');
             
-            // Mettre à jour les stats
-            const lastUpdate = new Date(data.generatedAt).toLocaleDateString('fr-FR');
-            const histoiresAvecImages = toutesLesHistoires.filter(h => h.logoUrl).length;
-            
-            statsElement.innerHTML = 
-                `📚 ${toutesLesHistoires.length} histoires • 🖼️ ${histoiresAvecImages} avec images • 📅 Mise à jour: ${lastUpdate}`;
-            
-        } catch (error) {
-            console.error('Erreur:', error);
-            statsElement.innerHTML = '<span style="color:#ff6b6b"><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</span>';
-            grilleLivres.innerHTML = `
-                <div class="error-state">
-                    <h2><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</h2>
-                    <p>Impossible de charger la bibliothèque des histoires.</p>
-                    <p>Vérifiez que le fichier stories-metadata.json est présent.</p>
-                    <button onclick="loadStoriesMetadata()" class="bouton-lire" style="margin-top:15px; width:auto;">
-                        <i class="fas fa-redo"></i> Réessayer
-                    </button>
-                </div>
-            `;
+            grilleLivres.innerHTML = histoires.map(histoire => {
+                // Corriger l'URL pour éviter les doubles chemins
+                let url = histoire.url;
+                
+                // Si l'URL commence déjà par /, la garder telle quelle
+                if (!url.startsWith('/')) {
+                    // Sinon, s'assurer que c'est un chemin relatif correct
+                    url = '/' + url;
+                }
+                
+                // Nettoyer les doubles slashes accidentels
+                url = url.replace(/\/\//g, '/');
+                
+                return `
+                    <div class="carte-livre" onclick="window.location.href='${url}'">
+                        <div class="image-livre">
+                            ${histoire.logoUrl ? 
+                                `<img src="${histoire.logoUrl}" alt="${histoire.title}">` :
+                                `<div class="default-icon">📖</div>`
+                            }
+                        </div>
+                        <div class="contenu-livre">
+                            <h3>${histoire.title}</h3>
+                            <div class="metadonnees">
+                                <span class="badge badge-age">${histoire.age} ans</span>
+                                <span class="badge badge-categorie">${histoire.categorie}</span>
+                                <span class="badge badge-type">${histoire.type}</span>
+                            </div>
+                            <p>${histoire.description}</p>
+                            <a href="${url}" class="bouton-lire" onclick="event.stopPropagation()">
+                                <i class="fas fa-book-open"></i> Lire l'histoire
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
-    }
 
     function extraireFiltresUniques() {
         toutesLesHistoires.forEach(histoire => {

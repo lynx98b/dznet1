@@ -215,7 +215,59 @@
             color: #666;
             font-size: 16px;
         }
-        
+        /* Styles pour les découvertes dynamiques */
+.item-decouverte {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    border: 3px dashed #4cc9f0;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.item-decouverte:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-color: #ff9e00;
+}
+
+.item-decouverte::before {
+    content: '🌟';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #ffd166;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    border: 2px solid #ff9e00;
+}
+
+.item-decouverte h3 {
+    font-size: 20px;
+    color: #4361ee;
+    margin-bottom: 10px;
+}
+
+.item-decouverte p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 8px;
+}
         /* Section découvertes */
         .section-decouvertes {
             background: white;
@@ -540,20 +592,13 @@
             </section>
             
             <!-- Section découvertes -->
+                        <!-- Section découvertes DYNAMIQUE -->
             <section class="section-decouvertes">
-                <h2>Découvertes de la Semaine</h2>
-                <div class="grille-decouvertes">
-                    <div class="item-decouverte">
-                        <h3>Le Monde des Dinosaures</h3>
-                        <p>Voyage dans le temps et découvre les créatures préhistoriques</p>
-                    </div>
-                    <div class="item-decouverte">
-                        <h3>Les Planètes</h3>
-                        <p>Explore notre système solaire et ses mystères</p>
-                    </div>
-                    <div class="item-decouverte">
-                        <h3>Les Animaux de la Forêt</h3>
-                        <p>Apprends à connaître les habitants des bois</p>
+                <h2>🌟 Découvertes de la Semaine</h2>
+                <div class="grille-decouvertes" id="decouvertes-semaine">
+                    <div class="loading">
+                        <i class="fas fa-sync-alt fa-spin"></i>
+                        <p>Chargement des découvertes...</p>
                     </div>
                 </div>
             </section>
@@ -629,6 +674,96 @@
                 carte.style.animationDelay = `${index * 0.2}s`;
             });
         });
+    <script>
+    // Charger les découvertes de la semaine
+        async function loadDecouvertesSemaine() {
+            try {
+                const response = await fetch('/stories-metadata.json');
+                const data = await response.json();
+                
+                // Filtrer les contenus avec tag "decouverte"
+                const decouvertes = data.stories.filter(item => 
+                    item.decouverte === 'semaine'
+                ).slice(0, 3); // Prendre les 3 premiers
+                
+                const decouvertesContainer = document.getElementById('decouvertes-semaine');
+                
+                if (decouvertes.length === 0) {
+                    decouvertesContainer.innerHTML = `
+                        <div class="item-decouverte">
+                            <h3>À venir...</h3>
+                            <p>Les nouvelles découvertes arrivent bientôt !</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                decouvertesContainer.innerHTML = decouvertes.map(item => {
+                    let url = item.url;
+                    if (!url.startsWith('/')) {
+                        url = '/' + url;
+                    }
+                    
+                    return `
+                        <div class="item-decouverte" onclick="window.location.href='${url}'" style="cursor: pointer;">
+                            <h3>${item.title}</h3>
+                            <p>${item.description}</p>
+                            <div style="margin-top: 10px; font-size: 0.9em; color: #666;">
+                                <span class="badge" style="background: #${getColorByType(item.type)}; color: white; padding: 2px 8px; border-radius: 10px;">
+                                    ${getIconByType(item.type)} ${item.type}
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch (error) {
+                console.error('Erreur chargement découvertes:', error);
+                document.getElementById('decouvertes-semaine').innerHTML = `
+                    <div class="item-decouverte">
+                        <h3>Chargement impossible</h3>
+                        <p>Revenez plus tard pour les découvertes</p>
+                    </div>
+                `;
+            }
+        }
+    
+        // Helper functions
+        function getColorByType(type) {
+            const colors = {
+                'jeu-educatif': 'ef476f',
+                'arcade': 'ff9e00', 
+                'quiz': '06d6a0',
+                'narrative': '118ab2',
+                'culture': '7209b7',
+                'aventure': 'ff006e'
+            };
+            return colors[type] || '4cc9f0';
+        }
+    
+        function getIconByType(type) {
+            const icons = {
+                'jeu-educatif': '🎓',
+                'arcade': '🎮',
+                'quiz': '❓',
+                'narrative': '📖',
+                'culture': '🌍',
+                'aventure': '⚔️'
+            };
+            return icons[type] || '🌟';
+        }
+    
+        // Lancer au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartes = document.querySelectorAll('.carte-activite');
+            cartes.forEach((carte, index) => {
+                carte.style.animationDelay = `${index * 0.2}s`;
+            });
+            
+            // Charger les découvertes
+            loadDecouvertesSemaine();
+        });
+    </script>    
     </script>
 </body>
 </html>

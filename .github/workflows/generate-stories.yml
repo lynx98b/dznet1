@@ -7,41 +7,62 @@ on:
       - '**.jpg'
       - '**.png'
       - '**.jpeg'
-      - '**.webp'
-      - '**.gif'
-      - '**.mp3'
-      - '**.wav'
-      - '**.ogg'
-      - '**.m4a'
   workflow_dispatch:
-  schedule:
-    - cron: '0 2 * * *'
 
 jobs:
   generate-metadata:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           
+      - name: List files (debug)
+        run: |
+          echo "📁 Contenu du repo:"
+          ls -la
+          echo "📁 Contenu racine:"
+          ls -la *.js *.json || echo "Aucun fichier JS/JSON trouvé"
+          
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
+          cache: 'npm'
           
       - name: Generate stories metadata
         run: |
-          node generate-metadata.js
+          if [ -f "generate-metadata.js" ]; then
+            echo "✅ Fichier generate-metadata.js trouvé"
+            node generate-metadata.js
+          else
+            echo "❌ Fichier generate-metadata.js NON TROUVÉ"
+            echo "📁 Liste des fichiers:"
+            find . -name "*.js" -o -name "*.json" | head -20
+            exit 1
+          fi
           
-      - name: Show scan results
+      - name: Show results
         run: |
-          echo "📊 Résultat du scan:"
-          cat stories-metadata.json | jq '.scanSummary'
+          if [ -f "stories-metadata.json" ]; then
+            echo "✅ Fichier généré avec succès"
+            echo "📊 Résumé:"
+            cat stories-metadata.json | jq '.scanSummary'
+          else
+            echo "❌ stories-metadata.json non généré"
+            exit 1
+          fi
           
-      - name: Commit and push if changed
+      - name: Commit and push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add stories-metadata.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update: $(date +'%Y-%m-%d %H:%M') - $(jq '.scanSummary.successful' stories-metadata.json) histoires" && git push)
+          if git diff --staged --quiet; then
+            echo "⏩ Aucun changement à commiter"
+          else
+            git commit -m "Auto-update stories metadata"
+            git push
+          fi

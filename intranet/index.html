@@ -677,102 +677,102 @@
     
     // Charger les découvertes de la semaine
         async function loadDecouvertesSemaine() {
-    try {
-        const response = await fetch('/stories-metadata.json');
-        const data = await response.json();
-        
-        // Filtrer les contenus avec tag "decouverte" - ADAPTÉ À TA STRUCTURE
-        const decouvertes = data.stories.filter(item => 
-            item.decouverte === 'semaine'
-        ).slice(0, 3); // Prendre les 3 premiers
-        
-        const decouvertesContainer = document.getElementById('decouvertes-semaine');
-        
-        if (decouvertes.length === 0) {
-            decouvertesContainer.innerHTML = `
-                <div class="item-decouverte">
-                    <h3>À venir...</h3>
-                    <p>Les nouvelles découvertes arrivent bientôt !</p>
-                </div>
-            `;
-            return;
-        }
-        
-        decouvertesContainer.innerHTML = decouvertes.map(item => {
-            // S'assurer que l'URL est correcte
-            let url = item.url;
-            if (!url.startsWith('/')) {
-                url = '/' + url;
+        try {
+            const response = await fetch('/stories-metadata.json');
+            const data = await response.json();
+            
+            // Filtrer les contenus avec tag "decouverte" - ADAPTÉ À TA STRUCTURE
+            const decouvertes = data.stories.filter(item => 
+                item.decouverte === 'semaine'
+            ).slice(0, 3); // Prendre les 3 premiers
+            
+            const decouvertesContainer = document.getElementById('decouvertes-semaine');
+            
+            if (decouvertes.length === 0) {
+                decouvertesContainer.innerHTML = `
+                    <div class="item-decouverte">
+                        <h3>À venir...</h3>
+                        <p>Les nouvelles découvertes arrivent bientôt !</p>
+                    </div>
+                `;
+                return;
             }
             
-            // Déterminer le type à afficher (priorité à 'type', sinon 'categorie')
-            const typeAffichage = item.type || item.categorie;
-            
-            return `
-                <div class="item-decouverte" onclick="window.location.href='${url}'" style="cursor: pointer;">
-                    <h3>${item.title}</h3>
-                    <p>${item.description}</p>
-                    <div style="margin-top: 10px; font-size: 0.9em; color: #666;">
-                        <span class="badge" style="background: #${getColorByType(typeAffichage)}; color: white; padding: 2px 8px; border-radius: 10px;">
-                            ${getIconByType(typeAffichage)} ${typeAffichage}
-                        </span>
-                        <span class="badge" style="background: #7209b7; color: white; padding: 2px 8px; border-radius: 10px; margin-left: 5px;">
-                            ${item.age} ans
-                        </span>
+            decouvertesContainer.innerHTML = decouvertes.map(item => {
+                // S'assurer que l'URL est correcte
+                let url = item.url;
+                if (!url.startsWith('/')) {
+                    url = '/' + url;
+                }
+                
+                // Déterminer le type à afficher (priorité à 'type', sinon 'categorie')
+                const typeAffichage = item.type || item.categorie;
+                
+                return `
+                    <div class="item-decouverte" onclick="window.location.href='${url}'" style="cursor: pointer;">
+                        <h3>${item.title}</h3>
+                        <p>${item.description}</p>
+                        <div style="margin-top: 10px; font-size: 0.9em; color: #666;">
+                            <span class="badge" style="background: #${getColorByType(typeAffichage)}; color: white; padding: 2px 8px; border-radius: 10px;">
+                                ${getIconByType(typeAffichage)} ${typeAffichage}
+                            </span>
+                            <span class="badge" style="background: #7209b7; color: white; padding: 2px 8px; border-radius: 10px; margin-left: 5px;">
+                                ${item.age} ans
+                            </span>
+                        </div>
                     </div>
+                `;
+            }).join('');
+            
+        } catch (error) {
+            console.error('Erreur chargement découvertes:', error);
+            document.getElementById('decouvertes-semaine').innerHTML = `
+                <div class="item-decouverte">
+                    <h3>Chargement impossible</h3>
+                    <p>Revenez plus tard pour les découvertes</p>
                 </div>
             `;
-        }).join('');
-        
-    } catch (error) {
-        console.error('Erreur chargement découvertes:', error);
-        document.getElementById('decouvertes-semaine').innerHTML = `
-            <div class="item-decouverte">
-                <h3>Chargement impossible</h3>
-                <p>Revenez plus tard pour les découvertes</p>
-            </div>
-        `;
+        }
     }
-}
-
-// Helper functions - AJOUTE TOUS LES TYPES DE TON JSON
-function getColorByType(type) {
-    const colors = {
-        'jeu-educatif': 'ef476f',
-        'arcade': 'ff9e00', 
-        'quiz': '06d6a0',
-        'narrative': '118ab2',
-        'histoire': '118ab2',
-        'educatif': '06d6a0',
-        'interactif': '4cc9f0',
-        'classique': 'ff9e00',
-        'culture': '7209b7',
-        'aventure': 'ff006e',
-        'html': '118ab2',
-        'audio': '9d4edd',
-        'contes': '118ab2'
-    };
-    return colors[type] || '4cc9f0';
-}
-
-function getIconByType(type) {
-    const icons = {
-        'jeu-educatif': '🎓',
-        'arcade': '🎮',
-        'quiz': '❓',
-        'narrative': '📖',
-        'histoire': '📖',
-        'educatif': '🎓',
-        'interactif': '👆',
-        'classique': '🏆',
-        'culture': '🌍',
-        'aventure': '⚔️',
-        'html': '💻',
-        'audio': '🎵',
-        'contes': '📚'
-    };
-    return icons[type] || '🌟';
-}
+    
+    // Helper functions - AJOUTE TOUS LES TYPES DE TON JSON
+    function getColorByType(type) {
+        const colors = {
+            'jeu-educatif': 'ef476f',
+            'arcade': 'ff9e00', 
+            'quiz': '06d6a0',
+            'narrative': '118ab2',
+            'histoire': '118ab2',
+            'educatif': '06d6a0',
+            'interactif': '4cc9f0',
+            'classique': 'ff9e00',
+            'culture': '7209b7',
+            'aventure': 'ff006e',
+            'html': '118ab2',
+            'audio': '9d4edd',
+            'contes': '118ab2'
+        };
+        return colors[type] || '4cc9f0';
+    }
+    
+    function getIconByType(type) {
+        const icons = {
+            'jeu-educatif': '🎓',
+            'arcade': '🎮',
+            'quiz': '❓',
+            'narrative': '📖',
+            'histoire': '📖',
+            'educatif': '🎓',
+            'interactif': '👆',
+            'classique': '🏆',
+            'culture': '🌍',
+            'aventure': '⚔️',
+            'html': '💻',
+            'audio': '🎵',
+            'contes': '📚'
+        };
+        return icons[type] || '🌟';
+    }
 
     </script>
 </body>

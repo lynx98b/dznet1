@@ -64,10 +64,12 @@ function extractMetadata(fileInfo) {
         const ageMatch = content.match(/<meta name="age" content="(.*?)"/i);
         const categorieMatch = content.match(/<meta name="categorie" content="(.*?)"/i);
         const typeMatch = content.match(/<meta name="type" content="(.*?)"/i);
+        const decouverteMatch = content.match(/<meta name="decouverte" content="(.*?)"/i); // ← NOUVEAU
 
         const age = ageMatch ? ageMatch[1] : '3-5';
         const categorie = categorieMatch ? categorieMatch[1] : 'contes';
         const type = typeMatch ? typeMatch[1] : 'histoire';
+        const decouverte = decouverteMatch ? decouverteMatch[1] : 'non'; // ← NOUVEAU
 
         // Chercher une image associée
         const baseName = filename.replace('.html', '');

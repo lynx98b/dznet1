@@ -1,0 +1,6 @@
+{
+  "name": "stories-generator",
+  "version": "1.0.0",
+  "description": "Generate stories metadata",
+  "type": "commonjs"
+}

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Boucle d'Or et les Trois Ours - Un classique raconté avec des effets sonores amusants">
+    <meta name="age" content="3-5">
+    <meta name="categorie" content="contes">
+    <meta name="type" content="html">
+    <title>Boucle d'Or et les Trois Ours - Histoire Interactive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #5a189a;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 5px solid #ff6b6b;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 0px #ff6b6b;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .metadonnees {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: white;
+            color: #5a189a;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        /* Navigation */
+        .navigation {
+            background: #f8f9fa;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 3px solid #4cc9f0;
+        }
+        
+        .bouton-nav {
+            background: #4cc9f0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .bouton-nav:hover {
+            background: #3ab0d6;
+            transform: translateY(-2px);
+        }
+        
+        .bouton-nav:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Contenu de l'histoire */
+        .histoire-container {
+            padding: 30px;
+            min-height: 500px;
+        }
+        
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .illustration {
+            width: 100%;
+            max-width: 400px;
+            height: 250px;
+            margin: 0 auto 25px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .texte-histoire {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: justify;
+            padding: 0 10px;
+        }
+        
+        .effets-sonores {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .bouton-son {
+            background: #ffd166;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 0 #ff9e00;
+        }
+        
+        .bouton-son:hover {
+            background: #ffc145;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #ff9e00;
+        }
+        
+        /* Section audio */
+        .section-audio {
+            background: #f0f8ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 3px dashed #4cc9f0;
+        }
+        
+        .section-audio h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #118ab2;
+        }
+        
+        .lecteur-audio {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .controles-audio {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .bouton-audio {
+            background: #06d6a0;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .bouton-audio:hover {
+            background: #05b989;
+            transform: scale(1.1);
+        }
+        
+        /* Activités interactives */
+        .activites {
+            background: #e9f5db;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 3px solid #06d6a0;
+        }
+        
+        .activites h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2d6a4f;
+        }
+        
+        .grille-activites {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .carte-activite {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .carte-activite:hover {
+            transform: translateY(-5px);
+            border-color: #06d6a0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .icone-activite {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #06d6a0;
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #5a189a 0%, #7b2cbf 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .liens-footer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .liens-footer a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .liens-footer a:hover {
+            color: #ffd166;
+        }
+        
+        .copyright {
+            margin-top: 15px;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .personnage {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .texte-histoire {
+                font-size: 1.1rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+            
+            .grille-activites {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête -->
+        <header class="header">
+            <h1>Boucle d'Or et les Trois Ours</h1>
+            <p>Un classique raconté avec des effets sonores amusants</p>
+            <div class="metadonnees">
+                <span class="badge">3-5 ans</span>
+                <span class="badge">Conte classique</span>
+                <span class="badge">Histoire interactive</span>
+            </div>
+        </header>
+        
+        <!-- Navigation -->
+        <nav class="navigation">
+            <button class="bouton-nav" id="btn-prev" disabled>
+                <i class="fas fa-arrow-left"></i> Page précédente
+            </button>
+            <div>
+                <span id="page-actuelle">Page 1</span> / <span id="total-pages">7</span>
+            </div>
+            <button class="bouton-nav" id="btn-next">
+                Page suivante <i class="fas fa-arrow-right"></i>
+            </button>
+        </nav>
+        
+        <!-- Contenu de l'histoire -->
+        <main class="histoire-container">
+            <!-- Page 1 -->
+            <div class="page active" id="page-1">
+                <div class="illustration">
+                    <i class="fas fa-home personnage"></i>
+                </div>
+                <p class="texte-histoire">
+                    Il était une fois une petite fille aux cheveux blonds et bouclés qu'on appelait Boucle d'Or. 
+                    Un jour, en se promenant dans la forêt, elle découvrit une jolie maison.
+                </p>
+                <div class="effets-sonores">
+                    <button class="bouton-son" data-son="foret">
+                        <i class="fas fa-tree"></i> Sons de la forêt
+                    </button>
+                    <button class="bouton-son" data-son="marcher">
+                        <i class="fas fa-walking"></i> Bruits de pas
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Page 2 -->
+            <div class="page" id="page-2">
+                <div class="illustration">
+                    <i class="fas fa-utensils personnage"></i>
+                </div>
+                <p class="texte-histoire">
+                    Boucle d'Or entra dans la maison et découvrit trois bols de soupe sur la table. 
+                    Il y avait un grand bol, un bol moyen et un petit bol.
+                </p>
+                <div class="effets-sonores">
+                    <button class="bouton-son" data-son="porte">
+                        <i class="fas fa-door-open"></i> Porte qui grince
+                    </button>
+                    <button class="bouton-son" data-son="soupe">
+                        <i class="fas fa-utensil-spoon"></i> Manger la soupe
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Page 3 -->
+            <div class="page" id="page-3">
+                <div class="illustration">
+                    <i class="fas fa-chair personnage"></i>
+                </div>
+                <p class="texte-histoire">
+                    Ensuite, Boucle d'Or vit trois chaises. Elle s'assit sur la grande chaise : "Trop dure !" 
+                    Sur la chaise moyenne : "Trop molle !" Sur la petite chaise : "Ah ! C'est parfait !" 
+                    Mais CRAC ! La petite chaise se brisa en mille morceaux.
+                </p>
+                <div class="effets-sonores">
+                    <button class="bouton-son" data-son="chaise-grande">
+                        <i class="fas fa-chair"></i> Chaise trop dure
+                    </button>
+                    <button class="bouton-son" data-son="chaise-petite">
+                        <i class="fas fa-broken-chair"></i> Chaise qui casse
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Page 4 -->
+            <div class="page" id="page-4">
+                <div class="illustration">
+                    <i class="fas fa-bed personnage"></i>
+                </div>
+                <p class="texte-histoire">
+                    Puis Boucle d'Or monta à l'étage et découvrit trois lits. Elle s'allongea sur le grand lit : 
+                    "Trop dur !" Sur le lit moyen : "Trop mou !" Sur le petit lit : "Ah ! C'est parfait !" 
+                    Et elle s'endormit profondément.
+                </p>
+                <div class="effets-sonores">
+                    <button class="bouton-son" data-son="lit-grand">
+                        <i class="fas fa-bed"></i> Lit trop dur
+                    </button>
+                    <button class="bouton-son" data-son="ronflement">
+                        <i class="fas fa-moon"></i> Ronflements
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Page 5 -->
+            <div class="page" id="page-5">
+                <div class="illustration">
+                    <i class="fas fa-bear personnage"></i>
+                </div>
+                <p class="texte-histoire">
+                    Peu après, les trois ours rentrèrent à la maison. Papa Ours, Maman Ours et Bébé Ours. 
+                    Ils remarquèrent tout de suite que quelqu'un était venu pendant leur absence.
+                </p>
+                <div class="effets-sonores">
+                    <button class="bouton-son" data-son="ours-marcher">
+                        <i class="fas fa-paw"></i> Pas d'ours
+                    </button>
+                    <button class="bouton-son" data-son="ours-parler">
+                        <i class="fas fa-comment"></i> Voix d'ours
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Page 6 -->
+            <div class="page" id="page-6">
+                <div class="illustration">
+                    <i class="fas fa-search personnage"></i>
+                </div>
+                <p class="texte-histoire">
+                    "Quelqu'un a mangé ma soupe !" grogna Papa Ours. "Quelqu'un a mangé ma soupe !" dit Maman Ours. 
+                    "Quelqu'un a mangé ma soupe et l'a toute finie !" pleura Bébé Ours.
+                </p>
+                <div class="effets-sonores">
+                    <button class="bouton-son" data-son="papa-ours">
+                        <i class="fas fa-volume-up"></i> Voix de Papa Ours
+                    </button>
+                    <button class="bouton-son" data-son="bebe-ours">
+                        <i class="fas fa-baby"></i> Voix de Bébé Ours
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Page 7 -->
+            <div class="page" id="page-7">
+                <div class="illustration">
+                    <i class="fas fa-surprise personnage"></i>
+                </div>
+                <p class="texte-histoire">
+                    Les trois ours montèrent à l'étage et découvrirent Boucle d'Or endormie dans le lit de Bébé Ours. 
+                    En les voyant, Boucle d'Or eut si peur qu'elle sauta par la fenêtre et courut jusqu'à chez elle. 
+                    Elle ne revint jamais dans la maison des trois ours.
+                </p>
+                <div class="effets-sonores">
+                    <button class="bouton-son" data-son="cri-surprise">
+                        <i class="fas fa-surprise"></i> Cri de surprise
+                    </button>
+                    <button class="bouton-son" data-son="courir">
+                        <i class="fas fa-running"></i> Bruits de course
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Section audio complète -->
+            <section class="section-audio">
+                <h3><i class="fas fa-headphones"></i> Écouter l'histoire complète</h3>
+                <div class="lecteur-audio">
+                    <div class="controles-audio">
+                        <button class="bouton-audio" id="play-audio">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="bouton-audio" id="pause-audio">
+                            <i class="fas fa-pause"></i>
+                        </button>
+                        <button class="bouton-audio" id="stop-audio">
+                            <i class="fas fa-stop"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <audio id="audio-complet" controls style="display: none;">
+                            <source src="boucle-dor-complet.mp3" type="audio/mpeg">
+                            Votre navigateur ne supporte pas l'audio.
+                        </audio>
+                        <p style="margin-top: 10px; font-style: italic;">
+                            Version audio complète avec narration et effets sonores
+                        </p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Activités interactives -->
+            <section class="activites">
+                <h3><i class="fas fa-gamepad"></i> Activités amusantes</h3>
+                <div class="grille-activites">
+                    <div class="carte-activite" onclick="jouerJeuMemory()">
+                        <div class="icone-activite">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <h4>Jeu de mémoire</h4>
+                        <p>Retrouve les paires des objets de l'histoire</p>
+                    </div>
+                    <div class="carte-activite" onclick="jouerColoriage()">
+                        <div class="icone-activite">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h4>Coloriage</h4>
+                        <p>Colorie Boucle d'Or et les trois ours</p>
+                    </div>
+                    <div class="carte-activite" onclick="jouerQuizz()">
+                        <div class="icone-activite">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h4>Quiz</h4>
+                        <p>Teste tes connaissances sur l'histoire</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Pied de page -->
+        <footer class="footer">
+            <div class="liens-footer">
+                <a href="histoires.html"><i class="fas fa-book"></i> Retour aux histoires</a>
+                <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+                <a href="#"><i class="fas fa-print"></i> Imprimer l'histoire</a>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Espace Enfants - Conçu avec <i class="fas fa-heart" style="color:#ff6b6b"></i> pour les enfants
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Gestion de la navigation entre les pages
+        let pageActuelle = 1;
+        const totalPages = 7;
+        
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const spanPageActuelle = document.getElementById('page-actuelle');
+        const spanTotalPages = document.getElementById('total-pages');
+        
+        spanTotalPages.textContent = totalPages;
+        
+        function mettreAJourNavigation() {
+            // Mettre à jour l'affichage de la page
+            spanPageActuelle.textContent = pageActuelle;
+            
+            // Masquer toutes les pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Afficher la page actuelle
+            document.getElementById(`page-${pageActuelle}`).classList.add('active');
+            
+            // Gérer l'état des boutons
+            btnPrev.disabled = (pageActuelle === 1);
+            btnNext.disabled = (pageActuelle === totalPages);
+        }
+        
+        btnPrev.addEventListener('click', () => {
+            if (pageActuelle > 1) {
+                pageActuelle--;
+                mettreAJourNavigation();
+            }
+        });
+        
+        btnNext.addEventListener('click', () => {
+            if (pageActuelle < totalPages) {
+                pageActuelle++;
+                mettreAJourNavigation();
+            }
+        });
+        
+        // Effets sonores
+        const effetsSonores = {
+            'foret': 'sons/foret.mp3',
+            'marcher': 'sons/marcher.mp3',
+            'porte': 'sons/porte.mp3',
+            'soupe': 'sons/soupe.mp3',
+            'chaise-grande': 'sons/chaise-grande.mp3',
+            'chaise-petite': 'sons/chaise-casse.mp3',
+            'lit-grand': 'sons/lit-dur.mp3',
+            'ronflement': 'sons/ronflement.mp3',
+            'ours-marcher': 'sons/ours-marcher.mp3',
+            'ours-parler': 'sons/ours-parler.mp3',
+            'papa-ours': 'sons/papa-ours.mp3',
+            'bebe-ours': 'sons/bebe-ours.mp3',
+            'cri-surprise': 'sons/cri-surprise.mp3',
+            'courir': 'sons/courir.mp3'
+        };
+        
+        document.querySelectorAll('.bouton-son').forEach(bouton => {
+            bouton.addEventListener('click', function() {
+                const son = this.getAttribute('data-son');
+                jouerSon(son);
+            });
+        });
+        
+        function jouerSon(son) {
+            // En production, vous utiliseriez le fichier audio correspondant
+            // Pour cette démo, nous simulons avec des alertes
+            const nomsSons = {
+                'foret': '🌳🔊 Sons d\'oiseaux et de vent dans les arbres',
+                'marcher': '👣🔊 Bruits de pas dans la forêt',
+                'porte': '🚪🔊 Grincement de porte',
+                'soupe': '🍲🔊 Bruit de cuillère dans la soupe',
+                'chaise-grande': '🪑🔊 Chaise en bois qui grince',
+                'chaise-petite': '💥🔊 Chaise qui se brise',
+                'lit-grand': '🛏️🔊 Lit qui craque',
+                'ronflement': '😴🔊 Doux ronflements',
+                'ours-marcher': '🐻🔊 Pas lourds d\'ours',
+                'ours-parler': '🐻🔊 Grognements d\'ours',
+                'papa-ours': '🐻🔊 Voix grave de Papa Ours',
+                'bebe-ours': '🐻🔊 Voix aiguë de Bébé Ours',
+                'cri-surprise': '😲🔊 Cri de surprise',
+                'courir': '🏃‍♀️🔊 Bruits de course précipitée'
+            };
+            
+            alert(`Effet sonore: ${nomsSons[son] || 'Son joué'}`);
+            
+            // En production, décommentez ce code:
+            /*
+            const audio = new Audio(effetsSonores[son]);
+            audio.play().catch(e => {
+                console.error("Erreur de lecture audio:", e);
+            });
+            */
+        }
+        
+        // Lecteur audio complet
+        const audioComplet = document.getElementById('audio-complet');
+        const btnPlay = document.getElementById('play-audio');
+        const btnPause = document.getElementById('pause-audio');
+        const btnStop = document.getElementById('stop-audio');
+        
+        btnPlay.addEventListener('click', () => {
+            audioComplet.play().catch(e => {
+                console.error("Erreur de lecture audio:", e);
+                alert("Le fichier audio complet n'est pas disponible en démo. En production, il jouerait l'histoire complète.");
+            });
+        });
+        
+        btnPause.addEventListener('click', () => {
+            audioComplet.pause();
+        });
+        
+        btnStop.addEventListener('click', () => {
+            audioComplet.pause();
+            audioComplet.currentTime = 0;
+        });
+        
+        // Fonctions pour les activités (simulées pour la démo)
+        function jouerJeuMemory() {
+            alert('🎮 Le jeu de mémoire va s\'ouvrir! Trouve les paires: bols, chaises et lits des trois ours!');
+        }
+        
+        function jouerColoriage() {
+            alert('🎨 L\'atelier coloriage va s\'ouvrir! Colorie Boucle d\'Or, Papa Ours, Maman Ours et Bébé Ours!');
+        }
+        
+        function jouerQuizz() {
+            alert('❓ Le quiz va commencer! Réponds aux questions sur l\'histoire de Boucle d\'Or!');
+        }
+        
+        // Initialisation
+        mettreAJourNavigation();
+        
+        console.log('Page modèle Boucle d\'Or chargée!');
+        console.log('Métadonnées: âge=3-5, catégorie=contes, type=html');
+    </script>
+</body>
+</html>

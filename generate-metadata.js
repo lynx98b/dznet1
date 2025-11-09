@@ -91,6 +91,7 @@ function extractMetadata(fileInfo) {
             age,
             categorie,
             type,
+            decouverte,
             directory: path.dirname(relativePath),
             lastModified: fs.statSync(fullPath).mtime
         };

@@ -1351,7 +1351,13 @@
 
 ## OBJECTIF
 Créer un contenu pédagogique interactif pour **dznet1.com**, totalement **responsive**, **accessible**, **SEO**, compatible **PC/Mobile** (sans débordement), avec **zone publicitaire**.
-
+Détection des ressources manquantes (obligatoire) :
+Tout code manipulant des fichiers externes (images, audio, vidéo, CSS, JS) DOIT inclure :
+- Vérification de l'existence des ressources au chargement
+- Affichage EXPLICITE du nom complet du fichier manquant dans la console (console.error)
+- Affichage visuel si mode debug activé (ex: ?debug=1 dans l'URL)
+- Placeholder informatif en cas de ressource absente (ex: "❌ Image manquante: images/alger.jpg")
+- Ne JAMAIS masquer silencieusement une erreur de chargement
 ${testMode ? `
 ⚠️ **MODE TEST ACTIVÉ** ⚠️
 - Chemins médias : /images/ et /audio/ (locaux) pour test PC

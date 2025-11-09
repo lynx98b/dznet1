@@ -1,222 +1,869 @@
-<script>
-    // Configuration
-    const METADATA_URL = '/stories-metadata.json';
-    const DOSSIER_CIBLE = 'intranet/histoirs'; // ← DOSSIER LIMITE
-    
-    // État des filtres
-    let filtresActifs = {
-        age: 'all',
-        categorie: 'all',
-        type: 'all',
-        recherche: ''
-    };
-    
-    let toutesLesHistoires = [];
-    let categoriesUniques = new Set();
-    let typesUniques = new Set();
-
-    // Charger les métadonnées
-    async function loadStoriesMetadata() {
-        const grilleLivres = document.getElementById('grilleLivres');
-        const statsElement = document.getElementById('livreCount');
-        
-        try {
-            statsElement.innerHTML = '<i class="fas fa-sync-alt spin"></i> Chargement des histoires...';
-            
-            const response = await fetch(METADATA_URL);
-            if (!response.ok) throw new Error('Fichier de métadonnées non trouvé');
-            
-            const data = await response.json();
-            
-            // FILTRER UNIQUEMENT LE DOSSIER intranet/histoirs
-            toutesLesHistoires = data.stories.filter(histoire => 
-                histoire.directory === DOSSIER_CIBLE || 
-                histoire.filename.startsWith(DOSSIER_CIBLE + '/')
-            );
-            
-            console.log(`📁 Histoires trouvées dans ${DOSSIER_CIBLE}:`, toutesLesHistoires.length);
-            
-            // Extraire les filtres uniques
-            extraireFiltresUniques();
-            
-            // Peupler les menus déroulants
-            peuplerFiltresAvances();
-            
-            // Afficher les histoires
-            afficherHistoires(toutesLesHistoires);
-            
-            // Mettre à jour les stats
-            const lastUpdate = new Date(data.generatedAt).toLocaleDateString('fr-FR');
-            const histoiresAvecImages = toutesLesHistoires.filter(h => h.logoUrl).length;
-            
-            statsElement.innerHTML = 
-                `📚 ${toutesLesHistoires.length} histoires • 🖼️ ${histoiresAvecImages} avec images • 📅 Mise à jour: ${lastUpdate}`;
-                
-        } catch (error) {
-            console.error('Erreur:', error);
-            statsElement.innerHTML = '<span style="color:#ff6b6b"><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</span>';
-            grilleLivres.innerHTML = `
-                <div class="error-state">
-                    <h2><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</h2>
-                    <p>Impossible de charger la bibliothèque des histoires.</p>
-                    <p>Vérifiez que le fichier stories-metadata.json est présent.</p>
-                    <button onclick="loadStoriesMetadata()" class="bouton-lire" style="margin-top:15px; width:auto;">
-                        <i class="fas fa-redo"></i> Réessayer
-                    </button>
-                </div>
-            `;
-        }
-    }
-
-    function extraireFiltresUniques() {
-        toutesLesHistoires.forEach(histoire => {
-            categoriesUniques.add(histoire.categorie);
-            typesUniques.add(histoire.type);
-        });
-    }
-
-    function peuplerFiltresAvances() {
-        const categorySelect = document.getElementById('filterCategory');
-        const typeSelect = document.getElementById('filterType');
-        const folderSelect = document.getElementById('filterFolder');
-        
-        // Vider les selects
-        categorySelect.innerHTML = '<option value="all">Toutes les catégories</option>';
-        typeSelect.innerHTML = '<option value="all">Tous les types</option>';
-        folderSelect.innerHTML = '<option value="all">Tous les dossiers</option>';
-        
-        // Catégories
-        [...categoriesUniques].sort().forEach(categorie => {
-            const option = document.createElement('option');
-            option.value = categorie;
-            option.textContent = categorie.charAt(0).toUpperCase() + categorie.slice(1);
-            categorySelect.appendChild(option);
-        });
-        
-        // Types
-        [...typesUniques].sort().forEach(type => {
-            const option = document.createElement('option');
-            option.value = type;
-            option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
-            typeSelect.appendChild(option);
-        });
-        
-        // Cacher le filtre dossier puisqu'on n'a qu'un seul dossier
-        document.querySelector('.filters-advanced').style.display = 'none';
-    }
-
-    function filtrerHistoires() {
-        const searchTerm = document.getElementById('champRecherche').value.toLowerCase();
-        const category = document.getElementById('filterCategory').value;
-        const type = document.getElementById('filterType').value;
-        const ageFilter = document.querySelector('.bouton-filtre.actif')?.dataset.filtre || 'all';
-        
-        return toutesLesHistoires.filter(histoire => {
-            // Filtre recherche
-            if (searchTerm && 
-                !histoire.title.toLowerCase().includes(searchTerm) && 
-                !histoire.description.toLowerCase().includes(searchTerm)) {
-                return false;
-            }
-            
-            // Filtre catégorie
-            if (category !== 'all' && histoire.categorie !== category) {
-                return false;
-            }
-            
-            // Filtre type
-            if (type !== 'all' && histoire.type !== type) {
-                return false;
-            }
-            
-            // Filtre âge
-            if (ageFilter !== 'all' && !histoire.age.includes(ageFilter.replace('age-', ''))) {
-                return false;
-            }
-            
-            return true;
-        });
-    }
-
-    function afficherHistoires(histoires) {
-        const grilleLivres = document.getElementById('grilleLivres');
-        
-        if (histoires.length === 0) {
-            grilleLivres.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-search" style="font-size: 50px; margin-bottom: 20px; color: #ccc;"></i>
-                    <h3>Aucune histoire trouvée</h3>
-                    <p>Aucune histoire ne correspond à vos critères de recherche dans le dossier ${DOSSIER_CIBLE}.</p>
-                    <p>Essayez de modifier vos filtres ou votre recherche.</p>
-                </div>
-            `;
-            return;
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CRRK6Z4D1X');
+  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliothèque Magique - Histoires et Livres</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* TOUT VOTRE CSS ICI (identique à avant) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
         }
         
-        grilleLivres.innerHTML = histoires.map(histoire => {
-            // Corriger l'URL pour éviter les doubles chemins
-            let url = histoire.url;
-            
-            // Si l'URL commence déjà par /, la garder telle quelle
-            if (!url.startsWith('/')) {
-                // Sinon, s'assurer que c'est un chemin relatif correct
-                url = '/' + url;
+        body {
+            background: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1920px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* ZONE EN-TÊTE */
+        .zone-entete-bub {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            border-bottom: 5px solid #ff6b6b;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .zone-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icone {
+            font-size: 36px;
+            color: #ff6b6b;
+        }
+        
+        .texte-logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #5a189a;
+            text-shadow: 2px 2px 0px #ffd166;
+        }
+        
+        .zone-navigation {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .bouton-navigation {
+            background: #4361ee;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 0 #3a56d4;
+        }
+        
+        .bouton-navigation:hover {
+            background: #3a56d4;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #3a56d4;
+        }
+        
+        /* ZONE TITRE PRINCIPAL */
+        .zone-titre-principal {
+            background-color: #ffd166;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 5px dashed #ff9e00;
+        }
+        
+        .zone-titre-principal h1 {
+            font-size: 42px;
+            color: #5a189a;
+            text-shadow: 3px 3px 0px #ff9e00;
+            margin-bottom: 10px;
+        }
+        
+        .zone-titre-principal p {
+            font-size: 20px;
+            color: #ef476f;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* ZONE RECHERCHE ET FILTRES */
+        .zone-recherche-filtres {
+            background: white;
+            padding: 20px 30px;
+            border-bottom: 3px solid #4cc9f0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .zone-recherche {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+            max-width: 400px;
+        }
+        
+        .champ-recherche {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #4cc9f0;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .bouton-recherche {
+            background: #4cc9f0;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .bouton-recherche:hover {
+            background: #3ab0d6;
+        }
+        
+        .bouton-filtre {
+            background: #f8f9fa;
+            border: 2px solid #4cc9f0;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #4361ee;
+        }
+        
+        .bouton-filtre.actif {
+            background: #4cc9f0;
+            color: white;
+        }
+        
+        .bouton-filtre:hover {
+            background: #4cc9f0;
+            color: white;
+        }
+        
+        /* FILTRES AVANCÉS */
+        .filters-advanced {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            justify-content: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .filter-group label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #5a189a;
+            text-align: center;
+        }
+        
+        .filter-select {
+            padding: 8px 15px;
+            border: 2px solid #4cc9f0;
+            border-radius: 20px;
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+            min-width: 150px;
+        }
+        
+        .stats {
+            background: linear-gradient(135deg, #5a189a 0%, #7b2cbf 100%);
+            padding: 15px;
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* ZONE CONTENU PRINCIPAL */
+        .zone-contenu-principal {
+            flex: 1;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        /* Section livres */
+        .section-livres {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border: 4px solid #ff9e00;
+        }
+        
+        .section-livres h2 {
+            font-size: 32px;
+            color: #5a189a;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 2px 2px 0px #ffd166;
+        }
+        
+        .grille-livres {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .carte-livre {
+            background: #f8f9fa;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 3px solid transparent;
+            position: relative;
+        }
+        
+        .carte-livre:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            border-color: #4cc9f0;
+        }
+        
+        .story-breadcrumb {
+            font-size: 0.8rem;
+            color: #666;
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.9);
+            border-bottom: 1px solid #eee;
+        }
+        
+        .story-breadcrumb .folder {
+            color: #4361ee;
+            font-weight: bold;
+        }
+        
+        .image-livre {
+            height: 200px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-livre img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .carte-livre:hover .image-livre img {
+            transform: scale(1.1);
+        }
+        
+        .default-icon {
+            font-size: 60px;
+            opacity: 0.8;
+        }
+        
+        .contenu-livre {
+            padding: 20px;
+        }
+        
+        .contenu-livre h3 {
+            font-size: 20px;
+            color: #5a189a;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        
+        .contenu-livre p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .metadonnees {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        
+        .badge-age {
+            background: #ef476f;
+            color: white;
+        }
+        
+        .badge-categorie {
+            background: #06d6a0;
+            color: white;
+        }
+        
+        .badge-type {
+            background: #118ab2;
+            color: white;
+        }
+        
+        .badge-audio {
+            background: #ff9e00;
+            color: white;
+        }
+        
+        .file-name {
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 10px;
+            font-family: monospace;
+            text-align: center;
+            background: #f1f3f4;
+            padding: 5px;
+            border-radius: 5px;
+            word-break: break-all;
+        }
+        
+        .bouton-lire {
+            background: linear-gradient(135deg, #06d6a0 0%, #05b989 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-weight: bold;
+            box-shadow: 0 4px 0 #049c75;
+        }
+        
+        .bouton-lire:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #049c75;
+        }
+        
+        /* États de chargement et erreur */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .loading-spinner {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #4cc9f0;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 18px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px dashed #dee2e6;
+        }
+        
+        .error-state {
+            text-align: center;
+            padding: 40px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            margin: 20px;
+            color: #856404;
+        }
+        
+        /* ZONE PIED DE PAGE */
+        .zone-pied-page {
+            background: linear-gradient(135deg, #5a189a 0%, #7b2cbf 100%);
+            color: white;
+            padding: 30px 40px 20px;
+            border-top: 8px solid #ff9e00;
+        }
+        
+        .contenu-pied-page {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .info-contact {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .info-contact h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #ffd166;
+        }
+        
+        .info-contact p {
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .liens-rapides {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .liens-rapides h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #ffd166;
+        }
+        
+        .liens-rapides ul {
+            list-style: none;
+        }
+        
+        .liens-rapides li {
+            margin-bottom: 10px;
+        }
+        
+        .liens-rapides a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        .liens-rapides a:hover {
+            color: #ffd166;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #9d4edd;
+            color: #e0aaff;
+            font-size: 14px;
+            width: 100%;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .flottant {
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .grille-livres {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .zone-entete-bub {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
             }
             
-            // Nettoyer les doubles slashes accidentels
-            url = url.replace(/\/\//g, '/');
+            .zone-navigation {
+                margin-top: 15px;
+            }
             
-            return `
-                <div class="carte-livre" onclick="window.location.href='${url}'">
-                    <div class="image-livre">
-                        ${histoire.logoUrl ? 
-                            `<img src="${histoire.logoUrl}" alt="${histoire.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                             <div class="default-icon" style="display:none;">📖</div>` :
-                            `<div class="default-icon">📖</div>`
-                        }
-                    </div>
-                    <div class="contenu-livre">
-                        <h3>${histoire.title}</h3>
-                        <div class="metadonnees">
-                            <span class="badge badge-age">${histoire.age} ans</span>
-                            <span class="badge badge-categorie">${histoire.categorie}</span>
-                            <span class="badge badge-type">${histoire.type}</span>
+            .zone-recherche-filtres {
+                flex-direction: column;
+            }
+            
+            .zone-recherche {
+                max-width: 100%;
+            }
+            
+            .filters-advanced {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-select {
+                min-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ZONE EN-TÊTE -->
+        <header class="zone-entete-bub">
+            <div class="zone-logo">
+                <div class="logo-icone flottant">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="texte-logo">Histoires et Livres</div>
+            </div>
+            <div class="zone-navigation">
+                <button class="bouton-navigation" onclick="window.location.href='index.html'">
+                    <i class="fas fa-home"></i> Accueil
+                </button>
+                <button class="bouton-navigation">
+                    <i class="fas fa-user"></i> Mon Compte
+                </button>
+            </div>
+        </header>
+        
+        <!-- ZONE TITRE PRINCIPAL -->
+        <section class="zone-titre-principal">
+            <h1>📚 Bibliothèque Magique</h1>
+            <p>Découvre des histoires captivantes, des livres interactifs et des contes audio!</p>
+        </section>
+        
+        <!-- ZONE RECHERCHE ET FILTRES -->
+        <section class="zone-recherche-filtres">
+            <div class="zone-recherche">
+                <input type="text" class="champ-recherche" id="champRecherche" placeholder="🔍 Rechercher une histoire...">
+                <button class="bouton-recherche" id="boutonRecherche">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <button class="bouton-filtre actif" data-filtre="all">Tous</button>
+            <button class="bouton-filtre" data-filtre="age-3-5">3-5 ans</button>
+            <button class="bouton-filtre" data-filtre="age-6-8">6-8 ans</button>
+            <button class="bouton-filtre" data-filtre="age-9-12">9-12 ans</button>
+        </section>
+        
+        <!-- FILTRES AVANCÉS -->
+        <div class="filters-advanced">
+            <div class="filter-group">
+                <label for="filterCategory"><i class="fas fa-tags"></i> Catégorie</label>
+                <select id="filterCategory" class="filter-select">
+                    <option value="all">Toutes les catégories</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="filterType"><i class="fas fa-bookmark"></i> Type</label>
+                <select id="filterType" class="filter-select">
+                    <option value="all">Tous les types</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="stats" id="stats">
+            <span id="livreCount"><i class="fas fa-sync-alt spin"></i> Chargement de la bibliothèque...</span>
+        </div>
+        
+        <!-- ZONE CONTENU PRINCIPAL -->
+        <main class="zone-contenu-principal">
+            <section class="section-livres">
+                <h2><i class="fas fa-star"></i> Nos Histoires <i class="fas fa-star"></i></h2>
+                <div class="grille-livres" id="grilleLivres">
+                    <div class="loading">
+                        <div class="loading-spinner">
+                            <i class="fas fa-sync-alt spin"></i>
                         </div>
-                        <p>${histoire.description}</p>
-                        <a href="${url}" class="bouton-lire" onclick="event.stopPropagation()">
-                            <i class="fas fa-book-open"></i> Lire l'histoire
-                        </a>
+                        <p>Exploration de la bibliothèque magique...</p>
                     </div>
                 </div>
-            `;
-        }).join('');
-    }
+            </section>
+        </main>
+        
+        <!-- ZONE PIED DE PAGE -->
+        <footer class="zone-pied-page">
+            <div class="contenu-pied-page">
+                <div class="info-contact">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-envelope"></i> enfants@monintranet.fr</p>
+                    <p><i class="fas fa-phone"></i> 01 23 45 67 89</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Rue des Enfants, Paris</p>
+                </div>
+                
+                <div class="liens-rapides">
+                    <h3>Liens Rapides</h3>
+                    <ul>
+                        <li><a href="index.html">Retour à l'accueil</a></li>
+                        <li><a href="#">Jeux Éducatifs</a></li>
+                        <li><a href="#">Atelier Créatif</a></li>
+                        <li><a href="#">Espace Musique</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2024 Espace Enfants - Tous droits réservés | Conçu avec <i class="fas fa-heart" style="color:#ff6b6b"></i> pour les enfants
+            </div>
+        </footer>
+    </div>
 
-    // Gestion des événements
-    document.querySelectorAll('.bouton-filtre').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.bouton-filtre').forEach(b => b.classList.remove('actif'));
-            this.classList.add('actif');
+    <script>
+        // Configuration
+        const METADATA_URL = '/stories-metadata.json';
+        const DOSSIER_CIBLE = 'intranet/histoirs';
+        
+        let toutesLesHistoires = [];
+        let categoriesUniques = new Set();
+        let typesUniques = new Set();
+
+        // Charger les métadonnées
+        async function loadStoriesMetadata() {
+            const grilleLivres = document.getElementById('grilleLivres');
+            const statsElement = document.getElementById('livreCount');
+            
+            try {
+                statsElement.innerHTML = '<i class="fas fa-sync-alt spin"></i> Chargement des histoires...';
+                
+                const response = await fetch(METADATA_URL);
+                if (!response.ok) throw new Error('Fichier de métadonnées non trouvé');
+                
+                const data = await response.json();
+                
+                // Filtrer uniquement le dossier intranet/histoirs
+                toutesLesHistoires = data.stories.filter(histoire => 
+                    histoire.directory === DOSSIER_CIBLE || 
+                    histoire.filename.startsWith(DOSSIER_CIBLE + '/')
+                );
+                
+                console.log(`📁 Histoires trouvées dans ${DOSSIER_CIBLE}:`, toutesLesHistoires.length);
+                
+                // Extraire les filtres uniques
+                extraireFiltresUniques();
+                
+                // Peupler les menus déroulants
+                peuplerFiltresAvances();
+                
+                // Afficher les histoires
+                afficherHistoires(toutesLesHistoires);
+                
+                // Mettre à jour les stats
+                const lastUpdate = new Date(data.generatedAt).toLocaleDateString('fr-FR');
+                const histoiresAvecImages = toutesLesHistoires.filter(h => h.logoUrl).length;
+                
+                statsElement.innerHTML = 
+                    `📚 ${toutesLesHistoires.length} histoires • 🖼️ ${histoiresAvecImages} avec images • 📅 Mise à jour: ${lastUpdate}`;
+                    
+            } catch (error) {
+                console.error('Erreur:', error);
+                statsElement.innerHTML = '<span style="color:#ff6b6b"><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</span>';
+                grilleLivres.innerHTML = `
+                    <div class="error-state">
+                        <h2><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</h2>
+                        <p>Impossible de charger la bibliothèque des histoires.</p>
+                        <p>Vérifiez que le fichier stories-metadata.json est présent.</p>
+                        <button onclick="loadStoriesMetadata()" class="bouton-lire" style="margin-top:15px; width:auto;">
+                            <i class="fas fa-redo"></i> Réessayer
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function extraireFiltresUniques() {
+            toutesLesHistoires.forEach(histoire => {
+                categoriesUniques.add(histoire.categorie);
+                typesUniques.add(histoire.type);
+            });
+        }
+
+        function peuplerFiltresAvances() {
+            const categorySelect = document.getElementById('filterCategory');
+            const typeSelect = document.getElementById('filterType');
+            
+            // Catégories
+            [...categoriesUniques].sort().forEach(categorie => {
+                const option = document.createElement('option');
+                option.value = categorie;
+                option.textContent = categorie.charAt(0).toUpperCase() + categorie.slice(1);
+                categorySelect.appendChild(option);
+            });
+            
+            // Types
+            [...typesUniques].sort().forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+                typeSelect.appendChild(option);
+            });
+        }
+
+        function filtrerHistoires() {
+            const searchTerm = document.getElementById('champRecherche').value.toLowerCase();
+            const category = document.getElementById('filterCategory').value;
+            const type = document.getElementById('filterType').value;
+            const ageFilter = document.querySelector('.bouton-filtre.actif')?.dataset.filtre || 'all';
+            
+            return toutesLesHistoires.filter(histoire => {
+                // Filtre recherche
+                if (searchTerm && 
+                    !histoire.title.toLowerCase().includes(searchTerm) && 
+                    !histoire.description.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+                
+                // Filtre catégorie
+                if (category !== 'all' && histoire.categorie !== category) {
+                    return false;
+                }
+                
+                // Filtre type
+                if (type !== 'all' && histoire.type !== type) {
+                    return false;
+                }
+                
+                // Filtre âge
+                if (ageFilter !== 'all' && !histoire.age.includes(ageFilter.replace('age-', ''))) {
+                    return false;
+                }
+                
+                return true;
+            });
+        }
+
+        function afficherHistoires(histoires) {
+            const grilleLivres = document.getElementById('grilleLivres');
+            
+            if (histoires.length === 0) {
+                grilleLivres.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search" style="font-size: 50px; margin-bottom: 20px; color: #ccc;"></i>
+                        <h3>Aucune histoire trouvée</h3>
+                        <p>Aucune histoire ne correspond à vos critères de recherche.</p>
+                        <p>Essayez de modifier vos filtres ou votre recherche.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grilleLivres.innerHTML = histoires.map(histoire => {
+                let url = histoire.url;
+                if (!url.startsWith('/')) {
+                    url = '/' + url;
+                }
+                url = url.replace(/\/\//g, '/');
+                
+                return `
+                    <div class="carte-livre" onclick="window.location.href='${url}'">
+                        <div class="image-livre">
+                            ${histoire.logoUrl ? 
+                                `<img src="${histoire.logoUrl}" alt="${histoire.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                 <div class="default-icon" style="display:none;">📖</div>` :
+                                `<div class="default-icon">📖</div>`
+                            }
+                        </div>
+                        <div class="contenu-livre">
+                            <h3>${histoire.title}</h3>
+                            <div class="metadonnees">
+                                <span class="badge badge-age">${histoire.age} ans</span>
+                                <span class="badge badge-categorie">${histoire.categorie}</span>
+                                <span class="badge badge-type">${histoire.type}</span>
+                            </div>
+                            <p>${histoire.description}</p>
+                            <a href="${url}" class="bouton-lire" onclick="event.stopPropagation()">
+                                <i class="fas fa-book-open"></i> Lire l'histoire
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Événements
+        document.querySelectorAll('.bouton-filtre').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.bouton-filtre').forEach(b => b.classList.remove('actif'));
+                this.classList.add('actif');
+                afficherHistoires(filtrerHistoires());
+            });
+        });
+
+        document.getElementById('boutonRecherche').addEventListener('click', () => {
             afficherHistoires(filtrerHistoires());
         });
-    });
 
-    document.getElementById('boutonRecherche').addEventListener('click', () => {
-        afficherHistoires(filtrerHistoires());
-    });
+        document.getElementById('champRecherche').addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') afficherHistoires(filtrerHistoires());
+        });
 
-    document.getElementById('champRecherche').addEventListener('keyup', (e) => {
-        if (e.key === 'Enter') afficherHistoires(filtrerHistoires());
-    });
+        document.getElementById('filterCategory').addEventListener('change', () => {
+            afficherHistoires(filtrerHistoires());
+        });
 
-    document.getElementById('filterCategory').addEventListener('change', () => {
-        afficherHistoires(filtrerHistoires());
-    });
+        document.getElementById('filterType').addEventListener('change', () => {
+            afficherHistoires(filtrerHistoires());
+        });
 
-    document.getElementById('filterType').addEventListener('change', () => {
-        afficherHistoires(filtrerHistoires());
-    });
-
-    // Démarrer au chargement
-    document.addEventListener('DOMContentLoaded', loadStoriesMetadata);
-</script>
+        // Démarrer
+        document.addEventListener('DOMContentLoaded', loadStoriesMetadata);
+    </script>
+</body>
+</html>

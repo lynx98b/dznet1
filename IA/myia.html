@@ -6,8 +6,8 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('\''js'\'', new Date());
-    gtag('\''config'\'', '\''G-CRRK6Z4D1X'\'');
+    gtag('js', new Date());
+    gtag('config', 'G-CRRK6Z4D1X');
   </script>
 
   <meta charset="UTF-8" />
@@ -23,7 +23,7 @@
     }
     *{margin:0;padding:0;box-sizing:border-box}
     body{
-      font-family:'\''Segoe UI'\'',Tahoma,Geneva,Verdana,sans-serif;
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
       background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
       min-height:100vh;padding:20px;color:var(--text-dark)
     }
@@ -255,7 +255,7 @@
       color: #ECF0F1;
       padding: 20px;
       border-radius: 8px;
-      font-family: '\''Courier New'\'', monospace;
+      font-family: 'Courier New', monospace;
       font-size: 12px;
       max-height: 400px;
       overflow-y: auto;
@@ -329,7 +329,7 @@
       <h4>📱 Expérience optimale sur PC/Tablette</h4>
       <p>
         Ce générateur est optimisé pour une utilisation sur ordinateur ou tablette.
-        <br>Pour une meilleure expérience de création, nous recommandons d'\''utiliser un écran plus large.
+        <br>Pour une meilleure expérience de création, nous recommandons d'utiliser un écran plus large.
       </p>
     </div>
 
@@ -491,7 +491,7 @@
         <div class="section">
           <h2 class="section-title">1️⃣ Public Cible (détermine les limites)</h2>
           <div class="form-group" id="ageGroup">
-            <label class="required">Tranche d'\''âge</label>
+            <label class="required">Tranche d'âge</label>
             <div class="radio-group">
               <label class="radio-item">
                 <input type="radio" name="ageRange" value="3-4" required>
@@ -514,7 +514,7 @@
                 <span>🧑 11-12 ans (3 pages, 1500 mots max)</span>
               </label>
             </div>
-            <div class="error-message">Sélectionnez une tranche d'\''âge</div>
+            <div class="error-message">Sélectionnez une tranche d'âge</div>
           </div>
         </div>
 
@@ -609,7 +609,7 @@
         <div class="section">
           <h2 class="section-title">👁️ Aperçu du Prompt</h2>
           <button type="button" class="btn-warning" id="previewBtn">
-            <span>Afficher l'\''aperçu</span>
+            <span>Afficher l'aperçu</span>
           </button>
           <div class="prompt-preview" id="promptPreview"></div>
         </div>
@@ -632,42 +632,42 @@
   <script>
     // ===== CONFIGURATION v4.4.001 =====
     const VERSION = "v4.4";
-    const STORAGE_KEY = '\''dznet1_generator_v4'\'';
-    let currentMode = '\''test'\''; // test ou production
+    const STORAGE_KEY = 'dznet1_generator_v4';
+    let currentMode = 'test'; // test ou production
     
     // ===== PROFILS PAR ÂGE =====
     const AGE_LIMITS = {
-      '\''3-4'\'': { pages: 1, words: 300, visual: 70 },
-      '\''5-6'\'': { pages: 2, words: 500, visual: 50 },
-      '\''7-8'\'': { pages: 2, words: 800, visual: 40 },
-      '\''9-10'\'': { pages: 3, words: 1200, visual: 30 },
-      '\''11-12'\'': { pages: 3, words: 1500, visual: 20 }
+      '3-4': { pages: 1, words: 300, visual: 70 },
+      '5-6': { pages: 2, words: 500, visual: 50 },
+      '7-8': { pages: 2, words: 800, visual: 40 },
+      '9-10': { pages: 3, words: 1200, visual: 30 },
+      '11-12': { pages: 3, words: 1500, visual: 20 }
     };
     
     // ===== TEMPLATE PROMPT COMPLET CORRIGÉ =====
     function generateCompletePrompt() {
-      const creator = document.getElementById('\''creatorName'\'').value.trim();
-      const category = document.getElementById('\''projectCategory'\'').value;
-      const age = document.querySelector('\''input[name="ageRange"]:checked'\'')?.value || '\''7-8'\'';
-      const contentType = document.getElementById('\''contentType'\'').value;
-      const theme = document.getElementById('\''theme'\'').value.trim();
-      const metaDesc = document.getElementById('\''metaDescription'\'').value.trim() || 
+      const creator = document.getElementById('creatorName').value.trim();
+      const category = document.getElementById('projectCategory').value;
+      const age = document.querySelector('input[name="ageRange"]:checked')?.value || '7-8';
+      const contentType = document.getElementById('contentType').value;
+      const theme = document.getElementById('theme').value.trim();
+      const metaDesc = document.getElementById('metaDescription').value.trim() || 
                        `${theme} - Contenu éducatif interactif pour enfants ${age} ans. Apprentissage ludique sur dznet1.com`;
       
-      const objectives = Array.from(document.querySelectorAll('\''input[name="objectives"]:checked'\''))
+      const objectives = Array.from(document.querySelectorAll('input[name="objectives"]:checked'))
                               .map(cb => cb.value);
       
       const limits = AGE_LIMITS[age];
-      const includeI18n = document.getElementById('\''reqI18n'\'').checked;
-      const includeAudio = document.getElementById('\''includeAudio'\'').checked;
-      const generatePaper = document.getElementById('\''generatePaper'\'').checked;
-      const addProgressBar = document.getElementById('\''addProgressBar'\'').checked;
+      const includeI18n = document.getElementById('reqI18n').checked;
+      const includeAudio = document.getElementById('includeAudio').checked;
+      const generatePaper = document.getElementById('generatePaper').checked;
+      const addProgressBar = document.getElementById('addProgressBar').checked;
       
-      const testMode = currentMode === '\''test'\'';
+      const testMode = currentMode === 'test';
       
       // Template string corrigé avec échappements appropriés
       const prompt = `# 🚀 PROMPT COMPLET dznet1.com - ${theme.toUpperCase()}
-## Version: ${VERSION} | Mode: ${testMode ? '\''TEST LOCAL'\'' : '\''PRODUCTION'\''} | Âge: ${age} ans
+## Version: ${VERSION} | Mode: ${testMode ? 'TEST LOCAL' : 'PRODUCTION'} | Âge: ${age} ans
 
 ## ⚠️ CONTRAINTES STRICTES
 - **PAGES:** ${limits.pages} MAXIMUM
@@ -680,17 +680,17 @@
 <!-- COMMENTAIRE OBLIGATOIRE DANS LE HTML GÉNÉRÉ -->
 <!-- 
 ⚠️ EXPÉRIENCE OPTIMALE : Ce contenu éducatif est optimisé pour une utilisation 
-sur PC ou tablette. L'\''affichage sur smartphone, bien que fonctionnel, 
-n'\''offre pas l'\''expérience interactive complète prévue pour l'\''apprentissage.
-Nous recommandons vivement l'\''utilisation d'\''un écran plus large.
+sur PC ou tablette. L'affichage sur smartphone, bien que fonctionnel, 
+n'offre pas l'expérience interactive complète prévue pour l'apprentissage.
+Nous recommandons vivement l'utilisation d'un écran plus large.
 -->
 
 **Il y a DEUX systèmes de navigation distincts :**
 
 ### 1️⃣ Navigation ENTRE FICHIERS HTML (navigator.html - AUTOMATIQUE)
-✅ **Déjà géré par dznet1.com, tu n'\''as RIEN à faire**
+✅ **Déjà géré par dznet1.com, tu n'as RIEN à faire**
 - Fichier : navigator.html chargé automatiquement via fetch
-- Fonction : Passer d'\''un fichier HTML à l'\''autre (jeux001.html → jeux002.html)
+- Fonction : Passer d'un fichier HTML à l'autre (jeux001.html → jeux002.html)
 - Position : En haut de page, sticky top, couleur bleu (#4A6FA5)
 - Boutons : "◀ Activité Précédente" | "Activité Suivante ▶" | "🏠 Menu" | "✓ Terminé"
 - **NE JAMAIS créer ou modifier cette navigation**
@@ -702,7 +702,7 @@ Nous recommandons vivement l'\''utilisation d'\''un écran plus large.
 - Couleur : ORANGE/ACCENT (#E67E22) - **DIFFÉRENT du bleu de navigator.html**
 - Boutons : "📄 Page 1" | "📄 Page 2" | "📄 Page 3"
 - Technique : CSS (display: none/block) + JavaScript simple
-${addProgressBar && limits.pages > 1 ? '\''- Inclure une barre de progression visuelle'\'' : '\'''\''}
+${addProgressBar && limits.pages > 1 ? '- Inclure une barre de progression visuelle' : ''}
 
 ### ⚠️ RÈGLES STRICTES
 1. **NE JAMAIS toucher à navigator.html** (chargé automatiquement)
@@ -740,7 +740,7 @@ ${addProgressBar ? `  <!-- Barre de progression -->
       transition: width 0.3s ease;
     "></div>
   </div>
-` : '\'''\''}
+` : ''}
   <button onclick="showPage(1)" class="page-btn active" id="btn-page-1" style="
     background: white;
     color: var(--accent);
@@ -773,53 +773,53 @@ ${limits.pages === 3 ? `  <button onclick="showPage(3)" class="page-btn" id="btn
     font-weight: 600;
     transition: 0.3s;
   ">📄 Page 3</button>
-` : '\'''\''}
+` : ''}
 </nav>
 
 <script>
 // Gestion pages internes (v4.4.001)
 function showPage(pageNum) {
   // Cacher toutes les pages
-  document.querySelectorAll('\''.content-page'\'').forEach(page => {
-    page.style.display = '\''none'\'';
+  document.querySelectorAll('.content-page').forEach(page => {
+    page.style.display = 'none';
   });
   
   // Afficher la page demandée
-  const targetPage = document.getElementById('\''page-'\'' + pageNum);
+  const targetPage = document.getElementById('page-' + pageNum);
   if (targetPage) {
-    targetPage.style.display = '\''block'\'';
+    targetPage.style.display = 'block';
   }
   
   // Mettre à jour boutons
-  document.querySelectorAll('\''.page-btn'\'').forEach(btn => {
-    btn.style.background = '\''white'\'';
-    btn.style.color = '\''var(--accent)'\'';
-    btn.classList.remove('\''active'\'');
+  document.querySelectorAll('.page-btn').forEach(btn => {
+    btn.style.background = 'white';
+    btn.style.color = 'var(--accent)';
+    btn.classList.remove('active');
   });
   
-  const activeBtn = document.getElementById('\''btn-page-'\'' + pageNum);
+  const activeBtn = document.getElementById('btn-page-' + pageNum);
   if (activeBtn) {
-    activeBtn.style.background = '\''var(--accent)'\'';
-    activeBtn.style.color = '\''white'\'';
-    activeBtn.classList.add('\''active'\'');
+    activeBtn.style.background = 'var(--accent)';
+    activeBtn.style.color = 'white';
+    activeBtn.classList.add('active');
   }
   
 ${addProgressBar ? `  // Mettre à jour la barre de progression
-  const progressFill = document.getElementById('\''progress-fill'\'');
+  const progressFill = document.getElementById('progress-fill');
   if (progressFill) {
     const progressPercent = (pageNum / ${limits.pages}) * 100;
-    progressFill.style.width = progressPercent + '\''%'\'';
+    progressFill.style.width = progressPercent + '%';
   }
-` : '\'''\''}
+` : ''}
 }
 
 // Afficher page 1 au chargement
-document.addEventListener('\''DOMContentLoaded'\'', function() {
+document.addEventListener('DOMContentLoaded', function() {
   showPage(1);
 });
 <script>
 \`\`\`
-` : '\'''\''}
+` : ''}
 
 ---
 
@@ -829,7 +829,7 @@ Génère une PALETTE JSON pour: "${theme}" (${age} ans).
 
 **Contraintes:**
 - WCAG AA: contraste texte/primaire ≥ 4.5, texte/surface ≥ 7.0
-- Couleurs adaptées à l'\''âge et au thème
+- Couleurs adaptées à l'âge et au thème
 - 8 clés obligatoires
 
 \`\`\`json
@@ -871,7 +871,7 @@ ${testMode ? `**MODE TEST - Tableau des médias locaux :**
 |---------|----|----|-------|--------|---------|----------|----------|
 | Titre | ${theme} | [EN] | [AR] | images/titre.jpg | audio/titre_fr.mp3 | audio/titre_en.mp3 | audio/titre_ar.mp3 |
 | ... | ... | ... | ... | ... | ... | ... | ... |
-` : '\''**MODE PRODUCTION - Utiliser CDN dznet1.com**'\''}
+` : '**MODE PRODUCTION - Utiliser CDN dznet1.com**'}
 
 ---
 
@@ -882,15 +882,15 @@ ${testMode ? `**MODE TEST - Tableau des médias locaux :**
 - [ ] SEO complet (H1, metas, JSON-LD)
 - [ ] Publicité après header
 - [ ] Logo sticky + Navigation + Footer distants
-- [ ] ${includeI18n ? '\''i18n FR/EN/AR'\'' : '\''Monolingue FR'\''}
+- [ ] ${includeI18n ? 'i18n FR/EN/AR' : 'Monolingue FR'}
 - [ ] Analytics configuré
 - [ ] CSS responsive
 - [ ] WCAG 2.1 AA
 - [ ] ${limits.pages} page(s) MAX respectées
 - [ ] ${limits.words} mots MAX respectés
-${limits.pages > 1 ? '\''- [ ] Navigation interne ORANGE différente'\'' : '\'''\''}
-${addProgressBar && limits.pages > 1 ? '\''- [ ] Barre de progression'\'' : '\'''\''}
-${generatePaper ? '\''- [ ] Version papier Word/PDF'\'' : '\'''\''}
+${limits.pages > 1 ? '- [ ] Navigation interne ORANGE différente' : ''}
+${addProgressBar && limits.pages > 1 ? '- [ ] Barre de progression' : ''}
+${generatePaper ? '- [ ] Version papier Word/PDF' : ''}
 
 **⚡ GÉNÈRE MAINTENANT !**`;
 
@@ -898,65 +898,65 @@ ${generatePaper ? '\''- [ ] Version papier Word/PDF'\'' : '\'''\''}
     }
     
     // ===== TOAST NOTIFICATION v4.4.002 =====
-    function showToast(message, type = '\''success'\'') {
-      const existingToast = document.querySelector('\''.toast'\'');
+    function showToast(message, type = 'success') {
+      const existingToast = document.querySelector('.toast');
       if (existingToast) {
         existingToast.remove();
       }
       
-      const toast = document.createElement('\''div'\'');
+      const toast = document.createElement('div');
       toast.className = `toast ${type}`;
       toast.textContent = message;
       document.body.appendChild(toast);
       
-      setTimeout(() => toast.classList.add('\''show'\''), 10);
+      setTimeout(() => toast.classList.add('show'), 10);
       
       setTimeout(() => {
-        toast.classList.remove('\''show'\'');
+        toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
       }, 3000);
     }
     
     // ===== EVENT LISTENERS v4.4.003 =====
-    document.addEventListener('\''DOMContentLoaded'\'', function() {
+    document.addEventListener('DOMContentLoaded', function() {
       // Mode toggle
-      document.querySelectorAll('\''.mode-option'\'').forEach(option => {
-        option.addEventListener('\''click'\'', function() {
-          document.querySelectorAll('\''.mode-option'\'').forEach(o => o.classList.remove('\''active'\''));
-          this.classList.add('\''active'\'');
+      document.querySelectorAll('.mode-option').forEach(option => {
+        option.addEventListener('click', function() {
+          document.querySelectorAll('.mode-option').forEach(o => o.classList.remove('active'));
+          this.classList.add('active');
           currentMode = this.dataset.mode;
-          showToast(`Mode ${currentMode === '\''test'\'' ? '\''TEST LOCAL'\'' : '\''PRODUCTION'\''} activé`, '\''success'\'');
+          showToast(`Mode ${currentMode === 'test' ? 'TEST LOCAL' : 'PRODUCTION'} activé`, 'success');
         });
       });
       
       // Preview button
-      document.getElementById('\''previewBtn'\'').addEventListener('\''click'\'', function() {
-        const preview = document.getElementById('\''promptPreview'\'');
-        if (preview.classList.contains('\''active'\'')) {
-          preview.classList.remove('\''active'\'');
-          this.textContent = '\''Afficher l'\''aperçu'\'';
+      document.getElementById('previewBtn').addEventListener('click', function() {
+        const preview = document.getElementById('promptPreview');
+        if (preview.classList.contains('active')) {
+          preview.classList.remove('active');
+          this.textContent = 'Afficher l\\'aperçu';
         } else {
           preview.textContent = generateCompletePrompt();
-          preview.classList.add('\''active'\'');
-          this.textContent = '\''Masquer l'\''aperçu'\'';
+          preview.classList.add('active');
+          this.textContent = 'Masquer l\\'aperçu';
         }
       });
       
       // Copy button
-      document.getElementById('\''copyBtn'\'').addEventListener('\''click'\'', async function() {
+      document.getElementById('copyBtn').addEventListener('click', async function() {
         try {
-          const creatorName = document.getElementById('\''creatorName'\'').value.trim();
-          const theme = document.getElementById('\''theme'\'').value.trim();
+          const creatorName = document.getElementById('creatorName').value.trim();
+          const theme = document.getElementById('theme').value.trim();
           
           if (!creatorName) {
-            showToast('\''⚠️ Nom du créateur requis'\'', '\''error'\'');
-            document.getElementById('\''creatorName'\'').focus();
+            showToast('⚠️ Nom du créateur requis', 'error');
+            document.getElementById('creatorName').focus();
             return;
           }
           
           if (!theme) {
-            showToast('\''⚠️ Thème requis'\'', '\''error'\'');
-            document.getElementById('\''theme'\'').focus();
+            showToast('⚠️ Thème requis', 'error');
+            document.getElementById('theme').focus();
             return;
           }
           
@@ -965,58 +965,58 @@ ${generatePaper ? '\''- [ ] Version papier Word/PDF'\'' : '\'''\''}
           // Tentative avec API moderne
           if (navigator.clipboard && window.isSecureContext) {
             await navigator.clipboard.writeText(prompt);
-            showToast('\''✅ Prompt copié dans le presse-papier !'\'', '\''success'\'');
+            showToast('✅ Prompt copié dans le presse-papier !', 'success');
           } else {
             // Fallback pour compatibilité
-            const textarea = document.createElement('\''textarea'\'');
+            const textarea = document.createElement('textarea');
             textarea.value = prompt;
-            textarea.style.position = '\''fixed'\'';
-            textarea.style.left = '\''-9999px'\'';
-            textarea.style.top = '\''0'\'';
+            textarea.style.position = 'fixed';
+            textarea.style.left = '-9999px';
+            textarea.style.top = '0';
             document.body.appendChild(textarea);
             textarea.focus();
             textarea.select();
             
             try {
-              const success = document.execCommand('\''copy'\'');
+              const success = document.execCommand('copy');
               if (success) {
-                showToast('\''✅ Prompt copié (mode compatibilité)'\'', '\''success'\'');
+                showToast('✅ Prompt copié (mode compatibilité)', 'success');
               } else {
-                throw new Error('\''execCommand failed'\'');
+                throw new Error('execCommand failed');
               }
             } catch (err) {
-              showToast('\''❌ Erreur: copie manuelle requise'\'', '\''error'\'');
-              console.error('\''Copy fallback failed:'\'', err);
+              showToast('❌ Erreur: copie manuelle requise', 'error');
+              console.error('Copy fallback failed:', err);
             } finally {
               document.body.removeChild(textarea);
             }
           }
         } catch (error) {
-          showToast('\''❌ Erreur lors de la copie'\'', '\''error'\'');
-          console.error('\''Copy error:'\'', error);
+          showToast('❌ Erreur lors de la copie', 'error');
+          console.error('Copy error:', error);
         }
       });
       
       // Form submit
-      document.getElementById('\''promptForm'\'').addEventListener('\''submit'\'', function(e) {
+      document.getElementById('promptForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const creatorName = document.getElementById('\''creatorName'\'').value.trim();
-        const theme = document.getElementById('\''theme'\'').value.trim();
+        const creatorName = document.getElementById('creatorName').value.trim();
+        const theme = document.getElementById('theme').value.trim();
         
         if (!creatorName) {
-          showToast('\''⚠️ Nom créateur requis'\'', '\''error'\'');
+          showToast('⚠️ Nom créateur requis', 'error');
           return;
         }
         if (!theme) {
-          showToast('\''⚠️ Thème requis'\'', '\''error'\'');
+          showToast('⚠️ Thème requis', 'error');
           return;
         }
         
         const prompt = generateCompletePrompt();
-        const blob = new Blob([prompt], {type: '\''text/plain'\''});
+        const blob = new Blob([prompt], {type: 'text/plain'});
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('\''a'\'');
+        const a = document.createElement('a');
         a.href = url;
         a.download = `prompt_dznet1_${currentMode}_${Date.now()}.txt`;
         document.body.appendChild(a);
@@ -1024,42 +1024,42 @@ ${generatePaper ? '\''- [ ] Version papier Word/PDF'\'' : '\'''\''}
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         
-        showToast('\''✅ Prompt complet généré et téléchargé !'\'', '\''success'\'');
+        showToast('✅ Prompt complet généré et téléchargé !', 'success');
       });
       
       // Reset form
-      document.getElementById('\''promptForm'\'').addEventListener('\''reset'\'', function() {
+      document.getElementById('promptForm').addEventListener('reset', function() {
         setTimeout(() => {
-          document.getElementById('\''promptPreview'\'').classList.remove('\''active'\'');
-          document.getElementById('\''previewBtn'\'').textContent = '\''Afficher l'\''aperçu'\'';
-          showToast('\''🔄 Formulaire réinitialisé'\'', '\''success'\'');
+          document.getElementById('promptPreview').classList.remove('active');
+          document.getElementById('previewBtn').textContent = 'Afficher l\\'aperçu';
+          showToast('🔄 Formulaire réinitialisé', 'success');
         }, 100);
       });
       
       // Auto-save creator name
       const savedName = localStorage.getItem(STORAGE_KEY);
       if (savedName) {
-        document.getElementById('\''creatorName'\'').value = savedName;
+        document.getElementById('creatorName').value = savedName;
       }
       
-      document.getElementById('\''creatorName'\'').addEventListener('\''blur'\'', function() {
+      document.getElementById('creatorName').addEventListener('blur', function() {
         if (this.value.trim()) {
           localStorage.setItem(STORAGE_KEY, this.value.trim());
         }
       });
       
       // Validation en temps réel
-      document.getElementById('\''creatorName'\'').addEventListener('\''input'\'', function() {
-        const parent = this.closest('\''.form-group'\'');
+      document.getElementById('creatorName').addEventListener('input', function() {
+        const parent = this.closest('.form-group');
         if (this.value.trim()) {
-          parent.classList.remove('\''has-error'\'');
+          parent.classList.remove('has-error');
         }
       });
       
-      document.getElementById('\''theme'\'').addEventListener('\''input'\'', function() {
-        const parent = this.closest('\''.form-group'\'');
+      document.getElementById('theme').addEventListener('input', function() {
+        const parent = this.closest('.form-group');
         if (this.value.trim()) {
-          parent.classList.remove('\''has-error'\'');
+          parent.classList.remove('has-error');
         }
       });
     });

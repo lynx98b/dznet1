@@ -10,301 +10,139 @@
   <meta name="content-age" content="5">
   <meta name="keywords" content="Algérie, villes, géographie, enfants, éducatif, interactif, Alger, Constantine, Oran, Tamanrasset">
 
-  <!-- Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-CRRK6Z4D1X');
-  </script>
-
-  <!-- Feuille de style distante -->
   <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css">
 
-  <!-- Style personnalisé -->
   <style>
-    /* ===== VARIABLES ===== */
     :root {
-      --color-pastel-1: #FFE4E1;
-      --color-pastel-2: #E0F2F7;
-      --color-pastel-3: #FFF9C4;
-      --color-pastel-4: #D1F2EB;
-      --color-primary: #4A90E2;
-      --color-success: #5CB85C;
-      --color-warning: #F0AD4E;
-      --color-danger: #D9534F;
+      --c1: #FFE4E1; --c2: #E0F2F7; --c3: #FFF9C4; --c4: #D1F2EB;
+      --p: #4A90E2; --s: #5CB85C; --w: #F0AD4E; --d: #D9534F;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif;
-      background-color: var(--color-pastel-2);
-      color: #333;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 15px;
-    }
-
-    /* ===== HEADER ===== */
-    header {
-      background: linear-gradient(135deg, var(--color-pastel-1), var(--color-pastel-3));
-      padding: 15px 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      height: 60px;
-      width: auto;
-    }
-
-    .language-selector {
-      display: flex;
-      gap: 10px;
-    }
-
-    .lang-btn {
-      border: 2px solid var(--color-primary);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: .3s;
-      background: none;
-    }
-
-    .lang-btn:hover,
-    .lang-btn.active {
-      background-color: var(--color-primary);
-      color: white;
-    }
-
-    /* ===== PUB BANNIÈRE ===== */
-    .ad-banner {
-      text-align: center;
-      padding: 10px 0;
-      background-color: white;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .ad-banner img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    /* ===== PRINCIPAL ===== */
-    main {
-      padding: 20px 0;
-      min-height: calc(100vh - 200px);
-    }
-
-    h1, h2 {
-      color: var(--color-primary);
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    h1 { font-size: 2.2rem; }
-    h2 { font-size: 1.8rem; }
-
-    .intro {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 1.2rem;
-      background-color: var(--color-pastel-4);
-      padding: 15px;
-      border-radius: 10px;
-    }
-
-    .timer-container {
-      margin: 20px auto;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: var(--color-primary);
-      background-color: var(--color-pastel-3);
-      padding: 10px;
-      border-radius: 10px;
-      display: inline-block;
-    }
-
-    /* ===== QUIZ ===== */
-    .quiz-container {
-      background-color: white;
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-    }
-
-    .question-image {
-      max-width: 100%;
-      max-height: 300px;
-      border-radius: 10px;
-      margin: 15px 0;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-    }
-
-    .options-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .option-btn {
-      background-color: var(--color-pastel-1);
-      border-radius: 10px;
-      padding: 15px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: .3s;
-      border: 2px solid transparent;
-    }
-
-    .option-btn:hover { transform: translateY(-3px); }
-
-    .option-btn.correct { background-color: var(--color-success); color: white; }
-    .option-btn.incorrect { background-color: var(--color-danger); color: white; }
-
-    .navigation {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
-    }
-
-    .nav-btn {
-      background-color: var(--color-primary);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 12px 25px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: .3s;
-      font-weight: bold;
-    }
-
-    .nav-btn:hover { transform: translateY(-2px); }
-    .nav-btn:disabled { background-color: #ccc; cursor: not-allowed; }
-
-    /* ===== AIDE PARENTS ===== */
-    .parent-help {
-      background-color: var(--color-pastel-3);
-      border-left: 5px solid var(--color-warning);
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 30px;
-    }
-
-    .version {
-      text-align: center;
-      margin-top: 20px;
-      font-size: .9rem;
-      color: #777;
-    }
+    body { font-family: 'Comic Sans MS', sans-serif; background: var(--c2); margin:0; }
+    header { background: linear-gradient(135deg, var(--c1), var(--c3)); padding: 15px; position: sticky; top:0; z-index:10; }
+    .container { max-width: 1200px; margin: auto; padding: 0 15px; }
+    .header-content { display:flex; justify-content:space-between; align-items:center; }
+    .logo { height:60px; }
+    .lang-btn { border:2px solid var(--p); border-radius:50%; width:40px; height:40px; cursor:pointer; }
+    .lang-btn.active, .lang-btn:hover { background: var(--p); color:white; }
+    .ad-banner { background:white; text-align:center; padding:10px 0; border-bottom:1px solid #ccc; }
+    main { padding:20px 0; }
+    h1,h2 { color:var(--p); text-align:center; }
+    .intro { background:var(--c4); padding:15px; border-radius:10px; text-align:center; }
+    .quiz-container { background:white; padding:20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); margin-top:20px; }
+    .question-image img { max-width:100%; max-height:300px; border-radius:10px; }
+    .options-container { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:15px; margin-top:20px; }
+    .option-btn { padding:15px; border-radius:10px; background:var(--c1); font-weight:bold; cursor:pointer; }
+    .option-btn.correct { background:var(--s); color:white; }
+    .option-btn.incorrect { background:var(--d); color:white; }
+    .feedback { text-align:center; margin-top:15px; font-size:1.3rem; font-weight:bold; display:none; }
+    .feedback.correct { color:var(--s); display:block; }
+    .feedback.incorrect { color:var(--d); display:block; }
+    .navigation { display:flex; justify-content:space-between; margin-top:20px; }
+    .nav-btn { background:var(--p); color:white; border:none; padding:12px 25px; border-radius:10px; cursor:pointer; font-weight:bold; }
+    .parent-help { background:var(--c3); padding:15px; border-left:5px solid var(--w); border-radius:10px; margin-top:20px; }
+    .version { text-align:center; margin-top:20px; color:#777; }
   </style>
-
 </head>
+
 <body>
 
-  <header>
-    <div class="container header-content">
-      <img src="https://dznet1.com/images/logo.png" alt="Logo dznet1.com" class="logo">
-
-      <div class="language-selector">
-        <button class="lang-btn active" data-lang="fr">FR</button>
-        <button class="lang-btn" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="ar">AR</button>
-      </div>
+<header>
+  <div class="container header-content">
+    <img src="https://dznet1.com/images/logo.png" class="logo" alt="logo">
+    <div class="language-selector">
+      <button class="lang-btn active" data-lang="fr">FR</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="ar">AR</button>
     </div>
-  </header>
+  </div>
+</header>
 
-  <div class="ad-banner">
-    <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" alt="Publicité partenaire">
+<div class="ad-banner">
+  <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png">
+</div>
+
+<main class="container">
+
+  <h1>Découvre les villes d'Algérie — Géographie — Âge : 5+</h1>
+
+  <div class="intro">
+    Bienvenue ! Écoute, regarde et devine la ville.
   </div>
 
-  <main class="container">
-    <h1>Découvre les villes d'Algérie — Catégorie : Géographie — Âge : 5+</h1>
+  <div class="timer-container">
+    <span id="timer">00:00</span>
+  </div>
 
-    <div class="intro">
-      <p>Bienvenue dans cette aventure à travers l'Algérie ! Écoute les sons, observe les images et devine de quelle ville il s'agit.</p>
+  <div class="quiz-container">
+    <h2 id="question-text"></h2>
+    <div id="question-image" class="question-image"></div>
+    <div id="audio-player"></div>
+    <div id="options-container" class="options-container"></div>
+    <div id="feedback" class="feedback"></div>
+    <div class="navigation">
+      <button id="prev-btn" class="nav-btn" disabled>Précédent</button>
+      <button id="next-btn" class="nav-btn">Suivant</button>
     </div>
+  </div>
 
-    <div class="timer-container">
-      <span id="timer">00:00</span>
-    </div>
+  <div class="parent-help">
+    <strong>Conseil :</strong> Encouragez et félicitez votre enfant !
+  </div>
 
-    <div class="quiz-container">
-      <div class="question-container">
-        <h2 id="question-text">De quelle ville s'agit-il ?</h2>
-        <div id="question-image"></div>
-        <div class="audio-player" id="audio-player"></div>
-      </div>
+  <div class="version">v1.015</div>
 
-      <div class="options-container" id="options-container"></div>
-      <div class="feedback" id="feedback"></div>
+</main>
 
-      <div class="navigation">
-        <button class="nav-btn" id="prev-btn" disabled>Précédent</button>
-        <button class="nav-btn" id="next-btn">Suivant</button>
-      </div>
-    </div>
+<script>
+const CDN_IMG = "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/";
+const CDN_AUDIO = "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/sounds/";
 
-    <div class="parent-help">
-      <h3>Conseil pour les parents</h3>
-      <p>Encouragez votre enfant après une erreur et félicitez-le lorsqu'il réussit !</p>
-    </div>
+const cities = [
+  { name:{fr:"Alger",en:"Algiers",ar:"الجزائر"}, image:CDN_IMG+"alger.jpg", audio:{fr:CDN_AUDIO+"alger_fr.mp3",en:CDN_AUDIO+"alger_en.mp3",ar:CDN_AUDIO+"alger_ar.mp3"} },
+  { name:{fr:"Constantine",en:"Constantine",ar:"قسنطينة"}, image:CDN_IMG+"constantine.jpg", audio:{fr:CDN_AUDIO+"constantine_fr.mp3",en:CDN_AUDIO+"constantine_en.mp3",ar:CDN_AUDIO+"constantine_ar.mp3"} },
+  { name:{fr:"Oran",en:"Oran",ar:"وهران"}, image:CDN_IMG+"oran.jpg", audio:{fr:CDN_AUDIO+"oran_fr.mp3",en:CDN_AUDIO+"oran_en.mp3",ar:CDN_AUDIO+"oran_ar.mp3"} },
+  { name:{fr:"Tamanrasset",en:"Tamanrasset",ar:"تمنراست"}, image:CDN_IMG+"tamanrasset.jpg", audio:{fr:CDN_AUDIO+"tamanrasset_fr.mp3",en:CDN_AUDIO+"tamanrasset_en.mp3",ar:CDN_AUDIO+"tamanrasset_ar.mp3"} }
+];
 
-    <div class="version">Version v1.014</div>
-  </main>
+let L='fr',i=0,s=0,t=Date.now();let T;
+const q=document.getElementById('question-text'), im=document.getElementById('question-image'),
+au=document.getElementById('audio-player'), op=document.getElementById('options-container'),
+fb=document.getElementById('feedback'), p=document.getElementById('prev-btn'),n=document.getElementById('next-btn');
 
-  <div id="footer-placeholder"></div>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LearningResource",
-    "name": "Découvre les villes d'Algérie",
-    "description": "Jeu éducatif interactif pour découvrir les grandes villes d'Algérie",
-    "educationalUse": "Géographie",
-    "typicalAgeRange": "5+",
-    "creator": {
-      "@type": "Person",
-      "name": "Bouchaib baya"
-    },
-    "dateCreated": "2025-11-09",
-    "version": "v1.014"
-  }
-  </script>
-
-  <!-- SCRIPT JS CONSERVÉ À L’IDENTIQUE -->
-  <script>
-  /* ( → ton JavaScript exact reste inchangé ) */
-  </script>
+function load(){const c=cities[i];
+q.textContent= L==='fr'?"De quelle ville s'agit-il ?":L==='en'?"Which city is this?":"ما هي هذه المدينة؟";
+im.innerHTML=`<img src="${c.image}">`;
+au.innerHTML=`<audio controls src="${c.audio[L]}"></audio>`;
+op.innerHTML='';
+cities.slice().sort(()=>Math.random()-0.5).forEach(v=>{
+let b=document.createElement('button');
+b.className='option-btn';b.textContent=v.name[L];
+b.onclick=()=>answer(v===c,b);
+op.appendChild(b);
+});
+fb.className='feedback';
+p.disabled=i===0;n.textContent=i===cities.length-1?(L==='fr'?"Terminer":L==='en'?"Finish":"إنهاء"):(L==='fr'?"Suivant":L==='en'?"Next":"التالي");
+}
+function answer(c,b){
+document.querySelectorAll('.option-btn').forEach(x=>x.disabled=true);
+b.classList.add(c?'correct':'incorrect');
+if(c){s++;fb.textContent="✔";fb.className='feedback correct';}
+else{fb.textContent="✖";fb.className='feedback incorrect';}
+new Audio(CDN_AUDIO+(c?"correct.mp3":"incorrect.mp3")).play();
+}
+function next(){i<cities.length-1?(i++,load()):end();}
+function prev(){i>0?(i--,load()):0;}
+function end(){
+clearInterval(T);
+q.textContent=`Score : ${s}/${cities.length}`;
+im.innerHTML='';au.innerHTML='';op.innerHTML='';
+fb.textContent=`Temps : ${Math.floor((Date.now()-t)/1000)} s`;fb.className='feedback correct';
+p.style.display='none';n.textContent="Recommencer";n.onclick=()=>location.reload();
+}
+document.addEventListener('DOMContentLoaded',()=>{load();T=setInterval(()=>{document.getElementById('timer').textContent=String(Math.floor((Date.now()-t)/1000)).padStart(2,"0")},1000);});
+p.onclick=prev;n.onclick=next;
+document.querySelectorAll('.lang-btn').forEach(b=>b.onclick=()=>{L=b.dataset.lang;document.querySelectorAll('.lang-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');load();});
+</script>
 
 </body>
 </html>

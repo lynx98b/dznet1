@@ -944,58 +944,40 @@ ${generatePaper ? '- [ ] Version papier Word/PDF' : ''}
       
       // Copy button
       document.getElementById('copyBtn').addEventListener('click', async function() {
+        const prompt = generateCompletePrompt();
+      
+        // Sécurité: vérifier données requises
+        const creatorName = document.getElementById('creatorName').value.trim();
+        const theme = document.getElementById('theme').value.trim();
+        
+        if (!creatorName || !theme) {
+          showToast('⚠️ Remplis les champs obligatoires d’abord', 'error');
+          return;
+        }
+      
         try {
-          const creatorName = document.getElementById('creatorName').value.trim();
-          const theme = document.getElementById('theme').value.trim();
-          
-          if (!creatorName) {
-            showToast('⚠️ Nom du créateur requis', 'error');
-            document.getElementById('creatorName').focus();
-            return;
-          }
-          
-          if (!theme) {
-            showToast('⚠️ Thème requis', 'error');
-            document.getElementById('theme').focus();
-            return;
-          }
-          
-          const prompt = generateCompletePrompt();
-          
-          // Tentative avec API moderne
+          // Méthode moderne (HTTPS / localhost OK)
           if (navigator.clipboard && window.isSecureContext) {
             await navigator.clipboard.writeText(prompt);
             showToast('✅ Prompt copié dans le presse-papier !', 'success');
           } else {
-            // Fallback pour compatibilité
+            // Fallback compatible partout
             const textarea = document.createElement('textarea');
             textarea.value = prompt;
             textarea.style.position = 'fixed';
-            textarea.style.left = '-9999px';
-            textarea.style.top = '0';
+            textarea.style.opacity = '0';
             document.body.appendChild(textarea);
-            textarea.focus();
             textarea.select();
-            
-            try {
-              const success = document.execCommand('copy');
-              if (success) {
-                showToast('✅ Prompt copié (mode compatibilité)', 'success');
-              } else {
-                throw new Error('execCommand failed');
-              }
-            } catch (err) {
-              showToast('❌ Erreur: copie manuelle requise', 'error');
-              console.error('Copy fallback failed:', err);
-            } finally {
-              document.body.removeChild(textarea);
-            }
+            document.execCommand('copy');
+            textarea.remove();
+            showToast('✅ Prompt copié (mode compatibilité)', 'success');
           }
-        } catch (error) {
-          showToast('❌ Erreur lors de la copie', 'error');
-          console.error('Copy error:', error);
+        } catch (e) {
+          showToast('❌ Impossible de copier automatiquement, copie manuelle requise', 'error');
+          console.error(e);
         }
       });
+
       
       // Form submit
       document.getElementById('promptForm').addEventListener('submit', function(e) {

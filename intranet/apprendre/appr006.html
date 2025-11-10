@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Découverte du Sahara — Catégorie : Jeu Éducatif — Âge : 5+</title>
+    <meta name="description" content="Jeu éducatif interactif pour découvrir le désert du Sahara, ses animaux, ses dunes et ses oasis. Activités de comptage et séquences pour enfants 5-8 ans.">
+    <meta name="content-category" content="Jeu Éducatif">
+    <meta name="content-age" content="5">
+    <meta name="keywords" content="Sahara, désert, fennec, oasis, jeu éducatif, enfants, comptage, séquences">
+    
+    <!-- Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-CRRK6Z4D1X');
+    </script>
+    
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        "name": "Découverte du Sahara - Jeu Éducatif",
+        "description": "Jeu éducatif interactif pour découvrir le désert du Sahara",
+        "educationalUse": "Jeu Éducatif",
+        "typicalAgeRange": "5+",
+        "learningResourceType": "Interactive Activity",
+        "timeRequired": "PT30M"
+    }
+    </script>
+    
+    <!-- CSS distant -->
+    <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css">
+    
+    <style>
+        /* Version: v1.023 - Corrections débordements + design amélioré */
+        
+        :root {
+            --desert-orange: #FF8C42;
+            --desert-yellow: #FFD23F;
+            --desert-brown: #8B4513;
+            --oasis-blue: #4A90E2;
+            --oasis-green: #50C878;
+            --night-blue: #1B2845;
+            --star-gold: #FFD700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif;
+            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 50%, #8B4513 100%);
+            background-attachment: fixed;
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Arrière-plan animé */
+        .desert-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .sun {
+            position: fixed;
+            top: 30px;
+            right: 5%;
+            width: clamp(60px, 10vw, 100px);
+            height: clamp(60px, 10vw, 100px);
+            background: radial-gradient(circle, #FFD700, #FF8C00);
+            border-radius: 50%;
+            box-shadow: 0 0 40px #FF8C00;
+            animation: sunPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes sunPulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* Header sticky - FIX débordement */
+        .logo-sticky {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .logo-sticky img {
+            height: 40px;
+            max-width: 150px;
+            object-fit: contain;
+        }
+        
+        .language-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .lang-btn {
+            padding: 8px 12px;
+            border: 2px solid var(--desert-brown);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .lang-btn:hover {
+            background: var(--desert-yellow);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3);
+        }
+        
+        .lang-btn.active {
+            background: var(--desert-orange);
+            color: white;
+            border-color: var(--desert-orange);
+        }
+        
+        /* Publicité - FIX débordement */
+        .ad-banner {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            margin: 10px auto;
+            border-radius: 12px;
+            max-width: 1200px;
+        }
+        
+        .ad-banner img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        /* Container - FIX débordement */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+            width: 100%;
+        }
+        
+        /* Titre principal */
+        h1 {
+            color: var(--desert-brown);
+            text-align: center;
+            margin: 20px 0;
+            font-size: clamp(24px, 5vw, 42px);
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            line-height: 1.2;
+            padding: 0 10px;
+        }
+        
+        h2 {
+            color: var(--desert-brown);
+            font-size: clamp(20px, 4vw, 32px);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        /* Sections */
+        .intro-section,
+        .activity-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.7);
+        }
+        
+        .intro-section p,
+        .activity-section > p {
+            font-size: clamp(14px, 2.5vw, 18px);
+            line-height: 1.6;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        /* Images génériques - FIX débordement */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .desert-image {
+            margin: 20px auto;
+            max-width: 600px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        /* CARTES ANIMAUX - FIX débordement + amélioration */
+        .animals-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+            padding: 10px;
+        }
+        
+        .animal-card {
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 
+                0 15px 35px rgba(0,0,0,0.3),
+                0 0 0 8px #F5DEB3,
+                0 0 0 12px var(--desert-brown);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .animal-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 20px 45px rgba(0,0,0,0.4),
+                0 0 0 8px #FFE4B5,
+                0 0 0 12px var(--desert-orange);
+        }
+
+        .animal-image-container {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 4px solid rgba(255,255,255,0.9);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .animal-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .animal-card:hover .animal-image {
+            transform: scale(1.1);
+        }
+
+        .animal-icon {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            font-size: 36px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            border: 3px solid white;
+            z-index: 2;
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(10deg); }
+        }
+        
+        .animal-card h3 {
+            color: white;
+            font-size: clamp(18px, 3vw, 24px);
+            margin: 12px 0;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .animal-card p {
+            color: white;
+            font-size: clamp(13px, 2vw, 16px);
+            text-align: center;
+            line-height: 1.5;
+            margin: 10px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        /* AUDIO - FIX débordement + amélioration */
+        .audio-container-3d {
+            width: 100%;
+            margin-top: 12px;
+            padding: 10px;
+            background: linear-gradient(135deg, #1E90FF, #4A90E2);
+            border-radius: 12px;
+            border: 3px solid white;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        
+        .audio-container-3d audio {
+            width: 100%;
+            max-width: 100%;
+            height: 40px;
+            border-radius: 8px;
+            outline: none;
+        }
+        
+        /* QUIZ - FIX débordement + amélioration */
+        .quiz-question {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .quiz-question h3 {
+            color: var(--desert-brown);
+            font-size: clamp(16px, 3vw, 22px);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .quiz-option {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 3px solid var(--desert-orange);
+            transition: all 0.3s ease;
+            font-size: clamp(14px, 2.5vw, 18px);
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .quiz-option:hover {
+            background: var(--desert-yellow);
+            transform: translateX(5px);
+            box-shadow: 0 6px 15px rgba(255, 140, 66, 0.4);
+        }
+        
+        .quiz-option:active {
+            transform: scale(0.98);
+        }
+        
+        /* OASIS - FIX débordement + amélioration */
+        .oasis-frame-3d {
+            position: relative;
+            background: linear-gradient(135deg, var(--oasis-blue), var(--oasis-green));
+            padding: 25px;
+            border-radius: 25px;
+            margin: 25px auto;
+            max-width: 650px;
+            box-shadow: 
+                0 15px 40px rgba(0,0,0,0.3),
+                0 0 0 8px white,
+                0 0 0 12px var(--oasis-green);
+            animation: oasisGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes oasisGlow {
+            0%, 100% { 
+                box-shadow: 
+                    0 15px 40px rgba(0,0,0,0.3),
+                    0 0 0 8px white,
+                    0 0 0 12px var(--oasis-green);
+            }
+            50% { 
+                box-shadow: 
+                    0 20px 50px rgba(74, 144, 226, 0.4),
+                    0 0 0 8px #E0F7FA,
+                    0 0 0 12px var(--oasis-blue);
+            }
+        }
+
+        .oasis-frame-3d::after {
+            content: '🌴 OASIS 🌊';
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--oasis-green), var(--oasis-blue));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: clamp(14px, 2.5vw, 18px);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            white-space: nowrap;
+        }
+
+        .oasis-image-container,
+        .ciel-image-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border: 4px solid white;
+        }
+
+        .oasis-image-container img,
+        .ciel-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .oasis-image-container:hover img,
+        .ciel-image-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        .palm-tree {
+            position: absolute;
+            font-size: clamp(24px, 4vw, 30px);
+            animation: palmSway 3s ease-in-out infinite;
+        }
+
+        .palm-tree-1 { top: -15px; left: 15px; }
+        .palm-tree-2 { top: -15px; right: 15px; }
+        .palm-tree-3 { bottom: -15px; left: 50%; transform: translateX(-50%); }
+
+        @keyframes palmSway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        .oasis-instruction {
+            text-align: center;
+            font-weight: bold;
+            color: var(--desert-brown);
+            margin: 15px 0;
+            font-size: clamp(15px, 2.5vw, 20px);
+        }
+        
+        /* BOUTONS OASIS - FIX débordement */
+        .oasis-choice {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 0 10px;
+        }
+        
+        .oasis-btn {
+            background: white;
+            padding: 12px 20px;
+            border: 3px solid var(--oasis-blue);
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: clamp(14px, 2.5vw, 18px);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            flex: 0 1 auto;
+            min-width: 120px;
+        }
+        
+        .oasis-btn:hover {
+            background: var(--oasis-blue);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(74, 144, 226, 0.4);
+        }
+        
+        .oasis-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* CIEL ÉTOILÉ - FIX débordement */
+        .ciel-frame-3d {
+            position: relative;
+            background: linear-gradient(135deg, var(--night-blue), #000080);
+            padding: 25px;
+            border-radius: 25px;
+            margin: 25px auto;
+            max-width: 650px;
+            box-shadow: 
+                0 15px 40px rgba(0,0,0,0.5),
+                0 0 0 8px #4169E1,
+                0 0 0 12px var(--night-blue);
+            animation: cielTwinkle 4s ease-in-out infinite;
+        }
+
+        @keyframes cielTwinkle {
+            0%, 100% { 
+                box-shadow: 
+                    0 15px 40px rgba(0,0,0,0.5),
+                    0 0 0 8px #4169E1,
+                    0 0 0 12px var(--night-blue);
+            }
+            50% { 
+                box-shadow: 
+                    0 20px 50px rgba(65, 105, 225, 0.6),
+                    0 0 0 8px #5B7FE8,
+                    0 0 0 12px #000080;
+            }
+        }
+
+        .ciel-frame-3d::after {
+            content: '🌌 CIEL ÉTOILÉ 🌠';
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #4169E1, var(--night-blue));
+            color: var(--star-gold);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: clamp(14px, 2.5vw, 18px);
+            text-shadow: 0 0 8px var(--star-gold);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            white-space: nowrap;
+        }
+
+        .etoile-decoration {
+            position: absolute;
+            font-size: clamp(16px, 3vw, 22px);
+            color: var(--star-gold);
+            text-shadow: 0 0 10px var(--star-gold);
+            animation: etoileSparkle 2s ease-in-out infinite;
+        }
+
+        .etoile-1 { top: 8px; left: 15px; }
+        .etoile-2 { top: 8px; right: 15px; animation-delay: 0.5s; }
+        .etoile-3 { bottom: 8px; left: 40px; animation-delay: 1s; }
+        .etoile-4 { bottom: 8px; right: 40px; animation-delay: 1.5s; }
+
+        @keyframes etoileSparkle {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+        
+        /* COMPTAGE - FIX débordement */
+        .counting-section {
+            text-align: center;
+            margin-top: 20px;
+            padding: 0 15px;
+        }
+        
+        .counting-section p {
+            font-size: clamp(14px, 2.5vw, 18px);
+            margin: 15px 0;
+        }
+        
+        .counting-section input {
+            padding: 12px;
+            border: 3px solid var(--night-blue);
+            border-radius: 10px;
+            font-size: clamp(14px, 2.5vw, 18px);
+            width: 100px;
+            text-align: center;
+            background: white;
+            font-weight: bold;
+        }
+        
+        .counting-section button {
+            background: linear-gradient(135deg, var(--night-blue), #4169E1);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: clamp(14px, 2.5vw, 18px);
+            cursor: pointer;
+            margin-left: 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(27, 40, 69, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .counting-section button:hover {
+            background: linear-gradient(135deg, #4169E1, var(--night-blue));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(65, 105, 225, 0.4);
+        }
+        
+        .counting-feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            color: var(--oasis-green);
+            display: none;
+            font-size: clamp(14px, 2.5vw, 18px);
+        }
+        
+        /* CTA FINAL - FIX débordement */
+        #share-btn {
+            background: linear-gradient(135deg, var(--oasis-green), #45a049);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: clamp(16px, 3vw, 20px);
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 6px 15px rgba(80, 200, 120, 0.4);
+            transition: all 0.3s ease;
+            margin: 15px auto;
+            display: block;
+        }
+        
+        #share-btn:hover {
+            background: linear-gradient(135deg, #45a049, var(--oasis-green));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(80, 200, 120, 0.5);
+        }
+        
+        /* TIMER - FIX débordement */
+        .timer {
+            position: fixed;
+            top: 70px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: bold;
+            font-size: clamp(14px, 2.5vw, 16px);
+            z-index: 999;
+            border: 2px solid var(--desert-brown);
+        }
+        
+        /* AIDE - FIX débordement */
+        .help-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--oasis-green);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 998;
+            font-size: 24px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .help-toggle:hover {
+            transform: scale(1.15);
+            background: #45a049;
+        }
+        
+        .help-panel {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            max-width: 320px;
+            display: none;
+            z-index: 997;
+            border: 3px solid var(--oasis-green);
+        }
+        
+        .help-panel h3 {
+            color: var(--desert-brown);
+            font-size: clamp(16px, 3vw, 20px);
+            margin-bottom: 12px;
+        }
+        
+        .help-panel p {
+            font-size: clamp(13px, 2vw, 15px);
+            line-height: 1.5;
+            margin: 8px 0;
+        }
+        
+        #close-help {
+            background: var(--oasis-green);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 12px;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        #close-help:hover {
+            background: #45a049;
+        }
+        
+        /* VERSION */
+        .version {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            z-index: 1000;
+        }
+        
+        /* FEEDBACK MESSAGE */
+        .feedback-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, var(--oasis-green), #45a049);
+            color: white;
+            padding: 25px 40px;
+            border-radius: 20px;
+            font-size: clamp(20px, 4vw, 32px);
+            font-weight: bold;
+            z-index: 1001;
+            display: none;
+            animation: popup 0.5s ease-out;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            text-align: center;
+            border: 4px solid white;
+            max-width: 90%;
+        }
+        
+        @keyframes popup {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            70% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        
+        /* FALLBACK */
+        .media-fallback {
+            display: inline-block;
+            background: #FFF3CD;
+            border: 2px dashed #FFB938;
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: #856404;
+            font-weight: 600;
+            font-size: clamp(11px, 2vw, 13px);
+            margin: 10px auto;
+            text-align: center;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .logo-sticky {
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .language-selector {
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .animals-container {
+                grid-template-columns: 1fr;
+                padding: 5px;
+            }
+            
+            .timer {
+                top: auto;
+                bottom: 80px;
+                right: 10px;
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+            
+            .help-toggle {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+            
+            .help-panel {
+                left: 10px;
+                right: 10px;
+                max-width: none;
+                bottom: 75px;
+            }
+            
+            .oasis-choice {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .oasis-btn {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            .counting-section button {
+                margin: 10px 0 0 0;
+                width: 100%;
+            }
+            
+            .counting-section input {
+                width: 80px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .intro-section,
+            .activity-section {
+                padding: 15px;
+            }
+            
+            .animal-card {
+                padding: 15px;
+            }
+            
+            .animal-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 28px;
+                top: -12px;
+                right: -12px;
+            }
+            
+            .palm-tree {
+                font-size: 20px;
+            }
+            
+            .etoile-decoration {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Arrière-plan désert -->
+    <div class="desert-background">
+        <div class="sun"></div>
+        <div class="stars" id="stars-container"></div>
+    </div>
+
+    <!-- Version -->
+    <div class="version">v1.023</div>
+    
+    <!-- Message de feedback -->
+    <div class="feedback-message" id="feedback-message"></div>
+    
+    <!-- Logo Sticky -->
+    <div class="logo-sticky">
+        <img src="https://dznet1.com/images/logo.png" alt="DZNet1" onerror="this.outerHTML='<span class=\"media-fallback\">❌ logo.png</span>'">
+        <div class="language-selector">
+            <button class="lang-btn active" data-lang="fr">🇫🇷 FR</button>
+            <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
+            <button class="lang-btn" data-lang="ar">🇩🇿 AR</button>
+        </div>
+    </div>
+    
+    <!-- Publicité -->
+    <div class="ad-banner">
+        <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" alt="Publicité partenaire" onerror="this.outerHTML='<span class=\"media-fallback\">❌ PUB01.png</span>'">
+    </div>
+    
+    <div class="container">
+        <!-- Titre principal -->
+        <h1>🏜️ Découverte du Sahara 🏜️</h1>
+        
+        <!-- Timer visible -->
+        <div class="timer">
+            ⏱️ <span id="time-display">00:00</span>
+        </div>
+        
+        <!-- Section Introduction -->
+        <section class="intro-section">
+            <h2>🌅 Bienvenue dans le désert du Sahara !</h2>
+            <p>Explore le plus grand désert chaud du monde et découvre ses secrets. Tu vas rencontrer des animaux étonnants, compter les palmiers des oasis et résoudre des énigmes du désert !</p>
+            <div class="desert-image">
+                <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/dune.jpg" alt="Dunes du Sahara" onerror="this.outerHTML='<span class=\"media-fallback\">❌ dune.jpg</span>'">
+            </div>
+        </section>
+        
+        <!-- Section Animaux du Désert -->
+        <section class="activity-section">
+            <h2>🦊 Les Habitants du Sahara</h2>
+            <p>Fais connaissance avec les animaux qui vivent dans le désert :</p>
+            
+            <div class="animals-container">
+                <!-- Fennec -->
+                <div class="animal-card">
+                    <div class="animal-image-container">
+                        <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/fennec.jpg" alt="Fennec" class="animal-image" onerror="this.outerHTML='<span class=\"media-fallback\">❌ fennec.jpg</span>'">
+                        <div class="animal-icon">🦊</div>
+                    </div>
+                    <h3>Le Fennec</h3>
+                    <p>Le renard des sables avec de grandes oreilles pour se rafraîchir !</p>
+                    <div class="audio-container-3d">
+                        <audio src="audio/fennec.mp3" controls onerror="this.outerHTML='<span class=\"media-fallback\">🔇 fennec.mp3</span>'"></audio>
+                    </div>
+                </div>
+                
+                <!-- Dromadaire -->
+                <div class="animal-card">
+                    <div class="animal-image-container">
+                        <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/dromadaire.jpg" alt="Dromadaire" class="animal-image" onerror="this.outerHTML='<span class=\"media-fallback\">❌ dromadaire.jpg</span>'">
+                        <div class="animal-icon">🐫</div>
+                    </div>
+                    <h3>Le Dromadaire</h3>
+                    <p>Le "vaisseau du désert" avec une bosse remplie de graisse !</p>
+                    <div class="audio-container-3d">
+                        <audio src="audio/dromadaire.mp3" controls onerror="this.outerHTML='<span class=\"media-fallback\">🔇 dromadaire.mp3</span>'"></audio>
+                    </div>
+                </div>
+                
+                <!-- Scorpion -->
+                <div class="animal-card">
+                    <div class="animal-image-container">
+                        <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/scorpion.jpg" alt="Scorpion" class="animal-image" onerror="this.outerHTML='<span class=\"media-fallback\">❌ scorpion.jpg</span>'">
+                        <div class="animal-icon">🦂</div>
+                    </div>
+                    <h3>Le Scorpion</h3>
+                    <p>Petit mais puissant ! Attention à sa queue venimeuse.</p>
+                    <div class="audio-container-3d">
+                        <audio src="audio/scorpion.mp3" controls onerror="this.outerHTML='<span class=\"media-fallback\">🔇 scorpion.mp3</span>'"></audio>
+                    </div>
+                </div>
+                
+                <!-- Gazelle -->
+                <div class="animal-card">
+                    <div class="animal-image-container">
+                        <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/gazelle.jpg" alt="Gazelle" class="animal-image" onerror="this.outerHTML='<span class=\"media-fallback\">❌ gazelle.jpg</span>'">
+                        <div class="animal-icon">🦌</div>
+                    </div>
+                    <h3>La Gazelle</h3>
+                    <p>Élégante et rapide comme le vent du désert !</p>
+                    <div class="audio-container-3d">
+                        <audio src="audio/gazelle.mp3" controls onerror="this.outerHTML='<span class=\"media-fallback\">🔇 gazelle.mp3</span>'"></audio>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section Quiz -->
+        <section class="activity-section">
+            <h2>❓ Quiz du Désert</h2>
+            <p>Choisis la bonne réponse :</p>
+            
+            <div class="quiz-question">
+                <h3>Combien de bosses a un dromadaire ?</h3>
+                <div class="quiz-option" data-correct="true">🐫 1 bosse</div>
+                <div class="quiz-option">🐫🐫 2 bosses</div>
+                <div class="quiz-option">🐫🐫🐫 3 bosses</div>
+            </div>
+            
+            <div class="quiz-question">
+                <h3>Quel animal a de très grandes oreilles ?</h3>
+                <div class="quiz-option">🦂 Le scorpion</div>
+                <div class="quiz-option" data-correct="true">🦊 Le fennec</div>
+                <div class="quiz-option">🦌 La gazelle</div>
+            </div>
+        </section>
+        
+        <!-- Section Oasis -->
+        <section class="activity-section">
+            <h2>🌴 Découvre l'Oasis</h2>
+            <p class="oasis-instruction">Trouve les DEUX bonnes réponses dans l'image :</p>
+            
+            <div class="oasis-frame-3d">
+                <div class="palm-tree palm-tree-1">🌴</div>
+                <div class="palm-tree palm-tree-2">🌴</div>
+                <div class="palm-tree palm-tree-3">🌴</div>
+                
+                <div class="oasis-image-container">
+                    <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/oasis.jpg" alt="Oasis avec 2 palmiers et de l'eau" onerror="this.outerHTML='<span class=\"media-fallback\">❌ oasis.jpg</span>'">
+                </div>
+            </div>
+            
+            <div class="oasis-choice">
+                <button class="oasis-btn" data-choice="palmier" data-correct="true">🌴 2 Palmiers</button>
+                <button class="oasis-btn" data-choice="eau" data-correct="true">💧 Eau</button>
+                <button class="oasis-btn" data-choice="tente">⛺ Tentes</button>
+                <button class="oasis-btn" data-choice="dromadaire">🐫 Dromadaires</button>
+            </div>
+            <p id="oasis-feedback" style="text-align:center; margin-top:15px; font-weight:bold; display:none;"></p>
+        </section>
+        
+        <!-- Section Comptage -->
+        <section class="activity-section">
+            <h2>⭐ Compte les Éléments du Désert</h2>
+            <p>Combien vois-tu d'étoiles dans le ciel ?</p>
+            
+            <div class="ciel-frame-3d">
+                <div class="etoile-decoration etoile-1">⭐</div>
+                <div class="etoile-decoration etoile-2">🌟</div>
+                <div class="etoile-decoration etoile-3">✨</div>
+                <div class="etoile-decoration etoile-4">💫</div>
+                
+                <div class="ciel-image-container">
+                    <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ciel.jpg" alt="Ciel étoilé du désert avec 2 étoiles" onerror="this.outerHTML='<span class=\"media-fallback\">❌ ciel.jpg</span>'">
+                </div>
+            </div>
+            
+            <div class="counting-section">
+                <p>Combien d'étoiles comptes-tu ?</p>
+                <input type="number" id="star-count" min="1" max="20" placeholder="?">
+                <button id="check-stars">Vérifier</button>
+                <p class="counting-feedback" id="counting-feedback"></p>
+            </div>
+        </section>
+        
+        <!-- CTA Final -->
+        <section class="intro-section" style="text-align:center;">
+            <h2>🎉 Bravo Explorateur !</h2>
+            <p>Tu as découvert les merveilles du Sahara. N'oublie pas de partager tes découvertes avec tes parents !</p>
+            <button id="share-btn">📤 Partager mes résultats</button>
+        </section>
+    </div>
+    
+    <!-- Aide Parentale -->
+    <div class="help-toggle" aria-label="Aide">?</div>
+    <div class="help-panel" id="help-panel">
+        <h3>💡 Conseils pour les parents</h3>
+        <p><strong>Après une erreur :</strong> Encouragez l'enfant à réessayer en lui donnant un indice.</p>
+        <p><strong>Quand féliciter :</strong> Immédiatement après une réussite.</p>
+        <p><strong>Questions :</strong><br>
+        - Quel animal préfères-tu ?<br>
+        - À quoi sert la bosse du dromadaire ?<br>
+        - Comment survivre dans le désert ?</p>
+        <button id="close-help">Fermer</button>
+    </div>
+    
+    <!-- Footer Distant -->
+    <div id="footer-placeholder"></div>
+    
+    <script>
+        // Étoiles dynamiques
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            
+            // Timer
+            let startTime = Date.now();
+            setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const min = Math.floor(elapsed / 60000);
+                const sec = Math.floor((elapsed % 60000) / 1000);
+                document.getElementById('time-display').textContent = 
+                    `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+            }, 1000);
+            
+            // Langues
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Feedback
+            function showFeedback(msg) {
+                const fb = document.getElementById('feedback-message');
+                fb.textContent = msg;
+                fb.style.display = 'block';
+                setTimeout(() => fb.style.display = 'none', 2000);
+            }
+            
+            // Quiz
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.addEventListener('click', function() {
+                    this.parentElement.querySelectorAll('.quiz-option').forEach(o => {
+                        o.style.background = 'white';
+                    });
+                    
+                    if (this.dataset.correct === 'true') {
+                        this.style.background = '#C8E6C9';
+                        showFeedback('🎉 Bravo ! Excellente réponse ! 🎉');
+                    } else {
+                        this.style.background = '#FFCDD2';
+                        showFeedback('🤔 Presque ! Essaie encore !');
+                    }
+                });
+            });
+            
+            // Oasis
+            let correctCount = 0;
+            document.querySelectorAll('.oasis-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const feedback = document.getElementById('oasis-feedback');
+                    
+                    if (this.dataset.correct === 'true' && !this.classList.contains('selected')) {
+                        this.style.background = '#C8E6C9';
+                        this.classList.add('selected');
+                        correctCount++;
+                        
+                        if (correctCount === 1) {
+                            showFeedback('🌴 Super ! Continue !');
+                            feedback.textContent = 'Trouve encore un élément...';
+                            feedback.style.color = '#4A90E2';
+                            feedback.style.display = 'block';
+                        } else if (correctCount === 2) {
+                            showFeedback('🎊 Excellent ! Tu as tout trouvé ! 🎊');
+                            feedback.textContent = '✅ Félicitations ! Tu as trouvé tous les éléments !';
+                            feedback.style.color = '#50C878';
+                            feedback.style.display = 'block';
+                        }
+                    } else if (this.dataset.correct !== 'true') {
+                        this.style.background = '#FFCDD2';
+                        setTimeout(() => {
+                            if (!this.classList.contains('selected')) {
+                                this.style.background = 'white';
+                            }
+                        }, 1000);
+                        showFeedback('🤔 Regarde bien la photo !');
+                    }
+                });
+            });
+            
+            // Comptage
+            document.getElementById('check-stars').addEventListener('click', function() {
+                const count = parseInt(document.getElementById('star-count').value);
+                const feedback = document.getElementById('counting-feedback');
+                
+                if (count === 2) {
+                    feedback.textContent = '🌟 Bravo ! Exactement 2 étoiles ! 🌟';
+                    feedback.style.color = '#50C878';
+                    feedback.style.display = 'block';
+                    showFeedback('🌟 Super comptage ! 🌟');
+                } else if (count < 2) {
+                    feedback.textContent = `Tu as compté ${count}. Regarde bien, il y en a plus !`;
+                    feedback.style.color = '#FF8C42';
+                    feedback.style.display = 'block';
+                } else {
+                    feedback.textContent = `Tu as compté ${count}. C'est trop, recompte !`;
+                    feedback.style.color = '#DC143C';
+                    feedback.style.display = 'block';
+                }
+            });
+            
+            // Aide
+            document.querySelector('.help-toggle').addEventListener('click', () => {
+                const panel = document.getElementById('help-panel');
+                panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+            });
+            
+            document.getElementById('close-help').addEventListener('click', () => {
+                document.getElementById('help-panel').style.display = 'none';
+            });
+            
+            // Partage
+            document.getElementById('share-btn').addEventListener('click', () => {
+                showFeedback('🎉 Partage avec tes parents ! 🎉');
+            });
+        });
+        
+        // Footer
+        fetch("https://dznet1.com/intranet/footer.html")
+            .then(r => r.text())
+            .then(h => document.getElementById("footer-placeholder").innerHTML = h)
+            .catch(() => {});
+    </script>
+</body>
+</html>

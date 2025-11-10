@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Metadata -->
+    <title>La Casbah d'Alger — Voyage dans l'Histoire — Catégorie : Histoire — Âge : 7+</title>
+    <meta name="description" content="Découvre l'histoire fascinante de la Casbah d'Alger à travers un voyage interactif : architecture, culture, traditions. Contenu éducatif pour enfants 7-12 ans.">
+    <meta name="keywords" content="Casbah Alger, histoire Algérie enfants, patrimoine unesco, architecture algérienne, éducation interactive">
+    <meta name="content-category" content="Histoire">
+    <meta name="content-age" content="7">
+    <meta name="author" content="mohamed">
+    <meta name="generator" content="Formulaire v1.014">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="La Casbah d'Alger — Voyage dans l'Histoire">
+    <meta property="og:description" content="Découvre l'histoire fascinante de la Casbah d'Alger">
+    <meta property="og:image" content="https://dznet1.com/images/logo.png">
+    <meta property="og:type" content="website">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-CRRK6Z4D1X');
+    </script>
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOccupationalCredential",
+        "name": "La Casbah d'Alger — Voyage dans l'Histoire",
+        "description": "Contenu éducatif interactif sur l'histoire de la Casbah d'Alger",
+        "educationalUse": "Histoire",
+        "typicalAgeRange": "7+",
+        "inLanguage": ["fr", "en", "ar"],
+        "learningResourceType": "Interactive Content",
+        "author": {
+            "@type": "Person",
+            "name": "mohamed"
+        },
+        "datePublished": "2025-11-09"
+    }
+    </script>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css">
+    
+    <!-- Inline CSS -->
+    <style>
+        /* Version: v1.015 */
+        /* [v1.014] Initial release - Base structure + i18n */
+        /* [v1.015] Timeline historique interactive */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FFE4E1 0%, #E0F2F7 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header Sticky */
+        .header-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo-container img {
+            height: 50px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-container img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Language Selector */
+        .lang-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .lang-btn {
+            background: white;
+            border: 2px solid #4A90E2;
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-btn:hover {
+            background: #4A90E2;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
+        }
+        
+        .lang-btn.active {
+            background: #4A90E2;
+            color: white;
+            box-shadow: 0 4px 8px rgba(74, 144, 226, 0.5);
+        }
+        
+        .lang-btn:focus {
+            outline: 3px solid #FFB938;
+            outline-offset: 2px;
+        }
+        
+        /* Ad Banner */
+        .ad-banner {
+            max-width: 1200px;
+            margin: 20px auto;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .ad-banner img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            border-radius: 20px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            font-size: clamp(28px, 5vw, 48px);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(16px, 3vw, 22px);
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+        
+        .hero-category {
+            font-size: clamp(14px, 2.5vw, 18px);
+            margin-top: 15px;
+        }
+        
+        /* Timeline Section */
+        .timeline-section {
+            margin: 40px 0;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-size: clamp(24px, 4vw, 36px);
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .section-intro {
+            text-align: center;
+            font-size: clamp(14px, 2.5vw, 18px);
+            color: #555;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Timeline Container */
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        /* Timeline Line */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+        
+        /* Timeline Item */
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+        .timeline-item:nth-child(6) { animation-delay: 0.6s; }
+        .timeline-item:nth-child(7) { animation-delay: 0.7s; }
+        .timeline-item:nth-child(8) { animation-delay: 0.8s; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Timeline Dot */
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: #FFB938;
+            border: 4px solid white;
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 0 0 0 4px rgba(255, 185, 56, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-dot:hover {
+            transform: translateX(-50%) scale(1.3);
+            box-shadow: 0 0 0 8px rgba(255, 185, 56, 0.5);
+        }
+        
+        /* Timeline Card */
+        .timeline-card {
+            background: linear-gradient(135deg, #FFF9C4 0%, #FFECB3 100%);
+            border-radius: 16px;
+            padding: 20px;
+            width: calc(50% - 40px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-card {
+            margin-right: auto;
+            margin-left: 0;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-card {
+            margin-left: auto;
+            margin-right: 0;
+        }
+        
+        /* Card Content */
+        .card-date {
+            font-size: clamp(22px, 3vw, 32px);
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .card-title {
+            font-size: clamp(16px, 2.5vw, 20px);
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .card-description {
+            font-size: clamp(13px, 2vw, 15px);
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-card:hover .card-image {
+            transform: scale(1.05);
+        }
+        
+        /* Media Fallback */
+        .media-fallback {
+            display: inline-block;
+            background: #FFF3CD;
+            border: 2px dashed #FFB938;
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: #856404;
+            font-weight: 600;
+            font-family: monospace;
+            font-size: 13px;
+        }
+        
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        /* Responsive Timeline */
+        @media (max-width: 768px) {
+            .header-sticky {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .lang-selector {
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .hero-section {
+                padding: 40px 15px;
+            }
+            
+            .timeline-line {
+                left: 20px;
+            }
+            
+            .timeline-dot {
+                left: 20px;
+            }
+            
+            .timeline-card {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+            }
+            
+            .card-image {
+                height: 150px;
+            }
+        }
+        
+        /* RTL Support */
+        [dir="rtl"] .timeline-item:nth-child(odd) .timeline-card {
+            margin-left: auto;
+            margin-right: 0;
+        }
+        
+        [dir="rtl"] .timeline-item:nth-child(even) .timeline-card {
+            margin-right: auto;
+            margin-left: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Sticky -->
+    <header class="header-sticky" role="banner">
+        <div class="logo-container">
+            <img src="https://dznet1.com/images/logo.png" 
+                 alt="Logo dznet1.com" 
+                 onerror="this.outerHTML='<span class=\'media-fallback\'>❌ logo.png</span>'">
+        </div>
+        
+        <nav class="lang-selector" role="navigation" aria-label="Sélection de langue">
+            <button class="lang-btn active" 
+                    data-lang="fr" 
+                    aria-label="Français"
+                    tabindex="0">
+                🇫🇷 Français
+            </button>
+            <button class="lang-btn" 
+                    data-lang="en" 
+                    aria-label="English"
+                    tabindex="0">
+                🇬🇧 English
+            </button>
+            <button class="lang-btn" 
+                    data-lang="ar" 
+                    aria-label="العربية"
+                    tabindex="0">
+                🇩🇿 العربية
+            </button>
+        </nav>
+    </header>
+
+    <!-- Ad Banner -->
+    <div class="ad-banner" role="complementary" aria-label="Publicité partenaire">
+        <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" 
+             alt="Publicité partenaire dznet1" 
+             loading="lazy">
+    </div>
+
+    <!-- Main Container -->
+    <main class="container" role="main">
+        
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 data-i18n="hero.title">La Casbah d'Alger — Voyage dans l'Histoire</h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">
+                Découvre un patrimoine mondial de l'UNESCO à travers les siècles
+            </p>
+            <p class="hero-category">
+                <strong>Catégorie :</strong> Histoire | <strong>Âge :</strong> 7+
+            </p>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="timeline-section" id="timeline">
+            <h2 class="section-title" data-i18n="timeline.title">📜 Voyage à Travers le Temps</h2>
+            <p class="section-intro" data-i18n="timeline.intro">
+                Découvre les moments clés qui ont façonné la Casbah d'Alger, de sa fondation à aujourd'hui.
+            </p>
+            
+            <div class="timeline-container" role="region" aria-label="Chronologie historique">
+                <div class="timeline-line" aria-hidden="true"></div>
+                
+                <!-- 960 - Fondation -->
+                <article class="timeline-item">
+                    <div class="timeline-dot" role="button" tabindex="0" aria-label="Année 960"></div>
+                    <div class="timeline-card">
+                        <div class="card-date">960</div>
+                        <h3 class="card-title" data-i18n="timeline.date1.title">Naissance de la Casbah</h3>
+                        <img class="card-image" 
+                             https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/casbah_fondation.jpg" 
+                             alt="Illustration de la Casbah au Xe siècle"
+                             loading="lazy"
+                             onerror="this.outerHTML='<span class=\'media-fallback\'>❌ casbah_fondation.jpg</span>'">
+                        <p class="card-description" data-i18n="timeline.date1.desc">
+                            Bologhine ibn Ziri, prince berbère, fonde la ville sur les ruines de l'antique Icosium. 
+                            Les premières maisons blanches s'accrochent à la colline face à la mer.
+                        </p>
+                    </div>
+                </article>
+                
+                <!-- 1516 - Empire Ottoman -->
+                <article class="timeline-item">
+                    <div class="timeline-dot" role="button" tabindex="0" aria-label="Année 1516"></div>
+                    <div class="timeline-card">
+                        <div class="card-date">1516</div>
+                        <h3 class="card-title" data-i18n="timeline.date2.title">L'Ère Ottomane</h3>
+                        <img class="card-image" 
+                             https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/casbah_ottomane.jpg" 
+                             alt="Architecture ottomane de la Casbah"
+                             loading="lazy"
+                             onerror="this.outerHTML='<span class=\'media-fallback\'>❌ casbah_ottomane.jpg</span>'">
+                        <p class="card-description" data-i18n="timeline.date2.desc">
+                            Les frères Barberousse établissent la régence d'Alger. La Casbah devient une forteresse 
+                            méditerranéenne avec palais, mosquées et demeures somptueuses.
+                        </p>
+                    </div>
+                </article>
+                
+                <!-- 1830 - Colonisation -->
+                <article class="timeline-item">
+                    <div class="timeline-dot" role="button" tabindex="0" aria-label="Année 1830"></div>
+                    <div class="timeline-card">
+                        <div class="card-date">1830</div>
+                        <h3 class="card-title" data-i18n="timeline.date3.title">Période Coloniale</h3>
+                        <img class="card-image" 
+                             https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/casbah_coloniale.jpg" 
+                             alt="La Casbah durant la période coloniale"
+                             loading="lazy"
+                             onerror="this.outerHTML='<span class=\'media-fallback\'>❌ casbah_coloniale.jpg</span>'">
+                        <p class="card-description" data-i18n="timeline.date3.desc">
+                            Conquête française. La Casbah résiste et préserve son identité malgré les transformations 
+                            urbaines. Ses ruelles deviennent refuges de la résistance.
+                        </p>
+                    </div>
+                </article>
+                
+                <!-- 1954-1962 - Guerre d'Indépendance -->
+                <article class="timeline-item">
+                    <div class="timeline-dot" role="button" tabindex="0" aria-label="Années 1954-1962"></div>
+                    <div class="timeline-card">
+                        <div class="card-date">1954-1962</div>
+                        <h3 class="card-title" data-i18n="timeline.date4.title">Cœur de la Révolution</h3>
+                        <img class="card-image" 
+                             https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/casbah_revolution.jpg" 
+                             alt="La Casbah pendant la guerre d'indépendance"
+                             loading="lazy"
+                             onerror="this.outerHTML='<span class=\'media-fallback\'>❌ casbah_revolution.jpg</span>'">
+                        <p class="card-description" data-i18n="timeline.date4.desc">
+                            La Casbah joue un rôle crucial dans la guerre d'indépendance. Ses ruelles labyrinthiques 
+                            protègent les combattants de la liberté.
+                        </p>
+                    </div>
+                </article>
+                
+                <!-- 1962 - Indépendance -->
+                <article class="timeline-item">
+                    <div class="timeline-dot" role="button" tabindex="0" aria-label="Année 1962"></div>
+                    <div class="timeline-card">
+                        <div class="card-date">1962</div>
+                        <h3 class="card-title" data-i18n="timeline.date5.title">L'Indépendance</h3>
+                        <img class="card-image" 
+                             https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/casbah_independance.jpg" 
+                             alt="Célébration de l'indépendance à la Casbah"
+                             loading="lazy"
+                             onerror="this.outerHTML='<span class=\'media-fallback\'>❌ casbah_independance.jpg</span>'">
+                        <p class="card-description" data-i18n="timeline.date5.desc">
+                            L'Algérie retrouve sa souveraineté. La Casbah devient symbole de la résistance et 
+                            de l'identité nationale algérienne.
+                        </p>
+                    </div>
+                </article>
+                
+                <!-- 1992 - UNESCO -->
+                <article class="timeline-item">
+                    <div class="timeline-dot" role="button" tabindex="0" aria-label="Année 1992"></div>
+                    <div class="timeline-card">
+                        <div class="card-date">1992</div>
+                        <h3 class="card-title" data-i18n="timeline.date6.title">Patrimoine Mondial</h3>
+                        <img class="card-image" 
+                             https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/casbah_unesco.jpg" 
+                             alt="Logo UNESCO et la Casbah"
+                             loading="lazy"
+                             onerror="this.outerHTML='<span class=\'media-fallback\'>❌ casbah_unesco.jpg</span>'">
+                        <p class="card-description" data-i18n="timeline.date6.desc">
+                            L'UNESCO inscrit la Casbah au patrimoine mondial de l'humanité. Un trésor architectural 
+                            reconnu mondialement pour sa valeur exceptionnelle.
+                        </p>
+                    </div>
+                </article>
+                
+                <!-- 2003-2015 - Restauration -->
+                <article class="timeline-item">
+                    <div class="timeline-dot" role="button" tabindex="0" aria-label="Années 2003-2015"></div>
+                    <div class="timeline-card">
+                        <div class="card-date">2003-2015</div>
+                        <h3 class="card-title" data-i18n="timeline.date7.title">Grands Travaux</h3>
+                        <img class="card-image" 
+                             https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/casbah_restauration.jpg" 
+                             alt="Travaux de restauration dans la Casbah"
+                             loading="lazy"
+                             onerror="this.outerHTML='<span class=\'media-fallback\'>❌ casbah_restauration.jpg</span>'">
+                        <p class="card-description" data-i18n="timeline.date7.desc">
+                            Lancement d'importants projets de restauration pour préserver ce joyau architectural. 
+                            Des centaines de maisons sont sauvées de la ruine.
+                        </p>
+                    </div>
+                </article>
+                
+                <!-- 2025 - Aujourd'hui -->
+                <article class="timeline-item">
+                    <div class="timeline-dot" role="button" tabindex="0" aria-label="Année 2025"></div>
+                    <div class="timeline-card">
+                        <div class="card-date">2025</div>
+                        <h3 class="card-title" data-i18n="timeline.date8.title">La Casbah Aujourd'hui</h3>
+                        <img class="card-image" 
+                             https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/casbah_aujourdhui.jpg" 
+                             alt="La Casbah en 2025"
+                             loading="lazy"
+                             onerror="this.outerHTML='<span class=\'media-fallback\'>❌ casbah_aujourdhui.jpg</span>'">
+                        <p class="card-description" data-i18n="timeline.date8.desc">
+                            La Casbah continue de vivre, entre tradition et modernité. Un quartier vivant où 
+                            se mêlent histoire millénaire et vie quotidienne contemporaine.
+                        </p>
+                    </div>
+                </article>
+                
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Version: v1.015
+        // [v1.014] Initial i18n implementation
+        // [v1.015] Timeline translations added
+        
+        const translations = {
+            fr: {
+                "hero.title": "La Casbah d'Alger — Voyage dans l'Histoire",
+                "hero.subtitle": "Découvre un patrimoine mondial de l'UNESCO à travers les siècles",
+                "timeline.title": "📜 Voyage à Travers le Temps",
+                "timeline.intro": "Découvre les moments clés qui ont façonné la Casbah d'Alger, de sa fondation à aujourd'hui.",
+                "timeline.date1.title": "Naissance de la Casbah",
+                "timeline.date1.desc": "Bologhine ibn Ziri, prince berbère, fonde la ville sur les ruines de l'antique Icosium. Les premières maisons blanches s'accrochent à la colline face à la mer.",
+                "timeline.date2.title": "L'Ère Ottomane",
+                "timeline.date2.desc": "Les frères Barberousse établissent la régence d'Alger. La Casbah devient une forteresse méditerranéenne avec palais, mosquées et demeures somptueuses.",
+                "timeline.date3.title": "Période Coloniale",
+                "timeline.date3.desc": "Conquête française. La Casbah résiste et préserve son identité malgré les transformations urbaines. Ses ruelles deviennent refuges de la résistance.",
+                "timeline.date4.title": "Cœur de la Révolution",
+                "timeline.date4.desc": "La Casbah joue un rôle crucial dans la guerre d'indépendance. Ses ruelles labyrinthiques protègent les combattants de la liberté.",
+                "timeline.date5.title": "L'Indépendance",
+                "timeline.date5.desc": "L'Algérie retrouve sa souveraineté. La Casbah devient symbole de la résistance et de l'identité nationale algérienne.",
+                "timeline.date6.title": "Patrimoine Mondial",
+                "timeline.date6.desc": "L'UNESCO inscrit la Casbah au patrimoine mondial de l'humanité. Un trésor architectural reconnu mondialement pour sa valeur exceptionnelle.",
+                "timeline.date7.title": "Grands Travaux",
+                "timeline.date7.desc": "Lancement d'importants projets de restauration pour préserver ce joyau architectural. Des centaines de maisons sont sauvées de la ruine.",
+                "timeline.date8.title": "La Casbah Aujourd'hui",
+                "timeline.date8.desc": "La Casbah continue de vivre, entre tradition et modernité. Un quartier vivant où se mêlent histoire millénaire et vie quotidienne contemporaine."
+            },
+            en: {
+                "hero.title": "The Casbah of Algiers — A Journey Through History",
+                "hero.subtitle": "Discover a UNESCO World Heritage site across the centuries",
+                "timeline.title": "📜 Journey Through Time",
+                "timeline.intro": "Discover the key moments that shaped the Casbah of Algiers, from its foundation to today.",
+                "timeline.date1.title": "Birth of the Casbah",
+                "timeline.date1.desc": "Bologhine ibn Ziri, Berber prince, founds the city on the ruins of ancient Icosium. The first white houses cling to the hillside facing the sea.",
+                "timeline.date2.title": "The Ottoman Era",
+                "timeline.date2.desc": "The Barbarossa brothers establish the Regency of Algiers. The Casbah becomes a Mediterranean fortress with palaces, mosques and sumptuous residences.",
+                "timeline.date3.title": "Colonial Period",
+                "timeline.date3.desc": "French conquest. The Casbah resists and preserves its identity despite urban transformations. Its alleyways become refuges of resistance.",
+                "timeline.date4.title": "Heart of the Revolution",
+                "timeline.date4.desc": "The Casbah plays a crucial role in the war of independence. Its labyrinthine alleys protect freedom fighters.",
+                "timeline.date5.title": "Independence",
+                "timeline.date5.desc": "Algeria regains its sovereignty. The Casbah becomes a symbol of resistance and Algerian national identity.",
+                "timeline.date6.title": "World Heritage",
+                "timeline.date6.desc": "UNESCO inscribes the Casbah as a World Heritage site. An architectural treasure recognized worldwide for its exceptional value.",
+                "timeline.date7.title": "Major Restoration",
+                "timeline.date7.desc": "Launch of major restoration projects to preserve this architectural jewel. Hundreds of houses are saved from ruin.",
+                "timeline.date8.title": "The Casbah Today",
+                "timeline.date8.desc": "The Casbah continues to live, between tradition and modernity. A living neighborhood where millenary history meets contemporary daily life."
+            },
+            ar: {
+                "hero.title": "قصبة الجزائر — رحلة عبر التاريخ",
+                "hero.subtitle": "اكتشف موقع التراث العالمي لليونسكو عبر القرون",
+                "timeline.title": "📜 رحلة عبر الزمن",
+                "timeline.intro": "اكتشف اللحظات الرئيسية التي شكلت قصبة الجزائر، من تأسيسها إلى اليوم.",
+                "timeline.date1.title": "ولادة القصبة",
+                "timeline.date1.desc": "بلوغين بن زيري، الأمير البربري، يؤسس المدينة على أنقاض إيكوسيوم القديمة. تتشبث البيوت البيضاء الأولى بالتل المطل على البحر.",
+                "timeline.date2.title": "العصر العثماني",
+                "timeline.date2.desc": "الأخوان بربروس يؤسسان إيالة الجزائر. تصبح القصبة حصنًا متوسطيًا بالقصور والمساجد والمساكن الفخمة.",
+                "timeline.date3.title": "الفترة الاستعمارية",
+                "timeline.date3.desc": "الغزو الفرنسي. تقاوم القصبة وتحافظ على هويتها رغم التحولات الحضرية. تصبح أزقتها ملاذات المقاومة.",
+                "timeline.date4.title": "قلب الثورة",
+                "timeline.date4.desc": "تلعب القصبة دورًا حاسمًا في حرب الاستقلال. أزقتها المتاهة تحمي مقاتلي الحرية.",
+                "timeline.date5.title": "الاستقلال",
+                "timeline.date5.desc": "تستعيد الجزائر سيادتها. تصبح القصبة رمزًا للمقاومة والهوية الوطنية الجزائرية.",
+                "timeline.date6.title": "التراث العالمي",
+                "timeline.date6.desc": "تسجل اليونسكو القصبة كموقع للتراث العالمي. كنز معماري معترف به عالميًا لقيمته الاستثنائية.",
+                "timeline.date7.title": "أعمال الترميم الكبرى",
+                "timeline.date7.desc": "إطلاق مشاريع ترميم كبيرة للحفاظ على هذه الجوهرة المعمارية. تم إنقاذ مئات المنازل من الخراب.",
+                "timeline.date8.title": "القصبة اليوم",
+                "timeline.date8.desc": "تواصل القصبة الحياة، بين التقليد والحداثة. حي حي حيث يلتقي التاريخ الألفي بالحياة اليومية المعاصرة."
+            }
+        };
+        
+        let currentLang = 'fr';
+        
+        // Apply translations
+        function applyTranslations(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            
+            // Apply dir="rtl" for Arabic
+            if (lang === 'ar') {
+                document.body.style.direction = 'rtl';
+                document.body.style.textAlign = 'right';
+            } else {
+                document.body.style.direction = 'ltr';
+                document.body.style.textAlign = 'left';
+            }
+            
+            // Update all elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                    btn.setAttribute('aria-current', 'true');
+                } else {
+                    btn.removeAttribute('aria-current');
+                }
+            });
+            
+            console.log(`✅ Langue changée: ${lang}`);
+        }
+        
+        // Language button event listeners
+        document.querySelectorAll('.lang-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const lang = button.getAttribute('data-lang');
+                applyTranslations(lang);
+            });
+            
+            // Keyboard accessibility
+            button.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    const lang = button.getAttribute('data-lang');
+                    applyTranslations(lang);
+                }
+            });
+        });
+        
+        // Global media fallback
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fallback for images
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('error', function() {
+                    const filename = this.src.split('/').pop();
+                    this.outerHTML = `<span class="media-fallback">❌ ${filename}</span>`;
+                });
+            });
+            
+            // Fallback for audio
+            document.querySelectorAll('audio').forEach(audio => {
+                audio.addEventListener('error', function() {
+                    const filename = this.src.split('/').pop();
+                    this.outerHTML = `<span class="media-fallback">🔇 ${filename}</span>`;
+                });
+            });
+            
+            console.log('✅ Media fallbacks activés (MODE TEST)');
+        });
+        
+        // Load distant footer
+        fetch("https://dznet1.com/intranet/footer.html")
+            .then(r => r.text())
+            .then(html => {
+                document.getElementById("footer-placeholder").innerHTML = html;
+                console.log('✅ Footer chargé');
+            })
+            .catch(err => {
+                console.warn('⚠️ Footer non disponible:', err);
+            });
+    </script>
+
+</body>
+</html>

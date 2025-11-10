@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-10T13:32:54.293Z",
+  "generatedAt": "2025-11-10T13:35:11.419Z",
   "totalStories": 57,
   "scanSummary": {
     "totalFiles": 57,
@@ -18,7 +18,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-10T13:32:50.028Z"
+      "lastModified": "2025-11-10T13:35:06.966Z"
     },
     {
       "filename": "contact.html",
@@ -31,7 +31,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-10T13:32:50.029Z"
+      "lastModified": "2025-11-10T13:35:06.966Z"
     },
     {
       "filename": "demo.html",
@@ -44,7 +44,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-10T13:32:50.029Z"
+      "lastModified": "2025-11-10T13:35:06.966Z"
     },
     {
       "filename": "e.html",
@@ -57,7 +57,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-10T13:32:50.029Z"
+      "lastModified": "2025-11-10T13:35:06.966Z"
     },
     {
       "filename": "enfants.html",
@@ -70,7 +70,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-10T13:32:50.029Z"
+      "lastModified": "2025-11-10T13:35:06.967Z"
     },
     {
       "filename": "faq.html",
@@ -83,7 +83,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-10T13:32:50.029Z"
+      "lastModified": "2025-11-10T13:35:06.967Z"
     },
     {
       "filename": "filtres.html",
@@ -96,7 +96,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-10T13:32:50.029Z"
+      "lastModified": "2025-11-10T13:35:06.967Z"
     },
     {
       "filename": "IA/ai.html",
@@ -109,7 +109,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "IA",
-      "lastModified": "2025-11-10T13:32:50.027Z"
+      "lastModified": "2025-11-10T13:35:06.965Z"
     },
     {
       "filename": "IA/myia.html",
@@ -122,7 +122,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "IA",
-      "lastModified": "2025-11-10T13:32:50.028Z"
+      "lastModified": "2025-11-10T13:35:06.965Z"
     },
     {
       "filename": "intranet/apprendre/appr001.html",
@@ -135,7 +135,7 @@
       "type": "histoire",
       "decouverte": "semaine",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-10T13:32:50.031Z"
+      "lastModified": "2025-11-10T13:35:06.968Z"
     },
     {
       "filename": "intranet/apprendre/appr002.html",
@@ -148,7 +148,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-10T13:32:50.031Z"
+      "lastModified": "2025-11-10T13:35:06.968Z"
     },
     {
       "filename": "intranet/apprendre/appr003.html",
@@ -161,7 +161,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-10T13:32:50.031Z"
+      "lastModified": "2025-11-10T13:35:06.968Z"
     },
     {
       "filename": "intranet/apprendre/appr004.html",
@@ -174,7 +174,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-10T13:32:50.031Z"
+      "lastModified": "2025-11-10T13:35:06.968Z"
     },
     {
       "filename": "intranet/apprendre/appr005.html",
@@ -187,7 +187,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-10T13:32:50.031Z"
+      "lastModified": "2025-11-10T13:35:06.969Z"
     },
     {
       "filename": "intranet/concours/concour0.html",
@@ -200,7 +200,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/concours",
-      "lastModified": "2025-11-10T13:32:50.032Z"
+      "lastModified": "2025-11-10T13:35:06.969Z"
     },
     {
       "filename": "intranet/concours/concour1.html",
@@ -213,7 +213,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/concours",
-      "lastModified": "2025-11-10T13:32:50.032Z"
+      "lastModified": "2025-11-10T13:35:06.969Z"
     },
     {
       "filename": "intranet/concours/concour2.html",
@@ -226,7 +226,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/concours",
-      "lastModified": "2025-11-10T13:32:50.032Z"
+      "lastModified": "2025-11-10T13:35:06.970Z"
     },
     {
       "filename": "intranet/encyclopedie/ency1.html",
@@ -239,7 +239,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/encyclopedie",
-      "lastModified": "2025-11-10T13:32:50.032Z"
+      "lastModified": "2025-11-10T13:35:06.970Z"
     },
     {
       "filename": "intranet/encyclopedie/ency2.html",
@@ -252,7 +252,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/encyclopedie",
-      "lastModified": "2025-11-10T13:32:50.033Z"
+      "lastModified": "2025-11-10T13:35:06.970Z"
     },
     {
       "filename": "intranet/encyclopedie/ency3.html",
@@ -265,7 +265,7 @@
       "type": "histoire",
       "decouverte": "semaine",
       "directory": "intranet/encyclopedie",
-      "lastModified": "2025-11-10T13:32:50.033Z"
+      "lastModified": "2025-11-10T13:35:06.970Z"
     },
     {
       "filename": "intranet/encyclopedie/ency5.html",
@@ -278,7 +278,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/encyclopedie",
-      "lastModified": "2025-11-10T13:32:50.033Z"
+      "lastModified": "2025-11-10T13:35:06.970Z"
     },
     {
       "filename": "intranet/footer.html",
@@ -291,7 +291,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet",
-      "lastModified": "2025-11-10T13:32:50.033Z"
+      "lastModified": "2025-11-10T13:35:06.971Z"
     },
     {
       "filename": "intranet/games/jeux.html",
@@ -304,7 +304,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.033Z"
+      "lastModified": "2025-11-10T13:35:06.971Z"
     },
     {
       "filename": "intranet/games/jeux0.html",
@@ -317,7 +317,7 @@
       "type": "classique",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.033Z"
+      "lastModified": "2025-11-10T13:35:06.971Z"
     },
     {
       "filename": "intranet/games/jeux1.html",
@@ -330,7 +330,7 @@
       "type": "educatif",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.034Z"
+      "lastModified": "2025-11-10T13:35:06.972Z"
     },
     {
       "filename": "intranet/games/jeux10.html",
@@ -343,7 +343,7 @@
       "type": "interactif",
       "decouverte": "semaine",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.034Z"
+      "lastModified": "2025-11-10T13:35:06.972Z"
     },
     {
       "filename": "intranet/games/jeux11.html",
@@ -356,7 +356,7 @@
       "type": "educatif",
       "decouverte": "semaine",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.035Z"
+      "lastModified": "2025-11-10T13:35:06.973Z"
     },
     {
       "filename": "intranet/games/jeux12.html",
@@ -369,7 +369,7 @@
       "type": "narrative",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.035Z"
+      "lastModified": "2025-11-10T13:35:06.973Z"
     },
     {
       "filename": "intranet/games/jeux2.html",
@@ -382,7 +382,7 @@
       "type": "interactif",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.035Z"
+      "lastModified": "2025-11-10T13:35:06.973Z"
     },
     {
       "filename": "intranet/games/jeux3.html",
@@ -395,7 +395,7 @@
       "type": "narrative",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.036Z"
+      "lastModified": "2025-11-10T13:35:06.974Z"
     },
     {
       "filename": "intranet/games/jeux4.html",
@@ -408,7 +408,7 @@
       "type": "aventure",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.036Z"
+      "lastModified": "2025-11-10T13:35:06.975Z"
     },
     {
       "filename": "intranet/games/jeux5.html",
@@ -421,7 +421,7 @@
       "type": "classique",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.036Z"
+      "lastModified": "2025-11-10T13:35:06.975Z"
     },
     {
       "filename": "intranet/games/jeux6.html",
@@ -434,7 +434,7 @@
       "type": "quiz",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.037Z"
+      "lastModified": "2025-11-10T13:35:06.976Z"
     },
     {
       "filename": "intranet/games/jeux7.html",
@@ -447,7 +447,7 @@
       "type": "arcade",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.038Z"
+      "lastModified": "2025-11-10T13:35:06.976Z"
     },
     {
       "filename": "intranet/games/jeux8.html",
@@ -460,7 +460,7 @@
       "type": "quiz",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.038Z"
+      "lastModified": "2025-11-10T13:35:06.977Z"
     },
     {
       "filename": "intranet/games/jeux9.html",
@@ -473,7 +473,7 @@
       "type": "classique",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.038Z"
+      "lastModified": "2025-11-10T13:35:06.977Z"
     },
     {
       "filename": "intranet/games/test.html",
@@ -486,7 +486,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-10T13:32:50.039Z"
+      "lastModified": "2025-11-10T13:35:06.978Z"
     },
     {
       "filename": "intranet/gestes/gest1.html",
@@ -499,7 +499,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/gestes",
-      "lastModified": "2025-11-10T13:32:50.039Z"
+      "lastModified": "2025-11-10T13:35:06.978Z"
     },
     {
       "filename": "intranet/gestes/gest2.html",
@@ -512,7 +512,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/gestes",
-      "lastModified": "2025-11-10T13:32:50.039Z"
+      "lastModified": "2025-11-10T13:35:06.978Z"
     },
     {
       "filename": "intranet/gestes/gest3.html",
@@ -525,7 +525,7 @@
       "type": "histoire",
       "decouverte": "semaine",
       "directory": "intranet/gestes",
-      "lastModified": "2025-11-10T13:32:50.039Z"
+      "lastModified": "2025-11-10T13:35:06.978Z"
     },
     {
       "filename": "intranet/histoirs/hist1.html",
@@ -538,7 +538,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-10T13:32:50.039Z"
+      "lastModified": "2025-11-10T13:35:06.978Z"
     },
     {
       "filename": "intranet/histoirs/hist10.html",
@@ -551,7 +551,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-10T13:32:50.039Z"
+      "lastModified": "2025-11-10T13:35:06.979Z"
     },
     {
       "filename": "intranet/histoirs/hist11.html",
@@ -564,7 +564,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-10T13:32:50.040Z"
+      "lastModified": "2025-11-10T13:35:06.979Z"
     },
     {
       "filename": "intranet/histoirs/hist12.html",
@@ -577,7 +577,7 @@
       "type": "html",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-10T13:32:50.040Z"
+      "lastModified": "2025-11-10T13:35:06.979Z"
     },
     {
       "filename": "intranet/histoirs/hist13.html",
@@ -590,7 +590,7 @@
       "type": "audio",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-10T13:32:50.040Z"
+      "lastModified": "2025-11-10T13:35:06.979Z"
     },
     {
       "filename": "intranet/histoirs/hist2.html",
@@ -603,7 +603,7 @@
       "type": "histoire",
       "decouverte": "semaine",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-10T13:32:50.040Z"
+      "lastModified": "2025-11-10T13:35:06.979Z"
     },
     {
       "filename": "intranet/histoirs/hist3.html",
@@ -616,7 +616,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-10T13:32:50.040Z"
+      "lastModified": "2025-11-10T13:35:06.979Z"
     },
     {
       "filename": "intranet/histoirs/hist4.html",
@@ -629,7 +629,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-10T13:32:50.040Z"
+      "lastModified": "2025-11-10T13:35:06.979Z"
     },
     {
       "filename": "intranet/histoirs/hist5.html",
@@ -642,7 +642,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-10T13:32:50.040Z"
+      "lastModified": "2025-11-10T13:35:06.980Z"
     },
     {
       "filename": "intranet/histoirs/hist6.html",
@@ -655,7 +655,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-10T13:32:50.040Z"
+      "lastModified": "2025-11-10T13:35:06.980Z"
     },
     {
       "filename": "intranet/histoirs/hist7.html",
@@ -668,7 +668,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-10T13:32:50.040Z"
+      "lastModified": "2025-11-10T13:35:06.980Z"
     },
     {
       "filename": "intranet/histoirs/hist8.html",
@@ -681,7 +681,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-10T13:32:50.040Z"
+      "lastModified": "2025-11-10T13:35:06.980Z"
     },
     {
       "filename": "intranet/histoirs/hist9.html",
@@ -694,7 +694,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-10T13:32:50.040Z"
+      "lastModified": "2025-11-10T13:35:06.980Z"
     },
     {
       "filename": "intranet/navigator.html",
@@ -707,7 +707,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet",
-      "lastModified": "2025-11-10T13:32:50.077Z"
+      "lastModified": "2025-11-10T13:35:07.028Z"
     },
     {
       "filename": "recrutement.html",
@@ -720,7 +720,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-10T13:32:50.078Z"
+      "lastModified": "2025-11-10T13:35:07.030Z"
     },
     {
       "filename": "test.html",
@@ -733,7 +733,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-10T13:32:50.078Z"
+      "lastModified": "2025-11-10T13:35:07.030Z"
     },
     {
       "filename": "zoho-domain-verification.html",
@@ -746,7 +746,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-10T13:32:50.078Z"
+      "lastModified": "2025-11-10T13:35:07.030Z"
     }
   ]
 }

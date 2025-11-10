@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌊 Aventure Marine Algérienne — Catégorie : Jeu Éducatif — Âge : 5+</title>
+    <meta name="description" content="Quiz éducatif interactif sur la côte algérienne pour enfants 5-8 ans. Découvre les villes, animaux marins et plages d'Algérie.">
+    <meta name="content-category" content="Jeu Éducatif">
+    <meta name="content-age" content="5">
+    <meta name="keywords" content="Algérie, côte, mer, quiz, enfants, Alger, Oran, animaux marins, dauphin">
+    
+    <!-- Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-CRRK6Z4D1X');
+    </script>
+    
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        "name": "Aventure Marine Algérienne - Quiz Éducatif",
+        "description": "Quiz interactif sur la côte algérienne pour enfants",
+        "educationalUse": "Jeu Éducatif",
+        "typicalAgeRange": "5+",
+        "learningResourceType": "Interactive Quiz",
+        "timeRequired": "PT15M",
+        "inLanguage": ["fr", "en", "ar"]
+    }
+    </script>
+    
+    <!-- CSS distant -->
+    <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Version: v1.027 - Quiz Marine avec FR/EN/AR */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+            --yellow: #f1c40f;
+            --purple: #9b59b6;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --ocean: #1abc9c;
+            --header-green: #00C853;
+            --header-orange: #FF6B35;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background: linear-gradient(135deg, #1e90ff, #00bfff, #87ceeb);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+            transition: direction 0.3s ease;
+        }
+
+        /* ===== LOGO STICKY ===== */
+        .logo-sticky {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, var(--header-green), var(--header-orange), var(--header-green));
+            padding: 12px 20px;
+            z-index: 1000;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 15px;
+        }
+        
+        .logo-container {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            min-width: 150px;
+        }
+        
+        .logo-container img {
+            height: 35px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+        
+        .logo-text {
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--header-green), var(--header-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Sélecteur langue dans header */
+        .language-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+
+        .lang-btn {
+            background: white;
+            border: 3px solid white;
+            border-radius: 10px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            color: #333;
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+        }
+
+        .lang-btn.active {
+            background: var(--header-orange);
+            color: white;
+            border-color: var(--header-orange);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.5);
+        }
+
+        /* ===== PUBLICITÉ ===== */
+        .ad-banner {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            margin: 0 auto 20px auto;
+            border-radius: 0 0 15px 15px;
+            max-width: 100%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .ad-banner img {
+            max-width: 100%;
+            max-height: 180px;
+            height: auto;
+            width: auto;
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto;
+            object-fit: contain;
+        }
+
+        /* Container principal */
+        .main-wrapper {
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            border: 8px solid var(--primary);
+        }
+
+        /* Animations bulles et poissons */
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+
+        .fish {
+            position: fixed;
+            font-size: 40px;
+            animation: swim 20s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes swim {
+            0% { transform: translateX(-100px) scaleX(1); }
+            49% { transform: translateX(calc(100vw + 100px)) scaleX(1); }
+            50% { transform: translateX(calc(100vw + 100px)) scaleX(-1); }
+            99% { transform: translateX(-100px) scaleX(-1); }
+            100% { transform: translateX(-100px) scaleX(1); }
+        }
+
+        /* Header interne */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title {
+            font-size: clamp(2em, 5vw, 3em);
+            color: var(--dark);
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(45deg, var(--primary), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: clamp(1.1em, 3vw, 1.4em);
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        /* Écran de bienvenue */
+        .welcome-screen {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-title {
+            font-size: clamp(2em, 4vw, 2.5em);
+            color: var(--accent);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .character {
+            font-size: clamp(80px, 15vw, 120px);
+            margin: 30px 0;
+            animation: bounce 2s infinite;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-25px); }
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+            text-align: left;
+        }
+
+        .feature {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 15px;
+            font-size: clamp(1em, 2.5vw, 1.2em);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--secondary);
+            transition: transform 0.3s;
+        }
+
+        /* RTL pour arabe */
+        body[dir="rtl"] .feature {
+            border-left: none;
+            border-right: 5px solid var(--secondary);
+            text-align: right;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, var(--accent), var(--yellow));
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: clamp(1.2em, 3vw, 1.5em);
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Écran de quiz */
+        .quiz-screen {
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .question-container {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 5px solid var(--primary);
+        }
+
+        .question {
+            font-size: clamp(1.3em, 3vw, 1.8em);
+            margin-bottom: 25px;
+            color: var(--dark);
+            line-height: 1.4;
+        }
+
+        .media-container {
+            margin: 25px 0;
+        }
+
+        .media-placeholder {
+            width: 100%;
+            max-width: 400px;
+            height: 250px;
+            margin: 0 auto;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 5px solid white;
+            overflow: hidden;
+            background: var(--light);
+        }
+
+        .media-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .media-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, var(--primary), var(--purple));
+            color: white;
+            font-weight: bold;
+            font-size: 1.3em;
+            width: 100%;
+            height: 100%;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .option {
+            background: var(--primary);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: clamp(1.1em, 2.5vw, 1.3em);
+            border: 5px solid transparent;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+        }
+
+        .option:hover:not(.correct):not(.incorrect) {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .option.correct {
+            background: var(--secondary);
+            border-color: #27ae60;
+            animation: celebrate 0.5s ease;
+        }
+
+        .option.incorrect {
+            background: var(--accent);
+            border-color: #c0392b;
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .feedback {
+            text-align: center;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 20px;
+            font-size: clamp(1.2em, 3vw, 1.5em);
+            font-weight: bold;
+            min-height: 100px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback.correct {
+            background: #d5f4e6;
+            color: var(--secondary);
+            border: 4px solid var(--secondary);
+        }
+
+        .feedback.incorrect {
+            background: #fadbd8;
+            color: var(--accent);
+            border: 4px solid var(--accent);
+        }
+
+        .progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            background: var(--light);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .progress-bar {
+            flex-grow: 1;
+            height: 25px;
+            background: #bdc3c7;
+            border-radius: 15px;
+            margin: 0 20px;
+            overflow: hidden;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--purple));
+            width: 0%;
+            transition: width 0.5s;
+            border-radius: 15px;
+        }
+
+        .parent-tip {
+            background: #fff9c4;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+            border-left: 8px solid var(--yellow);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body[dir="rtl"] .parent-tip {
+            border-left: none;
+            border-right: 8px solid var(--yellow);
+        }
+
+        .parent-tip h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: clamp(1.2em, 3vw, 1.4em);
+        }
+
+        .parent-tip p {
+            font-size: clamp(1em, 2vw, 1.1em);
+            line-height: 1.5;
+        }
+
+        /* Écran de résultats */
+        .results-screen {
+            text-align: center;
+            padding: 50px 20px;
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .trophy {
+            font-size: clamp(80px, 15vw, 120px);
+            margin: 30px 0;
+            animation: spin 3s infinite;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+        }
+
+        @keyframes spin {
+            0% { transform: rotateY(0); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .results-title {
+            font-size: clamp(2em, 5vw, 3em);
+            color: var(--accent);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-score {
+            font-size: clamp(3em, 8vw, 5em);
+            font-weight: bold;
+            margin: 30px 0;
+            color: var(--primary);
+            text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-message {
+            font-size: clamp(1.3em, 3vw, 1.8em);
+            margin-bottom: 40px;
+            color: var(--dark);
+            line-height: 1.5;
+        }
+
+        .restart-btn {
+            background: linear-gradient(45deg, var(--purple), var(--primary));
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: clamp(1.2em, 3vw, 1.5em);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== CONFETTI ===== */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* VERSION */
+        .version {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            z-index: 1000;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .logo-sticky {
+                flex-direction: column;
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .logo-container {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .language-selector {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .progress {
+                flex-direction: column;
+            }
+
+            .progress-bar {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            .ad-banner img {
+                max-height: 120px;
+            }
+
+            .main-wrapper {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px;
+                border-width: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .feature {
+                padding: 15px;
+            }
+
+            .option {
+                padding: 20px;
+            }
+
+            .question-container {
+                padding: 20px;
+            }
+
+            .media-placeholder {
+                height: 180px;
+            }
+
+            .lang-btn {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Version -->
+    <div class="version">v1.027</div>
+
+    <!-- Poissons animés -->
+    <div class="fish">🐠</div>
+    <div class="fish" style="top: 20%; animation-delay: 2s;">🐟</div>
+    <div class="fish" style="top: 60%; animation-delay: 5s;">🐡</div>
+    <div class="fish" style="top: 40%; animation-delay: 8s;">🦈</div>
+
+    <!-- ===== HEADER STICKY ===== -->
+    <header class="logo-sticky">
+        <div class="logo-container">
+            <img src="https://dznet1.com/images/logo.png" 
+                 alt="DZNet1" 
+                 onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'logo-text\'>🌵 DzNet1.com</span>';">
+        </div>
+        
+        <div class="language-selector">
+            <button class="lang-btn active" data-lang="fr" aria-label="Français">
+                🇫🇷 FR
+            </button>
+            <button class="lang-btn" data-lang="en" aria-label="English">
+                🇬🇧 EN
+            </button>
+            <button class="lang-btn" data-lang="ar" aria-label="العربية">
+                🇩🇿 AR
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== PUBLICITÉ ===== -->
+    <div class="ad-banner">
+        <img src="https://dznet1.com/cdn-cgi/image/width=728,height=180,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" 
+             alt="Publicité partenaire"
+             onerror="this.style.display='none';">
+    </div>
+
+    <!-- ===== CONTENU PRINCIPAL ===== -->
+    <div class="main-wrapper">
+        <div class="container">
+            <div id="bubbles-container"></div>
+
+            <!-- Écran de bienvenue -->
+            <div class="welcome-screen" id="welcome-screen">
+                <div class="header">
+                    <h1 class="title" id="welcome-title">🌊 Aventure Marine Algérienne</h1>
+                    <p class="subtitle" id="welcome-subtitle">Découvre les merveilles de la côte algérienne !</p>
+                </div>
+                
+                <div class="character">🧜‍♀️</div>
+                
+                <div class="welcome-title" id="adventure-call">Bienvenue, Petit Explorateur !</div>
+                
+                <div class="features">
+                    <div class="feature" id="feature1">🏖️ Découvre les plages magnifiques</div>
+                    <div class="feature" id="feature2">🐟 Rencontre les animaux marins</div>
+                    <div class="feature" id="feature3">🏙️ Explore les villes côtières</div>
+                    <div class="feature" id="feature4">🎯 Gagne des trophées brillants</div>
+                </div>
+                
+                <button class="start-btn" id="start-btn">
+                    <i class="fas fa-play"></i> Commencer l'Aventure !
+                </button>
+            </div>
+
+            <!-- Écran de quiz -->
+            <div class="quiz-screen" id="quiz-screen">
+                <div class="question-container">
+                    <div class="question" id="question">Chargement de la question...</div>
+                    <div class="media-container">
+                        <div class="media-placeholder" id="media-placeholder">
+                            <div class="media-fallback">
+                                <i class="fas fa-image"></i> Image
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="options" id="options"></div>
+
+                <div class="feedback" id="feedback"></div>
+
+                <div class="progress">
+                    <span id="score">Score: 0/0</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span id="question-count">Question 1/5</span>
+                </div>
+
+                <div class="parent-tip">
+                    <h3><i class="fas fa-lightbulb"></i> <span id="tip-title">Conseil pour les parents</span></h3>
+                    <p id="tip-content">Encouragez votre enfant à bien observer les images et à réfléchir avant de répondre.</p>
+                </div>
+            </div>
+
+            <!-- Écran de résultats -->
+            <div class="results-screen" id="results-screen">
+                <div class="trophy">🏆</div>
+                <h2 class="results-title" id="results-title">Félicitations !</h2>
+                <div class="results-score" id="results-score">0/5</div>
+                <p class="results-message" id="results-message">Tu as terminé l'aventure marine !</p>
+                <button class="restart-btn" id="restart-btn">
+                    <i class="fas fa-redo"></i> Rejouer l'Aventure
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Distant -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Version: v1.027 - Quiz Marine avec FR/EN/AR
+        
+        const quizData = {
+            fr: [
+                {
+                    question: "Quelle ville côtière algérienne est surnommée 'Alger la Blanche' ?",
+                    options: ["Alger", "Oran", "Annaba", "Béjaïa"],
+                    correct: 0,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/alger.jpg",
+                    explanation: "🎉 Exact ! Alger est surnommée 'Alger la Blanche' à cause de ses bâtiments blancs qui brillent au soleil !",
+                    tip: "Demandez à votre enfant pourquoi il pense qu'on l'appelle 'la Blanche'. Indice : regardez la couleur des maisons !"
+                },
+                {
+                    question: "Combien de poissons colorés nagent autour du corail ?",
+                    options: ["3", "5", "7", "9"],
+                    correct: 1,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/poissons.jpg",
+                    explanation: "🐠 Bravo ! Il y a 5 poissons dans le récif. Tu es un super compteur !",
+                    tip: "Aidez votre enfant à compter en pointant chaque poisson du doigt sur l'écran."
+                },
+                {
+                    question: "Quel animal marin est connu pour son intelligence et ses sauts ?",
+                    options: ["Méduse", "Dauphin", "Étoile de mer", "Crabe"],
+                    correct: 1,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/dauphin.jpg",
+                    explanation: "🐬 Super ! Le dauphin est très intelligent et adore jouer dans les vagues !",
+                    tip: "Parlez des différentes capacités des animaux marins avec votre enfant."
+                },
+                {
+                    question: "Quelle ville côtière se trouve à l'ouest de l'Algérie ?",
+                    options: ["Annaba", "Alger", "Oran", "Jijel"],
+                    correct: 2,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/oran.jpg",
+                    explanation: "🌊 Correct ! Oran est une belle ville portuaire située à l'ouest de l'Algérie !",
+                    tip: "Montrez une carte de l'Algérie à votre enfant pour situer les villes côtières."
+                },
+                {
+                    question: "Quel est cet animal marin qui peut piquer avec ses tentacules ?",
+                    options: ["Poisson-clown", "Méduse", "Tortue", "Baleine"],
+                    correct: 1,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/meduse.jpg",
+                    explanation: "✅ C'est ça ! La méduse peut piquer avec ses tentacules. Il faut être prudent !",
+                    tip: "Expliquez à votre enfant qu'il faut observer les animaux marins sans les toucher."
+                }
+            ],
+            en: [
+                {
+                    question: "Which Algerian coastal city is nicknamed 'Algiers the White'?",
+                    options: ["Algiers", "Oran", "Annaba", "Bejaia"],
+                    correct: 0,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/alger.jpg",
+                    explanation: "🎉 Correct! Algiers is called 'Algiers the White' because of its white buildings shining in the sun!",
+                    tip: "Ask your child why they think it's called 'the White'. Hint: look at the color of the houses!"
+                },
+                {
+                    question: "How many colorful fish are swimming around the coral?",
+                    options: ["3", "5", "7", "9"],
+                    correct: 1,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/poissons.jpg",
+                    explanation: "🐠 Great! There are 5 fish in the reef. You're a super counter!",
+                    tip: "Help your child count by pointing at each fish on the screen."
+                },
+                {
+                    question: "Which marine animal is known for its intelligence and jumps?",
+                    options: ["Jellyfish", "Dolphin", "Starfish", "Crab"],
+                    correct: 1,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/dauphin.jpg",
+                    explanation: "🐬 Awesome! The dolphin is very intelligent and loves to play in the waves!",
+                    tip: "Talk about the different abilities of marine animals with your child."
+                },
+                {
+                    question: "Which coastal city is located in western Algeria?",
+                    options: ["Annaba", "Algiers", "Oran", "Jijel"],
+                    correct: 2,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/oran.jpg",
+                    explanation: "🌊 Correct! Oran is a beautiful port city located in western Algeria!",
+                    tip: "Show a map of Algeria to your child to locate the coastal cities."
+                },
+                {
+                    question: "Which marine animal can sting with its tentacles?",
+                    options: ["Clownfish", "Jellyfish", "Turtle", "Whale"],
+                    correct: 1,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/meduse.jpg",
+                    explanation: "✅ That's right! The jellyfish can sting with its tentacles. We must be careful!",
+                    tip: "Explain to your child that we should observe marine animals without touching them."
+                }
+            ],
+            ar: [
+                {
+                    question: "ما هي المدينة الساحلية الجزائرية الملقبة بـ 'الجزائر البيضاء'؟",
+                    options: ["الجزائر", "وهران", "عنابة", "بجاية"],
+                    correct: 0,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/alger.jpg",
+                    explanation: "🎉 صحيح! الجزائر تُلقب بـ 'الجزائر البيضاء' بسبب مبانيها البيضاء التي تلمع تحت الشمس!",
+                    tip: "اسأل طفلك لماذا يُطلق عليها اسم 'البيضاء'. تلميح: انظر إلى لون المنازل!"
+                },
+                {
+                    question: "كم عدد الأسماك الملونة التي تسبح حول المرجان؟",
+                    options: ["3", "5", "7", "9"],
+                    correct: 1,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/poissons.jpg",
+                    explanation: "🐠 أحسنت! هناك 5 أسماك في الشعاب المرجانية. أنت عداد ممتاز!",
+                    tip: "ساعد طفلك على العد بالإشارة إلى كل سمكة على الشاشة."
+                },
+                {
+                    question: "ما هو الحيوان البحري المعروف بذكائه وقفزاته؟",
+                    options: ["قنديل البحر", "الدلفين", "نجم البحر", "السرطان"],
+                    correct: 1,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/dauphin.jpg",
+                    explanation: "🐬 رائع! الدلفين ذكي جدًا ويحب اللعب في الأمواج!",
+                    tip: "تحدث عن القدرات المختلفة للحيوانات البحرية مع طفلك."
+                },
+                {
+                    question: "أي مدينة ساحلية تقع في غرب الجزائر؟",
+                    options: ["عنابة", "الجزائر", "وهران", "جيجل"],
+                    correct: 2,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/oran.jpg",
+                    explanation: "🌊 صحيح! وهران مدينة ميناء جميلة تقع في غرب الجزائر!",
+                    tip: "أظهر خريطة الجزائر لطفلك لتحديد المدن الساحلية."
+                },
+                {
+                    question: "ما هو الحيوان البحري الذي يمكن أن يلسع بمجساته؟",
+                    options: ["سمكة المهرج", "قنديل البحر", "السلحفاة", "الحوت"],
+                    correct: 1,
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/meduse.jpg",
+                    explanation: "✅ هذا صحيح! قنديل البحر يمكن أن يلسع بمجساته. يجب أن نكون حذرين!",
+                    tip: "اشرح لطفلك أنه يجب مراقبة الحيوانات البحرية دون لمسها."
+                }
+            ]
+        };
+
+        // Variables globales
+        let currentLang = 'fr';
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        // Éléments DOM
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const langBtns = document.querySelectorAll('.lang-btn');
+
+        // Traductions
+        const translations = {
+            fr: {
+                title: "🌊 Aventure Marine Algérienne",
+                subtitle: "Découvre les merveilles de la côte algérienne !",
+                adventureCall: "Bienvenue, Petit Explorateur !",
+                feature1: "🏖️ Découvre les plages magnifiques",
+                feature2: "🐟 Rencontre les animaux marins",
+                feature3: "🏙️ Explore les villes côtières",
+                feature4: "🎯 Gagne des trophées brillants",
+                startBtn: "Commencer l'Aventure !",
+                restartBtn: "Rejouer l'Aventure",
+                resultsTitle: "Félicitations !",
+                resultsMessage: "Tu as terminé l'aventure marine !",
+                score: "Score",
+                question: "Question",
+                tipTitle: "Conseil pour les parents"
+            },
+            en: {
+                title: "🌊 Algerian Marine Adventure",
+                subtitle: "Discover the wonders of the Algerian coast!",
+                adventureCall: "Welcome, Little Explorer!",
+                feature1: "🏖️ Discover magnificent beaches",
+                feature2: "🐟 Meet marine animals",
+                feature3: "🏙️ Explore coastal cities",
+                feature4: "🎯 Win shiny trophies",
+                startBtn: "Start the Adventure!",
+                restartBtn: "Play Again",
+                resultsTitle: "Congratulations!",
+                resultsMessage: "You completed the marine adventure!",
+                score: "Score",
+                question: "Question",
+                tipTitle: "Tips for parents"
+            },
+            ar: {
+                title: "🌊 مغامرة بحرية جزائرية",
+                subtitle: "اكتشف عجائب الساحل الجزائري!",
+                adventureCall: "مرحبًا أيها المستكشف الصغير!",
+                feature1: "🏖️ اكتشف الشواطئ الرائعة",
+                feature2: "🐟 تعرف على الحيوانات البحرية",
+                feature3: "🏙️ استكشف المدن الساحلية",
+                feature4: "🎯 اربح الكؤوس اللامعة",
+                startBtn: "ابدأ المغامرة!",
+                restartBtn: "العب مرة أخرى",
+                resultsTitle: "تهانينا!",
+                resultsMessage: "لقد أكملت المغامرة البحرية!",
+                score: "النتيجة",
+                question: "سؤال",
+                tipTitle: "نصائح للآباء"
+            }
+        };
+
+        // Changement de langue
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentLang = btn.dataset.lang;
+                updateLanguage();
+            });
+        });
+
+        function updateLanguage() {
+            const t = translations[currentLang];
+            
+            // Direction RTL pour arabe
+            if (currentLang === 'ar') {
+                document.body.setAttribute('dir', 'rtl');
+                document.documentElement.lang = 'ar';
+            } else {
+                document.body.setAttribute('dir', 'ltr');
+                document.documentElement.lang = currentLang;
+            }
+            
+            document.getElementById('welcome-title').textContent = t.title;
+            document.getElementById('welcome-subtitle').textContent = t.subtitle;
+            document.getElementById('adventure-call').textContent = t.adventureCall;
+            document.getElementById('feature1').textContent = t.feature1;
+            document.getElementById('feature2').textContent = t.feature2;
+            document.getElementById('feature3').textContent = t.feature3;
+            document.getElementById('feature4').textContent = t.feature4;
+            document.getElementById('start-btn').innerHTML = `<i class="fas fa-play"></i> ${t.startBtn}`;
+            document.getElementById('restart-btn').innerHTML = `<i class="fas fa-redo"></i> ${t.restartBtn}`;
+            document.getElementById('tip-title').textContent = t.tipTitle;
+        }
+
+        // Démarrer le quiz
+        startBtn.addEventListener('click', startQuiz);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        function startQuiz() {
+            welcomeScreen.style.display = 'none';
+            quizScreen.style.display = 'block';
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            loadQuestion();
+        }
+
+        function restartQuiz() {
+            resultsScreen.style.display = 'none';
+            welcomeScreen.style.display = 'block';
+            currentQuestion = 0;
+            score = 0;
+        }
+
+        function loadQuestion() {
+            answered = false;
+            const q = quizData[currentLang][currentQuestion];
+            
+            document.getElementById('question').textContent = q.question;
+            document.getElementById('tip-content').textContent = q.tip;
+            document.getElementById('question-count').textContent = 
+                `${translations[currentLang].question} ${currentQuestion + 1}/${quizData[currentLang].length}`;
+            document.getElementById('score').textContent = 
+                `${translations[currentLang].score}: ${score}/${quizData[currentLang].length}`;
+            
+            const progressPercent = ((currentQuestion) / quizData[currentLang].length) * 100;
+            document.getElementById('progress-fill').style.width = progressPercent + '%';
+            
+            // Image avec fallback
+            const mediaPlaceholder = document.getElementById('media-placeholder');
+            if (q.image) {
+                mediaPlaceholder.innerHTML = `
+                    <img src="${q.image}" 
+                         alt="${translations[currentLang].question} ${currentQuestion + 1}" 
+                         onerror="this.parentElement.innerHTML='<div class=\\'media-fallback\\'><i class=\\'fas fa-image\\'></i> Image</div>'">
+                `;
+            } else {
+                mediaPlaceholder.innerHTML = '<div class="media-fallback"><i class="fas fa-image"></i> Image</div>';
+            }
+            
+            const feedback = document.getElementById('feedback');
+            feedback.style.display = 'none';
+            feedback.className = 'feedback';
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.textContent = option;
+                optionDiv.addEventListener('click', () => checkAnswer(index));
+                optionsContainer.appendChild(optionDiv);
+            });
+        }
+
+        function checkAnswer(selectedIndex) {
+            if (answered) return;
+            answered = true;
+            
+            const q = quizData[currentLang][currentQuestion];
+            const options = document.querySelectorAll('.option');
+            const feedback = document.getElementById('feedback');
+            
+            options[q.correct].classList.add('correct');
+            
+            if (selectedIndex === q.correct) {
+                score++;
+                feedback.className = 'feedback correct';
+                feedback.textContent = q.explanation;
+                createConfetti();
+            } else {
+                options[selectedIndex].classList.add('incorrect');
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = q.explanation;
+            }
+            
+            feedback.style.display = 'flex';
+            document.getElementById('score').textContent = 
+                `${translations[currentLang].score}: ${score}/${quizData[currentLang].length}`;
+            
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < quizData[currentLang].length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            }, 3000);
+        }
+
+        function showResults() {
+            quizScreen.style.display = 'none';
+            resultsScreen.style.display = 'block';
+            
+            const t = translations[currentLang];
+            document.getElementById('results-title').textContent = t.resultsTitle;
+            document.getElementById('results-score').textContent = `${score}/${quizData[currentLang].length}`;
+            
+            let message = t.resultsMessage;
+            if (score === quizData[currentLang].length) {
+                message = currentLang === 'fr' ? 
+                    "Parfait ! Tu es un champion de la mer ! 🌟" : 
+                    currentLang === 'en' ?
+                    "Perfect! You are a sea champion! 🌟" :
+                    "مثالي! أنت بطل البحر! 🌟";
+            } else if (score >= quizData[currentLang].length * 0.6) {
+                message = currentLang === 'fr' ? 
+                    "Très bien ! Tu connais bien la côte algérienne ! 👏" : 
+                    currentLang === 'en' ?
+                    "Very good! You know the Algerian coast well! 👏" :
+                    "جيد جدًا! أنت تعرف الساحل الجزائري جيدًا! 👏";
+            } else {
+                message = currentLang === 'fr' ? 
+                    "Bon effort ! Continue à explorer et à apprendre ! 🌊" : 
+                    currentLang === 'en' ?
+                    "Good effort! Keep exploring and learning! 🌊" :
+                    "مجهود جيد! استمر في الاستكشاف والتعلم! 🌊";
+            }
+            
+            document.getElementById('results-message').textContent = message;
+            createConfetti();
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = ['#f1c40f', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6'][Math.floor(Math.random() * 5)];
+                document.body.appendChild(confetti);
+                
+                confetti.style.animation = `confettiFall ${(Math.random() * 3 + 2)}s linear`;
+                
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+
+        // Créer des bulles animées
+        function createBubbles() {
+            const container = document.getElementById('bubbles-container');
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                const size = Math.random() * 60 + 20;
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                bubble.style.left = Math.random() * 100 + '%';
+                bubble.style.animationDelay = Math.random() * 5 + 's';
+                bubble.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                container.appendChild(bubble);
+            }
+        }
+
+        // Footer
+        fetch("https://dznet1.com/intranet/footer.html")
+            .then(r => r.text())
+            .then(h => document.getElementById("footer-placeholder").innerHTML = h)
+            .catch(() => {});
+
+        // Initialisation
+        createBubbles();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 Système Solaire pour Enfants — Catégorie : Jeu Éducatif — Âge : 6+</title>
+    <meta name="description" content="Découvre le système solaire de façon interactive : planètes, télescopes, rotation de la Terre. Aventure spatiale éducative pour enfants.">
+    <meta name="content-category" content="Jeu Éducatif">
+    <meta name="content-age" content="6">
+    <meta name="keywords" content="système solaire, planètes, espace, astronomie, enfants, télescope, Terre, éducatif">
+    
+    <!-- Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-CRRK6Z4D1X');
+    </script>
+    
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        "name": "Système Solaire pour Enfants",
+        "description": "Découverte interactive du système solaire",
+        "educationalUse": "Jeu Éducatif",
+        "typicalAgeRange": "6+",
+        "learningResourceType": "Interactive Experience",
+        "timeRequired": "PT20M",
+        "inLanguage": ["fr", "en", "ar"]
+    }
+    </script>
+    
+    <!-- CSS distant -->
+    <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Version: v1.032 - Système Solaire avec effet loupe + étoiles filantes */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --space-dark: #0b1120;
+            --space-blue: #1a2a4e;
+            --star-yellow: #ffdd00;
+            --planet-blue: #4a90e2;
+            --accent-orange: #ff9d00;
+            --accent-pink: #ff2a6d;
+            --header-green: #00C853;
+            --header-orange: #FF6B35;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            background: linear-gradient(135deg, var(--space-dark) 0%, var(--space-blue) 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+            transition: direction 0.3s ease;
+        }
+
+        /* ===== ÉTOILES FILANTES ===== */
+        .stars-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 80px;
+            background: linear-gradient(to bottom, white, transparent);
+            opacity: 0;
+            animation: shoot 3s ease-out;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translateX(0) translateY(0) rotate(45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(300px) translateY(300px) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        /* ===== LOGO STICKY ===== */
+        .logo-sticky {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, var(--header-green), var(--header-orange), var(--header-green));
+            padding: 12px 20px;
+            z-index: 1000;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 15px;
+        }
+        
+        .logo-container {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            min-width: 150px;
+        }
+        
+        .logo-container img {
+            height: 35px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+        
+        .logo-text {
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--header-green), var(--header-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: Arial, sans-serif;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+
+        .lang-btn {
+            background: white;
+            border: 3px solid white;
+            border-radius: 10px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            color: #333;
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+        }
+
+        .lang-btn.active {
+            background: var(--header-orange);
+            color: white;
+            border-color: var(--header-orange);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.5);
+        }
+
+        /* ===== PUBLICITÉ ===== */
+        .ad-banner {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            margin: 0 auto 20px auto;
+            border-radius: 0 0 15px 15px;
+            max-width: 100%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .ad-banner img {
+            max-width: 100%;
+            max-height: 180px;
+            height: auto;
+            width: auto;
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto;
+            object-fit: contain;
+        }
+
+        /* ===== CONTAINER PRINCIPAL ===== */
+        .main-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            background: linear-gradient(45deg, var(--accent-orange), var(--accent-pink));
+            padding: 30px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '🌟';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            top: -20px;
+            right: -20px;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-size: clamp(2em, 5vw, 3em);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: clamp(1.1em, 3vw, 1.4em);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== GRILLE ACTIVITÉS ===== */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .activity-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .activity-card:hover::before {
+            left: 100%;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            border-color: var(--accent-orange);
+            box-shadow: 0 15px 35px rgba(255, 157, 0, 0.4);
+        }
+
+        .activity-icon {
+            font-size: clamp(3em, 8vw, 4em);
+            margin-bottom: 15px;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .activity-title {
+            font-size: clamp(1.2em, 3vw, 1.5em);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .activity-description {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* ===== ÉCRANS ACTIVITÉS ===== */
+        .activity-screen {
+            display: none;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-btn {
+            background: var(--accent-pink);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 1em;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 42, 109, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 42, 109, 0.6);
+        }
+
+        /* ===== SYSTÈME SOLAIRE ===== */
+        .solar-system {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .sun {
+            width: clamp(60px, 10vw, 100px);
+            height: clamp(60px, 10vw, 100px);
+            background: radial-gradient(circle, #ffdd00, #ff6600);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            box-shadow: 0 0 40px #ff6600, 0 0 80px #ff6600;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .planets-container {
+            position: relative;
+            height: clamp(300px, 50vw, 500px);
+            margin: 30px auto;
+            max-width: clamp(300px, 80vw, 500px);
+        }
+
+        .orbit {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .planet:hover {
+            transform: scale(1.3);
+            z-index: 10;
+        }
+
+        .mercury-orbit { width: 20%; height: 20%; }
+        .venus-orbit { width: 35%; height: 35%; }
+        .earth-orbit { width: 50%; height: 50%; }
+        .mars-orbit { width: 65%; height: 65%; }
+        .jupiter-orbit { width: 80%; height: 80%; }
+        .saturn-orbit { width: 95%; height: 95%; }
+
+        .mercury { 
+            width: 8px; 
+            height: 8px; 
+            background: #a6a6a6; 
+            animation: orbit-mercury 8s linear infinite;
+        }
+
+        .venus { 
+            width: 12px; 
+            height: 12px; 
+            background: #e39e54; 
+            animation: orbit-venus 12s linear infinite;
+        }
+
+        .earth { 
+            width: 14px; 
+            height: 14px; 
+            background: linear-gradient(135deg, #4a90e2, #2e7bcf);
+            animation: orbit-earth 16s linear infinite;
+        }
+
+        .mars { 
+            width: 10px; 
+            height: 10px; 
+            background: #c1440e; 
+            animation: orbit-mars 20s linear infinite;
+        }
+
+        .jupiter { 
+            width: 24px; 
+            height: 24px; 
+            background: linear-gradient(135deg, #c9a86a, #8b6f47);
+            animation: orbit-jupiter 28s linear infinite;
+        }
+
+        .saturn { 
+            width: 20px; 
+            height: 20px; 
+            background: #e3cda5; 
+            animation: orbit-saturn 36s linear infinite;
+        }
+
+        @keyframes orbit-mercury {
+            from { transform: rotate(0deg) translateX(calc(var(--orbit-size, 50px))) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(calc(var(--orbit-size, 50px))) rotate(-360deg); }
+        }
+
+        @keyframes orbit-venus {
+            from { transform: rotate(0deg) translateX(calc(var(--orbit-size, 70px))) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(calc(var(--orbit-size, 70px))) rotate(-360deg); }
+        }
+
+        @keyframes orbit-earth {
+            from { transform: rotate(0deg) translateX(calc(var(--orbit-size, 90px))) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(calc(var(--orbit-size, 90px))) rotate(-360deg); }
+        }
+
+        @keyframes orbit-mars {
+            from { transform: rotate(0deg) translateX(calc(var(--orbit-size, 110px))) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(calc(var(--orbit-size, 110px))) rotate(-360deg); }
+        }
+
+        @keyframes orbit-jupiter {
+            from { transform: rotate(0deg) translateX(calc(var(--orbit-size, 140px))) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(calc(var(--orbit-size, 140px))) rotate(-360deg); }
+        }
+
+        @keyframes orbit-saturn {
+            from { transform: rotate(0deg) translateX(calc(var(--orbit-size, 170px))) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(calc(var(--orbit-size, 170px))) rotate(-360deg); }
+        }
+
+        /* ===== ROTATION TERRE ===== */
+        .earth-rotation {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .rotating-earth {
+            width: clamp(100px, 20vw, 150px);
+            height: clamp(100px, 20vw, 150px);
+            margin: 0 auto 30px;
+            perspective: 1000px;
+        }
+
+        .earth-globe {
+            width: 100%;
+            height: 100%;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Blue_Marble_2002.png/600px-Blue_Marble_2002.png');
+            background-size: 200% 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(74, 144, 226, 0.8), inset -20px 0 40px rgba(0,0,0,0.5);
+            animation: rotate-earth 10s linear infinite;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+
+        @keyframes rotate-earth {
+            from { background-position: 0% center; }
+            to { background-position: 200% center; }
+        }
+
+        .earth-description {
+            background: rgba(74, 144, 226, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 2px solid rgba(74, 144, 226, 0.3);
+            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.2);
+        }
+
+        .earth-line {
+            margin: 12px 0;
+            line-height: 1.6;
+            font-size: clamp(0.95em, 2.5vw, 1.1em);
+            padding-left: 10px;
+            border-left: 3px solid var(--accent-orange);
+        }
+
+        body[dir="rtl"] .earth-line {
+            border-left: none;
+            border-right: 3px solid var(--accent-orange);
+            padding-left: 0;
+            padding-right: 10px;
+        }
+
+        /* ===== GALERIE PLANÈTES AVEC EFFET LOUPE ===== */
+        .planets-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .planet-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: visible;
+        }
+
+        .planet-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            border-color: var(--accent-orange);
+            box-shadow: 0 12px 30px rgba(255, 157, 0, 0.4);
+            z-index: 10;
+        }
+
+        .planet-image-wrapper {
+            position: relative;
+            width: clamp(60px, 12vw, 80px);
+            height: clamp(60px, 12vw, 80px);
+            margin: 0 auto 15px;
+        }
+
+        .planet-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255,255,255,0.3);
+            transition: all 0.5s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* EFFET LOUPE TÉLESCOPE */
+        .planet-card:hover .planet-image {
+            transform: scale(1.8);
+            border-color: var(--star-yellow);
+            box-shadow: 0 0 30px var(--star-yellow), 0 0 50px rgba(255,221,0,0.5);
+            z-index: 20;
+        }
+
+        .telescope-cursor {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="white" stroke-width="2"/><circle cx="16" cy="16" r="10" fill="none" stroke="white" stroke-width="1"/></svg>') 16 16, auto;
+        }
+
+        .planet-name {
+            font-weight: bold;
+            font-size: clamp(1em, 2.5vw, 1.2em);
+            margin-bottom: 8px;
+            color: var(--accent-orange);
+        }
+
+        .planet-type {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        /* ===== INFO PLANÈTE ===== */
+        .planet-info {
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .planet-large-image {
+            width: clamp(120px, 25vw, 180px);
+            height: clamp(120px, 25vw, 180px);
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 4px solid var(--accent-orange);
+            box-shadow: 0 10px 30px rgba(255, 157, 0, 0.4);
+            animation: planet-appear 0.6s ease-out;
+        }
+
+        @keyframes planet-appear {
+            from {
+                transform: scale(0) rotate(180deg);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .planet-description {
+            line-height: 1.6;
+            margin: 8px 0;
+            font-size: clamp(0.95em, 2.5vw, 1.1em);
+        }
+
+        /* ===== TÉLESCOPES ===== */
+        .telescopes-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid var(--accent-orange);
+        }
+
+        .telescopes-section h3 {
+            font-size: clamp(1.5em, 4vw, 2em);
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--accent-orange);
+        }
+
+        .telescopes-section > p {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: clamp(1em, 2.5vw, 1.2em);
+        }
+
+        .telescopes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .telescope-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+        }
+
+        .telescope-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-orange);
+            box-shadow: 0 12px 30px rgba(255, 157, 0, 0.4);
+        }
+
+        .telescope-image {
+            width: 100%;
+            max-width: 200px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 0 auto 15px;
+            border: 3px solid var(--accent-orange);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .telescope-card:hover .telescope-image {
+            transform: scale(1.05);
+        }
+
+        .telescope-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--accent-orange);
+            font-size: clamp(1.1em, 3vw, 1.3em);
+        }
+
+        .telescope-info {
+            font-size: clamp(0.9em, 2.5vw, 1em);
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        /* ===== VERSION ===== */
+        .version {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            z-index: 1000;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .logo-sticky {
+                flex-direction: column;
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .logo-container {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .language-selector {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .activities-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .planets-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .telescopes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .planets-container {
+                height: 300px;
+                max-width: 300px;
+            }
+
+            .ad-banner img {
+                max-height: 120px;
+            }
+
+            .activity-screen {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-wrapper {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 20px 15px;
+            }
+
+            .back-btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+
+            .lang-btn {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Version -->
+    <div class="version">v1.032</div>
+
+    <!-- Étoiles fixes et filantes -->
+    <div class="stars-container" id="stars-container"></div>
+
+    <!-- ===== HEADER STICKY ===== -->
+    <header class="logo-sticky">
+        <div class="logo-container">
+            <img src="https://dznet1.com/images/logo.png" 
+                 alt="DZNet1" 
+                 onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'logo-text\'>🌵 DzNet1.com</span>';">
+        </div>
+        
+        <div class="language-selector">
+            <button class="lang-btn active" data-lang="fr" aria-label="Français">
+                🇫🇷 FR
+            </button>
+            <button class="lang-btn" data-lang="en" aria-label="English">
+                🇬🇧 EN
+            </button>
+            <button class="lang-btn" data-lang="ar" aria-label="العربية">
+                🇩🇿 AR
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== PUBLICITÉ ===== -->
+    <div class="ad-banner">
+        <img src="https://dznet1.com/cdn-cgi/image/width=728,height=180,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" 
+             alt="Publicité partenaire"
+             onerror="this.style.display='none';">
+    </div>
+
+    <!-- ===== CONTENU PRINCIPAL ===== -->
+    <div class="main-wrapper">
+        <div class="container">
+            <!-- Menu Principal -->
+            <div class="header">
+                <h1 data-i18n="header.title">🌍 Système Solaire</h1>
+                <p data-i18n="header.subtitle">Découvre l'espace en t'amusant !</p>
+            </div>
+
+            <div class="activities-grid">
+                <!-- Système Solaire -->
+                <div class="activity-card" onclick="showActivity('solar-system')">
+                    <div class="activity-icon">🪐</div>
+                    <div class="activity-title" data-i18n="activity1.title">Système Solaire</div>
+                    <div class="activity-description" data-i18n="activity1.desc">Observe les planètes</div>
+                </div>
+
+                <!-- Rotation de la Terre -->
+                <div class="activity-card" onclick="showActivity('earth-rotation')">
+                    <div class="activity-icon">🌍</div>
+                    <div class="activity-title" data-i18n="activity2.title">Notre Terre</div>
+                    <div class="activity-description" data-i18n="activity2.desc">Vois la Terre tourner</div>
+                </div>
+
+                <!-- Découvre les planètes -->
+                <div class="activity-card telescope-cursor" onclick="showActivity('discover-planets')">
+                    <div class="activity-icon">🔭</div>
+                    <div class="activity-title" data-i18n="activity3.title">Les Planètes</div>
+                    <div class="activity-description" data-i18n="activity3.desc">Explore avec la loupe</div>
+                </div>
+            </div>
+
+            <!-- Activité Système Solaire -->
+            <div id="solar-system-activity" class="activity-screen">
+                <button class="back-btn" onclick="showMainMenu()">
+                    <i class="fas fa-arrow-left"></i> <span data-i18n="back">Retour</span>
+                </button>
+                <h2>🪐 <span data-i18n="solar.title">Notre Système Solaire</span></h2>
+                
+                <div class="solar-system">
+                    <div class="sun"></div>
+                    <div class="planets-container">
+                        <div class="orbit mercury-orbit"></div>
+                        <div class="orbit venus-orbit"></div>
+                        <div class="orbit earth-orbit"></div>
+                        <div class="orbit mars-orbit"></div>
+                        <div class="orbit jupiter-orbit"></div>
+                        <div class="orbit saturn-orbit"></div>
+                        
+                        <div class="planet mercury" style="--orbit-size: 10%;"></div>
+                        <div class="planet venus" style="--orbit-size: 17.5%;"></div>
+                        <div class="planet earth" style="--orbit-size: 25%;"></div>
+                        <div class="planet mars" style="--orbit-size: 32.5%;"></div>
+                        <div class="planet jupiter" style="--orbit-size: 40%;"></div>
+                        <div class="planet saturn" style="--orbit-size: 47.5%;"></div>
+                    </div>
+                </div>
+                
+                <div class="planet-info">
+                    <h3 data-i18n="solar.subtitle">🌞 Notre Système Solaire</h3>
+                    <div class="planet-description" data-i18n="solar.fact1">• 1 étoile : le Soleil</div>
+                    <div class="planet-description" data-i18n="solar.fact2">• 8 planètes qui tournent autour</div>
+                    <div class="planet-description" data-i18n="solar.fact3">• La Terre est la 3ème planète</div>
+                    <div class="planet-description" data-i18n="solar.fact4">• Des astéroïdes et comètes aussi !</div>
+                </div>
+            </div>
+
+            <!-- Activité Notre Terre -->
+            <div id="earth-rotation-activity" class="activity-screen">
+                <button class="back-btn" onclick="showMainMenu()">
+                    <i class="fas fa-arrow-left"></i> <span data-i18n="back">Retour</span>
+                </button>
+                <h2>🌍 <span data-i18n="earth.title">Notre Planète Terre</span></h2>
+                
+                <div class="earth-rotation">
+                    <div class="rotating-earth">
+                        <div class="earth-globe"></div>
+                    </div>
+                </div>
+                
+                <div class="earth-description" id="earth-facts">
+                    <!-- Les faits seront ajoutés par JS selon la langue -->
+                </div>
+
+                <div class="planet-info">
+                    <span data-i18n="earth.rotation1">La Terre tourne sur elle-même :</span><br>
+                    <span data-i18n="earth.rotation2">🌞 → C'est le JOUR</span><br>
+                    <span data-i18n="earth.rotation3">🌙 → C'est la NUIT</span>
+                </div>
+            </div>
+
+            <!-- Découvre les planètes -->
+            <div id="discover-planets-activity" class="activity-screen">
+                <button class="back-btn" onclick="showMainMenu()">
+                    <i class="fas fa-arrow-left"></i> <span data-i18n="back">Retour</span>
+                </button>
+                <h2>🔭 <span data-i18n="planets.title">Découvre les Planètes</span></h2>
+                <p data-i18n="planets.instruction">Clique sur une planète pour en savoir plus ! (Effet loupe au survol)</p>
+                
+                <div class="planets-gallery telescope-cursor" id="planets-gallery"></div>
+                
+                <div class="planet-info" id="planet-info">
+                    <span data-i18n="planets.hint">Choisis une planète pour découvrir ses secrets !</span>
+                </div>
+
+                <!-- Section Télescopes -->
+                <div class="telescopes-section">
+                    <h3 data-i18n="telescopes.title">🔭 Les Télescopes Célèbres</h3>
+                    <p data-i18n="telescopes.subtitle">Ils nous aident à voir les étoiles et planètes !</p>
+                    
+                    <div class="telescopes-grid" id="telescopes-grid">
+                        <!-- Généré par JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Distant -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Version: v1.032 - Système Solaire complet
+        
+        // ===== DONNÉES PLANÈTES (3 LANGUES) =====
+        const planetsData = {
+            fr: [
+                {
+                    name: "Mercure",
+                    type: "Planète rocheuse",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Mercury_in_color_-_Prockter07_centered.jpg/480px-Mercury_in_color_-_Prockter07_centered.jpg",
+                    description: [
+                        "🌞 58 millions de km du Soleil",
+                        "👁️ Connue depuis toujours",
+                        "🔥 Très chaude le jour, très froide la nuit",
+                        "🏃 Planète la plus rapide"
+                    ]
+                },
+                {
+                    name: "Vénus",
+                    type: "Planète rocheuse",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Venus-real_color.jpg/480px-Venus-real_color.jpg",
+                    description: [
+                        "🌞 108 millions de km du Soleil",
+                        "👁️ Visible à l'œil nu",
+                        "☁️ Couverte de nuages épais",
+                        "⭐ L'étoile du berger"
+                    ]
+                },
+                {
+                    name: "Terre",
+                    type: "Notre maison",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/480px-Earth_Western_Hemisphere_transparent_background.png",
+                    description: [
+                        "🌞 150 millions de km du Soleil",
+                        "🏠 Notre maison avec des animaux",
+                        "💧 Seule planète avec de l'eau liquide",
+                        "🌱 Vie partout sur Terre"
+                    ]
+                },
+                {
+                    name: "Mars",
+                    type: "Planète rocheuse",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/480px-OSIRIS_Mars_true_color.jpg",
+                    description: [
+                        "🌞 228 millions de km du Soleil",
+                        "🔴 Appelée 'planète rouge'",
+                        "🏜️ Grands déserts et montagnes",
+                        "🤖 Explorée par des robots"
+                    ]
+                },
+                {
+                    name: "Jupiter",
+                    type: "Géante gazeuse",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Jupiter_and_its_shrunken_Great_Red_Spot.jpg/480px-Jupiter_and_its_shrunken_Great_Red_Spot.jpg",
+                    description: [
+                        "🌞 778 millions de km du Soleil",
+                        "💪 La plus grande planète",
+                        "🌀 Grande tache rouge (tempête)",
+                        "🌙 Plus de 70 lunes !"
+                    ]
+                },
+                {
+                    name: "Saturne",
+                    type: "Géante gazeuse",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Saturn_during_Equinox.jpg/480px-Saturn_during_Equinox.jpg",
+                    description: [
+                        "🌞 1,4 milliard de km du Soleil",
+                        "💍 Connue pour ses anneaux",
+                        "🪐 Anneaux de glace et poussière",
+                        "✨ La plus belle planète"
+                    ]
+                }
+            ],
+            en: [
+                {
+                    name: "Mercury",
+                    type: "Rocky planet",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Mercury_in_color_-_Prockter07_centered.jpg/480px-Mercury_in_color_-_Prockter07_centered.jpg",
+                    description: [
+                        "🌞 58 million km from the Sun",
+                        "👁️ Known since ancient times",
+                        "🔥 Very hot by day, very cold by night",
+                        "🏃 The fastest planet"
+                    ]
+                },
+                {
+                    name: "Venus",
+                    type: "Rocky planet",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Venus-real_color.jpg/480px-Venus-real_color.jpg",
+                    description: [
+                        "🌞 108 million km from the Sun",
+                        "👁️ Visible to the naked eye",
+                        "☁️ Covered with thick clouds",
+                        "⭐ The evening star"
+                    ]
+                },
+                {
+                    name: "Earth",
+                    type: "Our home",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/480px-Earth_Western_Hemisphere_transparent_background.png",
+                    description: [
+                        "🌞 150 million km from the Sun",
+                        "🏠 Our home with animals",
+                        "💧 Only planet with liquid water",
+                        "🌱 Life everywhere on Earth"
+                    ]
+                },
+                {
+                    name: "Mars",
+                    type: "Rocky planet",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/480px-OSIRIS_Mars_true_color.jpg",
+                    description: [
+                        "🌞 228 million km from the Sun",
+                        "🔴 Called the 'red planet'",
+                        "🏜️ Large deserts and mountains",
+                        "🤖 Explored by robots"
+                    ]
+                },
+                {
+                    name: "Jupiter",
+                    type: "Gas giant",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Jupiter_and_its_shrunken_Great_Red_Spot.jpg/480px-Jupiter_and_its_shrunken_Great_Red_Spot.jpg",
+                    description: [
+                        "🌞 778 million km from the Sun",
+                        "💪 The largest planet",
+                        "🌀 Great Red Spot (storm)",
+                        "🌙 More than 70 moons!"
+                    ]
+                },
+                {
+                    name: "Saturne",
+                    type: "Gas giant",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Saturn_during_Equinox.jpg/480px-Saturn_during_Equinox.jpg",
+                    description: [
+                        "🌞 1.4 billion km from the Sun",
+                        "💍 Famous for its rings",
+                        "🪐 Rings of ice and dust",
+                        "✨ The most beautiful planet"
+                    ]
+                }
+            ],
+            ar: [
+                {
+                    name: "عطارد",
+                    type: "كوكب صخري",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Mercury_in_color_-_Prockter07_centered.jpg/480px-Mercury_in_color_-_Prockter07_centered.jpg",
+                    description: [
+                        "🌞 58 مليون كم من الشمس",
+                        "👁️ معروف منذ القدم",
+                        "🔥 حار جدًا نهارًا، بارد جدًا ليلاً",
+                        "🏃 الكوكب الأسرع"
+                    ]
+                },
+                {
+                    name: "الزهرة",
+                    type: "كوكب صخري",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Venus-real_color.jpg/480px-Venus-real_color.jpg",
+                    description: [
+                        "🌞 108 مليون كم من الشمس",
+                        "👁️ مرئي بالعين المجردة",
+                        "☁️ مغطى بغيوم كثيفة",
+                        "⭐ نجم المساء"
+                    ]
+                },
+                {
+                    name: "الأرض",
+                    type: "بيتنا",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/480px-Earth_Western_Hemisphere_transparent_background.png",
+                    description: [
+                        "🌞 150 مليون كم من الشمس",
+                        "🏠 بيتنا مع الحيوانات",
+                        "💧 الكوكب الوحيد بماء سائل",
+                        "🌱 حياة في كل مكان على الأرض"
+                    ]
+                },
+                {
+                    name: "المريخ",
+                    type: "كوكب صخري",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/480px-OSIRIS_Mars_true_color.jpg",
+                    description: [
+                        "🌞 228 مليون كم من الشمس",
+                        "🔴 يُسمى 'الكوكب الأحمر'",
+                        "🏜️ صحاري وجبال كبيرة",
+                        "🤖 يستكشفه روبوتات"
+                    ]
+                },
+                {
+                    name: "المشتري",
+                    type: "عملاق غازي",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Jupiter_and_its_shrunken_Great_Red_Spot.jpg/480px-Jupiter_and_its_shrunken_Great_Red_Spot.jpg",
+                    description: [
+                        "🌞 778 مليون كم من الشمس",
+                        "💪 أكبر كوكب",
+                        "🌀 بقعة حمراء كبيرة (عاصفة)",
+                        "🌙 أكثر من 70 قمرًا!"
+                    ]
+                },
+                {
+                    name: "زحل",
+                    type: "عملاق غازي",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Saturn_during_Equinox.jpg/480px-Saturn_during_Equinox.jpg",
+                    description: [
+                        "🌞 1.4 مليار كم من الشمس",
+                        "💍 مشهور بحلقاته",
+                        "🪐 حلقات من الجليد والغبار",
+                        "✨ أجمل كوكب"
+                    ]
+                }
+            ]
+        };
+
+        // ===== DONNÉES TÉLESCOPES (3 LANGUES) =====
+        const telescopesData = {
+            fr: [
+                {
+                    name: "Hubble",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/HST-SM4.jpeg/800px-HST-SM4.jpeg",
+                    info: "Dans l'espace depuis 1990<br>Prend de belles photos des étoiles 🌟"
+                },
+                {
+                    name: "James Webb",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/James_Webb_Space_Telescope_artist_conception.jpg/800px-James_Webb_Space_Telescope_artist_conception.jpg",
+                    info: "Le plus nouveau télescope<br>Il voit très loin dans l'espace 🚀"
+                },
+                {
+                    name: "Pic du Midi",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/PicDuMidiObservatory.jpg/800px-PicDuMidiObservatory.jpg",
+                    info: "En France, dans les montagnes<br>On y voit bien les étoiles ⛰️"
+                }
+            ],
+            en: [
+                {
+                    name: "Hubble",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/HST-SM4.jpeg/800px-HST-SM4.jpeg",
+                    info: "In space since 1990<br>Takes beautiful pictures of stars 🌟"
+                },
+                {
+                    name: "James Webb",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/James_Webb_Space_Telescope_artist_conception.jpg/800px-James_Webb_Space_Telescope_artist_conception.jpg",
+                    info: "The newest telescope<br>It sees very far in space 🚀"
+                },
+                {
+                    name: "Pic du Midi",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/PicDuMidiObservatory.jpg/800px-PicDuMidiObservatory.jpg",
+                    info: "In France, in the mountains<br>Great view of stars ⛰️"
+                }
+            ],
+            ar: [
+                {
+                    name: "هابل",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/HST-SM4.jpeg/800px-HST-SM4.jpeg",
+                    info: "في الفضاء منذ 1990<br>يلتقط صورًا جميلة للنجوم 🌟"
+                },
+                {
+                    name: "جيمس ويب",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/James_Webb_Space_Telescope_artist_conception.jpg/800px-James_Webb_Space_Telescope_artist_conception.jpg",
+                    info: "أحدث تلسكوب<br>يرى بعيدًا جدًا في الفضاء 🚀"
+                },
+                {
+                    name: "بيك دو ميدي",
+                    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/PicDuMidiObservatory.jpg/800px-PicDuMidiObservatory.jpg",
+                    info: "في فرنسا، في الجبال<br>منظر رائع للنجوم ⛰️"
+                }
+            ]
+        };
+
+        // ===== TRADUCTIONS UI =====
+        const translations = {
+            fr: {
+                "header.title": "🌍 Système Solaire",
+                "header.subtitle": "Découvre l'espace en t'amusant !",
+                "activity1.title": "Système Solaire",
+                "activity1.desc": "Observe les planètes",
+                "activity2.title": "Notre Terre",
+                "activity2.desc": "Vois la Terre tourner",
+                "activity3.title": "Les Planètes",
+                "activity3.desc": "Explore avec la loupe",
+                "back": "Retour",
+                "solar.title": "Notre Système Solaire",
+                "solar.subtitle": "🌞 Notre Système Solaire",
+                "solar.fact1": "• 1 étoile : le Soleil",
+                "solar.fact2": "• 8 planètes qui tournent autour",
+                "solar.fact3": "• La Terre est la 3ème planète",
+                "solar.fact4": "• Des astéroïdes et comètes aussi !",
+                "earth.title": "Notre Planète Terre",
+                "earth.fact1": "📍 <strong>Position</strong> : 3ème planète du Soleil",
+                "earth.fact2": "🌎 <strong>Continents</strong> : 7 grands continents",
+                "earth.fact3": "🏔️ <strong>Terres</strong> : Montagnes, forêts, déserts",
+                "earth.fact4": "🌊 <strong>Océans</strong> : 5 grands océans bleus",
+                "earth.fact5": "💨 <strong>Air</strong> : Atmosphère qui nous protège",
+                "earth.rotation1": "La Terre tourne sur elle-même :",
+                "earth.rotation2": "🌞 → C'est le JOUR",
+                "earth.rotation3": "🌙 → C'est la NUIT",
+                "planets.title": "Découvre les Planètes",
+                "planets.instruction": "Clique sur une planète pour en savoir plus ! (Effet loupe au survol)",
+                "planets.hint": "Choisis une planète pour découvrir ses secrets !",
+                "telescopes.title": "🔭 Les Télescopes Célèbres",
+                "telescopes.subtitle": "Ils nous aident à voir les étoiles et planètes !"
+            },
+            en: {
+                "header.title": "🌍 Solar System",
+                "header.subtitle": "Discover space while having fun!",
+                "activity1.title": "Solar System",
+                "activity1.desc": "Watch the planets",
+                "activity2.title": "Our Earth",
+                "activity2.desc": "See Earth rotate",
+                "activity3.title": "The Planets",
+                "activity3.desc": "Explore with zoom",
+                "back": "Back",
+                "solar.title": "Our Solar System",
+                "solar.subtitle": "🌞 Our Solar System",
+                "solar.fact1": "• 1 star: the Sun",
+                "solar.fact2": "• 8 planets orbiting around",
+                "solar.fact3": "• Earth is the 3rd planet",
+                "solar.fact4": "• Asteroids and comets too!",
+                "earth.title": "Our Planet Earth",
+                "earth.fact1": "📍 <strong>Position</strong>: 3rd planet from the Sun",
+                "earth.fact2": "🌎 <strong>Continents</strong>: 7 large continents",
+                "earth.fact3": "🏔️ <strong>Land</strong>: Mountains, forests, deserts",
+                "earth.fact4": "🌊 <strong>Oceans</strong>: 5 great blue oceans",
+                "earth.fact5": "💨 <strong>Air</strong>: Atmosphere that protects us",
+                "earth.rotation1": "Earth rotates on itself:",
+                "earth.rotation2": "🌞 → It's DAY",
+                "earth.rotation3": "🌙 → It's NIGHT",
+                "planets.title": "Discover the Planets",
+                "planets.instruction": "Click on a planet to learn more! (Zoom effect on hover)",
+                "planets.hint": "Choose a planet to discover its secrets!",
+                "telescopes.title": "🔭 Famous Telescopes",
+                "telescopes.subtitle": "They help us see stars and planets!"
+            },
+            ar: {
+                "header.title": "🌍 النظام الشمسي",
+                "header.subtitle": "اكتشف الفضاء بالمتعة!",
+                "activity1.title": "النظام الشمسي",
+                "activity1.desc": "راقب الكواكب",
+                "activity2.title": "أرضنا",
+                "activity2.desc": "شاهد الأرض تدور",
+                "activity3.title": "الكواكب",
+                "activity3.desc": "استكشف بالعدسة",
+                "back": "رجوع",
+                "solar.title": "نظامنا الشمسي",
+                "solar.subtitle": "🌞 نظامنا الشمسي",
+                "solar.fact1": "• نجم واحد: الشمس",
+                "solar.fact2": "• 8 كواكب تدور حوله",
+                "solar.fact3": "• الأرض هي الكوكب الثالث",
+                "solar.fact4": "• كويكبات ومذنبات أيضًا!",
+                "earth.title": "كوكبنا الأرض",
+                "earth.fact1": "📍 <strong>الموقع</strong>: الكوكب الثالث من الشمس",
+                "earth.fact2": "🌎 <strong>القارات</strong>: 7 قارات كبيرة",
+                "earth.fact3": "🏔️ <strong>الأراضي</strong>: جبال، غابات، صحاري",
+                "earth.fact4": "🌊 <strong>المحيطات</strong>: 5 محيطات زرقاء كبيرة",
+                "earth.fact5": "💨 <strong>الهواء</strong>: غلاف جوي يحمينا",
+                "earth.rotation1": "الأرض تدور حول نفسها:",
+                "earth.rotation2": "🌞 ← إنه النهار",
+                "earth.rotation3": "🌙 ← إنه الليل",
+                "planets.title": "اكتشف الكواكب",
+                "planets.instruction": "انقر على كوكب لمعرفة المزيد! (تأثير التكبير عند التمرير)",
+                "planets.hint": "اختر كوكبًا لاكتشاف أسراره!",
+                "telescopes.title": "🔭 التلسكوبات الشهيرة",
+                "telescopes.subtitle": "إنها تساعدنا على رؤية النجوم والكواكب!"
+            }
+        };
+
+        // ===== VARIABLES GLOBALES =====
+        let currentLang = 'fr';
+
+        // ===== INITIALISATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            setupLanguageSelector();
+            loadFooter();
+        });
+
+        // ===== ÉTOILES ET ÉTOILES FILANTES =====
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            
+            // Étoiles fixes qui clignotent
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animation = `twinkle ${(Math.random() * 3 + 2)}s ease-in-out infinite`;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(star);
+            }
+            
+            // Étoiles filantes périodiques
+            setInterval(() => {
+                const shootingStar = document.createElement('div');
+                shootingStar.className = 'shooting-star';
+                shootingStar.style.left = Math.random() * 50 + '%';
+                shootingStar.style.top = Math.random() * 30 + '%';
+                container.appendChild(shootingStar);
+                
+                setTimeout(() => shootingStar.remove(), 3000);
+            }, 3000);
+        }
+
+        // ===== SÉLECTEUR LANGUE =====
+        function setupLanguageSelector() {
+            const langBtns = document.querySelectorAll('.lang-btn');
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    langBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentLang = btn.dataset.lang;
+                    updateLanguage();
+                });
+            });
+        }
+
+        function updateLanguage() {
+            // Direction RTL pour arabe
+            if (currentLang === 'ar') {
+                document.body.setAttribute('dir', 'rtl');
+                document.documentElement.lang = 'ar';
+            } else {
+                document.body.setAttribute('dir', 'ltr');
+                document.documentElement.lang = currentLang;
+            }
+            
+            // Mettre à jour tous les éléments i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
+            
+            // Mettre à jour les faits de la Terre
+            updateEarthFacts();
+        }
+
+        function updateEarthFacts() {
+            const earthFacts = document.getElementById('earth-facts');
+            if (earthFacts && translations[currentLang]) {
+                earthFacts.innerHTML = `
+                    <div class="earth-line">${translations[currentLang]["earth.fact1"]}</div>
+                    <div class="earth-line">${translations[currentLang]["earth.fact2"]}</div>
+                    <div class="earth-line">${translations[currentLang]["earth.fact3"]}</div>
+                    <div class="earth-line">${translations[currentLang]["earth.fact4"]}</div>
+                    <div class="earth-line">${translations[currentLang]["earth.fact5"]}</div>
+                `;
+            }
+        }
+
+        // ===== NAVIGATION =====
+        function showActivity(activityId) {
+            document.querySelectorAll('.activity-screen').forEach(screen => {
+                screen.style.display = 'none';
+            });
+            document.getElementById(activityId + '-activity').style.display = 'block';
+            
+            if (activityId === 'discover-planets') {
+                initPlanetsGallery();
+                initTelescopesGrid();
+            } else if (activityId === 'earth-rotation') {
+                updateEarthFacts();
+            }
+        }
+
+        function showMainMenu() {
+            document.querySelectorAll('.activity-screen').forEach(screen => {
+                screen.style.display = 'none';
+            });
+        }
+
+        // ===== GALERIE PLANÈTES =====
+        function initPlanetsGallery() {
+            const gallery = document.getElementById('planets-gallery');
+            const planets = planetsData[currentLang];
+            
+            gallery.innerHTML = '';
+            
+            planets.forEach((planet, index) => {
+                const card = document.createElement('div');
+                card.className = 'planet-card';
+                card.innerHTML = `
+                    <div class="planet-image-wrapper">
+                        <img src="${planet.image}" alt="${planet.name}" class="planet-image" onerror="this.src='https://via.placeholder.com/80/0b3d91/white?text=🪐'">
+                    </div>
+                    <div class="planet-name">${planet.name}</div>
+                    <div class="planet-type">${planet.type}</div>
+                `;
+                card.addEventListener('click', () => showPlanetInfo(index));
+                gallery.appendChild(card);
+            });
+            
+            document.getElementById('planet-info').innerHTML = `<span data-i18n="planets.hint">${translations[currentLang]["planets.hint"]}</span>`;
+        }
+
+        function showPlanetInfo(planetIndex) {
+            const planets = planetsData[currentLang];
+            const planet = planets[planetIndex];
+            const infoDiv = document.getElementById('planet-info');
+            
+            const descriptionHTML = planet.description.map(line => 
+                `<div class="planet-description">${line}</div>`
+            ).join('');
+            
+            infoDiv.innerHTML = `
+                <img src="${planet.image}" alt="${planet.name}" class="planet-large-image" onerror="this.src='https://via.placeholder.com/150/0b3d91/white?text=🪐'">
+                <h3>${planet.name}</h3>
+                <p style="color: var(--accent-orange); margin-bottom: 15px;">${planet.type}</p>
+                ${descriptionHTML}
+            `;
+        }
+
+        // ===== TÉLESCOPES =====
+        function initTelescopesGrid() {
+            const grid = document.getElementById('telescopes-grid');
+            const telescopes = telescopesData[currentLang];
+            
+            grid.innerHTML = '';
+            
+            telescopes.forEach(telescope => {
+                const card = document.createElement('div');
+                card.className = 'telescope-card';
+                card.innerHTML = `
+                    <img src="${telescope.image}" alt="${telescope.name}" class="telescope-image" onerror="this.src='https://via.placeholder.com/200x140/0b3d91/white?text=🔭'">
+                    <div class="telescope-name">${telescope.name}</div>
+                    <div class="telescope-info">${telescope.info}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ===== FOOTER =====
+        function loadFooter() {
+            fetch("https://dznet1.com/intranet/footer.html")
+                .then(r => r.text())
+                .then(h => document.getElementById("footer-placeholder").innerHTML = h)
+                .catch(() => {});
+        }
+    </script>
+</body>
+</html>

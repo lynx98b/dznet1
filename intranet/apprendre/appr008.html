@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌶️ Découverte de la Cuisine Algérienne — Catégorie : Jeu Éducatif — Âge : 8+</title>
+    <meta name="description" content="Voyage culinaire interactif à travers les plats traditionnels algériens. Découvre l'origine, l'histoire et les secrets de chaque recette.">
+    <meta name="content-category" content="Jeu Éducatif">
+    <meta name="content-age" content="8">
+    <meta name="keywords" content="cuisine algérienne, couscous, tajine, chorba, baklawa, makroud, recettes, culture, gastronomie, Algérie">
+    
+    <!-- Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-CRRK6Z4D1X');
+    </script>
+    
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        "name": "Découverte de la Cuisine Algérienne",
+        "description": "Voyage culinaire interactif à travers la cuisine algérienne",
+        "educationalUse": "Jeu Éducatif",
+        "typicalAgeRange": "8+",
+        "learningResourceType": "Interactive Experience",
+        "timeRequired": "PT30M",
+        "inLanguage": ["fr", "en", "ar"]
+    }
+    </script>
+    
+    <!-- CSS distant -->
+    <link rel="stylesheet" href="https://dznet1.com/assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Version: v1.030 - Bouton Quiz + 12 plats */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --spice-red: #D32F2F;
+            --spice-orange: #FF6F00;
+            --spice-yellow: #FFA000;
+            --spice-green: #388E3C;
+            --spice-brown: #5D4037;
+            --sand: #F4E4C1;
+            --cream: #FFF8E1;
+            --dark: #2C3E50;
+            --gold: #FFD700;
+            --header-green: #00C853;
+            --header-orange: #FF6B35;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, var(--sand) 0%, var(--cream) 50%, var(--sand) 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== ÉPICES FLOTTANTES ===== */
+        .spices-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .spice {
+            position: absolute;
+            font-size: clamp(20px, 3vw, 40px);
+            opacity: 0;
+            animation: floatSpice 15s infinite ease-in-out;
+        }
+
+        @keyframes floatSpice {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-150px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ===== LOGO STICKY ===== */
+        .logo-sticky {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, var(--header-green), var(--header-orange), var(--header-green));
+            padding: 12px 20px;
+            z-index: 1000;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 15px;
+        }
+        
+        .logo-container {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            min-width: 150px;
+        }
+        
+        .logo-container img {
+            height: 35px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+        
+        .logo-text {
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--header-green), var(--header-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: Arial, sans-serif;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+
+        .lang-btn {
+            background: white;
+            border: 3px solid white;
+            border-radius: 10px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            color: #333;
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+        }
+
+        .lang-btn.active {
+            background: var(--header-orange);
+            color: white;
+            border-color: var(--header-orange);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.5);
+        }
+
+        /* ===== PUBLICITÉ ===== */
+        .ad-banner {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            margin: 0 auto 20px auto;
+            border-radius: 0 0 15px 15px;
+            max-width: 100%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .ad-banner img {
+            max-width: 100%;
+            max-height: 180px;
+            height: auto;
+            width: auto;
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto;
+            object-fit: contain;
+        }
+
+        /* ===== CONTAINER PRINCIPAL ===== */
+        .main-wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ===== HEADER HERO ===== */
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--spice-red) 0%, var(--spice-orange) 50%, var(--spice-yellow) 100%);
+            border-radius: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '🌶️';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            top: -50px;
+            right: -50px;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5em, 6vw, 4em);
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2em, 3vw, 1.8em);
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .scroll-hint {
+            font-size: 1.2em;
+            color: white;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ===== SECTION INTRO ===== */
+        .intro-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-left: 8px solid var(--spice-red);
+        }
+
+        .intro-section h2 {
+            font-size: clamp(2em, 4vw, 2.5em);
+            color: var(--spice-brown);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .intro-section p {
+            font-size: clamp(1.1em, 2.5vw, 1.3em);
+            line-height: 1.8;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        /* ===== CARTES PLATS (FLIP) ===== */
+        .dishes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .dish-card-wrapper {
+            perspective: 1000px;
+            height: 500px;
+        }
+
+        .dish-card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .dish-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        /* FACE AVANT */
+        .card-front {
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dish-image-container {
+            height: 60%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dish-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .dish-card:hover .dish-image {
+            transform: scale(1.1);
+        }
+
+        .dish-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gold);
+            color: var(--dark);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .dish-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .dish-name {
+            font-size: 1.8em;
+            color: var(--spice-brown);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .dish-origin {
+            font-size: 1em;
+            color: var(--spice-red);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flip-hint {
+            text-align: center;
+            color: var(--spice-orange);
+            font-weight: bold;
+            font-size: 1em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* FACE ARRIÈRE */
+        .card-back {
+            background: linear-gradient(135deg, var(--spice-brown) 0%, var(--dark) 100%);
+            color: white;
+            transform: rotateY(180deg);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-back h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .story-section {
+            margin-bottom: 20px;
+        }
+
+        .story-section h4 {
+            font-size: 1.2em;
+            color: var(--spice-yellow);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .story-section p {
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .flip-back-hint {
+            text-align: center;
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        /* ===== BOUTON DÉMARRER QUIZ ===== */
+        .start-quiz-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--spice-green), var(--spice-yellow));
+            border-radius: 30px;
+            margin: 60px 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .start-quiz-section h2 {
+            font-size: clamp(2em, 5vw, 3em);
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .start-quiz-section p {
+            font-size: clamp(1.1em, 3vw, 1.4em);
+            color: white;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .start-quiz-btn {
+            background: linear-gradient(135deg, var(--spice-red), var(--spice-orange));
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: clamp(1.3em, 4vw, 1.8em);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            animation: pulseButton 2s infinite;
+        }
+
+        @keyframes pulseButton {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .start-quiz-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* ===== QUIZ SECTION ===== */
+        .quiz-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 60px 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border: 5px solid var(--spice-red);
+            display: none; /* Caché par défaut */
+        }
+
+        .quiz-section.active {
+            display: block;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .quiz-header h2 {
+            font-size: clamp(2em, 5vw, 3em);
+            color: var(--spice-brown);
+            margin-bottom: 15px;
+        }
+
+        .quiz-header p {
+            font-size: 1.2em;
+            color: var(--dark);
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .question-card {
+            background: var(--cream);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 6px solid var(--spice-orange);
+        }
+
+        .question-number {
+            font-size: 0.9em;
+            color: var(--spice-red);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: clamp(1.2em, 3vw, 1.5em);
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .question-image {
+            width: 100%;
+            max-width: 400px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border: 4px solid white;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .quiz-option {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 3px solid var(--spice-orange);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .quiz-option:hover:not(.correct):not(.incorrect):not(.disabled) {
+            background: var(--spice-yellow);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 160, 0, 0.4);
+        }
+
+        .quiz-option.correct {
+            background: #4CAF50;
+            color: white;
+            border-color: #388E3C;
+            animation: celebrate 0.5s ease;
+        }
+
+        .quiz-option.incorrect {
+            background: #F44336;
+            color: white;
+            border-color: #D32F2F;
+        }
+
+        .quiz-option.disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .feedback-message {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+
+        .feedback-message.correct {
+            background: #C8E6C9;
+            color: #388E3C;
+            border: 3px solid #4CAF50;
+        }
+
+        .feedback-message.incorrect {
+            background: #FFCDD2;
+            color: #D32F2F;
+            border: 3px solid #F44336;
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--cream);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar-container {
+            flex: 1;
+            height: 30px;
+            background: #E0E0E0;
+            border-radius: 15px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--spice-red), var(--spice-orange));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 15px;
+        }
+
+        .quiz-results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, var(--gold), var(--spice-yellow));
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+
+        .results-trophy {
+            font-size: 100px;
+            animation: spin 3s infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotateY(0); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .results-score {
+            font-size: 4em;
+            font-weight: bold;
+            color: var(--dark);
+            margin: 20px 0;
+        }
+
+        .results-message {
+            font-size: 1.5em;
+            color: var(--dark);
+            margin-bottom: 30px;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, var(--spice-red), var(--spice-orange));
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        /* ===== VERSION ===== */
+        .version {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            z-index: 1000;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .logo-sticky {
+                flex-direction: column;
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .logo-container {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .language-selector {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .dishes-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .dish-card-wrapper {
+                height: 480px;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-progress {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .progress-bar-container {
+                width: 100%;
+                margin: 0;
+            }
+
+            .ad-banner img {
+                max-height: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                padding: 40px 15px;
+            }
+
+            .intro-section {
+                padding: 25px;
+            }
+
+            .quiz-section {
+                padding: 25px;
+            }
+
+            .dish-content {
+                padding: 20px;
+            }
+
+            .lang-btn {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+
+            .start-quiz-btn {
+                padding: 15px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Version -->
+    <div class="version">v1.030</div>
+
+    <!-- Épices flottantes -->
+    <div class="spices-container" id="spices-container"></div>
+
+    <!-- ===== HEADER STICKY ===== -->
+    <header class="logo-sticky">
+        <div class="logo-container">
+            <img src="https://dznet1.com/images/logo.png" 
+                 alt="DZNet1" 
+                 onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'logo-text\'>🌵 DzNet1.com</span>';">
+        </div>
+        
+        <div class="language-selector">
+            <button class="lang-btn active" data-lang="fr" aria-label="Français">
+                🇫🇷 FR
+            </button>
+            <button class="lang-btn" data-lang="en" aria-label="English">
+                🇬🇧 EN
+            </button>
+            <button class="lang-btn" data-lang="ar" aria-label="العربية">
+                🇩🇿 AR
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== PUBLICITÉ ===== -->
+    <div class="ad-banner">
+        <img src="https://dznet1.com/cdn-cgi/image/width=728,height=180,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/PUB/PUB01.png" 
+             alt="Publicité partenaire"
+             onerror="this.style.display='none';">
+    </div>
+
+    <!-- ===== CONTENU PRINCIPAL ===== -->
+    <div class="main-wrapper">
+        
+        <!-- HERO SECTION -->
+        <section class="hero-section">
+            <h1 class="hero-title" data-i18n="hero.title">🌶️ Voyage Culinaire en Algérie 🌶️</h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">Découvre les secrets des plats traditionnels algériens</p>
+            <div class="scroll-hint">
+                <i class="fas fa-chevron-down"></i>
+                <span data-i18n="hero.scroll">Commence ton exploration</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- INTRO SECTION -->
+        <section class="intro-section">
+            <h2>
+                <i class="fas fa-book-open"></i>
+                <span data-i18n="intro.title">L'Art Culinaire Algérien</span>
+            </h2>
+            <p data-i18n="intro.p1">
+                La cuisine algérienne est un trésor méditerranéen riche en saveurs et traditions. Chaque plat raconte une histoire unique transmise de génération en génération.
+            </p>
+            <p data-i18n="intro.p2">
+                Découvre 12 plats emblématiques qui font la fierté de l'Algérie. Clique sur chaque carte pour révéler leur origine et leurs secrets !
+            </p>
+        </section>
+
+        <!-- PLATS SECTION -->
+        <section class="dishes-grid" id="dishes-container">
+            <!-- Les cartes seront générées par JavaScript -->
+        </section>
+
+        <!-- BOUTON DÉMARRER QUIZ -->
+        <section class="start-quiz-section" id="start-quiz-section">
+            <h2>🎯 Prêt à tester tes connaissances ?</h2>
+            <p>Tu as exploré les plats algériens, maintenant prouve que tu es devenu un expert !</p>
+            <button class="start-quiz-btn" onclick="startQuiz()">
+                <i class="fas fa-play-circle"></i> Démarrer le Quiz !
+            </button>
+        </section>
+
+        <!-- QUIZ SECTION (CACHÉ PAR DÉFAUT) -->
+        <section class="quiz-section" id="quiz-section">
+            <div class="quiz-header">
+                <h2>
+                    <i class="fas fa-question-circle"></i>
+                    <span data-i18n="quiz.title">Quiz : Teste tes connaissances !</span>
+                </h2>
+                <p data-i18n="quiz.subtitle">12 questions sur les plats découverts</p>
+            </div>
+
+            <div class="quiz-container" id="quiz-container">
+                <div class="quiz-progress">
+                    <span id="quiz-score">Score: 0</span>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progress-fill"></div>
+                    </div>
+                    <span id="quiz-question-count">Question 1/12</span>
+                </div>
+
+                <div id="question-display">
+                    <!-- Question affichée ici -->
+                </div>
+
+                <div class="quiz-results" id="quiz-results">
+                    <div class="results-trophy">🏆</div>
+                    <div class="results-score" id="final-score">0/12</div>
+                    <div class="results-message" id="results-message"></div>
+                    <button class="restart-btn" onclick="restartQuiz()">
+                        <i class="fas fa-redo"></i> Recommencer le Quiz
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer Distant -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Version: v1.030 - Bouton Quiz + 12 plats
+        
+        // ===== DONNÉES PLATS (12 PLATS - TEXTES COURTS) =====
+        const dishesData = {
+            fr: [
+                {
+                    name: "Couscous",
+                    origin: "Tout le pays",
+                    city: "National",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/couscous.jpg",
+                    badge: "⭐ Plat National",
+                    history: "Le couscous est le plat emblématique de l'Algérie, inscrit au patrimoine UNESCO. Originaire des Berbères il y a plus de 3000 ans, il symbolise le partage familial et se déguste traditionnellement le vendredi.",
+                    tradition: "Chaque région a sa recette : couscous kabyle aux légumes, constantinois à l'agneau, ou mesfouf sucré du Sahara. La semoule est roulée à la main selon un savoir-faire ancestral."
+                },
+                {
+                    name: "Tajine",
+                    origin: "Ouest algérien",
+                    city: "Tlemcen, Oran",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/tajine.jpg",
+                    badge: "🍖 Spécialité de l'Ouest",
+                    history: "Le tajine algérien est une tourte dorée aux œufs et viande, différente du tajine marocain. Originaire de Tlemcen, ce plat raffiné était servi dans les familles andalouses lors des grandes occasions.",
+                    tradition: "La recette demande patience : viande mijotée aux épices, œufs battus, amandes et cannelle. Le tout cuit jusqu'à obtenir une croûte dorée croustillante. C'est un symbole d'hospitalité."
+                },
+                {
+                    name: "Chorba",
+                    origin: "Tout le pays",
+                    city: "National",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/chorba.jpg",
+                    badge: "🌙 Ramadan",
+                    history: "La chorba est la soupe traditionnelle incontournable du Ramadan. Son nom vient du turc 'çorba' introduit pendant l'ère ottomane. Riche en vermicelles, légumes et viande, elle réconforte après le jeûne.",
+                    tradition: "Chaque famille garde sa recette secrète : chorba frik au blé concassé, chorba beïda blanche, ou chorba hamra rouge aux tomates. C'est le premier plat servi au ftour."
+                },
+                {
+                    name: "Mahjouba",
+                    origin: "Kabylie / Aurès",
+                    city: "Béjaïa, Batna",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mahjouba.jpg",
+                    badge: "🥞 Crêpe berbère",
+                    history: "La mahjouba est une crêpe berbère fourrée aux oignons et tomates. Son nom vient de 'mahjoub' (caché) car la farce est cachée à l'intérieur. C'est un plat de montagne économique et nourrissant.",
+                    tradition: "Cuite sur une plaque chaude, la mahjouba se plie en carré pour emprisonner la farce. Elle se déguste chaude avec du leben (petit-lait). C'est un en-cas populaire des marchés."
+                },
+                {
+                    name: "Bourek",
+                    origin: "Constantine / Alger",
+                    city: "Constantine, Alger",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/bourek.jpg",
+                    badge: "🥟 Délice frit",
+                    history: "Le bourek trouve son origine dans l'Empire ottoman sous le nom 'börek'. Adopté en Algérie avec des ingrédients locaux, il est devenu incontournable pendant le Ramadan et les fêtes familiales.",
+                    tradition: "Deux versions principales : bourek roulé en cigare et triangulaire. La farce mélange viande hachée, oignons, œuf dur et persil. La pâte filo croustillante contraste avec la farce fondante."
+                },
+                {
+                    name: "Mhadjeb",
+                    origin: "Kabylie / Aurès",
+                    city: "Tizi Ouzou, Batna",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mhadjeb.jpg",
+                    badge: "🌾 Pain farci",
+                    history: "Le mhadjeb est une galette kabyle à base de semoule fine, fourrée aux oignons et tomates. C'est un plat ancestral des montagnes berbères, simple mais savoureux, qui accompagnait les bergers en transhumance.",
+                    tradition: "La pâte est étalée finement, garnie puis pliée en carrés successifs. Cuite sur plaque en fonte, elle développe zones croustillantes et moelleuses. Symbole de l'hospitalité kabyle."
+                },
+                {
+                    name: "Berkoukas",
+                    origin: "Sahara",
+                    city: "Biskra, Laghouat",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/berkoukas.jpg",
+                    badge: "🏜️ Trésor du Sahara",
+                    history: "Le berkoukas est une semoule roulée en gros grains, spécialité saharienne. Ce plat remonte aux tribus nomades qui préparaient des aliments résistants aux longues traversées du désert. Les grains se conservent longtemps.",
+                    tradition: "Contrairement au couscous, les grains de berkoukas sont plus gros (taille d'un pois). Cuits dans un bouillon épicé avec viande et légumes. Plat réconfortant des soirées d'hiver."
+                },
+                {
+                    name: "Baklawa",
+                    origin: "Constantine / Alger",
+                    city: "Constantine, Alger",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/baklawa.jpg",
+                    badge: "🍯 Douceur orientale",
+                    history: "Le baklawa est une pâtisserie délicate aux amandes et miel, héritée de l'Empire ottoman. En Algérie, elle est devenue incontournable lors des mariages, fêtes religieuses et célébrations familiales. Symbole de générosité.",
+                    tradition: "Feuilles de brick beurrées superposées, garnies d'amandes concassées et pistaches, puis arrosées de sirop au miel parfumé à la fleur d'oranger. Chaque pâtissier garde le secret de son dosage."
+                },
+                {
+                    name: "Makroud",
+                    origin: "Sud algérien",
+                    city: "Biskra, Touggourt",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/makroud.jpg",
+                    badge: "🌴 Délice du désert",
+                    history: "Le makroud est une pâtisserie traditionnelle aux dattes, originaire du Sahara. Les dattes étant abondantes dans les oasis, ce gâteau fut créé pour les conserver et les transformer. Très populaire à l'Aïd et au Ramadan.",
+                    tradition: "Pâte de semoule fine fourrée de pâte de dattes parfumée à la cannelle et fleur d'oranger, frite puis trempée dans le miel chaud. Tradition ancestrale des familles sahariennes."
+                },
+                {
+                    name: "Rechta",
+                    origin: "Alger / Centre",
+                    city: "Alger, Blida",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/Rechta.jpg",
+                    badge: "🍜 Nouilles algériennes",
+                    history: "La rechta est un plat de nouilles fraîches servies avec un bouillon de poulet et légumes. Spécialité algéroise, elle était préparée lors des grandes occasions familiales. Le nom vient de l'arabe 'rachta' (fil, nouille fine).",
+                    tradition: "Les nouilles sont faites maison, étalées finement puis coupées en lanières. Servies avec un bouillon parfumé aux pois chiches et poulet. Souvent dégustée lors des naissances et baptêmes."
+                },
+                {
+                    name: "Mtawem",
+                    origin: "Ouest algérien",
+                    city: "Oran, Tlemcen",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mtawem.jpg",
+                    badge: "🥘 Couscous épicé",
+                    history: "Le mtawem est un couscous spécial cuisiné avec une sauce rouge épicée à base de tomates, poivrons et viande. Originaire de l'ouest algérien, c'est un plat festif qui marie saveurs méditerranéennes et épices orientales.",
+                    tradition: "La sauce est mijotée longuement avec des épices comme le cumin, paprika et carvi. Le couscous est cuit à la vapeur puis mélangé à la sauce généreuse. Plat de convivialité par excellence."
+                }
+            ]
+        };
+
+        // ===== DONNÉES QUIZ (12 QUESTIONS) =====
+        const quizData = {
+            fr: [
+                {
+                    question: "Quel est le plat national algérien inscrit à l'UNESCO ?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/couscous.jpg",
+                    options: ["Couscous", "Tajine", "Chorba", "Bourek"],
+                    correct: 0,
+                    explanation: "Bravo ! Le couscous est le plat emblématique de l'Algérie !"
+                },
+                {
+                    question: "De quelle ville vient le tajine algérien ?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/tajine.jpg",
+                    options: ["Alger", "Tlemcen", "Constantine", "Oran"],
+                    correct: 1,
+                    explanation: "Exact ! Le tajine est une spécialité de Tlemcen !"
+                },
+                {
+                    question: "Pendant quel mois mange-t-on la chorba tous les jours ?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/chorba.jpg",
+                    options: ["Janvier", "Ramadan", "Décembre", "Août"],
+                    correct: 1,
+                    explanation: "Parfait ! La chorba est servie chaque soir du Ramadan !"
+                },
+                {
+                    question: "Qu'est-ce qu'on met dans la mahjouba ?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mahjouba.jpg",
+                    options: ["Oignons et tomates", "Viande", "Chocolat", "Fromage"],
+                    correct: 0,
+                    explanation: "Bien joué ! La mahjouba est fourrée aux oignons et tomates !"
+                },
+                {
+                    question: "Quelle forme a le bourek ?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/bourek.jpg",
+                    options: ["Rond", "Cigare ou triangle", "Carré", "Étoile"],
+                    correct: 1,
+                    explanation: "Super ! Le bourek est roulé en cigare ou plié en triangle !"
+                },
+                {
+                    question: "Le mhadjeb vient de quelle région ?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mhadjeb.jpg",
+                    options: ["Sahara", "Kabylie", "Alger", "Oran"],
+                    correct: 1,
+                    explanation: "Excellent ! Le mhadjeb est une spécialité de Kabylie !"
+                },
+                {
+                    question: "Les grains de berkoukas sont comment par rapport au couscous ?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/berkoukas.jpg",
+                    options: ["Plus petits", "Plus gros", "Identiques", "Rouges"],
+                    correct: 1,
+                    explanation: "Bravo ! Les grains de berkoukas sont beaucoup plus gros que le couscous !"
+                },
+                {
+                    question: "Avec quoi arrose-t-on le baklawa ?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/baklawa.jpg",
+                    options: ["Chocolat", "Sirop au miel", "Caramel", "Confiture"],
+                    correct: 1,
+                    explanation: "Parfait ! Le baklawa est arrosé de sirop au miel parfumé !"
+                },
+                {
+                    question: "Quel fruit est utilisé dans le makroud ?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/makroud.jpg",
+                    options: ["Figues", "Dattes", "Abricots", "Raisins"],
+                    correct: 1,
+                    explanation: "Exact ! Le makroud est fourré de pâte de dattes !"
+                },
+                {
+                    question: "Qu'est-ce que la rechta ?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/Rechta.jpg",
+                    options: ["Un gâteau", "Des nouilles", "Une viande", "Un pain"],
+                    correct: 1,
+                    explanation: "Bien joué ! La rechta est un plat de nouilles fraîches algériennes !"
+                },
+                {
+                    question: "De quelle couleur est la sauce du mtawem ?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mtawem.jpg",
+                    options: ["Blanche", "Rouge", "Verte", "Jaune"],
+                    correct: 1,
+                    explanation: "Super ! Le mtawem a une sauce rouge épicée aux tomates !"
+                },
+                {
+                    question: "Le baklawa est traditionnellement servi lors de quel événement ?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/baklawa.jpg",
+                    options: ["Mariages", "Rentrée scolaire", "Vendanges", "Moisson"],
+                    correct: 0,
+                    explanation: "Bravo ! Le baklawa est incontournable lors des mariages et fêtes !"
+                }
+            ]
+        };
+
+        // ===== TRADUCTIONS UI =====
+        const translations = {
+            fr: {
+                "hero.title": "🌶️ Voyage Culinaire en Algérie 🌶️",
+                "hero.subtitle": "Découvre les secrets des plats traditionnels algériens",
+                "hero.scroll": "Commence ton exploration",
+                "intro.title": "L'Art Culinaire Algérien",
+                "intro.p1": "La cuisine algérienne est un trésor méditerranéen riche en saveurs et traditions. Chaque plat raconte une histoire unique transmise de génération en génération.",
+                "intro.p2": "Découvre 12 plats emblématiques qui font la fierté de l'Algérie. Clique sur chaque carte pour révéler leur origine et leurs secrets !",
+                "quiz.title": "Quiz : Teste tes connaissances !",
+                "quiz.subtitle": "12 questions sur les plats découverts"
+            }
+        };
+
+        // ===== VARIABLES GLOBALES =====
+        let currentLang = 'fr';
+        let currentQuizQuestion = 0;
+        let quizScore = 0;
+
+        // ===== INITIALISATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            createSpices();
+            renderDishes();
+            setupLanguageSelector();
+            loadFooter();
+        });
+
+        // ===== ÉPICES FLOTTANTES =====
+        function createSpices() {
+            const spices = ['🌶️', '🧄', '🧅', '🫑', '🌿', '⭐', '🍋'];
+            const container = document.getElementById('spices-container');
+            
+            for (let i = 0; i < 20; i++) {
+                const spice = document.createElement('div');
+                spice.className = 'spice';
+                spice.textContent = spices[Math.floor(Math.random() * spices.length)];
+                spice.style.left = Math.random() * 100 + '%';
+                spice.style.animationDelay = Math.random() * 15 + 's';
+                spice.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                container.appendChild(spice);
+            }
+        }
+
+        // ===== SÉLECTEUR LANGUE =====
+        function setupLanguageSelector() {
+            const langBtns = document.querySelectorAll('.lang-btn');
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    langBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentLang = btn.dataset.lang;
+                    updateLanguage();
+                    renderDishes();
+                });
+            });
+        }
+
+        function updateLanguage() {
+            if (currentLang === 'ar') {
+                document.body.setAttribute('dir', 'rtl');
+                document.documentElement.lang = 'ar';
+            } else {
+                document.body.setAttribute('dir', 'ltr');
+                document.documentElement.lang = currentLang;
+            }
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
+                }
+            });
+        }
+
+        // ===== RENDU DES PLATS =====
+        function renderDishes() {
+            const container = document.getElementById('dishes-container');
+            const dishes = dishesData[currentLang];
+            
+            container.innerHTML = dishes.map((dish, index) => `
+                <div class="dish-card-wrapper">
+                    <div class="dish-card" onclick="flipCard(${index})">
+                        <div class="card-front">
+                            <div class="dish-image-container">
+                                <img src="${dish.image}" alt="${dish.name}" class="dish-image" onerror="this.src='https://via.placeholder.com/400x300/FF6B35/white?text=🍽️'">
+                                <div class="dish-badge">${dish.badge}</div>
+                            </div>
+                            <div class="dish-content">
+                                <h3 class="dish-name">${dish.name}</h3>
+                                <p class="dish-origin">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    ${dish.origin}
+                                </p>
+                                <p class="flip-hint">
+                                    <i class="fas fa-sync-alt"></i> Clique pour l'histoire
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card-back">
+                            <h3>📖 ${dish.name}</h3>
+                            
+                            <div class="story-section">
+                                <h4>
+                                    <i class="fas fa-history"></i> Histoire
+                                </h4>
+                                <p>${dish.history}</p>
+                            </div>
+
+                            <div class="story-section">
+                                <h4>
+                                    <i class="fas fa-utensils"></i> Tradition
+                                </h4>
+                                <p>${dish.tradition}</p>
+                            </div>
+
+                            <p class="flip-back-hint">
+                                <i class="fas fa-undo"></i> Clique pour revenir
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function flipCard(index) {
+            const cards = document.querySelectorAll('.dish-card');
+            cards[index].classList.toggle('flipped');
+        }
+
+        // ===== DÉMARRAGE QUIZ =====
+        function startQuiz() {
+            // Cacher le bouton de démarrage
+            document.getElementById('start-quiz-section').style.display = 'none';
+            
+            // Afficher le quiz
+            document.getElementById('quiz-section').classList.add('active');
+            
+            // Scroll vers le quiz
+            document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
+            
+            // Réinitialiser et afficher la première question
+            resetQuiz();
+        }
+
+        // ===== QUIZ =====
+        function resetQuiz() {
+            currentQuizQuestion = 0;
+            quizScore = 0;
+            document.getElementById('quiz-results').style.display = 'none';
+            document.getElementById('question-display').style.display = 'block';
+            showQuizQuestion();
+        }
+
+        function showQuizQuestion() {
+            const questions = quizData[currentLang];
+            
+            if (currentQuizQuestion >= questions.length) {
+                showQuizResults();
+                return;
+            }
+
+            const q = questions[currentQuizQuestion];
+            const questionDisplay = document.getElementById('question-display');
+            
+            questionDisplay.innerHTML = `
+                <div class="question-card">
+                    <div class="question-number">Question ${currentQuizQuestion + 1}/12</div>
+                    <div class="question-text">${q.question}</div>
+                    ${q.image ? `<img src="${q.image}" alt="Question" class="question-image" onerror="this.style.display='none'">` : ''}
+                    
+                    <div class="quiz-options" id="quiz-options">
+                        ${q.options.map((option, index) => `
+                            <div class="quiz-option" onclick="checkQuizAnswer(${index})">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="feedback-message" id="feedback"></div>
+                </div>
+            `;
+
+            const progress = ((currentQuizQuestion) / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('quiz-score').textContent = `Score: ${quizScore}`;
+            document.getElementById('quiz-question-count').textContent = `Question ${currentQuizQuestion + 1}/12`;
+        }
+
+        function checkQuizAnswer(selectedIndex) {
+            const questions = quizData[currentLang];
+            const q = questions[currentQuizQuestion];
+            const options = document.querySelectorAll('.quiz-option');
+            const feedback = document.getElementById('feedback');
+            
+            // Désactiver tous les boutons
+            options.forEach(opt => opt.classList.add('disabled'));
+            
+            options[q.correct].classList.add('correct');
+            
+            if (selectedIndex === q.correct) {
+                quizScore++;
+                feedback.className = 'feedback-message correct';
+                feedback.textContent = `✅ ${q.explanation}`;
+                createConfetti();
+            } else {
+                options[selectedIndex].classList.add('incorrect');
+                feedback.className = 'feedback-message incorrect';
+                feedback.textContent = `❌ ${q.explanation}`;
+            }
+            
+            feedback.style.display = 'block';
+            document.getElementById('quiz-score').textContent = `Score: ${quizScore}`;
+            
+            setTimeout(() => {
+                currentQuizQuestion++;
+                showQuizQuestion();
+            }, 2500);
+        }
+
+        function showQuizResults() {
+            document.getElementById('question-display').style.display = 'none';
+            const results = document.getElementById('quiz-results');
+            results.style.display = 'block';
+            
+            document.getElementById('final-score').textContent = `${quizScore}/12`;
+            
+            let message = '';
+            if (quizScore === 12) {
+                message = "Parfait ! Tu es un véritable expert de la cuisine algérienne ! 🌟";
+            } else if (quizScore >= 9) {
+                message = "Excellent ! Tu connais très bien nos traditions culinaires ! 🎉";
+            } else if (quizScore >= 6) {
+                message = "Bien joué ! Continue à découvrir notre gastronomie ! 👏";
+            } else {
+                message = "Pas mal ! Relis les histoires et réessaie ! 💪";
+            }
+            
+            document.getElementById('results-message').textContent = message;
+            createConfetti();
+        }
+
+        function restartQuiz() {
+            document.getElementById('question-display').style.display = 'block';
+            resetQuiz();
+        }
+
+        // ===== CONFETTI =====
+        function createConfetti() {
+            const colors = ['#D32F2F', '#FF6F00', '#FFA000', '#388E3C', '#FFD700'];
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.zIndex = '9999';
+                confetti.style.pointerEvents = 'none';
+                document.body.appendChild(confetti);
+                
+                confetti.style.animation = `confettiFall ${(Math.random() * 3 + 2)}s linear`;
+                
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes confettiFall {
+                to { transform: translateY(100vh) rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ===== FOOTER =====
+        function loadFooter() {
+            fetch("https://dznet1.com/intranet/footer.html")
+                .then(r => r.text())
+                .then(h => document.getElementById("footer-placeholder").innerHTML = h)
+                .catch(() => {});
+        }
+    </script>
+</body>
+</html>

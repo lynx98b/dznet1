@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Version: v1.030 - Bouton Quiz + 12 plats */
+        /* Version: v1.031 - 3 langues complètes FR/EN/AR */
         
         * {
             margin: 0;
@@ -68,6 +68,7 @@
             color: var(--dark);
             overflow-x: hidden;
             position: relative;
+            transition: direction 0.3s ease;
         }
 
         /* ===== ÉPICES FLOTTANTES ===== */
@@ -272,6 +273,11 @@
             border-left: 8px solid var(--spice-red);
         }
 
+        body[dir="rtl"] .intro-section {
+            border-left: none;
+            border-right: 8px solid var(--spice-red);
+        }
+
         .intro-section h2 {
             font-size: clamp(2em, 4vw, 2.5em);
             color: var(--spice-brown);
@@ -360,6 +366,11 @@
             font-weight: bold;
             font-size: 0.9em;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        body[dir="rtl"] .dish-badge {
+            right: auto;
+            left: 15px;
         }
 
         .dish-content {
@@ -498,7 +509,7 @@
             margin: 60px 0;
             box-shadow: 0 15px 40px rgba(0,0,0,0.2);
             border: 5px solid var(--spice-red);
-            display: none; /* Caché par défaut */
+            display: none;
         }
 
         .quiz-section.active {
@@ -532,6 +543,11 @@
             border-radius: 15px;
             margin-bottom: 30px;
             border-left: 6px solid var(--spice-orange);
+        }
+
+        body[dir="rtl"] .question-card {
+            border-left: none;
+            border-right: 6px solid var(--spice-orange);
         }
 
         .question-number {
@@ -798,7 +814,7 @@
 </head>
 <body>
     <!-- Version -->
-    <div class="version">v1.030</div>
+    <div class="version">v1.031</div>
 
     <!-- Épices flottantes -->
     <div class="spices-container" id="spices-container"></div>
@@ -866,10 +882,10 @@
 
         <!-- BOUTON DÉMARRER QUIZ -->
         <section class="start-quiz-section" id="start-quiz-section">
-            <h2>🎯 Prêt à tester tes connaissances ?</h2>
-            <p>Tu as exploré les plats algériens, maintenant prouve que tu es devenu un expert !</p>
+            <h2 data-i18n="quiz.ready">🎯 Prêt à tester tes connaissances ?</h2>
+            <p data-i18n="quiz.challenge">Tu as exploré les plats algériens, maintenant prouve que tu es devenu un expert !</p>
             <button class="start-quiz-btn" onclick="startQuiz()">
-                <i class="fas fa-play-circle"></i> Démarrer le Quiz !
+                <i class="fas fa-play-circle"></i> <span data-i18n="quiz.start">Démarrer le Quiz !</span>
             </button>
         </section>
 
@@ -901,7 +917,7 @@
                     <div class="results-score" id="final-score">0/12</div>
                     <div class="results-message" id="results-message"></div>
                     <button class="restart-btn" onclick="restartQuiz()">
-                        <i class="fas fa-redo"></i> Recommencer le Quiz
+                        <i class="fas fa-redo"></i> <span data-i18n="quiz.restart">Recommencer le Quiz</span>
                     </button>
                 </div>
             </div>
@@ -913,9 +929,9 @@
     <div id="footer-placeholder"></div>
 
     <script>
-        // Version: v1.030 - Bouton Quiz + 12 plats
+        // Version: v1.031 - 3 LANGUES COMPLÈTES FR/EN/AR
         
-        // ===== DONNÉES PLATS (12 PLATS - TEXTES COURTS) =====
+        // ===== DONNÉES PLATS (12 PLATS × 3 LANGUES) =====
         const dishesData = {
             fr: [
                 {
@@ -1017,10 +1033,212 @@
                     history: "Le mtawem est un couscous spécial cuisiné avec une sauce rouge épicée à base de tomates, poivrons et viande. Originaire de l'ouest algérien, c'est un plat festif qui marie saveurs méditerranéennes et épices orientales.",
                     tradition: "La sauce est mijotée longuement avec des épices comme le cumin, paprika et carvi. Le couscous est cuit à la vapeur puis mélangé à la sauce généreuse. Plat de convivialité par excellence."
                 }
+            ],
+            en: [
+                {
+                    name: "Couscous",
+                    origin: "Nationwide",
+                    city: "National",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/couscous.jpg",
+                    badge: "⭐ National Dish",
+                    history: "Couscous is Algeria's emblematic dish, listed as UNESCO heritage. Originating from Berbers over 3000 years ago, it symbolizes family sharing and is traditionally enjoyed on Fridays.",
+                    tradition: "Each region has its recipe: Kabyle couscous with vegetables, Constantine with lamb, or sweet mesfouf from the Sahara. Semolina is hand-rolled according to ancestral know-how."
+                },
+                {
+                    name: "Tajine",
+                    origin: "Western Algeria",
+                    city: "Tlemcen, Oran",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/tajine.jpg",
+                    badge: "🍖 Western Specialty",
+                    history: "Algerian tajine is a golden pie with eggs and meat, different from Moroccan tajine. Originating from Tlemcen, this refined dish was served in Andalusian families on special occasions.",
+                    tradition: "The recipe requires patience: meat simmered with spices, beaten eggs, almonds and cinnamon. Everything baked until a crispy golden crust forms. It's a symbol of hospitality."
+                },
+                {
+                    name: "Chorba",
+                    origin: "Nationwide",
+                    city: "National",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/chorba.jpg",
+                    badge: "🌙 Ramadan",
+                    history: "Chorba is the essential traditional soup of Ramadan. Its name comes from Turkish 'çorba' introduced during the Ottoman era. Rich in vermicelli, vegetables and meat, it comforts after fasting.",
+                    tradition: "Each family keeps its secret recipe: chorba frik with cracked wheat, chorba beïda white, or chorba hamra red with tomatoes. It's the first dish served at iftar."
+                },
+                {
+                    name: "Mahjouba",
+                    origin: "Kabylia / Aurès",
+                    city: "Béjaïa, Batna",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mahjouba.jpg",
+                    badge: "🥞 Berber Crepe",
+                    history: "Mahjouba is a Berber crepe stuffed with onions and tomatoes. Its name comes from 'mahjoub' (hidden) as the filling is hidden inside. It's an economical and nourishing mountain dish.",
+                    tradition: "Cooked on a hot plate, mahjouba is folded into squares to trap the filling. Enjoyed hot with leben (buttermilk). It's a popular market snack."
+                },
+                {
+                    name: "Bourek",
+                    origin: "Constantine / Algiers",
+                    city: "Constantine, Algiers",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/bourek.jpg",
+                    badge: "🥟 Fried Delight",
+                    history: "Bourek originates from the Ottoman Empire under the name 'börek'. Adopted in Algeria with local ingredients, it became essential during Ramadan and family celebrations.",
+                    tradition: "Two main versions: rolled bourek (cigar) and triangular. The filling mixes minced meat, onions, hard-boiled egg and parsley. Crispy filo pastry contrasts with melting filling."
+                },
+                {
+                    name: "Mhadjeb",
+                    origin: "Kabylia / Aurès",
+                    city: "Tizi Ouzou, Batna",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mhadjeb.jpg",
+                    badge: "🌾 Stuffed Bread",
+                    history: "Mhadjeb is a Kabyle flatbread made with fine semolina, stuffed with onions and tomatoes. It's an ancestral dish from Berber mountains, simple but tasty, which accompanied shepherds.",
+                    tradition: "The dough is rolled thin, filled then folded in successive squares. Cooked on cast iron plate, it develops crispy and soft areas. Symbol of Kabyle hospitality."
+                },
+                {
+                    name: "Berkoukas",
+                    origin: "Sahara",
+                    city: "Biskra, Laghouat",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/berkoukas.jpg",
+                    badge: "🏜️ Sahara Treasure",
+                    history: "Berkoukas is semolina rolled into large grains, Saharan specialty. This dish dates back to nomadic tribes who prepared foods resistant to long desert crossings. Grains keep well.",
+                    tradition: "Unlike couscous, berkoukas grains are larger (pea-sized). Cooked in spiced broth with meat and vegetables. Comforting dish for winter evenings."
+                },
+                {
+                    name: "Baklawa",
+                    origin: "Constantine / Algiers",
+                    city: "Constantine, Algiers",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/baklawa.jpg",
+                    badge: "🍯 Oriental Sweetness",
+                    history: "Baklawa is a delicate pastry with almonds and honey, inherited from the Ottoman Empire. In Algeria, it became essential at weddings, religious festivals and family celebrations. Symbol of generosity.",
+                    tradition: "Buttered brick sheets layered, filled with crushed almonds and pistachios, then drizzled with honey syrup flavored with orange blossom. Each pastry chef keeps their dosage secret."
+                },
+                {
+                    name: "Makroud",
+                    origin: "Southern Algeria",
+                    city: "Biskra, Touggourt",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/makroud.jpg",
+                    badge: "🌴 Desert Delight",
+                    history: "Makroud is a traditional date pastry from the Sahara. With dates abundant in oases, this cake was created to preserve and transform them. Very popular at Eid and Ramadan.",
+                    tradition: "Fine semolina dough stuffed with date paste flavored with cinnamon and orange blossom, fried then dipped in hot honey. Ancestral tradition of Saharan families."
+                },
+                {
+                    name: "Rechta",
+                    origin: "Algiers / Central",
+                    city: "Algiers, Blida",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/Rechta.jpg",
+                    badge: "🍜 Algerian Noodles",
+                    history: "Rechta is a fresh noodle dish served with chicken and vegetable broth. Algiers specialty, it was prepared for major family occasions. The name comes from Arabic 'rachta' (thread, fine noodle).",
+                    tradition: "Noodles are homemade, rolled thin then cut into strips. Served with broth flavored with chickpeas and chicken. Often enjoyed at births and baptisms."
+                },
+                {
+                    name: "Mtawem",
+                    origin: "Western Algeria",
+                    city: "Oran, Tlemcen",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mtawem.jpg",
+                    badge: "🥘 Spicy Couscous",
+                    history: "Mtawem is a special couscous cooked with spicy red sauce made from tomatoes, peppers and meat. Originating from western Algeria, it's a festive dish marrying Mediterranean flavors and oriental spices.",
+                    tradition: "The sauce is simmered long with spices like cumin, paprika and caraway. Couscous is steamed then mixed with generous sauce. Dish of conviviality par excellence."
+                }
+            ],
+            ar: [
+                {
+                    name: "كسكس",
+                    origin: "جميع أنحاء البلاد",
+                    city: "وطني",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/couscous.jpg",
+                    badge: "⭐ طبق وطني",
+                    history: "الكسكس هو الطبق الرمزي للجزائر، مدرج في تراث اليونسكو. نشأ من البربر منذ أكثر من 3000 عام، يرمز للمشاركة العائلية ويُستمتع به تقليديًا يوم الجمعة.",
+                    tradition: "كل منطقة لها وصفتها: كسكس القبائل بالخضار، كسكس قسنطينة بلحم الضأن، أو المسفوف الحلو من الصحراء. يُلف السميد يدويًا وفقًا للمعرفة التقليدية."
+                },
+                {
+                    name: "طاجين",
+                    origin: "غرب الجزائر",
+                    city: "تلمسان، وهران",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/tajine.jpg",
+                    badge: "🍖 تخصص غربي",
+                    history: "الطاجين الجزائري عبارة عن فطيرة ذهبية بالبيض واللحم، مختلفة عن الطاجين المغربي. نشأ في تلمسان، كان هذا الطبق الراقي يُقدم في العائلات الأندلسية في المناسبات الخاصة.",
+                    tradition: "تتطلب الوصفة صبرًا: لحم مطهو بالتوابل، بيض مخفوق، لوز وقرفة. يُخبز كل شيء حتى تتشكل قشرة ذهبية مقرمشة. إنه رمز الضيافة."
+                },
+                {
+                    name: "شربة",
+                    origin: "جميع أنحاء البلاد",
+                    city: "وطني",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/chorba.jpg",
+                    badge: "🌙 رمضان",
+                    history: "الشربة هي الحساء التقليدي الأساسي في رمضان. اسمها يأتي من التركية 'çorba' المُدخلة خلال الحقبة العثمانية. غنية بالشعيرية والخضروات واللحم، تُريح بعد الصيام.",
+                    tradition: "كل عائلة تحتفظ بوصفتها السرية: شربة الفريك بالقمح المجروش، شربة بيضاء، أو شربة حمراء بالطماطم. إنها أول طبق يُقدم في الفطور."
+                },
+                {
+                    name: "محجوبة",
+                    origin: "القبائل / الأوراس",
+                    city: "بجاية، باتنة",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mahjouba.jpg",
+                    badge: "🥞 كريب بربري",
+                    history: "المحجوبة كريب بربري محشو بالبصل والطماطم. اسمها من 'محجوب' (مخفي) لأن الحشوة مخفية بالداخل. إنه طبق جبلي اقتصادي ومغذٍ.",
+                    tradition: "تُطهى على صفيحة ساخنة، تُطوى المحجوبة لمربعات لحبس الحشوة. تُستمتع ساخنة مع اللبن. إنها وجبة خفيفة شعبية في الأسواق."
+                },
+                {
+                    name: "بوراك",
+                    origin: "قسنطينة / الجزائر",
+                    city: "قسنطينة، الجزائر",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/bourek.jpg",
+                    badge: "🥟 متعة مقلية",
+                    history: "ينحدر البوراك من الإمبراطورية العثمانية باسم 'börek'. اعتُمد في الجزائر بمكونات محلية، أصبح أساسيًا خلال رمضان والاحتفالات العائلية.",
+                    tradition: "نسختان رئيسيتان: بوراك ملفوف (سيجار) ومثلث. الحشوة تخلط لحم مفروم، بصل، بيض مسلوق وبقدونس. عجينة فيلو مقرمشة تتناقض مع حشوة ذائبة."
+                },
+                {
+                    name: "محاجب",
+                    origin: "القبائل / الأوراس",
+                    city: "تيزي وزو، باتنة",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mhadjeb.jpg",
+                    badge: "🌾 خبز محشو",
+                    history: "المحاجب خبز مسطح قبائلي مصنوع من سميد ناعم، محشو بالبصل والطماطم. إنه طبق قديم من الجبال البربرية، بسيط لكن لذيذ، رافق الرعاة.",
+                    tradition: "تُفرد العجينة رقيقة، تُحشى ثم تُطوى لمربعات متتالية. تُطهى على صفيحة حديد، تطور مناطق مقرمشة وطرية. رمز الضيافة القبائلية."
+                },
+                {
+                    name: "بركوكس",
+                    origin: "الصحراء",
+                    city: "بسكرة، الأغواط",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/berkoukas.jpg",
+                    badge: "🏜️ كنز الصحراء",
+                    history: "البركوكس سميد ملفوف بحبوب كبيرة، تخصص صحراوي. يعود هذا الطبق للقبائل الرحل الذين حضّروا أطعمة مقاومة لعبور الصحراء الطويل. تحتفظ الحبوب جيدًا.",
+                    tradition: "على عكس الكسكس، حبوب البركوكس أكبر (بحجم البازلاء). تُطهى بمرق متبل مع لحم وخضروات. طبق مريح لأمسيات الشتاء."
+                },
+                {
+                    name: "بقلاوة",
+                    origin: "قسنطينة / الجزائر",
+                    city: "قسنطينة، الجزائر",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/baklawa.jpg",
+                    badge: "🍯 حلاوة شرقية",
+                    history: "البقلاوة حلوى رقيقة باللوز والعسل، موروثة من الإمبراطورية العثمانية. في الجزائر، أصبحت أساسية في الأعراس والأعياد الدينية والاحتفالات العائلية. رمز الكرم.",
+                    tradition: "طبقات ورق رقيق مدهون بالزبدة، محشوة باللوز المجروش والفستق، ثم مرشوشة بشراب العسل المعطر بماء الزهر. كل حلواني يحتفظ بسر جرعته."
+                },
+                {
+                    name: "مقروض",
+                    origin: "جنوب الجزائر",
+                    city: "بسكرة، تقرت",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/makroud.jpg",
+                    badge: "🌴 لذة الصحراء",
+                    history: "المقروض حلوى تقليدية بالتمر من الصحراء. مع وفرة التمر في الواحات، أُنشئت هذه الكعكة للحفظ والتحويل. شائعة جدًا في العيد ورمضان.",
+                    tradition: "عجينة سميد ناعمة محشوة بعجينة تمر معطرة بالقرفة وماء الزهر، مقلية ثم مغموسة بالعسل الساخن. تقليد قديم للعائلات الصحراوية."
+                },
+                {
+                    name: "رشتة",
+                    origin: "الجزائر / الوسط",
+                    city: "الجزائر، البليدة",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/Rechta.jpg",
+                    badge: "🍜 نودلز جزائرية",
+                    history: "الرشتة طبق نودلز طازجة يُقدم مع مرق دجاج وخضروات. تخصص جزائري، حُضّرت في المناسبات العائلية الكبرى. الاسم من العربية 'رشتة' (خيط، نودلز رفيعة).",
+                    tradition: "النودلز محلية الصنع، مفرودة رقيقة ثم مقطعة لشرائط. تُقدم مع مرق معطر بالحمص والدجاج. غالبًا تُستمتع في الولادات والعمادات."
+                },
+                {
+                    name: "متوم",
+                    origin: "غرب الجزائر",
+                    city: "وهران، تلمسان",
+                    image: "https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mtawem.jpg",
+                    badge: "🥘 كسكس حار",
+                    history: "المتوم كسكس خاص مطبوخ بصلصة حمراء حارة من الطماطم والفلفل واللحم. نشأ في غرب الجزائر، إنه طبق احتفالي يمزج نكهات متوسطية وتوابل شرقية.",
+                    tradition: "الصلصة تُطهى طويلًا بتوابل كالكمون والفلفل الحلو والكراوية. يُطهى الكسكس بالبخار ثم يُخلط بالصلصة السخية. طبق المودة بامتياز."
+                }
             ]
         };
 
-        // ===== DONNÉES QUIZ (12 QUESTIONS) =====
+        // ===== DONNÉES QUIZ (12 QUESTIONS × 3 LANGUES) =====
         const quizData = {
             fr: [
                 {
@@ -1107,10 +1325,182 @@
                     correct: 0,
                     explanation: "Bravo ! Le baklawa est incontournable lors des mariages et fêtes !"
                 }
+            ],
+            en: [
+                {
+                    question: "Which Algerian national dish is listed on UNESCO?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/couscous.jpg",
+                    options: ["Couscous", "Tajine", "Chorba", "Bourek"],
+                    correct: 0,
+                    explanation: "Great! Couscous is Algeria's emblematic dish!"
+                },
+                {
+                    question: "Which city does Algerian tajine come from?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/tajine.jpg",
+                    options: ["Algiers", "Tlemcen", "Constantine", "Oran"],
+                    correct: 1,
+                    explanation: "Correct! Tajine is a specialty of Tlemcen!"
+                },
+                {
+                    question: "During which month is chorba eaten daily?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/chorba.jpg",
+                    options: ["January", "Ramadan", "December", "August"],
+                    correct: 1,
+                    explanation: "Perfect! Chorba is served every Ramadan evening!"
+                },
+                {
+                    question: "What goes in mahjouba?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mahjouba.jpg",
+                    options: ["Onions and tomatoes", "Meat", "Chocolate", "Cheese"],
+                    correct: 0,
+                    explanation: "Well done! Mahjouba is stuffed with onions and tomatoes!"
+                },
+                {
+                    question: "What shape is bourek?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/bourek.jpg",
+                    options: ["Round", "Cigar or triangle", "Square", "Star"],
+                    correct: 1,
+                    explanation: "Super! Bourek is rolled as cigar or folded as triangle!"
+                },
+                {
+                    question: "Which region is mhadjeb from?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mhadjeb.jpg",
+                    options: ["Sahara", "Kabylia", "Algiers", "Oran"],
+                    correct: 1,
+                    explanation: "Excellent! Mhadjeb is a specialty of Kabylia!"
+                },
+                {
+                    question: "How are berkoukas grains compared to couscous?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/berkoukas.jpg",
+                    options: ["Smaller", "Larger", "Identical", "Red"],
+                    correct: 1,
+                    explanation: "Great! Berkoukas grains are much larger than couscous!"
+                },
+                {
+                    question: "What is baklawa drizzled with?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/baklawa.jpg",
+                    options: ["Chocolate", "Honey syrup", "Caramel", "Jam"],
+                    correct: 1,
+                    explanation: "Perfect! Baklawa is drizzled with flavored honey syrup!"
+                },
+                {
+                    question: "Which fruit is used in makroud?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/makroud.jpg",
+                    options: ["Figs", "Dates", "Apricots", "Raisins"],
+                    correct: 1,
+                    explanation: "Correct! Makroud is stuffed with date paste!"
+                },
+                {
+                    question: "What is rechta?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/Rechta.jpg",
+                    options: ["A cake", "Noodles", "Meat", "Bread"],
+                    correct: 1,
+                    explanation: "Well done! Rechta is an Algerian fresh noodle dish!"
+                },
+                {
+                    question: "What color is mtawem sauce?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mtawem.jpg",
+                    options: ["White", "Red", "Green", "Yellow"],
+                    correct: 1,
+                    explanation: "Super! Mtawem has spicy red tomato sauce!"
+                },
+                {
+                    question: "When is baklawa traditionally served?",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/baklawa.jpg",
+                    options: ["Weddings", "School start", "Harvest", "Reaping"],
+                    correct: 0,
+                    explanation: "Great! Baklawa is essential at weddings and celebrations!"
+                }
+            ],
+            ar: [
+                {
+                    question: "ما هو الطبق الوطني الجزائري المدرج في اليونسكو؟",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/couscous.jpg",
+                    options: ["كسكس", "طاجين", "شربة", "بوراك"],
+                    correct: 0,
+                    explanation: "رائع! الكسكس هو الطبق الرمزي للجزائر!"
+                },
+                {
+                    question: "من أي مدينة يأتي الطاجين الجزائري؟",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/tajine.jpg",
+                    options: ["الجزائر", "تلمسان", "قسنطينة", "وهران"],
+                    correct: 1,
+                    explanation: "صحيح! الطاجين تخصص من تلمسان!"
+                },
+                {
+                    question: "خلال أي شهر نأكل الشربة كل يوم؟",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/chorba.jpg",
+                    options: ["يناير", "رمضان", "ديسمبر", "أغسطس"],
+                    correct: 1,
+                    explanation: "مثالي! تُقدم الشربة كل مساء في رمضان!"
+                },
+                {
+                    question: "ماذا نضع في المحجوبة؟",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mahjouba.jpg",
+                    options: ["بصل وطماطم", "لحم", "شوكولاتة", "جبن"],
+                    correct: 0,
+                    explanation: "أحسنت! المحجوبة محشوة بالبصل والطماطم!"
+                },
+                {
+                    question: "ما هو شكل البوراك؟",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/bourek.jpg",
+                    options: ["دائري", "سيجار أو مثلث", "مربع", "نجمة"],
+                    correct: 1,
+                    explanation: "ممتاز! البوراك ملفوف كسيجار أو مطوي كمثلث!"
+                },
+                {
+                    question: "من أي منطقة المحاجب؟",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mhadjeb.jpg",
+                    options: ["الصحراء", "القبائل", "الجزائر", "وهران"],
+                    correct: 1,
+                    explanation: "ممتاز! المحاجب تخصص من القبائل!"
+                },
+                {
+                    question: "كيف حبوب البركوكس مقارنة بالكسكس؟",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/berkoukas.jpg",
+                    options: ["أصغر", "أكبر", "متطابقة", "حمراء"],
+                    correct: 1,
+                    explanation: "رائع! حبوب البركوكس أكبر بكثير من الكسكس!"
+                },
+                {
+                    question: "بماذا تُرش البقلاوة؟",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/baklawa.jpg",
+                    options: ["شوكولاتة", "شراب العسل", "كراميل", "مربى"],
+                    correct: 1,
+                    explanation: "مثالي! البقلاوة مرشوشة بشراب العسل المعطر!"
+                },
+                {
+                    question: "أي فاكهة تُستخدم في المقروض؟",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/makroud.jpg",
+                    options: ["تين", "تمر", "مشمش", "زبيب"],
+                    correct: 1,
+                    explanation: "صحيح! المقروض محشو بعجينة التمر!"
+                },
+                {
+                    question: "ما هي الرشتة؟",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/Rechta.jpg",
+                    options: ["كعكة", "نودلز", "لحم", "خبز"],
+                    correct: 1,
+                    explanation: "أحسنت! الرشتة طبق نودلز طازجة جزائرية!"
+                },
+                {
+                    question: "ما لون صلصة المتوم؟",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/mtawem.jpg",
+                    options: ["أبيض", "أحمر", "أخضر", "أصفر"],
+                    correct: 1,
+                    explanation: "ممتاز! المتوم له صلصة حمراء حارة بالطماطم!"
+                },
+                {
+                    question: "متى تُقدم البقلاوة تقليديًا؟",
+                    image: "https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/baklawa.jpg",
+                    options: ["أعراس", "دخول مدرسي", "حصاد عنب", "حصاد"],
+                    correct: 0,
+                    explanation: "رائع! البقلاوة أساسية في الأعراس والاحتفالات!"
+                }
             ]
         };
 
-        // ===== TRADUCTIONS UI =====
+        // ===== TRADUCTIONS UI (3 LANGUES COMPLÈTES) =====
         const translations = {
             fr: {
                 "hero.title": "🌶️ Voyage Culinaire en Algérie 🌶️",
@@ -1120,7 +1510,39 @@
                 "intro.p1": "La cuisine algérienne est un trésor méditerranéen riche en saveurs et traditions. Chaque plat raconte une histoire unique transmise de génération en génération.",
                 "intro.p2": "Découvre 12 plats emblématiques qui font la fierté de l'Algérie. Clique sur chaque carte pour révéler leur origine et leurs secrets !",
                 "quiz.title": "Quiz : Teste tes connaissances !",
-                "quiz.subtitle": "12 questions sur les plats découverts"
+                "quiz.subtitle": "12 questions sur les plats découverts",
+                "quiz.ready": "🎯 Prêt à tester tes connaissances ?",
+                "quiz.challenge": "Tu as exploré les plats algériens, maintenant prouve que tu es devenu un expert !",
+                "quiz.start": "Démarrer le Quiz !",
+                "quiz.restart": "Recommencer le Quiz"
+            },
+            en: {
+                "hero.title": "🌶️ Culinary Journey in Algeria 🌶️",
+                "hero.subtitle": "Discover the secrets of traditional Algerian dishes",
+                "hero.scroll": "Start your exploration",
+                "intro.title": "Algerian Culinary Art",
+                "intro.p1": "Algerian cuisine is a Mediterranean treasure rich in flavors and traditions. Each dish tells a unique story passed down through generations.",
+                "intro.p2": "Discover 12 emblematic dishes that are Algeria's pride. Click each card to reveal their origin and secrets!",
+                "quiz.title": "Quiz: Test your knowledge!",
+                "quiz.subtitle": "12 questions about discovered dishes",
+                "quiz.ready": "🎯 Ready to test your knowledge?",
+                "quiz.challenge": "You've explored Algerian dishes, now prove you've become an expert!",
+                "quiz.start": "Start Quiz!",
+                "quiz.restart": "Restart Quiz"
+            },
+            ar: {
+                "hero.title": "🌶️ رحلة طهي في الجزائر 🌶️",
+                "hero.subtitle": "اكتشف أسرار الأطباق الجزائرية التقليدية",
+                "hero.scroll": "ابدأ استكشافك",
+                "intro.title": "فن الطهي الجزائري",
+                "intro.p1": "المطبخ الجزائري كنز متوسطي غني بالنكهات والتقاليد. كل طبق يروي قصة فريدة تنتقل عبر الأجيال.",
+                "intro.p2": "اكتشف 12 طبقًا رمزيًا يشكلون فخر الجزائر. انقر على كل بطاقة لكشف أصلها وأسرارها!",
+                "quiz.title": "اختبار: اختبر معرفتك!",
+                "quiz.subtitle": "12 سؤالاً حول الأطباق المكتشفة",
+                "quiz.ready": "🎯 مستعد لاختبار معرفتك؟",
+                "quiz.challenge": "لقد استكشفت الأطباق الجزائرية، الآن أثبت أنك أصبحت خبيرًا!",
+                "quiz.start": "ابدأ الاختبار!",
+                "quiz.restart": "إعادة الاختبار"
             }
         };
 
@@ -1163,11 +1585,20 @@
                     currentLang = btn.dataset.lang;
                     updateLanguage();
                     renderDishes();
+                    
+                    // Réinitialiser le bouton quiz si visible
+                    const startSection = document.getElementById('start-quiz-section');
+                    const quizSection = document.getElementById('quiz-section');
+                    if (quizSection.classList.contains('active')) {
+                        quizSection.classList.remove('active');
+                        startSection.style.display = 'block';
+                    }
                 });
             });
         }
 
         function updateLanguage() {
+            // Direction RTL pour arabe
             if (currentLang === 'ar') {
                 document.body.setAttribute('dir', 'rtl');
                 document.documentElement.lang = 'ar';
@@ -1176,6 +1607,7 @@
                 document.documentElement.lang = currentLang;
             }
             
+            // Mettre à jour tous les éléments i18n
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[currentLang] && translations[currentLang][key]) {
@@ -1204,7 +1636,7 @@
                                     ${dish.origin}
                                 </p>
                                 <p class="flip-hint">
-                                    <i class="fas fa-sync-alt"></i> Clique pour l'histoire
+                                    <i class="fas fa-sync-alt"></i> ${currentLang === 'fr' ? 'Clique pour l\'histoire' : currentLang === 'en' ? 'Click for history' : 'انقر للتاريخ'}
                                 </p>
                             </div>
                         </div>
@@ -1214,20 +1646,20 @@
                             
                             <div class="story-section">
                                 <h4>
-                                    <i class="fas fa-history"></i> Histoire
+                                    <i class="fas fa-history"></i> ${currentLang === 'fr' ? 'Histoire' : currentLang === 'en' ? 'History' : 'التاريخ'}
                                 </h4>
                                 <p>${dish.history}</p>
                             </div>
 
                             <div class="story-section">
                                 <h4>
-                                    <i class="fas fa-utensils"></i> Tradition
+                                    <i class="fas fa-utensils"></i> ${currentLang === 'fr' ? 'Tradition' : currentLang === 'en' ? 'Tradition' : 'التقليد'}
                                 </h4>
                                 <p>${dish.tradition}</p>
                             </div>
 
                             <p class="flip-back-hint">
-                                <i class="fas fa-undo"></i> Clique pour revenir
+                                <i class="fas fa-undo"></i> ${currentLang === 'fr' ? 'Clique pour revenir' : currentLang === 'en' ? 'Click to return' : 'انقر للعودة'}
                             </p>
                         </div>
                     </div>
@@ -1242,16 +1674,9 @@
 
         // ===== DÉMARRAGE QUIZ =====
         function startQuiz() {
-            // Cacher le bouton de démarrage
             document.getElementById('start-quiz-section').style.display = 'none';
-            
-            // Afficher le quiz
             document.getElementById('quiz-section').classList.add('active');
-            
-            // Scroll vers le quiz
             document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
-            
-            // Réinitialiser et afficher la première question
             resetQuiz();
         }
 
@@ -1277,7 +1702,7 @@
             
             questionDisplay.innerHTML = `
                 <div class="question-card">
-                    <div class="question-number">Question ${currentQuizQuestion + 1}/12</div>
+                    <div class="question-number">${currentLang === 'fr' ? 'Question' : currentLang === 'en' ? 'Question' : 'سؤال'} ${currentQuizQuestion + 1}/12</div>
                     <div class="question-text">${q.question}</div>
                     ${q.image ? `<img src="${q.image}" alt="Question" class="question-image" onerror="this.style.display='none'">` : ''}
                     
@@ -1296,7 +1721,7 @@
             const progress = ((currentQuizQuestion) / questions.length) * 100;
             document.getElementById('progress-fill').style.width = progress + '%';
             document.getElementById('quiz-score').textContent = `Score: ${quizScore}`;
-            document.getElementById('quiz-question-count').textContent = `Question ${currentQuizQuestion + 1}/12`;
+            document.getElementById('quiz-question-count').textContent = `${currentLang === 'fr' ? 'Question' : currentLang === 'en' ? 'Question' : 'سؤال'} ${currentQuizQuestion + 1}/12`;
         }
 
         function checkQuizAnswer(selectedIndex) {
@@ -1305,9 +1730,7 @@
             const options = document.querySelectorAll('.quiz-option');
             const feedback = document.getElementById('feedback');
             
-            // Désactiver tous les boutons
             options.forEach(opt => opt.classList.add('disabled'));
-            
             options[q.correct].classList.add('correct');
             
             if (selectedIndex === q.correct) {
@@ -1339,13 +1762,29 @@
             
             let message = '';
             if (quizScore === 12) {
-                message = "Parfait ! Tu es un véritable expert de la cuisine algérienne ! 🌟";
+                message = currentLang === 'fr' ? 
+                    "Parfait ! Tu es un véritable expert de la cuisine algérienne ! 🌟" :
+                    currentLang === 'en' ?
+                    "Perfect! You're a true expert of Algerian cuisine! 🌟" :
+                    "مثالي! أنت خبير حقيقي في المطبخ الجزائري! 🌟";
             } else if (quizScore >= 9) {
-                message = "Excellent ! Tu connais très bien nos traditions culinaires ! 🎉";
+                message = currentLang === 'fr' ?
+                    "Excellent ! Tu connais très bien nos traditions culinaires ! 🎉" :
+                    currentLang === 'en' ?
+                    "Excellent! You know our culinary traditions very well! 🎉" :
+                    "ممتاز! أنت تعرف تقاليدنا الطهوية جيدًا جدًا! 🎉";
             } else if (quizScore >= 6) {
-                message = "Bien joué ! Continue à découvrir notre gastronomie ! 👏";
+                message = currentLang === 'fr' ?
+                    "Bien joué ! Continue à découvrir notre gastronomie ! 👏" :
+                    currentLang === 'en' ?
+                    "Well done! Keep discovering our gastronomy! 👏" :
+                    "أحسنت! استمر في اكتشاف فن الطهي لدينا! 👏";
             } else {
-                message = "Pas mal ! Relis les histoires et réessaie ! 💪";
+                message = currentLang === 'fr' ?
+                    "Pas mal ! Relis les histoires et réessaie ! 💪" :
+                    currentLang === 'en' ?
+                    "Not bad! Read the stories again and try again! 💪" :
+                    "ليس سيئًا! اقرأ القصص مرة أخرى وحاول مرة أخرى! 💪";
             }
             
             document.getElementById('results-message').textContent = message;

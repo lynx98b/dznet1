@@ -7,8 +7,8 @@
     <title>Kamel Solution | Télécoms & Sécurité - Oran</title>
     
     <style>
-        /* ===== VERSION: v1.004 ===== */
-        /* [v1.004] Ajout: Bouton NOUVEAU en rouge avec redirection */
+        /* ===== VERSION: v1.005 ===== */
+        /* [v1.005] Correction: Bouton NOUVEAU visible en responsive */
         
         /* Reset & Base */
         * {
@@ -44,27 +44,28 @@
             scroll-behavior: smooth;
         }
         
-        /* Nouveau Bouton Rouge */
+        /* Nouveau Bouton Rouge - CORRIGÉ */
         .new-button {
             position: fixed;
-            top: 120px;
-            right: 30px;
+            top: 100px;
+            right: 20px;
             background: var(--red-button);
             color: white;
-            padding: 12px 20px;
+            padding: 12px 18px;
             border-radius: 25px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.95rem;
             box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
-            z-index: 999;
+            z-index: 1001;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
             animation: pulse 2s infinite;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            white-space: nowrap;
         }
         
         .new-button:hover {
@@ -777,7 +778,16 @@
             box-shadow: 0 10px 30px rgba(255,107,53,0.5);
         }
         
-        /* Responsive */
+        /* Responsive - CORRIGÉ */
+        @media (max-width: 1024px) {
+            .new-button {
+                top: 90px;
+                right: 15px;
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+        }
+        
         @media (max-width: 768px) {
             .contact-header {
                 flex-direction: column;
@@ -824,10 +834,11 @@
             }
             
             .new-button {
-                top: 100px;
-                right: 15px;
-                padding: 10px 16px;
-                font-size: 0.9rem;
+                top: 85px;
+                right: 10px;
+                padding: 8px 14px;
+                font-size: 0.85rem;
+                z-index: 1001;
             }
         }
         
@@ -851,16 +862,33 @@
             }
             
             .new-button {
-                top: 90px;
-                right: 10px;
-                padding: 8px 12px;
+                top: 80px;
+                right: 8px;
+                padding: 7px 12px;
                 font-size: 0.8rem;
+                z-index: 1001;
+            }
+            
+            /* S'assurer que le bouton reste visible sur très petits écrans */
+            .new-button {
+                min-width: auto;
+                max-width: 140px;
+            }
+        }
+        
+        /* Pour les très petits écrans (iPhone SE etc.) */
+        @media (max-width: 320px) {
+            .new-button {
+                top: 75px;
+                right: 5px;
+                padding: 6px 10px;
+                font-size: 0.75rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Nouveau Bouton Rouge -->
+    <!-- Nouveau Bouton Rouge - CORRIGÉ -->
     <a href="https://dznet1.com/kamle-solution_services.html" class="new-button">
         🚨 NOUVEAU !!!
     </a>
@@ -883,6 +911,7 @@
         </div>
     </header>
 
+    <!-- Le reste du code reste identique -->
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
@@ -931,6 +960,7 @@
                 </div>
             </div>
             
+            <!-- Les autres éléments de galerie restent identiques -->
             <div class="gallery-item">
                 <img src="https://images.unsplash.com/photo-1590935216583-8ad547dc3f4c?w=600&q=80" alt="Câblage réseau" loading="lazy">
                 <div class="gallery-overlay">
@@ -985,6 +1015,7 @@
                 <p>Installation et maintenance de systèmes de télécommunications modernes, réseaux d'entreprise et infrastructures de communication haute performance.</p>
             </div>
             
+            <!-- Les autres services restent identiques -->
             <div class="service-card">
                 <div class="service-icon">🔌</div>
                 <h3>Câblage Réseau</h3>
@@ -1050,6 +1081,7 @@
                     </div>
                 </div>
                 
+                <!-- Les autres témoignages restent identiques -->
                 <div class="testimonial-card">
                     <div class="rating">⭐⭐⭐⭐⭐</div>
                     <p class="testimonial-content">
@@ -1196,7 +1228,7 @@
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; 2025 Kamel Solution. Tous droits réservés. | Fait avec 💛 à Oran | v1.004</p>
+            <p>&copy; 2025 Kamel Solution. Tous droits réservés. | Fait avec 💛 à Oran | v1.005</p>
         </div>
     </footer>
 
@@ -1217,4 +1249,4 @@
         });
     </script>
 </body>
-</html>.
+</html>

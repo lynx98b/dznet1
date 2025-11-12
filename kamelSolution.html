@@ -7,8 +7,8 @@
     <title>Kamel Solution | Télécoms & Sécurité - Oran</title>
     
     <style>
-        /* ===== VERSION: v1.003 ===== */
-        /* [v1.003] Ajout: images réelles Unsplash, témoignages, galerie projets, logo CDN */
+        /* ===== VERSION: v1.004 ===== */
+        /* [v1.004] Ajout: Bouton NOUVEAU en rouge avec redirection */
         
         /* Reset & Base */
         * {
@@ -28,6 +28,8 @@
             --border-color: #e2e8f0;
             --gradient-1: linear-gradient(135deg, #1a2847 0%, #2d4a7c 50%, #d4a574 100%);
             --gradient-2: linear-gradient(120deg, #ff6b35 0%, #d4a574 100%);
+            --red-button: #e74c3c;
+            --red-button-hover: #c0392b;
         }
         
         body {
@@ -40,6 +42,47 @@
         
         html {
             scroll-behavior: smooth;
+        }
+        
+        /* Nouveau Bouton Rouge */
+        .new-button {
+            position: fixed;
+            top: 120px;
+            right: 30px;
+            background: var(--red-button);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .new-button:hover {
+            background: var(--red-button-hover);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(231, 76, 60, 0.8);
+            }
+            100% {
+                box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            }
         }
         
         /* Header */
@@ -779,6 +822,13 @@
             .gallery-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .new-button {
+                top: 100px;
+                right: 15px;
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -799,10 +849,22 @@
             .stats-container {
                 grid-template-columns: 1fr;
             }
+            
+            .new-button {
+                top: 90px;
+                right: 10px;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Nouveau Bouton Rouge -->
+    <a href="https://dznet1.com/kamle-solution_services.html" class="new-button">
+        🚨 NOUVEAU !!!
+    </a>
+
     <!-- Header -->
     <header>
         <div class="header-container">
@@ -1134,7 +1196,7 @@
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; 2025 Kamel Solution. Tous droits réservés. | Fait avec 💛 à Oran | v1.003</p>
+            <p>&copy; 2025 Kamel Solution. Tous droits réservés. | Fait avec 💛 à Oran | v1.004</p>
         </div>
     </footer>
 
@@ -1155,4 +1217,4 @@
         });
     </script>
 </body>
-</html>
+</html>.

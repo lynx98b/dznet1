@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CRRK6Z4D1X');
+  </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats du Concours - Protection des Plages Algériennes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 8px solid #4ECDC4;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            position: relative;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Fredoka One', cursive;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 3px 3px 0 #2C7873;
+            margin-bottom: 10px;
+        }
+        
+        .language-tabs {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 10px;
+        }
+        
+        .lang-tab {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-tab.active {
+            background: white;
+            color: #2C7873;
+        }
+        
+        .content-section {
+            padding: 30px;
+        }
+        
+        .language-content {
+            display: none;
+        }
+        
+        .language-content.active {
+            display: block;
+        }
+        
+        .results-header {
+            background: linear-gradient(135deg, #FFD93D 0%, #FF9A3D 100%);
+            padding: 25px;
+            border-radius: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 4px solid #FF6B6B;
+        }
+        
+        .winner-emoji {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .winners-section {
+            background: linear-gradient(135deg, #6C5CE7 0%, #A29BFE 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+        }
+        
+        .winner-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .winner-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #FFD93D;
+        }
+        
+        .winner-prize {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .winner-location {
+            font-style: italic;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .result-card {
+            background: #E8F5E9;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #4CAF50;
+            transition: transform 0.3s ease;
+        }
+        
+        .result-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .result-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .participant-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .participant-location {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .participant-prize {
+            background: #4ECDC4;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+        
+        .special-mention {
+            background: linear-gradient(135deg, #FD79A8 0%, #F8A5C2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .gallery-section {
+            background: #F7F9FC;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .gallery-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-emoji {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            background: #2C7873;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .highlight-winner {
+            background: linear-gradient(135deg, #FFD93D 0%, #FF9A3D 100%) !important;
+            color: white;
+            border: 3px solid #FF6B6B;
+        }
+        
+        .highlight-winner .participant-name {
+            color: white;
+            font-size: 1.3rem;
+        }
+        
+        .highlight-winner .participant-prize {
+            background: #FF6B6B;
+        }
+        
+        @media (max-width: 768px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .language-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .lang-tab {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="winner-emoji">🏆🎨🌟</div>
+            <h1>Résultats du Concours</h1>
+            <p class="subtitle">Protection des Plages & Fond Marin Algérien</p>
+            
+            <div class="language-tabs">
+                <div class="lang-tab active" onclick="switchLanguage('fr')">Français</div>
+                <div class="lang-tab" onclick="switchLanguage('ar')">العربية</div>
+            </div>
+        </header>
+
+        <!-- Contenu Français -->
+        <div class="content-section">
+            <div class="language-content active" id="fr-content">
+                <div class="results-header">
+                    <h2>🎉 Félicitations à tous les participants !</h2>
+                    <p style="font-size: 1.3rem; margin: 15px 0;">
+                        Plus de 150 dessins reçus - Merci pour votre créativité !
+                    </p>
+                    <p>Découvrez les heureux gagnants ci-dessous</p>
+                </div>
+
+                <div class="winners-section">
+                    <h2>🏆 Grands Gagnants</h2>
+                    
+                    <div class="winner-card">
+                        <div class="winner-name">valérie </div>
+                        <div class="winner-prize">🎁 Carte cadeau Dollarama + Kit artistique premium</div>
+                        <div class="winner-location">📍 Terrebonne, Québec</div>
+                    </div>
+                    
+                    <div class="winner-card">
+                        <div class="winner-name">erika</div>
+                        <div class="winner-prize">🎁 Carte cadeau Dollarama + Collection de livres éducatifs</div>
+                        <div class="winner-location">📍 Terrebonne, Québec</div>
+                    </div>
+                </div>
+
+                <h2>🎨 Tous les Lauréats</h2>
+                <div class="results-grid">
+                    <!-- Participants avec Noa et Océane en évidence -->
+                    <div class="result-card highlight-winner">
+                        <div class="result-emoji">👑</div>
+                        <div class="participant-name">Dilane</div>
+                        <div class="participant-location">Terrebonne, Québec</div>
+                        <div class="participant-prize">Carte cadeau Dollarama + Kit artistique</div>
+                    </div>
+                    
+                    <div class="result-card highlight-winner">
+                        <div class="result-emoji">👑</div>
+                        <div class="participant-name">SOFIA</div>
+                        <div class="participant-location">Terrebonne, Québec</div>
+                        <div class="participant-prize">Carte cadeau Dollarama + Livres éducatifs</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🥇</div>
+                        <div class="participant-name">LÉA TREMBLAY</div>
+                        <div class="participant-location">Montréal, Québec</div>
+                        <div class="participant-prize">Carte cadeau Librairie</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🥇</div>
+                        <div class="participant-name">THOMAS GAGNON</div>
+                        <div class="participant-location">Laval, Québec</div>
+                        <div class="participant-prize">Boîte de chocolats fins</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🥈</div>
+                        <div class="participant-name">NOA DAOUDI</div>
+                        <div class="participant-location">Québec City, Québec</div>
+                        <div class="participant-prize">Carte cadeau Dolarama</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🥈</div>
+                        <div class="participant-name">WILLIAM PELLETIER</div>
+                        <div class="participant-location">Sherbrooke, Québec</div>
+                        <div class="participant-prize">Livre sur la mer</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🥈</div>
+                        <div class="participant-name">ZOE BÉLANGER</div>
+                        <div class="participant-location">Gatineau, Québec</div>
+                        <div class="participant-prize">Boîte de crayons premium</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🥉</div>
+                        <div class="participant-name">NATHAN LEBLANC</div>
+                        <div class="participant-location">Longueuil, Québec</div>
+                        <div class="participant-prize">Carte cadeau Cinéma</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🥉</div>
+                        <div class="participant-name">CHLOÉ MARTIN</div>
+                        <div class="participant-location">Trois-Rivières, Québec</div>
+                        <div class="participant-prize">Chocolats artisanaux</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🥉</div>
+                        <div class="participant-name">LUCAS BERGeron</div>
+                        <div class="participant-location">Drummondville, Québec</div>
+                        <div class="participant-prize">Livre de coloriage</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">MAYA FORTIER</div>
+                        <div class="participant-location">Saint-Jean-sur-Richelieu, Québec</div>
+                        <div class="participant-prize">Carte cadeau Papeterie</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">GABRIEL MORIN</div>
+                        <div class="participant-location">Saint-Hyacinthe, Québec</div>
+                        <div class="participant-prize">Boîte de gourmandises</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">OCEANE DAOUDI</div>
+                        <div class="participant-location">TERREBONNE, Québec</div>
+                        <div class="participant-prize">Livre éducatif </div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">LOUIS LAVOIE</div>
+                        <div class="participant-location">Rimouski, Québec</div>
+                        <div class="participant-prize">Carte cadeau Jouets</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">SARAH MERCIER</div>
+                        <div class="participant-location">Victoriaville, Québec</div>
+                        <div class="participant-prize">Chocolats de spécialité</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">FÉLIX BOUCHER</div>
+                        <div class="participant-location">Sorel-Tracy, Québec</div>
+                        <div class="participant-prize">Livre d'activités</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">CLARA PELLETIER</div>
+                        <div class="participant-location">Joliette, Québec</div>
+                        <div class="participant-prize">Carte cadeau Librairie</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">HUGO LEMIEUX</div>
+                        <div class="participant-location">Saint-Jérôme, Québec</div>
+                        <div class="participant-prize">Boîte surprise</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">MAÉLIE TURCOTTE</div>
+                        <div class="participant-location">Val-d'Or, Québec</div>
+                        <div class="participant-prize">Livre sur les océans</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">ANTOINE GAGNÉ</div>
+                        <div class="participant-location">Rouyn-Noranda, Québec</div>
+                        <div class="participant-prize">Carte cadeau Magasin</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">JADE BÉLIVEAU</div>
+                        <div class="participant-location">Sept-Îles, Québec</div>
+                        <div class="participant-prize">Chocolats fins</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">SAMUEL THIBAULT</div>
+                        <div class="participant-location">Matane, Québec</div>
+                        <div class="participant-prize">Livre de dessin</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">LÉANE DESCHÊNES</div>
+                        <div class="participant-location">Baie-Comeau, Québec</div>
+                        <div class="participant-prize">Carte cadeau Artisanat</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">MALO ROUSSEAU</div>
+                        <div class="participant-location">Thetford Mines, Québec</div>
+                        <div class="participant-prize">Boîte de crayons</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">INÈS LANGLOIS</div>
+                        <div class="participant-location">Mont-Laurier, Québec</div>
+                        <div class="participant-prize">Livre éducatif</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">ÉLIE CARON</div>
+                        <div class="participant-location">Amos, Québec</div>
+                        <div class="participant-prize">Carte cadeau</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">LOÏC BERNIER</div>
+                        <div class="participant-location">La Tuque, Québec</div>
+                        <div class="participant-prize">Chocolats</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">MAYA LÉVESQUE</div>
+                        <div class="participant-location">Gaspé, Québec</div>
+                        <div class="participant-prize">Livre sur la nature</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🎨</div>
+                        <div class="participant-name">RAPHAËL POULIN</div>
+                        <div class="participant-location">Cowansville, Québec</div>
+                        <div class="participant-prize">Carte cadeau</div>
+                    </div>
+                </div>
+
+                <div class="special-mention">
+                    <h2>🌟 Mention Spéciale</h2>
+                    <p style="font-size: 1.2rem; margin: 15px 0;">
+                        Félicitations à tous les 30 lauréats ! Chacun recevra son prix par courrier dans les 3 prochains jours.
+                    </p>
+                    <p>Un immense merci à tous les participants pour leurs magnifiques dessins !</p>
+                </div>
+
+                <div class="gallery-section">
+                    <h2>🖼️ Galerie des Dessins</h2>
+                    <p>Découvrez une sélection des plus beaux dessins reçus</p>
+                    <div class="gallery-grid">
+                        <div class="gallery-item">
+                            <div class="gallery-emoji">🐠</div>
+                            <div>Poissons colorés</div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-emoji">🏖️</div>
+                            <div>Plages propres</div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-emoji">🌊</div>
+                            <div>Mer bleue</div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-emoji">🐢</div>
+                            <div>Tortues marines</div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-emoji">🌞</div>
+                            <div>Soleil radieux</div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-emoji">🌴</div>
+                            <div>Nature préservée</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenu Arabe -->
+            <div class="language-content" id="ar-content" dir="rtl">
+                <div class="results-header">
+                    <h2>🎉 تهانينا لجميع المشاركين!</h2>
+                    <p style="font-size: 1.3rem; margin: 15px 0;">
+                        أكثر من 150 رسمة مستلمة - شكرًا لإبداعكم!
+                    </p>
+                    <p>اكتشفوا الفائزين المحظوظين أدناه</p>
+                </div>
+
+                <div class="winners-section">
+                    <h2>🏆 الفائزون الكبار</h2>
+                    
+                    <div class="winner-card">
+                        <div class="winner-name">نعمة داودي</div>
+                        <div class="winner-prize">🎁 بطاقة هدية دولاراما + مجموعة فنية متميزة</div>
+                        <div class="winner-location">📍 تيربون، كيبيك</div>
+                    </div>
+                    
+                    <div class="winner-card">
+                        <div class="winner-name">أوسيان داودي</div>
+                        <div class="winner-prize">🎁 بطاقة هدية دولاراما + مجموعة كتب تعليمية</div>
+                        <div class="winner-location">📍 تيربون، كيبيك</div>
+                    </div>
+                </div>
+
+                <h2>🎨 جميع الفائزين</h2>
+                <div class="results-grid">
+                    <!-- Participants avec Noa et Océane en évidence -->
+                    <div class="result-card highlight-winner">
+                        <div class="result-emoji">👑</div>
+                        <div class="participant-name">نعمة داودي</div>
+                        <div class="participant-location">تيربون، كيبيك</div>
+                        <div class="participant-prize">بطاقة هدية دولاراما + مجموعة فنية</div>
+                    </div>
+                    
+                    <div class="result-card highlight-winner">
+                        <div class="result-emoji">👑</div>
+                        <div class="participant-name">أوسيان داودي</div>
+                        <div class="participant-location">تيربون، كيبيك</div>
+                        <div class="participant-prize">بطاقة هدية دولاراما + كتب تعليمية</div>
+                    </div>
+                    
+                    <!-- Autres participants en arabe -->
+                    <div class="result-card">
+                        <div class="result-emoji">🥇</div>
+                        <div class="participant-name">ليا تريمبلاي</div>
+                        <div class="participant-location">مونتريال، كيبيك</div>
+                        <div class="participant-prize">بطاقة هدية مكتبة</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-emoji">🥇</div>
+                        <div class="participant-name">توماس غانيون</div>
+                        <div class="participant-location">لافال، كيبيك</div>
+                        <div class="participant-prize">علبة شوكولاتة فاخرة</div>
+                    </div>
+                    
+                    <!-- Continuer avec les autres participants... -->
+                </div>
+
+                <div class="special-mention">
+                    <h2>🌟 إشارة خاصة</h2>
+                    <p style="font-size: 1.2rem; margin: 15px 0;">
+                        تهانينا لجميع الفائزين الثلاثين! سيحصل كل واحد على جائزته بالبريد خلال 15 يومًا القادمة.
+                    </p>
+                    <p>شكرًا جزيلاً لجميع المشاركين على رسوماتهم الرائعة!</p>
+                </div>
+
+                <div class="gallery-section">
+                    <h2>🖼️ معرض الرسومات</h2>
+                    <p>اكتشفوا مجموعة من أجمل الرسومات المستلمة</p>
+                    <div class="gallery-grid">
+                        <div class="gallery-item">
+                            <div class="gallery-emoji">🐠</div>
+                            <div>أسماك ملونة</div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-emoji">🏖️</div>
+                            <div>شواطئ نظيفة</div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-emoji">🌊</div>
+                            <div>بحر أزرق</div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-emoji">🐢</div>
+                            <div>سلاحف بحرية</div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-emoji">🌞</div>
+                            <div>شمس ساطعة</div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-emoji">🌴</div>
+                            <div>طبيعة محفوظة</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 DZNET1 - Concours de Dessin Écologique</p>
+            <p>Merci à tous les participants pour leur engagement en faveur de l'environnement !</p>
+        </footer>
+    </div>
+
+    <script>
+        function switchLanguage(lang) {
+            // Mettre à jour les onglets
+            document.querySelectorAll('.lang-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Afficher le contenu correspondant
+            document.querySelectorAll('.language-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(lang + '-content').classList.add('active');
+        }
+
+        // Animation pour les cartes de résultats
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultCards = document.querySelectorAll('.result-card');
+            resultCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>

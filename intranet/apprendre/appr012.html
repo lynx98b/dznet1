@@ -1,213 +1,1674 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97902571-5"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adam's Special Prayer Adventure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Clicker+Script&display=swap" rel="stylesheet">
+    <style>
+        /* ===== BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        gtag('config', 'UA-97902571-5');
-    </script>
+        body {
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            overflow-x: hidden;
+            transition: background 1s ease-in-out;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+        }
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4523112948468173"
-        crossorigin="anonymous"></script>
+        /* ===== ANIMATIONS ===== */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width">
-    <meta name="description"
-        content="HTML Online Viewer is a fast HTML editor and formatter with an instant live preview. View, edit and format your HTML in real-time!">
-    <meta name="keywords"
-        content="HTML Online Viewer,Online HTML Viewer,HTML Preview,HTML Viewer,HTML Editor,Highlight HTML,HTML live">
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
 
-    <title>HTML Online Viewer</title>
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
-        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//www.onlineviewer.net/onlineviewer.v2.css">
-    <link rel="icon" href="//www.onlineviewer.net/favicon.ico" />
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.1/beautify.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.1/beautify-css.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.15.1/beautify-html.min.js"></script>
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.37.1/ace.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
-        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-        crossorigin="anonymous"></script>
+        /* ===== FLOATING ELEMENTS ===== */
+        .floating-hearts span {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.7;
+        }
 
+        .floating-rainbows span {
+            position: absolute;
+            font-size: 3rem;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        .floating-stars span {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: twinkle 4s ease-in-out infinite;
+            opacity: 0.8;
+        }
+
+        /* ===== SCENE STYLES ===== */
+        .scene {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 1rem;
+            overflow-y: auto;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .scene.active {
+            display: flex;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .scene-img {
+            width: 350px;
+            height: 220px;
+            margin-bottom: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            font-size: 4rem;
+            background-size: cover;
+            background-position: center;
+            animation: bounce 2s ease-in-out infinite;
+            overflow: hidden;
+        }
+
+        /* Larger images for scenes 6 and 7 */
+        .scene[data-scene="6"] .scene-img,
+        .scene[data-scene="7"] .scene-img {
+            width: 450px;
+            height: 280px;
+        }
+
+        .scene-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 17px;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1 {
+            font-family: 'Clicker Script', cursive;
+            font-size: 4rem;
+            color: #ffd166;
+            text-shadow: 3px 3px 0 #ff006e, 6px 6px 0 #073b4c, 9px 9px 10px rgba(0, 0, 0, 0.5);
+            transform: perspective(500px) rotateX(10deg) rotateY(5deg);
+            margin-bottom: 2rem;
+            transition: all 0.5s ease;
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.4rem;
+            line-height: 1.6;
+            max-width: 800px;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        p.highlight {
+            font-family: 'Times New Roman', serif;
+            font-weight: bold;
+            color: #ffd166;
+            font-size: 1.6rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            z-index: 1000;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .controls:hover {
+            opacity: 1;
+        }
+
+        .controls.left {
+            left: 20px;
+        }
+
+        .controls.right {
+            right: 20px;
+        }
+
+        button {
+            font-family: 'Times New Roman', serif;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            color: white;
+            font-size: 1rem;
+            padding: 0.7rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(15px);
+            font-weight: bold;
+            letter-spacing: 1px;
+            min-width: 100px;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        button:active {
+            transform: scale(1.05) translateY(0);
+        }
+
+        /* ===== LANGUAGE CONTROLS ===== */
+        .lang-btn {
+            position: fixed;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.8rem;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.8rem;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .lang-btn:hover {
+            opacity: 1;
+        }
+
+        .lang-btn button {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            font-weight: bold;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            min-width: auto;
+        }
+
+        .lang-btn button.active {
+            background: rgba(255, 255, 255, 0.8);
+            color: #1d3557;
+            transform: scale(1.1);
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1001;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd166, #ef476f, #a18cd1, #06d6a0);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* ===== INSTRUCTION STYLES ===== */
+        .instructions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .instruction-step {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            width: 280px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .instruction-step:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .instruction-step h3 {
+            color: #ffd166;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .instruction-step p {
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        /* ===== AUDIO CONTROLS ===== */
+        .audio-controls {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.5rem;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .audio-controls:hover {
+            opacity: 1;
+        }
+
+        .audio-controls button {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            font-weight: bold;
+            padding: 0.4rem 0.8rem;
+            border-radius: 50%;
+            font-size: 0;
+            letter-spacing: 1px;
+            min-width: auto;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .audio-controls button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+
+        /* CSS icons for audio controls */
+        #playAudio::before {
+            content: "";
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 14px solid white;
+            margin-left: 2px;
+        }
+
+        #pauseAudio::before {
+            content: "";
+            display: block;
+            width: 14px;
+            height: 16px;
+            background: 
+                linear-gradient(to right,
+                    white 0%, white 30%,
+                    transparent 30%, transparent 70%,
+                    white 70%, white 100%);
+        }
+
+        #stopAudio::before {
+            content: "";
+            display: block;
+            width: 14px;
+            height: 14px;
+            background: white;
+        }
+
+        /* ===== AUTO-HIDE CONTROLS ===== */
+        .auto-hide {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .auto-hide.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* ===== QUIZ STYLES ===== */
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            max-width: 800px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .quiz-question {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: #ffd166;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .quiz-option.correct {
+            background: rgba(72, 187, 120, 0.6);
+            border-color: #48bb78;
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(245, 101, 101, 0.6);
+            border-color: #f56565;
+        }
+
+        .quiz-feedback {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: none;
+        }
+
+        .quiz-feedback.correct {
+            background: rgba(72, 187, 120, 0.3);
+            color: #c6f6d5;
+            display: block;
+        }
+
+        .quiz-feedback.incorrect {
+            background: rgba(245, 101, 101, 0.3);
+            color: #fed7d7;
+            display: block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .quiz-score {
+            font-size: 2rem;
+            color: #ffd166;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-message {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===== SCENE-SPECIFIC BACKGROUNDS ===== */
+        .scene[data-scene="1"] {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        }
+
+        .scene[data-scene="2"] {
+            background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+        }
+
+        .scene[data-scene="3"] {
+            background: linear-gradient(135deg, #fad0c4, #ffd1ff);
+        }
+
+        .scene[data-scene="4"] {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+        }
+
+        .scene[data-scene="5"] {
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+        }
+
+        .scene[data-scene="6"] {
+            background: linear-gradient(135deg, #d4fc79, #96e6a1);
+        }
+
+        .scene[data-scene="7"] {
+            background: linear-gradient(135deg, #84fab0, #8fd3f4);
+        }
+
+        .scene[data-scene="8"] {
+            background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+        }
+
+        /* ===== RESPONSIVE STYLES ===== */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
+
+            .scene-img {
+                width: 280px;
+                height: 180px;
+                font-size: 3rem;
+            }
+
+            /* Adjust larger images for mobile */
+            .scene[data-scene="6"] .scene-img,
+            .scene[data-scene="7"] .scene-img {
+                width: 320px;
+                height: 200px;
+            }
+
+            .instruction-step {
+                width: 100%;
+            }
+
+            .lang-btn {
+                top: 15px;
+            }
+
+            .lang-btn button {
+                padding: 0.4rem 1rem;
+                font-size: 1rem;
+            }
+
+            .audio-controls {
+                bottom: 70px;
+            }
+
+            .audio-controls button {
+                width: 40px;
+                height: 40px;
+            }
+
+            #playAudio::before {
+                border-top: 7px solid transparent;
+                border-bottom: 7px solid transparent;
+                border-left: 12px solid white;
+            }
+
+            #pauseAudio::before {
+                width: 12px;
+                height: 14px;
+            }
+
+            #stopAudio::before {
+                width: 12px;
+                height: 12px;
+            }
+
+            .quiz-question {
+                font-size: 1.2rem;
+            }
+
+            .quiz-option {
+                font-size: 1rem;
+                padding: 0.8rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .scene-img {
+                width: 220px;
+                height: 150px;
+                font-size: 2.5rem;
+            }
+
+            /* Adjust larger images for small mobile */
+            .scene[data-scene="6"] .scene-img,
+            .scene[data-scene="7"] .scene-img {
+                width: 260px;
+                height: 160px;
+            }
+
+            .controls {
+                bottom: 10px;
+            }
+
+            .controls.left {
+                left: 10px;
+            }
+
+            .controls.right {
+                right: 10px;
+            }
+
+            button {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+                min-width: 80px;
+            }
+
+            .audio-controls {
+                bottom: 60px;
+            }
+
+            .audio-controls button {
+                width: 35px;
+                height: 35px;
+            }
+
+            #playAudio::before {
+                border-top: 6px solid transparent;
+                border-bottom: 6px solid transparent;
+                border-left: 10px solid white;
+            }
+
+            #pauseAudio::before {
+                width: 10px;
+                height: 12px;
+            }
+
+            #stopAudio::before {
+                width: 10px;
+                height: 10px;
+            }
+
+            .quiz-container {
+                padding: 1.5rem;
+            }
+
+            .quiz-question {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
-    <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="aboutModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="aboutModalLabel">About</h4>
-                </div>
-                <div class="modal-body">
-                    <strong>HTML Online Viewer</strong> is a fast HTML editor and formatter with an instant live
-                    preview. View, edit and format your HTML in real-time!
-                    <p>
-                    <p>
-                        You can see the <strong>live preview</strong> of the HTML on the same page, but you can also
-                        show the preview in a new separate tab where it is more stable.
-                    <p>
-                    <p>
-                        The viewer highlights the HTML for better readability using the high
-                        performance editor: <a href="https://ace.c9.io/" target="_blank"><strong>Ace</strong></a> (<a
-                            href="https://github.com/ajaxorg/ace/blob/master/LICENSE" target="_blank">license</a>).
-                        <strong>The highlighted code</strong> can also be shown in a separate tab where it is
-                        rendered at once (not in the editor), so the browser's native search function can be used
-                        (Ctrl+F). This highlighting is done using a reliable third-party library: <a
-                            href="https://highlightjs.org/" target="_blank"><strong>highlight.js</strong></a> (<a
-                            href="https://github.com/isagalaev/highlight.js/blob/master/LICENSE"
-                            target="_blank">license</a>).
-                    <p>
-                    <p>
-                        <strong>The formatting</strong> function can be useful too. It is done using an efficient
-                        third-party library: <a href="http://jsbeautifier.org/" target="_blank"><strong>JS
-                                Beautifier</strong></a> (<a
-                            href="https://github.com/beautify-web/js-beautify/blob/master/LICENSE"
-                            target="_blank">license</a>).
-                    <p>
-                    <p>
-                        Available functions:
-                    <ul>
-                        <li><strong>Preview (Alt+1)</strong> button renders the HTML code in a new tab.</li>
-                        <li><strong>Highlight (Alt+2)</strong> button shows the entire highlighted code in a new tab.
-                        </li>
-                        <li><strong>Format (Alt+3)</strong> button beautifies the HTML text.</li>
-                        <li><strong>Expand all (Alt+4)</strong> button expands all elements.</li>
-                        <li><strong>Collapse all (Alt+5)</strong> button collapses all elements.</li>
-                        <li><strong>Sample (Alt+6)</strong> button puts a sample HTML text into the editor.</li>
-                        <li><strong>Clear (Alt+7)</strong> button erases the editor text.</li>
-                    </ul>
-                    <p>
-                    <p>
-                        This website uses cookies for traffic monitoring and running ads. If you don't
-                        want to allow cookies, you can disable them in <strong>Privacy settings</strong>.
-                    <p>
-                    <p>
-                        <strong>All input is processed locally (not by a server)</strong> and it is thus 100% safe and
-                        private.
-                    <p>
-                    <p>
-                        Internal libraries used:
-                    <ul>
-                        <li><a href="https://jquery.com/" target="_blank">jQuery</a> (<a
-                                href="https://github.com/jquery/jquery/blob/master/LICENSE.txt"
-                                target="_blank">license</a>)</li>
-                        <li><a href="https://getbootstrap.com/" target="_blank">Bootstrap</a> (<a
-                                href="https://github.com/twbs/bootstrap/blob/master/LICENSE"
-                                target="_blank">license</a>)</li>
-                        <li><a href="https://web.archive.org/web/20170729144500/http://fontawesome.io/"
-                                target="_blank">Font Awesome</a> (<a
-                                href="https://web.archive.org/web/20170730011910/http://fontawesome.io/license"
-                                target="_blank">license</a>)</li>
-                    </ul>
-                    <p>
-                    <p>
-                        Check other viewers:
-                    <ul>
-                        <li><a href="https://javascript.onlineviewer.net" target="_blank">JavaScript Online Viewer</a>
-                        </li>
-                        <li><a href="https://css.onlineviewer.net" target="_blank">CSS Online Viewer</a></li>
-                        <li><a href="https://xml.onlineviewer.net" target="_blank">XML Online Viewer</a></li>
-                        <li><a href="https://json.onlineviewer.net" target="_blank">JSON Online Viewer</a></li>
-                        <li><a href="https://text.onlineviewer.net" target="_blank">Text Online Viewer</a></li>
-                    </ul>
-                    <p>
-                    <p>
-                        <strong>The favicon</strong> is from the <a href="https://github.com/KDE/oxygen-icons"
-                            target="_blank">Oxygen Icons</a> set made by <a href="https://www.kde.org/"
-                            target="_blank">KDE</a> (<a href="https://github.com/KDE/oxygen-icons/blob/master/COPYING"
-                            target="_blank">license</a>)
-                    <p>
-                    <p>
-                        If you have any suggestions, please use the following contact email address:
-                        <br><img src="//www.onlineviewer.net/email_address.png" alt="contact email address" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+    <!-- ===== FLOATING DECORATIONS ===== -->
+    <div class="floating-hearts">
+        <span style="left: 10%; top: 20%; animation-delay: 0s;">💛</span>
+        <span style="left: 20%; top: 60%; animation-delay: 1s;">💜</span>
+        <span style="left: 30%; top: 40%; animation-delay: 2s;">💙</span>
+        <span style="left: 40%; top: 80%; animation-delay: 3s;">🤍</span>
+        <span style="left: 50%; top: 30%; animation-delay: 4s;">🤎</span>
+    </div>
+    
+    <div class="floating-rainbows">
+        <span style="left: 15%; top: 15%; animation-delay: 0.5s;">🌈</span>
+        <span style="left: 25%; top: 75%; animation-delay: 2.5s;">🌈</span>
+        <span style="left: 75%; top: 15%; animation-delay: 4.5s;">🌈</span>
+        <span style="left: 85%; top: 85%; animation-delay: 6.5s;">🌈</span>
+    </div>
+    
+    <div class="floating-stars">
+        <span style="left: 5%; top: 45%; animation-delay: 0.2s;">⭐</span>
+        <span style="left: 35%; top: 20%; animation-delay: 1.2s;">⭐</span>
+        <span style="left: 65%; top: 60%; animation-delay: 2.2s;">⭐</span>
+        <span style="left: 95%; top: 35%; animation-delay: 3.2s;">⭐</span>
+    </div>
+    
+    <!-- ===== PROGRESS BAR ===== -->
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+    
+    <!-- ===== CONTROL ELEMENTS ===== -->
+    <div class="lang-btn auto-hide" id="langBtn">
+        <button data-lang="en" class="active">EN</button>
+        <button data-lang="fr">FR</button>
+        <button data-lang="ar">AR</button>
+    </div>
+    
+    <!-- Compact Audio Controls with CSS icons -->
+    <div class="audio-controls auto-hide" id="audioControls">
+        <button id="playAudio" title="Play Audio"></button>
+        <button id="pauseAudio" title="Pause Audio"></button>
+        <button id="stopAudio" title="Stop Audio"></button>
+    </div>
+    
+    <div class="controls left auto-hide" id="prevControl">
+        <button id="prev">⬅️ Previous</button>
+    </div>
+    <div class="controls right auto-hide" id="nextControl">
+        <button id="next">Next ➡️</button>
+    </div>
+    
+    <!-- ===== AUDIO ELEMENTS ===== -->
+    <audio id="scene1Audio" preload="auto">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="scene2Audio" preload="auto">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="scene3Audio" preload="auto">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="scene4Audio" preload="auto">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="scene5Audio" preload="auto">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="scene6Audio" preload="auto">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="scene7Audio" preload="auto">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- ===== SCENE 1 ===== -->
+    <div class="scene active" data-lang="en" data-scene="1">
+        <div class="scene-img" id="scene1Image">
+            <span>🌺</span>
+        </div>
+        <h1>Adam's Special Discovery 💖</h1>
+        <p><span class="highlight">Once upon a time</span>, little <span class="highlight">Adam</span> was playing in the garden. <span class="highlight">As Adam was playing, a beautiful and serene sound drifted through the air—the adhan. The melodic call to prayer captured his attention.</span> Then he saw his <span class="highlight">grandmother preparing for prayer</span>. The sun was shining softly through the window, and the house smelled like fresh flowers.</p>
+    </div>
+    
+    <div class="scene" data-lang="fr" data-scene="1">
+        <div class="scene-img" id="scene1ImageFr">
+            <span>🌺</span>
+        </div>
+        <h1>La Découverte Spéciale d'Adam 💖</h1>
+        <p><span class="highlight">Il était une fois</span>, le petit <span class="highlight">Adam</span> jouait dans le jardin. <span class="highlight">Alors qu'Adam jouait, un son beau et serein flotta dans l'air—l'adhan. L'appel mélodique à la prière capta son attention.</span> Puis il vit sa <span class="highlight">grand-mère se préparer pour la prière</span>. Le soleil brillait doucement à travers la fenêtre, et la maison sentait bon les fleurs fraîches.</p>
+    </div>
+    
+    <div class="scene" data-lang="ar" data-scene="1">
+        <div class="scene-img" id="scene1ImageAr">
+            <span>🌺</span>
+        </div>
+        <h1>اكتشاف آدم الخاص 💖</h1>
+        <p><span class="highlight">في يوم من الأيام</span>، كان <span class="highlight">آدم</span> الصغير يلعب في الحديقة. <span class="highlight">وبينما كان آدم يلعب، انبعث صوت جميل وهادئ في الهواء—الأذان. لفت نداء الصلاة اللحني انتباهه.</span> ثم رأى <span class="highlight">جدته تستعد للصلاة</span>. كانت الشمس تشرق بلطف من النافذة، وكانت رائحة المنزل مثل الزهور الطازجة.</p>
+    </div>
+    
+    <!-- ===== SCENE 2 ===== -->
+    <div class="scene" data-lang="en" data-scene="2">
+        <div class="scene-img" id="scene2Image">
+            <span>🕌</span>
+        </div>
+        <h1>Following Grandma's Lead 🌟</h1>
+        <p>Adam watched as his grandmother performed <span class="highlight">wudu</span>, the ritual washing before prayer. She washed her hands, mouth, nose, face, arms, and feet with such care and devotion. Adam was fascinated by the peaceful expression on her face. <span class="highlight">"Grandma, what are you doing?"</span> he asked curiously.</p>
+    </div>
+    
+    <div class="scene" data-lang="fr" data-scene="2">
+        <div class="scene-img" id="scene2ImageFr">
+            <span>🕌</span>
+        </div>
+        <h1>Suivre l'Exemple de Grand-Mère 🌟</h1>
+        <p>Adam regarda sa grand-mère effectuer le <span class="highlight">wudu</span>, le lavage rituel avant la prière. Elle se lava les mains, la bouche, le nez, le visage, les bras et les pieds avec tant de soin et de dévotion. Adam était fasciné par l'expression paisible sur son visage. <span class="highlight">"Grand-mère, que fais-tu ?"</span> demanda-t-il avec curiosité.</p>
+    </div>
+    
+    <div class="scene" data-lang="ar" data-scene="2">
+        <div class="scene-img" id="scene2ImageAr">
+            <span>🕌</span>
+        </div>
+        <h1>اتباع خطى الجدة 🌟</h1>
+        <p>شاهد آدم جدته وهي تؤدي <span class="highlight">الوضوء</span>، الغسل الشعائري قبل الصلاة. غسلت يديها وفمها وأنفها ووجهها وذراعيها وقدميها بعناية وتفانٍ كبيرين. كان آدم مفتونًا بالتعبير الهادئ على وجهها. <span class="highlight">"جدتي، ماذا تفعلين؟"</span> سأل بفضول.</p>
+    </div>
+    
+    <!-- ===== SCENE 3 ===== -->
+    <div class="scene" data-lang="en" data-scene="3">
+        <div class="scene-img" id="scene3Image">
+            <span>📿</span>
+        </div>
+        <h1>Learning About Prayer 🌈</h1>
+        <p>Grandma smiled warmly and explained, <span class="highlight">"I'm preparing to pray, my dear. Prayer is how we talk to Allah. It's our special time with Him."</span> She showed Adam how to stand, bow, and prostrate in prayer. Adam tried to copy her movements, feeling a special connection as he moved alongside her.</p>
+    </div>
+    
+    <div class="scene" data-lang="fr" data-scene="3">
+        <div class="scene-img" id="scene3ImageFr">
+            <span>📿</span>
+        </div>
+        <h1>Apprendre la Prière 🌈</h1>
+        <p>Grand-mère sourit chaleureusement et expliqua : <span class="highlight">"Je me prépare à prier, mon cher. La prière est la façon dont nous parlons à Allah. C'est notre moment spécial avec Lui."</span> Elle montra à Adam comment se tenir debout, s'incliner et se prosterner dans la prière. Adam essaya de copier ses mouvements, ressentant une connexion spéciale alors qu'il bougeait à ses côtés.</p>
+    </div>
+    
+    <div class="scene" data-lang="ar" data-scene="3">
+        <div class="scene-img" id="scene3ImageAr">
+            <span>📿</span>
+        </div>
+        <h1>تعلم الصلاة 🌈</h1>
+        <p>ابتسمت الجدة بحرارة وشرحت: <span class="highlight">"أنا أستعد للصلاة يا عزيزي. الصلاة هي كيف نتحدث إلى الله. إنها وقتنا الخاص معه."</span> أظهرت لآدم كيف يقف ويركع ويسجد في الصلاة. حاول آدم تقليد حركاتها، وشعر باتصال خاص وهو يتحرك بجانبها.</p>
+    </div>
+    
+    <!-- ===== SCENE 4 ===== -->
+    <div class="scene" data-lang="en" data-scene="4">
+        <div class="scene-img" id="scene4Image">
+            <span>🤲</span>
+        </div>
+        <h1>Adam's First Prayer 💫</h1>
+        <p>With Grandma's gentle guidance, Adam said his <span class="highlight">first prayer</span>. He felt a warm, peaceful feeling inside. <span class="highlight">"This feels special, Grandma,"</span> he whispered. She hugged him and said, <span class="highlight">"Prayer is a gift, Adam. It connects us to Allah and brings peace to our hearts."</span></p>
+    </div>
+    
+    <div class="scene" data-lang="fr" data-scene="4">
+        <div class="scene-img" id="scene4ImageFr">
+            <span>🤲</span>
+        </div>
+        <h1>La Première Prière d'Adam 💫</h1>
+        <p>Avec les conseils doux de Grand-mère, Adam dit sa <span class="highlight">première prière</span>. Il ressentit une sensation chaude et paisible à l'intérieur. <span class="highlight">"C'est spécial, Grand-mère,"</span> chuchota-t-il. Elle le serra dans ses bras et dit : <span class="highlight">"La prière est un cadeau, Adam. Elle nous connecte à Allah et apporte la paix à nos cœurs."</span></p>
+    </div>
+    
+    <div class="scene" data-lang="ar" data-scene="4">
+        <div class="scene-img" id="scene4ImageAr">
+            <span>🤲</span>
+        </div>
+        <h1>صلاة آدم الأولى 💫</h1>
+        <p>بتوجيهات الجدة اللطيفة، قال آدم <span class="highlight">أول صلاة له</span>. شعر بدفء وشعور بالسلام في داخله. <span class="highlight">"هذا شعور خاص يا جدتي،"</span> همس. عانقته وقالت: <span class="highlight">"الصلاة هبة يا آدم. إنها تربطنا بالله وتجلب السلام لقلوبنا."</span></p>
+    </div>
+    
+    <!-- ===== SCENE 5 ===== -->
+    <div class="scene" data-lang="en" data-scene="5">
+        <div class="scene-img" id="scene5Image">
+            <span>🌟</span>
+        </div>
+        <h1>A New Routine ✨</h1>
+        <p>From that day on, Adam looked forward to prayer time. He loved the peaceful feeling it gave him. Sometimes he prayed with Grandma, and sometimes he prayed by himself. <span class="highlight">Prayer became Adam's special time to talk to Allah, share his thoughts, and feel close to Him.</span></p>
+    </div>
+    
+    <div class="scene" data-lang="fr" data-scene="5">
+        <div class="scene-img" id="scene5ImageFr">
+            <span>🌟</span>
+        </div>
+        <h1>Une Nouvelle Routine ✨</h1>
+        <p>À partir de ce jour, Adam attendait avec impatience l'heure de la prière. Il aimait le sentiment de paix qu'elle lui donnait. Parfois, il priait avec Grand-mère, و parfois il priait seul. <span class="highlight">La prière devint le moment spécial d'Adam pour parler à Allah, partager ses pensées и se sentir proche de Lui.</span></p>
+    </div>
+    
+    <div class="scene" data-lang="ar" data-scene="5">
+        <div class="scene-img" id="scene5ImageAr">
+            <span>🌟</span>
+        </div>
+        <h1>روتين جديد ✨</h1>
+        <p>منذ ذلك اليوم، كان آدم يتطلع إلى وقت الصلاة. أحب الشعور بالسلام الذي منحته إياه. في بعض الأحيان كان يصلي مع الجدة، وفي أحيان أخرى كان يصلي بمفرده. <span class="highlight">أصبحت الصلاة وقت آدم الخاص للتحدث إلى الله، ومشاركة أفكاره، والشعر بالقرب منه.</span></p>
+    </div>
+    
+    <!-- ===== SCENE 6 ===== -->
+    <div class="scene" data-lang="en" data-scene="6">
+        <div class="scene-img" id="scene6Image">
+            <span>💫</span>
+        </div>
+        <h1>Learning Wudu Steps 💧</h1>
+        <p>Grandma taught Adam the steps of wudu:</p>
+        <div class="instructions">
+            <div class="instruction-step">
+                <h3>1. Niyyah (Intention)</h3>
+                <p>Make the intention in your heart to perform wudu for prayer</p>
+            </div>
+            <div class="instruction-step">
+                <h3>2. Wash Hands</h3>
+                <p>Wash both hands up to the wrists three times</p>
+            </div>
+            <div class="instruction-step">
+                <h3>3. Rinse Mouth</h3>
+                <p>Rinse your mouth three times with water</p>
+            </div>
+            <div class="instruction-step">
+                <h3>4. Clean Nose</h3>
+                <p>Clean your nose by sniffing water three times</p>
+            </div>
+            <div class="instruction-step">
+                <h3>5. Wash Face</h3>
+                <p>Wash your entire face three times</p>
+            </div>
+            <div class="instruction-step">
+                <h3>6. Wash Arms</h3>
+                <p>Wash arms up to elbows three times</p>
+            </div>
+            <div class="instruction-step">
+                <h3>7. Wipe Head & Ears</h3>
+                <p>Wipe your head and ears with wet hands once</p>
+            </div>
+            <div class="instruction-step">
+                <h3>8. Wash Feet</h3>
+                <p>Wash both feet up to ankles three times</p>
             </div>
         </div>
     </div>
-    <div id="view">
-        <div id="sidebar">
-            <h1 class="header"><a href="https://html.onlineviewer.net/" class="linkColor">HTML Online Viewer</a></h1>
-            <div id="textViewButtons">
-                <button onclick="openHtmlPreview()" class="btn btn-default btn-sm btn-block"><i
-                        class="fa fa-eye fa-lg fa-fw"></i> Preview (Full page)</button>
-                <button onclick="openHighlightedSyntax()" class="btn btn-default btn-sm btn-block"><i
-                        class="fa fa-edit fa-lg fa-fw"></i> Highlight (Full page)</button>
-                <button onclick="formatHtml();" class="btn btn-default btn-sm btn-block"><i
-                        class="fa fa-indent fa-lg fa-fw"></i> Format</button>
-                <button onclick="unfoldAll()" class="btn btn-default btn-sm btn-block"><i
-                        class="fa fa-plus-square fa-lg fa-fw"></i> Expand all</button>
-                <button onclick="foldAll();" class="btn btn-default btn-sm btn-block"><i
-                        class="fa fa-minus-square fa-lg fa-fw"></i> Collapse all</button>
-                <button id="btnSample" onclick="insertSample()" class="btn btn-default btn-sm btn-block"><i
-                        class="fa fa-file-text-o fa-lg fa-fw"></i> Sample</button>
-                <button id="btnClear" onclick="clearTextInput()" class="btn btn-default btn-sm btn-block"><i
-                        class="fa fa-file-o fa-lg fa-fw"></i> Clear</button>
-                <button id="btnImport" onclick="importText()" class="btn btn-default btn-sm btn-block"><i
-                        class="fa fa-upload fa-lg fa-fw"></i> Import</button>
-                <button id="btnExport" onclick="exportText()" class="btn btn-default btn-sm btn-block"><i
-                        class="fa fa-download fa-lg fa-fw"></i> Export</button>
-                <input type="file" id="inpImport" onclick="this.value=null;" accept="text/*" style="display:none">
-            </div>
-            <div id="aboutButtons">
-                <button style="margin-bottom: 5px; margin-top: 5px;" id="btnCookies"
-                    onclick="googlefc.callbackQueue.push(googlefc.showRevocationMessage)"
-                    class="btn btn-default btn-sm btn-block"><i class="fa fa-shield fa-lg fa-fw"></i> Privacy
-                    settings</button>
-                <div id="aboutButton" data-toggle="modal" data-target="#aboutModal">
-                    <button id="btnAbout" class="btn btn-default btn-sm btn-block"><i
-                            class="fa fa-question-circle-o fa-lg fa-fw"></i> About</button>
-                </div>
-                <div class="copyrightText">
-                    <span id="copyright"></span> <a id="copyrightName"
-                        href="https://www.onlineviewer.net">OnlineViewer.net</a><br />
-                </div>
-            </div>
+    
+    <div class="scene" data-lang="fr" data-scene="6">
+        <div class="scene-img" id="scene6ImageFr">
+            <span>💫</span>
         </div>
-        <div id="content">
-            <div id="textView">
-                <div id="editor">Put your HTML text here</div>
+        <h1>Apprendre les Étapes du Wudu 💧</h1>
+        <p>Grand-mère a appris à Adam les étapes du wudu :</p>
+        <div class="instructions">
+            <div class="instruction-step">
+                <h3>1. Niyyah (Intention)</h3>
+                <p>Faites l'intention dans votre cœur d'effectuer le wudu pour la prière</p>
             </div>
-            <div id="livePreview">
-                <iframe id="liveFrame" title="Live HTML Preview" srcdoc=""
-                    sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts"></iframe>
+            <div class="instruction-step">
+                <h3>2. Lavez les Mains</h3>
+                <p>Lavez les deux mains jusqu'aux poignets trois fois</p>
             </div>
-        </div>
-        <div id="rightsidebar">
-
-        </div>
-        <div id="leftbottomabs">
-            <script async
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4523112948468173"
-                crossorigin="anonymous"></script>
-            <!-- Sidebar bottom -->
-            <ins class="adsbygoogle" style="display:inline-block;width:200px;height:200px"
-                data-ad-client="ca-pub-4523112948468173" data-ad-slot="4008251510"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+            <div class="instruction-step">
+                <h3>3. Rincez la Bouche</h3>
+                <p>Rincez votre bouche trois fois avec de l'eau</p>
+            </div>
+            <div class="instruction-step">
+                <h3>4. Nettoyez le Nez</h3>
+                <p>Nettoyez votre nez en reniflant de l'eau trois fois</p>
+            </div>
+            <div class="instruction-step">
+                <h3>5. Lavez le Visage</h3>
+                <p>Lavez tout votre visage trois fois</p>
+            </div>
+            <div class="instruction-step">
+                <h3>6. Lavez les Bras</h3>
+                <p>Lavez les bras jusqu'aux coudes trois fois</p>
+            </div>
+            <div class="instruction-step">
+                <h3>7. Essuyez la Tête & Oreilles</h3>
+                <p>Essuyez votre tête et oreilles avec les mains mouillées une fois</p>
+            </div>
+            <div class="instruction-step">
+                <h3>8. Lavez les Pieds</h3>
+                <p>Lavez les deux pieds jusqu'aux chevilles ثلاث مرات</p>
+            </div>
         </div>
     </div>
+    
+    <div class="scene" data-lang="ar" data-scene="6">
+        <div class="scene-img" id="scene6ImageAr">
+            <span>💫</span>
+        </div>
+        <h1>تعلم خطوات الوضوء 💧</h1>
+        <p>علمت الجدة آدم خطوات الوضوء:</p>
+        <div class="instructions">
+            <div class="instruction-step">
+                <h3>١. النية</h3>
+                <p>انوي في قلبك أداء الوضوء للصلاة</p>
+            </div>
+            <div class="instruction-step">
+                <h3>٢. غسل اليدين</h3>
+                <p>اغسل كلتا اليدين حتى الرسغين ثلاث مرات</p>
+            </div>
+            <div class="instruction-step">
+                <h3>٣. المضمضة</h3>
+                <p>تمضمض ثلاث مرات بالماء</p>
+            </div>
+            <div class="instruction-step">
+                <h3>٤. الاستنشاق</h3>
+                <p>نظف أنفك باستنشاق الماء ثلاث مرات</p>
+            </div>
+            <div class="instruction-step">
+                <h3>٥. غسل الوجه</h3>
+                <p>اغسل وجهك بالكامل ثلاث مرات</p>
+            </div>
+            <div class="instruction-step">
+                <h3>٦. غسل الذراعين</h3>
+                <p>اغسل الذراعين حتى المرفقين ثلاث مرات</p>
+            </div>
+            <div class="instruction-step">
+                <h3>٧. مسح الرأس والأذنين</h3>
+                <p>امسح رأسك وأذنيك بيديك المبللتين مرة واحدة</p>
+            </div>
+            <div class="instruction-step">
+                <h3>٨. غسل القدمين</h3>
+                <p>اغسل القدمين حتى الكعبين ثلاث مرات</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ===== SCENE 7 ===== -->
+    <div class="scene" data-lang="en" data-scene="7">
+        <div class="scene-img" id="scene7Image">
+            <span>🕋</span>
+        </div>
+        <h1>Prayer Positions & Recitation 🙌</h1>
+        <p>Adam learned the different positions in prayer and Quran recitation:</p>
+        <div class="instructions">
+            <div class="instruction-step">
+                <h3>1. Standing (Qiyam)</h3>
+                <p>Stand facing the Qibla, recite Surah Al-Fatihah and another Quran chapter</p>
+            </div>
+            <div class="instruction-step">
+                <h3>2. Bowing (Ruku)</h3>
+                <p>Bow with hands on knees, back straight, recite "Subhana Rabbiyal Adheem"</p>
+            </div>
+            <div class="instruction-step">
+                <h3>3. Prostration (Sujood)</h3>
+                <p>Place forehead, nose, hands, knees and toes on ground, recite "Subhana Rabbiyal A'la"</p>
+            </div>
+            <div class="instruction-step">
+                <h3>4. Sitting (Jalsa)</h3>
+                <p>Sit between prostrations with right foot upright, recite "Rabbighfirli"</p>
+            </div>
+            <div class="instruction-step">
+                <h3>5. Final Tashahhud</h3>
+                <p>Sit and recite the testimony of faith and blessings on Prophet Muhammad</p>
+            </div>
+            <div class="instruction-step">
+                <h3>6. Salam</h3>
+                <p>Turn head right and left saying "Assalamu alaikum wa rahmatullah"</p>
+            </div>
+        </div>
+        <p style="margin-top: 2rem;"><span class="highlight">Adam felt so proud learning these special movements and recitations that brought him closer to Allah.</span></p>
+    </div>
+    
+    <div class="scene" data-lang="fr" data-scene="7">
+        <div class="scene-img" id="scene7ImageFr">
+            <span>🕋</span>
+        </div>
+        <h1>Positions de Prière & Récitation 🙌</h1>
+        <p>Adam a appris les différentes positions de la prière et la récitation du Coran :</p>
+        <div class="instructions">
+            <div class="instruction-step">
+                <h3>1. Debout (Qiyam)</h3>
+                <p>Tenez-vous debout face à la Qibla, récitez Sourate Al-Fatihah et un autre chapitre du Coran</p>
+            </div>
+            <div class="instruction-step">
+                <h3>2. Inclinaison (Ruku)</h3>
+                <p>Inclinez-vous avec les mains sur les genoux, dos droit, récitez "Subhana Rabbiyal Adheem"</p>
+            </div>
+            <div class="instruction-step">
+                <h3>3. Prosternation (Sujood)</h3>
+                <p>Placez le front, le nez, les mains, les genoux et les orteils au sol, récitez "Subhana Rabbiyal A'la"</p>
+            </div>
+            <div class="instruction-step">
+                <h3>4. Assis (Jalsa)</h3>
+                <p>Asseyez-vous entre les prosternations avec le pied droit dressé, récitez "Rabbighfirli"</p>
+            </div>
+            <div class="instruction-step">
+                <h3>5. Tashahhud Final</h3>
+                <p>Asseyez-vous et récitez le témoignage de faith et les bénédictions sur le Prophète Muhammad</p>
+            </div>
+            <div class="instruction-step">
+                <h3>6. Salam</h3>
+                <p>Tournez la tête à droite et à gauche en disant "Assalamu alaikum wa rahmatullah"</p>
+            </div>
+        </div>
+        <p style="margin-top: 2rem;"><span class="highlight">Adam était si fier d'apprendre ces mouvements et récitations spéciaux qui le rapprochaient d'Allah.</span></p>
+    </div>
+    
+    <div class="scene" data-lang="ar" data-scene="7">
+        <div class="scene-img" id="scene7ImageAr">
+            <span>🕋</span>
+        </div>
+        <h1>مواضع الصلاة والتلاوة 🙌</h1>
+        <p>تعلم آدم المواضع المختلفة في الصلاة وتلاوة القرآن:</p>
+        <div class="instructions">
+            <div class="instruction-step">
+                <h3>١. القيام</h3>
+                <p>قف متجهًا نحو القبلة، اقرأ سورة الفاتحة وسورة أخرى من القرآن</p>
+            </div>
+            <div class="instruction-step">
+                <h3>٢. الركوع</h3>
+                <p>اركع مع وضع اليدين على الركبتين والظهر مستقيم، اقرأ "سبحان ربي العظيم"</p>
+            </div>
+            <div class="instruction-step">
+                <h3>٣. السجود</h3>
+                <p>ضع الجبهة والأنف واليدين والركبتين وأصابع القدمين على الأرض، اقرأ "سبحان ربي الأعلى"</p>
+            </div>
+            <div class="instruction-step">
+                <h3>٤. الجلوس</h3>
+                <p>اجلس بين السجدتين مع نصب القدم اليمنى، اقرأ "رب اغفر لي"</p>
+            </div>
+            <div class="instruction-step">
+                <h3>٥. التشهد الأخير</h3>
+                <p>اجلس واقرأ الشهادة والصلوات على النبي محمد</p>
+            </div>
+            <div class="instruction-step">
+                <h3>٦. التسليم</h3>
+                <p>أدر رأسك يمينًا ويسارًا قائلاً "السلام عليكم ورحمة الله"</p>
+            </div>
+        </div>
+        <p style="margin-top: 2rem;"><span class="highlight">شعر آدم بالفخر الشديد لتعلم هذه الحركات والتلاوات الخاصة التي تقربه من الله.</span></p>
+    </div>
+    
+    <!-- ===== SCENE 8 - QUIZ ===== -->
+    <div class="scene" data-lang="en" data-scene="8">
+        <div class="scene-img">
+            <span>🎓</span>
+        </div>
+        <h1>Quiz Time! 📝</h1>
+        <p>Let's see how much you remember from Adam's prayer adventure!</p>
+        
+        <div class="quiz-container" id="quizContainer">
+            <!-- Quiz content will be generated by JavaScript -->
+        </div>
+        
+        <div class="quiz-results" id="quizResults" style="display: none;">
+            <div class="quiz-score" id="quizScore"></div>
+            <div class="quiz-message" id="quizMessage"></div>
+            <button id="restartQuiz">Try Again</button>
+        </div>
+    </div>
+    
+    <div class="scene" data-lang="fr" data-scene="8">
+        <div class="scene-img">
+            <span>🎓</span>
+        </div>
+        <h1>Quiz Temps! 📝</h1>
+        <p>Voyons combien vous vous souvenez de l'aventure de prière d'Adam!</p>
+        
+        <div class="quiz-container" id="quizContainerFr">
+            <!-- Quiz content will be generated by JavaScript -->
+        </div>
+        
+        <div class="quiz-results" id="quizResultsFr" style="display: none;">
+            <div class="quiz-score" id="quizScoreFr"></div>
+            <div class="quiz-message" id="quizMessageFr"></div>
+            <button id="restartQuizFr">Réessayer</button>
+        </div>
+    </div>
+    
+    <div class="scene" data-lang="ar" data-scene="8">
+        <div class="scene-img">
+            <span>🎓</span>
+        </div>
+        <h1>وقت الاختبار! 📝</h1>
+        <p>لنرى كم تتذكر من مغامرة آدم في الصلاة!</p>
+        
+        <div class="quiz-container" id="quizContainerAr">
+            <!-- Quiz content will be generated by JavaScript -->
+        </div>
+        
+        <div class="quiz-results" id="quizResultsAr" style="display: none;">
+            <div class="quiz-score" id="quizScoreAr"></div>
+            <div class="quiz-message" id="quizMessageAr"></div>
+            <button id="restartQuizAr">حاول مرة أخرى</button>
+        </div>
+    </div>
+    
     <script>
-        var pageType = 'HTML';
-    </script>
-    <script src="//www.onlineviewer.net/onlineviewer.min.v3.js"></script>
-</body>
+        // ===== GLOBAL VARIABLES =====
+        let currentLang = 'en';
+        let currentScene = 1;
+        const totalScenes = 8; // Now includes quiz
+        let currentAudio = null;
+        let hideControlsTimeout;
+        let currentQuestion = 0;
+        let score = 0;
+        
+        // ===== QUIZ DATA =====
+        const quizQuestions = {
+            en: [
+                {
+                    question: "What was the beautiful sound Adam heard that captured his attention?",
+                    options: [
+                        "The adhan (call to prayer)",
+                        "Birds singing",
+                        "Music playing",
+                        "Rain falling"
+                    ],
+                    correct: 0,
+                    explanation: "Correct! Adam heard the beautiful adhan, the call to prayer."
+                },
+                {
+                    question: "What is the ritual washing before prayer called?",
+                    options: [
+                        "Wudu",
+                        "Ghusl",
+                        "Tayammum",
+                        "Istinja"
+                    ],
+                    correct: 0,
+                    explanation: "Correct! Wudu is the ritual washing Muslims perform before prayer."
+                },
+                {
+                    question: "How many times do we wash each part during wudu?",
+                    options: [
+                        "Three times",
+                        "Once",
+                        "Five times",
+                        "Seven times"
+                    ],
+                    correct: 0,
+                    explanation: "Correct! We wash each part three times during wudu."
+                },
+                {
+                    question: "What do we say during bowing (ruku) in prayer?",
+                    options: [
+                        "Subhana Rabbiyal Adheem",
+                        "Subhana Rabbiyal A'la",
+                        "Allahu Akbar",
+                        "Alhamdulillah"
+                    ],
+                    correct: 0,
+                    explanation: "Correct! We say 'Subhana Rabbiyal Adheem' during bowing."
+                },
+                {
+                    question: "What do we say during prostration (sujood) in prayer?",
+                    options: [
+                        "Subhana Rabbiyal A'la",
+                        "Subhana Rabbiyal Adheem",
+                        "Allahu Akbar",
+                        "Astaghfirullah"
+                    ],
+                    correct: 0,
+                    explanation: "Correct! We say 'Subhana Rabbiyal A'la' during prostration."
+                }
+            ],
+            fr: [
+                {
+                    question: "Quel était le beau son qu'Adam a entendu et qui a capté son attention?",
+                    options: [
+                        "L'adhan (appel à la prière)",
+                        "Les oiseaux qui chantent",
+                        "De la musique",
+                        "La pluie qui tombe"
+                    ],
+                    correct: 0,
+                    explanation: "Correct! Adam a entendu le bel adhan, l'appel à la prière."
+                },
+                {
+                    question: "Comment s'appelle le lavage rituel avant la prière?",
+                    options: [
+                        "Wudu",
+                        "Ghusl",
+                        "Tayammum",
+                        "Istinja"
+                    ],
+                    correct: 0,
+                    explanation: "Correct! Le wudu est le lavage rituel que les musulmans effectuent avant la prière."
+                },
+                {
+                    question: "Combien de fois lavons-nous chaque partie pendant le wudu?",
+                    options: [
+                        "Trois fois",
+                        "Une fois",
+                        "Cinq fois",
+                        "Sept fois"
+                    ],
+                    correct: 0,
+                    explanation: "Correct! Nous lavons chaque partie trois fois pendant le wudu."
+                },
+                {
+                    question: "Que disons-nous pendant l'inclinaison (ruku) dans la prière?",
+                    options: [
+                        "Subhana Rabbiyal Adheem",
+                        "Subhana Rabbiyal A'la",
+                        "Allahu Akbar",
+                        "Alhamdulillah"
+                    ],
+                    correct: 0,
+                    explanation: "Correct! Nous disons 'Subhana Rabbiyal Adheem' pendant l'inclinaison."
+                },
+                {
+                    question: "Que disons-nous pendant la prosternation (sujood) dans la prière?",
+                    options: [
+                        "Subhana Rabbiyal A'la",
+                        "Subhana Rabbiyal Adheem",
+                        "Allahu Akbar",
+                        "Astaghfirullah"
+                    ],
+                    correct: 0,
+                    explanation: "Correct! Nous disons 'Subhana Rabbiyal A'la' pendant la prosternation."
+                }
+            ],
+            ar: [
+                {
+                    question: "ما هو الصوت الجميل الذي سمعه آدم وجذب انتباهه؟",
+                    options: [
+                        "الأذان (نداء الصلاة)",
+                        "طيور تغرد",
+                        "موسيقى تعزف",
+                        "مطر يهطل"
+                    ],
+                    correct: 0,
+                    explanation: "صحيح! سمع آدم الأذان الجميل، نداء الصلاة."
+                },
+                {
+                    question: "ما اسم الغسل الشعائري قبل الصلاة؟",
+                    options: [
+                        "الوضوء",
+                        "الغسل",
+                        "التيمم",
+                        "الاستنجاء"
+                    ],
+                    correct: 0,
+                    explanation: "صحيح! الوضوء هو الغسل الشعائري الذي يؤديه المسلمون قبل الصلاة."
+                },
+                {
+                    question: "كم مرة نغسل كل جزء أثناء الوضوء؟",
+                    options: [
+                        "ثلاث مرات",
+                        "مرة واحدة",
+                        "خمس مرات",
+                        "سبع مرات"
+                    ],
+                    correct: 0,
+                    explanation: "صحيح! نغسل كل جزء ثلاث مرات أثناء الوضوء."
+                },
+                {
+                    question: "ماذا نقول أثناء الركوع في الصلاة؟",
+                    options: [
+                        "سبحان ربي العظيم",
+                        "سبحان ربي الأعلى",
+                        "الله أكبر",
+                        "الحمد لله"
+                    ],
+                    correct: 0,
+                    explanation: "صحيح! نقول 'سبحان ربي العظيم' أثناء الركوع."
+                },
+                {
+                    question: "ماذا نقول أثناء السجود في الصلاة؟",
+                    options: [
+                        "سبحان ربي الأعلى",
+                        "سبحان ربي العظيم",
+                        "الله أكبر",
+                        "أستغفر الله"
+                    ],
+                    correct: 0,
+                    explanation: "صحيح! نقول 'سبحان ربي الأعلى' أثناء السجود."
+                }
+            ]
+        };
 
+        // ===== INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSavedImages();
+            loadSavedAudio();
+            setupAutoHide();
+            initializeQuiz();
+        });
+
+        // ===== STORAGE FUNCTIONS =====
+        function loadSavedImages() {
+            for (let scene = 1; scene <= 7; scene++) {
+                const savedImage = localStorage.getItem(`scene${scene}Image`);
+                if (savedImage) {
+                    // Update all language versions of the scene
+                    const sceneIds = [
+                        `scene${scene}Image`,
+                        `scene${scene}ImageFr`,
+                        `scene${scene}ImageAr`
+                    ];
+                    
+                    sceneIds.forEach(id => {
+                        const sceneElement = document.getElementById(id);
+                        if (sceneElement) {
+                            sceneElement.innerHTML = '';
+                            const img = document.createElement('img');
+                            img.src = savedImage;
+                            img.alt = `Scene ${scene}`;
+                            sceneElement.appendChild(img);
+                        }
+                    });
+                }
+            }
+        }
+
+        function loadSavedAudio() {
+            for (let scene = 1; scene <= 7; scene++) {
+                const savedAudio = localStorage.getItem(`scene${scene}Audio`);
+                if (savedAudio) {
+                    const audioElement = document.getElementById(`scene${scene}Audio`);
+                    if (audioElement) {
+                        // Clear existing sources
+                        while (audioElement.firstChild) {
+                            audioElement.removeChild(audioElement.firstChild);
+                        }
+                        
+                        // Add new source
+                        const source = document.createElement('source');
+                        source.src = savedAudio;
+                        source.type = 'audio/mpeg'; // Default type, can be adjusted if needed
+                        audioElement.appendChild(source);
+                        audioElement.load();
+                    }
+                }
+            }
+        }
+
+        // ===== NAVIGATION FUNCTIONS =====
+        function updateProgress() {
+            const progress = (currentScene / totalScenes) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+        }
+
+        function showScene(lang, scene) {
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+            const activeScene = document.querySelector(`.scene[data-lang="${lang}"][data-scene="${scene}"]`);
+            if (activeScene) {
+                activeScene.classList.add('active');
+            }
+            updateProgress();
+            updateButtons();
+            
+            // Stop any currently playing audio
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            
+            // Play audio for the current scene
+            const sceneAudio = document.getElementById(`scene${scene}Audio`);
+            if (sceneAudio) {
+                currentAudio = sceneAudio;
+                // Auto-play is disabled by browsers, so we'll let the user control it
+            }
+            
+            // Show controls when scene changes
+            showControls();
+            
+            // Initialize quiz if we're on the quiz scene
+            if (scene === 8) {
+                initializeQuiz();
+            }
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prev');
+            const nextBtn = document.getElementById('next');
+            prevBtn.style.display = currentScene === 1 ? 'none' : 'block';
+            nextBtn.style.display = currentScene === totalScenes ? 'none' : 'block';
+            const texts = {
+                en: { prev: '⬅️ Previous', next: 'Next ➡️' },
+                fr: { prev: '⬅️ Précédent', next: 'Suivant ➡️' },
+                ar: { prev: '⬅️ السابق', next: 'التالي ➡️' }
+            };
+            const text = texts[currentLang] || texts.en;
+            prevBtn.textContent = text.prev;
+            nextBtn.textContent = text.next;
+        }
+
+        // ===== LANGUAGE SELECTION =====
+        document.querySelectorAll('.lang-btn button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentLang = btn.dataset.lang;
+                currentScene = 1;
+                document.querySelectorAll('.lang-btn button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                showScene(currentLang, currentScene);
+            });
+        });
+
+        // ===== NAVIGATION CONTROLS =====
+        document.getElementById('next').addEventListener('click', () => {
+            if (currentScene < totalScenes) {
+                currentScene++;
+                showScene(currentLang, currentScene);
+            }
+        });
+
+        document.getElementById('prev').addEventListener('click', () => {
+            if (currentScene > 1) {
+                currentScene--;
+                showScene(currentLang, currentScene);
+            }
+        });
+
+        // ===== KEYBOARD NAVIGATION =====
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                document.getElementById('next').click();
+            } else if (e.key === 'ArrowLeft') {
+                document.getElementById('prev').click();
+            }
+        });
+
+        // ===== AUDIO CONTROLS =====
+        document.getElementById('playAudio').addEventListener('click', () => {
+            if (currentAudio) {
+                currentAudio.play().catch(e => {
+                    console.log("Audio play failed:", e);
+                    alert("Audio playback failed. Please upload audio files first.");
+                });
+            }
+        });
+
+        document.getElementById('pauseAudio').addEventListener('click', () => {
+            if (currentAudio) {
+                currentAudio.pause();
+            }
+        });
+
+        document.getElementById('stopAudio').addEventListener('click', () => {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+        });
+
+        // ===== AUTO-HIDE FUNCTIONALITY =====
+        function setupAutoHide() {
+            const controls = document.querySelectorAll('.auto-hide');
+            
+            // Show controls on mouse move
+            document.addEventListener('mousemove', () => {
+                showControls();
+            });
+            
+            // Show controls on touch
+            document.addEventListener('touchstart', () => {
+                showControls();
+            });
+            
+            // Hide controls after inactivity
+            function hideControlsAfterDelay() {
+                clearTimeout(hideControlsTimeout);
+                hideControlsTimeout = setTimeout(() => {
+                    controls.forEach(control => {
+                        control.classList.add('hidden');
+                    });
+                }, 3000); // Hide after 3 seconds of inactivity
+            }
+            
+            function showControls() {
+                controls.forEach(control => {
+                    control.classList.remove('hidden');
+                });
+                hideControlsAfterDelay();
+            }
+            
+            // Initial setup
+            hideControlsAfterDelay();
+        }
+
+        // ===== QUIZ FUNCTIONS =====
+        function initializeQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            
+            const quizContainer = document.getElementById(`quizContainer${currentLang === 'en' ? '' : currentLang.charAt(0).toUpperCase() + currentLang.slice(1)}`);
+            const quizResults = document.getElementById(`quizResults${currentLang === 'en' ? '' : currentLang.charAt(0).toUpperCase() + currentLang.slice(1)}`);
+            
+            if (quizContainer && quizResults) {
+                quizContainer.style.display = 'block';
+                quizResults.style.display = 'none';
+                loadQuestion();
+            }
+        }
+
+        function loadQuestion() {
+            const questions = quizQuestions[currentLang];
+            if (currentQuestion >= questions.length) {
+                showResults();
+                return;
+            }
+            
+            const quizContainer = document.getElementById(`quizContainer${currentLang === 'en' ? '' : currentLang.charAt(0).toUpperCase() + currentLang.slice(1)}`);
+            const question = questions[currentQuestion];
+            
+            quizContainer.innerHTML = `
+                <div class="quiz-question">${question.question}</div>
+                <div class="quiz-options">
+                    ${question.options.map((option, index) => `
+                        <div class="quiz-option" onclick="selectAnswer(${index})">
+                            ${option}
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="quiz-feedback" id="quizFeedback"></div>
+            `;
+        }
+
+        function selectAnswer(selectedIndex) {
+            const questions = quizQuestions[currentLang];
+            const question = questions[currentQuestion];
+            const options = document.querySelectorAll('.quiz-option');
+            const feedback = document.getElementById('quizFeedback');
+            
+            // Disable all options
+            options.forEach(option => {
+                option.style.pointerEvents = 'none';
+            });
+            
+            // Show correct/incorrect
+            if (selectedIndex === question.correct) {
+                options[selectedIndex].classList.add('correct');
+                feedback.textContent = question.explanation;
+                feedback.classList.add('correct');
+                score++;
+            } else {
+                options[selectedIndex].classList.add('incorrect');
+                options[question.correct].classList.add('correct');
+                feedback.textContent = question.explanation;
+                feedback.classList.add('incorrect');
+            }
+            
+            // Move to next question after delay
+            setTimeout(() => {
+                currentQuestion++;
+                loadQuestion();
+            }, 2000);
+        }
+
+        function showResults() {
+            const quizContainer = document.getElementById(`quizContainer${currentLang === 'en' ? '' : currentLang.charAt(0).toUpperCase() + currentLang.slice(1)}`);
+            const quizResults = document.getElementById(`quizResults${currentLang === 'en' ? '' : currentLang.charAt(0).toUpperCase() + currentLang.slice(1)}`);
+            const quizScore = document.getElementById(`quizScore${currentLang === 'en' ? '' : currentLang.charAt(0).toUpperCase() + currentLang.slice(1)}`);
+            const quizMessage = document.getElementById(`quizMessage${currentLang === 'en' ? '' : currentLang.charAt(0).toUpperCase() + currentLang.slice(1)}`);
+            const restartButton = document.getElementById(`restartQuiz${currentLang === 'en' ? '' : currentLang.charAt(0).toUpperCase() + currentLang.slice(1)}`);
+            
+            if (quizContainer && quizResults && quizScore && quizMessage) {
+                quizContainer.style.display = 'none';
+                quizResults.style.display = 'block';
+                
+                const totalQuestions = quizQuestions[currentLang].length;
+                const percentage = (score / totalQuestions) * 100;
+                
+                quizScore.textContent = `${currentLang === 'en' ? 'Score:' : currentLang === 'fr' ? 'Score:' : 'النتيجة:'} ${score}/${totalQuestions}`;
+                
+                if (percentage >= 80) {
+                    quizMessage.textContent = currentLang === 'en' ? 'Excellent! You really paid attention to Adam\'s story!' :
+                                          currentLang === 'fr' ? 'Excellent! Vous avez vraiment fait attention à l\'histoire d\'Adam!' :
+                                          'ممتاز! لقد انتبهت حقًا لقصة آدم!';
+                } else if (percentage >= 60) {
+                    quizMessage.textContent = currentLang === 'en' ? 'Good job! You remember most of Adam\'s prayer adventure!' :
+                                          currentLang === 'fr' ? 'Bon travail! Vous vous souvenez de la plupart de l\'aventure de prière d\'Adam!' :
+                                          'عمل جيد! تتذكر معظم مغامرة آدم في الصلاة!';
+                } else {
+                    quizMessage.textContent = currentLang === 'en' ? 'Nice try! Maybe read Adam\'s story again to learn more!' :
+                                          currentLang === 'fr' ? 'Bien essayé! Peut-être relire l\'histoire d\'Adam pour en apprendre plus!' :
+                                          'محاولة جيدة! ربما اقرأ قصة آدم مرة أخرى لتتعلم المزيد!';
+                }
+                
+                if (restartButton) {
+                    restartButton.onclick = initializeQuiz;
+                }
+            }
+        }
+
+        // ===== GLOBAL FUNCTION EXPORTS =====
+        window.selectAnswer = selectAnswer;
+
+        // ===== INITIALIZATION =====
+        showScene(currentLang, currentScene);
+    </script>
+</body>
 </html>

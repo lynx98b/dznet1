@@ -961,9 +961,6 @@
         </div>
     </div>
 
-    <!-- Footer Distant -->
-    <div id="footer-placeholder"></div>
-
     <script>
         // Version: v1.032 - Système Solaire complet
         
@@ -1493,13 +1490,9 @@
             });
         }
 
-        // ===== FOOTER =====
-        function loadFooter() {
-            fetch("https://dznet1.com/intranet/footer.html")
-                .then(r => r.text())
-                .then(h => document.getElementById("footer-placeholder").innerHTML = h)
-                .catch(() => {});
-        }
     </script>
+
+    <div data-include="footer"></div>
+    <script src="/intranet/footer.js"></script>
 </body>
 </html>

@@ -626,9 +626,6 @@
 
     </main>
 
-    <!-- Footer Placeholder -->
-    <div id="footer-placeholder"></div>
-
     <!-- JavaScript -->
     <script>
         // Version: v1.015
@@ -780,17 +777,10 @@
             console.log('✅ Media fallbacks activés (MODE TEST)');
         });
         
-        // Load distant footer
-        fetch("https://dznet1.com/intranet/footer.html")
-            .then(r => r.text())
-            .then(html => {
-                document.getElementById("footer-placeholder").innerHTML = html;
-                console.log('✅ Footer chargé');
-            })
-            .catch(err => {
-                console.warn('⚠️ Footer non disponible:', err);
-            });
     </script>
 
+
+    <div data-include="footer"></div>
+    <script src="/intranet/footer.js"></script>
 </body>
 </html>

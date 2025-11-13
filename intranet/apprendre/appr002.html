@@ -291,10 +291,8 @@
     <!-- BARRE DE NAVIGATION DISTANTE -->
     <div id="navigator-placeholder"></div>
     
-    <!-- FOOTER DISTANT OBLIGATOIRE -->
-    <div id="footer-placeholder"></div>
   </div>
-  
+
   <!-- Scripts finaux -->
   <script>
     // Chargement navigation distante
@@ -307,16 +305,6 @@
         console.log("Navigation non disponible");
       });
 
-    // Chargement footer distant
-    fetch("https://dznet1.com/intranet/footer.html")
-      .then(r => r.text())
-      .then(h => {
-        document.getElementById("footer-placeholder").innerHTML = h;
-      })
-      .catch(() => {
-        console.log("Footer non disponible");
-      });
-    
     // Système i18n
     const translations = {
       fr: {
@@ -434,5 +422,8 @@
     });
     
   </script>
+
+    <div data-include="footer"></div>
+    <script src="/intranet/footer.js"></script>
 </body>
 </html>

@@ -782,8 +782,6 @@
     </div>
 
     <!-- Footer Distant -->
-    <div id="footer-placeholder"></div>
-
     <script>
         // Version: v1.028 - Le Voyage avec FR/EN/AR
         
@@ -1176,14 +1174,11 @@
             }
         }
 
-        // Footer
-        fetch("https://dznet1.com/intranet/footer.html")
-            .then(r => r.text())
-            .then(h => document.getElementById("footer-placeholder").innerHTML = h)
-            .catch(() => {});
-
         // Initialisation
         createClouds();
     </script>
+
+    <div data-include="footer"></div>
+    <script src="/intranet/footer.js"></script>
 </body>
 </html>

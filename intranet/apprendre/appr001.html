@@ -185,15 +185,6 @@
     </section>
   </main>
 
-  <!-- Footer distant -->
-  <div id="footer-placeholder" class="footer-host" role="contentinfo" aria-label="Pied de page"></div>
-  <script>
-    fetch("https://dznet1.com/intranet/footer.html")
-      .then(res => res.text())
-      .then(html => { document.getElementById("footer-placeholder").innerHTML = html; })
-      .catch(() => { /* silencieux: footer non bloquant */ });
-  </script>
-
   <!-- i18n + accessibilité + résilience médias -->
   <script>
     (function() {
@@ -330,5 +321,8 @@
       applyI18n("fr");
     })();
   </script>
+
+    <div data-include="footer"></div>
+    <script src="/intranet/footer.js"></script>
 </body>
 </html>

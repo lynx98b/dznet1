@@ -191,15 +191,6 @@
     </ul>
   </div>
 </aside>
-
-<footer role="contentinfo" style="padding:1rem; text-align:center">
-  <small>© 2025 — créateur : mohamed — v1.0 — Offline • Aucun tracking • RGPD</small>
-  <div class="controls" style="justify-content:center; margin-top:.5rem">
-    <button class="btn ghost" id="btn-restart" aria-label="Recommencer l'aventure">Rejouer</button>
-  </div>
-  <div aria-live="polite" aria-atomic="true" id="aria-live" style="position:absolute; left:-9999px"></div>
-</footer>
-
 <script>
 /* =========================================================================
    App (namespace unique)
@@ -741,5 +732,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
   }catch(e){}
 });
 </script>
+
+    <div data-include="footer"></div>
+    <script src="/intranet/footer.js"></script>
 </body>
 </html>

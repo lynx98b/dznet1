@@ -499,27 +499,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p class="footer-text">
-                <i class="fas fa-mosque"></i> DZNET1 - Internet Sécurisé pour la Famille Algérienne
-            </p>
-            <p class="footer-text">
-                "Un internet qui respecte nos valeurs et protège nos enfants"
-            </p>
-            <div class="social-icons">
-                <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
-            </div>
-            <p class="footer-text" style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">
-                © 2024 DZNET1. Tous droits réservés. Ramadan Mubarak!
-            </p>
-        </div>
-    </footer>
-
-    <script>
+<script>
         // Créer les décorations Ramadan
         function createDecorations() {
             const decorationContainer = document.getElementById('decorations');
@@ -629,5 +609,8 @@
             decoration.style.transform = `translateY(${scrolled * 0.5}px)`;
         });
     </script>
+
+    <div data-include="footer"></div>
+    <script src="/intranet/footer.js"></script>
 </body>
 </html>

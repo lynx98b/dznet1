@@ -139,11 +139,6 @@ footer {
     <button class="reponse-btn" onclick="resetQuiz()">🔄 <span id="restartBtn">Recommencer</span></button>
   </section>
 </div>
-
-<footer>
-  <p id="footerText">🌟 Sois fier de ton drapeau, sois fier de l'Algérie ! 🌟</p>
-</footer>
-
 <script>
 const translations = {
   fr: {
@@ -242,5 +237,8 @@ function resetQuiz(){
 
 window.onload = ()=>setLang("fr");
 </script>
+
+    <div data-include="footer"></div>
+    <script src="/intranet/footer.js"></script>
 </body>
 </html>

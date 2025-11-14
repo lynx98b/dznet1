@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorateurs du Cerveau - Brain Explorers - مستكشفو الدماغ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --background: #f8fafc;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animation neuronale d'introduction */
+        .neuron-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 1.5s ease;
+        }
+
+        .neuron-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .neuron {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+            filter: blur(0.5px);
+        }
+
+        .dendrite {
+            position: absolute;
+            background: linear-gradient(to right, transparent, var(--accent), transparent);
+            transform-origin: 0 0;
+            height: 1px;
+        }
+
+        .title-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: white;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(6, 182, 212, 0.7);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            color: #cbd5e1;
+        }
+
+        /* CADRE DE RECHERCHE PRINCIPAL */
+        .search-hero {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .search-hero-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            text-align: center;
+        }
+
+        .search-container-hero {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-input-hero {
+            flex: 1;
+            border: none;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            outline: none;
+            background: white;
+        }
+
+        .search-button-hero {
+            background: var(--accent);
+            border: none;
+            padding: 1rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-button-hero:hover {
+            background: #0891b2;
+        }
+
+        .search-suggestions {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .search-suggestion {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .search-suggestion:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .enter-btn {
+            padding: 12px 32px;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(6, 182, 212, 0.3);
+            margin-top: 2rem;
+        }
+
+        .enter-btn:hover {
+            background: #0891b2;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(6, 182, 212, 0.4);
+        }
+
+        /* Header principal */
+        .main-content {
+            display: none;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Boutons de traduction */
+        .language-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .lang-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* Contenu principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        /* Section Cerveau avec Image */
+        .brain-section {
+            margin: 3rem 0;
+        }
+
+        .brain-image-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .brain-image-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .brain-image-wrapper {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .brain-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .brain-image:hover {
+            transform: scale(1.02);
+        }
+
+        .brain-image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .brain-image-placeholder .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .brain-regions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .brain-region {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .brain-region:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .brain-description {
+            text-align: center;
+            max-width: 600px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Sections d'information */
+        .info-section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .info-card p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        /* NOUVEAUX JEUX SIMPLES */
+        .exercises-section {
+            margin: 3rem 0;
+        }
+
+        .exercise-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .exercise-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .exercise-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .exercise-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Jeu 1: Vrai ou Faux */
+        .true-false-game {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .question {
+            background: var(--background);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .answer-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .true-btn, .false-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .true-btn {
+            background: #10b981;
+            color: white;
+        }
+
+        .false-btn {
+            background: #ef4444;
+            color: white;
+        }
+
+        .true-btn:hover, .false-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Jeu 2: MÉMOIRE DES COULEURS */
+        .memory-game {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .color-sequence {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .color-dot {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .player-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .color-btn {
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .color-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .color-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Jeu 3: Devine la Fonction */
+        .function-game {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .function-option {
+            padding: 12px;
+            background: var(--background);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .function-option:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .function-option.correct {
+            background: #10b981;
+            color: white;
+        }
+
+        .function-option.incorrect {
+            background: #ef4444;
+            color: white;
+        }
+
+        .exercise-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .exercise-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .exercise-result {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-top: 1px solid var(--border);
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .stats-container {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .search-hero {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .player-controls {
+                gap: 8px;
+            }
+
+            .color-btn {
+                width: 50px;
+                height: 50px;
+            }
+
+            .language-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Styles pour la langue arabe */
+        body.arabic {
+            direction: rtl;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body.arabic .brain-region,
+        body.arabic .function-option,
+        body.arabic .search-suggestion {
+            font-family: Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animation neuronale d'introduction -->
+    <div class="neuron-animation" id="neuronAnimation">
+        <div class="neuron-container" id="neuronContainer"></div>
+        <div class="title-container">
+            <h1 class="main-title" data-fr="Explorateurs du Cerveau" data-en="Brain Explorers" data-ar="مستكشفو الدماغ">Explorateurs du Cerveau</h1>
+            <p class="subtitle" data-fr="Un voyage interactif dans les méandres de l'esprit" data-en="An interactive journey through the mind's pathways" data-ar="رحلة تفاعلية في متاهات العقل">Un voyage interactif dans les méandres de l'esprit</p>
+            
+            <!-- CADRE DE RECHERCHE PRINCIPAL -->
+            <div class="search-hero">
+                <h2 class="search-hero-title" data-fr="Que souhaitez-vous découvrir sur le cerveau ?" data-en="What would you like to discover about the brain?" data-ar="ماذا تريد أن تكتشف عن الدماغ؟">Que souhaitez-vous découvrir sur le cerveau ?</h2>
+                <div class="search-container-hero">
+                    <input type="text" class="search-input-hero" id="mainSearchInput" 
+                           data-fr-placeholder="Rechercher des informations sur le cerveau..." 
+                           data-en-placeholder="Search for information about the brain..." 
+                           data-ar-placeholder="ابحث عن معلومات حول الدماغ..." 
+                           placeholder="Rechercher des informations sur le cerveau...">
+                    <button class="search-button-hero" id="mainSearchButton">
+                        <span>🔍</span>
+                        <span data-fr="Rechercher" data-en="Search" data-ar="بحث">Rechercher</span>
+                    </button>
+                </div>
+                <div class="search-suggestions">
+                    <div class="search-suggestion" data-search="neurones" data-fr="Neurones" data-en="Neurons" data-ar="الخلايا العصبية">Neurones</div>
+                    <div class="search-suggestion" data-search="mémoire" data-fr="Mémoire" data-en="Memory" data-ar="الذاكرة">Mémoire</div>
+                    <div class="search-suggestion" data-search="émotions" data-fr="Émotions" data-en="Emotions" data-ar="المشاعر">Émotions</div>
+                    <div class="search-suggestion" data-search="intelligence" data-fr="Intelligence" data-en="Intelligence" data-ar="الذكاء">Intelligence</div>
+                </div>
+            </div>
+
+            <button class="enter-btn" id="enterBtn" data-fr="Explorer sans recherche" data-en="Explore without search" data-ar="استكشف بدون بحث">Explorer sans recherche</button>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="main-content" id="mainContent">
+        <!-- Header avec boutons de traduction -->
+        <header class="header">
+            <div class="nav-container">
+                <div class="logo" data-fr="CerveauExplorer" data-en="BrainExplorer" data-ar="مستكشف الدماغ">CerveauExplorer</div>
+                
+                <!-- Boutons de traduction -->
+                <div class="language-buttons">
+                    <button class="lang-btn active" data-lang="fr">FR</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ar">AR</button>
+                </div>
+
+                <div class="stats-container">
+                    <div class="stat">
+                        <div class="stat-number">86</div>
+                        <div class="stat-label" data-fr="Milliards" data-en="Billions" data-ar="مليار">Milliards</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label" data-fr="Sens" data-en="Senses" data-ar="حواس">Sens</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label" data-fr="Génial" data-en="Awesome" data-ar="رائع">Génial</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- Titre principal -->
+            <h1 class="page-title" data-fr="Voyage dans le Cerveau Humain" data-en="Journey into the Human Brain" data-ar="رحلة في الدماغ البشري">Voyage dans le Cerveau Humain</h1>
+            <p class="page-subtitle" data-fr="Découvrez les mystères de votre esprit à travers une exploration interactive" data-en="Discover the mysteries of your mind through interactive exploration" data-ar="اكتشف أسرار عقلك من خلال استكشاف تفاعلي">Découvrez les mystères de votre esprit à travers une exploration interactive</p>
+
+            <!-- Section Cerveau avec Image -->
+            <section class="brain-section">
+                <div class="brain-image-container">
+                    <h2 class="brain-image-title" data-fr="Le Cerveau: Un Chef-d'Œuvre en Couches" data-en="The Brain: A Layered Masterpiece" data-ar="الدماغ: تحفة فنية متعددة الطبقات">Le Cerveau: Un Chef-d'Œuvre en Couches</h2>
+                    
+                    <div class="brain-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Cerveau humain" class="brain-image">
+                        
+                        <div class="brain-image-placeholder" style="display: none;">
+                            <div class="icon">🧠</div>
+                            <p data-fr="Image du cerveau humain" data-en="Human brain image" data-ar="صورة الدماغ البشري">Image du cerveau humain</p>
+                        </div>
+                    </div>
+                    
+                    <div class="brain-regions">
+                        <div class="brain-region" data-region="cortex" data-fr="Cortex Cérébral" data-en="Cerebral Cortex" data-ar="القشرة المخية">Cortex Cérébral</div>
+                        <div class="brain-region" data-region="limbique" data-fr="Système Limbique" data-en="Limbic System" data-ar="النظام الحوفي">Système Limbique</div>
+                        <div class="brain-region" data-region="cervelet" data-fr="Cervelet" data-en="Cerebellum" data-ar="المخيخ">Cervelet</div>
+                        <div class="brain-region" data-region="tronc" data-fr="Tronc Cérébral" data-en="Brain Stem" data-ar="جذع الدماغ">Tronc Cérébral</div>
+                    </div>
+                    
+                    <p class="brain-description" data-fr="Le cerveau est un organe complexe composé de milliards de neurones interconnectés. Chaque région a des fonctions spécifiques qui travaillent ensemble pour créer nos pensées, émotions et comportements." data-en="The brain is a complex organ composed of billions of interconnected neurons. Each region has specific functions that work together to create our thoughts, emotions, and behaviors." data-ar="الدماغ هو عضو معقد يتكون من مليارات الخلايا العصبية المترابطة. كل منطقة لها وظائف محددة تعمل معًا لخلق أفكارنا ومشاعرنا وسلوكياتنا.">Le cerveau est un organe complexe composé de milliards de neurones interconnectés. Chaque région a des fonctions spécifiques qui travaillent ensemble pour créer nos pensées, émotions et comportements.</p>
+                </div>
+            </section>
+
+            <!-- Sections d'information -->
+            <section class="info-section">
+                <h2 class="section-title" data-fr="Fonctions Cérébrales" data-en="Brain Functions" data-ar="وظائف الدماغ">Fonctions Cérébrales</h2>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <h3 data-fr="Les Neurones" data-en="Neurons" data-ar="الخلايا العصبية">Les Neurones</h3>
+                        <p data-fr="Les neurones sont les cellules fondamentales du système nerveux. Le cerveau humain en contient environ 86 milliards !" data-en="Neurons are the fundamental cells of the nervous system. The human brain contains about 86 billion of them!" data-ar="الخلايا العصبية هي الخلايا الأساسية في الجهاز العصبي. يحتوي الدماغ البشري على حوالي 86 مليار منها!">Les neurones sont les cellules fondamentales du système nerveux. Le cerveau humain en contient environ 86 milliards !</p>
+                        <p data-fr="Ces cellules spécialisées communiquent entre elles par des signaux électriques et chimiques, formant un réseau complexe qui permet la pensée, la mémoire et les émotions." data-en="These specialized cells communicate with each other through electrical and chemical signals, forming a complex network that enables thought, memory, and emotions." data-ar="هذه الخلايا المتخصصة تتواصل مع بعضها البعض من خلال الإشارات الكهربائية والكيميائية، مشكلة شبكة معقدة تمكن الفكر والذاكرة والمشاعر.">Ces cellules spécialisées communiquent entre elles par des signaux électriques et chimiques, formant un réseau complexe qui permet la pensée, la mémoire et les émotions.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3 data-fr="L'Imagination" data-en="Imagination" data-ar="التخيل">L'Imagination</h3>
+                        <p data-fr="L'imagination est la capacité de créer des images, des idées ou des concepts dans l'esprit sans input sensoriel direct." data-en="Imagination is the ability to create images, ideas, or concepts in the mind without direct sensory input." data-ar="التخيل هو القدرة على إنشاء صور أو أفكار أو مفاهيم في العقل دون مدخلات حسية مباشرة.">L'imagination est la capacité de créer des images, des idées ou des concepts dans l'esprit sans input sensoriel direct.</p>
+                        <p data-fr="Elle nous permet de résoudre des problèmes, de créer de l'art, d'anticiper le futur et de développer l'empathie en nous mettant à la place des autres." data-en="It allows us to solve problems, create art, anticipate the future, and develop empathy by putting ourselves in others' shoes." data-ar="إنه يسمح لنا بحل المشكلات، وخلق الفن، وتوقع المستقبل، وتطوير التعاطف من خلال وضع أنفسنا في مكان الآخرين.">Elle nous permet de résoudre des problèmes, de créer de l'art, d'anticiper le futur et de développer l'empathie en nous mettant à la place des autres.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3 data-fr="Les Émotions" data-en="Emotions" data-ar="المشاعر">Les Émotions</h3>
+                        <p data-fr="Les émotions sont des réponses complexes impliquant des changements physiologiques, comportementaux et cognitifs." data-en="Emotions are complex responses involving physiological, behavioral, and cognitive changes." data-ar="المشاعر هي استجابات معقدة تشمل تغييرات فسيولوجية وسلوكية ومعرفية.">Les émotions sont des réponses complexes impliquant des changements physiologiques, comportementaux et cognitifs.</p>
+                        <p data-fr="Elles sont principalement régulées par le système limbique, en particulier l'amygdale, et jouent un rôle crucial dans la prise de décision et la mémoire." data-en="They are primarily regulated by the limbic system, particularly the amygdala, and play a crucial role in decision-making and memory." data-ar="يتم تنظيمها بشكل أساسي بواسطة النظام الحوفي، وخاصة اللوزة الدماغية، وتلعب دورًا crucial في صنع القرار والذاكرة.">Elles sont principalement régulées par le système limbique, en particulier l'amygdale, et jouent un rôle crucial dans la prise de décision et la mémoire.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3 data-fr="La Logique" data-en="Logic" data-ar="المنطق">La Logique</h3>
+                        <p data-fr="La logique est la capacité de raisonner de manière structurée et cohérente, en suivant des règles précises." data-en="Logic is the ability to reason in a structured and coherent manner, following precise rules." data-ar="المنطق هو القدرة على التفكير بطريقة منظمة ومتماسكة، باتباع قواعد دقيقة.">La logique est la capacité de raisonner de manière structurée et cohérente, en suivant des règles précises.</p>
+                        <p data-fr="Principalement localisée dans le cortex préfrontal, elle nous permet de résoudre des problèmes, de prendre des décisions éclairées et de planifier l'avenir." data-en="Primarily located in the prefrontal cortex, it enables us to solve problems, make informed decisions, and plan for the future." data-ar="تقع بشكل أساسي في القشرة الأمامية الجبهية، تمكننا من حل المشكلات، واتخاذ قرارات مستنيرة، والتخطيط للمستقبل.">Principalement localisée dans le cortex préfrontal, elle nous permet de résoudre des problèmes, de prendre des décisions éclairées et de planifier l'avenir.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- JEUX -->
+            <section class="exercises-section">
+                <h2 class="section-title" data-fr="Jeux pour Ton Cerveau" data-en="Games for Your Brain" data-ar="ألعاب لعقلك">Jeux pour Ton Cerveau</h2>
+                <div class="exercise-cards">
+                    <!-- Jeu 1: Vrai ou Faux -->
+                    <div class="exercise-card">
+                        <h3 data-fr="✅ Vrai ou Faux" data-en="✅ True or False" data-ar="✅ صح أو خطأ">✅ Vrai ou Faux</h3>
+                        <p data-fr="Teste tes connaissances sur le cerveau !" data-en="Test your knowledge about the brain!" data-ar="اختبر معرفتك عن الدماغ!">Teste tes connaissances sur le cerveau !</p>
+                        <div class="true-false-game">
+                            <div class="question" id="currentQuestion" data-fr="Le cerveau contient environ 100 milliards de neurones." data-en="The brain contains about 100 billion neurons." data-ar="يحتوي الدماغ على حوالي 100 مليار خلية عصبية.">Le cerveau contient environ 100 milliards de neurones.</div>
+                            <div class="answer-buttons">
+                                <button class="true-btn" onclick="checkAnswer(true)" data-fr="VRAI" data-en="TRUE" data-ar="صح">VRAI</button>
+                                <button class="false-btn" onclick="checkAnswer(false)" data-fr="FAUX" data-en="FALSE" data-ar="خطأ">FAUX</button>
+                            </div>
+                            <div class="exercise-result" id="tfResult"></div>
+                            <button class="exercise-btn" onclick="nextQuestion()" data-fr="Question Suivante" data-en="Next Question" data-ar="السؤال التالي">Question Suivante</button>
+                        </div>
+                    </div>
+
+                    <!-- Jeu 2: MÉMOIRE DES COULEURS -->
+                    <div class="exercise-card">
+                        <h3 data-fr="🎨 Mémoire des Couleurs" data-en="🎨 Color Memory" data-ar="🎨 ذاكرة الألوان">🎨 Mémoire des Couleurs</h3>
+                        <p data-fr="Regarde la séquence de couleurs et répète-la !" data-en="Watch the color sequence and repeat it!" data-ar="شاهد تسلسل الألوان وكرره!">Regarde la séquence de couleurs et répète-la !</p>
+                        <div class="memory-game">
+                            <div class="color-sequence" id="colorSequence">
+                                <!-- Les points de couleur seront générés ici -->
+                            </div>
+                            <div class="player-controls" id="playerControls">
+                                <!-- Les boutons de couleur seront générés ici -->
+                            </div>
+                            <div class="exercise-result" id="memoryResult"></div>
+                            <button class="exercise-btn" onclick="startColorMemory()" data-fr="Commencer le Jeu" data-en="Start Game" data-ar="ابدأ اللعبة">Commencer le Jeu</button>
+                            <button class="exercise-btn" onclick="resetColorMemory()" style="background: var(--secondary);" data-fr="Nouvelle Partie" data-en="New Game" data-ar="لعبة جديدة">Nouvelle Partie</button>
+                        </div>
+                    </div>
+
+                    <!-- Jeu 3: Devine la Fonction -->
+                    <div class="exercise-card">
+                        <h3 data-fr="🔍 Devine la Fonction" data-en="🔍 Guess the Function" data-ar="🔍 خمن الوظيفة">🔍 Devine la Fonction</h3>
+                        <p data-fr="Quelle partie du cerveau fait quoi ?" data-en="Which brain part does what?" data-ar="أي جزء من الدماغ يفعل ماذا؟">Quelle partie du cerveau fait quoi ?</p>
+                        <div class="function-game">
+                            <div class="question" id="functionQuestion" data-fr="Quelle partie contrôle l'équilibre et la coordination ?" data-en="Which part controls balance and coordination?" data-ar="أي جزء يتحكم في التوازن والتنسيق؟">Quelle partie contrôle l'équilibre et la coordination ?</div>
+                            <div class="function-option" onclick="checkFunctionAnswer('cervelet')" data-fr="Cervelet" data-en="Cerebellum" data-ar="المخيخ">Cervelet</div>
+                            <div class="function-option" onclick="checkFunctionAnswer('cortex')" data-fr="Cortex Cérébral" data-en="Cerebral Cortex" data-ar="القشرة المخية">Cortex Cérébral</div>
+                            <div class="function-option" onclick="checkFunctionAnswer('limbique')" data-fr="Système Limbique" data-en="Limbic System" data-ar="النظام الحوفي">Système Limbique</div>
+                            <div class="function-option" onclick="checkFunctionAnswer('tronc')" data-fr="Tronc Cérébral" data-en="Brain Stem" data-ar="جذع الدماغ">Tronc Cérébral</div>
+                        </div>
+                        <div class="exercise-result" id="functionResult"></div>
+                        <button class="exercise-btn" onclick="nextFunctionQuestion()" data-fr="Question Suivante" data-en="Next Question" data-ar="السؤال التالي">Question Suivante</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p data-fr="Exploration du Cerveau Humain - Un voyage fascinant dans les méandres de l'esprit" data-en="Human Brain Exploration - A fascinating journey through the mind's pathways" data-ar="استكشاف الدماغ البشري - رحلة رائعة في متاهات العقل">Exploration du Cerveau Humain - Un voyage fascinant dans les méandres de l'esprit</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // ===== SYSTÈME DE TRADUCTION =====
+        let currentLanguage = 'fr';
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Changer la direction pour l'arabe
+            if (lang === 'ar') {
+                document.body.classList.add('arabic');
+            } else {
+                document.body.classList.remove('arabic');
+            }
+            
+            // Mettre à jour tous les éléments avec des attributs de traduction
+            document.querySelectorAll('[data-fr]').forEach(element => {
+                if (element.hasAttribute(`data-${lang}`)) {
+                    const newText = element.getAttribute(`data-${lang}`);
+                    
+                    if (element.tagName === 'INPUT' && element.hasAttribute(`data-${lang}-placeholder`)) {
+                        element.placeholder = element.getAttribute(`data-${lang}-placeholder`);
+                    } else {
+                        element.textContent = newText;
+                    }
+                }
+            });
+            
+            // Mettre à jour les boutons de langue
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Mettre à jour les questions des jeux
+            updateGameContent();
+        }
+
+        // Initialiser les boutons de langue
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                changeLanguage(this.getAttribute('data-lang'));
+            });
+        });
+
+        // ===== ANIMATION NEURONALE =====
+        const neuronAnimation = document.getElementById('neuronAnimation');
+        const neuronContainer = document.getElementById('neuronContainer');
+        const enterBtn = document.getElementById('enterBtn');
+        const mainContent = document.getElementById('mainContent');
+
+        // Créer les neurones et leurs connexions
+        function createNeurons() {
+            const neuronCount = 60;
+            const neurons = [];
+            
+            for (let i = 0; i < neuronCount; i++) {
+                const neuron = document.createElement('div');
+                neuron.className = 'neuron';
+                
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                neuron.style.left = `${x}%`;
+                neuron.style.top = `${y}%`;
+                
+                neuronContainer.appendChild(neuron);
+                neurons.push({element: neuron, x, y});
+                
+                // Faire pulser le neurone
+                setInterval(() => {
+                    neuron.style.transform = `scale(${1 + Math.random() * 0.5})`;
+                    neuron.style.opacity = 0.5 + Math.random() * 0.5;
+                }, 500 + Math.random() * 1000);
+            }
+            
+            // Créer des connexions entre neurones
+            for (let i = 0; i < neurons.length; i++) {
+                for (let j = i + 1; j < neurons.length; j++) {
+                    if (Math.random() < 0.1) {
+                        createConnection(neurons[i], neurons[j]);
+                    }
+                }
+            }
+        }
+
+        function createConnection(neuron1, neuron2) {
+            const dx = neuron2.x - neuron1.x;
+            const dy = neuron2.y - neuron1.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance > 30) return;
+            
+            const dendrite = document.createElement('div');
+            dendrite.className = 'dendrite';
+            
+            dendrite.style.width = `${distance}%`;
+            dendrite.style.left = `${neuron1.x}%`;
+            dendrite.style.top = `${neuron1.y}%`;
+            
+            const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+            dendrite.style.transform = `rotate(${angle}deg)`;
+            
+            neuronContainer.appendChild(dendrite);
+            
+            // Animation de la connexion
+            setInterval(() => {
+                dendrite.style.opacity = 0.3 + Math.random() * 0.7;
+            }, 300 + Math.random() * 700);
+        }
+
+        // ===== FONCTIONNALITÉS DE RECHERCHE =====
+        const mainSearchInput = document.getElementById('mainSearchInput');
+        const mainSearchButton = document.getElementById('mainSearchButton');
+        const searchSuggestions = document.querySelectorAll('.search-suggestion');
+
+        function performSearch(searchTerm) {
+            if (!searchTerm.trim()) return;
+            
+            // Animation de recherche
+            mainSearchInput.value = searchTerm;
+            mainSearchInput.style.background = '#f0f9ff';
+            
+            // Simuler une recherche
+            setTimeout(() => {
+                const searchMessages = {
+                    fr: `Recherche pour: "${searchTerm}"\n\nDans une application complète, cette recherche afficherait des résultats spécifiques sur le cerveau.`,
+                    en: `Search for: "${searchTerm}"\n\nIn a complete application, this search would display specific results about the brain.`,
+                    ar: `البحث عن: "${searchTerm}"\n\nفي تطبيق كامل، سيظهر هذا البحث نتائج محددة حول الدماغ.`
+                };
+                
+                alert(searchMessages[currentLanguage]);
+                
+                // Entrer dans l'application après la recherche
+                enterApplication();
+            }, 1000);
+        }
+
+        // Recherche depuis le bouton
+        mainSearchButton.addEventListener('click', () => {
+            const searchTerm = mainSearchInput.value.trim();
+            performSearch(searchTerm);
+        });
+
+        // Recherche depuis la touche Entrée
+        mainSearchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const searchTerm = mainSearchInput.value.trim();
+                performSearch(searchTerm);
+            }
+        });
+
+        // Suggestions de recherche
+        searchSuggestions.forEach(suggestion => {
+            suggestion.addEventListener('click', () => {
+                const searchTerm = suggestion.getAttribute('data-search');
+                performSearch(searchTerm);
+            });
+        });
+
+        // ===== ENTRÉE DANS L'APPLICATION =====
+        function enterApplication() {
+            neuronAnimation.style.opacity = '0';
+            setTimeout(() => {
+                neuronAnimation.style.display = 'none';
+                mainContent.style.display = 'block';
+            }, 1500);
+        }
+
+        // Entrée sans recherche
+        enterBtn.addEventListener('click', enterApplication);
+
+        // ===== INTERACTION AVEC LES RÉGIONS DU CERVEAU =====
+        const brainRegions = document.querySelectorAll('.brain-region');
+        
+        brainRegions.forEach(region => {
+            region.addEventListener('click', () => {
+                const regionName = region.getAttribute('data-region');
+                let description = '';
+                
+                const descriptions = {
+                    fr: {
+                        cortex: 'Le cortex cérébral est responsable des fonctions cognitives supérieures comme la pensée, le langage et la conscience.',
+                        limbique: 'Le système limbique gère les émotions, la mémoire et la motivation.',
+                        cervelet: 'Le cervelet coordonne les mouvements, l\'équilibre et la posture.',
+                        tronc: 'Le tronc cérébral contrôle les fonctions vitales comme la respiration et le rythme cardiaque.'
+                    },
+                    en: {
+                        cortex: 'The cerebral cortex is responsible for higher cognitive functions like thinking, language, and consciousness.',
+                        limbique: 'The limbic system manages emotions, memory, and motivation.',
+                        cervelet: 'The cerebellum coordinates movements, balance, and posture.',
+                        tronc: 'The brain stem controls vital functions like breathing and heart rate.'
+                    },
+                    ar: {
+                        cortex: 'القشرة المخية مسؤولة عن الوظائف المعرفية العليا مثل التفكير واللغة والوعي.',
+                        limbique: 'يدير النظام الحوفي المشاعر والذاكرة والدافع.',
+                        cervelet: 'ينسق المخيخ الحركات والتوازن والوضعية.',
+                        tronc: 'يتحكم جذع الدماغ في الوظائف الحيوية مثل التنفس ومعدل ضربات القلب.'
+                    }
+                };
+                
+                const regionNames = {
+                    fr: {
+                        cortex: 'Cortex Cérébral',
+                        limbique: 'Système Limbique',
+                        cervelet: 'Cervelet',
+                        tronc: 'Tronc Cérébral'
+                    },
+                    en: {
+                        cortex: 'Cerebral Cortex',
+                        limbique: 'Limbic System',
+                        cervelet: 'Cerebellum',
+                        tronc: 'Brain Stem'
+                    },
+                    ar: {
+                        cortex: 'القشرة المخية',
+                        limbique: 'النظام الحوفي',
+                        cervelet: 'المخيخ',
+                        tronc: 'جذع الدماغ'
+                    }
+                };
+                
+                description = descriptions[currentLanguage][regionName];
+                const regionTitle = regionNames[currentLanguage][regionName];
+                
+                alert(`${regionTitle}\n\n${description}`);
+            });
+        });
+
+        // ===== JEU 1: VRAI OU FAUX =====
+        const questions = {
+            fr: [
+                { question: "Le cerveau contient environ 100 milliards de neurones.", answer: false, explanation: "C'est environ 86 milliards de neurones !" },
+                { question: "Le cervelet contrôle l'équilibre et la coordination.", answer: true, explanation: "Exact ! Le cervelet est responsable de la coordination des mouvements." },
+                { question: "Les émotions sont contrôlées par le cortex cérébral.", answer: false, explanation: "Les émotions sont principalement gérées par le système limbique." },
+                { question: "Le tronc cérébral contrôle la respiration.", answer: true, explanation: "Oui ! Le tronc cérébral gère les fonctions vitales comme la respiration." },
+                { question: "La mémoire est stockée dans le cervelet.", answer: false, explanation: "La mémoire est principalement gérée par le système limbique, surtout l'hippocampe." }
+            ],
+            en: [
+                { question: "The brain contains about 100 billion neurons.", answer: false, explanation: "It's about 86 billion neurons!" },
+                { question: "The cerebellum controls balance and coordination.", answer: true, explanation: "Exactly! The cerebellum is responsible for movement coordination." },
+                { question: "Emotions are controlled by the cerebral cortex.", answer: false, explanation: "Emotions are primarily managed by the limbic system." },
+                { question: "The brain stem controls breathing.", answer: true, explanation: "Yes! The brain stem manages vital functions like breathing." },
+                { question: "Memory is stored in the cerebellum.", answer: false, explanation: "Memory is primarily managed by the limbic system, especially the hippocampus." }
+            ],
+            ar: [
+                { question: "يحتوي الدماغ على حوالي 100 مليار خلية عصبية.", answer: false, explanation: "إنه حوالي 86 مليار خلية عصبية!" },
+                { question: "يتحكم المخيخ في التوازن والتنسيق.", answer: true, explanation: "بالضبط! المخيخ مسؤول عن تنسيق الحركة." },
+                { question: "تتم السيطرة على المشاعر بواسطة القشرة المخية.", answer: false, explanation: "يتم إدارة المشاعر بشكل أساسي بواسطة النظام الحوفي." },
+                { question: "يتحكم جذع الدماغ في التنفس.", answer: true, explanation: "نعم! يدير جذع الدماغ الوظائف الحيوية مثل التنفس." },
+                { question: "يتم تخزين الذاكرة في المخيخ.", answer: false, explanation: "يتم إدارة الذاكرة بشكل أساسي بواسطة النظام الحوفي، وخاصة الحصين." }
+            ]
+        };
+
+        let currentQuestionIndex = 0;
+
+        function checkAnswer(userAnswer) {
+            const currentQuestion = questions[currentLanguage][currentQuestionIndex];
+            const resultElement = document.getElementById('tfResult');
+            
+            const successMessages = {
+                fr: "✅ Correct ! ",
+                en: "✅ Correct! ",
+                ar: "✅ صحيح! "
+            };
+            
+            const errorMessages = {
+                fr: "❌ Faux ! ",
+                en: "❌ False! ",
+                ar: "❌ خطأ! "
+            };
+            
+            if (userAnswer === currentQuestion.answer) {
+                resultElement.textContent = successMessages[currentLanguage] + currentQuestion.explanation;
+                resultElement.className = "exercise-result success";
+            } else {
+                resultElement.textContent = errorMessages[currentLanguage] + currentQuestion.explanation;
+                resultElement.className = "exercise-result error";
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex = (currentQuestionIndex + 1) % questions[currentLanguage].length;
+            updateCurrentQuestion();
+        }
+
+        function updateCurrentQuestion() {
+            const questionElement = document.getElementById('currentQuestion');
+            questionElement.textContent = questions[currentLanguage][currentQuestionIndex].question;
+            document.getElementById('tfResult').textContent = "";
+            document.getElementById('tfResult').className = "exercise-result";
+        }
+
+        // ===== JEU 2: MÉMOIRE DES COULEURS =====
+        const colors = [
+            { name: "rouge", value: "#ef4444", emoji: "🔴" },
+            { name: "bleu", value: "#3b82f6", emoji: "🔵" },
+            { name: "vert", value: "#10b981", emoji: "🟢" },
+            { name: "jaune", value: "#f59e0b", emoji: "🟡" },
+            { name: "violet", value: "#8b5cf6", emoji: "🟣" },
+            { name: "orange", value: "#f97316", emoji: "🟠" }
+        ];
+
+        let colorSequence = [];
+        let playerSequence = [];
+        let gameActive = false;
+        let level = 1;
+
+        function initializeColorMemory() {
+            const playerControls = document.getElementById('playerControls');
+            playerControls.innerHTML = '';
+            
+            colors.forEach(color => {
+                const button = document.createElement('button');
+                button.className = 'color-btn';
+                button.style.background = color.value;
+                button.innerHTML = color.emoji;
+                button.dataset.color = color.name;
+                button.addEventListener('click', () => handleColorClick(color.name));
+                playerControls.appendChild(button);
+            });
+        }
+
+        function startColorMemory() {
+            colorSequence = [];
+            playerSequence = [];
+            level = 1;
+            gameActive = true;
+            
+            const startMessages = {
+                fr: "Niveau 1 - Regarde bien la séquence !",
+                en: "Level 1 - Watch the sequence carefully!",
+                ar: "المستوى 1 - شاهد التسلسل بعناية!"
+            };
+            
+            document.getElementById('memoryResult').textContent = startMessages[currentLanguage];
+            document.getElementById('memoryResult').className = "exercise-result";
+            addToSequence();
+            showSequence();
+        }
+
+        function addToSequence() {
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            colorSequence.push(randomColor.name);
+        }
+
+        function showSequence() {
+            const sequenceElement = document.getElementById('colorSequence');
+            sequenceElement.innerHTML = '';
+            
+            colorSequence.forEach((colorName, index) => {
+                const color = colors.find(c => c.name === colorName);
+                const dot = document.createElement('div');
+                dot.className = 'color-dot';
+                dot.style.background = color.value;
+                dot.innerHTML = color.emoji;
+                sequenceElement.appendChild(dot);
+                
+                // Animation
+                setTimeout(() => {
+                    dot.style.transform = 'scale(1.3)';
+                    dot.style.boxShadow = '0 0 20px ' + color.value;
+                }, index * 800);
+                
+                setTimeout(() => {
+                    dot.style.transform = 'scale(1)';
+                    dot.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+                }, index * 800 + 400);
+            });
+            
+            const turnMessages = {
+                fr: "À ton tour ! Répète la séquence.",
+                en: "Your turn! Repeat the sequence.",
+                ar: "دورك! كرر التسلسل."
+            };
+            
+            setTimeout(() => {
+                document.getElementById('memoryResult').textContent = turnMessages[currentLanguage];
+                enablePlayerInput();
+            }, colorSequence.length * 800 + 500);
+        }
+
+        function enablePlayerInput() {
+            const buttons = document.querySelectorAll('.color-btn');
+            buttons.forEach(button => {
+                button.disabled = false;
+                button.style.opacity = '1';
+            });
+        }
+
+        function disablePlayerInput() {
+            const buttons = document.querySelectorAll('.color-btn');
+            buttons.forEach(button => {
+                button.disabled = true;
+                button.style.opacity = '0.6';
+            });
+        }
+
+        function handleColorClick(colorName) {
+            if (!gameActive) return;
+            
+            playerSequence.push(colorName);
+            const currentIndex = playerSequence.length - 1;
+            
+            // Vérifier si la couleur est correcte
+            if (playerSequence[currentIndex] !== colorSequence[currentIndex]) {
+                gameActive = false;
+                
+                const failMessages = {
+                    fr: `❌ Oops ! Séquence incorrecte. Tu as atteint le niveau ${level}.`,
+                    en: `❌ Oops! Incorrect sequence. You reached level ${level}.`,
+                    ar: `❌ عذرًا! تسلسل غير صحيح. وصلت إلى المستوى ${level}.`
+                };
+                
+                document.getElementById('memoryResult').textContent = failMessages[currentLanguage];
+                document.getElementById('memoryResult').className = "exercise-result error";
+                disablePlayerInput();
+                return;
+            }
+            
+            // Vérifier si la séquence est complète
+            if (playerSequence.length === colorSequence.length) {
+                level++;
+                playerSequence = [];
+                disablePlayerInput();
+                
+                const successMessages = {
+                    fr: `✅ Bravo ! Niveau ${level} - Regarde la nouvelle séquence !`,
+                    en: `✅ Well done! Level ${level} - Watch the new sequence!`,
+                    ar: `✅ أحسنت! المستوى ${level} - شاهد التسلسل الجديد!`
+                };
+                
+                document.getElementById('memoryResult').textContent = successMessages[currentLanguage];
+                document.getElementById('memoryResult').className = "exercise-result success";
+                
+                setTimeout(() => {
+                    addToSequence();
+                    showSequence();
+                }, 1500);
+            }
+        }
+
+        function resetColorMemory() {
+            gameActive = false;
+            disablePlayerInput();
+            document.getElementById('colorSequence').innerHTML = '';
+            
+            const resetMessages = {
+                fr: "Clique sur 'Commencer le Jeu' pour jouer !",
+                en: "Click 'Start Game' to play!",
+                ar: "انقر فوق 'ابدأ اللعبة' للعب!"
+            };
+            
+            document.getElementById('memoryResult').textContent = resetMessages[currentLanguage];
+            document.getElementById('memoryResult').className = "exercise-result";
+        }
+
+        // ===== JEU 3: DEVINE LA FONCTION =====
+        const functionQuestions = {
+            fr: [
+                { 
+                    question: "Quelle partie contrôle l'équilibre et la coordination ?",
+                    correct: "cervelet",
+                    options: ["Cervelet", "Cortex Cérébral", "Système Limbique", "Tronc Cérébral"]
+                },
+                { 
+                    question: "Quelle partie gère les émotions et la mémoire ?",
+                    correct: "limbique",
+                    options: ["Cervelet", "Cortex Cérébral", "Système Limbique", "Tronc Cérébral"]
+                },
+                { 
+                    question: "Quelle partie est responsable de la pensée et du raisonnement ?",
+                    correct: "cortex",
+                    options: ["Cervelet", "Cortex Cérébral", "Système Limbique", "Tronc Cérébral"]
+                },
+                { 
+                    question: "Quelle partie contrôle la respiration et les battements de cœur ?",
+                    correct: "tronc",
+                    options: ["Cervelet", "Cortex Cérébral", "Système Limbique", "Tronc Cérébral"]
+                }
+            ],
+            en: [
+                { 
+                    question: "Which part controls balance and coordination?",
+                    correct: "cervelet",
+                    options: ["Cerebellum", "Cerebral Cortex", "Limbic System", "Brain Stem"]
+                },
+                { 
+                    question: "Which part manages emotions and memory?",
+                    correct: "limbique",
+                    options: ["Cerebellum", "Cerebral Cortex", "Limbic System", "Brain Stem"]
+                },
+                { 
+                    question: "Which part is responsible for thinking and reasoning?",
+                    correct: "cortex",
+                    options: ["Cerebellum", "Cerebral Cortex", "Limbic System", "Brain Stem"]
+                },
+                { 
+                    question: "Which part controls breathing and heartbeats?",
+                    correct: "tronc",
+                    options: ["Cerebellum", "Cerebral Cortex", "Limbic System", "Brain Stem"]
+                }
+            ],
+            ar: [
+                { 
+                    question: "أي جزء يتحكم في التوازن والتنسيق؟",
+                    correct: "cervelet",
+                    options: ["المخيخ", "القشرة المخية", "النظام الحوفي", "جذع الدماغ"]
+                },
+                { 
+                    question: "أي جزء يدير المشاعر والذاكرة؟",
+                    correct: "limbique",
+                    options: ["المخيخ", "القشرة المخية", "النظام الحوفي", "جذع الدماغ"]
+                },
+                { 
+                    question: "أي جزء مسؤول عن التفكير والمنطق؟",
+                    correct: "cortex",
+                    options: ["المخيخ", "القشرة المخية", "النظام الحوفي", "جذع الدماغ"]
+                },
+                { 
+                    question: "أي جزء يتحكم في التنفس وضربات القلب؟",
+                    correct: "tronc",
+                    options: ["المخيخ", "القشرة المخية", "النظام الحوفي", "جذع الدماغ"]
+                }
+            ]
+        };
+
+        let currentFunctionQuestionIndex = 0;
+
+        function checkFunctionAnswer(selectedAnswer) {
+            const currentQuestion = functionQuestions[currentLanguage][currentFunctionQuestionIndex];
+            const resultElement = document.getElementById('functionResult');
+            const options = document.querySelectorAll('.function-option');
+            
+            options.forEach(option => {
+                if (option.getAttribute('onclick').includes(currentQuestion.correct)) {
+                    option.classList.add('correct');
+                }
+                if (option.getAttribute('onclick').includes(selectedAnswer) && selectedAnswer !== currentQuestion.correct) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+            
+            const successMessages = {
+                fr: "✅ Correct ! Excellente réponse !",
+                en: "✅ Correct! Excellent answer!",
+                ar: "✅ صحيح! إجابة ممتازة!"
+            };
+            
+            const errorMessages = {
+                fr: "❌ Presque ! Essaie encore.",
+                en: "❌ Almost! Try again.",
+                ar: "❌ تقريبًا! حاول مرة أخرى."
+            };
+            
+            if (selectedAnswer === currentQuestion.correct) {
+                resultElement.textContent = successMessages[currentLanguage];
+                resultElement.className = "exercise-result success";
+            } else {
+                resultElement.textContent = errorMessages[currentLanguage];
+                resultElement.className = "exercise-result error";
+            }
+        }
+
+        function nextFunctionQuestion() {
+            currentFunctionQuestionIndex = (currentFunctionQuestionIndex + 1) % functionQuestions[currentLanguage].length;
+            updateFunctionQuestion();
+        }
+
+        function updateFunctionQuestion() {
+            const currentQuestion = functionQuestions[currentLanguage][currentFunctionQuestionIndex];
+            
+            document.getElementById('functionQuestion').textContent = currentQuestion.question;
+            document.getElementById('functionResult').textContent = "";
+            document.getElementById('functionResult').className = "exercise-result";
+            
+            const options = document.querySelectorAll('.function-option');
+            options.forEach((option, index) => {
+                option.textContent = currentQuestion.options[index];
+                option.className = 'function-option';
+                option.style.pointerEvents = 'auto';
+                option.setAttribute('onclick', `checkFunctionAnswer('${currentQuestion.options[index].toLowerCase().split(' ')[0]}')`);
+            });
+        }
+
+        // ===== MISE À JOUR DU CONTENU DES JEUX =====
+        function updateGameContent() {
+            updateCurrentQuestion();
+            updateFunctionQuestion();
+            
+            // Mettre à jour les messages de résultat s'ils existent
+            const memoryResult = document.getElementById('memoryResult');
+            if (memoryResult.textContent.includes("Niveau") || memoryResult.textContent.includes("Level") || memoryResult.textContent.includes("المستوى")) {
+                if (gameActive) {
+                    const activeMessages = {
+                        fr: `Niveau ${level} - Regarde bien la séquence !`,
+                        en: `Level ${level} - Watch the sequence carefully!`,
+                        ar: `المستوى ${level} - شاهد التسلسل بعناية!`
+                    };
+                    memoryResult.textContent = activeMessages[currentLanguage];
+                } else {
+                    const resetMessages = {
+                        fr: "Clique sur 'Commencer le Jeu' pour jouer !",
+                        en: "Click 'Start Game' to play!",
+                        ar: "انقر فوق 'ابدأ اللعبة' للعب!"
+                    };
+                    memoryResult.textContent = resetMessages[currentLanguage];
+                }
+            }
+        }
+
+        // ===== INITIALISATION =====
+        function initializeApp() {
+            initializeColorMemory();
+            updateFunctionQuestion();
+            createNeurons();
+        }
+
+        // Vérifier si l'image s'est chargée
+        const brainImage = document.querySelector('.brain-image');
+        const brainPlaceholder = document.querySelector('.brain-image-placeholder');
+        
+        brainImage.onerror = function() {
+            brainImage.style.display = 'none';
+            brainPlaceholder.style.display = 'flex';
+        };
+
+        // Initialiser l'application
+        initializeApp();
+    </script>
+</body>
+</html>

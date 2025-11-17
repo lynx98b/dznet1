@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2025-11-17T11:00:18.138Z",
-  "totalStories": 71,
+  "generatedAt": "2025-11-17T11:32:21.993Z",
+  "totalStories": 99,
   "scanSummary": {
-    "totalFiles": 71,
-    "successful": 71,
+    "totalFiles": 99,
+    "successful": 99,
     "failed": 0
   },
   "stories": [
@@ -18,7 +18,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-17T11:00:14.064Z"
+      "lastModified": "2025-11-17T11:32:17.082Z"
     },
     {
       "filename": "contact.html",
@@ -31,7 +31,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-17T11:00:14.064Z"
+      "lastModified": "2025-11-17T11:32:17.082Z"
     },
     {
       "filename": "demo.html",
@@ -44,7 +44,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-17T11:00:14.065Z"
+      "lastModified": "2025-11-17T11:32:17.082Z"
     },
     {
       "filename": "e.html",
@@ -57,7 +57,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-17T11:00:14.065Z"
+      "lastModified": "2025-11-17T11:32:17.082Z"
     },
     {
       "filename": "enfants.html",
@@ -70,7 +70,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-17T11:00:14.065Z"
+      "lastModified": "2025-11-17T11:32:17.083Z"
     },
     {
       "filename": "faq.html",
@@ -83,7 +83,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-17T11:00:14.065Z"
+      "lastModified": "2025-11-17T11:32:17.083Z"
     },
     {
       "filename": "filtres.html",
@@ -96,7 +96,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-17T11:00:14.065Z"
+      "lastModified": "2025-11-17T11:32:17.083Z"
     },
     {
       "filename": "IA/ai.html",
@@ -109,7 +109,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "IA",
-      "lastModified": "2025-11-17T11:00:14.063Z"
+      "lastModified": "2025-11-17T11:32:17.081Z"
     },
     {
       "filename": "IA/myia.html",
@@ -122,7 +122,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "IA",
-      "lastModified": "2025-11-17T11:00:14.064Z"
+      "lastModified": "2025-11-17T11:32:17.081Z"
     },
     {
       "filename": "intranet/apprendre/appr001.html",
@@ -135,7 +135,7 @@
       "type": "histoire",
       "decouverte": "semaine",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.069Z"
+      "lastModified": "2025-11-17T11:32:17.087Z"
     },
     {
       "filename": "intranet/apprendre/appr002.html",
@@ -148,7 +148,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.069Z"
+      "lastModified": "2025-11-17T11:32:17.087Z"
     },
     {
       "filename": "intranet/apprendre/appr003.html",
@@ -161,7 +161,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.069Z"
+      "lastModified": "2025-11-17T11:32:17.087Z"
     },
     {
       "filename": "intranet/apprendre/appr004.html",
@@ -174,7 +174,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.070Z"
+      "lastModified": "2025-11-17T11:32:17.088Z"
     },
     {
       "filename": "intranet/apprendre/appr005.html",
@@ -187,7 +187,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.070Z"
+      "lastModified": "2025-11-17T11:32:17.088Z"
     },
     {
       "filename": "intranet/apprendre/appr006.html",
@@ -200,7 +200,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.070Z"
+      "lastModified": "2025-11-17T11:32:17.088Z"
     },
     {
       "filename": "intranet/apprendre/appr007.html",
@@ -213,7 +213,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.070Z"
+      "lastModified": "2025-11-17T11:32:17.088Z"
     },
     {
       "filename": "intranet/apprendre/appr008.html",
@@ -226,7 +226,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.070Z"
+      "lastModified": "2025-11-17T11:32:17.088Z"
     },
     {
       "filename": "intranet/apprendre/appr009.html",
@@ -239,7 +239,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.071Z"
+      "lastModified": "2025-11-17T11:32:17.089Z"
     },
     {
       "filename": "intranet/apprendre/appr010.html",
@@ -252,7 +252,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.071Z"
+      "lastModified": "2025-11-17T11:32:17.089Z"
     },
     {
       "filename": "intranet/apprendre/appr011.html",
@@ -265,7 +265,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.071Z"
+      "lastModified": "2025-11-17T11:32:17.089Z"
     },
     {
       "filename": "intranet/apprendre/appr012.html",
@@ -278,7 +278,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.071Z"
+      "lastModified": "2025-11-17T11:32:17.089Z"
     },
     {
       "filename": "intranet/apprendre/appr013.html",
@@ -291,7 +291,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.071Z"
+      "lastModified": "2025-11-17T11:32:17.089Z"
     },
     {
       "filename": "intranet/apprendre/appr014.html",
@@ -304,7 +304,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2025-11-17T11:00:14.071Z"
+      "lastModified": "2025-11-17T11:32:17.089Z"
     },
     {
       "filename": "intranet/concours/concour0.html",
@@ -317,7 +317,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/concours",
-      "lastModified": "2025-11-17T11:00:14.072Z"
+      "lastModified": "2025-11-17T11:32:17.090Z"
     },
     {
       "filename": "intranet/concours/concour1.html",
@@ -330,7 +330,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/concours",
-      "lastModified": "2025-11-17T11:00:14.072Z"
+      "lastModified": "2025-11-17T11:32:17.090Z"
     },
     {
       "filename": "intranet/concours/concour2.html",
@@ -343,7 +343,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/concours",
-      "lastModified": "2025-11-17T11:00:14.072Z"
+      "lastModified": "2025-11-17T11:32:17.090Z"
     },
     {
       "filename": "intranet/concours/concour3.html",
@@ -356,7 +356,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/concours",
-      "lastModified": "2025-11-17T11:00:14.072Z"
+      "lastModified": "2025-11-17T11:32:17.090Z"
     },
     {
       "filename": "intranet/encyclopedie/ency1.html",
@@ -369,7 +369,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/encyclopedie",
-      "lastModified": "2025-11-17T11:00:14.072Z"
+      "lastModified": "2025-11-17T11:32:17.090Z"
     },
     {
       "filename": "intranet/encyclopedie/ency2.html",
@@ -382,7 +382,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/encyclopedie",
-      "lastModified": "2025-11-17T11:00:14.073Z"
+      "lastModified": "2025-11-17T11:32:17.091Z"
     },
     {
       "filename": "intranet/encyclopedie/ency3.html",
@@ -395,7 +395,7 @@
       "type": "histoire",
       "decouverte": "semaine",
       "directory": "intranet/encyclopedie",
-      "lastModified": "2025-11-17T11:00:14.073Z"
+      "lastModified": "2025-11-17T11:32:17.091Z"
     },
     {
       "filename": "intranet/encyclopedie/ency5.html",
@@ -408,7 +408,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/encyclopedie",
-      "lastModified": "2025-11-17T11:00:14.073Z"
+      "lastModified": "2025-11-17T11:32:17.091Z"
     },
     {
       "filename": "intranet/footer.html",
@@ -421,7 +421,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet",
-      "lastModified": "2025-11-17T11:00:14.073Z"
+      "lastModified": "2025-11-17T11:32:17.091Z"
     },
     {
       "filename": "intranet/games/jeux.html",
@@ -434,7 +434,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.073Z"
+      "lastModified": "2025-11-17T11:32:17.091Z"
     },
     {
       "filename": "intranet/games/jeux0.html",
@@ -447,7 +447,7 @@
       "type": "classique",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.073Z"
+      "lastModified": "2025-11-17T11:32:17.091Z"
     },
     {
       "filename": "intranet/games/jeux1.html",
@@ -460,7 +460,7 @@
       "type": "educatif",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.074Z"
+      "lastModified": "2025-11-17T11:32:17.092Z"
     },
     {
       "filename": "intranet/games/jeux10.html",
@@ -473,7 +473,7 @@
       "type": "interactif",
       "decouverte": "semaine",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.074Z"
+      "lastModified": "2025-11-17T11:32:17.092Z"
     },
     {
       "filename": "intranet/games/jeux11.html",
@@ -486,7 +486,7 @@
       "type": "educatif",
       "decouverte": "semaine",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.075Z"
+      "lastModified": "2025-11-17T11:32:17.093Z"
     },
     {
       "filename": "intranet/games/jeux12.html",
@@ -499,7 +499,7 @@
       "type": "narrative",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.075Z"
+      "lastModified": "2025-11-17T11:32:17.093Z"
     },
     {
       "filename": "intranet/games/jeux2.html",
@@ -512,7 +512,7 @@
       "type": "interactif",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.075Z"
+      "lastModified": "2025-11-17T11:32:17.093Z"
     },
     {
       "filename": "intranet/games/jeux3.html",
@@ -525,7 +525,7 @@
       "type": "narrative",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.076Z"
+      "lastModified": "2025-11-17T11:32:17.094Z"
     },
     {
       "filename": "intranet/games/jeux4.html",
@@ -538,7 +538,7 @@
       "type": "aventure",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.076Z"
+      "lastModified": "2025-11-17T11:32:17.094Z"
     },
     {
       "filename": "intranet/games/jeux5.html",
@@ -551,7 +551,7 @@
       "type": "classique",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.076Z"
+      "lastModified": "2025-11-17T11:32:17.094Z"
     },
     {
       "filename": "intranet/games/jeux6.html",
@@ -564,7 +564,7 @@
       "type": "quiz",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.077Z"
+      "lastModified": "2025-11-17T11:32:17.095Z"
     },
     {
       "filename": "intranet/games/jeux7.html",
@@ -577,7 +577,7 @@
       "type": "arcade",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.077Z"
+      "lastModified": "2025-11-17T11:32:17.095Z"
     },
     {
       "filename": "intranet/games/jeux8.html",
@@ -590,7 +590,7 @@
       "type": "quiz",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.078Z"
+      "lastModified": "2025-11-17T11:32:17.096Z"
     },
     {
       "filename": "intranet/games/jeux9.html",
@@ -603,7 +603,7 @@
       "type": "classique",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.078Z"
+      "lastModified": "2025-11-17T11:32:17.096Z"
     },
     {
       "filename": "intranet/games/test.html",
@@ -616,7 +616,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2025-11-17T11:00:14.079Z"
+      "lastModified": "2025-11-17T11:32:17.097Z"
     },
     {
       "filename": "intranet/gestes/gest1.html",
@@ -629,7 +629,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/gestes",
-      "lastModified": "2025-11-17T11:00:14.079Z"
+      "lastModified": "2025-11-17T11:32:17.097Z"
     },
     {
       "filename": "intranet/gestes/gest2.html",
@@ -642,7 +642,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/gestes",
-      "lastModified": "2025-11-17T11:00:14.079Z"
+      "lastModified": "2025-11-17T11:32:17.097Z"
     },
     {
       "filename": "intranet/gestes/gest3.html",
@@ -655,7 +655,7 @@
       "type": "histoire",
       "decouverte": "semaine",
       "directory": "intranet/gestes",
-      "lastModified": "2025-11-17T11:00:14.079Z"
+      "lastModified": "2025-11-17T11:32:17.097Z"
     },
     {
       "filename": "intranet/gestes/gest4.html",
@@ -668,7 +668,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/gestes",
-      "lastModified": "2025-11-17T11:00:14.079Z"
+      "lastModified": "2025-11-17T11:32:17.097Z"
     },
     {
       "filename": "intranet/histoirs/hist1.html",
@@ -681,7 +681,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-17T11:00:14.079Z"
+      "lastModified": "2025-11-17T11:32:17.097Z"
     },
     {
       "filename": "intranet/histoirs/hist10.html",
@@ -694,7 +694,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-17T11:00:14.079Z"
+      "lastModified": "2025-11-17T11:32:17.097Z"
     },
     {
       "filename": "intranet/histoirs/hist11.html",
@@ -707,7 +707,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-17T11:00:14.079Z"
+      "lastModified": "2025-11-17T11:32:17.097Z"
     },
     {
       "filename": "intranet/histoirs/hist12.html",
@@ -720,7 +720,7 @@
       "type": "html",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-17T11:00:14.080Z"
+      "lastModified": "2025-11-17T11:32:17.098Z"
     },
     {
       "filename": "intranet/histoirs/hist13.html",
@@ -733,7 +733,7 @@
       "type": "audio",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-17T11:00:14.080Z"
+      "lastModified": "2025-11-17T11:32:17.098Z"
     },
     {
       "filename": "intranet/histoirs/hist2.html",
@@ -746,7 +746,7 @@
       "type": "histoire",
       "decouverte": "semaine",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-17T11:00:14.080Z"
+      "lastModified": "2025-11-17T11:32:17.098Z"
     },
     {
       "filename": "intranet/histoirs/hist3.html",
@@ -759,7 +759,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-17T11:00:14.080Z"
+      "lastModified": "2025-11-17T11:32:17.098Z"
     },
     {
       "filename": "intranet/histoirs/hist4.html",
@@ -772,7 +772,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-17T11:00:14.080Z"
+      "lastModified": "2025-11-17T11:32:17.098Z"
     },
     {
       "filename": "intranet/histoirs/hist5.html",
@@ -785,7 +785,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-17T11:00:14.080Z"
+      "lastModified": "2025-11-17T11:32:17.098Z"
     },
     {
       "filename": "intranet/histoirs/hist6.html",
@@ -798,7 +798,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-17T11:00:14.080Z"
+      "lastModified": "2025-11-17T11:32:17.098Z"
     },
     {
       "filename": "intranet/histoirs/hist7.html",
@@ -811,7 +811,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-17T11:00:14.080Z"
+      "lastModified": "2025-11-17T11:32:17.098Z"
     },
     {
       "filename": "intranet/histoirs/hist8.html",
@@ -824,7 +824,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-17T11:00:14.080Z"
+      "lastModified": "2025-11-17T11:32:17.098Z"
     },
     {
       "filename": "intranet/histoirs/hist9.html",
@@ -837,7 +837,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2025-11-17T11:00:14.080Z"
+      "lastModified": "2025-11-17T11:32:17.098Z"
     },
     {
       "filename": "intranet/music/mus001.html",
@@ -850,7 +850,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/music",
-      "lastModified": "2025-11-17T11:00:14.139Z"
+      "lastModified": "2025-11-17T11:32:17.158Z"
     },
     {
       "filename": "intranet/navigator.html",
@@ -863,7 +863,371 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet",
-      "lastModified": "2025-11-17T11:00:14.139Z"
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram001.html",
+      "title": "Bienvenue Ramadan - Programme Ramadan 2026",
+      "description": "Un message chaleureux pour ouvrir le mois sacré au sein de l'intranet avec une ambiance lumineuse, des intentions positives et des mots de bienvenue adressés à toute l'équipe.",
+      "url": "intranet/ramadans2026/ram001.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram002.html",
+      "title": "Histoire du Hilal - Programme Ramadan 2026",
+      "description": "Retour sur la manière dont la lune croissante annonce chaque année le début du Ramadan avec des repères historiques, scientifiques et culturels.",
+      "url": "intranet/ramadans2026/ram002.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram003.html",
+      "title": "Les valeurs du Ramadan - Programme Ramadan 2026",
+      "description": "Panorama des valeurs cardinales du mois de jeûne : patience, partage, générosité, gratitude et esprit de communauté.",
+      "url": "intranet/ramadans2026/ram003.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram004.html",
+      "title": "Recettes traditionnelles du Ftour - Programme Ramadan 2026",
+      "description": "Sélection de recettes incontournables du ftour : chorba, bourek, maakouda et boissons maison pour un repas équilibré.",
+      "url": "intranet/ramadans2026/ram004.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram005.html",
+      "title": "Ramadan en Algérie - Programme Ramadan 2026",
+      "description": "Tour d'horizon des traditions du Nord au Sud, des médinas aux oasis avec des témoignages de collègues.",
+      "url": "intranet/ramadans2026/ram005.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram006.html",
+      "title": "Conseils Santé - Programme Ramadan 2026",
+      "description": "Guide hydratation, organisation des repas, suivi médical et écoute de soi pour garder une bonne énergie.",
+      "url": "intranet/ramadans2026/ram006.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram007.html",
+      "title": "Concours 1 : Ma Table de F’tour la Plus Belle - Programme Ramadan 2026",
+      "description": "Premier concours photo : partager la plus belle table de ftour et inspirer toute la communauté.",
+      "url": "intranet/ramadans2026/ram007.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram008.html",
+      "title": "Activités Ramadan pour enfants - Programme Ramadan 2026",
+      "description": "Idées de mini-jeûne, défis bienveillants et ateliers créatifs pour vivre le Ramadan avec les plus jeunes.",
+      "url": "intranet/ramadans2026/ram008.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram009.html",
+      "title": "Lapbook Ramadan - Programme Ramadan 2026",
+      "description": "Documents éducatifs prêts à imprimer pour apprendre les concepts clés du mois sacré.",
+      "url": "intranet/ramadans2026/ram009.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram010.html",
+      "title": "Coloriages Ramadan - Programme Ramadan 2026",
+      "description": "Galerie de coloriages inédits à télécharger et imprimer pour occuper les enfants avant le ftour.",
+      "url": "intranet/ramadans2026/ram010.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram011.html",
+      "title": "Histoires du soir - Programme Ramadan 2026",
+      "description": "Contes algériens et anecdotes spirituelles à lire chaque soir pour clôturer la journée avec douceur.",
+      "url": "intranet/ramadans2026/ram011.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram012.html",
+      "title": "Bien-être & sérénité - Programme Ramadan 2026",
+      "description": "Respiration, organisation des journées et moments de gratitude pour préserver la sérénité familiale.",
+      "url": "intranet/ramadans2026/ram012.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram013.html",
+      "title": "Mini-recettes faciles - Programme Ramadan 2026",
+      "description": "Préparations rapides à réaliser avec les enfants : smoothies, bricks colorées, energy balls maison.",
+      "url": "intranet/ramadans2026/ram013.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram014.html",
+      "title": "Concours 2 : Le Plus Beau Dessin Ramadan - Programme Ramadan 2026",
+      "description": "Concours créatif qui valorise les dessins, collages et affiches réalisés par les enfants.",
+      "url": "intranet/ramadans2026/ram014.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram015.html",
+      "title": "Zakat & solidarité - Programme Ramadan 2026",
+      "description": "Explications claires sur la Zakat, la solidarité locale et des exemples d'initiatives inspirantes.",
+      "url": "intranet/ramadans2026/ram015.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram016.html",
+      "title": "La Nuit du Destin - Programme Ramadan 2026",
+      "description": "Focus sur Laylat el Qadr : spiritualité, signes, prières recommandées et témoignages.",
+      "url": "intranet/ramadans2026/ram016.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.158Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram017.html",
+      "title": "Ramadan autour du monde - Programme Ramadan 2026",
+      "description": "Comparaisons culturelles et photos inspirantes du Ramadan célébré sur les cinq continents.",
+      "url": "intranet/ramadans2026/ram017.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.159Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram018.html",
+      "title": "Conseils sommeil & énergie - Programme Ramadan 2026",
+      "description": "Astuces sommeil, micro-siestes et nutrition légère pour rester concentré.",
+      "url": "intranet/ramadans2026/ram018.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.159Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram019.html",
+      "title": "Technologie & Ramadan - Programme Ramadan 2026",
+      "description": "Applications mobiles, playlists et outils numériques pour vivre un Ramadan connecté mais serein.",
+      "url": "intranet/ramadans2026/ram019.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.159Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram020.html",
+      "title": "Musique douce & ambiances nocturnes - Programme Ramadan 2026",
+      "description": "Sélection de musiques traditionnelles et ambiances sonores pour accompagner les veillées.",
+      "url": "intranet/ramadans2026/ram020.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.159Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram021.html",
+      "title": "Concours 3 : La Plus Belle Parole Inspirante - Programme Ramadan 2026",
+      "description": "Concours d'écriture autour de citations et invocations inspirantes.",
+      "url": "intranet/ramadans2026/ram021.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.159Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram022.html",
+      "title": "Cuisines régionales d’Algérie - Programme Ramadan 2026",
+      "description": "Tour gourmand des régions : Est, Ouest, Sud avec recettes signature.",
+      "url": "intranet/ramadans2026/ram022.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.159Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram023.html",
+      "title": "Savoir-vivre au Ramadan - Programme Ramadan 2026",
+      "description": "Rappels d'éthique, bienveillance au travail et bonnes pratiques de communication.",
+      "url": "intranet/ramadans2026/ram023.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.159Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram024.html",
+      "title": "Idées de dons & actions caritatives - Programme Ramadan 2026",
+      "description": "Liste d'associations locales, défis solidaires et idées de mécénat participatif.",
+      "url": "intranet/ramadans2026/ram024.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.159Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram025.html",
+      "title": "Gestion du stress au travail - Programme Ramadan 2026",
+      "description": "Conseils pour concilier objectifs professionnels et spiritualité sans pression.",
+      "url": "intranet/ramadans2026/ram025.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.159Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram026.html",
+      "title": "Sport léger & marche - Programme Ramadan 2026",
+      "description": "Séances légères, étirements et marche douce avant ou après le ftour.",
+      "url": "intranet/ramadans2026/ram026.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.159Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram027.html",
+      "title": "Préparer l’Aïd - Programme Ramadan 2026",
+      "description": "Checklist festive, idées cadeaux et décorations pour l'Aïd El Fitr.",
+      "url": "intranet/ramadans2026/ram027.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.159Z"
+    },
+    {
+      "filename": "intranet/ramadans2026/ram028.html",
+      "title": "Concours 4 : Le Plus Beau Gâteau de l’Aïd - Programme Ramadan 2026",
+      "description": "Concours gourmand qui met à l'honneur les gâteaux maison et la créativité culinaire.",
+      "url": "intranet/ramadans2026/ram028.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "intranet/ramadans2026",
+      "lastModified": "2025-11-17T11:32:17.159Z"
     },
     {
       "filename": "kamelSolution.html",
@@ -876,7 +1240,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-17T11:00:14.203Z"
+      "lastModified": "2025-11-17T11:32:17.222Z"
     },
     {
       "filename": "kamle-solution_services.html",
@@ -889,7 +1253,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-17T11:00:14.203Z"
+      "lastModified": "2025-11-17T11:32:17.222Z"
     },
     {
       "filename": "recrutement.html",
@@ -902,7 +1266,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-17T11:00:14.203Z"
+      "lastModified": "2025-11-17T11:32:17.223Z"
     },
     {
       "filename": "test.html",
@@ -915,7 +1279,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-17T11:00:14.204Z"
+      "lastModified": "2025-11-17T11:32:17.223Z"
     },
     {
       "filename": "zoho-domain-verification.html",
@@ -928,7 +1292,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2025-11-17T11:00:14.204Z"
+      "lastModified": "2025-11-17T11:32:17.223Z"
     }
   ]
 }

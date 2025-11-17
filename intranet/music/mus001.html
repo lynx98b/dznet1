@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎀 Comptines pour enfants</title>
+
+<style>
+/* 🌈 Fond pastel animé */
+body {
+    margin: 0;
+    font-family: "Comic Sans MS", sans-serif;
+    background: linear-gradient(135deg, #ffd6e8, #c7eaff, #ffe9b5);
+    background-size: 400% 400%;
+    animation: bgMove 16s ease infinite;
+    overflow-x: hidden;
+}
+
+@keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ☁️ Nuages mignons */
+.cloud {
+    position: absolute;
+    top: 15%;
+    width: 160px;
+    height: 55px;
+    background: white;
+    opacity: 0.85;
+    border-radius: 50px;
+    filter: blur(1px);
+    animation: cloud-floating 28s linear infinite;
+}
+.cloud::before, .cloud::after {
+    content: "";
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+}
+.cloud::before {
+    width: 90px;
+    height: 70px;
+    top: -30px;
+    left: 10px;
+}
+.cloud::after {
+    width: 120px;
+    height: 80px;
+    top: -35px;
+    left: 60px;
+}
+
+@keyframes cloud-floating {
+    0% { left: -200px; }
+    100% { left: 110%; }
+}
+
+.cloud2 { top: 35%; animation-duration: 32s; transform: scale(1.2); }
+.cloud3 { top: 55%; animation-duration: 38s; }
+
+/* 🎀 Titre mignon */
+h1 {
+    text-align: center;
+    font-size: 35px;
+    color: #ff5d94;
+    text-shadow: 2px 2px 0 white;
+    margin-top: 40px;
+    animation: pop 1s ease;
+}
+
+@keyframes pop {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* 📦 Cadre comptine */
+.box {
+    background: white;
+    width: 85%;
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 0 8px 20px #00000022;
+    text-align: center;
+    animation: fadeIn 1.5s ease;
+}
+
+/* 🔹 Comptine cadre animé */
+.box.animated {
+    animation: pulse 2s infinite;
+}
+
+@keyframes fadeIn {
+    0% { transform: translateY(40px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+}
+
+/* Texte comptine */
+p {
+    font-size: 20px;
+    color: #555;
+}
+
+/* 🎧 Audio */
+audio {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+/* 💕 Bouton mignon */
+button {
+    margin-top: 10px;
+    background: #ff8bb0;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 20px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+button:hover {
+    background: #ff6c97;
+}
+
+/* 🎁 Cadeau animé */
+.gift {
+    font-size: 30px;
+    text-align: center;
+    margin-top: 20px;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.5s ease;
+}
+
+/* 💥 Confettis */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ff5d8f;
+    animation: fall 1s linear forwards;
+    border-radius: 50%;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(200px) rotate(360deg); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Nuages animés -->
+<div class="cloud"></div>
+<div class="cloud cloud2"></div>
+<div class="cloud cloud3"></div>
+
+<h1>🎵 Comptines pour enfants 🎵</h1>
+
+<!-- Comptine 1 : C'est demain jeudi -->
+<div class="box animated">
+    <p id="texte1">
+        <b>C'est demain jeudi</b><br>
+        La fête de la souris 🎉<br>
+        Qui balaie son tapis 🧹<br>
+        Trouve une pomme d’api 🍎<br>
+        La découpe et la cuit 🍲<br>
+        Et la donne à ses petites 🐭🐭🐭
+    </p>
+    <button onclick="changeColor('texte1')">Changer couleur ✨</button>
+</div>
+
+<div class="box animated">
+    <h3>🎧 Écouter "C'est demain jeudi"</h3>
+    <audio controls>
+        <source src="audio/Souris.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+<!-- Comptine 2 : Il est midi -->
+<div class="box animated">
+    <p id="texte2">
+        <b>Il est midi</b><br>
+        À table les petits 🍽️<br>
+        Mangez les légumes 🥦<br>
+        Mangez les fruits 🍎🍌<br>
+        Et bon appétit 😋
+    </p>
+    <button onclick="changeColor('texte2')">Changer couleur ✨</button>
+</div>
+
+<div class="box animated">
+    <h3>🎧 Écouter "Il est midi"</h3>
+    <audio controls>
+        <source src="audio/Midi.mp3" type="audio/mpeg">
+    </audio>
+</div>
+
+
+
+<script>
+// Changement couleur texte
+function changeColor(id) {
+    const colors = ["#ff5d8f", "#ff7eb3", "#3a86ff", "#ffbe0b", "#8338ec"];
+    const t = document.getElementById(id);
+    t.style.color = colors[Math.floor(Math.random() * colors.length)];
+}
+
+// Cadeau d’audience
+const giftBtn = document.getElementById('giftBtn');
+const gift = document.getElementById('gift');
+
+giftBtn.addEventListener('click', () => {
+    // Affiche le cadeau
+    gift.style.opacity = 1;
+    gift.style.transform = 'scale(1)';
+
+    // Crée quelques confettis
+    for (let i = 0; i < 20; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.background = `hsl(${Math.random()*360}, 70%, 60%)`;
+        document.body.appendChild(confetti);
+
+        // Supprime après l'animation
+        confetti.addEventListener('animationend', () => confetti.remove());
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">Bannière Ramadan 2026</title>
+  <desc id="desc">Ambiance lumineuse avec croissant et motif géométrique</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#27113f"/>
+      <stop offset="50%" stop-color="#5b1f4b"/>
+      <stop offset="100%" stop-color="#c46d2c"/>
+    </linearGradient>
+    <radialGradient id="moon" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff6d5"/>
+      <stop offset="100%" stop-color="#f3d291"/>
+    </radialGradient>
+    <pattern id="stars" width="120" height="120" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="40" r="2.5" fill="#ffe9b5" opacity="0.9"/>
+      <circle cx="90" cy="80" r="1.8" fill="#ffe9b5" opacity="0.7"/>
+      <circle cx="50" cy="15" r="1.5" fill="#fff" opacity="0.6"/>
+      <circle cx="100" cy="30" r="2.1" fill="#fff3d3" opacity="0.8"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="600" fill="url(#bg)"/>
+  <rect width="1200" height="600" fill="url(#stars)" opacity="0.35"/>
+  <g transform="translate(820 150)">
+    <circle cx="120" cy="120" r="110" fill="url(#moon)"/>
+    <path d="M160 20c-52 10-92 57-92 112s40 102 92 112c-78-16-132-70-132-112s54-96 132-112z" fill="#fef6e0" opacity="0.75"/>
+  </g>
+  <g fill="none" stroke="#ffd9a3" stroke-width="2" opacity="0.6">
+    <path d="M100 510h1000"/>
+    <path d="M120 520h960"/>
+    <path d="M140 530h920"/>
+  </g>
+  <g fill="rgba(255,255,255,0.15)">
+    <circle cx="200" cy="120" r="18"/>
+    <circle cx="320" cy="200" r="12"/>
+    <circle cx="450" cy="90" r="10"/>
+    <circle cx="600" cy="180" r="14"/>
+  </g>
+  <text x="120" y="240" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="54" fill="#ffe8c4" font-weight="600" letter-spacing="6">PROGRAMME</text>
+  <text x="120" y="340" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="130" fill="#ffffff" font-weight="700">RAMADAN 2026</text>
+  <text x="120" y="410" font-family="'Cairo', 'Segoe UI', sans-serif" font-size="32" fill="#ffe2b0" font-weight="500">Ambiances, concours &amp; inspirations DZ</text>
+</svg>

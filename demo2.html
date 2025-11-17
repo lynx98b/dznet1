@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍜 Ramen - L'Art du Bouillon Japonais</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #fef9e7 0%, #fff5e1 100%);
+        }
+        
+        /* HERO SECTION - 10 PREMIÈRES SECONDES */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23d35400" width="1200" height="400"/><text x="50%25" y="50%25" font-size="120" fill="%23fff" text-anchor="middle" dy=".3em">🍜</text></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        .hero p {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            max-width: 700px;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            animation: fadeInUp 1s ease;
+        }
+        
+        .cta-button {
+            background: #e74c3c;
+            color: white;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+            animation: fadeInUp 1.2s ease;
+        }
+        
+        .cta-button:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.6);
+        }
+        
+        /* CONTAINER */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+        
+        /* TYPOGRAPHIE */
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: #d35400;
+            margin: 40px 0 20px 0;
+            border-left: 6px solid #e74c3c;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            color: #e67e22;
+            margin: 30px 0 15px 0;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        /* LISTES */
+        ul {
+            margin: 20px 0 20px 30px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        strong {
+            color: #c0392b;
+            font-weight: 600;
+        }
+        
+        /* VISUELS */
+        .visual-block {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 4rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* STATS */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        /* ANIMATIONS */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero {
+                height: 60vh;
+            }
+            
+            .container {
+                padding: 40px 15px;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HERO - 10 PREMIÈRES SECONDES DÉCISIVES -->
+    <section class="hero">
+        <h1>🍜 Le Ramen Authentique</h1>
+        <p>Découvrez l'art millénaire du bouillon japonais en 3 minutes</p>
+        <a href="#content" class="cta-button">Découvrir Maintenant →</a>
+    </section>
+
+    <!-- CONTENU PRINCIPAL -->
+    <div class="container" id="content">
+        
+        <h2>🔥 Qu'est-ce que le Ramen ?</h2>
+        <p>
+            Le ramen est bien plus qu'un simple plat de nouilles. C'est une <strong>expérience culinaire japonaise</strong> qui combine bouillon riche, nouilles parfaites et garnitures savamment choisies.
+        </p>
+        <p>
+            Originaire de Chine au 19ème siècle, ce plat s'est transformé au Japon en <strong>symbole de réconfort</strong> et d'innovation gastronomique.
+        </p>
+
+        <!-- VISUEL 1 -->
+        <div class="visual-block">
+            🍲 🥢 🥚
+        </div>
+
+        <h2>🎯 Les 4 Types de Bouillon Incontournables</h2>
+        <ul>
+            <li><strong>Shoyu:</strong> Base soja, saveur équilibrée et profonde</li>
+            <li><strong>Miso:</strong> Pâte fermentée, goût umami intense</li>
+            <li><strong>Shio:</strong> Sel marin, bouillon clair et délicat</li>
+            <li><strong>Tonkotsu:</strong> Os de porc mijotés 12h, texture crémeuse</li>
+        </ul>
+
+        <!-- STATS VISUELLES -->
+        <div class="stats">
+            <div class="stat-card">
+                <span class="stat-number">12h</span>
+                <span>Temps de mijotage</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">200+</span>
+                <span>Variétés au Japon</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">5min</span>
+                <span>Temps de dégustation</span>
+            </div>
+        </div>
+
+        <h2>✨ Pourquoi le Ramen Fascine ?</h2>
+        <p>
+            Chaque bol raconte une histoire. Le chef maîtrise le <strong>timing parfait</strong> pour des nouilles al dente, dose le bouillon au millilitre près, et compose sa garniture comme un artiste.
+        </p>
+        <p>
+            C'est cette recherche de <strong>perfection dans la simplicité</strong> qui fait du ramen un plat adulé mondialement.
+        </p>
+
+        <!-- VISUEL 2 -->
+        <div class="visual-block">
+            👨‍🍳 ⏱️ 🎨
+        </div>
+
+        <h2>🥢 Comment Déguster un Ramen Authentique</h2>
+        <ul>
+            <li>Commencez par <strong>aspirer le bouillon</strong> à la cuillère</li>
+            <li>Mangez les nouilles rapidement (elles gonflent!)</li>
+            <li>Faites du bruit en aspirant: c'est un signe de respect</li>
+            <li>Terminez le bouillon jusqu'à la dernière goutte</li>
+        </ul>
+
+        <h2>🎁 Prêt à Tenter l'Expérience ?</h2>
+        <p>
+            Le ramen n'attend pas. Trouvez un restaurant authentique près de chez vous, ou lancez-vous dans la <strong>préparation maison</strong>. Votre première bouchée changera votre vision de ce plat iconique.
+        </p>
+
+        <!-- CTA FINAL -->
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="#" class="cta-button">Trouver un Restaurant 📍</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

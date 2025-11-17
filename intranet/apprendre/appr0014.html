@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Les tenues traditionnels 3D</title>
+<style>
+  :root{
+    --bg:#fff8ee;
+    --card:#fffdf9;
+    --accent:#f08b54;
+    --muted:#6b6b6b;
+    --kid1:#ffd8b5;
+    --kid2:#ffe4f2;
+    --kid3:#e8fff3;
+    --shadow: 0 12px 24px rgba(0,0,0,0.10);
+    --radius:18px;
+  }
+
+  body{
+    margin:0;
+    font-family: "Poppins", Arial, sans-serif;
+    background: linear-gradient(180deg,var(--bg), #fff6e8);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px;
+    box-sizing:border-box;
+  }
+  .wrap{
+    width:100%;
+    max-width:1100px;
+    text-align:center;
+  }
+
+  /* 3D title */
+  .title-3d{
+    display:inline-block;
+    font-size:clamp(28px,4vw,44px);
+    font-weight:700;
+    letter-spacing:0.6px;
+    margin-bottom:18px;
+    transform-style:preserve-3d;
+    perspective:900px;
+    cursor:default;
+    user-select:none;
+  }
+  .title-3d .layer{
+    display:block;
+    transform-origin:center;
+    transition:transform .12s ease-out;
+  }
+  .title-3d .front{
+    color: #e65a1a;
+    text-shadow: 0 6px 0 rgba(0,0,0,0.03);
+    transform: translateZ(40px) rotateX(0deg);
+  }
+  .title-3d .mid{
+    color: #ff9a66;
+    transform: translateZ(20px);
+    opacity:0.95;
+  }
+  .title-3d .back{
+    color: #ffd3b3;
+    transform: translateZ(5px);
+    filter:blur(.2px);
+    opacity:0.9;
+  }
+
+  .grid{
+    margin-top:14px;
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    gap:18px;
+    align-items:start;
+  }
+
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:12px;
+    padding-bottom:18px;
+    transform-style:preserve-3d;
+    transition: transform .18s ease, box-shadow .18s ease;
+    border: 2px solid rgba(240,139,84,0.12);
+  }
+  .card .top{
+    height:34px;
+    border-radius:14px;
+    margin-bottom:8px;
+    background: linear-gradient(90deg,var(--kid1), var(--kid2), var(--kid3));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    color:#7a3b14;
+    box-shadow: inset 0 -4px 8px rgba(255,255,255,0.4);
+  }
+
+  .imgwrap{
+    width:100%;
+    height:160px;
+    border-radius:12px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(250,240,230,0.6));
+    margin-bottom:10px;
+    border:1px dashed rgba(0,0,0,0.05);
+  }
+  .imgwrap img{
+    max-width:100%;
+    max-height:100%;
+    object-fit:cover;
+    transition: transform .5s ease;
+  }
+
+  .definition{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.45;
+    padding:0 6px;
+  }
+
+  .badge{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:12px;
+    margin-top:8px;
+    background: rgba(224,130,77,0.12);
+    color:#d9622d;
+    font-weight:600;
+  }
+
+  .card:hover{
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 22px 44px rgba(0,0,0,0.14);
+  }
+  .card:active{ transform: translateY(-4px); }
+  .card[data-tilt="true"]{ will-change: transform; }
+
+  .note{
+    margin-top:14px;
+    font-size:13px;
+    color:#7a7a7a;
+  }
+
+  @media (max-width:520px){
+    .imgwrap{ height:140px; }
+    .title-3d{ font-size:24px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap" id="wrap">
+    <!-- Titre 3D -->
+    <div class="title-3d" id="title3d" aria-hidden="true">
+      <span class="layer back">Les tenues</span>
+      <span class="layer mid">Les tenues</span>
+      <span class="layer front">Les tenues traditionnels </span>
+    </div>
+
+    <div class="grid" id="grid">
+      <!-- Barnous -->
+      <div class="card" data-tilt="true">
+        <div class="top">Le Barnous</div>
+        <div class="imgwrap">
+          <img src="images/Barnous.jpg" alt="Barnous - cape avec capuche">
+        </div>
+        <div class="definition">
+          Le Barnous est un grand manteau chaud avec une capuche. Les hommes le portent surtout quand il fait froid, comme une cape de chevalier !
+        </div>
+        <div class="badge">Chaud & Cosy</div>
+      </div>
+
+      <!-- Chaoui -->
+      <div class="card" data-tilt="true">
+        <div class="top">Le Chaoui</div>
+        <div class="imgwrap">
+          <img src="images/Chaoui.jpg" alt="Tenue Chaoui colorée">
+        </div>
+        <div class="definition">
+          Le Chaoui vient des montagnes des Aurès. Les femmes portent une robe colorée et un foulard rouge et blanc avec des bijoux brillants.
+        </div>
+        <div class="badge">Coloré</div>
+      </div>
+
+      <!-- Kabyle -->
+      <div class="card" data-tilt="true">
+        <div class="top">Le Kabyle</div>
+        <div class="imgwrap">
+          <img src="images/Kabyle.jpg" alt="Robe Kabyle rayée">
+        </div>
+        <div class="definition">
+          La tenue Kabyle a des rayures vives (rouge, jaune, vert). On porte aussi un grand foulard sur les épaules.
+        </div>
+        <div class="badge">Rayures vives</div>
+      </div>
+
+      <!-- Blousa Oranaise -->
+      <div class="card" data-tilt="true">
+        <div class="top">La Blousa Oranaise</div>
+        <div class="imgwrap">
+          <img src="images/Blousant.jpg" alt="Blousa Oranaise brodée">
+        </div>
+        <div class="definition">
+          La Blousa Oranaise est un petit gilet de fête, court et sans manches, décoré de broderies dorées et colorées.
+        </div>
+        <div class="badge">Gilet de fête</div>
+      </div>
+
+      <!-- Cheda -->
+      <div class="card" data-tilt="true">
+        <div class="top">La Cheda</div>
+        <div class="imgwrap">
+          <img src="images/Cheda.jpg" alt="Cheda - robe de mariée">
+        </div>
+        <div class="definition">
+          La Cheda est la tenue de la mariée dans l’ouest : robe en velours, broderies dorées, diadème et beaucoup de bijoux.
+        </div>
+        <div class="badge">Mariée</div>
+      </div>
+
+      <!-- Hayek -->
+      <div class="card" data-tilt="true">
+        <div class="top">Le Hayek</div>
+        <div class="imgwrap">
+          <img src="images/Hayak.jpg" alt="Hayek - grand voile blanc">
+        </div>
+        <div class="definition">
+          Le Hayek est un grand voile blanc et doux. Les femmes s’en enveloppent complètement, comme un grand drap léger.
+        </div>
+        <div class="badge">Voile léger</div>
+      </div>
+
+      <!-- Karakou -->
+      <div class="card" data-tilt="true">
+        <div class="top">Le Karakou</div>
+        <div class="imgwrap">
+          <img src="images/karakou.jpg" alt="Karakou veste brodée">
+        </div>
+        <div class="definition">
+          Le Karakou est très élégant : veste en velours brodée d’or et pantalon en soie brillante. Une tenue de reine !
+        </div>
+        <div class="badge">Élégant</div>
+      </div>
+    </div>
+
+    <div class="note">Astuce : survole les cartes avec la souris (ou incline ton téléphone) pour voir l'effet 3D !</div>
+  </div>
+
+<script>
+  /* ---------- Title 3D parallax ---------- */
+  (function(){
+    const title = document.getElementById('title3d');
+    if(!title) return;
+    title.addEventListener('mousemove', (e)=>{
+      const r = title.getBoundingClientRect();
+      const cx = r.left + r.width/2;
+      const cy = r.top + r.height/2;
+      const dx = (e.clientX - cx) / r.width;
+      const dy = (e.clientY - cy) / r.height;
+      const layers = title.querySelectorAll('.layer');
+      layers.forEach((el,i)=>{
+        const depth = (layers.length - i) * 8;
+        el.style.transform = `translateZ(${depth}px) rotateY(${dx*8}deg) rotateX(${ -dy*8 }deg)`;
+      });
+    });
+    title.addEventListener('mouseleave', ()=>{
+      title.querySelectorAll('.layer').forEach((el)=>{ el.style.transform = ''; });
+    });
+  })();
+
+  /* ---------- Card tilt effect ---------- */
+  (function(){
+    const cards = document.querySelectorAll('.card[data-tilt="true"]');
+    function setTilt(e,card){
+      const r = card.getBoundingClientRect();
+      const cx = r.left + r.width/2;
+      const cy = r.top + r.height/2;
+      const x = ((e.clientX || (e.touches && e.touches[0].clientX)) - cx) / r.width;
+      const y = ((e.clientY || (e.touches && e.touches[0].clientY)) - cy) / r.height;
+      const tiltX = (y * 12).toFixed(2);
+      const tiltY = (x * -12).toFixed(2);
+      card.style.transform = `perspective(900px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(6px)`;
+    }
+    function resetTilt(card){ card.style.transform = ''; }
+    cards.forEach(card=>{
+      card.addEventListener('mousemove', (e)=> setTilt(e,card));
+      card.addEventListener('touchmove', (e)=> { setTilt(e,card); }, {passive:true});
+      card.addEventListener('mouseleave', ()=> resetTilt(card));
+      card.addEventListener('touchend', ()=> resetTilt(card));
+    });
+  })();
+</script>
+</body>
+</html>

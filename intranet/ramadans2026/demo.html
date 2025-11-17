@@ -3,18 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ramadan en Algérie et en immigration : traditions, spiritualité et maintien des liens culturels à travers le monde">
     <title>Ramadan : Entre Traditions Algériennes et Vie en Immigration</title>
     
     <style>
         /* __version__ = "v1.005" */
         /* [v1.005] Chat avec authentification Google (Firebase) */
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
             --primary: #2C5F2D;
@@ -24,7 +19,6 @@
             --light-bg: #F8F9FA;
             --white: #FFFFFF;
             --shadow: rgba(0, 0, 0, 0.1);
-            --info: #3498db;
         }
         
         body {
@@ -47,39 +41,16 @@
             font-weight: 700;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: fadeInDown 0.8s ease-out;
         }
         
         .hero-subtitle {
             font-size: clamp(1.1rem, 2.5vw, 1.4rem);
             margin-bottom: 30px;
-            opacity: 0.95;
-            animation: fadeInUp 1s ease-out;
         }
         
         .hero-icon {
             font-size: 4rem;
             margin-bottom: 20px;
-            animation: pulse 2s infinite;
-        }
-        
-        .cta-primary {
-            display: inline-block;
-            background: var(--secondary);
-            color: var(--text);
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            animation: fadeInUp 1.2s ease-out;
-        }
-        
-        .cta-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
-            background: #E5C047;
         }
         
         .container {
@@ -87,87 +58,6 @@
             margin: 0 auto;
             padding: 40px 20px;
             background: var(--white);
-        }
-        
-        h2 {
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            color: var(--primary);
-            margin: 40px 0 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid var(--secondary);
-        }
-        
-        h3 {
-            font-size: clamp(1.3rem, 3vw, 1.8rem);
-            color: var(--accent);
-            margin: 30px 0 15px;
-        }
-        
-        p {
-            margin-bottom: 20px;
-            font-size: clamp(1rem, 2vw, 1.1rem);
-        }
-        
-        ul, ol {
-            margin: 20px 0 20px 30px;
-        }
-        
-        li {
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-        
-        strong {
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        .highlight-box {
-            background: linear-gradient(to right, var(--light-bg), var(--white));
-            border-left: 5px solid var(--secondary);
-            padding: 25px;
-            margin: 30px 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px var(--shadow);
-        }
-        
-        .stat-box {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-        
-        .stat {
-            background: var(--primary);
-            color: var(--white);
-            padding: 25px;
-            text-align: center;
-            border-radius: 12px;
-            transition: transform 0.3s ease;
-        }
-        
-        .stat:hover {
-            transform: scale(1.05);
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--secondary);
-        }
-        
-        .visual-placeholder {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            height: 300px;
-            margin: 30px 0;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: var(--white);
-            box-shadow: 0 4px 15px var(--shadow);
         }
         
         /* ===== CHAT WIDGET ===== */
@@ -192,30 +82,11 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            animation: chatPulse 2s infinite;
-            position: relative;
         }
         
         .chat-button:hover {
             transform: scale(1.1);
             background: var(--secondary);
-        }
-        
-        .chat-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--accent);
-            color: var(--white);
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            font-size: 0.75rem;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            border: 2px solid var(--white);
         }
         
         .chat-box {
@@ -234,10 +105,8 @@
         
         .chat-box.active {
             display: flex;
-            animation: slideUp 0.3s ease-out;
         }
         
-        /* [v1.005] Écran de connexion Google */
         .chat-login {
             display: flex;
             flex-direction: column;
@@ -252,12 +121,6 @@
             color: var(--primary);
             margin-bottom: 10px;
             font-size: 1.5rem;
-        }
-        
-        .chat-login p {
-            color: var(--text);
-            margin-bottom: 25px;
-            font-size: 0.95rem;
         }
         
         .chat-login-icon {
@@ -275,33 +138,15 @@
             border: 2px solid #ddd;
             border-radius: 8px;
             font-weight: 600;
-            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
         .google-signin-btn:hover {
             border-color: var(--primary);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             transform: translateY(-2px);
         }
         
-        .google-signin-btn img {
-            width: 24px;
-            height: 24px;
-        }
-        
-        .chat-login-info {
-            margin-top: 20px;
-            font-size: 0.85rem;
-            color: #999;
-            padding: 15px;
-            background: var(--light-bg);
-            border-radius: 8px;
-        }
-        
-        /* Chat principal */
         .chat-main {
             display: none;
             flex-direction: column;
@@ -319,7 +164,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         .chat-header-info {
@@ -335,25 +179,12 @@
             border: 2px solid var(--secondary);
         }
         
-        .chat-online-indicator {
-            width: 10px;
-            height: 10px;
-            background: #4ade80;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        
         .chat-close {
             background: none;
             border: none;
             color: var(--white);
             font-size: 1.5rem;
             cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        
-        .chat-close:hover {
-            transform: rotate(90deg);
         }
         
         .chat-logout-btn {
@@ -365,11 +196,6 @@
             font-size: 0.85rem;
             cursor: pointer;
             margin-left: 10px;
-            transition: background 0.3s ease;
-        }
-        
-        .chat-logout-btn:hover {
-            background: #a01f24;
         }
         
         .chat-messages {
@@ -377,21 +203,10 @@
             padding: 20px;
             overflow-y: auto;
             background: var(--light-bg);
-            scroll-behavior: smooth;
-        }
-        
-        .chat-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 3px;
         }
         
         .chat-message {
             margin-bottom: 15px;
-            animation: messageSlide 0.3s ease-out;
         }
         
         .chat-message-header {
@@ -424,17 +239,12 @@
             border-radius: 12px;
             box-shadow: 0 2px 5px var(--shadow);
             word-wrap: break-word;
-            line-height: 1.5;
         }
         
         .chat-message.own .chat-message-content {
             background: linear-gradient(135deg, var(--primary), #2d6e2f);
             color: var(--white);
             margin-left: 20px;
-        }
-        
-        .chat-message.own .chat-message-username {
-            color: var(--secondary);
         }
         
         .chat-message.system {
@@ -463,13 +273,7 @@
             padding: 12px 15px;
             border: 2px solid #e5e7eb;
             border-radius: 20px;
-            font-size: 0.95rem;
             outline: none;
-            transition: border-color 0.3s ease;
-        }
-        
-        .chat-input:focus {
-            border-color: var(--primary);
         }
         
         .chat-send {
@@ -480,75 +284,13 @@
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .chat-send:hover {
-            background: var(--secondary);
-            color: var(--text);
-            transform: scale(1.05);
-        }
-        
-        .chat-send:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .chat-users-count {
-            font-size: 0.85rem;
-            opacity: 0.9;
-        }
-        
-        /* Animations */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
-        
-        @keyframes chatPulse {
-            0%, 100% { box-shadow: 0 4px 15px rgba(44, 95, 45, 0.5); }
-            50% { box-shadow: 0 4px 25px rgba(44, 95, 45, 0.8); }
-        }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes messageSlide {
-            from { opacity: 0; transform: translateX(-10px); }
-            to { opacity: 1; transform: translateX(0); }
         }
         
         @media (max-width: 768px) {
-            .hero { padding: 40px 15px; }
-            .container { padding: 30px 15px; }
-            .stat-box { grid-template-columns: 1fr; }
             .chat-box {
                 width: calc(100vw - 20px);
                 height: calc(100vh - 100px);
-                right: 10px;
-                bottom: 80px;
             }
-        }
-        
-        :focus {
-            outline: 3px solid var(--secondary);
-            outline-offset: 2px;
         }
     </style>
 </head>
@@ -557,51 +299,27 @@
     <header class="hero">
         <div class="hero-icon">🌙</div>
         <h1>Ramadan : Entre Traditions Algériennes et Vie en Immigration</h1>
-        <p class="hero-subtitle">Quand le mois sacré devient un pont entre deux mondes</p>
-        <a href="#partager" class="cta-primary">Partagez Votre Expérience</a>
+        <p class="hero-subtitle">Chat communautaire avec authentification Google</p>
     </header>
     
     <main class="container">
-        <p><strong>Le Ramadan en Algérie</strong>, c'est bien plus qu'un mois de jeûne. C'est l'odeur du Chorba qui embaume les rues à l'heure du ftour, les tables généreuses partagées en famille, et cette atmosphère unique qui transforme les nuits en moments de communion.</p>
-        
-        <p>Mais que devient cette magie quand on vit loin de chez soi, en immigration ? Comment maintenir ces traditions quand on est séparé par des milliers de kilomètres ?</p>
-        
-        <div class="visual-placeholder">🕌</div>
-        
-        <h2>🇩🇿 Le Ramadan en Algérie : Un Mois Hors du Temps</h2>
-        
-        <h3>Les Traditions Qui Font Battre le Cœur</h3>
-        
-        <p>En Algérie, le Ramadan bouleverse le rythme quotidien. Les villes s'animent après le coucher du soleil, créant une ambiance festive et spirituelle inégalée.</p>
-        
-        <div class="highlight-box">
-            <strong>💡 Le saviez-vous ?</strong> En Algérie, 99% de la population musulmane observe le Ramadan, créant une cohésion sociale exceptionnelle durant ce mois.
-        </div>
+        <p>Bienvenue sur notre plateforme de chat sécurisée. Connectez-vous avec votre compte Google pour rejoindre la conversation.</p>
     </main>
     
-    <!-- [v1.005] CHAT AVEC AUTH GOOGLE -->
+    <!-- CHAT WIDGET -->
     <div class="chat-widget">
-        <button class="chat-button" id="chatButton" aria-label="Ouvrir le chat">
-            💬
-            <span class="chat-badge" id="chatBadge">0</span>
-        </button>
+        <button class="chat-button" id="chatButton">💬</button>
         
         <div class="chat-box" id="chatBox">
             <!-- Connexion Google -->
             <div class="chat-login" id="chatLogin">
                 <div class="chat-login-icon">🌙</div>
-                <h3>Chat Communautaire Ramadan</h3>
-                <p>Connectez-vous avec Google pour rejoindre le chat</p>
+                <h3>Chat Communautaire</h3>
+                <p>Connectez-vous avec Google</p>
                 
                 <button class="google-signin-btn" id="googleSignInBtn">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%234285F4' d='M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z'/%3E%3Cpath fill='%2334A853' d='M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z'/%3E%3Cpath fill='%23FBBC05' d='M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24c0 3.55.85 6.91 2.34 9.88l7.35-5.7z'/%3E%3Cpath fill='%23EA4335' d='M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z'/%3E%3C/svg%3E" alt="Google">
-                    <span>Se connecter avec Google</span>
+                    <span>🔐 Se connecter avec Google</span>
                 </button>
-                
-                <div class="chat-login-info">
-                    🔒 Connexion sécurisée via Google<br>
-                    Vos données restent privées
-                </div>
             </div>
             
             <!-- Chat principal -->
@@ -609,28 +327,18 @@
                 <div class="chat-header">
                     <div class="chat-header-info">
                         <img src="" alt="Avatar" class="chat-user-avatar" id="userAvatar">
-                        <div>
-                            <strong id="userName">Utilisateur</strong><br>
-                            <span class="chat-users-count">En ligne</span>
-                        </div>
+                        <span id="userName">Utilisateur</span>
                     </div>
                     <div>
-                        <button class="chat-logout-btn" id="logoutBtn">Déconnexion</button>
-                        <button class="chat-close" id="chatClose" aria-label="Fermer">✕</button>
+                        <button class="chat-logout-btn" id="logoutBtn">Déco</button>
+                        <button class="chat-close" id="chatClose">✕</button>
                     </div>
                 </div>
                 
                 <div class="chat-messages" id="chatMessages"></div>
                 
                 <div class="chat-input-container">
-                    <input 
-                        type="text" 
-                        class="chat-input" 
-                        id="chatInput" 
-                        placeholder="Votre message..."
-                        maxlength="200"
-                        autocomplete="off"
-                    >
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Message..." maxlength="200">
                     <button class="chat-send" id="chatSend">📤</button>
                 </div>
             </div>
@@ -643,15 +351,14 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
     <script>
-        // ===== [v1.005] CONFIGURATION FIREBASE =====
-        // REMPLACER PAR VOS CLÉS (voir guide ci-dessous)
+        // ===== CONFIGURATION FIREBASE (TES VRAIES CLÉS) =====
         const firebaseConfig = {
-            apiKey: "VOTRE_API_KEY",
-            authDomain: "VOTRE_PROJECT.firebaseapp.com",
-            projectId: "VOTRE_PROJECT",
-            storageBucket: "VOTRE_PROJECT.appspot.com",
-            messagingSenderId: "VOTRE_SENDER_ID",
-            appId: "VOTRE_APP_ID"
+            apiKey: "AIzaSyBoF6xTWr4dzgbWFwXavVC2mMshHCTK6fM",
+            authDomain: "ramadan-chat-auth.firebaseapp.com",
+            projectId: "ramadan-chat-auth",
+            storageBucket: "ramadan-chat-auth.firebasestorage.app",
+            messagingSenderId: "785976346844",
+            appId: "1:785976346844:web:62b890dbc32a32596f8c19"
         };
         
         // Initialisation
@@ -662,11 +369,8 @@
         
         // Provider Google
         const googleProvider = new firebase.auth.GoogleAuthProvider();
-        googleProvider.setCustomParameters({ prompt: 'select_account' });
         
-        // Variables globales
         let currentUser = null;
-        let messageCount = 0;
         let unsubscribe = null;
         
         // Éléments DOM
@@ -680,7 +384,6 @@
         const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
         const chatSend = document.getElementById('chatSend');
-        const chatBadge = document.getElementById('chatBadge');
         const userName = document.getElementById('userName');
         const userAvatar = document.getElementById('userAvatar');
         
@@ -700,75 +403,58 @@
         // UI
         chatButton.addEventListener('click', () => {
             chatBox.classList.add('active');
-            if (currentUser) {
-                chatInput.focus();
-            }
-            messageCount = 0;
-            chatBadge.style.display = 'none';
         });
         
         chatClose.addEventListener('click', () => {
             chatBox.classList.remove('active');
         });
         
-        // ===== AUTHENTIFICATION GOOGLE =====
+        // Authentification Google
         googleSignInBtn.addEventListener('click', async () => {
             try {
-                const result = await auth.signInWithPopup(googleProvider);
-                currentUser = result.user;
-                console.log('✅ Connexion réussie:', currentUser.displayName);
+                await auth.signInWithPopup(googleProvider);
+                console.log('✅ Connexion réussie');
             } catch (error) {
-                console.error('❌ Erreur auth:', error.message);
+                console.error('❌ Erreur:', error.message);
                 alert('Erreur de connexion: ' + error.message);
             }
         });
         
         // Déconnexion
         logoutBtn.addEventListener('click', async () => {
-            if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
+            if (confirm('Déconnexion ?')) {
                 await auth.signOut();
             }
         });
         
-        // ===== OBSERVER AUTH STATE =====
+        // Observer état auth
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 currentUser = user;
-                
-                // UI connexion réussie
                 chatLogin.style.display = 'none';
                 chatMain.classList.add('active');
                 userName.textContent = user.displayName || 'Utilisateur';
-                userAvatar.src = user.photoURL || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%232C5F2D"%3E%3Cpath d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/%3E%3C/svg%3E';
+                userAvatar.src = user.photoURL || '';
                 
                 // Message système
                 await messagesRef.add({
                     type: 'system',
-                    content: `${user.displayName} a rejoint le chat 🌙`,
+                    content: `${user.displayName} a rejoint 🌙`,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     userId: user.uid
                 });
                 
-                // Écouter les messages
                 listenToMessages();
-                
             } else {
                 currentUser = null;
                 chatLogin.style.display = 'flex';
                 chatMain.classList.remove('active');
-                
-                // Stop l'écoute
-                if (unsubscribe) {
-                    unsubscribe();
-                    unsubscribe = null;
-                }
-                
-                // Clear messages
+                if (unsubscribe) unsubscribe();
                 chatMessages.innerHTML = '';
             }
         });
         
-        // ===== ÉCOUTE MESSAGES =====
+        // Écoute messages
         function listenToMessages() {
             unsubscribe = messagesRef
                 .orderBy('timestamp', 'desc')
@@ -784,19 +470,17 @@
                 });
         }
         
-        // ===== AFFICHAGE MESSAGE =====
+        // Affichage message
         function addMessage(msg, isOwn = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `chat-message ${msg.type === 'system' ? 'system' : ''} ${isOwn ? 'own' : ''}`;
             
             if (msg.type === 'system') {
-                messageDiv.innerHTML = `
-                    <div class="chat-message-content">${msg.content}</div>
-                `;
+                messageDiv.innerHTML = `<div class="chat-message-content">${msg.content}</div>`;
             } else {
                 messageDiv.innerHTML = `
                     <div class="chat-message-header">
-                        ${msg.photoURL ? `<img src="${msg.photoURL}" class="chat-message-avatar" alt="">` : ''}
+                        ${msg.photoURL ? `<img src="${msg.photoURL}" class="chat-message-avatar">` : ''}
                         <span class="chat-message-username">${msg.username}</span>
                         <span class="chat-message-time">${formatTime(msg.timestamp)}</span>
                     </div>
@@ -804,24 +488,15 @@
                 `;
             }
             
-            // Insérer au début
             chatMessages.insertBefore(messageDiv, chatMessages.firstChild);
             
-            // Badge notification
-            if (!chatBox.classList.contains('active') && !isOwn) {
-                messageCount++;
-                chatBadge.textContent = messageCount;
-                chatBadge.style.display = 'flex';
-            }
-            
-            // Limiter à 50 messages DOM
             const allMessages = chatMessages.querySelectorAll('.chat-message');
             if (allMessages.length > 50) {
                 allMessages[allMessages.length - 1].remove();
             }
         }
         
-        // ===== ENVOI MESSAGE =====
+        // Envoi message
         chatSend.addEventListener('click', sendMessage);
         chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
@@ -831,18 +506,7 @@
             if (!currentUser) return;
             
             const message = chatInput.value.trim();
-            
-            if (!message) return;
-            
-            if (message.length > 200) {
-                alert('Message trop long (200 caractères max)');
-                return;
-            }
-            
-            if (/<script|javascript:|onerror|onclick/i.test(message)) {
-                alert('Message contient du contenu non autorisé');
-                return;
-            }
+            if (!message || message.length > 200) return;
             
             try {
                 await messagesRef.add({
@@ -854,22 +518,11 @@
                 });
                 
                 chatInput.value = '';
-                chatInput.focus();
             } catch (error) {
                 console.error('❌ Erreur envoi:', error);
-                alert('Erreur lors de l\'envoi du message');
+                alert('Erreur envoi');
             }
         }
-        
-        // ===== NETTOYAGE AUTO (messages > 24h) =====
-        setInterval(async () => {
-            const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000);
-            const oldMessages = await messagesRef
-                .where('timestamp', '<', cutoff)
-                .get();
-            
-            oldMessages.forEach(doc => doc.ref.delete());
-        }, 60 * 60 * 1000); // Check toutes les heures
     </script>
     
 </body>

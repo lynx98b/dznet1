@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramadan Chat</title>
+    <meta name="description" content="Ramadan en Algérie et en immigration : traditions, spiritualité et maintien des liens culturels à travers le monde">
+    <title>Ramadan : Entre Traditions Algériennes et Vie en Immigration</title>
     
     <style>
-        /* v1.009 - RETOUR VERSION STABLE */
+        /* ===== RESET & VARIABLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -17,742 +18,385 @@
             --primary: #2C5F2D;
             --secondary: #D4AF37;
             --accent: #C1272D;
+            --text: #2C3E50;
+            --light-bg: #F8F9FA;
             --white: #FFFFFF;
+            --shadow: rgba(0, 0, 0, 0.1);
         }
         
+        /* ===== TYPOGRAPHIE ===== */
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--light-bg);
         }
         
-        /* ===== DISCLAIMER MODAL ===== */
-        .disclaimer-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            padding: 20px;
-        }
-        
-        .disclaimer-modal.show {
-            display: flex;
-        }
-        
-        .disclaimer-content {
-            background: white;
-            border-radius: 15px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        
-        .disclaimer-header {
-            background: var(--primary);
-            color: white;
-            padding: 20px;
-            border-radius: 15px 15px 0 0;
+        /* ===== HERO SECTION (10 premières secondes décisives) ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a3a1b 100%);
+            color: var(--white);
+            padding: 60px 20px;
             text-align: center;
+            box-shadow: 0 4px 12px var(--shadow);
         }
         
-        .disclaimer-body {
-            padding: 20px;
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.8s ease-out;
         }
         
-        .disclaimer-body h3 {
-            color: var(--primary);
-            margin: 15px 0 10px;
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 30px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out;
         }
         
-        .disclaimer-body ul {
-            list-style: none;
-            padding: 0;
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
         }
         
-        .disclaimer-body li {
-            padding: 8px;
-            margin: 5px 0;
-            background: #ffebee;
-            border-left: 3px solid var(--accent);
-            border-radius: 5px;
-            font-size: 0.9rem;
-        }
-        
-        .disclaimer-body li::before {
-            content: '❌ ';
-        }
-        
-        .disclaimer-footer {
-            padding: 20px;
-            border-top: 1px solid #ddd;
-        }
-        
-        .disclaimer-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .disclaimer-checkbox input {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-        
-        .disclaimer-btn {
-            width: 100%;
-            padding: 15px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .disclaimer-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        
-        /* ===== RATE LIMIT WARNING ===== */
-        .rate-warning {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            display: none;
-            z-index: 10000;
-            font-weight: bold;
-        }
-        
-        .rate-warning.show {
-            display: block;
-        }
-        
-        /* ===== CHAT WIDGET ===== */
-        .chat-widget {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-        
-        .chat-btn {
-            width: 60px;
-            height: 60px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            font-size: 2rem;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        
-        .chat-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--accent);
-            color: white;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            font-size: 0.7rem;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            border: 2px solid white;
-        }
-        
-        /* ===== CHAT BOX ===== */
-        .chat-box {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 400px;
-            height: 550px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            display: none;
-            flex-direction: column;
-        }
-        
-        .chat-box.show {
-            display: flex;
-        }
-        
-        /* Login */
-        .chat-login {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            padding: 30px;
-            text-align: center;
-        }
-        
-        .chat-login h3 {
-            color: var(--primary);
-            margin: 20px 0;
-        }
-        
-        .google-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 25px;
-            background: white;
-            border: 2px solid #ddd;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        
-        .google-btn:hover {
-            border-color: var(--primary);
-        }
-        
-        /* Chat main */
-        .chat-main {
-            display: none;
-            flex-direction: column;
-            height: 100%;
-        }
-        
-        .chat-main.show {
-            display: flex;
-        }
-        
-        .chat-header {
-            background: var(--primary);
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 15px 15px 0 0;
-        }
-        
-        .chat-header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .chat-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 2px solid var(--secondary);
-        }
-        
-        .chat-close-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        
-        .chat-messages {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background: #fafafa;
-        }
-        
-        .message {
-            margin-bottom: 15px;
-        }
-        
-        .message-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 5px;
-        }
-        
-        .message-avatar {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-        }
-        
-        .message-name {
-            font-weight: bold;
-            color: var(--primary);
-            font-size: 0.85rem;
-        }
-        
-        .message-time {
-            font-size: 0.7rem;
-            color: #999;
-            margin-left: auto;
-        }
-        
-        .message-content {
-            background: white;
-            padding: 10px 12px;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            max-width: 80%;
-        }
-        
-        .message.own .message-content {
-            background: var(--primary);
-            color: white;
-            margin-left: auto;
-        }
-        
-        .message.system {
-            text-align: center;
-        }
-        
-        .message.system .message-content {
-            background: #fff3cd;
-            color: #856404;
+        /* ===== CTA VISIBLE IMMÉDIATEMENT ===== */
+        .cta-primary {
             display: inline-block;
-            font-size: 0.85rem;
-            padding: 6px 15px;
-            border-radius: 15px;
+            background: var(--secondary);
+            color: var(--text);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            animation: fadeInUp 1.2s ease-out;
         }
         
-        .chat-input-area {
-            padding: 15px;
-            border-top: 1px solid #ddd;
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+            background: #E5C047;
         }
         
-        .rate-counter {
-            text-align: center;
-            font-size: 0.8rem;
+        /* ===== CONTAINER RESPONSIVE ===== */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: var(--white);
+        }
+        
+        /* ===== HIÉRARCHIE VISUELLE ===== */
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
             color: var(--primary);
-            margin-bottom: 8px;
-            font-weight: bold;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary);
         }
         
-        .rate-counter.warning {
-            color: orange;
-        }
-        
-        .rate-counter.danger {
+        h3 {
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
             color: var(--accent);
+            margin: 30px 0 15px;
         }
         
-        .chat-input-form {
-            display: flex;
-            gap: 8px;
+        /* ===== PARAGRAPHES COURTS (2-4 lignes) ===== */
+        p {
+            margin-bottom: 20px;
+            font-size: clamp(1rem, 2vw, 1.1rem);
         }
         
-        .chat-input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 2px solid #ddd;
-            border-radius: 20px;
-            outline: none;
+        /* ===== LISTES À PUCES ===== */
+        ul, ol {
+            margin: 20px 0 20px 30px;
         }
         
-        .chat-input:focus {
-            border-color: var(--primary);
+        li {
+            margin-bottom: 12px;
+            line-height: 1.6;
         }
         
-        .chat-send {
+        strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* ===== ENCADRÉS VISUELS ===== */
+        .highlight-box {
+            background: linear-gradient(to right, var(--light-bg), var(--white));
+            border-left: 5px solid var(--secondary);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        
+        .stat-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat {
             background: var(--primary);
-            color: white;
+            color: var(--white);
+            padding: 25px;
+            text-align: center;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat:hover {
+            transform: scale(1.05);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        /* ===== IMAGES / VISUELS ===== */
+        .visual-placeholder {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            height: 300px;
+            margin: 30px 0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--white);
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+        
+        /* ===== FOOTER CTA ===== */
+        .footer-cta {
+            background: var(--primary);
+            color: var(--white);
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .footer-cta h2 {
+            color: var(--white);
             border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
+            margin-bottom: 20px;
         }
         
-        .chat-send:disabled {
-            background: #ccc;
-            cursor: not-allowed;
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        /* Responsive */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
+        /* ===== RESPONSIVE < 768px ===== */
         @media (max-width: 768px) {
-            .chat-box {
-                position: fixed;
-                bottom: 0;
-                right: 0;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                border-radius: 0;
-                max-width: none;
+            .hero {
+                padding: 40px 15px;
             }
             
-            .chat-header {
-                border-radius: 0;
+            .container {
+                padding: 30px 15px;
             }
+            
+            .stat-box {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* ===== ACCESSIBILITÉ ===== */
+        :focus {
+            outline: 3px solid var(--secondary);
+            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
     
-    <!-- DISCLAIMER MODAL -->
-    <div class="disclaimer-modal" id="disclaimerModal">
-        <div class="disclaimer-content">
-            <div class="disclaimer-header">
-                <h2>📜 Règles du Chat</h2>
+    <!-- ===== HERO: 10 PREMIÈRES SECONDES DÉCISIVES ===== -->
+    <header class="hero">
+        <div class="hero-icon">🌙</div>
+        <h1>Ramadan : Entre Traditions Algériennes et Vie en Immigration</h1>
+        <p class="hero-subtitle">Quand le mois sacré devient un pont entre deux mondes</p>
+        <a href="#partager" class="cta-primary">Partagez Votre Expérience</a>
+    </header>
+    
+    <!-- ===== CONTENU PRINCIPAL ===== -->
+    <main class="container">
+        
+        <!-- Introduction accrocheuse -->
+        <p><strong>Le Ramadan en Algérie</strong>, c'est bien plus qu'un mois de jeûne. C'est l'odeur du Chorba qui embaume les rues à l'heure du ftour, les tables généreuses partagées en famille, et cette atmosphère unique qui transforme les nuits en moments de communion.</p>
+        
+        <p>Mais que devient cette magie quand on vit loin de chez soi, en immigration ? Comment maintenir ces traditions quand on est séparé par des milliers de kilomètres ?</p>
+        
+        <div class="visual-placeholder">🕌</div>
+        
+        <!-- Section 1: Sous-titre tous les 80-120 mots -->
+        <h2>🇩🇿 Le Ramadan en Algérie : Un Mois Hors du Temps</h2>
+        
+        <h3>Les Traditions Qui Font Battre le Cœur</h3>
+        
+        <p>En Algérie, le Ramadan bouleverse le rythme quotidien. Les villes s'animent après le coucher du soleil, créant une ambiance festive et spirituelle inégalée.</p>
+        
+        <p><strong>Les moments forts incluent :</strong></p>
+        
+        <ul>
+            <li><strong>Le Ftour familial :</strong> La rupture du jeûne réunit toute la famille autour d'une table généreuse. Chorba, dates, zlabia et thé à la menthe sont les stars incontournables.</li>
+            <li><strong>Les nuits de Tarawih :</strong> Les mosquées se remplissent pour ces prières nocturnes spéciales, créant un sentiment profond d'unité.</li>
+            <li><strong>Le S'hour avant l'aube :</strong> Ce repas pré-jeûne devient un rituel familial, souvent accompagné de discussions jusqu'au premier appel à la prière.</li>
+            <li><strong>La solidarité :</strong> Les associations multiplient les actions caritatives, incarnant l'esprit de partage du mois sacré.</li>
+        </ul>
+        
+        <div class="highlight-box">
+            <strong>💡 Le saviez-vous ?</strong> En Algérie, 99% de la population musulmane observe le Ramadan, créant une cohésion sociale exceptionnelle durant ce mois.
+        </div>
+        
+        <h3>Les Plats Emblématiques</h3>
+        
+        <p>La gastronomie du Ramadan algérien est un patrimoine à elle seule. Chaque région apporte ses spécialités, mais certains classiques traversent tout le pays.</p>
+        
+        <ul>
+            <li><strong>Chorba frik :</strong> Cette soupe traditionnelle aux légumes et blé concassé ouvre presque tous les ftours algériens</li>
+            <li><strong>Bourek :</strong> Ces bricks farcis (viande, fromage, pomme de terre) sont omniprésents</li>
+            <li><strong>Zlabia et Qalb el louz :</strong> Les pâtisseries au miel qui font le bonheur des gourmands</li>
+            <li><strong>Lben et dattes :</strong> La combinaison traditionnelle pour rompre le jeûne en douceur</li>
+        </ul>
+        
+        <div class="visual-placeholder">🍲</div>
+        
+        <!-- Section 2 -->
+        <h2>✈️ Le Ramadan en Immigration : Entre Nostalgie et Adaptation</h2>
+        
+        <h3>Les Défis Quotidiens</h3>
+        
+        <p>Vivre le Ramadan loin de l'Algérie présente des défis uniques. Les immigrés doivent jongler entre leurs obligations professionnelles et leurs pratiques religieuses dans un environnement souvent peu adapté.</p>
+        
+        <p><strong>Les principales difficultés rencontrées :</strong></p>
+        
+        <ol>
+            <li><strong>Horaires de travail inadaptés :</strong> Maintenir un rythme professionnel normal tout en jeûnant demande une organisation rigoureuse</li>
+            <li><strong>Isolement social :</strong> L'absence de l'ambiance collective du Ramadan peut peser sur le moral</li>
+            <li><strong>Ingrédients introuvables :</strong> Reproduire les recettes traditionnelles devient un défi quand certains produits manquent</li>
+            <li><strong>Décalage horaire :</strong> Les appels en visio avec la famille coïncident rarement avec les bons moments</li>
+        </ol>
+        
+        <div class="stat-box">
+            <div class="stat">
+                <div class="stat-number">2M+</div>
+                <div>Algériens en France</div>
             </div>
-            <div class="disclaimer-body">
-                <h3>❌ Strictement Interdit</h3>
-                <ul>
-                    <li>Politique et propagande</li>
-                    <li>Extrémisme et haine</li>
-                    <li>Armes et violence</li>
-                    <li>Drogue</li>
-                    <li>Menaces et intimidation</li>
-                    <li>Discrimination</li>
-                    <li>Contenu sexuel</li>
-                    <li>Harcèlement et insultes</li>
-                    <li>Spam</li>
-                    <li>Désinformation</li>
-                </ul>
-                <p style="margin-top: 15px; padding: 10px; background: #fff3cd; border-radius: 8px;">
-                    <strong>⏱️ Limite:</strong> 5 messages par minute maximum
-                </p>
+            <div class="stat">
+                <div class="stat-number">18h</div>
+                <div>Jeûne max en été (Europe)</div>
             </div>
-            <div class="disclaimer-footer">
-                <label class="disclaimer-checkbox">
-                    <input type="checkbox" id="acceptCheckbox">
-                    <span>J'ai lu et j'accepte les règles</span>
-                </label>
-                <button class="disclaimer-btn" id="acceptBtn" disabled>Accepter</button>
+            <div class="stat">
+                <div class="stat-number">100%</div>
+                <div>Connexion digitale</div>
             </div>
         </div>
-    </div>
-    
-    <!-- RATE LIMIT WARNING -->
-    <div class="rate-warning" id="rateWarning">
-        ⏱️ Trop de messages ! Patientez <span id="rateCountdown">10</span>s
-    </div>
-    
-    <!-- CHAT WIDGET -->
-    <div class="chat-widget">
-        <button class="chat-btn" id="chatBtn">
-            💬
-            <span class="chat-badge" id="chatBadge">0</span>
-        </button>
         
-        <div class="chat-box" id="chatBox">
-            <!-- Login -->
-            <div class="chat-login" id="chatLogin">
-                <div style="font-size: 4rem;">🌙</div>
-                <h3>Chat Ramadan</h3>
-                <p>Rejoignez la communauté</p>
-                <button class="google-btn" id="googleBtn">
-                    <span>🔐</span>
-                    <span>Connexion Google</span>
-                </button>
-            </div>
-            
-            <!-- Chat -->
-            <div class="chat-main" id="chatMain">
-                <div class="chat-header">
-                    <div class="chat-header-left">
-                        <img src="" class="chat-avatar" id="userAvatar">
-                        <div>
-                            <div id="userName">Utilisateur</div>
-                            <div style="font-size: 0.7rem;" id="onlineCount">En ligne</div>
-                        </div>
-                    </div>
-                    <button class="chat-close-btn" id="closeBtn">✕</button>
-                </div>
-                
-                <div class="chat-messages" id="messages"></div>
-                
-                <div class="chat-input-area">
-                    <div class="rate-counter" id="rateCounter">5/5 messages</div>
-                    <form class="chat-input-form" id="messageForm">
-                        <input 
-                            type="text" 
-                            class="chat-input" 
-                            id="messageInput" 
-                            placeholder="Votre message..."
-                            maxlength="200"
-                            autocomplete="off"
-                        >
-                        <button type="submit" class="chat-send" id="sendBtn">📤</button>
-                    </form>
-                </div>
-            </div>
+        <h3>Les Solutions Créatives</h3>
+        
+        <p>Face à ces défis, la communauté algérienne en immigration fait preuve d'une résilience remarquable. Les nouvelles générations réinventent les traditions tout en préservant l'essentiel.</p>
+        
+        <p><strong>Les initiatives qui fonctionnent :</strong></p>
+        
+        <ul>
+            <li><strong>Ftours communautaires :</strong> Les associations algériennes organisent des ruptures de jeûne collectives, recréant l'atmosphère du pays</li>
+            <li><strong>Visioconférences familiales :</strong> WhatsApp et Zoom permettent de partager virtuellement le ftour avec les proches restés au pays</li>
+            <li><strong>Épiceries spécialisées :</strong> De plus en plus de commerces proposent les produits algériens essentiels au Ramadan</li>
+            <li><strong>Applications mobiles :</strong> Des apps dédiées donnent les horaires de prière locaux et rappellent les moments importants</li>
+        </ul>
+        
+        <div class="highlight-box">
+            <strong>✨ Témoignage :</strong> "En France, j'ai découvert que le Ramadan pouvait être encore plus fort spirituellement. Sans l'agitation des rues, je me concentre davantage sur l'essence même du mois sacré." — Amina, 34 ans, Paris
         </div>
-    </div>
+        
+        <div class="visual-placeholder">🌍</div>
+        
+        <!-- Section 3 -->
+        <h2>🔗 Maintenir le Lien : Transmission et Identité</h2>
+        
+        <h3>L'Enjeu de la Deuxième Génération</h3>
+        
+        <p>Pour les enfants d'immigrés nés à l'étranger, le Ramadan devient un marqueur identitaire essentiel. C'est souvent le moment où ils se reconnectent le plus fortement à leurs racines algériennes.</p>
+        
+        <p>Les parents jouent un rôle crucial dans cette transmission culturelle. Ils adaptent les rituels au contexte local tout en préservant les valeurs fondamentales.</p>
+        
+        <ul>
+            <li><strong>Apprentissage culinaire :</strong> Cuisiner ensemble les plats traditionnels devient un moment de transmission privilégié</li>
+            <li><strong>Récits familiaux :</strong> Partager les souvenirs du Ramadan en Algérie aide à construire une mémoire collective</li>
+            <li><strong>Visites au pays :</strong> Passer le Ramadan en Algérie reste un moment fort pour les jeunes de la diaspora</li>
+        </ul>
+        
+        <h3>Le Ramadan 2.0</h3>
+        
+        <p>La digitalisation transforme l'expérience du Ramadan en immigration. Les réseaux sociaux deviennent des ponts virtuels entre les deux rives de la Méditerranée.</p>
+        
+        <p><strong>Les nouveaux outils :</strong></p>
+        
+        <ul>
+            <li>Groupes Facebook de recettes du Ramadan algérien</li>
+            <li>Comptes Instagram partageant quotidiennement les traditions</li>
+            <li>Chaînes YouTube de cuisine maghrébine</li>
+            <li>Applications de rappel des horaires de prière géolocalisés</li>
+        </ul>
+        
+        <div class="highlight-box">
+            <strong>💡 Conseil pratique :</strong> Créez un groupe WhatsApp familial dédié au Ramadan. Partagez photos de ftours, vidéos de préparation, et messages de soutien. Cela maintient le lien malgré la distance.
+        </div>
+        
+        <!-- Conclusion -->
+        <h2>🌟 Conclusion : Un Pont Entre Deux Mondes</h2>
+        
+        <p>Le Ramadan en immigration n'est ni une copie affaiblie du Ramadan algérien, ni une expérience totalement nouvelle. C'est un pont unique entre deux mondes, où tradition et adaptation se rencontrent.</p>
+        
+        <p>Cette expérience enrichit autant qu'elle questionne. Elle pousse à l'essentiel : au-delà des rituels et des plats, c'est la spiritualité, le partage et les valeurs familiales qui restent le cœur du Ramadan.</p>
+        
+        <p><strong>Que vous soyez en Algérie ou à l'autre bout du monde, le Ramadan reste ce mois béni qui unit les cœurs au-delà des frontières.</strong></p>
+        
+    </main>
     
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    
-    <script>
-        console.log('🚀 Chat v1.009 - Version stable');
-        
-        // ===== CONFIG FIREBASE =====
-        const firebaseConfig = {
-            apiKey: "AIzaSyBoF6xTWr4dzgbWFwXavVC2mMshHCTK6fM",
-            authDomain: "ramadan-chat-auth.firebaseapp.com",
-            projectId: "ramadan-chat-auth",
-            storageBucket: "ramadan-chat-auth.firebasestorage.app",
-            messagingSenderId: "785976346844",
-            appId: "1:785976346844:web:62b890dbc32a32596f8c19"
-        };
-        
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const messagesRef = db.collection('messages');
-        const usersRef = db.collection('users');
-        const provider = new firebase.auth.GoogleAuthProvider();
-        
-        let currentUser = null;
-        let unsubscribe = null;
-        
-        // DOM
-        const chatBtn = document.getElementById('chatBtn');
-        const chatBox = document.getElementById('chatBox');
-        const chatLogin = document.getElementById('chatLogin');
-        const chatMain = document.getElementById('chatMain');
-        const googleBtn = document.getElementById('googleBtn');
-        const closeBtn = document.getElementById('closeBtn');
-        const messageForm = document.getElementById('messageForm');
-        const messageInput = document.getElementById('messageInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const messages = document.getElementById('messages');
-        const userName = document.getElementById('userName');
-        const userAvatar = document.getElementById('userAvatar');
-        const onlineCount = document.getElementById('onlineCount');
-        const rateCounter = document.getElementById('rateCounter');
-        const rateWarning = document.getElementById('rateWarning');
-        const rateCountdown = document.getElementById('rateCountdown');
-        const disclaimerModal = document.getElementById('disclaimerModal');
-        const acceptCheckbox = document.getElementById('acceptCheckbox');
-        const acceptBtn = document.getElementById('acceptBtn');
-        const chatBadge = document.getElementById('chatBadge');
-        
-        // ===== DISCLAIMER =====
-        let termsAccepted = localStorage.getItem('terms') === 'ok';
-        
-        acceptCheckbox.addEventListener('change', () => {
-            acceptBtn.disabled = !acceptCheckbox.checked;
-        });
-        
-        acceptBtn.addEventListener('click', () => {
-            localStorage.setItem('terms', 'ok');
-            termsAccepted = true;
-            disclaimerModal.classList.remove('show');
-        });
-        
-        // ===== RATE LIMITING =====
-        let messageTimes = [];
-        const MAX_MESSAGES = 5;
-        const TIME_WINDOW = 60000; // 1 minute
-        const COOLDOWN = 10000; // 10 secondes
-        let rateLimited = false;
-        
-        function checkRate() {
-            const now = Date.now();
-            messageTimes = messageTimes.filter(t => now - t < TIME_WINDOW);
-            
-            const remaining = MAX_MESSAGES - messageTimes.length;
-            rateCounter.textContent = `${remaining}/${MAX_MESSAGES} messages`;
-            rateCounter.className = 'rate-counter';
-            
-            if (remaining <= 1) rateCounter.classList.add('danger');
-            else if (remaining <= 2) rateCounter.classList.add('warning');
-            
-            if (messageTimes.length >= MAX_MESSAGES) {
-                activateRateLimit();
-                return false;
-            }
-            return true;
-        }
-        
-        function activateRateLimit() {
-            if (rateLimited) return;
-            rateLimited = true;
-            rateWarning.classList.add('show');
-            sendBtn.disabled = true;
-            messageInput.disabled = true;
-            
-            let seconds = COOLDOWN / 1000;
-            const interval = setInterval(() => {
-                seconds--;
-                rateCountdown.textContent = seconds;
-                if (seconds <= 0) clearInterval(interval);
-            }, 1000);
-            
-            setTimeout(() => {
-                rateLimited = false;
-                rateWarning.classList.remove('show');
-                sendBtn.disabled = false;
-                messageInput.disabled = false;
-                messageTimes = [];
-                checkRate();
-            }, COOLDOWN);
-        }
-        
-        // ===== UI =====
-        chatBtn.addEventListener('click', () => {
-            chatBox.classList.toggle('show');
-        });
-        
-        closeBtn.addEventListener('click', () => {
-            chatBox.classList.remove('show');
-        });
-        
-        googleBtn.addEventListener('click', async () => {
-            if (!termsAccepted) {
-                disclaimerModal.classList.add('show');
-                return;
-            }
-            
-            try {
-                await auth.signInWithPopup(provider);
-                console.log('✅ Connexion OK');
-            } catch (error) {
-                console.error('❌ Erreur:', error);
-                alert('Erreur: ' + error.message);
-            }
-        });
-        
-        // ===== AUTH =====
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                console.log('✅ User connecté:', user.displayName);
-                currentUser = user;
-                
-                chatLogin.style.display = 'none';
-                chatMain.classList.add('show');
-                userName.textContent = user.displayName;
-                userAvatar.src = user.photoURL;
-                
-                // Ajouter user
-                await usersRef.doc(user.uid).set({
-                    name: user.displayName,
-                    photo: user.photoURL,
-                    time: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                usersRef.doc(user.uid).onDisconnect().delete();
-                
-                // Message système
-                await messagesRef.add({
-                    type: 'system',
-                    text: `${user.displayName} a rejoint 🌙`,
-                    time: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                listenMessages();
-                listenUsers();
-                checkRate();
-                
-            } else {
-                console.log('❌ User déconnecté');
-                currentUser = null;
-                chatLogin.style.display = 'flex';
-                chatMain.classList.remove('show');
-                messages.innerHTML = '';
-                if (unsubscribe) unsubscribe();
-            }
-        });
-        
-        // ===== MESSAGES =====
-        function listenMessages() {
-            unsubscribe = messagesRef
-                .orderBy('time', 'desc')
-                .limit(50)
-                .onSnapshot((snapshot) => {
-                    messages.innerHTML = '';
-                    const docs = [];
-                    snapshot.forEach(doc => docs.push(doc.data()));
-                    docs.reverse().forEach(msg => addMessage(msg));
-                });
-        }
-        
-        function addMessage(msg) {
-            const div = document.createElement('div');
-            const isOwn = currentUser && msg.uid === currentUser.uid;
-            div.className = `message ${msg.type === 'system' ? 'system' : ''} ${isOwn ? 'own' : ''}`;
-            
-            if (msg.type === 'system') {
-                div.innerHTML = `<div class="message-content">${msg.text}</div>`;
-            } else {
-                div.innerHTML = `
-                    <div class="message-header">
-                        <img src="${msg.photo}" class="message-avatar">
-                        <span class="message-name">${msg.name}</span>
-                        <span class="message-time">${formatTime(msg.time)}</span>
-                    </div>
-                    <div class="message-content">${msg.text}</div>
-                `;
-            }
-            
-            messages.appendChild(div);
-            messages.scrollTop = messages.scrollHeight;
-        }
-        
-        function formatTime(timestamp) {
-            if (!timestamp) return '';
-            const date = timestamp.toDate();
-            return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-        }
-        
-        // ===== SEND MESSAGE =====
-        messageForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!currentUser || rateLimited) return;
-            if (!checkRate()) return;
-            
-            const text = messageInput.value.trim();
-            if (!text) return;
-            
-            try {
-                await messagesRef.add({
-                    uid: currentUser.uid,
-                    name: currentUser.displayName,
-                    photo: currentUser.photoURL,
-                    text: text,
-                    time: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                messageTimes.push(Date.now());
-                messageInput.value = '';
-                checkRate();
-                
-            } catch (error) {
-                console.error('❌ Erreur:', error);
-                alert('Erreur envoi');
-            }
-        });
-        
-        // ===== USERS COUNT =====
-        function listenUsers() {
-            usersRef.onSnapshot((snapshot) => {
-                onlineCount.textContent = `${snapshot.size} en ligne`;
-            });
-        }
-        
-        console.log('✅ Chat prêt');
-    </script>
+    <!-- ===== CTA FINAL ===== -->
+    <section class="footer-cta" id="partager">
+        <h2>Partagez Votre Expérience du Ramadan</h2>
+        <p style="margin-bottom: 30px; font-size: 1.1rem;">Vous vivez le Ramadan en immigration ? Racontez-nous votre histoire et vos astuces !</p>
+        <a href="mailto:contact@ramadan-stories.com" class="cta-primary">Contactez-Nous</a>
+    </section>
     
 </body>
 </html>

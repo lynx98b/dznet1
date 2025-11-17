@@ -6,8 +6,8 @@
     <title>Ramadan Chat - Communauté</title>
     
     <style>
-        /* __version__ = "v1.006" */
-        /* [v1.006] Chat élégant avec emojis, cadeaux, liste users */
+        /* __version__ = "v1.007" */
+        /* [v1.007] Rate limiting + Conditions d'utilisation + Anti-spam */
         
         * {
             margin: 0;
@@ -34,7 +34,262 @@
             background: var(--light-bg);
         }
         
-        /* ===== CHAT WIDGET ÉLÉGANT ===== */
+        /* ===== MODAL CONDITIONS D'UTILISATION ===== */
+        .terms-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .terms-modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .terms-modal {
+            background: var(--white);
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            animation: slideUpModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .terms-modal-header {
+            background: var(--gradient-1);
+            color: var(--white);
+            padding: 25px 30px;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+        }
+        
+        .terms-modal-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        
+        .terms-modal-header p {
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+        
+        .terms-modal-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .terms-modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .terms-modal-body::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        .terms-section {
+            margin-bottom: 25px;
+        }
+        
+        .terms-section h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .terms-section p {
+            color: var(--text);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        
+        .terms-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .terms-list li {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: #fff5f5;
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            color: var(--text);
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .terms-list li::before {
+            content: '❌';
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .terms-highlight {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--secondary);
+            margin: 20px 0;
+        }
+        
+        .terms-highlight h4 {
+            color: #92400e;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .terms-highlight p {
+            color: #92400e;
+            font-weight: 600;
+        }
+        
+        .terms-modal-footer {
+            padding: 25px 30px;
+            border-top: 1px solid #e5e7eb;
+            background: var(--light-bg);
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .terms-checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--white);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .terms-checkbox-container:hover {
+            background: #f0fdf4;
+            border-color: var(--primary);
+        }
+        
+        .terms-checkbox {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+        
+        .terms-checkbox-label {
+            color: var(--text);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .terms-accept-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient-1);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(44, 95, 45, 0.3);
+        }
+        
+        .terms-accept-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        .terms-accept-btn:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 95, 45, 0.4);
+        }
+        
+        /* ===== RATE LIMIT WARNING ===== */
+        .rate-limit-warning {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--accent), #e74c3c);
+            color: var(--white);
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(193, 39, 45, 0.4);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        .rate-limit-warning.active {
+            display: flex;
+        }
+        
+        .rate-limit-icon {
+            font-size: 1.5rem;
+        }
+        
+        .rate-limit-countdown {
+            background: rgba(255,255,255,0.3);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            min-width: 45px;
+            text-align: center;
+        }
+        
+        /* ===== MESSAGES REMAINING INDICATOR ===== */
+        .messages-counter {
+            position: absolute;
+            top: -35px;
+            right: 0;
+            background: var(--light-bg);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text);
+            font-weight: 600;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .messages-counter.warning {
+            background: #fef3c7;
+            border-color: #fde68a;
+            color: #92400e;
+        }
+        
+        .messages-counter.danger {
+            background: #fee2e2;
+            border-color: #fca5a5;
+            color: #991b1b;
+        }
+        
+        /* ===== STYLES EXISTANTS (v1.006) ===== */
         .chat-widget {
             position: fixed;
             bottom: 20px;
@@ -101,7 +356,6 @@
             animation: pulse 2s infinite;
         }
         
-        /* ===== CHAT BOX PRINCIPALE ===== */
         .chat-box {
             position: absolute;
             bottom: 90px;
@@ -114,7 +368,6 @@
             display: none;
             flex-direction: row;
             overflow: hidden;
-            backdrop-filter: blur(10px);
         }
         
         .chat-box.active {
@@ -122,7 +375,6 @@
             animation: slideUpFade 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
-        /* ===== SIDEBAR USERS ===== */
         .chat-sidebar {
             width: 120px;
             background: linear-gradient(180deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -162,7 +414,6 @@
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
         }
         
         .user-item:hover {
@@ -203,7 +454,6 @@
             white-space: nowrap;
         }
         
-        /* ===== ZONE PRINCIPALE CHAT ===== */
         .chat-main-area {
             flex: 1;
             display: flex;
@@ -211,7 +461,6 @@
             background: var(--white);
         }
         
-        /* Écran de connexion */
         .chat-login {
             display: flex;
             flex-direction: column;
@@ -265,7 +514,6 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
         
-        /* Chat principal */
         .chat-main {
             display: none;
             flex-direction: column;
@@ -347,7 +595,6 @@
             transform: rotate(90deg) scale(1.2);
         }
         
-        /* Messages */
         .chat-messages {
             flex: 1;
             padding: 20px;
@@ -405,7 +652,6 @@
             word-wrap: break-word;
             line-height: 1.6;
             max-width: 80%;
-            position: relative;
             border: 1px solid rgba(0,0,0,0.05);
         }
         
@@ -445,12 +691,12 @@
             padding: 20px;
         }
         
-        /* ===== ZONE INPUT ÉLÉGANTE ===== */
         .chat-input-area {
             padding: 20px;
             background: var(--white);
             border-top: 1px solid #e5e7eb;
             box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+            position: relative;
         }
         
         .chat-actions-bar {
@@ -479,11 +725,6 @@
             color: var(--white);
             border-color: var(--primary);
             transform: translateY(-2px);
-        }
-        
-        .action-btn span {
-            font-size: 0.8rem;
-            font-weight: 600;
         }
         
         .chat-input-container {
@@ -538,7 +779,6 @@
             box-shadow: none;
         }
         
-        /* ===== EMOJI PICKER ===== */
         .emoji-picker {
             position: absolute;
             bottom: 180px;
@@ -587,7 +827,6 @@
             transform: scale(1.3);
         }
         
-        /* ===== GIFT PICKER ===== */
         .gift-picker {
             position: absolute;
             bottom: 180px;
@@ -709,6 +948,37 @@
             }
         }
         
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideUpModal {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .chat-box {
@@ -729,12 +999,92 @@
             .gift-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .terms-modal {
+                max-width: 95%;
+            }
         }
     </style>
 </head>
 <body>
     
-    <!-- CHAT WIDGET ÉLÉGANT -->
+    <!-- MODAL CONDITIONS D'UTILISATION -->
+    <div class="terms-modal-overlay" id="termsModal">
+        <div class="terms-modal">
+            <div class="terms-modal-header">
+                <h2>📜 Conditions d'Utilisation</h2>
+                <p>Veuillez lire et accepter avant de rejoindre le chat</p>
+            </div>
+            
+            <div class="terms-modal-body">
+                <div class="terms-section">
+                    <h3>🤝 Bienvenue dans notre communauté</h3>
+                    <p>Ce chat est un espace de partage bienveillant et respectueux dédié à la communauté du Ramadan. En acceptant ces conditions, vous vous engagez à contribuer à un environnement sain et positif pour tous.</p>
+                </div>
+                
+                <div class="terms-highlight">
+                    <h4>⚠️ Avertissement Important</h4>
+                    <p>Toute violation de ces règles entraînera une exclusion immédiate et définitive du chat. Les infractions graves seront signalées aux autorités compétentes.</p>
+                </div>
+                
+                <div class="terms-section">
+                    <h3>❌ Contenus et Comportements Interdits</h3>
+                    <ul class="terms-list">
+                        <li><strong>Politique :</strong> Débats politiques, propagande, messages partisans</li>
+                        <li><strong>Extrémisme :</strong> Incitation à la haine, radicalisation, terrorisme</li>
+                        <li><strong>Armes :</strong> Vente, promotion ou discussion sur les armes</li>
+                        <li><strong>Drogue :</strong> Usage, vente ou promotion de substances illicites</li>
+                        <li><strong>Violence :</strong> Menaces, intimidation, harcèlement de toute forme</li>
+                        <li><strong>Discrimination :</strong> Racisme, sexisme, homophobie, xénophobie</li>
+                        <li><strong>Contenu sexuel :</strong> Messages explicites, pornographie, sollicitation</li>
+                        <li><strong>Harcèlement :</strong> Bizutage, moqueries, insultes répétées</li>
+                        <li><strong>Spam :</strong> Messages répétitifs, publicité non autorisée</li>
+                        <li><strong>Désinformation :</strong> Fake news, rumeurs, manipulation</li>
+                        <li><strong>Usurpation :</strong> Se faire passer pour quelqu'un d'autre</li>
+                        <li><strong>Données personnelles :</strong> Partage non autorisé d'infos privées</li>
+                    </ul>
+                </div>
+                
+                <div class="terms-section">
+                    <h3>✅ Comportements Attendus</h3>
+                    <p><strong>Respect mutuel :</strong> Traitez les autres avec bienveillance et courtoisie.</p>
+                    <p><strong>Écoute active :</strong> Soyez ouverts aux différentes perspectives.</p>
+                    <p><strong>Entraide :</strong> Soutenez les membres de la communauté.</p>
+                    <p><strong>Signalement :</strong> Alertez les modérateurs en cas de problème.</p>
+                </div>
+                
+                <div class="terms-section">
+                    <h3>🔒 Confidentialité et Données</h3>
+                    <p>Vos messages sont stockés de manière sécurisée. Nous ne partageons jamais vos données personnelles avec des tiers. Votre adresse email Google est utilisée uniquement pour l'authentification.</p>
+                </div>
+                
+                <div class="terms-section">
+                    <h3>⏱️ Limite de Messages</h3>
+                    <p>Pour éviter le spam, vous pouvez envoyer <strong>maximum 5 messages par minute</strong>. Un compteur en temps réel vous indique vos messages restants.</p>
+                </div>
+            </div>
+            
+            <div class="terms-modal-footer">
+                <label class="terms-checkbox-container">
+                    <input type="checkbox" class="terms-checkbox" id="termsCheckbox">
+                    <span class="terms-checkbox-label">J'ai lu et j'accepte les conditions d'utilisation du chat</span>
+                </label>
+                
+                <button class="terms-accept-btn" id="termsAcceptBtn" disabled>
+                    Accepter et Continuer
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- RATE LIMIT WARNING -->
+    <div class="rate-limit-warning" id="rateLimitWarning">
+        <span class="rate-limit-icon">⏱️</span>
+        <span>Trop de messages ! Patientez</span>
+        <span class="rate-limit-countdown" id="rateLimitCountdown">10s</span>
+    </div>
+    
+    <!-- CHAT WIDGET -->
     <div class="chat-widget">
         <button class="chat-button" id="chatButton" aria-label="Ouvrir le chat">
             <span>💬</span>
@@ -742,15 +1092,12 @@
         </button>
         
         <div class="chat-box" id="chatBox">
-            <!-- SIDEBAR USERS -->
             <div class="chat-sidebar" id="chatSidebar">
                 <div class="sidebar-header">En ligne</div>
                 <div id="usersList"></div>
             </div>
             
-            <!-- ZONE PRINCIPALE -->
             <div class="chat-main-area">
-                <!-- Écran de connexion -->
                 <div class="chat-login" id="chatLogin">
                     <div class="chat-login-icon">🌙</div>
                     <h3>Chat Ramadan</h3>
@@ -762,7 +1109,6 @@
                     </button>
                 </div>
                 
-                <!-- Chat principal -->
                 <div class="chat-main" id="chatMain">
                     <div class="chat-header">
                         <div class="chat-header-left">
@@ -781,22 +1127,18 @@
                     <div class="chat-messages" id="chatMessages"></div>
                     
                     <div class="chat-input-area">
+                        <div class="messages-counter" id="messagesCounter">5/5 messages</div>
+                        
                         <div class="chat-actions-bar">
-                            <button class="action-btn" id="emojiBtn" title="Emojis">
-                                😊
-                            </button>
-                            <button class="action-btn" id="giftBtn" title="Cadeaux">
-                                🎁
-                            </button>
+                            <button class="action-btn" id="emojiBtn" title="Emojis">😊</button>
+                            <button class="action-btn" id="giftBtn" title="Cadeaux">🎁</button>
                         </div>
                         
-                        <!-- Emoji Picker -->
                         <div class="emoji-picker" id="emojiPicker">
                             <h4>😊 Emojis populaires</h4>
                             <div class="emoji-grid" id="emojiGrid"></div>
                         </div>
                         
-                        <!-- Gift Picker -->
                         <div class="gift-picker" id="giftPicker">
                             <h4>🎁 Envoyer un cadeau</h4>
                             <div class="gift-grid" id="giftGrid"></div>
@@ -848,6 +1190,106 @@
         let messageCount = 0;
         let unsubscribe = null;
         let usersUnsubscribe = null;
+        let termsAccepted = false;
+        
+        // ===== RATE LIMITING =====
+        const RATE_LIMIT = {
+            maxMessages: 5,
+            timeWindow: 60000, // 60 secondes
+            cooldownTime: 10000 // 10 secondes de cooldown
+        };
+        
+        let messageTimestamps = [];
+        let isRateLimited = false;
+        let rateLimitTimer = null;
+        
+        function checkRateLimit() {
+            const now = Date.now();
+            
+            // Nettoyer les anciens timestamps
+            messageTimestamps = messageTimestamps.filter(
+                timestamp => now - timestamp < RATE_LIMIT.timeWindow
+            );
+            
+            // Calculer messages restants
+            const messagesRemaining = RATE_LIMIT.maxMessages - messageTimestamps.length;
+            updateMessagesCounter(messagesRemaining);
+            
+            // Vérifier limite
+            if (messageTimestamps.length >= RATE_LIMIT.maxMessages) {
+                activateRateLimit();
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function updateMessagesCounter(remaining) {
+            const counter = document.getElementById('messagesCounter');
+            counter.textContent = `${remaining}/${RATE_LIMIT.maxMessages} messages`;
+            
+            counter.className = 'messages-counter';
+            if (remaining <= 2) {
+                counter.classList.add('danger');
+            } else if (remaining <= 3) {
+                counter.classList.add('warning');
+            }
+        }
+        
+        function activateRateLimit() {
+            if (isRateLimited) return;
+            
+            isRateLimited = true;
+            const rateLimitWarning = document.getElementById('rateLimitWarning');
+            const countdown = document.getElementById('rateLimitCountdown');
+            const sendBtn = document.getElementById('chatSend');
+            const chatInput = document.getElementById('chatInput');
+            
+            rateLimitWarning.classList.add('active');
+            sendBtn.disabled = true;
+            chatInput.disabled = true;
+            
+            let secondsLeft = RATE_LIMIT.cooldownTime / 1000;
+            countdown.textContent = `${secondsLeft}s`;
+            
+            const countdownInterval = setInterval(() => {
+                secondsLeft--;
+                countdown.textContent = `${secondsLeft}s`;
+                
+                if (secondsLeft <= 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+            
+            rateLimitTimer = setTimeout(() => {
+                isRateLimited = false;
+                rateLimitWarning.classList.remove('active');
+                sendBtn.disabled = false;
+                chatInput.disabled = false;
+                messageTimestamps = [];
+                updateMessagesCounter(RATE_LIMIT.maxMessages);
+            }, RATE_LIMIT.cooldownTime);
+        }
+        
+        // ===== MODAL CONDITIONS =====
+        const termsModal = document.getElementById('termsModal');
+        const termsCheckbox = document.getElementById('termsCheckbox');
+        const termsAcceptBtn = document.getElementById('termsAcceptBtn');
+        
+        termsCheckbox.addEventListener('change', () => {
+            termsAcceptBtn.disabled = !termsCheckbox.checked;
+        });
+        
+        termsAcceptBtn.addEventListener('click', () => {
+            termsAccepted = true;
+            termsModal.classList.remove('active');
+            localStorage.setItem('termsAccepted', 'true');
+        });
+        
+        // Vérifier si déjà accepté
+        if (localStorage.getItem('termsAccepted') === 'true') {
+            termsAccepted = true;
+        }
         
         // Éléments DOM
         const chatButton = document.getElementById('chatButton');
@@ -890,7 +1332,6 @@
             { icon: '💚', label: 'Cœur', message: 'vous envoie son amitié' }
         ];
         
-        // Générer emoji picker
         emojis.forEach(emoji => {
             const btn = document.createElement('button');
             btn.className = 'emoji-btn';
@@ -902,7 +1343,6 @@
             emojiGrid.appendChild(btn);
         });
         
-        // Générer gift picker
         gifts.forEach(gift => {
             const btn = document.createElement('button');
             btn.className = 'gift-btn';
@@ -914,7 +1354,6 @@
             giftGrid.appendChild(btn);
         });
         
-        // Toggle pickers
         emojiBtn.addEventListener('click', () => {
             emojiPicker.classList.toggle('active');
             giftPicker.classList.remove('active');
@@ -925,7 +1364,6 @@
             emojiPicker.classList.remove('active');
         });
         
-        // Fermer pickers en cliquant ailleurs
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.action-btn') && 
                 !e.target.closest('.emoji-picker') && 
@@ -935,13 +1373,11 @@
             }
         });
         
-        // Auto-resize textarea
         chatInput.addEventListener('input', function() {
             this.style.height = 'auto';
             this.style.height = (this.scrollHeight) + 'px';
         });
         
-        // Utilitaires
         function sanitizeHTML(text) {
             const div = document.createElement('div');
             div.textContent = text;
@@ -954,7 +1390,6 @@
             return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
         }
         
-        // UI
         chatButton.addEventListener('click', () => {
             chatBox.classList.add('active');
             if (currentUser) chatInput.focus();
@@ -966,8 +1401,12 @@
             chatBox.classList.remove('active');
         });
         
-        // Authentification Google
         googleSignInBtn.addEventListener('click', async () => {
+            if (!termsAccepted) {
+                termsModal.classList.add('active');
+                return;
+            }
+            
             try {
                 await auth.signInWithPopup(googleProvider);
             } catch (error) {
@@ -976,14 +1415,12 @@
             }
         });
         
-        // Déconnexion
         logoutBtn.addEventListener('click', async () => {
             if (confirm('Déconnexion ?')) {
                 await auth.signOut();
             }
         });
         
-        // Observer auth state
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 currentUser = user;
@@ -992,7 +1429,6 @@
                 headerName.textContent = user.displayName || 'Utilisateur';
                 headerAvatar.src = user.photoURL || '';
                 
-                // Ajouter user à Firestore
                 await usersRef.doc(user.uid).set({
                     uid: user.uid,
                     name: user.displayName,
@@ -1000,10 +1436,8 @@
                     lastSeen: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 
-                // Supprimer à la déconnexion
                 usersRef.doc(user.uid).onDisconnect().delete();
                 
-                // Message système
                 await messagesRef.add({
                     type: 'system',
                     content: `${user.displayName} a rejoint le chat 🌙`,
@@ -1013,6 +1447,7 @@
                 
                 listenToMessages();
                 listenToUsers();
+                updateMessagesCounter(RATE_LIMIT.maxMessages);
                 
             } else {
                 currentUser = null;
@@ -1022,10 +1457,10 @@
                 if (usersUnsubscribe) usersUnsubscribe();
                 chatMessages.innerHTML = '';
                 usersList.innerHTML = '';
+                messageTimestamps = [];
             }
         });
         
-        // Écoute messages
         function listenToMessages() {
             unsubscribe = messagesRef
                 .orderBy('timestamp', 'desc')
@@ -1041,7 +1476,6 @@
                 });
         }
         
-        // Écoute users
         function listenToUsers() {
             usersUnsubscribe = usersRef.onSnapshot((snapshot) => {
                 usersList.innerHTML = '';
@@ -1071,7 +1505,6 @@
             });
         }
         
-        // Affichage message
         function addMessage(msg, isOwn = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `chat-message ${msg.type === 'system' ? 'system' : ''} ${msg.type === 'gift' ? 'gift' : ''} ${isOwn ? 'own' : ''}`;
@@ -1115,7 +1548,6 @@
             }
         }
         
-        // Envoi message
         chatSend.addEventListener('click', sendMessage);
         chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
@@ -1125,7 +1557,12 @@
         });
         
         async function sendMessage() {
-            if (!currentUser) return;
+            if (!currentUser || isRateLimited) return;
+            
+            // Vérifier rate limit
+            if (!checkRateLimit()) {
+                return;
+            }
             
             const message = chatInput.value.trim();
             if (!message || message.length > 200) return;
@@ -1139,16 +1576,26 @@
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 
+                // Ajouter timestamp
+                messageTimestamps.push(Date.now());
+                
                 chatInput.value = '';
                 chatInput.style.height = 'auto';
+                
+                // Update counter
+                checkRateLimit();
             } catch (error) {
                 console.error('❌ Erreur:', error);
             }
         }
         
-        // Envoi cadeau
         async function sendGift(gift) {
-            if (!currentUser) return;
+            if (!currentUser || isRateLimited) return;
+            
+            // Vérifier rate limit
+            if (!checkRateLimit()) {
+                return;
+            }
             
             try {
                 await messagesRef.add({
@@ -1161,20 +1608,25 @@
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 
+                // Ajouter timestamp
+                messageTimestamps.push(Date.now());
+                
                 giftPicker.classList.remove('active');
+                
+                // Update counter
+                checkRateLimit();
             } catch (error) {
                 console.error('❌ Erreur:', error);
             }
         }
         
-        // Heartbeat pour maintenir user en ligne
         setInterval(() => {
             if (currentUser) {
                 usersRef.doc(currentUser.uid).update({
                     lastSeen: firebase.firestore.FieldValue.serverTimestamp()
                 }).catch(() => {});
             }
-        }, 30000); // Toutes les 30 secondes
+        }, 30000);
     </script>
     
 </body>

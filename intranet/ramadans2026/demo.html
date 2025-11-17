@@ -108,7 +108,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
     <script>
-        console.log('🧪 TEST SIDEBAR USERS');
+        console.log('🧪 TEST SIDEBAR USERS v2 - CORRIGÉ');
         
         // CONFIG FIREBASE
         const firebaseConfig = {
@@ -128,6 +128,7 @@
         
         let currentUser = null;
         let unsubscribe = null;
+        let heartbeatInterval = null;
         
         // DOM
         const loginScreen = document.getElementById('loginScreen');
@@ -150,7 +151,20 @@
         
         // DÉCONNEXION
         logoutBtn.addEventListener('click', async () => {
+            if (currentUser) {
+                // Supprimer le user avant de se déconnecter
+                await usersRef.doc(currentUser.uid).delete();
+                console.log('✅ User supprimé de Firestore');
+            }
             await auth.signOut();
+        });
+        
+        // Nettoyer à la fermeture de la page
+        window.addEventListener('beforeunload', () => {
+            if (currentUser) {
+                // Note: Ceci peut ne pas fonctionner toujours à cause des restrictions navigateur
+                usersRef.doc(currentUser.uid).delete();
+            }
         });
         
         // AUTH STATE
@@ -168,12 +182,20 @@
                         uid: user.uid,
                         name: user.displayName,
                         photo: user.photoURL,
-                        time: firebase.firestore.FieldValue.serverTimestamp()
+                        online: true,
+                        lastSeen: firebase.firestore.FieldValue.serverTimestamp()
                     });
                     console.log('✅ User ajouté à Firestore');
                     
-                    // Supprimer à la déconnexion
-                    usersRef.doc(user.uid).onDisconnect().delete();
+                    // Heartbeat pour maintenir l'état "en ligne"
+                    heartbeatInterval = setInterval(() => {
+                        if (currentUser) {
+                            usersRef.doc(currentUser.uid).update({
+                                lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+                            console.log('💓 Heartbeat envoyé');
+                        }
+                    }, 30000); // Toutes les 30 secondes
                     
                     // ÉCOUTER LES USERS
                     listenUsers();
@@ -185,6 +207,13 @@
                 
             } else {
                 console.log('❌ Déconnecté');
+                
+                // Nettoyer heartbeat
+                if (heartbeatInterval) {
+                    clearInterval(heartbeatInterval);
+                    heartbeatInterval = null;
+                }
+                
                 currentUser = null;
                 loginScreen.style.display = 'block';
                 usersArea.classList.remove('show');
@@ -197,43 +226,45 @@
         function listenUsers() {
             console.log('👂 Écoute des users...');
             
-            unsubscribe = usersRef.onSnapshot((snapshot) => {
-                console.log('📊 Snapshot reçu, nombre de docs:', snapshot.size);
-                
-                const users = [];
-                snapshot.forEach((doc) => {
-                    const user = doc.data();
-                    console.log('👤 User trouvé:', user.name);
-                    if (user.uid !== currentUser.uid) {
-                        users.push(user);
-                    }
+            unsubscribe = usersRef
+                .where('online', '==', true)
+                .onSnapshot((snapshot) => {
+                    console.log('📊 Snapshot reçu, nombre de docs:', snapshot.size);
+                    
+                    const users = [];
+                    snapshot.forEach((doc) => {
+                        const user = doc.data();
+                        console.log('👤 User trouvé:', user.name);
+                        if (user.uid !== currentUser.uid) {
+                            users.push(user);
+                        }
+                    });
+                    
+                    // Mettre à jour compteur
+                    count.textContent = `${users.length + 1} connectés`;
+                    
+                    // Vider liste
+                    usersList.innerHTML = '';
+                    
+                    // Afficher users
+                    users.forEach((user) => {
+                        const div = document.createElement('div');
+                        div.className = 'user-item';
+                        div.innerHTML = `
+                            <img src="${user.photo}" class="avatar">
+                            <div>
+                                <strong>${user.name}</strong>
+                                <div style="font-size: 0.8rem; color: #4ade80;">● En ligne</div>
+                            </div>
+                        `;
+                        usersList.appendChild(div);
+                    });
+                    
+                    console.log('✅ Liste affichée:', users.length, 'users');
+                }, (error) => {
+                    console.error('❌ ERREUR SNAPSHOT:', error);
+                    alert('❌ Erreur lecture users: ' + error.message);
                 });
-                
-                // Mettre à jour compteur
-                count.textContent = `${users.length + 1} connectés`;
-                
-                // Vider liste
-                usersList.innerHTML = '';
-                
-                // Afficher users
-                users.forEach((user) => {
-                    const div = document.createElement('div');
-                    div.className = 'user-item';
-                    div.innerHTML = `
-                        <img src="${user.photo}" class="avatar">
-                        <div>
-                            <strong>${user.name}</strong>
-                            <div style="font-size: 0.8rem; color: #666;">En ligne</div>
-                        </div>
-                    `;
-                    usersList.appendChild(div);
-                });
-                
-                console.log('✅ Liste affichée:', users.length, 'users');
-            }, (error) => {
-                console.error('❌ ERREUR SNAPSHOT:', error);
-                alert('❌ Erreur lecture users: ' + error.message);
-            });
         }
         
         console.log('✅ Script prêt');

@@ -2,26 +2,356 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Test Chat Firebase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan : Entre Traditions Algériennes et Vie en Immigration</title>
+    
     <style>
-        body { font-family: Arial; padding: 20px; }
-        button { padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 10px; }
-        #status { margin: 20px 0; padding: 15px; background: #f0f0f0; border-radius: 5px; }
+        /* __version__ = "v1.005" */
+        /* [v1.005] Chat avec authentification Google (Firebase) */
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #2C5F2D;
+            --secondary: #D4AF37;
+            --accent: #C1272D;
+            --text: #2C3E50;
+            --light-bg: #F8F9FA;
+            --white: #FFFFFF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--light-bg);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a3a1b 100%);
+            color: var(--white);
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+        
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 30px;
+        }
+        
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: var(--white);
+        }
+        
+        /* ===== CHAT WIDGET ===== */
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .chat-button {
+            background: var(--primary);
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(44, 95, 45, 0.5);
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-button:hover {
+            transform: scale(1.1);
+            background: var(--secondary);
+        }
+        
+        .chat-box {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 380px;
+            height: 500px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-box.active {
+            display: flex;
+        }
+        
+        .chat-login {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 30px;
+            height: 100%;
+            text-align: center;
+        }
+        
+        .chat-login h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .chat-login-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .google-signin-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--white);
+            color: #444;
+            padding: 12px 24px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .google-signin-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .chat-main {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .chat-main.active {
+            display: flex;
+        }
+        
+        .chat-header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .chat-user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid var(--secondary);
+        }
+        
+        .chat-close {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .chat-logout-btn {
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: var(--light-bg);
+        }
+        
+        .chat-message {
+            margin-bottom: 15px;
+        }
+        
+        .chat-message-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+        
+        .chat-message-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+        
+        .chat-message-username {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        
+        .chat-message-time {
+            font-size: 0.75rem;
+            color: #999;
+        }
+        
+        .chat-message-content {
+            background: var(--white);
+            padding: 12px 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px var(--shadow);
+            word-wrap: break-word;
+        }
+        
+        .chat-message.own .chat-message-content {
+            background: linear-gradient(135deg, var(--primary), #2d6e2f);
+            color: var(--white);
+            margin-left: 20px;
+        }
+        
+        .chat-message.system {
+            text-align: center;
+        }
+        
+        .chat-message.system .chat-message-content {
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 0.85rem;
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        .chat-input-container {
+            padding: 15px;
+            background: var(--white);
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 20px;
+            outline: none;
+        }
+        
+        .chat-send {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .chat-box {
+                width: calc(100vw - 20px);
+                height: calc(100vh - 100px);
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>🧪 Test Firebase Auth</h1>
-    <div id="status">Status: Chargement...</div>
-    <button id="loginBtn">🔐 Connexion Google</button>
-    <button id="logoutBtn" style="display:none;">🚪 Déconnexion</button>
-    <div id="userInfo" style="display:none; margin-top: 20px;"></div>
-
+    
+    <header class="hero">
+        <div class="hero-icon">🌙</div>
+        <h1>Ramadan : Entre Traditions Algériennes et Vie en Immigration</h1>
+        <p class="hero-subtitle">Chat communautaire avec authentification Google</p>
+    </header>
+    
+    <main class="container">
+        <p>Bienvenue sur notre plateforme de chat sécurisée. Connectez-vous avec votre compte Google pour rejoindre la conversation.</p>
+    </main>
+    
+    <!-- CHAT WIDGET -->
+    <div class="chat-widget">
+        <button class="chat-button" id="chatButton">💬</button>
+        
+        <div class="chat-box" id="chatBox">
+            <!-- Connexion Google -->
+            <div class="chat-login" id="chatLogin">
+                <div class="chat-login-icon">🌙</div>
+                <h3>Chat Communautaire</h3>
+                <p>Connectez-vous avec Google</p>
+                
+                <button class="google-signin-btn" id="googleSignInBtn">
+                    <span>🔐 Se connecter avec Google</span>
+                </button>
+            </div>
+            
+            <!-- Chat principal -->
+            <div class="chat-main" id="chatMain">
+                <div class="chat-header">
+                    <div class="chat-header-info">
+                        <img src="" alt="Avatar" class="chat-user-avatar" id="userAvatar">
+                        <span id="userName">Utilisateur</span>
+                    </div>
+                    <div>
+                        <button class="chat-logout-btn" id="logoutBtn">Déco</button>
+                        <button class="chat-close" id="chatClose">✕</button>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages"></div>
+                
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Message..." maxlength="200">
+                    <button class="chat-send" id="chatSend">📤</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
     <script>
-        // ✅ TES VRAIES CLÉS FIREBASE
+        // ===== CONFIGURATION FIREBASE (TES VRAIES CLÉS) =====
         const firebaseConfig = {
             apiKey: "AIzaSyBoF6xTWr4dzgbWFwXavVC2mMshHCTK6fM",
             authDomain: "ramadan-chat-auth.firebaseapp.com",
@@ -32,66 +362,168 @@
         };
         
         // Initialisation
-        console.log('🔧 Initialisation Firebase...');
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
+        const db = firebase.firestore();
+        const messagesRef = db.collection('messages');
+        
+        // Provider Google
         const googleProvider = new firebase.auth.GoogleAuthProvider();
         
+        let currentUser = null;
+        let unsubscribe = null;
+        
         // Éléments DOM
-        const statusDiv = document.getElementById('status');
-        const loginBtn = document.getElementById('loginBtn');
+        const chatButton = document.getElementById('chatButton');
+        const chatBox = document.getElementById('chatBox');
+        const chatClose = document.getElementById('chatClose');
+        const chatLogin = document.getElementById('chatLogin');
+        const chatMain = document.getElementById('chatMain');
+        const googleSignInBtn = document.getElementById('googleSignInBtn');
         const logoutBtn = document.getElementById('logoutBtn');
-        const userInfo = document.getElementById('userInfo');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSend = document.getElementById('chatSend');
+        const userName = document.getElementById('userName');
+        const userAvatar = document.getElementById('userAvatar');
         
-        // Test initialisation
-        statusDiv.textContent = '✅ Firebase initialisé avec succès!';
-        statusDiv.style.background = '#d4edda';
+        // Utilitaires
+        function sanitizeHTML(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
         
-        // Connexion
-        loginBtn.addEventListener('click', async () => {
+        function formatTime(timestamp) {
+            if (!timestamp) return '';
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+        }
+        
+        // UI
+        chatButton.addEventListener('click', () => {
+            chatBox.classList.add('active');
+        });
+        
+        chatClose.addEventListener('click', () => {
+            chatBox.classList.remove('active');
+        });
+        
+        // Authentification Google
+        googleSignInBtn.addEventListener('click', async () => {
             try {
-                statusDiv.textContent = '⏳ Connexion en cours...';
-                statusDiv.style.background = '#fff3cd';
-                
-                const result = await auth.signInWithPopup(googleProvider);
-                console.log('✅ Connexion réussie:', result.user.displayName);
-                
-                statusDiv.textContent = '✅ Connexion réussie!';
-                statusDiv.style.background = '#d4edda';
+                await auth.signInWithPopup(googleProvider);
+                console.log('✅ Connexion réussie');
             } catch (error) {
-                console.error('❌ Erreur:', error);
-                statusDiv.textContent = '❌ Erreur: ' + error.message;
-                statusDiv.style.background = '#f8d7da';
+                console.error('❌ Erreur:', error.message);
+                alert('Erreur de connexion: ' + error.message);
             }
         });
         
         // Déconnexion
         logoutBtn.addEventListener('click', async () => {
-            await auth.signOut();
-        });
-        
-        // Observer état
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                loginBtn.style.display = 'none';
-                logoutBtn.style.display = 'inline-block';
-                userInfo.style.display = 'block';
-                userInfo.innerHTML = `
-                    <img src="${user.photoURL}" width="50" style="border-radius: 50%;">
-                    <p><strong>Nom:</strong> ${user.displayName}</p>
-                    <p><strong>Email:</strong> ${user.email}</p>
-                    <p><strong>UID:</strong> ${user.uid}</p>
-                `;
-                statusDiv.textContent = '✅ Connecté en tant que ' + user.displayName;
-                statusDiv.style.background = '#d4edda';
-            } else {
-                loginBtn.style.display = 'inline-block';
-                logoutBtn.style.display = 'none';
-                userInfo.style.display = 'none';
-                statusDiv.textContent = 'ℹ️ Prêt - Cliquez pour vous connecter';
-                statusDiv.style.background = '#d1ecf1';
+            if (confirm('Déconnexion ?')) {
+                await auth.signOut();
             }
         });
+        
+        // Observer état auth
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = user;
+                chatLogin.style.display = 'none';
+                chatMain.classList.add('active');
+                userName.textContent = user.displayName || 'Utilisateur';
+                userAvatar.src = user.photoURL || '';
+                
+                // Message système
+                await messagesRef.add({
+                    type: 'system',
+                    content: `${user.displayName} a rejoint 🌙`,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    userId: user.uid
+                });
+                
+                listenToMessages();
+            } else {
+                currentUser = null;
+                chatLogin.style.display = 'flex';
+                chatMain.classList.remove('active');
+                if (unsubscribe) unsubscribe();
+                chatMessages.innerHTML = '';
+            }
+        });
+        
+        // Écoute messages
+        function listenToMessages() {
+            unsubscribe = messagesRef
+                .orderBy('timestamp', 'desc')
+                .limit(50)
+                .onSnapshot((snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'added') {
+                            const msg = change.doc.data();
+                            const isOwn = currentUser && msg.userId === currentUser.uid;
+                            addMessage(msg, isOwn);
+                        }
+                    });
+                });
+        }
+        
+        // Affichage message
+        function addMessage(msg, isOwn = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${msg.type === 'system' ? 'system' : ''} ${isOwn ? 'own' : ''}`;
+            
+            if (msg.type === 'system') {
+                messageDiv.innerHTML = `<div class="chat-message-content">${msg.content}</div>`;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="chat-message-header">
+                        ${msg.photoURL ? `<img src="${msg.photoURL}" class="chat-message-avatar">` : ''}
+                        <span class="chat-message-username">${msg.username}</span>
+                        <span class="chat-message-time">${formatTime(msg.timestamp)}</span>
+                    </div>
+                    <div class="chat-message-content">${msg.content}</div>
+                `;
+            }
+            
+            chatMessages.insertBefore(messageDiv, chatMessages.firstChild);
+            
+            const allMessages = chatMessages.querySelectorAll('.chat-message');
+            if (allMessages.length > 50) {
+                allMessages[allMessages.length - 1].remove();
+            }
+        }
+        
+        // Envoi message
+        chatSend.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+        
+        async function sendMessage() {
+            if (!currentUser) return;
+            
+            const message = chatInput.value.trim();
+            if (!message || message.length > 200) return;
+            
+            try {
+                await messagesRef.add({
+                    userId: currentUser.uid,
+                    username: currentUser.displayName || 'Utilisateur',
+                    photoURL: currentUser.photoURL || '',
+                    content: sanitizeHTML(message),
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                chatInput.value = '';
+            } catch (error) {
+                console.error('❌ Erreur envoi:', error);
+                alert('Erreur envoi');
+            }
+        }
     </script>
+    
 </body>
 </html>

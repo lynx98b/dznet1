@@ -4,7 +4,16 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Les tenues traditionnels 3D</title>
+<title>Les tenues traditionnelles 3D</title>
+<meta name="description" content="Découvre les tenues traditionnelles algériennes les plus célèbres grâce à des cartes interactives et des effets 3D pensés pour les enfants." />
+<meta name="keywords" content="tenues traditionnelles, Algérie, enfants, culture, 3D" />
+<meta name="author" content="DZnet1" />
+<link rel="canonical" href="https://dznet1.com/intranet/apprendre/appr014.html" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Les tenues traditionnelles 3D" />
+<meta property="og:description" content="Une expérience colorée et ludique pour apprendre les vêtements traditionnels algériens." />
+<meta property="og:url" content="https://dznet1.com/intranet/apprendre/appr014.html" />
+<meta property="og:image" content="https://dznet1.com/cdn-cgi/image/width=800,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/Cheda.jpg" />
 <style>
   :root{
     --bg:#fff8ee;
@@ -24,9 +33,10 @@
     background: linear-gradient(180deg,var(--bg), #fff6e8);
     min-height:100vh;
     display:flex;
+    flex-direction:column;
     align-items:center;
-    justify-content:center;
-    padding:28px;
+    justify-content:flex-start;
+    padding:28px 16px 48px;
     box-sizing:border-box;
   }
   .wrap{
@@ -34,6 +44,20 @@
     max-width:1100px;
     text-align:center;
   }
+
+  footer{
+    margin-top:32px;
+    text-align:center;
+    color:#8a6d5a;
+    font-size:14px;
+    line-height:1.5;
+  }
+  footer a{
+    color:#d9642f;
+    text-decoration:none;
+    font-weight:600;
+  }
+  footer a:hover{ text-decoration:underline; }
 
   /* 3D title */
   .title-3d{
@@ -157,12 +181,12 @@
 </style>
 </head>
 <body>
-  <div class="wrap" id="wrap">
+  <main class="wrap" id="wrap">
     <!-- Titre 3D -->
     <div class="title-3d" id="title3d" aria-hidden="true">
       <span class="layer back">Les tenues</span>
       <span class="layer mid">Les tenues</span>
-      <span class="layer front">Les tenues traditionnels </span>
+      <span class="layer front">Les tenues traditionnelles</span>
     </div>
 
     <div class="grid" id="grid">
@@ -170,7 +194,7 @@
       <div class="card" data-tilt="true">
         <div class="top">Le Barnous</div>
         <div class="imgwrap">
-          <img src="images/Barnous.jpg" alt="Barnous - cape avec capuche">
+          <img src="https://dznet1.com/cdn-cgi/image/width=600,quality=90,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/Barnous.jpg" alt="Barnous - cape avec capuche">
         </div>
         <div class="definition">
           Le Barnous est un grand manteau chaud avec une capuche. Les hommes le portent surtout quand il fait froid, comme une cape de chevalier !
@@ -182,7 +206,7 @@
       <div class="card" data-tilt="true">
         <div class="top">Le Chaoui</div>
         <div class="imgwrap">
-          <img src="images/Chaoui.jpg" alt="Tenue Chaoui colorée">
+          <img src="https://dznet1.com/cdn-cgi/image/width=600,quality=90,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/Chaoui.jpg" alt="Tenue Chaoui colorée">
         </div>
         <div class="definition">
           Le Chaoui vient des montagnes des Aurès. Les femmes portent une robe colorée et un foulard rouge et blanc avec des bijoux brillants.
@@ -194,7 +218,7 @@
       <div class="card" data-tilt="true">
         <div class="top">Le Kabyle</div>
         <div class="imgwrap">
-          <img src="images/Kabyle.jpg" alt="Robe Kabyle rayée">
+          <img src="https://dznet1.com/cdn-cgi/image/width=600,quality=90,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/Kabyle.jpg" alt="Robe Kabyle rayée">
         </div>
         <div class="definition">
           La tenue Kabyle a des rayures vives (rouge, jaune, vert). On porte aussi un grand foulard sur les épaules.
@@ -206,7 +230,7 @@
       <div class="card" data-tilt="true">
         <div class="top">La Blousa Oranaise</div>
         <div class="imgwrap">
-          <img src="images/Blousant.jpg" alt="Blousa Oranaise brodée">
+          <img src="https://dznet1.com/cdn-cgi/image/width=600,quality=90,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/Blousant.jpg" alt="Blousa Oranaise brodée">
         </div>
         <div class="definition">
           La Blousa Oranaise est un petit gilet de fête, court et sans manches, décoré de broderies dorées et colorées.
@@ -218,7 +242,7 @@
       <div class="card" data-tilt="true">
         <div class="top">La Cheda</div>
         <div class="imgwrap">
-          <img src="images/Cheda.jpg" alt="Cheda - robe de mariée">
+          <img src="https://dznet1.com/cdn-cgi/image/width=600,quality=90,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/Cheda.jpg" alt="Cheda - robe de mariée">
         </div>
         <div class="definition">
           La Cheda est la tenue de la mariée dans l’ouest : robe en velours, broderies dorées, diadème et beaucoup de bijoux.
@@ -230,7 +254,7 @@
       <div class="card" data-tilt="true">
         <div class="top">Le Hayek</div>
         <div class="imgwrap">
-          <img src="images/Hayak.jpg" alt="Hayek - grand voile blanc">
+          <img src="https://dznet1.com/cdn-cgi/image/width=600,quality=90,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/Hayak.jpg" alt="Hayek - grand voile blanc">
         </div>
         <div class="definition">
           Le Hayek est un grand voile blanc et doux. Les femmes s’en enveloppent complètement, comme un grand drap léger.
@@ -242,7 +266,7 @@
       <div class="card" data-tilt="true">
         <div class="top">Le Karakou</div>
         <div class="imgwrap">
-          <img src="images/karakou.jpg" alt="Karakou veste brodée">
+          <img src="https://dznet1.com/cdn-cgi/image/width=600,quality=90,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/karakou.jpg" alt="Karakou veste brodée">
         </div>
         <div class="definition">
           Le Karakou est très élégant : veste en velours brodée d’or et pantalon en soie brillante. Une tenue de reine !
@@ -252,7 +276,11 @@
     </div>
 
     <div class="note">Astuce : survole les cartes avec la souris (ou incline ton téléphone) pour voir l'effet 3D !</div>
-  </div>
+  </main>
+  <footer class="site-footer" role="contentinfo">
+    <p>© 2025 DZnet1 — Préservons et partageons notre patrimoine avec les plus jeunes.</p>
+    <p>Besoin d'aide ? Écrivez-nous sur <a href="mailto:contact@dznet1.com">contact@dznet1.com</a> ou visitez <a href="https://dznet1.com" target="_blank" rel="noopener">dznet1.com</a>.</p>
+  </footer>
 
 <script>
   /* ---------- Title 3D parallax ---------- */

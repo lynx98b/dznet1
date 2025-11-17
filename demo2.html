@@ -3,161 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍜 Ramen - L'Art du Bouillon Japonais</title>
+    <meta name="description" content="Ramadan en Algérie et en immigration : traditions, spiritualité et maintien des liens culturels à travers le monde">
+    <title>Ramadan : Entre Traditions Algériennes et Vie en Immigration</title>
+    
     <style>
+        /* ===== RESET & VARIABLES ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #2c3e50;
-            background: linear-gradient(135deg, #fef9e7 0%, #fff5e1 100%);
+        :root {
+            --primary: #2C5F2D;
+            --secondary: #D4AF37;
+            --accent: #C1272D;
+            --text: #2C3E50;
+            --light-bg: #F8F9FA;
+            --white: #FFFFFF;
+            --shadow: rgba(0, 0, 0, 0.1);
         }
         
-        /* HERO SECTION - 10 PREMIÈRES SECONDES */
+        /* ===== TYPOGRAPHIE ===== */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--light-bg);
+        }
+        
+        /* ===== HERO SECTION (10 premières secondes décisives) ===== */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23d35400" width="1200" height="400"/><text x="50%25" y="50%25" font-size="120" fill="%23fff" text-anchor="middle" dy=".3em">🍜</text></svg>');
-            background-size: cover;
-            background-position: center;
-            height: 70vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a3a1b 100%);
+            color: var(--white);
+            padding: 60px 20px;
             text-align: center;
-            color: white;
-            padding: 20px;
+            box-shadow: 0 4px 12px var(--shadow);
         }
         
         .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 900;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
             margin-bottom: 20px;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
-            animation: fadeInDown 0.8s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.8s ease-out;
         }
         
-        .hero p {
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
-            max-width: 700px;
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
             margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-            animation: fadeInUp 1s ease;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out;
         }
         
-        .cta-button {
-            background: #e74c3c;
-            color: white;
-            padding: 18px 40px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        /* ===== CTA VISIBLE IMMÉDIATEMENT ===== */
+        .cta-primary {
             display: inline-block;
+            background: var(--secondary);
+            color: var(--text);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
-            animation: fadeInUp 1.2s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            animation: fadeInUp 1.2s ease-out;
         }
         
-        .cta-button:hover {
-            background: #c0392b;
+        .cta-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.6);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+            background: #E5C047;
         }
         
-        /* CONTAINER */
+        /* ===== CONTAINER RESPONSIVE ===== */
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 60px 20px;
-            background: white;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            padding: 40px 20px;
+            background: var(--white);
         }
         
-        /* TYPOGRAPHIE */
+        /* ===== HIÉRARCHIE VISUELLE ===== */
         h2 {
             font-size: clamp(1.8rem, 4vw, 2.5rem);
-            color: #d35400;
-            margin: 40px 0 20px 0;
-            border-left: 6px solid #e74c3c;
-            padding-left: 15px;
+            color: var(--primary);
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary);
         }
         
         h3 {
             font-size: clamp(1.3rem, 3vw, 1.8rem);
-            color: #e67e22;
-            margin: 30px 0 15px 0;
+            color: var(--accent);
+            margin: 30px 0 15px;
         }
         
+        /* ===== PARAGRAPHES COURTS (2-4 lignes) ===== */
         p {
             margin-bottom: 20px;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2vw, 1.1rem);
         }
         
-        /* LISTES */
-        ul {
+        /* ===== LISTES À PUCES ===== */
+        ul, ol {
             margin: 20px 0 20px 30px;
         }
         
         li {
             margin-bottom: 12px;
-            font-size: 1.1rem;
-            line-height: 1.8;
+            line-height: 1.6;
         }
         
         strong {
-            color: #c0392b;
+            color: var(--primary);
             font-weight: 600;
         }
         
-        /* VISUELS */
-        .visual-block {
-            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-            padding: 30px;
+        /* ===== ENCADRÉS VISUELS ===== */
+        .highlight-box {
+            background: linear-gradient(to right, var(--light-bg), var(--white));
+            border-left: 5px solid var(--secondary);
+            padding: 25px;
             margin: 30px 0;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 4rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px var(--shadow);
         }
         
-        /* STATS */
-        .stats {
+        .stat-box {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            margin: 40px 0;
+            margin: 30px 0;
         }
         
-        .stat-card {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            color: white;
+        .stat {
+            background: var(--primary);
+            color: var(--white);
             padding: 25px;
-            border-radius: 12px;
             text-align: center;
-            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+            border-radius: 12px;
             transition: transform 0.3s ease;
         }
         
-        .stat-card:hover {
-            transform: translateY(-5px);
+        .stat:hover {
+            transform: scale(1.05);
         }
         
         .stat-number {
             font-size: 2.5rem;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--secondary);
         }
         
-        /* ANIMATIONS */
+        /* ===== IMAGES / VISUELS ===== */
+        .visual-placeholder {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            height: 300px;
+            margin: 30px 0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--white);
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+        
+        /* ===== FOOTER CTA ===== */
+        .footer-cta {
+            background: var(--primary);
+            color: var(--white);
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .footer-cta h2 {
+            color: var(--white);
+            border: none;
+            margin-bottom: 20px;
+        }
+        
+        /* ===== ANIMATIONS ===== */
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -180,106 +214,189 @@
             }
         }
         
-        /* RESPONSIVE */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
+        /* ===== RESPONSIVE < 768px ===== */
         @media (max-width: 768px) {
             .hero {
-                height: 60vh;
-            }
-            
-            .container {
                 padding: 40px 15px;
             }
             
-            h2 {
-                font-size: 1.8rem;
+            .container {
+                padding: 30px 15px;
             }
             
-            .stats {
+            .stat-box {
                 grid-template-columns: 1fr;
             }
+        }
+        
+        /* ===== ACCESSIBILITÉ ===== */
+        :focus {
+            outline: 3px solid var(--secondary);
+            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
-    <!-- HERO - 10 PREMIÈRES SECONDES DÉCISIVES -->
-    <section class="hero">
-        <h1>🍜 Le Ramen Authentique</h1>
-        <p>Découvrez l'art millénaire du bouillon japonais en 3 minutes</p>
-        <a href="#content" class="cta-button">Découvrir Maintenant →</a>
-    </section>
-
-    <!-- CONTENU PRINCIPAL -->
-    <div class="container" id="content">
+    
+    <!-- ===== HERO: 10 PREMIÈRES SECONDES DÉCISIVES ===== -->
+    <header class="hero">
+        <div class="hero-icon">🌙</div>
+        <h1>Ramadan : Entre Traditions Algériennes et Vie en Immigration</h1>
+        <p class="hero-subtitle">Quand le mois sacré devient un pont entre deux mondes</p>
+        <a href="#partager" class="cta-primary">Partagez Votre Expérience</a>
+    </header>
+    
+    <!-- ===== CONTENU PRINCIPAL ===== -->
+    <main class="container">
         
-        <h2>🔥 Qu'est-ce que le Ramen ?</h2>
-        <p>
-            Le ramen est bien plus qu'un simple plat de nouilles. C'est une <strong>expérience culinaire japonaise</strong> qui combine bouillon riche, nouilles parfaites et garnitures savamment choisies.
-        </p>
-        <p>
-            Originaire de Chine au 19ème siècle, ce plat s'est transformé au Japon en <strong>symbole de réconfort</strong> et d'innovation gastronomique.
-        </p>
-
-        <!-- VISUEL 1 -->
-        <div class="visual-block">
-            🍲 🥢 🥚
-        </div>
-
-        <h2>🎯 Les 4 Types de Bouillon Incontournables</h2>
+        <!-- Introduction accrocheuse -->
+        <p><strong>Le Ramadan en Algérie</strong>, c'est bien plus qu'un mois de jeûne. C'est l'odeur du Chorba qui embaume les rues à l'heure du ftour, les tables généreuses partagées en famille, et cette atmosphère unique qui transforme les nuits en moments de communion.</p>
+        
+        <p>Mais que devient cette magie quand on vit loin de chez soi, en immigration ? Comment maintenir ces traditions quand on est séparé par des milliers de kilomètres ?</p>
+        
+        <div class="visual-placeholder">🕌</div>
+        
+        <!-- Section 1: Sous-titre tous les 80-120 mots -->
+        <h2>🇩🇿 Le Ramadan en Algérie : Un Mois Hors du Temps</h2>
+        
+        <h3>Les Traditions Qui Font Battre le Cœur</h3>
+        
+        <p>En Algérie, le Ramadan bouleverse le rythme quotidien. Les villes s'animent après le coucher du soleil, créant une ambiance festive et spirituelle inégalée.</p>
+        
+        <p><strong>Les moments forts incluent :</strong></p>
+        
         <ul>
-            <li><strong>Shoyu:</strong> Base soja, saveur équilibrée et profonde</li>
-            <li><strong>Miso:</strong> Pâte fermentée, goût umami intense</li>
-            <li><strong>Shio:</strong> Sel marin, bouillon clair et délicat</li>
-            <li><strong>Tonkotsu:</strong> Os de porc mijotés 12h, texture crémeuse</li>
+            <li><strong>Le Ftour familial :</strong> La rupture du jeûne réunit toute la famille autour d'une table généreuse. Chorba, dates, zlabia et thé à la menthe sont les stars incontournables.</li>
+            <li><strong>Les nuits de Tarawih :</strong> Les mosquées se remplissent pour ces prières nocturnes spéciales, créant un sentiment profond d'unité.</li>
+            <li><strong>Le S'hour avant l'aube :</strong> Ce repas pré-jeûne devient un rituel familial, souvent accompagné de discussions jusqu'au premier appel à la prière.</li>
+            <li><strong>La solidarité :</strong> Les associations multiplient les actions caritatives, incarnant l'esprit de partage du mois sacré.</li>
         </ul>
-
-        <!-- STATS VISUELLES -->
-        <div class="stats">
-            <div class="stat-card">
-                <span class="stat-number">12h</span>
-                <span>Temps de mijotage</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">200+</span>
-                <span>Variétés au Japon</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">5min</span>
-                <span>Temps de dégustation</span>
-            </div>
+        
+        <div class="highlight-box">
+            <strong>💡 Le saviez-vous ?</strong> En Algérie, 99% de la population musulmane observe le Ramadan, créant une cohésion sociale exceptionnelle durant ce mois.
         </div>
-
-        <h2>✨ Pourquoi le Ramen Fascine ?</h2>
-        <p>
-            Chaque bol raconte une histoire. Le chef maîtrise le <strong>timing parfait</strong> pour des nouilles al dente, dose le bouillon au millilitre près, et compose sa garniture comme un artiste.
-        </p>
-        <p>
-            C'est cette recherche de <strong>perfection dans la simplicité</strong> qui fait du ramen un plat adulé mondialement.
-        </p>
-
-        <!-- VISUEL 2 -->
-        <div class="visual-block">
-            👨‍🍳 ⏱️ 🎨
-        </div>
-
-        <h2>🥢 Comment Déguster un Ramen Authentique</h2>
+        
+        <h3>Les Plats Emblématiques</h3>
+        
+        <p>La gastronomie du Ramadan algérien est un patrimoine à elle seule. Chaque région apporte ses spécialités, mais certains classiques traversent tout le pays.</p>
+        
         <ul>
-            <li>Commencez par <strong>aspirer le bouillon</strong> à la cuillère</li>
-            <li>Mangez les nouilles rapidement (elles gonflent!)</li>
-            <li>Faites du bruit en aspirant: c'est un signe de respect</li>
-            <li>Terminez le bouillon jusqu'à la dernière goutte</li>
+            <li><strong>Chorba frik :</strong> Cette soupe traditionnelle aux légumes et blé concassé ouvre presque tous les ftours algériens</li>
+            <li><strong>Bourek :</strong> Ces bricks farcis (viande, fromage, pomme de terre) sont omniprésents</li>
+            <li><strong>Zlabia et Qalb el louz :</strong> Les pâtisseries au miel qui font le bonheur des gourmands</li>
+            <li><strong>Lben et dattes :</strong> La combinaison traditionnelle pour rompre le jeûne en douceur</li>
         </ul>
-
-        <h2>🎁 Prêt à Tenter l'Expérience ?</h2>
-        <p>
-            Le ramen n'attend pas. Trouvez un restaurant authentique près de chez vous, ou lancez-vous dans la <strong>préparation maison</strong>. Votre première bouchée changera votre vision de ce plat iconique.
-        </p>
-
-        <!-- CTA FINAL -->
-        <div style="text-align: center; margin-top: 50px;">
-            <a href="#" class="cta-button">Trouver un Restaurant 📍</a>
+        
+        <div class="visual-placeholder">🍲</div>
+        
+        <!-- Section 2 -->
+        <h2>✈️ Le Ramadan en Immigration : Entre Nostalgie et Adaptation</h2>
+        
+        <h3>Les Défis Quotidiens</h3>
+        
+        <p>Vivre le Ramadan loin de l'Algérie présente des défis uniques. Les immigrés doivent jongler entre leurs obligations professionnelles et leurs pratiques religieuses dans un environnement souvent peu adapté.</p>
+        
+        <p><strong>Les principales difficultés rencontrées :</strong></p>
+        
+        <ol>
+            <li><strong>Horaires de travail inadaptés :</strong> Maintenir un rythme professionnel normal tout en jeûnant demande une organisation rigoureuse</li>
+            <li><strong>Isolement social :</strong> L'absence de l'ambiance collective du Ramadan peut peser sur le moral</li>
+            <li><strong>Ingrédients introuvables :</strong> Reproduire les recettes traditionnelles devient un défi quand certains produits manquent</li>
+            <li><strong>Décalage horaire :</strong> Les appels en visio avec la famille coïncident rarement avec les bons moments</li>
+        </ol>
+        
+        <div class="stat-box">
+            <div class="stat">
+                <div class="stat-number">2M+</div>
+                <div>Algériens en France</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">18h</div>
+                <div>Jeûne max en été (Europe)</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">100%</div>
+                <div>Connexion digitale</div>
+            </div>
         </div>
-
-    </div>
-
+        
+        <h3>Les Solutions Créatives</h3>
+        
+        <p>Face à ces défis, la communauté algérienne en immigration fait preuve d'une résilience remarquable. Les nouvelles générations réinventent les traditions tout en préservant l'essentiel.</p>
+        
+        <p><strong>Les initiatives qui fonctionnent :</strong></p>
+        
+        <ul>
+            <li><strong>Ftours communautaires :</strong> Les associations algériennes organisent des ruptures de jeûne collectives, recréant l'atmosphère du pays</li>
+            <li><strong>Visioconférences familiales :</strong> WhatsApp et Zoom permettent de partager virtuellement le ftour avec les proches restés au pays</li>
+            <li><strong>Épiceries spécialisées :</strong> De plus en plus de commerces proposent les produits algériens essentiels au Ramadan</li>
+            <li><strong>Applications mobiles :</strong> Des apps dédiées donnent les horaires de prière locaux et rappellent les moments importants</li>
+        </ul>
+        
+        <div class="highlight-box">
+            <strong>✨ Témoignage :</strong> "En France, j'ai découvert que le Ramadan pouvait être encore plus fort spirituellement. Sans l'agitation des rues, je me concentre davantage sur l'essence même du mois sacré." — Amina, 34 ans, Paris
+        </div>
+        
+        <div class="visual-placeholder">🌍</div>
+        
+        <!-- Section 3 -->
+        <h2>🔗 Maintenir le Lien : Transmission et Identité</h2>
+        
+        <h3>L'Enjeu de la Deuxième Génération</h3>
+        
+        <p>Pour les enfants d'immigrés nés à l'étranger, le Ramadan devient un marqueur identitaire essentiel. C'est souvent le moment où ils se reconnectent le plus fortement à leurs racines algériennes.</p>
+        
+        <p>Les parents jouent un rôle crucial dans cette transmission culturelle. Ils adaptent les rituels au contexte local tout en préservant les valeurs fondamentales.</p>
+        
+        <ul>
+            <li><strong>Apprentissage culinaire :</strong> Cuisiner ensemble les plats traditionnels devient un moment de transmission privilégié</li>
+            <li><strong>Récits familiaux :</strong> Partager les souvenirs du Ramadan en Algérie aide à construire une mémoire collective</li>
+            <li><strong>Visites au pays :</strong> Passer le Ramadan en Algérie reste un moment fort pour les jeunes de la diaspora</li>
+        </ul>
+        
+        <h3>Le Ramadan 2.0</h3>
+        
+        <p>La digitalisation transforme l'expérience du Ramadan en immigration. Les réseaux sociaux deviennent des ponts virtuels entre les deux rives de la Méditerranée.</p>
+        
+        <p><strong>Les nouveaux outils :</strong></p>
+        
+        <ul>
+            <li>Groupes Facebook de recettes du Ramadan algérien</li>
+            <li>Comptes Instagram partageant quotidiennement les traditions</li>
+            <li>Chaînes YouTube de cuisine maghrébine</li>
+            <li>Applications de rappel des horaires de prière géolocalisés</li>
+        </ul>
+        
+        <div class="highlight-box">
+            <strong>💡 Conseil pratique :</strong> Créez un groupe WhatsApp familial dédié au Ramadan. Partagez photos de ftours, vidéos de préparation, et messages de soutien. Cela maintient le lien malgré la distance.
+        </div>
+        
+        <!-- Conclusion -->
+        <h2>🌟 Conclusion : Un Pont Entre Deux Mondes</h2>
+        
+        <p>Le Ramadan en immigration n'est ni une copie affaiblie du Ramadan algérien, ni une expérience totalement nouvelle. C'est un pont unique entre deux mondes, où tradition et adaptation se rencontrent.</p>
+        
+        <p>Cette expérience enrichit autant qu'elle questionne. Elle pousse à l'essentiel : au-delà des rituels et des plats, c'est la spiritualité, le partage et les valeurs familiales qui restent le cœur du Ramadan.</p>
+        
+        <p><strong>Que vous soyez en Algérie ou à l'autre bout du monde, le Ramadan reste ce mois béni qui unit les cœurs au-delà des frontières.</strong></p>
+        
+    </main>
+    
+    <!-- ===== CTA FINAL ===== -->
+    <section class="footer-cta" id="partager">
+        <h2>Partagez Votre Expérience du Ramadan</h2>
+        <p style="margin-bottom: 30px; font-size: 1.1rem;">Vous vivez le Ramadan en immigration ? Racontez-nous votre histoire et vos astuces !</p>
+        <a href="mailto:contact@ramadan-stories.com" class="cta-primary">Contactez-Nous</a>
+    </section>
+    
 </body>
 </html>

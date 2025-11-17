@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salima Traffic Lights Adventure</title>
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* __version__ = "v1.002" - Complet FR/EN/AR + animations */
+  
+  :root {
+    --primary-orange: #ff8c00;
+    --primary-pink: #ff80ab;
+    --primary-blue: #4fc3f7;
+    --primary-green: #2ea44f;
+    --bg-sky: linear-gradient(to bottom, #87ceeb 0%, #e0f6ff 100%);
+    --bg-ground: #36b37e;
+    --shadow-soft: 0 8px 20px rgba(0,0,0,0.12);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Comic Neue', cursive;
+    overflow-x: hidden;
+    position: relative;
+    background: var(--bg-sky);
+    min-height: 100vh;
+    transition: var(--transition-smooth);
+  }
+
+  body.rtl {
+    direction: rtl;
+    font-family: 'Noto Sans Arabic', 'Comic Neue', sans-serif;
+  }
+
+  .lang-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    background: rgba(255,255,255,0.95);
+    padding: 8px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(10px);
+  }
+
+  .lang-btn {
+    padding: 8px 16px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background: #f0f0f0;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: var(--transition-smooth);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .lang-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .lang-btn.active {
+    background: linear-gradient(135deg, var(--primary-orange), #ffa500);
+    color: white;
+    border-color: var(--primary-orange);
+  }
+
+  .ground {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 150px;
+    background: var(--bg-ground);
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .ground::before {
+    content: '🌱🌿🌱🌾🌱🌿🌱🌾🌱🌿🌱🌾';
+    position: absolute;
+    font-size: 1.5rem;
+    animation: grassWave 3s ease-in-out infinite;
+    white-space: nowrap;
+  }
+
+  @keyframes grassWave {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    50% { transform: translateX(10px) rotate(2deg); }
+  }
+
+  .floating {
+    position: fixed;
+    pointer-events: none;
+    animation: floatSmooth 8s ease-in-out infinite;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+  }
+
+  .cloud { font-size: 70px; }
+  .sun { 
+    font-size: 90px; 
+    animation: sunRotate 20s linear infinite, floatSmooth 8s ease-in-out infinite;
+  }
+
+  @keyframes floatSmooth {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-25px) translateX(15px); }
+  }
+
+  @keyframes sunRotate {
+    from { filter: hue-rotate(0deg) drop-shadow(2px 2px 8px rgba(255,200,0,0.4)); }
+    to { filter: hue-rotate(360deg) drop-shadow(2px 2px 8px rgba(255,200,0,0.4)); }
+  }
+
+  .title {
+    text-align: center;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 700;
+    padding: 40px 20px 20px;
+    margin-top: 60px;
+    z-index: 2;
+    position: relative;
+    background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff6b6b);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbowTitle 4s linear infinite;
+    filter: drop-shadow(2px 2px 4px rgba(255,255,255,0.8));
+  }
+
+  @keyframes rainbowTitle {
+    to { background-position: 200% center; }
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-bottom: 180px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .dialogue-space {
+    background: rgba(255,255,255,0.95);
+    border-radius: 25px;
+    padding: 30px;
+    margin: 30px 0;
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(10px);
+    border: 3px solid var(--primary-pink);
+    animation: slideInDown 0.6s ease-out;
+  }
+
+  @keyframes slideInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .chat {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .bubble {
+    max-width: 75%;
+    padding: 15px 20px;
+    border-radius: 20px;
+    line-height: 1.5;
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    animation: bubblePop 0.4s ease-out;
+    position: relative;
+  }
+
+  @keyframes bubblePop {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .bubble.salima {
+    background: linear-gradient(135deg, #ffd6ff, #ffe6ff);
+    align-self: flex-start;
+    border: 3px solid var(--primary-pink);
+    border-bottom-left-radius: 5px;
+  }
+
+  .bubble.father {
+    background: linear-gradient(135deg, #b3e5fc, #e1f5fe);
+    align-self: flex-end;
+    border: 3px solid var(--primary-blue);
+    border-bottom-right-radius: 5px;
+  }
+
+  body.rtl .bubble.salima {
+    align-self: flex-end;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 5px;
+  }
+
+  body.rtl .bubble.father {
+    align-self: flex-start;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 5px;
+  }
+
+  .bubble .name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin: 30px 0;
+  }
+
+  .rule {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition-smooth);
+    border: 3px solid transparent;
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .rule:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  }
+
+  .rule:nth-child(1) { background: linear-gradient(135deg, #ffd6d6, #ffe6e6); border-color: #ff6b6b; animation-delay: 0.1s; }
+  .rule:nth-child(2) { background: linear-gradient(135deg, #fff0b3, #fffbe6); border-color: #feca57; animation-delay: 0.2s; }
+  .rule:nth-child(3) { background: linear-gradient(135deg, #d6ffd6, #e6ffe6); border-color: #2ea44f; animation-delay: 0.3s; }
+  .rule:nth-child(4) { background: linear-gradient(135deg, #cce0ff, #e6f0ff); border-color: #4fc3f7; animation-delay: 0.4s; }
+  .rule:nth-child(5) { background: linear-gradient(135deg, #e6ccff, #f0e6ff); border-color: #9b59b6; animation-delay: 0.5s; }
+  .rule:nth-child(6) { background: linear-gradient(135deg, #ffe6cc, #fff5e6); border-color: #f39c12; animation-delay: 0.6s; }
+  .rule:nth-child(7) { background: linear-gradient(135deg, #b3fff0, #d6fff7); border-color: #1abc9c; animation-delay: 0.7s; }
+  .rule:nth-child(8) { background: linear-gradient(135deg, #ffccf2, #ffe6f7); border-color: #e91e63; animation-delay: 0.8s; }
+  .rule:nth-child(9) { background: linear-gradient(135deg, #fff5b3, #fffbe6); border-color: #f1c40f; animation-delay: 0.9s; }
+  .rule:nth-child(10){ background: linear-gradient(135deg, #d9ffb3, #eaffe6); border-color: #8bc34a; animation-delay: 1s; }
+
+  .rule h4 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    color: #333;
+  }
+
+  .rule p {
+    margin: 8px 0;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .rule em {
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  .placeholder {
+    width: 100%;
+    height: 160px;
+    background: #f8f9fa;
+    border: 3px dashed #ccc;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    font-size: 3rem;
+    color: #999;
+    transition: var(--transition-smooth);
+  }
+
+  .placeholder:hover {
+    border-color: var(--primary-orange);
+    background: #fff;
+    transform: scale(1.05);
+  }
+
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin: 30px 0;
+  }
+
+  .quizbox {
+    background: linear-gradient(135deg, #fff7e6, #fffbf0);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    border: 3px solid #ffd700;
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .quiz {
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .opts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .opts button {
+    padding: 12px 20px;
+    border-radius: 15px;
+    border: 3px solid transparent;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    background: white;
+    transition: var(--transition-smooth);
+    font-family: inherit;
+  }
+
+  .opts button:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    border-color: var(--primary-orange);
+  }
+
+  .opts button.correct {
+    background: linear-gradient(135deg, #b3ffcc, #d4ffe6);
+    border-color: var(--primary-green);
+    animation: correctPulse 0.6s ease-out;
+  }
+
+  .opts button.wrong {
+    background: linear-gradient(135deg, #ffb3b3, #ffe6e6);
+    border-color: #d73a49;
+    animation: wrongShake 0.5s ease-out;
+  }
+
+  @keyframes correctPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  @keyframes wrongShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+  }
+
+  .feedback {
+    margin-top: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .salima-char {
+    position: fixed;
+    bottom: 20px;
+    left: 30px;
+    width: 100px;
+    filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.2));
+    transition: left 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 10;
+    animation: salimaWave 2s ease-in-out infinite;
+  }
+
+  @keyframes salimaWave {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+  }
+
+  @media (max-width: 768px) {
+    .lang-switcher {
+      top: 10px;
+      right: 10px;
+      gap: 4px;
+      padding: 6px;
+    }
+
+    .lang-btn {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+    }
+
+    .title {
+      margin-top: 80px;
+      padding: 20px 15px 15px;
+    }
+
+    .container {
+      padding: 15px;
+      padding-bottom: 160px;
+    }
+
+    .rules {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .bubble {
+      max-width: 85%;
+    }
+
+    .salima-char {
+      width: 70px;
+      left: 15px;
+      bottom: 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .lang-btn {
+      padding: 5px 8px;
+      font-size: 0.75rem;
+    }
+    
+    .opts button {
+      font-size: 0.9rem;
+      padding: 10px 15px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="fr" onclick="changeLang('fr')">
+      <span>🇫🇷</span> FR
+    </button>
+    <button class="lang-btn" data-lang="en" onclick="changeLang('en')">
+      <span>🇬🇧</span> EN
+    </button>
+    <button class="lang-btn" data-lang="ar" onclick="changeLang('ar')">
+      <span>🇸🇦</span> AR
+    </button>
+  </div>
+
+  <div class="ground"></div>
+
+  <div class="floating cloud" style="top:8%; left:5%;">☁️</div>
+  <div class="floating cloud" style="top:15%; left:80%;">☁️</div>
+  <div class="floating cloud" style="top:25%; left:40%;">☁️</div>
+  <div class="floating sun" style="top:5%; left:88%;">🌞</div>
+
+  <div class="container">
+    <div class="title" id="pageTitle">🌟 L'Aventure de Salima aux Feux de Circulation 🌟</div>
+
+    <div class="dialogue-space">
+      <div class="chat" id="chat"></div>
+    </div>
+
+    <div class="rules" id="rules"></div>
+
+    <div class="quiz-container" id="quizzes"></div>
+  </div>
+
+  <div class="salima-char" id="salimaChar">👧</div>
+
+<script>
+// __version__ = "v1.002"
+let currentLang = 'fr';
+
+const translations = {
+  fr: {
+    title: "🌟 L'Aventure de Salima aux Feux de Circulation 🌟",
+    salimaName: "Salima 👧",
+    fatherName: "Papa 👨‍🦱",
+    dialogue: [
+      {who:'salima', text:"Papa, pourquoi y a-t-il autant de feux et de panneaux ?"},
+      {who:'father', text:"Ils aident tout le monde à rester en sécurité. Les feux indiquent aux conducteurs et piétons ce qu'ils doivent faire."},
+      {who:'salima', text:"Que signifie le feu rouge ?"},
+      {who:'father', text:"Rouge veut dire STOP complètement. Ne traverse pas avant que ce soit sûr."},
+      {who:'salima', text:"Et le feu jaune ?"},
+      {who:'father', text:"Ralentis et prépare-toi à t'arrêter. Ne te précipite jamais sur un feu jaune."},
+      {who:'salima', text:"Et le feu vert ?"},
+      {who:'father', text:"Va seulement quand c'est sûr. Regarde toujours à gauche et à droite d'abord."},
+      {who:'salima', text:"Les feux pour piétons ?"},
+      {who:'father', text:"Traverse uniquement quand la figurine qui marche s'affiche. Si elle clignote, finis vite."},
+      {who:'salima', text:"Les feux clignotants près des trains ou travaux ?"},
+      {who:'father', text:"Jaune clignotant = ralentir. Rouge clignotant = arrêt. Danger !"},
+      {who:'salima', text:"Et les personnes daltoniennes ?"},
+      {who:'father', text:"Feu du haut = stop, feu du bas = va. Les formes aident tout le monde."},
+      {who:'salima', text:"D'autres conseils ?"},
+      {who:'father', text:"Tiens la main, surveille les vélos, porte des vêtements lumineux, obéis aux agents."}
+    ],
+    rules: [
+      {title:"Feu Rouge 🚦", def:"Arrêt complet. Attends sur le trottoir jusqu'au vert.", example:"Salima reste sur le trottoir et attend.", emoji:"🛑"},
+      {title:"Feu Jaune 💛", def:"Ralentis, prépare-toi à t'arrêter.", example:"Salima tient la main de son père.", emoji:"⚠️"},
+      {title:"Feu Vert 💚", def:"Va quand c'est sûr, regarde des deux côtés.", example:"Salima regarde à gauche et à droite avant de traverser.", emoji:"✅"},
+      {title:"Signal Piéton 🚶", def:"Marche seulement quand la figurine verte apparaît.", example:"Salima traverse sur le feu piéton stable.", emoji:"🚶‍♀️"},
+      {title:"Feux Clignotants ⚠️", def:"Jaune clignotant = attention, rouge clignotant = arrêt.", example:"Salima ralentit dans les zones de travaux.", emoji:"🚧"},
+      {title:"Signaux Train/Tram 🚋", def:"Arrête-toi quand les feux clignotent ou les barrières se ferment.", example:"Salima ne traverse jamais les rails quand ça clignote.", emoji:"🚂"},
+      {title:"Véhicules d'Urgence 🚨", def:"Écarte-toi et laisse-les passer.", example:"Salima va sur le trottoir pour l'ambulance.", emoji:"🚑"},
+      {title:"Vélos & Trottinettes 🚲", def:"Vérifie les pistes cyclables, attends les cyclistes.", example:"Salima vérifie la piste avant de traverser.", emoji:"🚴"},
+      {title:"Sécurité Nocturne 🌙", def:"Porte des vêtements lumineux/réfléchissants.", example:"Salima porte une veste lumineuse la nuit.", emoji:"🦺"},
+      {title:"Agents de Circulation 👮", def:"Obéis aux agents et surveillants.", example:"Salima attend le signal de l'agent à l'école.", emoji:"👮‍♀️"}
+    ],
+    quizzes: [
+      {q:"Le feu ROUGE signifie ?", opts:["Aller vite","Stop complet","Faire signe"], correct:1},
+      {q:"Le feu JAUNE ?", opts:["Accélérer","Ralentir et se préparer","Chanter"], correct:1},
+      {q:"Le feu VERT ?", opts:["Regarder des deux côtés et aller","Fermer les yeux et courir","Pousser le vélo"], correct:0},
+      {q:"Traverser en toute sécurité ?", opts:["Quand la figurine verte marche","Quand la voiture klaxonne","Quand tu le sens"], correct:0},
+      {q:"Feu ROUGE clignotant ?", opts:["Arrêter et attendre","Traverser vite","Ignorer"], correct:0}
+    ],
+    correctMsg: "✅ Correct !",
+    wrongMsg: "❌ Réessaie."
+  },
+  en: {
+    title: "🌟 Salima's Traffic Light Adventure 🌟",
+    salimaName: "Salima 👧",
+    fatherName: "Father 👨‍🦱",
+    dialogue: [
+      {who:'salima', text:"Daddy, why are there so many traffic lights and signs?"},
+      {who:'father', text:"They help everyone stay safe. Traffic lights tell drivers and people what to do."},
+      {who:'salima', text:"What does the red light mean?"},
+      {who:'father', text:"Red means STOP completely. Do not step until safe."},
+      {who:'salima', text:"Yellow?"},
+      {who:'father', text:"Slow down and prepare to stop. Never rush a yellow light."},
+      {who:'salima', text:"Green?"},
+      {who:'father', text:"Go only when safe. Always look left and right first."},
+      {who:'salima', text:"Pedestrian lights?"},
+      {who:'father', text:"Cross only when the walking figure shows. If it flashes, finish quickly."},
+      {who:'salima', text:"Flashing lights near trains or work?"},
+      {who:'father', text:"Flashing yellow = slow. Flashing red = stop. Danger!"},
+      {who:'salima', text:"Color-blind people?"},
+      {who:'father', text:"Top light = stop, bottom = go. Shapes help everyone."},
+      {who:'salima', text:"Any other tips?"},
+      {who:'father', text:"Hold hands, watch bikes, wear bright clothes, obey guards."}
+    ],
+    rules: [
+      {title:"Red Light 🚦", def:"Stop completely. Wait on the curb until green.", example:"Salima stands at the curb and waits.", emoji:"🛑"},
+      {title:"Yellow Light 💛", def:"Slow down, prepare to stop.", example:"Salima holds her father's hand.", emoji:"⚠️"},
+      {title:"Green Light 💚", def:"Go when safe, look both ways.", example:"Salima looks left and right before crossing.", emoji:"✅"},
+      {title:"Pedestrian Signal 🚶", def:"Walk only when green figure shows.", example:"Salima crosses only on steady walk figure.", emoji:"🚶‍♀️"},
+      {title:"Flashing Lights ⚠️", def:"Flashing yellow = care, flashing red = stop.", example:"Salima slows in work zones.", emoji:"🚧"},
+      {title:"Train/Tram Signals 🚋", def:"Stop when lights flash or barriers close.", example:"Salima never crosses tracks while flashing.", emoji:"🚂"},
+      {title:"Emergency Vehicles 🚨", def:"Move aside and let them pass.", example:"Salima steps to sidewalk for ambulance.", emoji:"🚑"},
+      {title:"Bicycles & Scooters 🚲", def:"Look for bike lanes, wait for cyclists.", example:"Salima checks bike lane before crossing.", emoji:"🚴"},
+      {title:"Night Safety 🌙", def:"Wear bright/reflective clothes.", example:"Salima wears a bright jacket after dark.", emoji:"🦺"},
+      {title:"School/Crossing Guards 👮", def:"Obey guards and officers.", example:"Salima waits for guard's signal at school.", emoji:"👮‍♀️"}
+    ],
+    quizzes: [
+      {q:"RED light means?", opts:["Go quickly","Stop completely","Wave hands"], correct:1},
+      {q:"YELLOW light?", opts:["Speed up","Slow down & prepare","Sing"], correct:1},
+      {q:"GREEN light?", opts:["Look both ways & go","Close eyes & run","Push bike"], correct:0},
+      {q:"Pedestrian safe crossing?", opts:["When walking figure shows","When car honks","Whenever you feel"], correct:0},
+      {q:"Flashing RED?", opts:["Stop & wait","Cross quickly","Ignore"], correct:0}
+    ],
+    correctMsg: "✅ Correct!",
+    wrongMsg: "❌ Try again."
+  },
+  ar: {
+    title: "🌟 مغامرة سليمة مع إشارات المرور 🌟",
+    salimaName: "سليمة 👧",
+    fatherName: "أبي 👨‍🦱",
+    dialogue: [
+      {who:'salima', text:"أبي، لماذا توجد الكثير من إشارات المرور واللوحات؟"},
+      {who:'father', text:"إنها تساعد الجميع على البقاء آمنين. إشارات المرور تخبر السائقين والمشاة بما يجب فعله."},
+      {who:'salima', text:"ماذا يعني الضوء الأحمر؟"},
+      {who:'father', text:"الأحمر يعني توقف تماماً. لا تتحرك حتى يصبح الأمر آمناً."},
+      {who:'salima', text:"والضوء الأصفر؟"},
+      {who:'father', text:"تباطأ واستعد للتوقف. لا تتسرع أبداً على الضوء الأصفر."},
+      {who:'salima', text:"والضوء الأخضر؟"},
+      {who:'father', text:"تحرك فقط عندما يكون آمناً. انظر دائماً يساراً ويميناً أولاً."},
+      {who:'salima', text:"إشارات المشاة؟"},
+      {who:'father', text:"اعبر فقط عندما تظهر صورة المشي. إذا كانت تومض، أكمل بسرعة."},
+      {who:'salima', text:"الأضواء الوامضة بالقرب من القطارات أو الأعمال؟"},
+      {who:'father', text:"الأصفر الوامض = إبطاء. الأحمر الوامض = توقف. خطر!"},
+      {who:'salima', text:"والأشخاص الذين لا يميزون الألوان؟"},
+      {who:'father', text:"الضوء العلوي = توقف، السفلي = تحرك. الأشكال تساعد الجميع."},
+      {who:'salima', text:"أي نصائح أخرى؟"},
+      {who:'father', text:"أمسك يدي، راقب الدراجات، ارتد ملابس ساطعة، أطع الحراس."}
+    ],
+    rules: [
+      {title:"الضوء الأحمر 🚦", def:"توقف تماماً. انتظر على الرصيف حتى يصبح أخضر.", example:"سليمة تقف على الرصيف وتنتظر.", emoji:"🛑"},
+      {title:"الضوء الأصفر 💛", def:"تباطأ، استعد للتوقف.", example:"سليمة تمسك يد والدها.", emoji:"⚠️"},
+      {title:"الضوء الأخضر 💚", def:"تحرك عندما يكون آمناً، انظر في كلا الاتجاهين.", example:"سليمة تنظر يساراً ويميناً قبل العبور.", emoji:"✅"},
+      {title:"إشارة المشاة 🚶", def:"امش فقط عندما تظهر الصورة الخضراء.", example:"سليمة تعبر فقط على إشارة المشي الثابتة.", emoji:"🚶‍♀️"},
+      {title:"الأضواء الوامضة ⚠️", def:"الأصفر الوامض = احذر، الأحمر الوامض = توقف.", example:"سليمة تتباطأ في مناطق العمل.", emoji:"🚧"},
+      {title:"إشارات القطار/الترام 🚋", def:"توقف عندما تومض الأضواء أو تغلق الحواجز.", example:"سليمة لا تعبر السكة أبداً أثناء الوميض.", emoji:"🚂"},
+      {title:"مركبات الطوارئ 🚨", def:"ابتعد واتركها تمر.", example:"سليمة تذهب إلى الرصيف للإسعاف.", emoji:"🚑"},
+      {title:"الدراجات والسكوترات 🚲", def:"ابحث عن مسارات الدراجات، انتظر الدراجين.", example:"سليمة تفحص مسار الدراجات قبل العبور.", emoji:"🚴"},
+      {title:"السلامة الليلية 🌙", def:"ارتد ملابس ساطعة/عاكسة.", example:"سليمة ترتدي سترة ساطعة بعد الظلام.", emoji:"🦺"},
+      {title:"حراس المرور 👮", def:"أطع الحراس والضباط.", example:"سليمة تنتظر إشارة الحارس في المدرسة.", emoji:"👮‍♀️"}
+    ],
+    quizzes: [
+      {q:"الضوء الأحمر يعني؟", opts:["اذهب بسرعة","توقف تماماً","لوح بيديك"], correct:1},
+      {q:"الضوء الأصفر؟", opts:["أسرع","تباطأ واستعد","غني"], correct:1},
+      {q:"الضوء الأخضر؟", opts:["انظر في كلا الاتجاهين واذهب","أغمض عينيك واركض","ادفع الدراجة"], correct:0},
+      {q:"العبور الآمن للمشاة؟", opts:["عندما تظهر صورة المشي","عندما تبوق السيارة","متى ما شعرت"], correct:0},
+      {q:"الضوء الأحمر الوامض؟", opts:["توقف وانتظر","اعبر بسرعة","تجاهل"], correct:0}
+    ],
+    correctMsg: "✅ صحيح!",
+    wrongMsg: "❌ حاول مرة أخرى."
+  }
+};
+
+function initLang() {
+  const savedLang = localStorage.getItem('salimaLang');
+  const browserLang = navigator.language.split('-')[0];
+  
+  if (savedLang && ['fr', 'en', 'ar'].includes(savedLang)) {
+    currentLang = savedLang;
+  } else if (['fr', 'en', 'ar'].includes(browserLang)) {
+    currentLang = browserLang;
+  }
+  
+  updateLangUI();
+  renderContent();
+}
+
+function changeLang(lang) {
+  if (lang === currentLang) return;
+  
+  currentLang = lang;
+  localStorage.setItem('salimaLang', lang);
+  
+  document.body.style.opacity = '0';
+  setTimeout(() => {
+    updateLangUI();
+    renderContent();
+    document.body.style.opacity = '1';
+  }, 200);
+}
+
+function updateLangUI() {
+  if (currentLang === 'ar') {
+    document.body.classList.add('rtl');
+    document.documentElement.setAttribute('lang', 'ar');
+  } else {
+    document.body.classList.remove('rtl');
+    document.documentElement.setAttribute('lang', currentLang);
+  }
+  
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === currentLang);
+  });
+}
+
+function renderContent() {
+  const t = translations[currentLang];
+  
+  document.getElementById('pageTitle').textContent = t.title;
+  
+  renderDialogue(t);
+  renderRules(t);
+  renderQuizzes(t);
+}
+
+function renderDialogue(t) {
+  const chat = document.getElementById('chat');
+  chat.innerHTML = '';
+  
+  t.dialogue.forEach((line, index) => {
+    setTimeout(() => {
+      const div = document.createElement('div');
+      div.className = 'bubble ' + (line.who === 'salima' ? 'salima' : 'father');
+      div.innerHTML = `<span class="name">${line.who === 'salima' ? t.salimaName : t.fatherName}:</span> ${line.text}`;
+      chat.appendChild(div);
+    }, index * 100);
+  });
+}
+
+function renderRules(t) {
+  const wrap = document.getElementById('rules');
+  wrap.innerHTML = '';
+  
+  t.rules.forEach((r, index) => {
+    const rule = document.createElement('div');
+    rule.className = 'rule';
+    rule.innerHTML = `
+      <div class="placeholder">${r.emoji}</div>
+      <h4>${r.title}</h4>
+      <p><strong>${r.def}</strong></p>
+      <p><em>${r.example}</em></p>
+    `;
+    wrap.appendChild(rule);
+  });
+}
+
+function renderQuizzes(t) {
+  const wrap = document.getElementById('quizzes');
+  wrap.innerHTML = '';
+  
+  t.quizzes.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'quizbox';
+    const optsHtml = q.opts.map((o, j) => `<button onclick="answerQuiz(event,${i},${j})">${o}</button>`).join('');
+    card.innerHTML = `<div class="quiz">${i + 1}. ${q.q}</div><div class="opts">${optsHtml}</div><div class="feedback"></div>`;
+    wrap.appendChild(card);
+  });
+}
+
+function answerQuiz(e, qIndex, optIndex) {
+  const t = translations[currentLang];
+  const card = e.target.closest('.quizbox');
+  const opts = card.querySelectorAll('button');
+  const feedback = card.querySelector('.feedback');
+  const correct = t.quizzes[qIndex].correct;
+  
+  opts.forEach((b, idx) => {
+    b.disabled = true;
+    b.classList.remove('correct', 'wrong');
+    if (idx === correct) b.classList.add('correct');
+  });
+  
+  if (optIndex === correct) {
+    e.target.classList.add('correct');
+    feedback.textContent = t.correctMsg;
+    feedback.style.color = '#1a7f37';
+  } else {
+    e.target.classList.add('wrong');
+    feedback.textContent = t.wrongMsg;
+    feedback.style.color = '#d02b2b';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initLang);
+</script>
+
+</body>
+</html>

@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramadan Chat - Communauté</title>
+    <title>Ramadan Chat</title>
     
     <style>
-        /* __version__ = "v1.008" */
-        /* [v1.008] CORRECTION: Messages visibles, liste users OK, cadeaux ciblés, responsive */
-        
+        /* v1.009 - RETOUR VERSION STABLE */
         * {
             margin: 0;
             padding: 0;
@@ -17,210 +15,128 @@
         
         :root {
             --primary: #2C5F2D;
-            --primary-light: #3a7a3d;
             --secondary: #D4AF37;
             --accent: #C1272D;
-            --text: #2C3E50;
-            --light-bg: #F8F9FA;
             --white: #FFFFFF;
-            --shadow: rgba(0, 0, 0, 0.1);
-            --gradient-1: linear-gradient(135deg, #2C5F2D 0%, #1a3a1b 100%);
-            --gradient-2: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
         }
         
         body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--light-bg);
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f5f5;
         }
         
-        /* ===== MODAL CONDITIONS ===== */
-        .terms-modal-overlay {
+        /* ===== DISCLAIMER MODAL ===== */
+        .disclaimer-modal {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            z-index: 9999;
+            background: rgba(0,0,0,0.8);
             display: none;
             align-items: center;
             justify-content: center;
+            z-index: 9999;
             padding: 20px;
         }
         
-        .terms-modal-overlay.active {
+        .disclaimer-modal.show {
             display: flex;
-            animation: fadeIn 0.3s ease-out;
         }
         
-        .terms-modal {
-            background: var(--white);
-            border-radius: 20px;
-            max-width: 600px;
+        .disclaimer-content {
+            background: white;
+            border-radius: 15px;
+            max-width: 500px;
             width: 100%;
-            max-height: 90vh;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
-            animation: slideUpModal 0.4s ease-out;
-            display: flex;
-            flex-direction: column;
+            max-height: 80vh;
+            overflow-y: auto;
         }
         
-        .terms-modal-header {
-            background: var(--gradient-1);
-            color: var(--white);
-            padding: 25px 30px;
-            border-radius: 20px 20px 0 0;
+        .disclaimer-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
             text-align: center;
         }
         
-        .terms-modal-header h2 {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
+        .disclaimer-body {
+            padding: 20px;
         }
         
-        .terms-modal-body {
-            padding: 30px;
-            overflow-y: auto;
-            flex: 1;
+        .disclaimer-body h3 {
+            color: var(--primary);
+            margin: 15px 0 10px;
         }
         
-        .terms-modal-body::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .terms-modal-body::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
-        }
-        
-        .terms-list {
+        .disclaimer-body ul {
             list-style: none;
             padding: 0;
         }
         
-        .terms-list li {
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            background: #fff5f5;
-            border-left: 4px solid var(--accent);
-            border-radius: 8px;
-            color: var(--text);
-            line-height: 1.6;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
+        .disclaimer-body li {
+            padding: 8px;
+            margin: 5px 0;
+            background: #ffebee;
+            border-left: 3px solid var(--accent);
+            border-radius: 5px;
+            font-size: 0.9rem;
         }
         
-        .terms-list li::before {
-            content: '❌';
-            font-size: 1.2rem;
-            flex-shrink: 0;
+        .disclaimer-body li::before {
+            content: '❌ ';
         }
         
-        .terms-modal-footer {
-            padding: 25px 30px;
-            border-top: 1px solid #e5e7eb;
-            background: var(--light-bg);
-            border-radius: 0 0 20px 20px;
+        .disclaimer-footer {
+            padding: 20px;
+            border-top: 1px solid #ddd;
         }
         
-        .terms-checkbox-container {
+        .disclaimer-checkbox {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: var(--white);
-            border-radius: 10px;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .disclaimer-checkbox input {
+            width: 20px;
+            height: 20px;
             cursor: pointer;
         }
         
-        .terms-checkbox {
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            accent-color: var(--primary);
-        }
-        
-        .terms-checkbox-label {
-            color: var(--text);
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            flex: 1;
-        }
-        
-        .terms-accept-btn {
+        .disclaimer-btn {
             width: 100%;
-            padding: 16px;
-            background: var(--gradient-1);
-            color: var(--white);
+            padding: 15px;
+            background: var(--primary);
+            color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 700;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
         
-        .terms-accept-btn:disabled {
+        .disclaimer-btn:disabled {
             background: #ccc;
             cursor: not-allowed;
         }
         
         /* ===== RATE LIMIT WARNING ===== */
-        .rate-limit-warning {
+        .rate-warning {
             position: fixed;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--accent), #e74c3c);
-            color: var(--white);
+            background: var(--accent);
+            color: white;
             padding: 15px 25px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(193, 39, 45, 0.4);
-            z-index: 10000;
+            border-radius: 10px;
             display: none;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
+            z-index: 10000;
+            font-weight: bold;
         }
         
-        .rate-limit-warning.active {
-            display: flex;
-        }
-        
-        .rate-limit-countdown {
-            background: rgba(255,255,255,0.3);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-            min-width: 45px;
-            text-align: center;
-        }
-        
-        /* ===== MESSAGES COUNTER ===== */
-        .messages-counter {
-            position: absolute;
-            top: -35px;
-            right: 0;
-            background: var(--light-bg);
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            color: var(--text);
-            font-weight: 600;
-            border: 1px solid #e5e7eb;
-        }
-        
-        .messages-counter.warning {
-            background: #fef3c7;
-            border-color: #fde68a;
-            color: #92400e;
-        }
-        
-        .messages-counter.danger {
-            background: #fee2e2;
-            border-color: #fca5a5;
-            color: #991b1b;
+        .rate-warning.show {
+            display: block;
         }
         
         /* ===== CHAT WIDGET ===== */
@@ -231,25 +147,16 @@
             z-index: 1000;
         }
         
-        .chat-button {
-            background: var(--gradient-1);
-            color: var(--white);
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
+        .chat-btn {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
             border: none;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(44, 95, 45, 0.4);
+            border-radius: 50%;
             font-size: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.4s ease;
-            position: relative;
-        }
-        
-        .chat-button:hover {
-            transform: scale(1.15) rotate(5deg);
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         
         .chat-badge {
@@ -257,16 +164,16 @@
             top: -5px;
             right: -5px;
             background: var(--accent);
-            color: var(--white);
-            min-width: 24px;
-            height: 24px;
-            border-radius: 12px;
-            font-size: 0.75rem;
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 0.7rem;
             display: none;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            border: 3px solid var(--white);
+            font-weight: bold;
+            border: 2px solid white;
         }
         
         /* ===== CHAT BOX ===== */
@@ -274,384 +181,189 @@
             position: fixed;
             bottom: 100px;
             right: 20px;
-            width: 450px;
-            height: 600px;
-            background: var(--white);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 400px;
+            height: 550px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             display: none;
-            flex-direction: row;
-            overflow: hidden;
-        }
-        
-        .chat-box.active {
-            display: flex;
-        }
-        
-        /* ===== SIDEBAR USERS ===== */
-        .chat-sidebar {
-            width: 100px;
-            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-light) 100%);
-            display: flex;
             flex-direction: column;
-            overflow-y: auto;
-            padding: 15px 5px;
         }
         
-        .chat-sidebar::-webkit-scrollbar {
-            width: 4px;
-        }
-        
-        .chat-sidebar::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.3);
-            border-radius: 2px;
-        }
-        
-        .sidebar-header {
-            color: var(--white);
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-            text-align: center;
-            opacity: 0.9;
-        }
-        
-        .user-item {
+        .chat-box.show {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 8px 3px;
-            margin-bottom: 8px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
         }
         
-        .user-item:hover {
-            background: rgba(255,255,255,0.15);
-        }
-        
-        .user-item.selected {
-            background: var(--secondary);
-        }
-        
-        .user-item-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--secondary);
-            margin-bottom: 4px;
-            position: relative;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-        
-        .user-item-status {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 10px;
-            height: 10px;
-            background: #4ade80;
-            border: 2px solid var(--white);
-            border-radius: 50%;
-        }
-        
-        .user-item-name {
-            color: var(--white);
-            font-size: 0.65rem;
-            text-align: center;
-            font-weight: 600;
-            max-width: 70px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        
-        /* ===== MAIN AREA ===== */
-        .chat-main-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
-        
+        /* Login */
         .chat-login {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 40px;
             height: 100%;
+            padding: 30px;
             text-align: center;
         }
         
         .chat-login h3 {
             color: var(--primary);
-            margin-bottom: 12px;
-            font-size: 1.5rem;
+            margin: 20px 0;
         }
         
-        .google-signin-btn {
+        .google-btn {
             display: flex;
             align-items: center;
-            gap: 15px;
-            background: var(--white);
-            color: #444;
-            padding: 15px 30px;
-            border: 2px solid #e5e7eb;
-            border-radius: 50px;
-            font-weight: 600;
+            gap: 10px;
+            padding: 12px 25px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-weight: bold;
         }
         
-        .google-signin-btn:hover {
+        .google-btn:hover {
             border-color: var(--primary);
-            transform: translateY(-3px);
         }
         
-        /* ===== CHAT MAIN ===== */
+        /* Chat main */
         .chat-main {
             display: none;
             flex-direction: column;
             height: 100%;
         }
         
-        .chat-main.active {
+        .chat-main.show {
             display: flex;
         }
         
         .chat-header {
-            background: var(--gradient-1);
-            color: var(--white);
+            background: var(--primary);
+            color: white;
             padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-radius: 15px 15px 0 0;
         }
         
         .chat-header-left {
             display: flex;
             align-items: center;
             gap: 10px;
-            min-width: 0;
         }
         
-        .chat-header-avatar {
+        .chat-avatar {
             width: 35px;
             height: 35px;
             border-radius: 50%;
             border: 2px solid var(--secondary);
-            flex-shrink: 0;
         }
         
-        .chat-header-info {
-            min-width: 0;
-        }
-        
-        .chat-header-info h4 {
-            font-size: 0.9rem;
-            margin-bottom: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .chat-header-info p {
-            font-size: 0.7rem;
-            opacity: 0.9;
-        }
-        
-        .chat-header-actions {
-            display: flex;
-            gap: 5px;
-            flex-shrink: 0;
-        }
-        
-        .chat-header-btn {
+        .chat-close-btn {
             background: rgba(255,255,255,0.2);
             border: none;
-            color: var(--white);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
         
-        .chat-header-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        
-        .chat-close {
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 1.3rem;
-            cursor: pointer;
-            padding: 3px;
-        }
-        
-        /* ===== MESSAGES ===== */
         .chat-messages {
             flex: 1;
             padding: 15px;
             overflow-y: auto;
-            background: linear-gradient(180deg, #fafafa 0%, var(--white) 100%);
-            display: flex;
-            flex-direction: column-reverse;
+            background: #fafafa;
         }
         
-        .chat-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 3px;
-        }
-        
-        .chat-message {
+        .message {
             margin-bottom: 15px;
-            animation: messageSlide 0.3s ease-out;
         }
         
-        .chat-message-header {
+        .message-header {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
         
-        .chat-message-avatar {
-            width: 28px;
-            height: 28px;
+        .message-avatar {
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
-            border: 2px solid var(--secondary);
         }
         
-        .chat-message-username {
-            font-weight: 700;
+        .message-name {
+            font-weight: bold;
             color: var(--primary);
             font-size: 0.85rem;
         }
         
-        .chat-message-time {
+        .message-time {
             font-size: 0.7rem;
             color: #999;
             margin-left: auto;
         }
         
-        .chat-message-content {
-            background: var(--white);
-            padding: 12px 15px;
-            border-radius: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            word-wrap: break-word;
-            line-height: 1.5;
-            max-width: 85%;
-            border: 1px solid rgba(0,0,0,0.05);
+        .message-content {
+            background: white;
+            padding: 10px 12px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            max-width: 80%;
         }
         
-        .chat-message.own {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
+        .message.own .message-content {
+            background: var(--primary);
+            color: white;
+            margin-left: auto;
         }
         
-        .chat-message.own .chat-message-content {
-            background: var(--gradient-1);
-            color: var(--white);
-            border: none;
-        }
-        
-        .chat-message.system {
+        .message.system {
             text-align: center;
         }
         
-        .chat-message.system .chat-message-content {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            color: #92400e;
-            font-size: 0.85rem;
+        .message.system .message-content {
+            background: #fff3cd;
+            color: #856404;
             display: inline-block;
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-weight: 600;
-            border: 1px solid #fcd34d;
-            max-width: 100%;
+            font-size: 0.85rem;
+            padding: 6px 15px;
+            border-radius: 15px;
         }
         
-        .chat-message.gift .chat-message-content {
-            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
-            border: 2px solid #f9a8d4;
-            font-size: 1.2rem;
-            text-align: center;
-            padding: 15px;
-            max-width: 100%;
-        }
-        
-        .gift-recipient {
-            font-size: 0.75rem;
-            color: #831843;
-            font-weight: 600;
-            margin-top: 5px;
-        }
-        
-        /* ===== INPUT AREA ===== */
         .chat-input-area {
             padding: 15px;
-            background: var(--white);
-            border-top: 1px solid #e5e7eb;
-            position: relative;
+            border-top: 1px solid #ddd;
         }
         
-        .chat-actions-bar {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 10px;
+        .rate-counter {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-weight: bold;
         }
         
-        .action-btn {
-            flex: 1;
-            background: var(--light-bg);
-            border: 1px solid #e5e7eb;
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .rate-counter.warning {
+            color: orange;
         }
         
-        .action-btn:hover {
-            background: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
+        .rate-counter.danger {
+            color: var(--accent);
         }
         
-        .chat-input-container {
+        .chat-input-form {
             display: flex;
             gap: 8px;
-            align-items: flex-end;
         }
         
         .chat-input {
             flex: 1;
-            padding: 12px 15px;
-            border: 2px solid #e5e7eb;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
             border-radius: 20px;
-            font-size: 0.9rem;
             outline: none;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            resize: none;
-            max-height: 80px;
         }
         
         .chat-input:focus {
@@ -659,20 +371,13 @@
         }
         
         .chat-send {
-            background: var(--gradient-1);
-            color: var(--white);
+            background: var(--primary);
+            color: white;
             border: none;
-            padding: 12px 18px;
+            padding: 10px 20px;
             border-radius: 20px;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            flex-shrink: 0;
-        }
-        
-        .chat-send:hover {
-            transform: translateY(-2px);
+            font-weight: bold;
         }
         
         .chat-send:disabled {
@@ -680,159 +385,7 @@
             cursor: not-allowed;
         }
         
-        /* ===== EMOJI PICKER ===== */
-        .emoji-picker {
-            position: absolute;
-            bottom: 160px;
-            left: 15px;
-            right: 15px;
-            background: var(--white);
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            display: none;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 10;
-        }
-        
-        .emoji-picker.active {
-            display: block;
-        }
-        
-        .emoji-picker h4 {
-            color: var(--primary);
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-        }
-        
-        .emoji-grid {
-            display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            gap: 6px;
-        }
-        
-        .emoji-btn {
-            font-size: 1.5rem;
-            padding: 6px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-        
-        .emoji-btn:hover {
-            background: var(--light-bg);
-            transform: scale(1.2);
-        }
-        
-        /* ===== GIFT PICKER ===== */
-        .gift-picker {
-            position: absolute;
-            bottom: 160px;
-            left: 15px;
-            right: 15px;
-            background: linear-gradient(135deg, var(--white) 0%, #fef3c7 100%);
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            display: none;
-            z-index: 10;
-            border: 2px solid var(--secondary);
-        }
-        
-        .gift-picker.active {
-            display: block;
-        }
-        
-        .gift-picker h4 {
-            color: var(--primary);
-            font-size: 0.95rem;
-            margin-bottom: 8px;
-            font-weight: 700;
-            text-align: center;
-        }
-        
-        .gift-recipient-select {
-            margin-bottom: 12px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--text);
-        }
-        
-        .gift-recipient-select strong {
-            color: var(--primary);
-        }
-        
-        .gift-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
-        
-        .gift-btn {
-            background: var(--white);
-            border: 2px solid #e5e7eb;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .gift-btn:hover {
-            border-color: var(--secondary);
-            background: var(--secondary);
-            transform: scale(1.05);
-        }
-        
-        .gift-btn-icon {
-            font-size: 2rem;
-        }
-        
-        .gift-btn-label {
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--text);
-        }
-        
-        .gift-btn:hover .gift-btn-label {
-            color: var(--white);
-        }
-        
-        /* ===== ANIMATIONS ===== */
-        @keyframes messageSlide {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideUpModal {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* ===== RESPONSIVE ===== */
+        /* Responsive */
         @media (max-width: 768px) {
             .chat-box {
                 position: fixed;
@@ -844,175 +397,102 @@
                 height: 100%;
                 border-radius: 0;
                 max-width: none;
-                max-height: none;
             }
             
-            .chat-sidebar {
-                width: 80px;
-                padding: 10px 3px;
-            }
-            
-            .user-item-avatar {
-                width: 35px;
-                height: 35px;
-            }
-            
-            .emoji-grid {
-                grid-template-columns: repeat(6, 1fr);
-            }
-            
-            .gift-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .terms-modal {
-                max-width: 95%;
-                max-height: 85vh;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .chat-sidebar {
-                width: 70px;
-            }
-            
-            .sidebar-header {
-                font-size: 0.6rem;
-            }
-            
-            .user-item-name {
-                font-size: 0.6rem;
+            .chat-header {
+                border-radius: 0;
             }
         }
     </style>
 </head>
 <body>
     
-    <!-- MODAL CONDITIONS -->
-    <div class="terms-modal-overlay" id="termsModal">
-        <div class="terms-modal">
-            <div class="terms-modal-header">
-                <h2>📜 Conditions d'Utilisation</h2>
-                <p>Règles du chat - Lecture obligatoire</p>
+    <!-- DISCLAIMER MODAL -->
+    <div class="disclaimer-modal" id="disclaimerModal">
+        <div class="disclaimer-content">
+            <div class="disclaimer-header">
+                <h2>📜 Règles du Chat</h2>
             </div>
-            
-            <div class="terms-modal-body">
-                <h3 style="color: var(--primary); margin-bottom: 15px;">❌ Contenus Interdits</h3>
-                <ul class="terms-list">
-                    <li>Politique, propagande, débats partisans</li>
-                    <li>Extrémisme, incitation à la haine, terrorisme</li>
-                    <li>Armes, vente ou promotion</li>
-                    <li>Drogue, substances illicites</li>
-                    <li>Violence, menaces, intimidation</li>
-                    <li>Discrimination (racisme, sexisme, etc.)</li>
-                    <li>Contenu sexuel explicite</li>
-                    <li>Harcèlement, bizutage, insultes</li>
-                    <li>Spam, publicité non autorisée</li>
-                    <li>Désinformation, fake news</li>
-                    <li>Usurpation d'identité</li>
-                    <li>Partage de données personnelles</li>
+            <div class="disclaimer-body">
+                <h3>❌ Strictement Interdit</h3>
+                <ul>
+                    <li>Politique et propagande</li>
+                    <li>Extrémisme et haine</li>
+                    <li>Armes et violence</li>
+                    <li>Drogue</li>
+                    <li>Menaces et intimidation</li>
+                    <li>Discrimination</li>
+                    <li>Contenu sexuel</li>
+                    <li>Harcèlement et insultes</li>
+                    <li>Spam</li>
+                    <li>Désinformation</li>
                 </ul>
-                
-                <div style="background: #fef3c7; padding: 15px; border-radius: 10px; margin: 15px 0; border: 2px solid var(--secondary);">
-                    <strong style="color: #92400e;">⏱️ Limite: 5 messages par minute</strong>
-                    <p style="color: #92400e; margin-top: 5px; font-size: 0.9rem;">Pour éviter le spam et maintenir un chat de qualité.</p>
-                </div>
+                <p style="margin-top: 15px; padding: 10px; background: #fff3cd; border-radius: 8px;">
+                    <strong>⏱️ Limite:</strong> 5 messages par minute maximum
+                </p>
             </div>
-            
-            <div class="terms-modal-footer">
-                <label class="terms-checkbox-container">
-                    <input type="checkbox" class="terms-checkbox" id="termsCheckbox">
-                    <span class="terms-checkbox-label">J'ai lu et j'accepte les conditions</span>
+            <div class="disclaimer-footer">
+                <label class="disclaimer-checkbox">
+                    <input type="checkbox" id="acceptCheckbox">
+                    <span>J'ai lu et j'accepte les règles</span>
                 </label>
-                <button class="terms-accept-btn" id="termsAcceptBtn" disabled>Accepter et Continuer</button>
+                <button class="disclaimer-btn" id="acceptBtn" disabled>Accepter</button>
             </div>
         </div>
     </div>
     
     <!-- RATE LIMIT WARNING -->
-    <div class="rate-limit-warning" id="rateLimitWarning">
-        <span>⏱️</span>
-        <span>Trop de messages ! Patientez</span>
-        <span class="rate-limit-countdown" id="rateLimitCountdown">10s</span>
+    <div class="rate-warning" id="rateWarning">
+        ⏱️ Trop de messages ! Patientez <span id="rateCountdown">10</span>s
     </div>
     
     <!-- CHAT WIDGET -->
     <div class="chat-widget">
-        <button class="chat-button" id="chatButton">
+        <button class="chat-btn" id="chatBtn">
             💬
             <span class="chat-badge" id="chatBadge">0</span>
         </button>
         
         <div class="chat-box" id="chatBox">
-            <!-- SIDEBAR -->
-            <div class="chat-sidebar">
-                <div class="sidebar-header">En ligne</div>
-                <div id="usersList"></div>
+            <!-- Login -->
+            <div class="chat-login" id="chatLogin">
+                <div style="font-size: 4rem;">🌙</div>
+                <h3>Chat Ramadan</h3>
+                <p>Rejoignez la communauté</p>
+                <button class="google-btn" id="googleBtn">
+                    <span>🔐</span>
+                    <span>Connexion Google</span>
+                </button>
             </div>
             
-            <!-- MAIN AREA -->
-            <div class="chat-main-area">
-                <!-- Login -->
-                <div class="chat-login" id="chatLogin">
-                    <div style="font-size: 4rem; margin-bottom: 20px;">🌙</div>
-                    <h3>Chat Ramadan</h3>
-                    <p style="margin-bottom: 20px;">Rejoignez la communauté</p>
-                    <button class="google-signin-btn" id="googleSignInBtn">
-                        <span>🔐</span>
-                        <span>Se connecter avec Google</span>
-                    </button>
+            <!-- Chat -->
+            <div class="chat-main" id="chatMain">
+                <div class="chat-header">
+                    <div class="chat-header-left">
+                        <img src="" class="chat-avatar" id="userAvatar">
+                        <div>
+                            <div id="userName">Utilisateur</div>
+                            <div style="font-size: 0.7rem;" id="onlineCount">En ligne</div>
+                        </div>
+                    </div>
+                    <button class="chat-close-btn" id="closeBtn">✕</button>
                 </div>
                 
-                <!-- Chat -->
-                <div class="chat-main" id="chatMain">
-                    <div class="chat-header">
-                        <div class="chat-header-left">
-                            <img src="" alt="" class="chat-header-avatar" id="headerAvatar">
-                            <div class="chat-header-info">
-                                <h4 id="headerName">Utilisateur</h4>
-                                <p id="onlineCount">En ligne</p>
-                            </div>
-                        </div>
-                        <div class="chat-header-actions">
-                            <button class="chat-header-btn" id="logoutBtn">Déco</button>
-                            <button class="chat-close" id="chatClose">✕</button>
-                        </div>
-                    </div>
-                    
-                    <div class="chat-messages" id="chatMessages"></div>
-                    
-                    <div class="chat-input-area">
-                        <div class="messages-counter" id="messagesCounter">5/5</div>
-                        
-                        <div class="chat-actions-bar">
-                            <button class="action-btn" id="emojiBtn" title="Emojis">😊</button>
-                            <button class="action-btn" id="giftBtn" title="Cadeaux">🎁</button>
-                        </div>
-                        
-                        <div class="emoji-picker" id="emojiPicker">
-                            <h4>😊 Emojis</h4>
-                            <div class="emoji-grid" id="emojiGrid"></div>
-                        </div>
-                        
-                        <div class="gift-picker" id="giftPicker">
-                            <h4>🎁 Envoyer un cadeau</h4>
-                            <div class="gift-recipient-select" id="giftRecipientInfo">
-                                <strong>À:</strong> <span id="selectedUserName">Tout le monde</span>
-                            </div>
-                            <div class="gift-grid" id="giftGrid"></div>
-                        </div>
-                        
-                        <div class="chat-input-container">
-                            <textarea 
-                                class="chat-input" 
-                                id="chatInput" 
-                                placeholder="Votre message..."
-                                maxlength="200"
-                                rows="1"
-                            ></textarea>
-                            <button class="chat-send" id="chatSend">📤</button>
-                        </div>
-                    </div>
+                <div class="chat-messages" id="messages"></div>
+                
+                <div class="chat-input-area">
+                    <div class="rate-counter" id="rateCounter">5/5 messages</div>
+                    <form class="chat-input-form" id="messageForm">
+                        <input 
+                            type="text" 
+                            class="chat-input" 
+                            id="messageInput" 
+                            placeholder="Votre message..."
+                            maxlength="200"
+                            autocomplete="off"
+                        >
+                        <button type="submit" class="chat-send" id="sendBtn">📤</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -1024,6 +504,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
     <script>
+        console.log('🚀 Chat v1.009 - Version stable');
+        
         // ===== CONFIG FIREBASE =====
         const firebaseConfig = {
             apiKey: "AIzaSyBoF6xTWr4dzgbWFwXavVC2mMshHCTK6fM",
@@ -1039,462 +521,237 @@
         const db = firebase.firestore();
         const messagesRef = db.collection('messages');
         const usersRef = db.collection('users');
-        const googleProvider = new firebase.auth.GoogleAuthProvider();
+        const provider = new firebase.auth.GoogleAuthProvider();
         
         let currentUser = null;
-        let selectedUser = null; // Pour les cadeaux ciblés
-        let messageCount = 0;
         let unsubscribe = null;
-        let usersUnsubscribe = null;
-        let termsAccepted = false;
         
-        // Rate limiting
-        const RATE_LIMIT = {
-            maxMessages: 5,
-            timeWindow: 60000,
-            cooldownTime: 10000
-        };
-        
-        let messageTimestamps = [];
-        let isRateLimited = false;
-        
-        // DOM Elements
-        const chatButton = document.getElementById('chatButton');
+        // DOM
+        const chatBtn = document.getElementById('chatBtn');
         const chatBox = document.getElementById('chatBox');
-        const chatClose = document.getElementById('chatClose');
         const chatLogin = document.getElementById('chatLogin');
         const chatMain = document.getElementById('chatMain');
-        const googleSignInBtn = document.getElementById('googleSignInBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const chatMessages = document.getElementById('chatMessages');
-        const chatInput = document.getElementById('chatInput');
-        const chatSend = document.getElementById('chatSend');
-        const chatBadge = document.getElementById('chatBadge');
-        const headerName = document.getElementById('headerName');
-        const headerAvatar = document.getElementById('headerAvatar');
+        const googleBtn = document.getElementById('googleBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const messageForm = document.getElementById('messageForm');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const messages = document.getElementById('messages');
+        const userName = document.getElementById('userName');
+        const userAvatar = document.getElementById('userAvatar');
         const onlineCount = document.getElementById('onlineCount');
-        const usersList = document.getElementById('usersList');
-        const emojiBtn = document.getElementById('emojiBtn');
-        const giftBtn = document.getElementById('giftBtn');
-        const emojiPicker = document.getElementById('emojiPicker');
-        const giftPicker = document.getElementById('giftPicker');
-        const emojiGrid = document.getElementById('emojiGrid');
-        const giftGrid = document.getElementById('giftGrid');
-        const messagesCounter = document.getElementById('messagesCounter');
-        const rateLimitWarning = document.getElementById('rateLimitWarning');
-        const rateLimitCountdown = document.getElementById('rateLimitCountdown');
-        const termsModal = document.getElementById('termsModal');
-        const termsCheckbox = document.getElementById('termsCheckbox');
-        const termsAcceptBtn = document.getElementById('termsAcceptBtn');
-        const selectedUserName = document.getElementById('selectedUserName');
+        const rateCounter = document.getElementById('rateCounter');
+        const rateWarning = document.getElementById('rateWarning');
+        const rateCountdown = document.getElementById('rateCountdown');
+        const disclaimerModal = document.getElementById('disclaimerModal');
+        const acceptCheckbox = document.getElementById('acceptCheckbox');
+        const acceptBtn = document.getElementById('acceptBtn');
+        const chatBadge = document.getElementById('chatBadge');
         
-        // Emojis & Gifts
-        const emojis = ['😊', '😂', '❤️', '🌙', '⭐', '🕌', '🤲', '📿', '🌟', '✨', 
-                       '🙏', '💚', '🌸', '🌺', '🎉', '🎊', '👏', '🤝', '💫', '☪️',
-                       '🕋', '📖', '🍽️', '🥘', '🍰', '☕', '🫖', '🌹', '💐', '🎁'];
+        // ===== DISCLAIMER =====
+        let termsAccepted = localStorage.getItem('terms') === 'ok';
         
-        const gifts = [
-            { icon: '🎁', label: 'Cadeau' },
-            { icon: '🌙', label: 'Lune' },
-            { icon: '⭐', label: 'Étoile' },
-            { icon: '🕌', label: 'Mosquée' },
-            { icon: '💐', label: 'Fleurs' },
-            { icon: '🍰', label: 'Gâteau' },
-            { icon: '☕', label: 'Café' },
-            { icon: '📿', label: 'Tasbih' },
-            { icon: '💚', label: 'Cœur' }
-        ];
-        
-        // Generate emojis
-        emojis.forEach(emoji => {
-            const btn = document.createElement('button');
-            btn.className = 'emoji-btn';
-            btn.textContent = emoji;
-            btn.onclick = () => {
-                chatInput.value += emoji;
-                chatInput.focus();
-            };
-            emojiGrid.appendChild(btn);
+        acceptCheckbox.addEventListener('change', () => {
+            acceptBtn.disabled = !acceptCheckbox.checked;
         });
         
-        // Generate gifts
-        gifts.forEach(gift => {
-            const btn = document.createElement('button');
-            btn.className = 'gift-btn';
-            btn.innerHTML = `
-                <div class="gift-btn-icon">${gift.icon}</div>
-                <div class="gift-btn-label">${gift.label}</div>
-            `;
-            btn.onclick = () => sendGift(gift);
-            giftGrid.appendChild(btn);
-        });
-        
-        // Toggle pickers
-        emojiBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            emojiPicker.classList.toggle('active');
-            giftPicker.classList.remove('active');
-        });
-        
-        giftBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            giftPicker.classList.toggle('active');
-            emojiPicker.classList.remove('active');
-        });
-        
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.emoji-picker') && !e.target.closest('.gift-picker') && 
-                !e.target.closest('.action-btn')) {
-                emojiPicker.classList.remove('active');
-                giftPicker.classList.remove('active');
-            }
-        });
-        
-        // Auto-resize textarea
-        chatInput.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = Math.min(this.scrollHeight, 80) + 'px';
-        });
-        
-        // Terms modal
-        termsCheckbox.addEventListener('change', () => {
-            termsAcceptBtn.disabled = !termsCheckbox.checked;
-        });
-        
-        termsAcceptBtn.addEventListener('click', () => {
+        acceptBtn.addEventListener('click', () => {
+            localStorage.setItem('terms', 'ok');
             termsAccepted = true;
-            termsModal.classList.remove('active');
-            localStorage.setItem('termsAccepted', 'true');
+            disclaimerModal.classList.remove('show');
         });
         
-        if (localStorage.getItem('termsAccepted') === 'true') {
-            termsAccepted = true;
-        }
+        // ===== RATE LIMITING =====
+        let messageTimes = [];
+        const MAX_MESSAGES = 5;
+        const TIME_WINDOW = 60000; // 1 minute
+        const COOLDOWN = 10000; // 10 secondes
+        let rateLimited = false;
         
-        // Rate limiting functions
-        function checkRateLimit() {
+        function checkRate() {
             const now = Date.now();
-            messageTimestamps = messageTimestamps.filter(t => now - t < RATE_LIMIT.timeWindow);
+            messageTimes = messageTimes.filter(t => now - t < TIME_WINDOW);
             
-            const remaining = RATE_LIMIT.maxMessages - messageTimestamps.length;
-            updateMessagesCounter(remaining);
+            const remaining = MAX_MESSAGES - messageTimes.length;
+            rateCounter.textContent = `${remaining}/${MAX_MESSAGES} messages`;
+            rateCounter.className = 'rate-counter';
             
-            if (messageTimestamps.length >= RATE_LIMIT.maxMessages) {
+            if (remaining <= 1) rateCounter.classList.add('danger');
+            else if (remaining <= 2) rateCounter.classList.add('warning');
+            
+            if (messageTimes.length >= MAX_MESSAGES) {
                 activateRateLimit();
                 return false;
             }
             return true;
         }
         
-        function updateMessagesCounter(remaining) {
-            messagesCounter.textContent = `${remaining}/${RATE_LIMIT.maxMessages}`;
-            messagesCounter.className = 'messages-counter';
-            if (remaining <= 1) messagesCounter.classList.add('danger');
-            else if (remaining <= 2) messagesCounter.classList.add('warning');
-        }
-        
         function activateRateLimit() {
-            if (isRateLimited) return;
-            isRateLimited = true;
-            rateLimitWarning.classList.add('active');
-            chatSend.disabled = true;
-            chatInput.disabled = true;
+            if (rateLimited) return;
+            rateLimited = true;
+            rateWarning.classList.add('show');
+            sendBtn.disabled = true;
+            messageInput.disabled = true;
             
-            let seconds = RATE_LIMIT.cooldownTime / 1000;
-            rateLimitCountdown.textContent = `${seconds}s`;
-            
+            let seconds = COOLDOWN / 1000;
             const interval = setInterval(() => {
                 seconds--;
-                rateLimitCountdown.textContent = `${seconds}s`;
+                rateCountdown.textContent = seconds;
                 if (seconds <= 0) clearInterval(interval);
             }, 1000);
             
             setTimeout(() => {
-                isRateLimited = false;
-                rateLimitWarning.classList.remove('active');
-                chatSend.disabled = false;
-                chatInput.disabled = false;
-                messageTimestamps = [];
-                updateMessagesCounter(RATE_LIMIT.maxMessages);
-            }, RATE_LIMIT.cooldownTime);
+                rateLimited = false;
+                rateWarning.classList.remove('show');
+                sendBtn.disabled = false;
+                messageInput.disabled = false;
+                messageTimes = [];
+                checkRate();
+            }, COOLDOWN);
         }
         
-        // Utils
-        function sanitizeHTML(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-        
-        function formatTime(timestamp) {
-            if (!timestamp) return '';
-            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-            return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-        }
-        
-        // UI
-        chatButton.addEventListener('click', () => {
-            chatBox.classList.add('active');
-            if (currentUser) chatInput.focus();
-            messageCount = 0;
-            chatBadge.style.display = 'none';
+        // ===== UI =====
+        chatBtn.addEventListener('click', () => {
+            chatBox.classList.toggle('show');
         });
         
-        chatClose.addEventListener('click', () => {
-            chatBox.classList.remove('active');
+        closeBtn.addEventListener('click', () => {
+            chatBox.classList.remove('show');
         });
         
-        // Auth
-        googleSignInBtn.addEventListener('click', async () => {
+        googleBtn.addEventListener('click', async () => {
             if (!termsAccepted) {
-                termsModal.classList.add('active');
+                disclaimerModal.classList.add('show');
                 return;
             }
             
             try {
-                await auth.signInWithPopup(googleProvider);
-                console.log('✅ Connexion réussie');
+                await auth.signInWithPopup(provider);
+                console.log('✅ Connexion OK');
             } catch (error) {
                 console.error('❌ Erreur:', error);
                 alert('Erreur: ' + error.message);
             }
         });
         
-        logoutBtn.addEventListener('click', async () => {
-            if (confirm('Déconnexion ?')) {
-                await auth.signOut();
-            }
-        });
-        
+        // ===== AUTH =====
         auth.onAuthStateChanged(async (user) => {
             if (user) {
+                console.log('✅ User connecté:', user.displayName);
                 currentUser = user;
-                chatLogin.style.display = 'none';
-                chatMain.classList.add('active');
-                headerName.textContent = user.displayName || 'Utilisateur';
-                headerAvatar.src = user.photoURL || '';
                 
+                chatLogin.style.display = 'none';
+                chatMain.classList.add('show');
+                userName.textContent = user.displayName;
+                userAvatar.src = user.photoURL;
+                
+                // Ajouter user
                 await usersRef.doc(user.uid).set({
-                    uid: user.uid,
                     name: user.displayName,
-                    photoURL: user.photoURL,
-                    lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+                    photo: user.photoURL,
+                    time: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 
                 usersRef.doc(user.uid).onDisconnect().delete();
                 
+                // Message système
                 await messagesRef.add({
                     type: 'system',
-                    content: `${user.displayName} a rejoint 🌙`,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    userId: user.uid
+                    text: `${user.displayName} a rejoint 🌙`,
+                    time: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 
-                listenToMessages();
-                listenToUsers();
-                updateMessagesCounter(RATE_LIMIT.maxMessages);
+                listenMessages();
+                listenUsers();
+                checkRate();
                 
             } else {
+                console.log('❌ User déconnecté');
                 currentUser = null;
                 chatLogin.style.display = 'flex';
-                chatMain.classList.remove('active');
+                chatMain.classList.remove('show');
+                messages.innerHTML = '';
                 if (unsubscribe) unsubscribe();
-                if (usersUnsubscribe) usersUnsubscribe();
-                chatMessages.innerHTML = '';
-                usersList.innerHTML = '';
-                messageTimestamps = [];
-                selectedUser = null;
             }
         });
         
-        // Listen messages - FIX: Ordre correct
-        function listenToMessages() {
+        // ===== MESSAGES =====
+        function listenMessages() {
             unsubscribe = messagesRef
-                .orderBy('timestamp', 'asc')
-                .limitToLast(50)
+                .orderBy('time', 'desc')
+                .limit(50)
                 .onSnapshot((snapshot) => {
-                    snapshot.docChanges().forEach((change) => {
-                        if (change.type === 'added') {
-                            const msg = change.doc.data();
-                            const isOwn = currentUser && msg.userId === currentUser.uid;
-                            addMessage(msg, isOwn);
-                        }
-                    });
+                    messages.innerHTML = '';
+                    const docs = [];
+                    snapshot.forEach(doc => docs.push(doc.data()));
+                    docs.reverse().forEach(msg => addMessage(msg));
                 });
         }
         
-        // Listen users - FIX: Affichage correct
-        function listenToUsers() {
-            usersUnsubscribe = usersRef.onSnapshot((snapshot) => {
-                const users = [];
-                snapshot.forEach((doc) => {
-                    const user = doc.data();
-                    if (user.uid !== currentUser.uid) {
-                        users.push(user);
-                    }
+        function addMessage(msg) {
+            const div = document.createElement('div');
+            const isOwn = currentUser && msg.uid === currentUser.uid;
+            div.className = `message ${msg.type === 'system' ? 'system' : ''} ${isOwn ? 'own' : ''}`;
+            
+            if (msg.type === 'system') {
+                div.innerHTML = `<div class="message-content">${msg.text}</div>`;
+            } else {
+                div.innerHTML = `
+                    <div class="message-header">
+                        <img src="${msg.photo}" class="message-avatar">
+                        <span class="message-name">${msg.name}</span>
+                        <span class="message-time">${formatTime(msg.time)}</span>
+                    </div>
+                    <div class="message-content">${msg.text}</div>
+                `;
+            }
+            
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+        }
+        
+        function formatTime(timestamp) {
+            if (!timestamp) return '';
+            const date = timestamp.toDate();
+            return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+        }
+        
+        // ===== SEND MESSAGE =====
+        messageForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser || rateLimited) return;
+            if (!checkRate()) return;
+            
+            const text = messageInput.value.trim();
+            if (!text) return;
+            
+            try {
+                await messagesRef.add({
+                    uid: currentUser.uid,
+                    name: currentUser.displayName,
+                    photo: currentUser.photoURL,
+                    text: text,
+                    time: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 
-                onlineCount.textContent = `${users.length + 1} en ligne`;
+                messageTimes.push(Date.now());
+                messageInput.value = '';
+                checkRate();
                 
-                usersList.innerHTML = '';
-                users.forEach(user => {
-                    const userDiv = document.createElement('div');
-                    userDiv.className = 'user-item';
-                    if (selectedUser && selectedUser.uid === user.uid) {
-                        userDiv.classList.add('selected');
-                    }
-                    
-                    userDiv.innerHTML = `
-                        <div style="position: relative;">
-                            <img src="${user.photoURL || ''}" class="user-item-avatar" alt="${user.name}">
-                            <div class="user-item-status"></div>
-                        </div>
-                        <div class="user-item-name">${user.name}</div>
-                    `;
-                    
-                    // Click pour sélectionner destinataire cadeau
-                    userDiv.addEventListener('click', () => {
-                        document.querySelectorAll('.user-item').forEach(u => u.classList.remove('selected'));
-                        if (selectedUser && selectedUser.uid === user.uid) {
-                            selectedUser = null;
-                            selectedUserName.textContent = 'Tout le monde';
-                        } else {
-                            selectedUser = user;
-                            userDiv.classList.add('selected');
-                            selectedUserName.textContent = user.name;
-                        }
-                    });
-                    
-                    usersList.appendChild(userDiv);
-                });
+            } catch (error) {
+                console.error('❌ Erreur:', error);
+                alert('Erreur envoi');
+            }
+        });
+        
+        // ===== USERS COUNT =====
+        function listenUsers() {
+            usersRef.onSnapshot((snapshot) => {
+                onlineCount.textContent = `${snapshot.size} en ligne`;
             });
         }
         
-        // Add message - FIX: Append à la fin
-        function addMessage(msg, isOwn = false) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `chat-message ${msg.type === 'system' ? 'system' : ''} ${msg.type === 'gift' ? 'gift' : ''} ${isOwn ? 'own' : ''}`;
-            
-            if (msg.type === 'system') {
-                messageDiv.innerHTML = `<div class="chat-message-content">${msg.content}</div>`;
-            } else if (msg.type === 'gift') {
-                const recipientText = msg.recipientName ? 
-                    `<div class="gift-recipient">Pour ${msg.recipientName}</div>` : '';
-                
-                messageDiv.innerHTML = `
-                    <div class="chat-message-header">
-                        ${msg.photoURL ? `<img src="${msg.photoURL}" class="chat-message-avatar">` : ''}
-                        <span class="chat-message-username">${msg.username}</span>
-                        <span class="chat-message-time">${formatTime(msg.timestamp)}</span>
-                    </div>
-                    <div class="chat-message-content">
-                        <div style="font-size: 2.5rem; margin-bottom: 8px;">${msg.giftIcon}</div>
-                        <div style="font-size: 0.85rem;">${msg.username} offre ${msg.giftLabel}</div>
-                        ${recipientText}
-                    </div>
-                `;
-            } else {
-                messageDiv.innerHTML = `
-                    <div class="chat-message-header">
-                        ${msg.photoURL ? `<img src="${msg.photoURL}" class="chat-message-avatar">` : ''}
-                        <span class="chat-message-username">${msg.username}</span>
-                        <span class="chat-message-time">${formatTime(msg.timestamp)}</span>
-                    </div>
-                    <div class="chat-message-content">${msg.content}</div>
-                `;
-            }
-            
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            
-            if (!chatBox.classList.contains('active') && !isOwn) {
-                messageCount++;
-                chatBadge.textContent = messageCount;
-                chatBadge.style.display = 'flex';
-            }
-        }
-        
-        // Send message
-        chatSend.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
-        
-        async function sendMessage() {
-            if (!currentUser || isRateLimited) return;
-            if (!checkRateLimit()) return;
-            
-            const message = chatInput.value.trim();
-            if (!message || message.length > 200) return;
-            
-            try {
-                await messagesRef.add({
-                    userId: currentUser.uid,
-                    username: currentUser.displayName,
-                    photoURL: currentUser.photoURL,
-                    content: sanitizeHTML(message),
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                messageTimestamps.push(Date.now());
-                chatInput.value = '';
-                chatInput.style.height = 'auto';
-                checkRateLimit();
-            } catch (error) {
-                console.error('❌ Erreur:', error);
-            }
-        }
-        
-        // Send gift - FIX: Avec destinataire
-        async function sendGift(gift) {
-            if (!currentUser || isRateLimited) return;
-            if (!checkRateLimit()) return;
-            
-            try {
-                const giftData = {
-                    type: 'gift',
-                    userId: currentUser.uid,
-                    username: currentUser.displayName,
-                    photoURL: currentUser.photoURL,
-                    giftIcon: gift.icon,
-                    giftLabel: gift.label,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                };
-                
-                if (selectedUser) {
-                    giftData.recipientUid = selectedUser.uid;
-                    giftData.recipientName = selectedUser.name;
-                }
-                
-                await messagesRef.add(giftData);
-                
-                messageTimestamps.push(Date.now());
-                giftPicker.classList.remove('active');
-                checkRateLimit();
-                
-                // Reset selection
-                selectedUser = null;
-                selectedUserName.textContent = 'Tout le monde';
-                document.querySelectorAll('.user-item').forEach(u => u.classList.remove('selected'));
-                
-            } catch (error) {
-                console.error('❌ Erreur:', error);
-            }
-        }
-        
-        // Heartbeat
-        setInterval(() => {
-            if (currentUser) {
-                usersRef.doc(currentUser.uid).update({
-                    lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-                }).catch(() => {});
-            }
-        }, 30000);
-        
-        console.log('✅ Chat v1.008 initialisé');
+        console.log('✅ Chat prêt');
     </script>
     
 </body>

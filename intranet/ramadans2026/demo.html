@@ -25,7 +25,19 @@
             --gradient-1: linear-gradient(135deg, #2C5F2D 0%, #1a4a1e 100%);
             --gradient-2: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
         }
+        .chat-input-area {
+            display: flex;
+            flex-direction: column;
+        }
         
+        .input-form {
+            order: 1;
+        }
+        
+        .actions-bar,
+        .picker {
+            order: 2;
+        }
         /* ===== MODE SOMBRE ===== */
         body.dark-mode {
             --primary: #3a7a3d;

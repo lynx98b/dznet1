@@ -3,50 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Sidebar Users</title>
+    <title>Chat Ramadan - Communauté</title>
+    
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background: #f5f5f5;
+        /* v1.011 - Chat complet + Sidebar fonctionnelle */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
-        .container {
-            max-width: 400px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* ===== CONTAINER PRINCIPAL ===== */
+        .chat-container {
+            display: flex;
+            height: 100vh;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+        
+        /* ===== SIDEBAR UTILISATEURS ===== */
+        .users-sidebar {
+            width: 250px;
+            background: linear-gradient(180deg, #2C5F2D 0%, #1a4a1e 100%);
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-header {
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .login {
-            text-align: center;
-        }
-        
-        .google-btn {
-            background: white;
-            border: 2px solid #ddd;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        
-        .users-area {
-            display: none;
-        }
-        
-        .users-area.show {
-            display: block;
-        }
-        
-        .header {
-            background: #2C5F2D;
+            background: rgba(0,0,0,0.2);
             color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-header h2 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .online-count {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            color: #D4AF37;
+        }
+        
+        .users-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 10px;
+        }
+        
+        .users-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .users-list::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
         }
         
         .user-item {
@@ -54,63 +78,442 @@
             align-items: center;
             gap: 12px;
             padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
         }
         
-        .avatar {
+        .user-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+        
+        .user-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
+            border: 2px solid #D4AF37;
+            position: relative;
+        }
+        
+        .user-status {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            background: #4ade80;
             border: 2px solid #2C5F2D;
+            border-radius: 50%;
+        }
+        
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .user-name {
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-activity {
+            color: #4ade80;
+            font-size: 0.75rem;
+        }
+        
+        /* ===== ZONE CHAT PRINCIPALE ===== */
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+        
+        /* ===== ÉCRAN CONNEXION ===== */
+        .chat-login {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(44, 95, 45, 0.05) 0%, rgba(212, 175, 55, 0.05) 100%);
+        }
+        
+        .login-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .chat-login h1 {
+            color: #2C5F2D;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        
+        .chat-login p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .google-signin-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            color: #444;
+            padding: 15px 35px;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .google-signin-btn:hover {
+            border-color: #2C5F2D;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* ===== CHAT ACTIF ===== */
+        .chat-active {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .chat-active.show {
+            display: flex;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #2C5F2D 0%, #1a4a1e 100%);
+            color: white;
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .header-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid #D4AF37;
+        }
+        
+        .header-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 3px;
+        }
+        
+        .header-info p {
+            font-size: 0.85rem;
+            opacity: 0.9;
         }
         
         .logout-btn {
-            background: #C1272D;
+            background: rgba(255,255,255,0.2);
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
-            margin-top: 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        /* ===== MESSAGES ===== */
+        .chat-messages {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+        }
+        
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #2C5F2D;
+            border-radius: 4px;
+        }
+        
+        .message {
+            margin-bottom: 20px;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #D4AF37;
+        }
+        
+        .message-username {
+            font-weight: 700;
+            color: #2C5F2D;
+            font-size: 0.95rem;
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            color: #999;
+            margin-left: auto;
+        }
+        
+        .message-content {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 15px;
+            max-width: 70%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            word-wrap: break-word;
+            line-height: 1.5;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .message.own {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .message.own .message-content {
+            background: linear-gradient(135deg, #2C5F2D 0%, #1a4a1e 100%);
+            color: white;
+            border: none;
+        }
+        
+        .message.system {
+            text-align: center;
+        }
+        
+        .message.system .message-content {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            color: #92400e;
+            display: inline-block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid #fcd34d;
+            max-width: 100%;
+        }
+        
+        /* ===== INPUT ZONE ===== */
+        .chat-input-area {
+            padding: 20px 25px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .input-form {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .message-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .message-input:focus {
+            border-color: #2C5F2D;
+            box-shadow: 0 0 0 3px rgba(44, 95, 45, 0.1);
+        }
+        
+        .send-btn {
+            background: linear-gradient(135deg, #2C5F2D 0%, #1a4a1e 100%);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(44, 95, 45, 0.3);
+        }
+        
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 95, 45, 0.4);
+        }
+        
+        .send-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .chat-container {
+                max-width: none;
+            }
+            
+            .users-sidebar {
+                width: 80px;
+            }
+            
+            .sidebar-header h2 {
+                font-size: 0.9rem;
+            }
+            
+            .online-count {
+                font-size: 0.7rem;
+            }
+            
+            .user-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 8px;
+            }
+            
+            .user-info {
+                display: none;
+            }
+            
+            .user-avatar {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .chat-messages {
+                padding: 15px;
+            }
+            
+            .message-content {
+                max-width: 85%;
+            }
         }
     </style>
 </head>
 <body>
     
-    <div class="container">
-        <!-- Écran connexion -->
-        <div class="login" id="loginScreen">
-            <h2>🧪 Test Sidebar Users</h2>
-            <p>Connectez-vous pour voir la liste</p>
-            <button class="google-btn" id="googleBtn">
-                🔐 Connexion Google
-            </button>
+    <div class="chat-container">
+        <!-- SIDEBAR UTILISATEURS -->
+        <div class="users-sidebar">
+            <div class="sidebar-header">
+                <h2>🌙 En ligne</h2>
+                <div class="online-count" id="onlineCount">0 connectés</div>
+            </div>
+            <div class="users-list" id="usersList"></div>
         </div>
         
-        <!-- Zone users -->
-        <div class="users-area" id="usersArea">
-            <div class="header">
-                <h3>👥 Utilisateurs en ligne</h3>
-                <div id="count">0 connectés</div>
+        <!-- ZONE CHAT PRINCIPALE -->
+        <div class="chat-main">
+            <!-- Écran de connexion -->
+            <div class="chat-login" id="loginScreen">
+                <div class="login-icon">🌙</div>
+                <h1>Chat Ramadan</h1>
+                <p>Rejoignez la communauté</p>
+                <button class="google-signin-btn" id="googleSignInBtn">
+                    <span style="font-size: 1.5rem;">🔐</span>
+                    <span>Se connecter avec Google</span>
+                </button>
             </div>
             
-            <div id="usersList"></div>
-            
-            <button class="logout-btn" id="logoutBtn">Déconnexion</button>
+            <!-- Chat actif -->
+            <div class="chat-active" id="chatActive">
+                <div class="chat-header">
+                    <div class="header-left">
+                        <img src="" alt="Avatar" class="header-avatar" id="headerAvatar">
+                        <div class="header-info">
+                            <h3 id="headerName">Utilisateur</h3>
+                            <p>Chat Ramadan</p>
+                        </div>
+                    </div>
+                    <button class="logout-btn" id="logoutBtn">Déconnexion</button>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages"></div>
+                
+                <div class="chat-input-area">
+                    <form class="input-form" id="messageForm">
+                        <input 
+                            type="text" 
+                            class="message-input" 
+                            id="messageInput" 
+                            placeholder="Écrivez votre message..."
+                            maxlength="200"
+                            autocomplete="off"
+                            required
+                        >
+                        <button type="submit" class="send-btn" id="sendBtn">
+                            Envoyer 📤
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     
-    <!-- Firebase -->
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
     <script>
-        console.log('🧪 TEST SIDEBAR USERS v2 - CORRIGÉ');
+        console.log('🚀 Chat v1.011 - Complet avec sidebar');
         
-        // CONFIG FIREBASE
+        // ===== CONFIGURATION FIREBASE =====
         const firebaseConfig = {
             apiKey: "AIzaSyBoF6xTWr4dzgbWFwXavVC2mMshHCTK6fM",
             authDomain: "ramadan-chat-auth.firebaseapp.com",
@@ -123,90 +526,120 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
+        const messagesRef = db.collection('messages');
         const usersRef = db.collection('users');
-        const provider = new firebase.auth.GoogleAuthProvider();
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
         
         let currentUser = null;
-        let unsubscribe = null;
+        let messagesUnsubscribe = null;
+        let usersUnsubscribe = null;
         let heartbeatInterval = null;
         
-        // DOM
+        // ===== ÉLÉMENTS DOM =====
         const loginScreen = document.getElementById('loginScreen');
-        const usersArea = document.getElementById('usersArea');
-        const googleBtn = document.getElementById('googleBtn');
+        const chatActive = document.getElementById('chatActive');
+        const googleSignInBtn = document.getElementById('googleSignInBtn');
         const logoutBtn = document.getElementById('logoutBtn');
+        const messageForm = document.getElementById('messageForm');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const chatMessages = document.getElementById('chatMessages');
+        const headerName = document.getElementById('headerName');
+        const headerAvatar = document.getElementById('headerAvatar');
+        const onlineCount = document.getElementById('onlineCount');
         const usersList = document.getElementById('usersList');
-        const count = document.getElementById('count');
         
-        // CONNEXION
-        googleBtn.addEventListener('click', async () => {
+        // ===== FONCTIONS UTILITAIRES =====
+        function sanitizeHTML(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function formatTime(timestamp) {
+            if (!timestamp) return '';
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            return date.toLocaleTimeString('fr-FR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+        }
+        
+        // ===== AUTHENTIFICATION =====
+        googleSignInBtn.addEventListener('click', async () => {
             try {
-                await auth.signInWithPopup(provider);
-                console.log('✅ Connexion OK');
+                await auth.signInWithPopup(googleProvider);
+                console.log('✅ Connexion réussie');
             } catch (error) {
-                console.error('❌ Erreur:', error);
-                alert('Erreur: ' + error.message);
+                console.error('❌ Erreur connexion:', error);
+                alert('Erreur de connexion: ' + error.message);
             }
         });
         
-        // DÉCONNEXION
         logoutBtn.addEventListener('click', async () => {
-            if (currentUser) {
-                // Supprimer le user avant de se déconnecter
-                await usersRef.doc(currentUser.uid).delete();
-                console.log('✅ User supprimé de Firestore');
+            if (confirm('Voulez-vous vous déconnecter ?')) {
+                if (currentUser) {
+                    // Supprimer l'utilisateur de la liste
+                    await usersRef.doc(currentUser.uid).delete();
+                }
+                await auth.signOut();
             }
-            await auth.signOut();
         });
         
-        // Nettoyer à la fermeture de la page
+        // Nettoyer à la fermeture
         window.addEventListener('beforeunload', () => {
             if (currentUser) {
-                // Note: Ceci peut ne pas fonctionner toujours à cause des restrictions navigateur
                 usersRef.doc(currentUser.uid).delete();
             }
         });
         
-        // AUTH STATE
+        // ===== OBSERVER ÉTAT AUTHENTIFICATION =====
         auth.onAuthStateChanged(async (user) => {
             if (user) {
-                console.log('✅ User:', user.displayName);
+                console.log('✅ Utilisateur connecté:', user.displayName);
                 currentUser = user;
                 
+                // Afficher le chat
                 loginScreen.style.display = 'none';
-                usersArea.classList.add('show');
+                chatActive.classList.add('show');
                 
-                // AJOUTER USER À FIRESTORE
-                try {
-                    await usersRef.doc(user.uid).set({
-                        uid: user.uid,
-                        name: user.displayName,
-                        photo: user.photoURL,
-                        online: true,
-                        lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                    console.log('✅ User ajouté à Firestore');
-                    
-                    // Heartbeat pour maintenir l'état "en ligne"
-                    heartbeatInterval = setInterval(() => {
-                        if (currentUser) {
-                            usersRef.doc(currentUser.uid).update({
-                                lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-                            });
-                            console.log('💓 Heartbeat envoyé');
-                        }
-                    }, 30000); // Toutes les 30 secondes
-                    
-                    // ÉCOUTER LES USERS
-                    listenUsers();
-                    
-                } catch (error) {
-                    console.error('❌ ERREUR FIRESTORE:', error);
-                    alert('❌ ERREUR: ' + error.message + '\n\nVérifie les règles Firestore !');
-                }
+                // Mettre à jour l'interface
+                headerName.textContent = user.displayName;
+                headerAvatar.src = user.photoURL;
+                
+                // Ajouter l'utilisateur à la collection users
+                await usersRef.doc(user.uid).set({
+                    uid: user.uid,
+                    name: user.displayName,
+                    photoURL: user.photoURL,
+                    online: true,
+                    lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                // Heartbeat pour maintenir en ligne
+                heartbeatInterval = setInterval(() => {
+                    if (currentUser) {
+                        usersRef.doc(currentUser.uid).update({
+                            lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+                        }).catch(() => {});
+                    }
+                }, 30000); // 30 secondes
+                
+                // Message système de connexion
+                await messagesRef.add({
+                    type: 'system',
+                    content: `${user.displayName} a rejoint le chat 🌙`,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    userId: user.uid
+                });
+                
+                // Écouter les messages et utilisateurs
+                listenToMessages();
+                listenToUsers();
                 
             } else {
-                console.log('❌ Déconnecté');
+                console.log('❌ Utilisateur déconnecté');
+                currentUser = null;
                 
                 // Nettoyer heartbeat
                 if (heartbeatInterval) {
@@ -214,60 +647,138 @@
                     heartbeatInterval = null;
                 }
                 
-                currentUser = null;
-                loginScreen.style.display = 'block';
-                usersArea.classList.remove('show');
-                if (unsubscribe) unsubscribe();
+                // Afficher l'écran de connexion
+                loginScreen.style.display = 'flex';
+                chatActive.classList.remove('show');
+                
+                // Nettoyer les listeners
+                if (messagesUnsubscribe) messagesUnsubscribe();
+                if (usersUnsubscribe) usersUnsubscribe();
+                
+                // Vider l'interface
+                chatMessages.innerHTML = '';
                 usersList.innerHTML = '';
             }
         });
         
-        // ÉCOUTER USERS
-        function listenUsers() {
-            console.log('👂 Écoute des users...');
+        // ===== ÉCOUTER LES MESSAGES =====
+        function listenToMessages() {
+            messagesUnsubscribe = messagesRef
+                .orderBy('timestamp', 'desc')
+                .limit(50)
+                .onSnapshot((snapshot) => {
+                    // Vider les messages
+                    chatMessages.innerHTML = '';
+                    
+                    // Récupérer tous les messages
+                    const messages = [];
+                    snapshot.forEach((doc) => {
+                        messages.push(doc.data());
+                    });
+                    
+                    // Afficher dans l'ordre chronologique
+                    messages.reverse().forEach((msg) => {
+                        addMessage(msg);
+                    });
+                });
+        }
+        
+        // ===== AFFICHER UN MESSAGE =====
+        function addMessage(msg) {
+            const messageDiv = document.createElement('div');
+            const isOwn = currentUser && msg.userId === currentUser.uid;
             
-            unsubscribe = usersRef
+            messageDiv.className = `message ${msg.type === 'system' ? 'system' : ''} ${isOwn ? 'own' : ''}`;
+            
+            if (msg.type === 'system') {
+                messageDiv.innerHTML = `
+                    <div class="message-content">${msg.content}</div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <img src="${msg.photoURL}" class="message-avatar" alt="${msg.username}">
+                        <span class="message-username">${msg.username}</span>
+                        <span class="message-time">${formatTime(msg.timestamp)}</span>
+                    </div>
+                    <div class="message-content">${msg.content}</div>
+                `;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // ===== ÉCOUTER LES UTILISATEURS =====
+        function listenToUsers() {
+            usersUnsubscribe = usersRef
                 .where('online', '==', true)
                 .onSnapshot((snapshot) => {
-                    console.log('📊 Snapshot reçu, nombre de docs:', snapshot.size);
-                    
                     const users = [];
+                    
                     snapshot.forEach((doc) => {
                         const user = doc.data();
-                        console.log('👤 User trouvé:', user.name);
+                        // Ne pas afficher l'utilisateur courant
                         if (user.uid !== currentUser.uid) {
                             users.push(user);
                         }
                     });
                     
-                    // Mettre à jour compteur
-                    count.textContent = `${users.length + 1} connectés`;
+                    // Mettre à jour le compteur
+                    onlineCount.textContent = `${users.length + 1} connectés`;
                     
-                    // Vider liste
+                    // Vider la liste
                     usersList.innerHTML = '';
                     
-                    // Afficher users
+                    // Afficher chaque utilisateur
                     users.forEach((user) => {
-                        const div = document.createElement('div');
-                        div.className = 'user-item';
-                        div.innerHTML = `
-                            <img src="${user.photo}" class="avatar">
-                            <div>
-                                <strong>${user.name}</strong>
-                                <div style="font-size: 0.8rem; color: #4ade80;">● En ligne</div>
+                        const userDiv = document.createElement('div');
+                        userDiv.className = 'user-item';
+                        userDiv.innerHTML = `
+                            <div style="position: relative;">
+                                <img src="${user.photoURL}" class="user-avatar" alt="${user.name}">
+                                <div class="user-status"></div>
+                            </div>
+                            <div class="user-info">
+                                <div class="user-name">${user.name}</div>
+                                <div class="user-activity">● En ligne</div>
                             </div>
                         `;
-                        usersList.appendChild(div);
+                        usersList.appendChild(userDiv);
                     });
                     
-                    console.log('✅ Liste affichée:', users.length, 'users');
-                }, (error) => {
-                    console.error('❌ ERREUR SNAPSHOT:', error);
-                    alert('❌ Erreur lecture users: ' + error.message);
+                    console.log('✅ Sidebar mise à jour:', users.length, 'users');
                 });
         }
         
-        console.log('✅ Script prêt');
+        // ===== ENVOYER UN MESSAGE =====
+        messageForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!currentUser) return;
+            
+            const message = messageInput.value.trim();
+            if (!message) return;
+            
+            try {
+                await messagesRef.add({
+                    userId: currentUser.uid,
+                    username: currentUser.displayName,
+                    photoURL: currentUser.photoURL,
+                    content: sanitizeHTML(message),
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                messageInput.value = '';
+                messageInput.focus();
+                
+            } catch (error) {
+                console.error('❌ Erreur envoi message:', error);
+                alert('Erreur lors de l\'envoi du message');
+            }
+        });
+        
+        console.log('✅ Chat initialisé et prêt');
     </script>
     
 </body>

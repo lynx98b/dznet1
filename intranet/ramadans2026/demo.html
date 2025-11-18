@@ -1628,11 +1628,22 @@
             }
         });
         
-        // ===== ÉCOUTER MESSAGES =====
+        // ===== ÉCOUTER MESSAGES (UNIQUEMENT LES NOUVEAUX) =====
         function listenToMessages() {
+            // Désabonner l'ancien écouteur si il existe
+            if (messagesUnsubscribe) {
+                messagesUnsubscribe();
+            }
+            
+            // Obtenir l'heure actuelle comme point de référence
+            const connectionTime = new Date();
+            
+            console.log('🕐 Connexion à:', connectionTime.toLocaleTimeString());
+            
+            // Écouter uniquement les NOUVEAUX messages
             messagesUnsubscribe = messagesRef
-                .orderBy('timestamp', 'desc')
-                .limit(50)
+                .where('timestamp', '>', connectionTime)
+                .orderBy('timestamp', 'asc')
                 .onSnapshot((snapshot) => {
                     snapshot.docChanges().forEach((change) => {
                         if (change.type === 'added') {
@@ -1651,8 +1662,24 @@
                         }
                     });
                 });
+            
+            // Ajouter un message de bienvenue pour le nouvel utilisateur
+            addWelcomeMessage();
         }
         
+        // ===== MESSAGE DE BIENVENUE =====
+        function addWelcomeMessage() {
+            const welcomeDiv = document.createElement('div');
+            welcomeDiv.className = 'message system';
+            welcomeDiv.innerHTML = `
+                <div class="message-content">
+                    🌙 Bienvenue dans le chat Ramadan !<br>
+                    <small>Vous voyez uniquement les messages à partir de maintenant.</small>
+                </div>
+            `;
+            chatMessages.appendChild(welcomeDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
         // ===== AFFICHER MESSAGE =====
         function addMessage(msg, msgId, isOwn = false) {
             // Vérifier si le message existe déjà

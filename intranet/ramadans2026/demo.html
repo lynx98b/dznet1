@@ -6,18 +6,202 @@
     <title>Chat Ramadan - Communauté</title>
     
     <style>
-        /* v1.012 - Responsive corrigé + Emojis + Cadeaux ciblés */
+        /* v1.013 - COMPLET: Disclaimer + Rate Limit + Filtrage + Réactions + Mode Sombre + Sons */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
+        :root {
+            --primary: #2C5F2D;
+            --primary-light: #3a7a3d;
+            --secondary: #D4AF37;
+            --accent: #C1272D;
+            --text: #2C3E50;
+            --light-bg: #F8F9FA;
+            --white: #FFFFFF;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --gradient-1: linear-gradient(135deg, #2C5F2D 0%, #1a4a1e 100%);
+            --gradient-2: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+        }
+        
+        /* ===== MODE SOMBRE ===== */
+        body.dark-mode {
+            --primary: #3a7a3d;
+            --primary-light: #4a9a4d;
+            --text: #E5E7EB;
+            --light-bg: #1F2937;
+            --white: #111827;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
+            background: var(--light-bg);
             height: 100vh;
             overflow: hidden;
+            transition: background 0.3s ease;
+        }
+        
+        /* ===== DISCLAIMER MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+        
+        .modal-overlay.show {
+            display: flex;
+        }
+        
+        .modal {
+            background: var(--white);
+            border-radius: 20px;
+            max-width: 550px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        
+        .modal-header {
+            background: var(--gradient-1);
+            color: white;
+            padding: 25px;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .modal-body {
+            padding: 25px;
+            color: var(--text);
+        }
+        
+        .modal-body h3 {
+            color: var(--primary);
+            margin: 15px 0 10px;
+            font-size: 1.1rem;
+        }
+        
+        .rules-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .rules-list li {
+            padding: 10px;
+            margin: 8px 0;
+            background: #ffebee;
+            border-left: 4px solid var(--accent);
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        
+        .rules-list li::before {
+            content: '❌ ';
+            margin-right: 8px;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid var(--secondary);
+        }
+        
+        .highlight-box strong {
+            color: #92400e;
+        }
+        
+        .modal-footer {
+            padding: 20px 25px;
+            border-top: 1px solid #e5e7eb;
+            background: var(--light-bg);
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: var(--white);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .checkbox-container input {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+        
+        .accept-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .accept-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .accept-btn:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 95, 45, 0.4);
+        }
+        
+        /* ===== RATE LIMIT WARNING ===== */
+        .rate-warning {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--accent), #e74c3c);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(193, 39, 45, 0.5);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+        
+        .rate-warning.show {
+            display: flex;
+        }
+        
+        .rate-countdown {
+            background: rgba(255,255,255,0.3);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            min-width: 45px;
+            text-align: center;
         }
         
         /* ===== CONTAINER PRINCIPAL ===== */
@@ -26,14 +210,14 @@
             height: 100vh;
             max-width: 1400px;
             margin: 0 auto;
-            background: white;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            background: var(--white);
+            box-shadow: 0 0 30px var(--shadow);
         }
         
-        /* ===== SIDEBAR UTILISATEURS ===== */
+        /* ===== SIDEBAR ===== */
         .users-sidebar {
             width: 250px;
-            background: linear-gradient(180deg, #2C5F2D 0%, #1a4a1e 100%);
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-light) 100%);
             display: flex;
             flex-direction: column;
             border-right: 1px solid rgba(255,255,255,0.1);
@@ -55,7 +239,7 @@
         .online-count {
             font-size: 0.85rem;
             opacity: 0.9;
-            color: #D4AF37;
+            color: var(--secondary);
         }
         
         .users-list {
@@ -91,7 +275,7 @@
         }
         
         .user-item.selected {
-            background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+            background: var(--gradient-2);
             transform: translateX(5px);
         }
         
@@ -99,7 +283,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 2px solid #D4AF37;
+            border: 2px solid var(--secondary);
             position: relative;
         }
         
@@ -110,7 +294,7 @@
             width: 12px;
             height: 12px;
             background: #4ade80;
-            border: 2px solid #2C5F2D;
+            border: 2px solid var(--primary);
             border-radius: 50%;
         }
         
@@ -163,13 +347,13 @@
         }
         
         .chat-login h1 {
-            color: #2C5F2D;
+            color: var(--primary);
             margin-bottom: 10px;
             font-size: 2rem;
         }
         
         .chat-login p {
-            color: #666;
+            color: var(--text);
             margin-bottom: 30px;
             font-size: 1.1rem;
         }
@@ -178,7 +362,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            background: white;
+            background: var(--white);
             color: #444;
             padding: 15px 35px;
             border: 2px solid #ddd;
@@ -187,13 +371,13 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px var(--shadow);
         }
         
         .google-signin-btn:hover {
-            border-color: #2C5F2D;
+            border-color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 20px var(--shadow);
         }
         
         /* ===== CHAT ACTIF ===== */
@@ -208,13 +392,13 @@
         }
         
         .chat-header {
-            background: linear-gradient(135deg, #2C5F2D 0%, #1a4a1e 100%);
+            background: var(--gradient-1);
             color: white;
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px var(--shadow);
             flex-shrink: 0;
         }
         
@@ -229,7 +413,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 2px solid #D4AF37;
+            border: 2px solid var(--secondary);
             flex-shrink: 0;
         }
         
@@ -250,6 +434,36 @@
             opacity: 0.9;
         }
         
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .header-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+        
+        .header-btn.active {
+            background: var(--secondary);
+        }
+        
         .logout-btn {
             background: rgba(255,255,255,0.2);
             color: white;
@@ -260,7 +474,6 @@
             font-weight: 600;
             font-size: 0.85rem;
             transition: all 0.3s ease;
-            flex-shrink: 0;
         }
         
         .logout-btn:hover {
@@ -272,7 +485,7 @@
             flex: 1;
             padding: 20px;
             overflow-y: auto;
-            background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+            background: var(--light-bg);
         }
         
         .chat-messages::-webkit-scrollbar {
@@ -280,13 +493,14 @@
         }
         
         .chat-messages::-webkit-scrollbar-thumb {
-            background: #2C5F2D;
+            background: var(--primary);
             border-radius: 4px;
         }
         
         .message {
             margin-bottom: 15px;
             animation: slideIn 0.3s ease-out;
+            position: relative;
         }
         
         @keyframes slideIn {
@@ -311,12 +525,12 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            border: 2px solid #D4AF37;
+            border: 2px solid var(--secondary);
         }
         
         .message-username {
             font-weight: 700;
-            color: #2C5F2D;
+            color: var(--primary);
             font-size: 0.9rem;
         }
         
@@ -327,11 +541,11 @@
         }
         
         .message-content {
-            background: white;
+            background: var(--white);
             padding: 10px 14px;
             border-radius: 12px;
             max-width: 70%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px var(--shadow);
             word-wrap: break-word;
             line-height: 1.5;
             border: 1px solid rgba(0,0,0,0.05);
@@ -345,7 +559,7 @@
         }
         
         .message.own .message-content {
-            background: linear-gradient(135deg, #2C5F2D 0%, #1a4a1e 100%);
+            background: var(--gradient-1);
             color: white;
             border: none;
         }
@@ -392,17 +606,128 @@
             font-style: italic;
         }
         
+        /* ===== RÉACTIONS ===== */
+        .message-reactions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        
+        .reaction-item {
+            background: var(--white);
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 4px 8px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .reaction-item:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+        
+        .reaction-item.user-reacted {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .reaction-emoji {
+            font-size: 1rem;
+        }
+        
+        .reaction-count {
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+        
+        .reaction-picker {
+            position: absolute;
+            background: var(--white);
+            border: 2px solid #e5e7eb;
+            border-radius: 25px;
+            padding: 8px;
+            display: none;
+            gap: 5px;
+            box-shadow: 0 4px 15px var(--shadow);
+            z-index: 10;
+            bottom: 100%;
+            left: 0;
+        }
+        
+        .reaction-picker.show {
+            display: flex;
+        }
+        
+        .reaction-picker-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+        
+        .reaction-picker-btn:hover {
+            background: var(--light-bg);
+            transform: scale(1.2);
+        }
+        
+        .add-reaction-btn {
+            background: var(--light-bg);
+            border: 1px solid #e5e7eb;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            margin-top: 8px;
+        }
+        
+        .add-reaction-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+        
         /* ===== INPUT ZONE ===== */
         .chat-input-area {
             padding: 15px;
-            background: white;
+            background: var(--white);
             border-top: 1px solid #e5e7eb;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 -2px 10px var(--shadow);
             flex-shrink: 0;
         }
         
+        .rate-counter {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .rate-counter.warning {
+            color: orange;
+        }
+        
+        .rate-counter.danger {
+            color: var(--accent);
+        }
+        
         .selected-user-banner {
-            background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+            background: var(--gradient-2);
             color: white;
             padding: 8px 12px;
             border-radius: 8px;
@@ -435,7 +760,7 @@
         }
         
         .action-btn {
-            background: #f5f5f5;
+            background: var(--light-bg);
             border: 1px solid #ddd;
             padding: 10px;
             border-radius: 8px;
@@ -449,13 +774,14 @@
         }
         
         .action-btn:hover {
-            background: #2C5F2D;
-            border-color: #2C5F2D;
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
             transform: translateY(-2px);
         }
         
         .picker {
-            background: white;
+            background: var(--white);
             border: 2px solid #e5e7eb;
             border-radius: 12px;
             padding: 15px;
@@ -470,7 +796,7 @@
         }
         
         .picker h4 {
-            color: #2C5F2D;
+            color: var(--primary);
             font-size: 0.9rem;
             margin-bottom: 10px;
         }
@@ -492,7 +818,7 @@
         }
         
         .emoji-btn:hover {
-            background: #f5f5f5;
+            background: var(--light-bg);
             transform: scale(1.2);
         }
         
@@ -503,7 +829,7 @@
         }
         
         .gift-btn {
-            background: white;
+            background: var(--white);
             border: 2px solid #e5e7eb;
             padding: 15px 10px;
             border-radius: 10px;
@@ -516,8 +842,8 @@
         }
         
         .gift-btn:hover {
-            border-color: #D4AF37;
-            background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+            border-color: var(--secondary);
+            background: var(--gradient-2);
             transform: scale(1.05);
         }
         
@@ -550,15 +876,17 @@
             font-family: inherit;
             outline: none;
             transition: all 0.3s ease;
+            background: var(--white);
+            color: var(--text);
         }
         
         .message-input:focus {
-            border-color: #2C5F2D;
+            border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(44, 95, 45, 0.1);
         }
         
         .send-btn {
-            background: linear-gradient(135deg, #2C5F2D 0%, #1a4a1e 100%);
+            background: var(--gradient-1);
             color: white;
             border: none;
             padding: 12px 20px;
@@ -586,10 +914,6 @@
         
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .chat-container {
-                max-width: none;
-            }
-            
             .users-sidebar {
                 width: 70px;
             }
@@ -604,10 +928,6 @@
             
             .online-count {
                 font-size: 0.65rem;
-            }
-            
-            .users-list {
-                padding: 10px 5px;
             }
             
             .user-item {
@@ -640,7 +960,12 @@
             }
             
             .header-info p {
-                font-size: 0.7rem;
+                display: none;
+            }
+            
+            .header-btn {
+                padding: 6px 10px;
+                font-size: 1rem;
             }
             
             .logout-btn {
@@ -720,11 +1045,6 @@
                 height: 30px;
             }
             
-            .send-btn {
-                padding: 10px;
-                font-size: 1.2rem;
-            }
-            
             .send-btn span {
                 display: none;
             }
@@ -737,8 +1057,60 @@
 </head>
 <body>
     
+    <!-- DISCLAIMER MODAL -->
+    <div class="modal-overlay" id="disclaimerModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>📜 Règles du Chat Ramadan</h2>
+                <p>À lire attentivement avant de continuer</p>
+            </div>
+            
+            <div class="modal-body">
+                <h3>❌ Contenus Strictement Interdits</h3>
+                <ul class="rules-list">
+                    <li>Politique, propagande, débats partisans</li>
+                    <li>Extrémisme, terrorisme, incitation à la haine</li>
+                    <li>Armes, violence, menaces</li>
+                    <li>Drogue, substances illicites</li>
+                    <li>Discrimination (racisme, sexisme, homophobie, etc.)</li>
+                    <li>Contenu sexuel explicite, pornographie</li>
+                    <li>Harcèlement, insultes, bizutage</li>
+                    <li>Spam, publicité non autorisée</li>
+                    <li>Désinformation, fake news</li>
+                    <li>Usurpation d'identité</li>
+                    <li>Partage de données personnelles</li>
+                </ul>
+                
+                <div class="highlight-box">
+                    <strong>⏱️ Limite de messages:</strong> Maximum 6 messages par minute pour éviter le spam.
+                    <br><strong>🚫 Filtrage automatique:</strong> Les insultes et contenus inappropriés sont automatiquement bloqués.
+                </div>
+                
+                <h3>✅ Comportements Attendus</h3>
+                <p><strong>Respect mutuel</strong> - Soyez bienveillants et courtois</p>
+                <p><strong>Entraide</strong> - Soutenez les membres de la communauté</p>
+                <p><strong>Signalement</strong> - Signalez tout comportement inapproprié</p>
+            </div>
+            
+            <div class="modal-footer">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="acceptCheckbox">
+                    <span>J'ai lu et j'accepte les règles du chat</span>
+                </label>
+                <button class="accept-btn" id="acceptBtn" disabled>Accepter et Continuer</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- RATE LIMIT WARNING -->
+    <div class="rate-warning" id="rateWarning">
+        <span>⏱️</span>
+        <span>Trop de messages ! Patientez</span>
+        <span class="rate-countdown" id="rateCountdown">15s</span>
+    </div>
+    
     <div class="chat-container">
-        <!-- SIDEBAR UTILISATEURS -->
+        <!-- SIDEBAR -->
         <div class="users-sidebar">
             <div class="sidebar-header">
                 <h2>🌙 En ligne</h2>
@@ -747,60 +1119,61 @@
             <div class="users-list" id="usersList"></div>
         </div>
         
-        <!-- ZONE CHAT PRINCIPALE -->
+        <!-- ZONE CHAT -->
         <div class="chat-main">
-            <!-- Écran de connexion -->
+            <!-- Login -->
             <div class="chat-login" id="loginScreen">
                 <div class="login-icon">🌙</div>
                 <h1>Chat Ramadan</h1>
-                <p>Rejoignez la communauté</p>
+                <p>Communauté bienveillante</p>
                 <button class="google-signin-btn" id="googleSignInBtn">
                     <span style="font-size: 1.5rem;">🔐</span>
                     <span>Se connecter avec Google</span>
                 </button>
             </div>
             
-            <!-- Chat actif -->
+            <!-- Chat -->
             <div class="chat-active" id="chatActive">
                 <div class="chat-header">
                     <div class="header-left">
-                        <img src="" alt="Avatar" class="header-avatar" id="headerAvatar">
+                        <img src="" alt="" class="header-avatar" id="headerAvatar">
                         <div class="header-info">
                             <h3 id="headerName">Utilisateur</h3>
                             <p>Chat Ramadan</p>
                         </div>
                     </div>
-                    <button class="logout-btn" id="logoutBtn">Déco</button>
+                    <div class="header-actions">
+                        <button class="header-btn" id="soundBtn" title="Sons">🔔</button>
+                        <button class="header-btn" id="darkModeBtn" title="Mode sombre">🌙</button>
+                        <button class="logout-btn" id="logoutBtn">Déco</button>
+                    </div>
                 </div>
                 
                 <div class="chat-messages" id="chatMessages"></div>
                 
                 <div class="chat-input-area">
-                    <!-- Banner utilisateur sélectionné -->
+                    <div class="rate-counter" id="rateCounter">6/6 messages</div>
+                    
                     <div class="selected-user-banner" id="selectedUserBanner">
                         <span>🎁 Pour: <strong id="selectedUserName"></strong></span>
                         <button class="clear-selection" id="clearSelection">✕</button>
                     </div>
                     
-                    <!-- Barre d'actions -->
                     <div class="actions-bar">
                         <button class="action-btn" id="emojiBtn" title="Emojis">😊</button>
                         <button class="action-btn" id="giftBtn" title="Cadeaux">🎁</button>
                     </div>
                     
-                    <!-- Emoji Picker -->
                     <div class="picker" id="emojiPicker">
                         <h4>😊 Emojis</h4>
                         <div class="emoji-grid" id="emojiGrid"></div>
                     </div>
                     
-                    <!-- Gift Picker -->
                     <div class="picker" id="giftPicker">
                         <h4>🎁 Cadeaux</h4>
                         <div class="gift-grid" id="giftGrid"></div>
                     </div>
                     
-                    <!-- Formulaire message -->
                     <form class="input-form" id="messageForm">
                         <input 
                             type="text" 
@@ -820,15 +1193,15 @@
         </div>
     </div>
     
-    <!-- Firebase SDKs -->
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
     <script>
-        console.log('🚀 Chat v1.012 - Responsive + Emojis + Cadeaux ciblés');
+        console.log('🚀 Chat v1.013 - COMPLET avec toutes les fonctionnalités');
         
-        // ===== CONFIGURATION FIREBASE =====
+        // ===== CONFIGURATION =====
         const firebaseConfig = {
             apiKey: "AIzaSyBoF6xTWr4dzgbWFwXavVC2mMshHCTK6fM",
             authDomain: "ramadan-chat-auth.firebaseapp.com",
@@ -843,13 +1216,187 @@
         const db = firebase.firestore();
         const messagesRef = db.collection('messages');
         const usersRef = db.collection('users');
+        const reactionsRef = db.collection('reactions');
         const googleProvider = new firebase.auth.GoogleAuthProvider();
         
+        // ===== VARIABLES GLOBALES =====
         let currentUser = null;
         let selectedUser = null;
         let messagesUnsubscribe = null;
         let usersUnsubscribe = null;
         let heartbeatInterval = null;
+        
+        // ===== FILTRAGE DE MOTS INTERDITS =====
+        const forbiddenWords = [
+            'merde', 'putain', 'connard', 'salope', 'enculé', 'con', 'conne', 
+            'pute', 'chier', 'bordel', 'foutre', 'bite', 'couille', 'pétasse',
+            'enfoiré', 'débile', 'crétin', 'abruti', 'idiot', 'imbécile',
+            'pd', 'tapette', 'tarlouze', 'pédé', 'sale', 'nègre', 'bamboula',
+            'youpin', 'arabe', 'bougnoule', 'raton', 'chinetoque'
+        ];
+        
+        function filterBadWords(text) {
+            let filtered = text;
+            forbiddenWords.forEach(word => {
+                const regex = new RegExp(word, 'gi');
+                filtered = filtered.replace(regex, '***');
+            });
+            return filtered;
+        }
+        
+        // ===== RATE LIMITING =====
+        const RATE_LIMIT = {
+            maxMessages: 6,
+            timeWindow: 60000, // 1 minute
+            cooldownTime: 15000 // 15 secondes
+        };
+        
+        let messageTimestamps = [];
+        let isRateLimited = false;
+        
+        function checkRateLimit() {
+            const now = Date.now();
+            messageTimestamps = messageTimestamps.filter(t => now - t < RATE_LIMIT.timeWindow);
+            
+            const remaining = RATE_LIMIT.maxMessages - messageTimestamps.length;
+            updateRateCounter(remaining);
+            
+            if (messageTimestamps.length >= RATE_LIMIT.maxMessages) {
+                activateRateLimit();
+                return false;
+            }
+            return true;
+        }
+        
+        function updateRateCounter(remaining) {
+            const counter = document.getElementById('rateCounter');
+            counter.textContent = `${remaining}/${RATE_LIMIT.maxMessages} messages`;
+            counter.className = 'rate-counter';
+            if (remaining <= 1) counter.classList.add('danger');
+            else if (remaining <= 2) counter.classList.add('warning');
+        }
+        
+        function activateRateLimit() {
+            if (isRateLimited) return;
+            isRateLimited = true;
+            
+            const warning = document.getElementById('rateWarning');
+            const countdown = document.getElementById('rateCountdown');
+            const sendBtn = document.getElementById('sendBtn');
+            const messageInput = document.getElementById('messageInput');
+            
+            warning.classList.add('show');
+            sendBtn.disabled = true;
+            messageInput.disabled = true;
+            
+            let seconds = RATE_LIMIT.cooldownTime / 1000;
+            countdown.textContent = `${seconds}s`;
+            
+            const interval = setInterval(() => {
+                seconds--;
+                countdown.textContent = `${seconds}s`;
+                if (seconds <= 0) clearInterval(interval);
+            }, 1000);
+            
+            setTimeout(() => {
+                isRateLimited = false;
+                warning.classList.remove('show');
+                sendBtn.disabled = false;
+                messageInput.disabled = false;
+                messageTimestamps = [];
+                updateRateCounter(RATE_LIMIT.maxMessages);
+            }, RATE_LIMIT.cooldownTime);
+        }
+        
+        // ===== DISCLAIMER =====
+        let termsAccepted = localStorage.getItem('ramadan-terms') === 'true';
+        
+        const disclaimerModal = document.getElementById('disclaimerModal');
+        const acceptCheckbox = document.getElementById('acceptCheckbox');
+        const acceptBtn = document.getElementById('acceptBtn');
+        
+        acceptCheckbox.addEventListener('change', () => {
+            acceptBtn.disabled = !acceptCheckbox.checked;
+        });
+        
+        acceptBtn.addEventListener('click', () => {
+            localStorage.setItem('ramadan-terms', 'true');
+            termsAccepted = true;
+            disclaimerModal.classList.remove('show');
+        });
+        
+        // ===== MODE SOMBRE =====
+        let darkMode = localStorage.getItem('ramadan-dark') === 'true';
+        const darkModeBtn = document.getElementById('darkModeBtn');
+        
+        if (darkMode) {
+            document.body.classList.add('dark-mode');
+            darkModeBtn.textContent = '☀️';
+        }
+        
+        darkModeBtn.addEventListener('click', () => {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode');
+            darkModeBtn.textContent = darkMode ? '☀️' : '🌙';
+            localStorage.setItem('ramadan-dark', darkMode);
+        });
+        
+        // ===== NOTIFICATIONS SONORES =====
+        let soundEnabled = localStorage.getItem('ramadan-sound') !== 'false';
+        const soundBtn = document.getElementById('soundBtn');
+        
+        if (!soundEnabled) {
+            soundBtn.classList.remove('active');
+            soundBtn.textContent = '🔕';
+        } else {
+            soundBtn.classList.add('active');
+        }
+        
+        soundBtn.addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            soundBtn.classList.toggle('active');
+            soundBtn.textContent = soundEnabled ? '🔔' : '🔕';
+            localStorage.setItem('ramadan-sound', soundEnabled);
+        });
+        
+        // Sons (fréquences Web Audio API)
+        function playMessageSound() {
+            if (!soundEnabled) return;
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            
+            osc.frequency.value = 800;
+            gain.gain.value = 0.1;
+            
+            osc.start();
+            setTimeout(() => osc.stop(), 100);
+        }
+        
+        function playGiftSound() {
+            if (!soundEnabled) return;
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // Son plus festif pour les cadeaux
+            [600, 800, 1000].forEach((freq, i) => {
+                setTimeout(() => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    
+                    osc.frequency.value = freq;
+                    gain.gain.value = 0.1;
+                    
+                    osc.start();
+                    setTimeout(() => osc.stop(), 80);
+                }, i * 100);
+            });
+        }
         
         // ===== EMOJIS & CADEAUX =====
         const emojis = ['😊', '😂', '❤️', '🌙', '⭐', '🕌', '🤲', '📿', '🌟', '✨', 
@@ -867,6 +1414,8 @@
             { icon: '📿', label: 'Tasbih' },
             { icon: '💚', label: 'Cœur' }
         ];
+        
+        const reactionEmojis = ['👍', '❤️', '😂', '🙏', '⭐'];
         
         // ===== ÉLÉMENTS DOM =====
         const loginScreen = document.getElementById('loginScreen');
@@ -928,16 +1477,13 @@
             emojiPicker.classList.remove('show');
         });
         
-        // Fermer pickers si clic ailleurs
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.action-btn') && 
-                !e.target.closest('.picker')) {
+            if (!e.target.closest('.action-btn') && !e.target.closest('.picker')) {
                 emojiPicker.classList.remove('show');
                 giftPicker.classList.remove('show');
             }
         });
         
-        // ===== CLEAR SELECTION =====
         clearSelection.addEventListener('click', () => {
             selectedUser = null;
             selectedUserBanner.classList.remove('show');
@@ -946,7 +1492,7 @@
             });
         });
         
-        // ===== FONCTIONS UTILITAIRES =====
+        // ===== UTILITAIRES =====
         function sanitizeHTML(text) {
             const div = document.createElement('div');
             div.textContent = text;
@@ -956,25 +1502,27 @@
         function formatTime(timestamp) {
             if (!timestamp) return '';
             const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-            return date.toLocaleTimeString('fr-FR', { 
-                hour: '2-digit', 
-                minute: '2-digit' 
-            });
+            return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
         }
         
-        // ===== AUTHENTIFICATION =====
+        // ===== AUTH =====
         googleSignInBtn.addEventListener('click', async () => {
+            if (!termsAccepted) {
+                disclaimerModal.classList.add('show');
+                return;
+            }
+            
             try {
                 await auth.signInWithPopup(googleProvider);
                 console.log('✅ Connexion réussie');
             } catch (error) {
-                console.error('❌ Erreur connexion:', error);
-                alert('Erreur de connexion: ' + error.message);
+                console.error('❌ Erreur:', error);
+                alert('Erreur: ' + error.message);
             }
         });
         
         logoutBtn.addEventListener('click', async () => {
-            if (confirm('Voulez-vous vous déconnecter ?')) {
+            if (confirm('Déconnexion ?')) {
                 if (currentUser) {
                     await usersRef.doc(currentUser.uid).delete();
                 }
@@ -988,10 +1536,9 @@
             }
         });
         
-        // ===== OBSERVER ÉTAT AUTHENTIFICATION =====
         auth.onAuthStateChanged(async (user) => {
             if (user) {
-                console.log('✅ Utilisateur connecté:', user.displayName);
+                console.log('✅ User:', user.displayName);
                 currentUser = user;
                 
                 loginScreen.style.display = 'none';
@@ -1025,9 +1572,10 @@
                 
                 listenToMessages();
                 listenToUsers();
+                updateRateCounter(RATE_LIMIT.maxMessages);
                 
             } else {
-                console.log('❌ Utilisateur déconnecté');
+                console.log('❌ Déconnecté');
                 currentUser = null;
                 selectedUser = null;
                 
@@ -1045,46 +1593,53 @@
                 chatMessages.innerHTML = '';
                 usersList.innerHTML = '';
                 selectedUserBanner.classList.remove('show');
+                messageTimestamps = [];
             }
         });
         
-        // ===== ÉCOUTER LES MESSAGES =====
+        // ===== ÉCOUTER MESSAGES =====
         function listenToMessages() {
             messagesUnsubscribe = messagesRef
                 .orderBy('timestamp', 'desc')
                 .limit(50)
                 .onSnapshot((snapshot) => {
-                    chatMessages.innerHTML = '';
-                    
-                    const messages = [];
-                    snapshot.forEach((doc) => {
-                        messages.push(doc.data());
-                    });
-                    
-                    messages.reverse().forEach((msg) => {
-                        addMessage(msg);
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'added') {
+                            const msg = change.doc.data();
+                            const isOwn = currentUser && msg.userId === currentUser.uid;
+                            addMessage(msg, change.doc.id, isOwn);
+                            
+                            // Son uniquement si pas son propre message
+                            if (!isOwn) {
+                                if (msg.type === 'gift') {
+                                    playGiftSound();
+                                } else if (msg.type !== 'system') {
+                                    playMessageSound();
+                                }
+                            }
+                        }
                     });
                 });
         }
         
-        // ===== AFFICHER UN MESSAGE =====
-        function addMessage(msg) {
-            const messageDiv = document.createElement('div');
-            const isOwn = currentUser && msg.userId === currentUser.uid;
+        // ===== AFFICHER MESSAGE =====
+        function addMessage(msg, msgId, isOwn = false) {
+            // Vérifier si le message existe déjà
+            if (document.querySelector(`[data-msg-id="${msgId}"]`)) return;
             
+            const messageDiv = document.createElement('div');
             messageDiv.className = `message ${msg.type === 'system' ? 'system' : ''} ${msg.type === 'gift' ? 'gift' : ''} ${isOwn ? 'own' : ''}`;
+            messageDiv.dataset.msgId = msgId;
             
             if (msg.type === 'system') {
-                messageDiv.innerHTML = `
-                    <div class="message-content">${msg.content}</div>
-                `;
+                messageDiv.innerHTML = `<div class="message-content">${msg.content}</div>`;
             } else if (msg.type === 'gift') {
                 const recipientText = msg.recipientName ? 
                     `<div class="gift-recipient">Pour ${msg.recipientName}</div>` : '';
                 
                 messageDiv.innerHTML = `
                     <div class="message-header">
-                        <img src="${msg.photoURL}" class="message-avatar" alt="${msg.username}">
+                        <img src="${msg.photoURL}" class="message-avatar">
                         <span class="message-username">${msg.username}</span>
                         <span class="message-time">${formatTime(msg.timestamp)}</span>
                     </div>
@@ -1097,19 +1652,109 @@
             } else {
                 messageDiv.innerHTML = `
                     <div class="message-header">
-                        <img src="${msg.photoURL}" class="message-avatar" alt="${msg.username}">
+                        <img src="${msg.photoURL}" class="message-avatar">
                         <span class="message-username">${msg.username}</span>
                         <span class="message-time">${formatTime(msg.timestamp)}</span>
                     </div>
                     <div class="message-content">${msg.content}</div>
+                    <div class="message-reactions" id="reactions-${msgId}"></div>
+                    <button class="add-reaction-btn" onclick="showReactionPicker('${msgId}')">+</button>
+                    <div class="reaction-picker" id="picker-${msgId}">
+                        ${reactionEmojis.map(e => 
+                            `<button class="reaction-picker-btn" onclick="addReaction('${msgId}', '${e}')">${e}</button>`
+                        ).join('')}
+                    </div>
                 `;
+                
+                // Écouter les réactions
+                listenToReactions(msgId);
             }
             
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
         
-        // ===== ÉCOUTER LES UTILISATEURS =====
+        // ===== RÉACTIONS =====
+        function listenToReactions(msgId) {
+            reactionsRef
+                .where('messageId', '==', msgId)
+                .onSnapshot((snapshot) => {
+                    const reactionsContainer = document.getElementById(`reactions-${msgId}`);
+                    if (!reactionsContainer) return;
+                    
+                    const reactions = {};
+                    snapshot.forEach(doc => {
+                        const data = doc.data();
+                        if (!reactions[data.emoji]) {
+                            reactions[data.emoji] = { count: 0, users: [] };
+                        }
+                        reactions[data.emoji].count++;
+                        reactions[data.emoji].users.push(data.userId);
+                    });
+                    
+                    reactionsContainer.innerHTML = '';
+                    Object.entries(reactions).forEach(([emoji, data]) => {
+                        const div = document.createElement('div');
+                        div.className = 'reaction-item';
+                        if (currentUser && data.users.includes(currentUser.uid)) {
+                            div.classList.add('user-reacted');
+                        }
+                        div.innerHTML = `
+                            <span class="reaction-emoji">${emoji}</span>
+                            <span class="reaction-count">${data.count}</span>
+                        `;
+                        div.onclick = () => addReaction(msgId, emoji);
+                        reactionsContainer.appendChild(div);
+                    });
+                });
+        }
+        
+        window.showReactionPicker = (msgId) => {
+            const picker = document.getElementById(`picker-${msgId}`);
+            if (!picker) return;
+            
+            // Fermer les autres pickers
+            document.querySelectorAll('.reaction-picker').forEach(p => {
+                if (p.id !== `picker-${msgId}`) p.classList.remove('show');
+            });
+            
+            picker.classList.toggle('show');
+        };
+        
+        window.addReaction = async (msgId, emoji) => {
+            if (!currentUser) return;
+            
+            try {
+                // Vérifier si déjà réagi
+                const existing = await reactionsRef
+                    .where('messageId', '==', msgId)
+                    .where('userId', '==', currentUser.uid)
+                    .where('emoji', '==', emoji)
+                    .get();
+                
+                if (!existing.empty) {
+                    // Supprimer la réaction
+                    existing.docs[0].ref.delete();
+                } else {
+                    // Ajouter la réaction
+                    await reactionsRef.add({
+                        messageId: msgId,
+                        userId: currentUser.uid,
+                        emoji: emoji,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
+                
+                // Fermer le picker
+                const picker = document.getElementById(`picker-${msgId}`);
+                if (picker) picker.classList.remove('show');
+                
+            } catch (error) {
+                console.error('❌ Erreur réaction:', error);
+            }
+        };
+        
+        // ===== ÉCOUTER USERS =====
         function listenToUsers() {
             usersUnsubscribe = usersRef
                 .where('online', '==', true)
@@ -1137,7 +1782,7 @@
                         
                         userDiv.innerHTML = `
                             <div style="position: relative;">
-                                <img src="${user.photoURL}" class="user-avatar" alt="${user.name}">
+                                <img src="${user.photoURL}" class="user-avatar">
                                 <div class="user-status"></div>
                             </div>
                             <div class="user-info">
@@ -1146,7 +1791,6 @@
                             </div>
                         `;
                         
-                        // Clic pour sélectionner
                         userDiv.addEventListener('click', () => {
                             document.querySelectorAll('.user-item').forEach(item => {
                                 item.classList.remove('selected');
@@ -1165,19 +1809,21 @@
                         
                         usersList.appendChild(userDiv);
                     });
-                    
-                    console.log('✅ Sidebar mise à jour:', users.length, 'users');
                 });
         }
         
-        // ===== ENVOYER UN MESSAGE =====
+        // ===== ENVOYER MESSAGE =====
         messageForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            if (!currentUser) return;
+            if (!currentUser || isRateLimited) return;
+            if (!checkRateLimit()) return;
             
-            const message = messageInput.value.trim();
+            let message = messageInput.value.trim();
             if (!message) return;
+            
+            // Filtrer les mots interdits
+            message = filterBadWords(message);
             
             try {
                 await messagesRef.add({
@@ -1188,18 +1834,21 @@
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 
+                messageTimestamps.push(Date.now());
                 messageInput.value = '';
                 messageInput.focus();
+                checkRateLimit();
                 
             } catch (error) {
-                console.error('❌ Erreur envoi message:', error);
-                alert('Erreur lors de l\'envoi du message');
+                console.error('❌ Erreur:', error);
+                alert('Erreur envoi');
             }
         });
         
-        // ===== ENVOYER UN CADEAU =====
+        // ===== ENVOYER CADEAU =====
         async function sendGift(gift) {
-            if (!currentUser) return;
+            if (!currentUser || isRateLimited) return;
+            if (!checkRateLimit()) return;
             
             try {
                 const giftData = {
@@ -1219,9 +1868,10 @@
                 
                 await messagesRef.add(giftData);
                 
+                messageTimestamps.push(Date.now());
                 giftPicker.classList.remove('show');
+                checkRateLimit();
                 
-                // Reset selection
                 if (selectedUser) {
                     selectedUser = null;
                     selectedUserBanner.classList.remove('show');
@@ -1231,12 +1881,12 @@
                 }
                 
             } catch (error) {
-                console.error('❌ Erreur envoi cadeau:', error);
-                alert('Erreur lors de l\'envoi du cadeau');
+                console.error('❌ Erreur:', error);
+                alert('Erreur envoi cadeau');
             }
         }
         
-        console.log('✅ Chat initialisé et prêt');
+        console.log('✅ Chat v1.013 prêt avec TOUTES les fonctionnalités !');
     </script>
     
 </body>

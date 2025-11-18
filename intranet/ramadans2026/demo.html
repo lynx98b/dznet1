@@ -6,7 +6,7 @@
     <title>Chat Ramadan - Communauté</title>
     
     <style>
-        /* v1.011 - Chat complet + Sidebar fonctionnelle */
+        /* v1.012 - Responsive corrigé + Emojis + Cadeaux ciblés */
         * {
             margin: 0;
             padding: 0;
@@ -82,10 +82,16 @@
             background: rgba(255,255,255,0.1);
             border-radius: 10px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         
         .user-item:hover {
             background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+        
+        .user-item.selected {
+            background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
             transform: translateX(5px);
         }
         
@@ -204,33 +210,43 @@
         .chat-header {
             background: linear-gradient(135deg, #2C5F2D 0%, #1a4a1e 100%);
             color: white;
-            padding: 20px 25px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            flex-shrink: 0;
         }
         
         .header-left {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            min-width: 0;
         }
         
         .header-avatar {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: 2px solid #D4AF37;
+            flex-shrink: 0;
+        }
+        
+        .header-info {
+            min-width: 0;
         }
         
         .header-info h3 {
-            font-size: 1.1rem;
-            margin-bottom: 3px;
+            font-size: 1rem;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .header-info p {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             opacity: 0.9;
         }
         
@@ -238,11 +254,13 @@
             background: rgba(255,255,255,0.2);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
+            font-size: 0.85rem;
             transition: all 0.3s ease;
+            flex-shrink: 0;
         }
         
         .logout-btn:hover {
@@ -252,7 +270,7 @@
         /* ===== MESSAGES ===== */
         .chat-messages {
             flex: 1;
-            padding: 25px;
+            padding: 20px;
             overflow-y: auto;
             background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
         }
@@ -267,7 +285,7 @@
         }
         
         .message {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             animation: slideIn 0.3s ease-out;
         }
         
@@ -285,13 +303,13 @@
         .message-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
+            gap: 8px;
+            margin-bottom: 6px;
         }
         
         .message-avatar {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             border: 2px solid #D4AF37;
         }
@@ -299,24 +317,25 @@
         .message-username {
             font-weight: 700;
             color: #2C5F2D;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         
         .message-time {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #999;
             margin-left: auto;
         }
         
         .message-content {
             background: white;
-            padding: 12px 16px;
-            border-radius: 15px;
+            padding: 10px 14px;
+            border-radius: 12px;
             max-width: 70%;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             word-wrap: break-word;
             line-height: 1.5;
             border: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.95rem;
         }
         
         .message.own {
@@ -339,33 +358,194 @@
             background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
             color: #92400e;
             display: inline-block;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 20px;
             border: 1px solid #fcd34d;
             max-width: 100%;
         }
         
+        .message.gift .message-content {
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+            border: 2px solid #f9a8d4;
+            text-align: center;
+            padding: 15px;
+            max-width: 100%;
+        }
+        
+        .gift-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .gift-text {
+            font-size: 0.9rem;
+            color: #831843;
+            font-weight: 600;
+        }
+        
+        .gift-recipient {
+            font-size: 0.75rem;
+            color: #831843;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
         /* ===== INPUT ZONE ===== */
         .chat-input-area {
-            padding: 20px 25px;
+            padding: 15px;
             background: white;
             border-top: 1px solid #e5e7eb;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+        
+        .selected-user-banner {
+            background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+        
+        .selected-user-banner.show {
+            display: flex;
+        }
+        
+        .clear-selection {
+            background: rgba(255,255,255,0.3);
+            border: none;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .actions-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .action-btn {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .action-btn:hover {
+            background: #2C5F2D;
+            border-color: #2C5F2D;
+            transform: translateY(-2px);
+        }
+        
+        .picker {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .picker.show {
+            display: block;
+        }
+        
+        .picker h4 {
+            color: #2C5F2D;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 8px;
+        }
+        
+        .emoji-btn {
+            font-size: 1.5rem;
+            padding: 8px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .emoji-btn:hover {
+            background: #f5f5f5;
+            transform: scale(1.2);
+        }
+        
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        
+        .gift-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            padding: 15px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .gift-btn:hover {
+            border-color: #D4AF37;
+            background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+            transform: scale(1.05);
+        }
+        
+        .gift-btn-icon {
+            font-size: 2rem;
+        }
+        
+        .gift-btn-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .gift-btn:hover .gift-btn-label {
+            color: white;
         }
         
         .input-form {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
         }
         
         .message-input {
             flex: 1;
-            padding: 14px 20px;
+            padding: 12px 16px;
             border: 2px solid #e5e7eb;
-            border-radius: 25px;
+            border-radius: 20px;
             font-size: 0.95rem;
             font-family: inherit;
             outline: none;
@@ -381,13 +561,15 @@
             background: linear-gradient(135deg, #2C5F2D 0%, #1a4a1e 100%);
             color: white;
             border: none;
-            padding: 14px 25px;
-            border-radius: 25px;
-            font-size: 1rem;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(44, 95, 45, 0.3);
+            flex-shrink: 0;
+            white-space: nowrap;
         }
         
         .send-btn:hover {
@@ -409,21 +591,30 @@
             }
             
             .users-sidebar {
-                width: 80px;
+                width: 70px;
+            }
+            
+            .sidebar-header {
+                padding: 15px 5px;
             }
             
             .sidebar-header h2 {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
             }
             
             .online-count {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
+            }
+            
+            .users-list {
+                padding: 10px 5px;
             }
             
             .user-item {
                 flex-direction: column;
                 text-align: center;
-                padding: 8px;
+                padding: 8px 4px;
+                gap: 5px;
             }
             
             .user-info {
@@ -435,12 +626,111 @@
                 height: 35px;
             }
             
+            .chat-header {
+                padding: 12px 15px;
+            }
+            
+            .header-avatar {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .header-info h3 {
+                font-size: 0.9rem;
+            }
+            
+            .header-info p {
+                font-size: 0.7rem;
+            }
+            
+            .logout-btn {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+            }
+            
             .chat-messages {
-                padding: 15px;
+                padding: 15px 10px;
             }
             
             .message-content {
                 max-width: 85%;
+                font-size: 0.9rem;
+                padding: 10px 12px;
+            }
+            
+            .chat-input-area {
+                padding: 10px;
+            }
+            
+            .actions-bar {
+                gap: 5px;
+                margin-bottom: 8px;
+            }
+            
+            .action-btn {
+                padding: 8px;
+                font-size: 1.1rem;
+            }
+            
+            .emoji-grid {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 6px;
+            }
+            
+            .emoji-btn {
+                font-size: 1.3rem;
+                padding: 6px;
+            }
+            
+            .gift-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .gift-btn {
+                padding: 12px 8px;
+            }
+            
+            .gift-btn-icon {
+                font-size: 1.8rem;
+            }
+            
+            .input-form {
+                gap: 8px;
+            }
+            
+            .message-input {
+                padding: 10px 14px;
+                font-size: 0.9rem;
+            }
+            
+            .send-btn {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .users-sidebar {
+                width: 60px;
+            }
+            
+            .user-avatar {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .send-btn {
+                padding: 10px;
+                font-size: 1.2rem;
+            }
+            
+            .send-btn span {
+                display: none;
+            }
+            
+            .send-btn::after {
+                content: '📤';
             }
         }
     </style>
@@ -480,24 +770,49 @@
                             <p>Chat Ramadan</p>
                         </div>
                     </div>
-                    <button class="logout-btn" id="logoutBtn">Déconnexion</button>
+                    <button class="logout-btn" id="logoutBtn">Déco</button>
                 </div>
                 
                 <div class="chat-messages" id="chatMessages"></div>
                 
                 <div class="chat-input-area">
+                    <!-- Banner utilisateur sélectionné -->
+                    <div class="selected-user-banner" id="selectedUserBanner">
+                        <span>🎁 Pour: <strong id="selectedUserName"></strong></span>
+                        <button class="clear-selection" id="clearSelection">✕</button>
+                    </div>
+                    
+                    <!-- Barre d'actions -->
+                    <div class="actions-bar">
+                        <button class="action-btn" id="emojiBtn" title="Emojis">😊</button>
+                        <button class="action-btn" id="giftBtn" title="Cadeaux">🎁</button>
+                    </div>
+                    
+                    <!-- Emoji Picker -->
+                    <div class="picker" id="emojiPicker">
+                        <h4>😊 Emojis</h4>
+                        <div class="emoji-grid" id="emojiGrid"></div>
+                    </div>
+                    
+                    <!-- Gift Picker -->
+                    <div class="picker" id="giftPicker">
+                        <h4>🎁 Cadeaux</h4>
+                        <div class="gift-grid" id="giftGrid"></div>
+                    </div>
+                    
+                    <!-- Formulaire message -->
                     <form class="input-form" id="messageForm">
                         <input 
                             type="text" 
                             class="message-input" 
                             id="messageInput" 
-                            placeholder="Écrivez votre message..."
+                            placeholder="Votre message..."
                             maxlength="200"
                             autocomplete="off"
                             required
                         >
                         <button type="submit" class="send-btn" id="sendBtn">
-                            Envoyer 📤
+                            <span>Envoyer</span> 📤
                         </button>
                     </form>
                 </div>
@@ -511,7 +826,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
     <script>
-        console.log('🚀 Chat v1.011 - Complet avec sidebar');
+        console.log('🚀 Chat v1.012 - Responsive + Emojis + Cadeaux ciblés');
         
         // ===== CONFIGURATION FIREBASE =====
         const firebaseConfig = {
@@ -531,9 +846,27 @@
         const googleProvider = new firebase.auth.GoogleAuthProvider();
         
         let currentUser = null;
+        let selectedUser = null;
         let messagesUnsubscribe = null;
         let usersUnsubscribe = null;
         let heartbeatInterval = null;
+        
+        // ===== EMOJIS & CADEAUX =====
+        const emojis = ['😊', '😂', '❤️', '🌙', '⭐', '🕌', '🤲', '📿', '🌟', '✨', 
+                       '🙏', '💚', '🌸', '🌺', '🎉', '🎊', '👏', '🤝', '💫', '☪️',
+                       '🕋', '📖', '🍽️', '🥘', '🍰', '☕', '🫖', '🌹', '💐', '🎁'];
+        
+        const gifts = [
+            { icon: '🎁', label: 'Cadeau' },
+            { icon: '🌙', label: 'Lune' },
+            { icon: '⭐', label: 'Étoile' },
+            { icon: '🕌', label: 'Mosquée' },
+            { icon: '💐', label: 'Fleurs' },
+            { icon: '🍰', label: 'Gâteau' },
+            { icon: '☕', label: 'Café' },
+            { icon: '📿', label: 'Tasbih' },
+            { icon: '💚', label: 'Cœur' }
+        ];
         
         // ===== ÉLÉMENTS DOM =====
         const loginScreen = document.getElementById('loginScreen');
@@ -548,6 +881,70 @@
         const headerAvatar = document.getElementById('headerAvatar');
         const onlineCount = document.getElementById('onlineCount');
         const usersList = document.getElementById('usersList');
+        const emojiBtn = document.getElementById('emojiBtn');
+        const giftBtn = document.getElementById('giftBtn');
+        const emojiPicker = document.getElementById('emojiPicker');
+        const giftPicker = document.getElementById('giftPicker');
+        const emojiGrid = document.getElementById('emojiGrid');
+        const giftGrid = document.getElementById('giftGrid');
+        const selectedUserBanner = document.getElementById('selectedUserBanner');
+        const selectedUserName = document.getElementById('selectedUserName');
+        const clearSelection = document.getElementById('clearSelection');
+        
+        // ===== GÉNÉRER EMOJIS =====
+        emojis.forEach(emoji => {
+            const btn = document.createElement('button');
+            btn.className = 'emoji-btn';
+            btn.textContent = emoji;
+            btn.type = 'button';
+            btn.onclick = () => {
+                messageInput.value += emoji;
+                messageInput.focus();
+            };
+            emojiGrid.appendChild(btn);
+        });
+        
+        // ===== GÉNÉRER CADEAUX =====
+        gifts.forEach(gift => {
+            const btn = document.createElement('button');
+            btn.className = 'gift-btn';
+            btn.type = 'button';
+            btn.innerHTML = `
+                <div class="gift-btn-icon">${gift.icon}</div>
+                <div class="gift-btn-label">${gift.label}</div>
+            `;
+            btn.onclick = () => sendGift(gift);
+            giftGrid.appendChild(btn);
+        });
+        
+        // ===== TOGGLE PICKERS =====
+        emojiBtn.addEventListener('click', () => {
+            emojiPicker.classList.toggle('show');
+            giftPicker.classList.remove('show');
+        });
+        
+        giftBtn.addEventListener('click', () => {
+            giftPicker.classList.toggle('show');
+            emojiPicker.classList.remove('show');
+        });
+        
+        // Fermer pickers si clic ailleurs
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.action-btn') && 
+                !e.target.closest('.picker')) {
+                emojiPicker.classList.remove('show');
+                giftPicker.classList.remove('show');
+            }
+        });
+        
+        // ===== CLEAR SELECTION =====
+        clearSelection.addEventListener('click', () => {
+            selectedUser = null;
+            selectedUserBanner.classList.remove('show');
+            document.querySelectorAll('.user-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+        });
         
         // ===== FONCTIONS UTILITAIRES =====
         function sanitizeHTML(text) {
@@ -579,14 +976,12 @@
         logoutBtn.addEventListener('click', async () => {
             if (confirm('Voulez-vous vous déconnecter ?')) {
                 if (currentUser) {
-                    // Supprimer l'utilisateur de la liste
                     await usersRef.doc(currentUser.uid).delete();
                 }
                 await auth.signOut();
             }
         });
         
-        // Nettoyer à la fermeture
         window.addEventListener('beforeunload', () => {
             if (currentUser) {
                 usersRef.doc(currentUser.uid).delete();
@@ -599,15 +994,12 @@
                 console.log('✅ Utilisateur connecté:', user.displayName);
                 currentUser = user;
                 
-                // Afficher le chat
                 loginScreen.style.display = 'none';
                 chatActive.classList.add('show');
                 
-                // Mettre à jour l'interface
                 headerName.textContent = user.displayName;
                 headerAvatar.src = user.photoURL;
                 
-                // Ajouter l'utilisateur à la collection users
                 await usersRef.doc(user.uid).set({
                     uid: user.uid,
                     name: user.displayName,
@@ -616,16 +1008,14 @@
                     lastSeen: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 
-                // Heartbeat pour maintenir en ligne
                 heartbeatInterval = setInterval(() => {
                     if (currentUser) {
                         usersRef.doc(currentUser.uid).update({
                             lastSeen: firebase.firestore.FieldValue.serverTimestamp()
                         }).catch(() => {});
                     }
-                }, 30000); // 30 secondes
+                }, 30000);
                 
-                // Message système de connexion
                 await messagesRef.add({
                     type: 'system',
                     content: `${user.displayName} a rejoint le chat 🌙`,
@@ -633,31 +1023,28 @@
                     userId: user.uid
                 });
                 
-                // Écouter les messages et utilisateurs
                 listenToMessages();
                 listenToUsers();
                 
             } else {
                 console.log('❌ Utilisateur déconnecté');
                 currentUser = null;
+                selectedUser = null;
                 
-                // Nettoyer heartbeat
                 if (heartbeatInterval) {
                     clearInterval(heartbeatInterval);
                     heartbeatInterval = null;
                 }
                 
-                // Afficher l'écran de connexion
                 loginScreen.style.display = 'flex';
                 chatActive.classList.remove('show');
                 
-                // Nettoyer les listeners
                 if (messagesUnsubscribe) messagesUnsubscribe();
                 if (usersUnsubscribe) usersUnsubscribe();
                 
-                // Vider l'interface
                 chatMessages.innerHTML = '';
                 usersList.innerHTML = '';
+                selectedUserBanner.classList.remove('show');
             }
         });
         
@@ -667,16 +1054,13 @@
                 .orderBy('timestamp', 'desc')
                 .limit(50)
                 .onSnapshot((snapshot) => {
-                    // Vider les messages
                     chatMessages.innerHTML = '';
                     
-                    // Récupérer tous les messages
                     const messages = [];
                     snapshot.forEach((doc) => {
                         messages.push(doc.data());
                     });
                     
-                    // Afficher dans l'ordre chronologique
                     messages.reverse().forEach((msg) => {
                         addMessage(msg);
                     });
@@ -688,11 +1072,27 @@
             const messageDiv = document.createElement('div');
             const isOwn = currentUser && msg.userId === currentUser.uid;
             
-            messageDiv.className = `message ${msg.type === 'system' ? 'system' : ''} ${isOwn ? 'own' : ''}`;
+            messageDiv.className = `message ${msg.type === 'system' ? 'system' : ''} ${msg.type === 'gift' ? 'gift' : ''} ${isOwn ? 'own' : ''}`;
             
             if (msg.type === 'system') {
                 messageDiv.innerHTML = `
                     <div class="message-content">${msg.content}</div>
+                `;
+            } else if (msg.type === 'gift') {
+                const recipientText = msg.recipientName ? 
+                    `<div class="gift-recipient">Pour ${msg.recipientName}</div>` : '';
+                
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <img src="${msg.photoURL}" class="message-avatar" alt="${msg.username}">
+                        <span class="message-username">${msg.username}</span>
+                        <span class="message-time">${formatTime(msg.timestamp)}</span>
+                    </div>
+                    <div class="message-content">
+                        <div class="gift-icon">${msg.giftIcon}</div>
+                        <div class="gift-text">${msg.username} offre ${msg.giftLabel}</div>
+                        ${recipientText}
+                    </div>
                 `;
             } else {
                 messageDiv.innerHTML = `
@@ -718,22 +1118,23 @@
                     
                     snapshot.forEach((doc) => {
                         const user = doc.data();
-                        // Ne pas afficher l'utilisateur courant
                         if (user.uid !== currentUser.uid) {
                             users.push(user);
                         }
                     });
                     
-                    // Mettre à jour le compteur
                     onlineCount.textContent = `${users.length + 1} connectés`;
                     
-                    // Vider la liste
                     usersList.innerHTML = '';
                     
-                    // Afficher chaque utilisateur
                     users.forEach((user) => {
                         const userDiv = document.createElement('div');
                         userDiv.className = 'user-item';
+                        
+                        if (selectedUser && selectedUser.uid === user.uid) {
+                            userDiv.classList.add('selected');
+                        }
+                        
                         userDiv.innerHTML = `
                             <div style="position: relative;">
                                 <img src="${user.photoURL}" class="user-avatar" alt="${user.name}">
@@ -744,6 +1145,24 @@
                                 <div class="user-activity">● En ligne</div>
                             </div>
                         `;
+                        
+                        // Clic pour sélectionner
+                        userDiv.addEventListener('click', () => {
+                            document.querySelectorAll('.user-item').forEach(item => {
+                                item.classList.remove('selected');
+                            });
+                            
+                            if (selectedUser && selectedUser.uid === user.uid) {
+                                selectedUser = null;
+                                selectedUserBanner.classList.remove('show');
+                            } else {
+                                selectedUser = user;
+                                selectedUserName.textContent = user.name;
+                                selectedUserBanner.classList.add('show');
+                                userDiv.classList.add('selected');
+                            }
+                        });
+                        
                         usersList.appendChild(userDiv);
                     });
                     
@@ -778,8 +1197,78 @@
             }
         });
         
+        // ===== ENVOYER UN CADEAU =====
+        async function sendGift(gift) {
+            if (!currentUser) return;
+            
+            try {
+                const giftData = {
+                    type: 'gift',
+                    userId: currentUser.uid,
+                    username: currentUser.displayName,
+                    photoURL: currentUser.photoURL,
+                    giftIcon: gift.icon,
+                    giftLabel: gift.label,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                if (selectedUser) {
+                    giftData.recipientUid = selectedUser.uid;
+                    giftData.recipientName = selectedUser.name;
+                }
+                
+                await messagesRef.add(giftData);
+                
+                giftPicker.classList.remove('show');
+                
+                // Reset selection
+                if (selectedUser) {
+                    selectedUser = null;
+                    selectedUserBanner.classList.remove('show');
+                    document.querySelectorAll('.user-item').forEach(item => {
+                        item.classList.remove('selected');
+                    });
+                }
+                
+            } catch (error) {
+                console.error('❌ Erreur envoi cadeau:', error);
+                alert('Erreur lors de l\'envoi du cadeau');
+            }
+        }
+        
         console.log('✅ Chat initialisé et prêt');
     </script>
     
 </body>
 </html>
+```
+
+---
+
+## ✅ NOUVEAUTÉS v1.012
+
+### 📱 Responsive Parfait
+- ✅ Bouton "Envoyer" bien placé sur mobile
+- ✅ Sur très petit écran (< 480px): bouton devient juste 📤
+- ✅ Sidebar se réduit à 60px sur smartphone
+- ✅ Tout s'adapte automatiquement
+
+### 😊 Emojis
+- ✅ 30 emojis populaires
+- ✅ Clic → insertion dans le message
+- ✅ Grid responsive (8 → 6 colonnes mobile)
+
+### 🎁 Cadeaux Ciblés
+1. **Cliquer** sur un utilisateur dans la sidebar
+2. Il devient **doré** (sélectionné)
+3. Banner jaune apparaît: "🎁 Pour: [Nom]"
+4. Cliquer sur un cadeau → Envoi avec mention
+5. Message affiche "Pour [Nom]"
+
+### 🎯 Workflow Complet
+```
+1. Clic sur User A dans sidebar → Devient doré
+2. Banner: "Pour: User A" avec bouton ✕
+3. Clic sur 🎁 → Ouvre picker cadeaux
+4. Clic sur 🌙 → Envoi "X offre Lune - Pour User A"
+5. Sélection auto-reset

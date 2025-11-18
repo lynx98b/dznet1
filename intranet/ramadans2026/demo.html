@@ -6,7 +6,7 @@
     <title>Chat Ramadan - Communauté</title>
     
     <style>
-        /* v1.014 - CORRIGÉ: Problèmes de sons résolus */
+        /* v1.015 - CORRIGÉ: Responsive + Typing + Read Status */
         * {
             margin: 0;
             padding: 0;
@@ -212,6 +212,7 @@
             margin: 0 auto;
             background: var(--white);
             box-shadow: 0 0 30px var(--shadow);
+            overflow: hidden;
         }
         
         /* ===== SIDEBAR ===== */
@@ -221,6 +222,7 @@
             display: flex;
             flex-direction: column;
             border-right: 1px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
         }
         
         .sidebar-header {
@@ -229,6 +231,7 @@
             color: white;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
         }
         
         .sidebar-header h2 {
@@ -246,6 +249,7 @@
             flex: 1;
             overflow-y: auto;
             padding: 15px 10px;
+            min-height: 0;
         }
         
         .users-list::-webkit-scrollbar {
@@ -285,6 +289,7 @@
             border-radius: 50%;
             border: 2px solid var(--secondary);
             position: relative;
+            flex-shrink: 0;
         }
         
         .user-status {
@@ -323,6 +328,7 @@
             display: flex;
             flex-direction: column;
             min-width: 0;
+            overflow: hidden;
         }
         
         /* ===== ÉCRAN CONNEXION ===== */
@@ -333,6 +339,7 @@
             justify-content: center;
             height: 100%;
             background: linear-gradient(135deg, rgba(44, 95, 45, 0.05) 0%, rgba(212, 175, 55, 0.05) 100%);
+            padding: 20px;
         }
         
         .login-icon {
@@ -350,12 +357,14 @@
             color: var(--primary);
             margin-bottom: 10px;
             font-size: 2rem;
+            text-align: center;
         }
         
         .chat-login p {
             color: var(--text);
             margin-bottom: 30px;
             font-size: 1.1rem;
+            text-align: center;
         }
         
         .google-signin-btn {
@@ -385,6 +394,7 @@
             display: none;
             flex-direction: column;
             height: 100%;
+            overflow: hidden;
         }
         
         .chat-active.show {
@@ -400,6 +410,7 @@
             align-items: center;
             box-shadow: 0 2px 10px var(--shadow);
             flex-shrink: 0;
+            z-index: 10;
         }
         
         .header-left {
@@ -407,6 +418,7 @@
             align-items: center;
             gap: 12px;
             min-width: 0;
+            flex: 1;
         }
         
         .header-avatar {
@@ -419,6 +431,7 @@
         
         .header-info {
             min-width: 0;
+            flex: 1;
         }
         
         .header-info h3 {
@@ -481,11 +494,20 @@
         }
         
         /* ===== MESSAGES ===== */
+        .messages-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        
         .chat-messages {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
             background: var(--light-bg);
+            min-height: 0;
         }
         
         .chat-messages::-webkit-scrollbar {
@@ -526,6 +548,7 @@
             height: 28px;
             border-radius: 50%;
             border: 2px solid var(--secondary);
+            flex-shrink: 0;
         }
         
         .message-username {
@@ -538,6 +561,7 @@
             font-size: 0.7rem;
             color: #999;
             margin-left: auto;
+            flex-shrink: 0;
         }
         
         .message-content {
@@ -550,6 +574,7 @@
             line-height: 1.5;
             border: 1px solid rgba(0,0,0,0.05);
             font-size: 0.95rem;
+            position: relative;
         }
         
         .message.own {
@@ -604,6 +629,81 @@
             color: #831843;
             margin-top: 5px;
             font-style: italic;
+        }
+        
+        /* ===== TYPING INDICATOR ===== */
+        .typing-indicator {
+            background: var(--light-bg);
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin: 10px 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .typing-indicator.show {
+            display: flex;
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: typingBounce 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ===== READ STATUS ===== */
+        .read-status {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .read-status.own {
+            align-self: flex-end;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .read-count {
+            background: rgba(0,0,0,0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.65rem;
+        }
+        
+        .dark-mode .read-count {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .message.own .read-status {
+            color: rgba(255,255,255,0.7);
         }
         
         /* ===== RÉACTIONS ===== */
@@ -878,6 +978,7 @@
             transition: all 0.3s ease;
             background: var(--white);
             color: var(--text);
+            min-width: 0;
         }
         
         .message-input:focus {
@@ -912,65 +1013,65 @@
             box-shadow: none;
         }
         
-        /* ===== RESPONSIVE ===== */
+        /* ===== RESPONSIVE AMÉLIORÉ ===== */
         @media (max-width: 768px) {
+            .chat-container {
+                flex-direction: column;
+                height: 100vh;
+            }
+            
             .users-sidebar {
-                width: 70px;
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+                order: 2;
+            }
+            
+            .chat-main {
+                order: 1;
+                flex: 1;
             }
             
             .sidebar-header {
-                padding: 15px 5px;
+                padding: 15px;
             }
             
-            .sidebar-header h2 {
-                font-size: 0.8rem;
-            }
-            
-            .online-count {
-                font-size: 0.65rem;
+            .users-list {
+                display: flex;
+                overflow-x: auto;
+                padding: 10px;
+                flex-wrap: nowrap;
             }
             
             .user-item {
                 flex-direction: column;
                 text-align: center;
-                padding: 8px 4px;
-                gap: 5px;
+                padding: 8px 12px;
+                margin-bottom: 0;
+                margin-right: 8px;
+                min-width: 80px;
             }
             
             .user-info {
-                display: none;
+                display: block;
             }
             
-            .user-avatar {
-                width: 35px;
-                height: 35px;
+            .user-name {
+                font-size: 0.8rem;
+            }
+            
+            .user-activity {
+                display: none;
             }
             
             .chat-header {
                 padding: 12px 15px;
-            }
-            
-            .header-avatar {
-                width: 35px;
-                height: 35px;
-            }
-            
-            .header-info h3 {
-                font-size: 0.9rem;
+                position: sticky;
+                top: 0;
             }
             
             .header-info p {
                 display: none;
-            }
-            
-            .header-btn {
-                padding: 6px 10px;
-                font-size: 1rem;
-            }
-            
-            .logout-btn {
-                padding: 6px 12px;
-                font-size: 0.75rem;
             }
             
             .chat-messages {
@@ -981,6 +1082,27 @@
                 max-width: 85%;
                 font-size: 0.9rem;
                 padding: 10px 12px;
+            }
+            
+            .typing-indicator {
+                margin: 10px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-actions {
+                gap: 4px;
+            }
+            
+            .header-btn {
+                padding: 6px 8px;
+                font-size: 1rem;
+            }
+            
+            .logout-btn {
+                padding: 6px 10px;
+                font-size: 0.75rem;
             }
             
             .chat-input-area {
@@ -1032,17 +1154,6 @@
             .send-btn {
                 padding: 10px 16px;
                 font-size: 0.85rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .users-sidebar {
-                width: 60px;
-            }
-            
-            .user-avatar {
-                width: 30px;
-                height: 30px;
             }
             
             .send-btn span {
@@ -1149,7 +1260,15 @@
                     </div>
                 </div>
                 
-                <div class="chat-messages" id="chatMessages"></div>
+                <div class="messages-container">
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="typing-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <span id="typingText"></span>
+                    </div>
+                </div>
                 
                 <div class="chat-input-area">
                     <div class="rate-counter" id="rateCounter">6/6 messages</div>
@@ -1207,7 +1326,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
     <script>
-        console.log('🚀 Chat v1.014 - CORRIGÉ: Problèmes de sons résolus');
+        console.log('🚀 Chat v1.015 - CORRIGÉ: Responsive + Typing + Read Status');
         
         // ===== CONFIGURATION =====
         const firebaseConfig = {
@@ -1225,6 +1344,7 @@
         const messagesRef = db.collection('messages');
         const usersRef = db.collection('users');
         const reactionsRef = db.collection('reactions');
+        const typingRef = db.collection('typingIndicators');
         const googleProvider = new firebase.auth.GoogleAuthProvider();
         
         // ===== VARIABLES GLOBALES =====
@@ -1232,7 +1352,9 @@
         let selectedUser = null;
         let messagesUnsubscribe = null;
         let usersUnsubscribe = null;
+        let typingUnsubscribe = null;
         let heartbeatInterval = null;
+        let typingTimeout = null;
         
         // ===== FILTRAGE DE MOTS INTERDITS =====
         const forbiddenWords = [
@@ -1255,8 +1377,8 @@
         // ===== RATE LIMITING =====
         const RATE_LIMIT = {
             maxMessages: 6,
-            timeWindow: 60000, // 1 minute
-            cooldownTime: 15000 // 15 secondes
+            timeWindow: 60000,
+            cooldownTime: 15000
         };
         
         let messageTimestamps = [];
@@ -1349,7 +1471,7 @@
             localStorage.setItem('ramadan-dark', darkMode);
         });
         
-        // ===== NOTIFICATIONS SONORES CORRIGÉES =====
+        // ===== NOTIFICATIONS SONORES =====
         let soundEnabled = localStorage.getItem('ramadan-sound') !== 'false';
         const soundBtn = document.getElementById('soundBtn');
         
@@ -1367,65 +1489,48 @@
             localStorage.setItem('ramadan-sound', soundEnabled);
         });
         
-        // Sons corrigés - Version simplifiée et sécurisée
         function playMessageSound() {
             if (!soundEnabled) return;
-            
             try {
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 const oscillator = audioContext.createOscillator();
                 const gainNode = audioContext.createGain();
-                
                 oscillator.connect(gainNode);
                 gainNode.connect(audioContext.destination);
-                
                 oscillator.frequency.value = 800;
                 gainNode.gain.value = 0.1;
-                
                 oscillator.start();
                 setTimeout(() => {
                     oscillator.stop();
                     audioContext.close();
                 }, 100);
             } catch (error) {
-                console.log('Audio non supporté:', error);
-                // Fallback silencieux
+                console.log('Audio non supporté');
             }
         }
         
         function playGiftSound() {
             if (!soundEnabled) return;
-            
             try {
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                
-                // Séquence de sons pour cadeaux
                 const playBeep = (frequency, time) => {
                     setTimeout(() => {
                         const oscillator = audioContext.createOscillator();
                         const gainNode = audioContext.createGain();
-                        
                         oscillator.connect(gainNode);
                         gainNode.connect(audioContext.destination);
-                        
                         oscillator.frequency.value = frequency;
                         gainNode.gain.value = 0.1;
-                        
                         oscillator.start();
-                        setTimeout(() => {
-                            oscillator.stop();
-                        }, 80);
+                        setTimeout(() => oscillator.stop(), 80);
                     }, time);
                 };
-                
                 playBeep(600, 0);
                 playBeep(800, 100);
                 playBeep(1000, 200);
-                
                 setTimeout(() => audioContext.close(), 500);
             } catch (error) {
-                console.log('Audio non supporté:', error);
-                // Fallback silencieux
+                console.log('Audio non supporté');
             }
         }
         
@@ -1457,6 +1562,8 @@
         const messageInput = document.getElementById('messageInput');
         const sendBtn = document.getElementById('sendBtn');
         const chatMessages = document.getElementById('chatMessages');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const typingText = document.getElementById('typingText');
         const headerName = document.getElementById('headerName');
         const headerAvatar = document.getElementById('headerAvatar');
         const onlineCount = document.getElementById('onlineCount');
@@ -1536,13 +1643,84 @@
             return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
         }
         
+        // ===== TYPING INDICATORS =====
+        messageInput.addEventListener('input', () => {
+            if (!currentUser) return;
+            setUserTyping(true);
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(() => {
+                setUserTyping(false);
+            }, 1000);
+        });
+        
+        async function setUserTyping(isTyping) {
+            if (!currentUser) return;
+            try {
+                if (isTyping) {
+                    await typingRef.doc(currentUser.uid).set({
+                        userId: currentUser.uid,
+                        username: currentUser.displayName,
+                        isTyping: true,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        channel: 'ramadan'
+                    });
+                } else {
+                    await typingRef.doc(currentUser.uid).delete();
+                }
+            } catch (error) {
+                console.error('Erreur typing indicator:', error);
+            }
+        }
+        
+        function listenToTyping() {
+            if (typingUnsubscribe) typingUnsubscribe();
+            
+            typingUnsubscribe = typingRef
+                .where('channel', '==', 'ramadan')
+                .onSnapshot((snapshot) => {
+                    const typingUsers = [];
+                    snapshot.forEach(doc => {
+                        const data = doc.data();
+                        if (data.userId !== currentUser.uid && data.isTyping) {
+                            typingUsers.push(data);
+                        }
+                    });
+                    
+                    updateTypingIndicator(typingUsers);
+                });
+        }
+        
+        function updateTypingIndicator(typingUsers) {
+            if (typingUsers.length === 0) {
+                typingIndicator.classList.remove('show');
+            } else {
+                if (typingUsers.length === 1) {
+                    typingText.textContent = `${typingUsers[0].username} est en train d'écrire...`;
+                } else if (typingUsers.length === 2) {
+                    typingText.textContent = `${typingUsers[0].username} et ${typingUsers[1].username} écrivent...`;
+                } else {
+                    typingText.textContent = `${typingUsers.length} personnes sont en train d'écrire...`;
+                }
+                typingIndicator.classList.add('show');
+            }
+        }
+        
+        // ===== READ STATUS =====
+        function markMessageAsRead(messageId) {
+            if (!currentUser) return;
+            const messageRef = messagesRef.doc(messageId);
+            messageRef.update({
+                [`readBy.${currentUser.uid}`]: true,
+                readCount: firebase.firestore.FieldValue.increment(1)
+            }).catch(() => {});
+        }
+        
         // ===== AUTH =====
         googleSignInBtn.addEventListener('click', async () => {
             if (!termsAccepted) {
                 disclaimerModal.classList.add('show');
                 return;
             }
-            
             try {
                 await auth.signInWithPopup(googleProvider);
                 console.log('✅ Connexion réussie');
@@ -1556,6 +1734,7 @@
             if (confirm('Déconnexion ?')) {
                 if (currentUser) {
                     await usersRef.doc(currentUser.uid).delete();
+                    await typingRef.doc(currentUser.uid).delete();
                 }
                 await auth.signOut();
             }
@@ -1564,6 +1743,7 @@
         window.addEventListener('beforeunload', () => {
             if (currentUser) {
                 usersRef.doc(currentUser.uid).delete();
+                typingRef.doc(currentUser.uid).delete();
             }
         });
         
@@ -1603,6 +1783,7 @@
                 
                 listenToMessages();
                 listenToUsers();
+                listenToTyping();
                 updateRateCounter(RATE_LIMIT.maxMessages);
                 
             } else {
@@ -1610,37 +1791,32 @@
                 currentUser = null;
                 selectedUser = null;
                 
-                if (heartbeatInterval) {
-                    clearInterval(heartbeatInterval);
-                    heartbeatInterval = null;
-                }
+                if (heartbeatInterval) clearInterval(heartbeatInterval);
+                if (typingTimeout) clearTimeout(typingTimeout);
                 
                 loginScreen.style.display = 'flex';
                 chatActive.classList.remove('show');
                 
                 if (messagesUnsubscribe) messagesUnsubscribe();
                 if (usersUnsubscribe) usersUnsubscribe();
+                if (typingUnsubscribe) typingUnsubscribe();
                 
                 chatMessages.innerHTML = '';
                 usersList.innerHTML = '';
                 selectedUserBanner.classList.remove('show');
+                typingIndicator.classList.remove('show');
                 messageTimestamps = [];
             }
         });
         
-        // ===== ÉCOUTER MESSAGES (UNIQUEMENT LES NOUVEAUX) =====
+        // ===== ÉCOUTER MESSAGES =====
         function listenToMessages() {
-            // Désabonner l'ancien écouteur si il existe
-            if (messagesUnsubscribe) {
-                messagesUnsubscribe();
-            }
+            if (messagesUnsubscribe) messagesUnsubscribe();
             
-            // Obtenir l'heure actuelle comme point de référence
             const connectionTime = new Date();
             
             console.log('🕐 Connexion à:', connectionTime.toLocaleTimeString());
             
-            // Écouter uniquement les NOUVEAUX messages
             messagesUnsubscribe = messagesRef
                 .where('timestamp', '>', connectionTime)
                 .orderBy('timestamp', 'asc')
@@ -1651,23 +1827,17 @@
                             const isOwn = currentUser && msg.userId === currentUser.uid;
                             addMessage(msg, change.doc.id, isOwn);
                             
-                            // Son uniquement si pas son propre message
                             if (!isOwn) {
-                                if (msg.type === 'gift') {
-                                    playGiftSound();
-                                } else if (msg.type !== 'system') {
-                                    playMessageSound();
-                                }
+                                if (msg.type === 'gift') playGiftSound();
+                                else if (msg.type !== 'system') playMessageSound();
                             }
                         }
                     });
                 });
             
-            // Ajouter un message de bienvenue pour le nouvel utilisateur
             addWelcomeMessage();
         }
         
-        // ===== MESSAGE DE BIENVENUE =====
         function addWelcomeMessage() {
             const welcomeDiv = document.createElement('div');
             welcomeDiv.className = 'message system';
@@ -1680,9 +1850,9 @@
             chatMessages.appendChild(welcomeDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
+        
         // ===== AFFICHER MESSAGE =====
         function addMessage(msg, msgId, isOwn = false) {
-            // Vérifier si le message existe déjà
             if (document.querySelector(`[data-msg-id="${msgId}"]`)) return;
             
             const messageDiv = document.createElement('div');
@@ -1708,6 +1878,11 @@
                     </div>
                 `;
             } else {
+                // Ajouter le statut de lecture
+                const readStatus = msg.readBy && msg.readBy[currentUser.uid] ? 
+                    `<div class="read-status ${isOwn ? 'own' : ''}">✓✓ ${Object.keys(msg.readBy).length} lu${Object.keys(msg.readBy).length > 1 ? 's' : ''}</div>` : 
+                    (isOwn ? '<div class="read-status own">✓</div>' : '');
+                
                 messageDiv.innerHTML = `
                     <div class="message-header">
                         <img src="${msg.photoURL}" class="message-avatar">
@@ -1715,6 +1890,7 @@
                         <span class="message-time">${formatTime(msg.timestamp)}</span>
                     </div>
                     <div class="message-content">${msg.content}</div>
+                    ${readStatus}
                     <div class="message-reactions" id="reactions-${msgId}"></div>
                     <button class="add-reaction-btn" onclick="showReactionPicker('${msgId}')">+</button>
                     <div class="reaction-picker" id="picker-${msgId}">
@@ -1724,7 +1900,11 @@
                     </div>
                 `;
                 
-                // Écouter les réactions
+                // Marquer comme lu si ce n'est pas notre message
+                if (!isOwn) {
+                    markMessageAsRead(msgId);
+                }
+                
                 listenToReactions(msgId);
             }
             
@@ -1770,20 +1950,15 @@
         window.showReactionPicker = (msgId) => {
             const picker = document.getElementById(`picker-${msgId}`);
             if (!picker) return;
-            
-            // Fermer les autres pickers
             document.querySelectorAll('.reaction-picker').forEach(p => {
                 if (p.id !== `picker-${msgId}`) p.classList.remove('show');
             });
-            
             picker.classList.toggle('show');
         };
         
         window.addReaction = async (msgId, emoji) => {
             if (!currentUser) return;
-            
             try {
-                // Vérifier si déjà réagi
                 const existing = await reactionsRef
                     .where('messageId', '==', msgId)
                     .where('userId', '==', currentUser.uid)
@@ -1791,10 +1966,8 @@
                     .get();
                 
                 if (!existing.empty) {
-                    // Supprimer la réaction
                     existing.docs[0].ref.delete();
                 } else {
-                    // Ajouter la réaction
                     await reactionsRef.add({
                         messageId: msgId,
                         userId: currentUser.uid,
@@ -1803,7 +1976,6 @@
                     });
                 }
                 
-                // Fermer le picker
                 const picker = document.getElementById(`picker-${msgId}`);
                 if (picker) picker.classList.remove('show');
                 
@@ -1818,7 +1990,6 @@
                 .where('online', '==', true)
                 .onSnapshot((snapshot) => {
                     const users = [];
-                    
                     snapshot.forEach((doc) => {
                         const user = doc.data();
                         if (user.uid !== currentUser.uid) {
@@ -1827,7 +1998,6 @@
                     });
                     
                     onlineCount.textContent = `${users.length + 1} connectés`;
-                    
                     usersList.innerHTML = '';
                     
                     users.forEach((user) => {
@@ -1880,7 +2050,6 @@
             let message = messageInput.value.trim();
             if (!message) return;
             
-            // Filtrer les mots interdits
             message = filterBadWords(message);
             
             try {
@@ -1889,7 +2058,9 @@
                     username: currentUser.displayName,
                     photoURL: currentUser.photoURL,
                     content: sanitizeHTML(message),
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    readBy: { [currentUser.uid]: true },
+                    readCount: 1
                 });
                 
                 messageTimestamps.push(Date.now());
@@ -1916,7 +2087,9 @@
                     photoURL: currentUser.photoURL,
                     giftIcon: gift.icon,
                     giftLabel: gift.label,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    readBy: { [currentUser.uid]: true },
+                    readCount: 1
                 };
                 
                 if (selectedUser) {
@@ -1944,7 +2117,7 @@
             }
         }
         
-        console.log('✅ Chat v1.014 prêt avec sons corrigés !');
+        console.log('✅ Chat v1.015 prêt avec responsive + typing + read status !');
     </script>
     
 </body>

@@ -38,6 +38,174 @@
         .picker {
             order: 2;
         }
+
+        /* ===== MESSAGES ===== */
+        .message {
+            margin-bottom: 15px;
+            animation: slideIn 0.3s ease-out;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            order: 1; /* Nom en premier */
+        }
+        
+        .message-content {
+            background: var(--white);
+            padding: 10px 14px;
+            border-radius: 12px;
+            max-width: 70%;
+            box-shadow: 0 2px 8px var(--shadow);
+            word-wrap: break-word;
+            line-height: 1.5;
+            border: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.95rem;
+            position: relative;
+            order: 2; /* Message en deuxième */
+            margin-bottom: 4px;
+        }
+        
+        .message-reactions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 4px;
+            order: 3; /* Réactions en troisième */
+        }
+        
+        .add-reaction-btn {
+            background: var(--light-bg);
+            border: 1px solid #e5e7eb;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            margin-top: 4px;
+            order: 4; /* Bouton réaction en quatrième */
+        }
+        
+        .read-status {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            order: 5; /* Statut lecture en dernier */
+        }
+        
+        /* Pour les messages cadeaux */
+        .message.gift .message-content {
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+            border: 2px solid #f9a8d4;
+            text-align: center;
+            padding: 15px;
+            max-width: 100%;
+            order: 2;
+        }
+        
+        /* Pour les messages système */
+        .message.system .message-content {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            color: #92400e;
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid #fcd34d;
+            max-width: 100%;
+            order: 2;
+        }
+        
+        /* Pour nos propres messages */
+        .message.own {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .message.own .message-content {
+            background: var(--gradient-1);
+            color: white;
+            border: none;
+            order: 2;
+        }
+        
+        .message.own .read-status {
+            align-self: flex-end;
+            color: rgba(255,255,255,0.7);
+            order: 5;
+        }
+        
+        /* Positionnement du sélecteur de réactions */
+        .reaction-picker {
+            position: absolute;
+            background: var(--white);
+            border: 2px solid #e5e7eb;
+            border-radius: 25px;
+            padding: 8px;
+            display: none;
+            gap: 5px;
+            box-shadow: 0 4px 15px var(--shadow);
+            z-index: 10;
+            bottom: 100%;
+            left: 0;
+            order: 6; /* En dernier dans l'ordre mais position absolue */
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .message-content {
+                max-width: 85%;
+                font-size: 0.9rem;
+                padding: 10px 12px;
+            }
+            
+            .message-reactions {
+                gap: 3px;
+            }
+            
+            .add-reaction-btn {
+                width: 24px;
+                height: 24px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .message-content {
+                max-width: 90%;
+                padding: 8px 10px;
+                font-size: 0.85rem;
+            }
+            
+            .message-reactions {
+                gap: 2px;
+            }
+            
+            .reaction-item {
+                padding: 3px 6px;
+                font-size: 0.8rem;
+            }
+            
+            .add-reaction-btn {
+                width: 22px;
+                height: 22px;
+                font-size: 0.8rem;
+            }
+        }
         /* ===== MODE SOMBRE ===== */
         body.dark-mode {
             --primary: #3a7a3d;

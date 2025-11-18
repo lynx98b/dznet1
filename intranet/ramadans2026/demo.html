@@ -6,7 +6,7 @@
     <title>Chat Ramadan - Communauté</title>
     
     <style>
-        /* v1.013 - COMPLET: Disclaimer + Rate Limit + Filtrage + Réactions + Mode Sombre + Sons */
+        /* v1.014 - CORRIGÉ: Problèmes de sons résolus */
         * {
             margin: 0;
             padding: 0;
@@ -1193,13 +1193,21 @@
         </div>
     </div>
     
+    <!-- Sons audio cachés -->
+    <audio id="messageSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==" type="audio/wav">
+    </audio>
+    <audio id="giftSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==" type="audio/wav">
+    </audio>
+    
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     
     <script>
-        console.log('🚀 Chat v1.013 - COMPLET avec toutes les fonctionnalités');
+        console.log('🚀 Chat v1.014 - CORRIGÉ: Problèmes de sons résolus');
         
         // ===== CONFIGURATION =====
         const firebaseConfig = {
@@ -1341,7 +1349,7 @@
             localStorage.setItem('ramadan-dark', darkMode);
         });
         
-        // ===== NOTIFICATIONS SONORES =====
+        // ===== NOTIFICATIONS SONORES CORRIGÉES =====
         let soundEnabled = localStorage.getItem('ramadan-sound') !== 'false';
         const soundBtn = document.getElementById('soundBtn');
         
@@ -1359,43 +1367,66 @@
             localStorage.setItem('ramadan-sound', soundEnabled);
         });
         
-        // Sons (fréquences Web Audio API)
+        // Sons corrigés - Version simplifiée et sécurisée
         function playMessageSound() {
             if (!soundEnabled) return;
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
             
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            
-            osc.frequency.value = 800;
-            gain.gain.value = 0.1;
-            
-            osc.start();
-            setTimeout(() => osc.stop(), 100);
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 800;
+                gainNode.gain.value = 0.1;
+                
+                oscillator.start();
+                setTimeout(() => {
+                    oscillator.stop();
+                    audioContext.close();
+                }, 100);
+            } catch (error) {
+                console.log('Audio non supporté:', error);
+                // Fallback silencieux
+            }
         }
         
         function playGiftSound() {
             if (!soundEnabled) return;
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
             
-            // Son plus festif pour les cadeaux
-            [600, 800, 1000].forEach((freq, i) => {
-                setTimeout(() => {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    
-                    osc.frequency.value = freq;
-                    gain.gain.value = 0.1;
-                    
-                    osc.start();
-                    setTimeout(() => osc.stop(), 80);
-                }, i * 100);
-            });
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Séquence de sons pour cadeaux
+                const playBeep = (frequency, time) => {
+                    setTimeout(() => {
+                        const oscillator = audioContext.createOscillator();
+                        const gainNode = audioContext.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioContext.destination);
+                        
+                        oscillator.frequency.value = frequency;
+                        gainNode.gain.value = 0.1;
+                        
+                        oscillator.start();
+                        setTimeout(() => {
+                            oscillator.stop();
+                        }, 80);
+                    }, time);
+                };
+                
+                playBeep(600, 0);
+                playBeep(800, 100);
+                playBeep(1000, 200);
+                
+                setTimeout(() => audioContext.close(), 500);
+            } catch (error) {
+                console.log('Audio non supporté:', error);
+                // Fallback silencieux
+            }
         }
         
         // ===== EMOJIS & CADEAUX =====
@@ -1886,7 +1917,7 @@
             }
         }
         
-        console.log('✅ Chat v1.013 prêt avec TOUTES les fonctionnalités !');
+        console.log('✅ Chat v1.014 prêt avec sons corrigés !');
     </script>
     
 </body>

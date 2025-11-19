@@ -1,9 +1,9 @@
 /**
  * Chat Ramadan - Gestion Messages & Réactions
- * Version: v2.005 - Messages, Réactions, Typing, Users
+ * Version: v2.006 - CORRIGÉ: Réactions fonctionnelles
  */
 
-console.log('💬 Chat v2.005 - Chargement...');
+console.log('💬 Chat v2.006 - Chargement (réactions corrigées)...');
 
 // ===== VARIABLES GLOBALES CHAT =====
 let messagesUnsubscribe = null;
@@ -56,7 +56,7 @@ window.cleanupChat = function() {
     
     chatMessages.innerHTML = '';
     usersList.innerHTML = '';
-    selectedUserBanner.classList.remove('show');
+    document.getElementById('selectedUserBanner').classList.remove('show');
     typingIndicator.classList.remove('show');
     window.messageTimestamps = [];
 };
@@ -120,7 +120,7 @@ function addMessage(msg, msgId, isOwn = false) {
         
         messageDiv.innerHTML = `
             <div class="message-header">
-                <img src="${msg.photoURL}" class="message-avatar">
+                <img src="${msg.photoURL}" class="message-avatar" alt="">
                 <span class="message-username">${msg.username}</span>
                 <span class="message-time">${formatTime(msg.timestamp)}</span>
             </div>
@@ -130,17 +130,15 @@ function addMessage(msg, msgId, isOwn = false) {
                     <div class="gift-text">${msg.username} offre ${msg.giftLabel}</div>
                     ${recipientText}
                 </div>
-                <div class="message-reactions" id="reactions-${msgId}"></div>
-                <button class="add-reaction-btn" data-msg-id="${msgId}">+</button>
-                <div class="reaction-picker" id="picker-${msgId}">
-                    ${REACTION_EMOJIS.map(e => 
-                        `<button class="reaction-picker-btn" data-msg-id="${msgId}" data-emoji="${e}">${e}</button>`
-                    ).join('')}
-                </div>
+                <div class="message-reactions" data-msg-id="${msgId}"></div>
+                <button class="add-reaction-btn" type="button" data-msg-id="${msgId}">+</button>
             </div>
         `;
         
+        // Créer le picker après insertion dans le DOM
+        createReactionPicker(messageDiv, msgId);
         listenToReactions(msgId);
+        
     } else {
         const readStatus = msg.readBy && Object.keys(msg.readBy).length > 1 ? 
             `<div class="read-status">✓✓ ${Object.keys(msg.readBy).length}</div>` : 
@@ -148,22 +146,20 @@ function addMessage(msg, msgId, isOwn = false) {
         
         messageDiv.innerHTML = `
             <div class="message-header">
-                <img src="${msg.photoURL}" class="message-avatar">
+                <img src="${msg.photoURL}" class="message-avatar" alt="">
                 <span class="message-username">${msg.username}</span>
                 <span class="message-time">${formatTime(msg.timestamp)}</span>
             </div>
             <div class="message-body">
                 <div class="message-content">${msg.content}</div>
-                <div class="message-reactions" id="reactions-${msgId}"></div>
-                <button class="add-reaction-btn" data-msg-id="${msgId}">+</button>
+                <div class="message-reactions" data-msg-id="${msgId}"></div>
+                <button class="add-reaction-btn" type="button" data-msg-id="${msgId}">+</button>
                 ${readStatus}
-                <div class="reaction-picker" id="picker-${msgId}">
-                    ${REACTION_EMOJIS.map(e => 
-                        `<button class="reaction-picker-btn" data-msg-id="${msgId}" data-emoji="${e}">${e}</button>`
-                    ).join('')}
-                </div>
             </div>
         `;
+        
+        // Créer le picker après insertion dans le DOM
+        createReactionPicker(messageDiv, msgId);
         
         if (!isOwn) {
             markMessageAsRead(msgId);
@@ -174,6 +170,33 @@ function addMessage(msg, msgId, isOwn = false) {
     
     chatMessages.appendChild(messageDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// ===== CRÉER REACTION PICKER =====
+function createReactionPicker(messageDiv, msgId) {
+    const pickerDiv = document.createElement('div');
+    pickerDiv.className = 'reaction-picker';
+    pickerDiv.id = `picker-${msgId}`;
+    
+    REACTION_EMOJIS.forEach(emoji => {
+        const btn = document.createElement('button');
+        btn.className = 'reaction-picker-btn';
+        btn.type = 'button';
+        btn.textContent = emoji;
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            addReaction(msgId, emoji);
+        };
+        pickerDiv.appendChild(btn);
+    });
+    
+    const messageBody = messageDiv.querySelector('.message-body');
+    if (messageBody) {
+        const addBtn = messageBody.querySelector('.add-reaction-btn');
+        if (addBtn) {
+            addBtn.insertAdjacentElement('afterend', pickerDiv);
+        }
+    }
 }
 
 // ===== MARQUER MESSAGE COMME LU =====
@@ -188,34 +211,44 @@ function markMessageAsRead(messageId) {
     }).catch(() => {});
 }
 
-// ===== RÉACTIONS =====
-document.addEventListener('click', (e) => {
-    // Bouton ajouter réaction
+// ===== EVENT DELEGATION POUR RÉACTIONS =====
+chatMessages.addEventListener('click', (e) => {
+    // Clic sur bouton "+"
     if (e.target.classList.contains('add-reaction-btn')) {
+        e.stopPropagation();
         const msgId = e.target.dataset.msgId;
         const picker = document.getElementById(`picker-${msgId}`);
-        if (!picker) return;
         
-        document.querySelectorAll('.reaction-picker').forEach(p => {
-            if (p.id !== `picker-${msgId}`) p.classList.remove('show');
-        });
-        
-        picker.classList.toggle('show');
-    }
-    
-    // Bouton sélectionner emoji
-    if (e.target.classList.contains('reaction-picker-btn')) {
-        const msgId = e.target.dataset.msgId;
-        const emoji = e.target.dataset.emoji;
-        addReaction(msgId, emoji);
+        if (picker) {
+            // Fermer tous les autres pickers
+            document.querySelectorAll('.reaction-picker').forEach(p => {
+                if (p.id !== `picker-${msgId}`) {
+                    p.classList.remove('show');
+                }
+            });
+            
+            // Toggle ce picker
+            picker.classList.toggle('show');
+            console.log('🎯 Picker toggled pour message:', msgId);
+        }
     }
 });
 
+// Fermer les pickers si clic ailleurs
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.add-reaction-btn') && !e.target.closest('.reaction-picker')) {
+        document.querySelectorAll('.reaction-picker').forEach(p => {
+            p.classList.remove('show');
+        });
+    }
+});
+
+// ===== ÉCOUTER RÉACTIONS =====
 function listenToReactions(msgId) {
     reactionsRef
         .where('messageId', '==', msgId)
         .onSnapshot((snapshot) => {
-            const reactionsContainer = document.getElementById(`reactions-${msgId}`);
+            const reactionsContainer = document.querySelector(`.message-reactions[data-msg-id="${msgId}"]`);
             if (!reactionsContainer) return;
             
             const reactions = {};
@@ -246,9 +279,15 @@ function listenToReactions(msgId) {
         });
 }
 
+// ===== AJOUTER/RETIRER RÉACTION =====
 async function addReaction(msgId, emoji) {
     const user = window.getCurrentUser();
-    if (!user) return;
+    if (!user) {
+        console.warn('⚠️ Pas d\'utilisateur connecté pour réagir');
+        return;
+    }
+    
+    console.log('👍 Ajout/retrait réaction:', emoji, 'sur message:', msgId);
     
     try {
         const existing = await reactionsRef
@@ -258,8 +297,12 @@ async function addReaction(msgId, emoji) {
             .get();
         
         if (!existing.empty) {
-            existing.docs[0].ref.delete();
+            // Retirer la réaction
+            console.log('❌ Retrait réaction existante');
+            await existing.docs[0].ref.delete();
         } else {
+            // Ajouter la réaction
+            console.log('✅ Ajout nouvelle réaction');
             await reactionsRef.add({
                 messageId: msgId,
                 userId: user.uid,
@@ -268,11 +311,13 @@ async function addReaction(msgId, emoji) {
             });
         }
         
+        // Fermer le picker
         const picker = document.getElementById(`picker-${msgId}`);
         if (picker) picker.classList.remove('show');
         
     } catch (error) {
         console.error('❌ Erreur réaction:', error);
+        alert('Erreur lors de l\'ajout de la réaction');
     }
 }
 
@@ -348,6 +393,8 @@ function updateTypingIndicator(typingUsers) {
 
 // ===== ÉCOUTER USERS EN LIGNE =====
 function listenToUsers() {
+    if (usersUnsubscribe) usersUnsubscribe();
+    
     usersUnsubscribe = usersRef
         .where('online', '==', true)
         .onSnapshot((snapshot) => {
@@ -374,7 +421,7 @@ function listenToUsers() {
                 
                 userDiv.innerHTML = `
                     <div style="position: relative;">
-                        <img src="${user.photoURL}" class="user-avatar">
+                        <img src="${user.photoURL}" class="user-avatar" alt="">
                         <div class="user-status"></div>
                     </div>
                     <div class="user-info">
@@ -384,6 +431,9 @@ function listenToUsers() {
                 `;
                 
                 userDiv.addEventListener('click', () => {
+                    const selectedUserBanner = document.getElementById('selectedUserBanner');
+                    const selectedUserName = document.getElementById('selectedUserName');
+                    
                     document.querySelectorAll('.user-item').forEach(item => {
                         item.classList.remove('selected');
                     });
@@ -411,7 +461,7 @@ messageForm.addEventListener('submit', async (e) => {
     const user = window.getCurrentUser();
     const profile = window.getUserProfile();
     
-    if (!user || !profile || window.isRateLimited) return;
+    if (!user || !profile) return;
     if (!window.checkRateLimit()) return;
     
     let message = messageInput.value.trim();
@@ -435,9 +485,11 @@ messageForm.addEventListener('submit', async (e) => {
         messageInput.focus();
         window.checkRateLimit();
         
+        console.log('✅ Message envoyé');
+        
     } catch (error) {
         console.error('❌ Erreur envoi message:', error);
-        alert('Erreur envoi message');
+        alert('Erreur envoi message: ' + error.message);
     }
 });
 
@@ -446,7 +498,7 @@ window.sendGift = async function(gift) {
     const user = window.getCurrentUser();
     const profile = window.getUserProfile();
     
-    if (!user || !profile || window.isRateLimited) return;
+    if (!user || !profile) return;
     if (!window.checkRateLimit()) return;
     
     try {
@@ -473,7 +525,10 @@ window.sendGift = async function(gift) {
         document.getElementById('giftPicker').classList.remove('show');
         window.checkRateLimit();
         
+        console.log('✅ Cadeau envoyé');
+        
         if (window.selectedUser) {
+            const selectedUserBanner = document.getElementById('selectedUserBanner');
             window.setSelectedUser(null);
             selectedUserBanner.classList.remove('show');
             document.querySelectorAll('.user-item').forEach(item => {
@@ -483,8 +538,8 @@ window.sendGift = async function(gift) {
         
     } catch (error) {
         console.error('❌ Erreur envoi cadeau:', error);
-        alert('Erreur envoi cadeau');
+        alert('Erreur envoi cadeau: ' + error.message);
     }
 };
 
-console.log('✅ Chat chargé - Messages, Réactions, Typing, Users OK');
+console.log('✅ Chat chargé - Messages, Réactions CORRIGÉES, Typing, Users OK');

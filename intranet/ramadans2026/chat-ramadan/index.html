@@ -1,279 +1,46 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Ramadan - Communauté</title>
+<meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
 
-    <!-- Content Security Policy FIX -->
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-    
-        script-src 
-            'self'
-            'unsafe-inline'
-            'unsafe-eval'
-            https://www.gstatic.com
-            https://www.gstatic.com/firebasejs/
-            https://firebase.googleapis.com
-            https://www.googleapis.com
-            https://identitytoolkit.googleapis.com
-            https://securetoken.googleapis.com
-            https://www.googletagmanager.com
-            https://www.google-analytics.com
-            https://dznet1.com
-            https://static.cloudflareinsights.com;
-    
-        connect-src
-            'self'
-            https://firestore.googleapis.com
-            https://firebase.googleapis.com
-            https://identitytoolkit.googleapis.com
-            https://securetoken.googleapis.com
-            https://www.googleapis.com
-            https://dznet1.com;
-    
-        img-src
-            'self'
-            data:
-            https://dznet1.com
-            https://raw.githubusercontent.com;
-    
-        style-src
-            'self'
-            'unsafe-inline'
-            https://fonts.googleapis.com;
-    
-        font-src
-            'self'
-            https://fonts.gstatic.com;
-    
-        frame-src
-            https://www.google.com
-            https://accounts.google.com;
-    
-        child-src
-            https://www.google.com
-            https://accounts.google.com;
-    
-        object-src 'none';
-    
-        base-uri 'self';
-    ">
+    script-src 
+        'self'
+        'unsafe-inline'
+        'unsafe-eval'
+        https://www.gstatic.com
+        https://www.gstatic.com/firebasejs/
+        https://firebase.googleapis.com
+        https://www.googleapis.com
+        https://identitytoolkit.googleapis.com
+        https://securetoken.googleapis.com
+        https://apis.google.com                <!-- FIX -->
+        https://accounts.google.com            <!-- FIX -->
+        https://www.googletagmanager.com
+        https://www.google-analytics.com
+        https://dznet1.com
+        https://static.cloudflareinsights.com;
 
-    <!-- CSS externe -->
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    
-    <!-- DISCLAIMER MODAL -->
-    <div class="modal-overlay" id="disclaimerModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2>📜 Règles du Chat Ramadan</h2>
-                <p>À lire attentivement avant de continuer</p>
-            </div>
-            
-            <div class="modal-body">
-                <h3>❌ Contenus Strictement Interdits</h3>
-                <ul class="rules-list">
-                    <li>Politique, propagande, débats partisans</li>
-                    <li>Extrémisme, terrorisme, incitation à la haine</li>
-                    <li>Armes, violence, menaces</li>
-                    <li>Drogue, substances illicites</li>
-                    <li>Discrimination (racisme, sexisme, homophobie, etc.)</li>
-                    <li>Contenu sexuel explicite, pornographie</li>
-                    <li>Harcèlement, insultes, bizutage</li>
-                    <li>Spam, publicité non autorisée</li>
-                    <li>Désinformation, fake news</li>
-                    <li>Usurpation d'identité</li>
-                    <li>Partage de données personnelles</li>
-                </ul>
-                
-                <div class="highlight-box">
-                    <strong>⏱️ Limite de messages:</strong> Maximum 6 messages par minute.
-                    <br><strong>🚫 Filtrage automatique:</strong> Insultes bloquées.
-                </div>
-                
-                <h3>✅ Comportements Attendus</h3>
-                <p><strong>Respect mutuel</strong> - Soyez bienveillants</p>
-                <p><strong>Entraide</strong> - Soutenez la communauté</p>
-                <p><strong>Signalement</strong> - Signalez les abus</p>
-            </div>
-            
-            <div class="modal-footer">
-                <label class="checkbox-container">
-                    <input type="checkbox" id="acceptCheckbox">
-                    <span>J'ai lu et j'accepte les règles</span>
-                </label>
-                <button class="accept-btn" id="acceptBtn" disabled>Accepter et Continuer</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- PROFILE MODAL -->
-    <div class="modal-overlay hidden" id="profileModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2>✨ Créer votre profil</h2>
-                <p>Pour commencer à discuter</p>
-            </div>
-            
-            <div class="modal-body">
-                <form id="profileForm">
-                    <div class="form-group">
-                        <label class="form-label">🎭 Pseudo (3-20 caractères)</label>
-                        <input type="text" id="pseudoInput" class="form-input" 
-                               placeholder="Ex: joliecoeur" minlength="3" maxlength="20" required>
-                        <div class="form-error" id="pseudoError">3-20 caractères requis</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">⚧️ Sexe</label>
-                        <div class="gender-selector">
-                            <label class="gender-option">
-                                <input type="radio" name="gender" value="F" required>
-                                <div class="gender-icon">👩</div>
-                                <div class="gender-label">Femme</div>
-                            </label>
-                            <label class="gender-option">
-                                <input type="radio" name="gender" value="M" required>
-                                <div class="gender-icon">👨</div>
-                                <div class="gender-label">Homme</div>
-                            </label>
-                        </div>
-                        <div class="form-error" id="genderError">Sélectionnez votre sexe</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">🎂 Âge (13-99 ans)</label>
-                        <input type="number" id="ageInput" class="form-input" 
-                               placeholder="Ex: 25" min="13" max="99" required>
-                        <div class="form-error" id="ageError">Âge entre 13-99 ans</div>
-                    </div>
-                    
-                    <div class="profile-preview">
-                        <div class="profile-preview-label">📋 Aperçu</div>
-                        <div class="profile-preview-display" id="profilePreview">Remplissez le formulaire</div>
-                    </div>
-                </form>
-            </div>
-            
-            <div class="modal-footer">
-                <button class="accept-btn" id="saveProfileBtn" type="button">Enregistrer</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- RATE LIMIT WARNING -->
-    <div class="rate-warning" id="rateWarning">
-        <span>⏱️</span>
-        <span>Trop de messages !</span>
-        <span class="rate-countdown" id="rateCountdown">15s</span>
-    </div>
-    
-    <!-- CONTAINER PRINCIPAL -->
-    <div class="chat-container">
-        
-        <!-- SIDEBAR USERS -->
-        <div class="users-sidebar">
-            <div class="sidebar-header">
-                <h2>🌙 En ligne</h2>
-                <div class="online-count" id="onlineCount">0 connectés</div>
-            </div>
-            <div class="users-list" id="usersList"></div>
-        </div>
-        
-        <!-- ZONE CHAT -->
-        <div class="chat-main">
-            
-            <!-- ÉCRAN CONNEXION -->
-            <div class="chat-login" id="loginScreen">
-                <div class="login-icon">🌙</div>
-                <h1>Chat Ramadan</h1>
-                <p>Communauté bienveillante</p>
-                <button class="google-signin-btn" id="googleSignInBtn">
-                    <span style="font-size: 1.5rem;">🔐</span>
-                    <span>Se connecter avec Google</span>
-                </button>
-            </div>
-            
-            <!-- CHAT ACTIF -->
-            <div class="chat-active" id="chatActive">
-                
-                <!-- HEADER -->
-                <div class="chat-header">
-                    <div class="header-left">
-                        <img src="" alt="" class="header-avatar" id="headerAvatar">
-                        <div class="header-info">
-                            <h3 id="headerName">Utilisateur</h3>
-                            <p>Chat Ramadan</p>
-                        </div>
-                    </div>
-                    <div class="header-actions">
-                        <button class="header-btn" id="soundBtn" title="Sons">🔔</button>
-                        <button class="header-btn" id="darkModeBtn" title="Mode sombre">🌙</button>
-                        <button class="logout-btn" id="logoutBtn">Déco</button>
-                    </div>
-                </div>
-                
-                <!-- MESSAGES -->
-                <div class="messages-container">
-                    <div class="chat-messages" id="chatMessages"></div>
-                    <div class="typing-indicator" id="typingIndicator">
-                        <div class="typing-dots">
-                            <span></span><span></span><span></span>
-                        </div>
-                        <span id="typingText"></span>
-                    </div>
-                </div>
-                
-                <!-- INPUT ZONE -->
-                <div class="chat-input-area">
-                    <div class="rate-counter" id="rateCounter">6/6 messages</div>
-                    
-                    <div class="selected-user-banner" id="selectedUserBanner">
-                        <span>🎁 Pour: <strong id="selectedUserName"></strong></span>
-                        <button class="clear-selection" id="clearSelection">✕</button>
-                    </div>
-                    
-                    <div class="actions-bar">
-                        <button class="action-btn" id="emojiBtn" title="Emojis">😊</button>
-                        <button class="action-btn" id="giftBtn" title="Cadeaux">🎁</button>
-                    </div>
-                    
-                    <div class="picker" id="emojiPicker">
-                        <h4>😊 Emojis</h4>
-                        <div class="emoji-grid" id="emojiGrid"></div>
-                    </div>
-                    
-                    <div class="picker" id="giftPicker">
-                        <h4>🎁 Cadeaux</h4>
-                        <div class="gift-grid" id="giftGrid"></div>
-                    </div>
-                    
-                    <form class="input-form" id="messageForm">
-                        <input type="text" class="message-input" id="messageInput" 
-                               placeholder="Votre message..." maxlength="200" autocomplete="off" required>
-                        <button type="submit" class="send-btn" id="sendBtn">
-                            <span>Envoyer</span> 📤
-                        </button>
-                    </form>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-    
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    
-    <!-- Scripts modulaires -->
-    <script src="js/config.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/chat.js"></script>
-</body>
-</html>
+    connect-src
+        'self'
+        https://firestore.googleapis.com
+        https://firebase.googleapis.com
+        https://identitytoolkit.googleapis.com
+        https://securetoken.googleapis.com
+        https://www.googleapis.com
+        https://dznet1.com;
+
+    img-src 'self' data: https://dznet1.com https://raw.githubusercontent.com;
+
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+
+    font-src 'self' https://fonts.gstatic.com;
+
+    frame-src
+        https://accounts.google.com           <!-- FIX -->
+        https://apis.google.com;              <!-- FIX -->
+
+    child-src
+        https://accounts.google.com           <!-- FIX -->
+        https://apis.google.com;              <!-- FIX -->
+
+    object-src 'none';
+    base-uri 'self';
+">

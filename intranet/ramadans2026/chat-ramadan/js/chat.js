@@ -6,7 +6,7 @@
 console.log('💬 Chat v2.007 - Chargement (réactions corrigées)...');
 
 // ====== FIRESTORE COLLECTIONS ======
-const reactionsRef = firebase.firestore().collection('reactions');   // 🔥 FIX AJOUTÉ
+   // 🔥 FIX AJOUTÉ
 const messagesRef = firebase.firestore().collection('messages');
 const usersRef = firebase.firestore().collection('users');
 const typingRef = firebase.firestore().collection('typing');

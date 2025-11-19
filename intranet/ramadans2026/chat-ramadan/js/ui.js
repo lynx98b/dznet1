@@ -1,9 +1,9 @@
 /**
  * ui.js
- * Version: v3.001 - UI, modals, dark mode, sons, pickers
+ * Version: v3.002 - Correction dark mode + amélioration logging boutons
  */
 
-console.log("🎨 UI v3.001 - Chargement...");
+console.log("🎨 UI v3.002 - Chargement...");
 
 document.addEventListener("DOMContentLoaded", () => {
   setupDisclaimer();
@@ -41,19 +41,26 @@ function setupDisclaimer() {
 
 function setupDarkMode() {
   const btn = document.getElementById("darkModeBtn");
-  if (!btn) return;
+  if (!btn) {
+    console.warn("⚠️ Bouton dark mode non trouvé");
+    return;
+  }
 
   const applyTheme = (theme) => {
-    document.documentElement.setAttribute("data-theme", theme);
+    if (theme === "dark") {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
     btn.textContent = theme === "dark" ? "☀️" : "🌙";
+    console.log("🌙 Mode " + (theme === "dark" ? "sombre" : "clair") + " activé");
   };
 
   const stored = localStorage.getItem("theme") || "dark";
   applyTheme(stored);
 
   btn.addEventListener("click", () => {
-    const current =
-      document.documentElement.getAttribute("data-theme") || "dark";
+    const current = document.body.classList.contains("dark-mode") ? "dark" : "light";
     const next = current === "dark" ? "light" : "dark";
     localStorage.setItem("theme", next);
     applyTheme(next);
@@ -66,7 +73,16 @@ function setupDarkMode() {
 
 function setupSoundToggle() {
   const btn = document.getElementById("soundBtn");
-  if (!btn) return;
+  if (!btn) {
+    console.warn("⚠️ Bouton son non trouvé");
+    return;
+  }
+
+  // Restaurer l'état depuis localStorage
+  const stored = localStorage.getItem("soundEnabled");
+  if (stored !== null) {
+    window.soundEnabled = stored === "true";
+  }
 
   const updateIcon = () => {
     btn.textContent = window.soundEnabled ? "🔔" : "🔕";
@@ -75,7 +91,9 @@ function setupSoundToggle() {
   updateIcon();
   btn.addEventListener("click", () => {
     window.soundEnabled = !window.soundEnabled;
+    localStorage.setItem("soundEnabled", window.soundEnabled);
     updateIcon();
+    console.log("🔔 Son " + (window.soundEnabled ? "activé" : "désactivé"));
   });
 }
 

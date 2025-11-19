@@ -1,0 +1,85 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 🔐 Fonction helper : vérifie qu'un utilisateur est connecté
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // 🔐 Fonction helper : vérifie que l'utilisateur modifie ses propres données
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    // 💬 COLLECTION MESSAGES
+    // - Lecture : tous les utilisateurs authentifiés
+    // - Création : utilisateurs authentifiés uniquement (avec validation)
+    // - Modification/Suppression : uniquement le créateur du message
+    match /messages/{messageId} {
+      allow read: if isAuthenticated();
+
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.text is string
+        && request.resource.data.text.size() >= 1
+        && request.resource.data.text.size() <= 200
+        && request.resource.data.timestamp is timestamp;
+
+      allow update, delete: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+    }
+
+    // 👥 COLLECTION USERS (PROFILS)
+    // - Lecture : tous les utilisateurs authentifiés peuvent voir tous les profils
+    // - Création/Modification : uniquement son propre profil
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+
+      allow create, update: if isOwner(userId)
+        && request.resource.data.pseudo is string
+        && request.resource.data.pseudo.size() >= 3
+        && request.resource.data.pseudo.size() <= 20
+        && request.resource.data.age is int
+        && request.resource.data.age >= 13
+        && request.resource.data.age <= 99
+        && request.resource.data.gender in ['M', 'F'];
+
+      allow delete: if isOwner(userId);
+    }
+
+    // ⌨️ COLLECTION TYPING (INDICATEURS DE FRAPPE)
+    // - Lecture/Écriture : tous les utilisateurs authentifiés
+    // - Les indicateurs de frappe sont temporaires et peu sensibles
+    match /typing/{typingId} {
+      allow read: if isAuthenticated();
+
+      allow create, update: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      allow delete: if isAuthenticated();
+    }
+
+    // 💝 COLLECTION REACTIONS
+    // - Lecture : tous les utilisateurs authentifiés
+    // - Création : utilisateurs authentifiés (avec validation)
+    // - Modification/Suppression : uniquement le créateur
+    match /reactions/{reactionId} {
+      allow read: if isAuthenticated();
+
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.messageId is string
+        && request.resource.data.reaction is string;
+
+      allow update, delete: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+    }
+
+    // 🚫 Bloquer tout accès non explicitement autorisé
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,9 +1,18 @@
 /**
  * Chat Ramadan - Gestion Messages & Réactions
- * Version: v2.006 - CORRIGÉ: Réactions fonctionnelles
+ * Version: v2.007 - RÉACTIONS FONCTIONNELLES
  */
 
-console.log('💬 Chat v2.006 - Chargement (réactions corrigées)...');
+console.log('💬 Chat v2.007 - Chargement (réactions corrigées)...');
+
+// ====== FIRESTORE COLLECTIONS ======
+const reactionsRef = firebase.firestore().collection('reactions');   // 🔥 FIX AJOUTÉ
+const messagesRef = firebase.firestore().collection('messages');
+const usersRef = firebase.firestore().collection('users');
+const typingRef = firebase.firestore().collection('typing');
+
+// ====== CONSTANTES ======
+const REACTION_EMOJIS = ["👍", "❤️", "😂", "😮", "😢", "🔥"]; // 🔥 FIX AJOUTÉ
 
 // ===== VARIABLES GLOBALES CHAT =====
 let messagesUnsubscribe = null;
@@ -20,6 +29,7 @@ const onlineCount = document.getElementById('onlineCount');
 const usersList = document.getElementById('usersList');
 const messageForm = document.getElementById('messageForm');
 const sendBtn = document.getElementById('sendBtn');
+const messageInput = document.getElementById('messageInput');
 
 // ===== INITIALISATION CHAT =====
 window.initializeChat = function() {
@@ -114,7 +124,8 @@ function addMessage(msg, msgId, isOwn = false) {
     
     if (msg.type === 'system') {
         messageDiv.innerHTML = `<div class="message-content">${msg.content}</div>`;
-    } else if (msg.type === 'gift') {
+    } 
+    else if (msg.type === 'gift') {
         const recipientText = msg.recipientName ? 
             `<div class="gift-recipient">Pour ${msg.recipientName}</div>` : '';
         
@@ -134,12 +145,10 @@ function addMessage(msg, msgId, isOwn = false) {
                 <button class="add-reaction-btn" type="button" data-msg-id="${msgId}">+</button>
             </div>
         `;
-        
-        // Créer le picker après insertion dans le DOM
         createReactionPicker(messageDiv, msgId);
         listenToReactions(msgId);
-        
-    } else {
+    } 
+    else {
         const readStatus = msg.readBy && Object.keys(msg.readBy).length > 1 ? 
             `<div class="read-status">✓✓ ${Object.keys(msg.readBy).length}</div>` : 
             (isOwn ? '<div class="read-status">✓</div>' : '');
@@ -157,14 +166,8 @@ function addMessage(msg, msgId, isOwn = false) {
                 ${readStatus}
             </div>
         `;
-        
-        // Créer le picker après insertion dans le DOM
         createReactionPicker(messageDiv, msgId);
-        
-        if (!isOwn) {
-            markMessageAsRead(msgId);
-        }
-        
+        if (!isOwn) markMessageAsRead(msgId);
         listenToReactions(msgId);
     }
     
@@ -190,58 +193,9 @@ function createReactionPicker(messageDiv, msgId) {
         pickerDiv.appendChild(btn);
     });
     
-    const messageBody = messageDiv.querySelector('.message-body');
-    if (messageBody) {
-        const addBtn = messageBody.querySelector('.add-reaction-btn');
-        if (addBtn) {
-            addBtn.insertAdjacentElement('afterend', pickerDiv);
-        }
-    }
+    const addBtn = messageDiv.querySelector('.add-reaction-btn');
+    addBtn.insertAdjacentElement('afterend', pickerDiv);
 }
-
-// ===== MARQUER MESSAGE COMME LU =====
-function markMessageAsRead(messageId) {
-    const user = window.getCurrentUser();
-    if (!user) return;
-    
-    const messageRef = messagesRef.doc(messageId);
-    messageRef.update({
-        [`readBy.${user.uid}`]: true,
-        readCount: firebase.firestore.FieldValue.increment(1)
-    }).catch(() => {});
-}
-
-// ===== EVENT DELEGATION POUR RÉACTIONS =====
-chatMessages.addEventListener('click', (e) => {
-    // Clic sur bouton "+"
-    if (e.target.classList.contains('add-reaction-btn')) {
-        e.stopPropagation();
-        const msgId = e.target.dataset.msgId;
-        const picker = document.getElementById(`picker-${msgId}`);
-        
-        if (picker) {
-            // Fermer tous les autres pickers
-            document.querySelectorAll('.reaction-picker').forEach(p => {
-                if (p.id !== `picker-${msgId}`) {
-                    p.classList.remove('show');
-                }
-            });
-            
-            // Toggle ce picker
-            picker.classList.toggle('show');
-            console.log('🎯 Picker toggled pour message:', msgId);
-        }
-    }
-});
-
-// Fermer les pickers si clic ailleurs
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.add-reaction-btn') && !e.target.closest('.reaction-picker')) {
-        document.querySelectorAll('.reaction-picker').forEach(p => {
-            p.classList.remove('show');
-        });
-    }
-});
 
 // ===== ÉCOUTER RÉACTIONS =====
 function listenToReactions(msgId) {
@@ -282,12 +236,7 @@ function listenToReactions(msgId) {
 // ===== AJOUTER/RETIRER RÉACTION =====
 async function addReaction(msgId, emoji) {
     const user = window.getCurrentUser();
-    if (!user) {
-        console.warn('⚠️ Pas d\'utilisateur connecté pour réagir');
-        return;
-    }
-    
-    console.log('👍 Ajout/retrait réaction:', emoji, 'sur message:', msgId);
+    if (!user) return;
     
     try {
         const existing = await reactionsRef
@@ -297,12 +246,8 @@ async function addReaction(msgId, emoji) {
             .get();
         
         if (!existing.empty) {
-            // Retirer la réaction
-            console.log('❌ Retrait réaction existante');
             await existing.docs[0].ref.delete();
         } else {
-            // Ajouter la réaction
-            console.log('✅ Ajout nouvelle réaction');
             await reactionsRef.add({
                 messageId: msgId,
                 userId: user.uid,
@@ -310,16 +255,49 @@ async function addReaction(msgId, emoji) {
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
         }
-        
-        // Fermer le picker
+
         const picker = document.getElementById(`picker-${msgId}`);
         if (picker) picker.classList.remove('show');
         
     } catch (error) {
         console.error('❌ Erreur réaction:', error);
-        alert('Erreur lors de l\'ajout de la réaction');
+        alert("Erreur lors de l'ajout de la réaction");
     }
 }
+
+// ===== MARQUER MESSAGE COMME LU =====
+function markMessageAsRead(messageId) {
+    const user = window.getCurrentUser();
+    if (!user) return;
+    
+    messagesRef.doc(messageId).update({
+        [`readBy.${user.uid}`]: true,
+        readCount: firebase.firestore.FieldValue.increment(1)
+    }).catch(() => {});
+}
+
+// ===== EVENT DELEGATION POUR PICKERS =====
+chatMessages.addEventListener('click', (e) => {
+    if (e.target.classList.contains('add-reaction-btn')) {
+        e.stopPropagation();
+        const msgId = e.target.dataset.msgId;
+        const picker = document.getElementById(`picker-${msgId}`);
+        
+        if (picker) {
+            document.querySelectorAll('.reaction-picker').forEach(p => {
+                if (p.id !== `picker-${msgId}`) p.classList.remove('show');
+            });
+            picker.classList.toggle('show');
+        }
+    }
+});
+
+// ===== FERMETURE PICKER SI CLIC AILLEURS =====
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.add-reaction-btn') && !e.target.closest('.reaction-picker')) {
+        document.querySelectorAll('.reaction-picker').forEach(p => p.classList.remove('show'));
+    }
+});
 
 // ===== TYPING INDICATORS =====
 messageInput.addEventListener('input', () => {
@@ -329,9 +307,7 @@ messageInput.addEventListener('input', () => {
     
     setUserTyping(true);
     clearTimeout(typingTimeout);
-    typingTimeout = setTimeout(() => {
-        setUserTyping(false);
-    }, 1000);
+    typingTimeout = setTimeout(() => setUserTyping(false), 1000);
 });
 
 async function setUserTyping(isTyping) {
@@ -385,7 +361,7 @@ function updateTypingIndicator(typingUsers) {
         } else if (typingUsers.length === 2) {
             typingText.textContent = `${typingUsers[0].username} et ${typingUsers[1].username} écrivent...`;
         } else {
-            typingText.textContent = `${typingUsers.length} personnes sont en train d'écrire...`;
+            typingText.textContent = `${typingUsers.length} personnes écrivent...`;
         }
         typingIndicator.classList.add('show');
     }
@@ -542,4 +518,4 @@ window.sendGift = async function(gift) {
     }
 };
 
-console.log('✅ Chat chargé - Messages, Réactions CORRIGÉES, Typing, Users OK');
+console.log('✅ Chat chargé - Réactions OK, Typing OK, Users OK');

@@ -1,14 +1,15 @@
 /**
  * auth.js
- * Version: v3.002 - Fix complet Firestore + pseudo obligatoire
+ * Version: v3.003 - Ajout modification de profil
  */
 
-console.log("🔐 Auth v3.002 - Chargement...");
+console.log("🔐 Auth v3.003 - Chargement...");
 
 const loginScreen    = document.getElementById("loginScreen");
 const chatActive     = document.getElementById("chatActive");
 const googleBtn      = document.getElementById("googleSignInBtn");
 const logoutBtn      = document.getElementById("logoutBtn");
+const editProfileBtn = document.getElementById("editProfileBtn");
 const profileModal   = document.getElementById("profileModal");
 const saveProfileBtn = document.getElementById("saveProfileBtn");
 
@@ -46,6 +47,32 @@ if (logoutBtn) {
   });
 }
 
+if (editProfileBtn) {
+  editProfileBtn.addEventListener("click", () => {
+    const profile = window.getUserProfile();
+    if (!profile) return;
+
+    // Pré-remplir le formulaire avec les données actuelles
+    pseudoInput.value = profile.pseudo || profile.displayName || "";
+    ageInput.value = profile.age || "";
+
+    const genderRadio = document.querySelector(`input[name="gender"][value="${profile.gender}"]`);
+    if (genderRadio) {
+      genderRadio.checked = true;
+    }
+
+    // Changer le titre du modal pour l'édition
+    const modalTitle = document.getElementById("profileModalTitle");
+    const modalSubtitle = document.getElementById("profileModalSubtitle");
+    if (modalTitle) modalTitle.textContent = "✏️ Modifier votre profil";
+    if (modalSubtitle) modalSubtitle.textContent = "Mettez à jour vos informations";
+
+    // Afficher le modal en mode édition
+    showProfileModal(true);
+    console.log("✏️ Édition du profil...");
+  });
+}
+
 // ==============================
 // 📥 RECUP PROFIL
 // ==============================
@@ -77,6 +104,26 @@ async function createUserProfile(user, pseudo, gender, age) {
 }
 
 // ==============================
+// 🔄 MISE À JOUR PROFIL
+// ==============================
+
+async function updateUserProfile(user, pseudo, gender, age) {
+
+  const profileData = {
+    pseudo: pseudo,
+    displayName: pseudo,
+    gender: gender,
+    age: age,
+    photoURL: user.photoURL || "",
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  await window.usersRef.doc(user.uid).update(profileData);
+  console.log("✅ Profil mis à jour dans Firestore");
+  return profileData;
+}
+
+// ==============================
 // UI
 // ==============================
 
@@ -90,8 +137,18 @@ function showChatUI() {
   chatActive && (chatActive.style.display = "flex");
 }
 
-function showProfileModal() {
-  profileModal && profileModal.classList.remove("hidden");
+function showProfileModal(isEdit = false) {
+  if (!profileModal) return;
+
+  // Réinitialiser le titre si c'est une création
+  if (!isEdit) {
+    const modalTitle = document.getElementById("profileModalTitle");
+    const modalSubtitle = document.getElementById("profileModalSubtitle");
+    if (modalTitle) modalTitle.textContent = "✨ Créer votre profil";
+    if (modalSubtitle) modalSubtitle.textContent = "Pour commencer à discuter";
+  }
+
+  profileModal.classList.remove("hidden");
 }
 
 function hideProfileModal() {
@@ -180,29 +237,42 @@ if (saveProfileBtn) {
     if (!valid) return;
 
     try {
-      console.log("💾 Création profil:", pseudo, genderInput.value, age);
+      const existingProfile = window.getUserProfile();
+      const isUpdate = !!existingProfile;
 
-      const profile = await createUserProfile(
-        user,
-        pseudo,
-        genderInput.value,
-        age
-      );
+      if (isUpdate) {
+        console.log("💾 Mise à jour profil:", pseudo, genderInput.value, age);
+        const profile = await updateUserProfile(
+          user,
+          pseudo,
+          genderInput.value,
+          age
+        );
+        window.currentProfile = profile;
+        applyProfileToHeader(profile);
+        hideProfileModal();
+        console.log("✅ Profil mis à jour avec succès");
+      } else {
+        console.log("💾 Création profil:", pseudo, genderInput.value, age);
+        const profile = await createUserProfile(
+          user,
+          pseudo,
+          genderInput.value,
+          age
+        );
+        window.currentProfile = profile;
+        applyProfileToHeader(profile);
+        hideProfileModal();
+        showChatUI();
 
-      window.currentProfile = profile;
-
-      applyProfileToHeader(profile);
-      hideProfileModal();
-      showChatUI();
-
-      if (window.initializeChat) {
-        window.initializeChat();
+        if (window.initializeChat) {
+          window.initializeChat();
+        }
+        console.log("🎉 Interface chat activée");
       }
 
-      console.log("🎉 Interface chat activée");
-
     } catch (err) {
-      console.error("❌ Erreur création profil:", err);
+      console.error("❌ Erreur sauvegarde profil:", err);
       alert("Erreur enregistrement profil: " + err.message);
     }
   });
@@ -219,4 +289,4 @@ function applyProfileToHeader(profile) {
   }
 }
 
-console.log("✅ Auth v3.002 - Chargée avec correctifs Firestore");
+console.log("✅ Auth v3.003 - Chargée (Firestore + Modification profil)");

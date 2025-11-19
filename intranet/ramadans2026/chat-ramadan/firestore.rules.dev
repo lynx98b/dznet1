@@ -1,0 +1,67 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 🔐 Fonction helper : vérifie qu'un utilisateur est connecté
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // 🔐 Fonction helper : vérifie que l'utilisateur modifie ses propres données
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    // 💬 COLLECTION MESSAGES - MODE DEV SIMPLIFIÉ
+    // ✅ Authentification obligatoire (sécurité de base)
+    // ✅ Validation minimale (flexibilité pour tests)
+    match /messages/{messageId} {
+      allow read: if isAuthenticated();
+
+      // Création simplifiée : juste vérifier l'auth et userId
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      // Modification/Suppression : uniquement ses propres messages
+      allow update, delete: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+    }
+
+    // 👥 COLLECTION USERS (PROFILS) - MODE DEV SIMPLIFIÉ
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+
+      // Création/Modification simplifiée : juste vérifier que c'est son propre profil
+      allow create, update: if isOwner(userId);
+
+      allow delete: if isOwner(userId);
+    }
+
+    // ⌨️ COLLECTION TYPING - TOUJOURS SIMPLE
+    match /typing/{typingId} {
+      allow read: if isAuthenticated();
+
+      allow create, update: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      allow delete: if isAuthenticated();
+    }
+
+    // 💝 COLLECTION REACTIONS - MODE DEV SIMPLIFIÉ
+    match /reactions/{reactionId} {
+      allow read: if isAuthenticated();
+
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid;
+
+      allow update, delete: if isAuthenticated()
+        && resource.data.userId == request.auth.uid;
+    }
+
+    // 🚫 Bloquer tout accès non explicitement autorisé
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

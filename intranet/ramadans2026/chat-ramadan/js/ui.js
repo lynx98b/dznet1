@@ -1,11 +1,16 @@
 /**
  * ui.js
- * Version: v3.002 - Correction dark mode + amélioration logging boutons
+ * Version: v3.003 - Initialisation robuste des boutons UI
  */
 
-console.log("🎨 UI v3.002 - Chargement...");
+console.log("🎨 UI v3.003 - Chargement...");
+
+let uiInitialized = false;
 
 function initUI() {
+  if (uiInitialized) return;
+  uiInitialized = true;
+
   setupDisclaimer();
   setupDarkMode();
   setupSoundToggle();
@@ -15,10 +20,41 @@ function initUI() {
   console.log("✅ UI chargée - Disclaimer, Profil, Dark Mode, Sons OK");
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initUI);
-} else {
+function ensureUIReady(attempt = 1) {
+  const requiredIds = [
+    "darkModeBtn",
+    "soundBtn",
+    "editProfileBtn",
+    "emojiBtn",
+    "giftBtn",
+    "acceptBtn",
+    "acceptCheckbox",
+    "profileModal"
+  ];
+
+  const missing = requiredIds.filter((id) => !document.getElementById(id));
+
+  if (missing.length && attempt < 5) {
+    console.warn(
+      `⚠️ UI: éléments absents (${missing.join(", ")}), nouvelle tentative...`
+    );
+    setTimeout(() => ensureUIReady(attempt + 1), 150);
+    return;
+  }
+
+  if (missing.length) {
+    console.warn(
+      `⚠️ UI: initialisation forcée malgré éléments manquants (${missing.join(", ")})`
+    );
+  }
+
   initUI();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", () => ensureUIReady());
+} else {
+  ensureUIReady();
 }
 
 // ==============================

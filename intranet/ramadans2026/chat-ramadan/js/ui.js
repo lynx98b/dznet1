@@ -5,7 +5,7 @@
 
 console.log("🎨 UI v3.002 - Chargement...");
 
-document.addEventListener("DOMContentLoaded", () => {
+function initUI() {
   setupDisclaimer();
   setupDarkMode();
   setupSoundToggle();
@@ -13,7 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
   setupSelectedUserBanner();
   setupProfilePreview();
   console.log("✅ UI chargée - Disclaimer, Profil, Dark Mode, Sons OK");
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initUI);
+} else {
+  initUI();
+}
 
 // ==============================
 // 📜 DISCLAIMER

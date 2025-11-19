@@ -8,7 +8,7 @@
     <!-- Content Security Policy FIX -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
-
+    
         script-src 
             'self'
             'unsafe-inline'
@@ -17,42 +17,47 @@
             https://www.gstatic.com/firebasejs/
             https://firebase.googleapis.com
             https://www.googleapis.com
+            https://identitytoolkit.googleapis.com
+            https://securetoken.googleapis.com
             https://www.googletagmanager.com
             https://www.google-analytics.com
-            https://dznet1.com;
-
+            https://dznet1.com
+            https://static.cloudflareinsights.com;
+    
         connect-src
             'self'
             https://firestore.googleapis.com
             https://firebase.googleapis.com
+            https://identitytoolkit.googleapis.com
+            https://securetoken.googleapis.com
             https://www.googleapis.com
             https://dznet1.com;
-
+    
         img-src
             'self'
             data:
             https://dznet1.com
             https://raw.githubusercontent.com;
-
+    
         style-src
             'self'
             'unsafe-inline'
             https://fonts.googleapis.com;
-
+    
         font-src
             'self'
             https://fonts.gstatic.com;
-
+    
         frame-src
             https://www.google.com
             https://accounts.google.com;
-
+    
         child-src
             https://www.google.com
             https://accounts.google.com;
-
+    
         object-src 'none';
-
+    
         base-uri 'self';
     ">
 

@@ -1,246 +1,204 @@
 /**
- * Chat Ramadan - Authentification & Profil
- * Version: v2.004 - Google Auth + Profil utilisateur
+ * auth.js
+ * Version: v3.001 - Auth Google + profil persistant
  */
 
-console.log('🔐 Auth v2.004 - Chargement...');
+console.log("🔐 Auth v3.001 - Chargement...");
 
-// ===== VARIABLES GLOBALES AUTH =====
-let currentUser = null;
-let userProfile = null;
+const loginScreen    = document.getElementById("loginScreen");
+const chatActive     = document.getElementById("chatActive");
+const googleBtn      = document.getElementById("googleSignInBtn");
+const logoutBtn      = document.getElementById("logoutBtn");
+const profileModal   = document.getElementById("profileModal");
+const saveProfileBtn = document.getElementById("saveProfileBtn");
 
-// ===== ÉLÉMENTS DOM =====
-const loginScreen = document.getElementById('loginScreen');
-const chatActive = document.getElementById('chatActive');
-const googleSignInBtn = document.getElementById('googleSignInBtn');
-const logoutBtn = document.getElementById('logoutBtn');
-const headerName = document.getElementById('headerName');
-const headerAvatar = document.getElementById('headerAvatar');
+const headerAvatar = document.getElementById("headerAvatar");
+const headerName   = document.getElementById("headerName");
 
-// ===== CONNEXION GOOGLE =====
-googleSignInBtn.addEventListener('click', async () => {
-    if (!termsAccepted) {
-        disclaimerModal.classList.remove('hidden');
-        return;
-    }
-    
+const pseudoInput  = document.getElementById("pseudoInput");
+const ageInput     = document.getElementById("ageInput");
+
+// ==============================
+// 🔑 CONNEXION GOOGLE
+// ==============================
+
+if (googleBtn) {
+  googleBtn.addEventListener("click", async () => {
+    console.log("🔑 Tentative de connexion Google...");
+    const provider = new firebase.auth.GoogleAuthProvider();
     try {
-        console.log('🔑 Tentative de connexion Google...');
-        await auth.signInWithPopup(googleProvider);
-        console.log('✅ Connexion Google réussie');
-    } catch (error) {
-        console.error('❌ Erreur connexion:', error);
-        alert('Erreur de connexion: ' + error.message);
+      await window.auth.signInWithPopup(provider);
+    } catch (err) {
+      console.error("❌ Erreur connexion Google:", err);
+      alert("Erreur de connexion: " + err.message);
     }
-});
+  });
+}
 
-// ===== DÉCONNEXION =====
-logoutBtn.addEventListener('click', async () => {
-    if (!confirm('Déconnexion ?')) return;
-    
-    if (currentUser) {
-        try {
-            console.log('🚪 Déconnexion en cours...');
-            await Promise.all([
-                usersRef.doc(currentUser.uid).delete().catch(e => console.warn('User delete:', e)),
-                typingRef.doc(currentUser.uid).delete().catch(e => console.warn('Typing delete:', e))
-            ]);
-            console.log('✅ Nettoyage Firestore réussi');
-        } catch (error) {
-            console.warn('⚠️ Erreur nettoyage:', error.code);
-        }
-    }
-    
-    await auth.signOut();
-});
-
-// ===== NETTOYAGE AVANT FERMETURE =====
-window.addEventListener('beforeunload', async () => {
-    if (currentUser) {
-        try {
-            const batch = db.batch();
-            batch.delete(usersRef.doc(currentUser.uid));
-            batch.delete(typingRef.doc(currentUser.uid));
-            await batch.commit();
-        } catch (error) {
-            usersRef.doc(currentUser.uid).update({
-                online: false,
-                lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-            }).catch(() => {});
-        }
-    }
-});
-
-// ===== VALIDATION PROFIL =====
-saveProfileBtn.addEventListener('click', async () => {
-    const pseudo = pseudoInput.value.trim();
-    const gender = document.querySelector('input[name="gender"]:checked')?.value;
-    const age = parseInt(ageInput.value);
-    
-    // Réinitialiser les erreurs
-    document.querySelectorAll('.form-error').forEach(err => err.classList.remove('show'));
-    document.querySelectorAll('.form-input').forEach(input => input.classList.remove('error'));
-    
-    let hasError = false;
-    
-    // Validation pseudo
-    if (!pseudo || pseudo.length < 3 || pseudo.length > 20) {
-        document.getElementById('pseudoError').classList.add('show');
-        pseudoInput.classList.add('error');
-        hasError = true;
-    }
-    
-    // Validation sexe
-    if (!gender) {
-        document.getElementById('genderError').classList.add('show');
-        hasError = true;
-    }
-    
-    // Validation âge
-    if (!age || age < 13 || age > 99) {
-        document.getElementById('ageError').classList.add('show');
-        ageInput.classList.add('error');
-        hasError = true;
-    }
-    
-    if (hasError) return;
-    
-    // Filtrer le pseudo
-    const filteredPseudo = filterBadWords(pseudo);
-    
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
     try {
-        saveProfileBtn.disabled = true;
-        saveProfileBtn.textContent = 'Enregistrement...';
-        
-        console.log('💾 Création profil:', filteredPseudo, gender, age);
-        
-        // Créer le profil
-        userProfile = {
-            pseudo: filteredPseudo,
-            gender: gender,
-            age: age,
-            displayName: `${filteredPseudo} / ${gender} / ${age} ans`
-        };
-        
-        // Sauvegarder dans Firestore
-        await usersRef.doc(currentUser.uid).set({
-            uid: currentUser.uid,
-            pseudo: filteredPseudo,
-            gender: gender,
-            age: age,
-            displayName: userProfile.displayName,
-            photoURL: currentUser.photoURL,
-            online: true,
-            lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        
-        console.log('✅ Profil sauvegardé dans Firestore');
-        
-        // Message système
-        await messagesRef.add({
-            type: 'system',
-            content: `${userProfile.displayName} a rejoint le chat 🌙`,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            userId: currentUser.uid
-        });
-        
-        // Fermer le modal profil
-        window.hideProfileModal();
-        
-        // Afficher le chat
-        loginScreen.style.display = 'none';
-        chatActive.classList.add('show');
-        headerName.textContent = userProfile.displayName;
-        
-        console.log('🎉 Interface chat activée');
-        
-        // Initialiser le chat (sera géré par chat.js au Bloc #5)
-        if (window.initializeChat) {
-            window.initializeChat();
-        }
-        
-    } catch (error) {
-        console.error('❌ Erreur sauvegarde profil:', error);
-        alert('Erreur lors de la sauvegarde du profil: ' + error.message);
-        saveProfileBtn.disabled = false;
-        saveProfileBtn.textContent = 'Enregistrer';
+      await window.auth.signOut();
+      console.log("🚪 Déconnexion");
+    } catch (err) {
+      console.error("❌ Erreur déconnexion:", err);
     }
-});
+  });
+}
 
-// ===== GESTION ÉTAT AUTHENTIFICATION =====
-auth.onAuthStateChanged(async (user) => {
-    if (user) {
-        console.log('👤 Utilisateur connecté:', user.displayName);
-        currentUser = user;
-        headerAvatar.src = user.photoURL;
-        
-        // Vérifier si profil existe
-        const userDoc = await usersRef.doc(user.uid).get();
-        
-        if (userDoc.exists) {
-            // ✅ Profil existe déjà
-            console.log('📋 Profil existant trouvé');
-            const data = userDoc.data();
-            userProfile = {
-                pseudo: data.pseudo,
-                gender: data.gender,
-                age: data.age,
-                displayName: data.displayName
-            };
-            
-            // Réactiver le profil
-            await usersRef.doc(user.uid).update({
-                online: true,
-                lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            
-            // Message système
-            await messagesRef.add({
-                type: 'system',
-                content: `${userProfile.displayName} a rejoint le chat 🌙`,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                userId: user.uid
-            });
-            
-            // Afficher le chat
-            loginScreen.style.display = 'none';
-            chatActive.classList.add('show');
-            headerName.textContent = userProfile.displayName;
-            
-            console.log('🎉 Reconnexion réussie');
-            
-            // Initialiser le chat
-            if (window.initializeChat) {
-                window.initializeChat();
-            }
-            
-        } else {
-            // ❌ Profil n'existe pas → Afficher modal de création
-            console.log('📝 Nouveau profil requis');
-            loginScreen.style.display = 'none';
-            window.showProfileModal();
-        }
-        
+// ==============================
+// 👤 GESTION PROFIL FIRESTORE
+// ==============================
+
+async function fetchUserProfile(user) {
+  const doc = await window.usersRef.doc(user.uid).get();
+  if (!doc.exists) return null;
+  return doc.data();
+}
+
+async function createUserProfile(user, pseudo, gender, age) {
+  const profileData = {
+    uid: user.uid,
+    displayName: pseudo,
+    gender: gender,
+    age: age,
+    photoURL: user.photoURL || "",
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  await window.usersRef.doc(user.uid).set(profileData, { merge: true });
+  console.log("✅ Profil sauvegardé dans Firestore");
+  return profileData;
+}
+
+function showLoginUI() {
+  loginScreen && (loginScreen.style.display = "flex");
+  chatActive && (chatActive.style.display = "none");
+}
+
+function showChatUI() {
+  loginScreen && (loginScreen.style.display = "none");
+  chatActive && (chatActive.style.display = "flex");
+}
+
+function showProfileModal() {
+  profileModal && profileModal.classList.remove("hidden");
+}
+
+function hideProfileModal() {
+  profileModal && profileModal.classList.add("hidden");
+}
+
+// ==============================
+// 🎯 FLUX COMPLET AUTH + PROFIL
+// ==============================
+
+window.auth.onAuthStateChanged(async (user) => {
+  if (!user) {
+    console.log("ℹ️ Aucun utilisateur connecté");
+    window.currentUser = null;
+    window.currentProfile = null;
+    showLoginUI();
+    return;
+  }
+
+  console.log("👤 Utilisateur connecté:", user.displayName);
+  window.currentUser = user;
+
+  try {
+    let profile = await fetchUserProfile(user);
+    if (!profile) {
+      console.log("📝 Nouveau profil requis");
+      showProfileModal();
+      showLoginUI(); // on ne montre pas le chat tant que le profil n'est pas créé
     } else {
-        console.log('❌ Utilisateur déconnecté');
-        currentUser = null;
-        userProfile = null;
-        
-        loginScreen.style.display = 'flex';
-        chatActive.classList.remove('show');
-        window.hideProfileModal();
-        
-        // Nettoyage (sera géré par chat.js)
-        if (window.cleanupChat) {
-            window.cleanupChat();
-        }
+      console.log("✅ Profil existant trouvé:", profile.displayName);
+      window.currentProfile = profile;
+      applyProfileToHeader(profile);
+      hideProfileModal();
+      showChatUI();
+      if (window.initializeChat) {
+        window.initializeChat();
+      }
     }
+  } catch (err) {
+    console.error("❌ Erreur chargement profil:", err);
+  }
 });
 
-// ===== EXPORTS =====
-window.currentUser = null;
-window.userProfile = null;
-window.getCurrentUser = () => currentUser;
-window.getUserProfile = () => userProfile;
+// ==============================
+// 💾 ENREGISTREMENT PROFIL (MODAL)
+// ==============================
 
-console.log('✅ Auth chargée - Connexion Google + Profil OK');
+if (saveProfileBtn) {
+  saveProfileBtn.addEventListener("click", async () => {
+    const user = window.getCurrentUser();
+    if (!user) return;
+
+    const pseudo = pseudoInput.value.trim();
+    const age = parseInt(ageInput.value.trim(), 10);
+    const genderInput = document.querySelector(
+      'input[name="gender"]:checked'
+    );
+
+    let valid = true;
+
+    if (!pseudo || pseudo.length < 3 || pseudo.length > 20) {
+      document.getElementById("pseudoError").classList.add("show");
+      valid = false;
+    } else {
+      document.getElementById("pseudoError").classList.remove("show");
+    }
+
+    if (!genderInput) {
+      document.getElementById("genderError").classList.add("show");
+      valid = false;
+    } else {
+      document.getElementById("genderError").classList.remove("show");
+    }
+
+    if (isNaN(age) || age < 13 || age > 99) {
+      document.getElementById("ageError").classList.add("show");
+      valid = false;
+    } else {
+      document.getElementById("ageError").classList.remove("show");
+    }
+
+    if (!valid) return;
+
+    try {
+      console.log(
+        "💾 Création profil:",
+        pseudo,
+        genderInput.value,
+        age
+      );
+      const profile = await createUserProfile(
+        user,
+        pseudo,
+        genderInput.value,
+        age
+      );
+      window.currentProfile = profile;
+      applyProfileToHeader(profile);
+      hideProfileModal();
+      showChatUI();
+      if (window.initializeChat) {
+        window.initializeChat();
+      }
+      console.log("🎉 Interface chat activée");
+    } catch (err) {
+      console.error("❌ Erreur création profil:", err);
+      alert("Erreur enregistrement profil: " + err.message);
+    }
+  });
+}
+
+function applyProfileToHeader(profile) {
+  if (headerName) headerName.textContent = profile.displayName || "Utilisateur";
+  if (headerAvatar && profile.photoURL) {
+    headerAvatar.src = profile.photoURL;
+  }
+}
+
+console.log("✅ Auth chargée - Connexion Google + Profil OK");

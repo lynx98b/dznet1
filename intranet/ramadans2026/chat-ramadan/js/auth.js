@@ -1,9 +1,9 @@
 /**
  * auth.js
- * Version: v3.001 - Auth Google + profil persistant
+ * Version: v3.002 - Fix complet Firestore + pseudo obligatoire
  */
 
-console.log("🔐 Auth v3.001 - Chargement...");
+console.log("🔐 Auth v3.002 - Chargement...");
 
 const loginScreen    = document.getElementById("loginScreen");
 const chatActive     = document.getElementById("chatActive");
@@ -47,7 +47,7 @@ if (logoutBtn) {
 }
 
 // ==============================
-// 👤 GESTION PROFIL FIRESTORE
+// 📥 RECUP PROFIL
 // ==============================
 
 async function fetchUserProfile(user) {
@@ -56,20 +56,29 @@ async function fetchUserProfile(user) {
   return doc.data();
 }
 
+// ==============================
+// 💾 CREATION PROFIL (CORRIGÉE)
+// ==============================
+
 async function createUserProfile(user, pseudo, gender, age) {
+
   const profileData = {
-    uid: user.uid,
-    displayName: pseudo,
+    pseudo: pseudo,                      // 🔥 obligatoire selon Firestore Rules
+    displayName: pseudo,                 // ok
     gender: gender,
     age: age,
     photoURL: user.photoURL || "",
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   };
 
-  await window.usersRef.doc(user.uid).set(profileData, { merge: true });
+  await window.usersRef.doc(user.uid).set(profileData);
   console.log("✅ Profil sauvegardé dans Firestore");
   return profileData;
 }
+
+// ==============================
+// UI
+// ==============================
 
 function showLoginUI() {
   loginScreen && (loginScreen.style.display = "flex");
@@ -90,7 +99,7 @@ function hideProfileModal() {
 }
 
 // ==============================
-// 🎯 FLUX COMPLET AUTH + PROFIL
+// 🔄 FLUX COMPLET AUTH
 // ==============================
 
 window.auth.onAuthStateChanged(async (user) => {
@@ -107,27 +116,33 @@ window.auth.onAuthStateChanged(async (user) => {
 
   try {
     let profile = await fetchUserProfile(user);
+
     if (!profile) {
       console.log("📝 Nouveau profil requis");
       showProfileModal();
-      showLoginUI(); // on ne montre pas le chat tant que le profil n'est pas créé
-    } else {
-      console.log("✅ Profil existant trouvé:", profile.displayName);
-      window.currentProfile = profile;
-      applyProfileToHeader(profile);
-      hideProfileModal();
-      showChatUI();
-      if (window.initializeChat) {
-        window.initializeChat();
-      }
+      showLoginUI();
+      return;
     }
+
+    // Profil OK
+    console.log("✅ Profil existant trouvé:", profile.pseudo);
+    window.currentProfile = profile;
+
+    applyProfileToHeader(profile);
+    hideProfileModal();
+    showChatUI();
+
+    if (window.initializeChat) {
+      window.initializeChat();
+    }
+
   } catch (err) {
     console.error("❌ Erreur chargement profil:", err);
   }
 });
 
 // ==============================
-// 💾 ENREGISTREMENT PROFIL (MODAL)
+// 💾 SAUVEGARDE DU PROFIL
 // ==============================
 
 if (saveProfileBtn) {
@@ -137,9 +152,7 @@ if (saveProfileBtn) {
 
     const pseudo = pseudoInput.value.trim();
     const age = parseInt(ageInput.value.trim(), 10);
-    const genderInput = document.querySelector(
-      'input[name="gender"]:checked'
-    );
+    const genderInput = document.querySelector('input[name="gender"]:checked');
 
     let valid = true;
 
@@ -167,26 +180,27 @@ if (saveProfileBtn) {
     if (!valid) return;
 
     try {
-      console.log(
-        "💾 Création profil:",
-        pseudo,
-        genderInput.value,
-        age
-      );
+      console.log("💾 Création profil:", pseudo, genderInput.value, age);
+
       const profile = await createUserProfile(
         user,
         pseudo,
         genderInput.value,
         age
       );
+
       window.currentProfile = profile;
+
       applyProfileToHeader(profile);
       hideProfileModal();
       showChatUI();
+
       if (window.initializeChat) {
         window.initializeChat();
       }
+
       console.log("🎉 Interface chat activée");
+
     } catch (err) {
       console.error("❌ Erreur création profil:", err);
       alert("Erreur enregistrement profil: " + err.message);
@@ -194,11 +208,15 @@ if (saveProfileBtn) {
   });
 }
 
+// ==============================
+// AVATAR + HEADER
+// ==============================
+
 function applyProfileToHeader(profile) {
-  if (headerName) headerName.textContent = profile.displayName || "Utilisateur";
+  if (headerName) headerName.textContent = profile.pseudo || "Utilisateur";
   if (headerAvatar && profile.photoURL) {
     headerAvatar.src = profile.photoURL;
   }
 }
 
-console.log("✅ Auth chargée - Connexion Google + Profil OK");
+console.log("✅ Auth v3.002 - Chargée avec correctifs Firestore");

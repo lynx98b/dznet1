@@ -63,20 +63,3 @@ const GIFTS = [
 const REACTION_EMOJIS = ['👍', '❤️', '😂', '🙏', '⭐'];
 
 console.log('✅ Config chargée - Firebase initialisé');
-```
-
----
-
-## FICHIER 3 : Structure des dossiers
-
-Crée cette structure :
-```
-ton-dossier/
-├── index.html
-├── css/
-│   └── styles.css (vide pour l'instant)
-├── js/
-│   ├── config.js (fichier ci-dessus)
-│   ├── ui.js (vide pour l'instant)
-│   ├── auth.js (vide pour l'instant)
-│   └── chat.js (vide pour l'instant)

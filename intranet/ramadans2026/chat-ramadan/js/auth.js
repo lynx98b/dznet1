@@ -1,9 +1,9 @@
 /**
  * auth.js
- * Version: v3.003 - Ajout modification de profil
+ * Version: v3.004 - Amélioration logging bouton profil
  */
 
-console.log("🔐 Auth v3.003 - Chargement...");
+console.log("🔐 Auth v3.004 - Chargement...");
 
 const loginScreen    = document.getElementById("loginScreen");
 const chatActive     = document.getElementById("chatActive");
@@ -49,8 +49,12 @@ if (logoutBtn) {
 
 if (editProfileBtn) {
   editProfileBtn.addEventListener("click", () => {
+    console.log("✏️ Bouton modifier profil cliqué");
     const profile = window.getUserProfile();
-    if (!profile) return;
+    if (!profile) {
+      console.warn("⚠️ Aucun profil trouvé");
+      return;
+    }
 
     // Pré-remplir le formulaire avec les données actuelles
     pseudoInput.value = profile.pseudo || profile.displayName || "";
@@ -69,8 +73,10 @@ if (editProfileBtn) {
 
     // Afficher le modal en mode édition
     showProfileModal(true);
-    console.log("✏️ Édition du profil...");
+    console.log("✅ Modal de profil affiché");
   });
+} else {
+  console.warn("⚠️ Bouton modifier profil non trouvé");
 }
 
 // ==============================
@@ -289,4 +295,4 @@ function applyProfileToHeader(profile) {
   }
 }
 
-console.log("✅ Auth v3.003 - Chargée (Firestore + Modification profil)");
+console.log("✅ Auth v3.004 - Chargée (Firestore + Modification profil + Logging)");

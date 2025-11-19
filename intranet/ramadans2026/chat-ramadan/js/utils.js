@@ -1,11 +1,18 @@
 /**
  * utils.js
- * Version: v1.100 - Stub web-safe (pour éviter les erreurs chrome.*)
+ * Version: v1.101 - Stub web-safe (pour éviter les erreurs chrome.*)
  */
 
-if (typeof chrome === "undefined") {
-  console.log("utils.js: Exécution hors extension Chrome → aucune action.");
+const hasChrome = typeof chrome !== "undefined";
+const hasStorage =
+  hasChrome &&
+  chrome.storage &&
+  typeof chrome.storage.onChanged === "object" &&
+  typeof chrome.storage.onChanged.addListener === "function";
+
+if (!hasStorage) {
+  console.log("utils.js: API chrome.storage.onChanged indisponible → aucune action.");
 } else {
-  console.log("utils.js: Contexte extension Chrome.");
+  console.log("utils.js: Contexte extension Chrome (storage disponible).");
   // Ici tu peux remettre ton code spécifique extension si besoin
 }

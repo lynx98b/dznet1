@@ -6,7 +6,7 @@
     <title>Chat Ramadan - Communauté</title>
     
     <style>
-        /* v1.017 - CORRIGÉ: Alignement + Réactions + Disclaimer */
+        /* v1.018 - NOUVEAU: Système de profil (Pseudo + Sexe + Âge) */
         * {
             margin: 0;
             padding: 0;
@@ -44,7 +44,7 @@
             transition: background 0.3s ease;
         }
         
-        /* ===== DISCLAIMER MODAL ===== */
+        /* ===== MODALS COMMUNS ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -95,6 +95,7 @@
             font-size: 1.1rem;
         }
         
+        /* ===== DISCLAIMER ===== */
         .rules-list {
             list-style: none;
             padding: 0;
@@ -173,6 +174,113 @@
             box-shadow: 0 6px 20px rgba(44, 95, 45, 0.4);
         }
         
+        /* ===== PROFILE MODAL ===== */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: var(--white);
+            color: var(--text);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(44, 95, 45, 0.1);
+        }
+        
+        .form-input.error {
+            border-color: var(--accent);
+        }
+        
+        .form-error {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-error.show {
+            display: block;
+        }
+        
+        .gender-selector {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .gender-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+        
+        .gender-option:hover {
+            border-color: var(--primary);
+        }
+        
+        .gender-option.selected {
+            background: var(--gradient-1);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .gender-option input {
+            display: none;
+        }
+        
+        .gender-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .gender-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .profile-preview {
+            background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .profile-preview-label {
+            font-size: 0.8rem;
+            color: #00695c;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .profile-preview-display {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
         /* ===== RATE LIMIT WARNING ===== */
         .rate-warning {
             position: fixed;
@@ -217,7 +325,7 @@
         
         /* ===== SIDEBAR ===== */
         .users-sidebar {
-            width: 250px;
+            width: 280px;
             background: linear-gradient(180deg, var(--primary) 0%, var(--primary-light) 100%);
             display: flex;
             flex-direction: column;
@@ -318,8 +426,11 @@
         }
         
         .user-activity {
-            color: #4ade80;
-            font-size: 0.75rem;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.7rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         /* ===== ZONE CHAT PRINCIPALE ===== */
@@ -519,7 +630,6 @@
             border-radius: 4px;
         }
         
-        /* ✅ CORRECTION v1.017 : ALIGNEMENT PARFAIT */
         .message {
             margin-bottom: 15px;
             animation: slideIn 0.3s ease-out;
@@ -539,7 +649,6 @@
             }
         }
         
-        /* Ligne 1 : Avatar + Nom + Heure */
         .message-header {
             display: flex;
             align-items: center;
@@ -566,7 +675,6 @@
             margin-left: auto;
         }
         
-        /* Ligne 2 : Message + Réactions + Bouton + Statut - TOUT SUR LA MÊME LIGNE */
         .message-body {
             display: flex;
             align-items: center;
@@ -695,7 +803,6 @@
             flex-shrink: 0;
         }
         
-        /* Messages propres (own) */
         .message.own {
             align-items: flex-end;
         }
@@ -716,7 +823,6 @@
             margin-right: auto;
         }
         
-        /* Messages système */
         .message.system {
             align-items: center;
         }
@@ -732,7 +838,6 @@
             max-width: 80%;
         }
         
-        /* Messages cadeaux */
         .message.gift .message-content {
             background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
             border: 2px solid #f9a8d4;
@@ -1043,7 +1148,7 @@
             .user-item {
                 flex-direction: column;
                 text-align: center;
-                min-width: 70px;
+                min-width: 80px;
                 margin-right: 8px;
             }
             
@@ -1070,7 +1175,7 @@
 </head>
 <body>
     
-    <!-- ✅ DISCLAIMER MODAL (VISIBLE PAR DÉFAUT) -->
+    <!-- DISCLAIMER MODAL -->
     <div class="modal-overlay" id="disclaimerModal">
         <div class="modal">
             <div class="modal-header">
@@ -1115,993 +1220,35 @@
         </div>
     </div>
     
-    <!-- RATE LIMIT WARNING -->
-    <div class="rate-warning" id="rateWarning">
-        <span>⏱️</span>
-        <span>Trop de messages ! Patientez</span>
-        <span class="rate-countdown" id="rateCountdown">15s</span>
-    </div>
-    
-    <div class="chat-container">
-        <!-- SIDEBAR -->
-        <div class="users-sidebar">
-            <div class="sidebar-header">
-                <h2>🌙 En ligne</h2>
-                <div class="online-count" id="onlineCount">0 connectés</div>
-            </div>
-            <div class="users-list" id="usersList"></div>
-        </div>
-        
-        <!-- ZONE CHAT -->
-        <div class="chat-main">
-            <!-- Login -->
-            <div class="chat-login" id="loginScreen">
-                <div class="login-icon">🌙</div>
-                <h1>Chat Ramadan</h1>
-                <p>Communauté bienveillante</p>
-                <button class="google-signin-btn" id="googleSignInBtn">
-                    <span style="font-size: 1.5rem;">🔐</span>
-                    <span>Se connecter avec Google</span>
-                </button>
+    <!-- ✅ PROFILE MODAL -->
+    <div class="modal-overlay hidden" id="profileModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>✨ Créer votre profil</h2>
+                <p>Pour commencer à discuter</p>
             </div>
             
-            <!-- Chat -->
-            <div class="chat-active" id="chatActive">
-                <div class="chat-header">
-                    <div class="header-left">
-                        <img src="" alt="" class="header-avatar" id="headerAvatar">
-                        <div class="header-info">
-                            <h3 id="headerName">Utilisateur</h3>
-                            <p>Chat Ramadan</p>
-                        </div>
-                    </div>
-                    <div class="header-actions">
-                        <button class="header-btn" id="soundBtn" title="Sons">🔔</button>
-                        <button class="header-btn" id="darkModeBtn" title="Mode sombre">🌙</button>
-                        <button class="logout-btn" id="logoutBtn">Déco</button>
-                    </div>
-                </div>
-                
-                <div class="messages-container">
-                    <div class="chat-messages" id="chatMessages"></div>
-                    <div class="typing-indicator" id="typingIndicator">
-                        <div class="typing-dots">
-                            <span></span><span></span><span></span>
-                        </div>
-                        <span id="typingText"></span>
-                    </div>
-                </div>
-                
-                <div class="chat-input-area">
-                    <div class="rate-counter" id="rateCounter">6/6 messages</div>
-                    
-                    <div class="selected-user-banner" id="selectedUserBanner">
-                        <span>🎁 Pour: <strong id="selectedUserName"></strong></span>
-                        <button class="clear-selection" id="clearSelection">✕</button>
-                    </div>
-                    
-                    <div class="actions-bar">
-                        <button class="action-btn" id="emojiBtn" title="Emojis">😊</button>
-                        <button class="action-btn" id="giftBtn" title="Cadeaux">🎁</button>
-                    </div>
-                    
-                    <div class="picker" id="emojiPicker">
-                        <h4>😊 Emojis</h4>
-                        <div class="emoji-grid" id="emojiGrid"></div>
-                    </div>
-                    
-                    <div class="picker" id="giftPicker">
-                        <h4>🎁 Cadeaux</h4>
-                        <div class="gift-grid" id="giftGrid"></div>
-                    </div>
-                    
-                    <form class="input-form" id="messageForm">
+            <div class="modal-body">
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label class="form-label">🎭 Pseudo (3-20 caractères)</label>
                         <input 
                             type="text" 
-                            class="message-input" 
-                            id="messageInput" 
-                            placeholder="Votre message..."
-                            maxlength="200"
-                            autocomplete="off"
+                            id="pseudoInput" 
+                            class="form-input" 
+                            placeholder="Ex: joliecoeur"
+                            minlength="3"
+                            maxlength="20"
                             required
                         >
-                        <button type="submit" class="send-btn" id="sendBtn">
-                            <span>Envoyer</span> 📤
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    
-    <script>
-        console.log('🚀 Chat v1.017 - CORRIGÉ: Alignement + Réactions + Disclaimer');
-        
-        // ===== CONFIGURATION =====
-        const firebaseConfig = {
-            apiKey: "AIzaSyBoF6xTWr4dzgbWFwXavVC2mMshHCTK6fM",
-            authDomain: "ramadan-chat-auth.firebaseapp.com",
-            projectId: "ramadan-chat-auth",
-            storageBucket: "ramadan-chat-auth.firebasestorage.app",
-            messagingSenderId: "785976346844",
-            appId: "1:785976346844:web:62b890dbc32a32596f8c19"
-        };
-        
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const messagesRef = db.collection('messages');
-        const usersRef = db.collection('users');
-        const reactionsRef = db.collection('reactions');
-        const typingRef = db.collection('typingIndicators');
-        const googleProvider = new firebase.auth.GoogleAuthProvider();
-        
-        // ===== VARIABLES GLOBALES =====
-        let currentUser = null;
-        let selectedUser = null;
-        let messagesUnsubscribe = null;
-        let usersUnsubscribe = null;
-        let typingUnsubscribe = null;
-        let heartbeatInterval = null;
-        let typingTimeout = null;
-        
-        // ===== FILTRAGE DE MOTS INTERDITS =====
-        const forbiddenWords = [
-            'merde', 'putain', 'connard', 'salope', 'enculé', 'con', 'conne', 
-            'pute', 'chier', 'bordel', 'foutre', 'bite', 'couille', 'pétasse',
-            'enfoiré', 'débile', 'crétin', 'abruti', 'idiot', 'imbécile',
-            'pd', 'tapette', 'tarlouze', 'pédé', 'sale', 'nègre', 'bamboula',
-            'youpin', 'arabe', 'bougnoule', 'raton', 'chinetoque'
-        ];
-        
-        function filterBadWords(text) {
-            let filtered = text;
-            forbiddenWords.forEach(word => {
-                const regex = new RegExp(word, 'gi');
-                filtered = filtered.replace(regex, '***');
-            });
-            return filtered;
-        }
-        
-        // ===== RATE LIMITING =====
-        const RATE_LIMIT = {
-            maxMessages: 6,
-            timeWindow: 60000,
-            cooldownTime: 15000
-        };
-        
-        let messageTimestamps = [];
-        let isRateLimited = false;
-        
-        function checkRateLimit() {
-            const now = Date.now();
-            messageTimestamps = messageTimestamps.filter(t => now - t < RATE_LIMIT.timeWindow);
-            
-            const remaining = RATE_LIMIT.maxMessages - messageTimestamps.length;
-            updateRateCounter(remaining);
-            
-            if (messageTimestamps.length >= RATE_LIMIT.maxMessages) {
-                activateRateLimit();
-                return false;
-            }
-            return true;
-        }
-        
-        function updateRateCounter(remaining) {
-            const counter = document.getElementById('rateCounter');
-            counter.textContent = `${remaining}/${RATE_LIMIT.maxMessages} messages`;
-            counter.className = 'rate-counter';
-            if (remaining <= 1) counter.classList.add('danger');
-            else if (remaining <= 2) counter.classList.add('warning');
-        }
-        
-        function activateRateLimit() {
-            if (isRateLimited) return;
-            isRateLimited = true;
-            
-            const warning = document.getElementById('rateWarning');
-            const countdown = document.getElementById('rateCountdown');
-            const sendBtn = document.getElementById('sendBtn');
-            const messageInput = document.getElementById('messageInput');
-            
-            warning.classList.add('show');
-            sendBtn.disabled = true;
-            messageInput.disabled = true;
-            
-            let seconds = RATE_LIMIT.cooldownTime / 1000;
-            countdown.textContent = `${seconds}s`;
-            
-            const interval = setInterval(() => {
-                seconds--;
-                countdown.textContent = `${seconds}s`;
-                if (seconds <= 0) clearInterval(interval);
-            }, 1000);
-            
-            setTimeout(() => {
-                isRateLimited = false;
-                warning.classList.remove('show');
-                sendBtn.disabled = false;
-                messageInput.disabled = false;
-                messageTimestamps = [];
-                updateRateCounter(RATE_LIMIT.maxMessages);
-            }, RATE_LIMIT.cooldownTime);
-        }
-        
-        // ✅ CORRECTION v1.017 : DISCLAIMER VISIBLE
-        let termsAccepted = localStorage.getItem('ramadan-terms') === 'true';
-        
-        const disclaimerModal = document.getElementById('disclaimerModal');
-        const acceptCheckbox = document.getElementById('acceptCheckbox');
-        const acceptBtn = document.getElementById('acceptBtn');
-        
-        // Afficher le disclaimer si pas accepté
-        if (!termsAccepted) {
-            disclaimerModal.classList.remove('hidden');
-        } else {
-            disclaimerModal.classList.add('hidden');
-        }
-        
-        acceptCheckbox.addEventListener('change', () => {
-            acceptBtn.disabled = !acceptCheckbox.checked;
-        });
-        
-        acceptBtn.addEventListener('click', () => {
-            localStorage.setItem('ramadan-terms', 'true');
-            termsAccepted = true;
-            disclaimerModal.classList.add('hidden');
-        });
-        
-        // ===== MODE SOMBRE =====
-        let darkMode = localStorage.getItem('ramadan-dark') === 'true';
-        const darkModeBtn = document.getElementById('darkModeBtn');
-        
-        if (darkMode) {
-            document.body.classList.add('dark-mode');
-            darkModeBtn.textContent = '☀️';
-        }
-        
-        darkModeBtn.addEventListener('click', () => {
-            darkMode = !darkMode;
-            document.body.classList.toggle('dark-mode');
-            darkModeBtn.textContent = darkMode ? '☀️' : '🌙';
-            localStorage.setItem('ramadan-dark', darkMode);
-        });
-        
-        // ===== NOTIFICATIONS SONORES =====
-        let soundEnabled = localStorage.getItem('ramadan-sound') !== 'false';
-        const soundBtn = document.getElementById('soundBtn');
-        
-        if (!soundEnabled) {
-            soundBtn.classList.remove('active');
-            soundBtn.textContent = '🔕';
-        } else {
-            soundBtn.classList.add('active');
-        }
-        
-        soundBtn.addEventListener('click', () => {
-            soundEnabled = !soundEnabled;
-            soundBtn.classList.toggle('active');
-            soundBtn.textContent = soundEnabled ? '🔔' : '🔕';
-            localStorage.setItem('ramadan-sound', soundEnabled);
-        });
-        
-        function playMessageSound() {
-            if (!soundEnabled) return;
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                oscillator.frequency.value = 800;
-                gainNode.gain.value = 0.1;
-                oscillator.start();
-                setTimeout(() => {
-                    oscillator.stop();
-                    audioContext.close();
-                }, 100);
-            } catch (error) {
-                console.log('Audio non supporté');
-            }
-        }
-        
-        function playGiftSound() {
-            if (!soundEnabled) return;
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const playBeep = (frequency, time) => {
-                    setTimeout(() => {
-                        const oscillator = audioContext.createOscillator();
-                        const gainNode = audioContext.createGain();
-                        oscillator.connect(gainNode);
-                        gainNode.connect(audioContext.destination);
-                        oscillator.frequency.value = frequency;
-                        gainNode.gain.value = 0.1;
-                        oscillator.start();
-                        setTimeout(() => oscillator.stop(), 80);
-                    }, time);
-                };
-                playBeep(600, 0);
-                playBeep(800, 100);
-                playBeep(1000, 200);
-                setTimeout(() => audioContext.close(), 500);
-            } catch (error) {
-                console.log('Audio non supporté');
-            }
-        }
-        
-        // ===== EMOJIS & CADEAUX =====
-        const emojis = ['😊', '😂', '❤️', '🌙', '⭐', '🕌', '🤲', '📿', '🌟', '✨', 
-                       '🙏', '💚', '🌸', '🌺', '🎉', '🎊', '👏', '🤝', '💫', '☪️',
-                       '🕋', '📖', '🍽️', '🥘', '🍰', '☕', '🫖', '🌹', '💐', '🎁'];
-        
-        const gifts = [
-            { icon: '🎁', label: 'Cadeau' },
-            { icon: '🌙', label: 'Lune' },
-            { icon: '⭐', label: 'Étoile' },
-            { icon: '🕌', label: 'Mosquée' },
-            { icon: '💐', label: 'Fleurs' },
-            { icon: '🍰', label: 'Gâteau' },
-            { icon: '☕', label: 'Café' },
-            { icon: '📿', label: 'Tasbih' },
-            { icon: '💚', label: 'Cœur' }
-        ];
-        
-        const reactionEmojis = ['👍', '❤️', '😂', '🙏', '⭐'];
-        
-        // ===== ÉLÉMENTS DOM =====
-        const loginScreen = document.getElementById('loginScreen');
-        const chatActive = document.getElementById('chatActive');
-        const googleSignInBtn = document.getElementById('googleSignInBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const messageForm = document.getElementById('messageForm');
-        const messageInput = document.getElementById('messageInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const chatMessages = document.getElementById('chatMessages');
-        const typingIndicator = document.getElementById('typingIndicator');
-        const typingText = document.getElementById('typingText');
-        const headerName = document.getElementById('headerName');
-        const headerAvatar = document.getElementById('headerAvatar');
-        const onlineCount = document.getElementById('onlineCount');
-        const usersList = document.getElementById('usersList');
-        const emojiBtn = document.getElementById('emojiBtn');
-        const giftBtn = document.getElementById('giftBtn');
-        const emojiPicker = document.getElementById('emojiPicker');
-        const giftPicker = document.getElementById('giftPicker');
-        const emojiGrid = document.getElementById('emojiGrid');
-        const giftGrid = document.getElementById('giftGrid');
-        const selectedUserBanner = document.getElementById('selectedUserBanner');
-        const selectedUserName = document.getElementById('selectedUserName');
-        const clearSelection = document.getElementById('clearSelection');
-        
-        // ===== GÉNÉRER EMOJIS =====
-        emojis.forEach(emoji => {
-            const btn = document.createElement('button');
-            btn.className = 'emoji-btn';
-            btn.textContent = emoji;
-            btn.type = 'button';
-            btn.onclick = () => {
-                messageInput.value += emoji;
-                messageInput.focus();
-            };
-            emojiGrid.appendChild(btn);
-        });
-        
-        // ===== GÉNÉRER CADEAUX =====
-        gifts.forEach(gift => {
-            const btn = document.createElement('button');
-            btn.className = 'gift-btn';
-            btn.type = 'button';
-            btn.innerHTML = `
-                <div class="gift-btn-icon">${gift.icon}</div>
-                <div class="gift-btn-label">${gift.label}</div>
-            `;
-            btn.onclick = () => sendGift(gift);
-            giftGrid.appendChild(btn);
-        });
-        
-        // ===== TOGGLE PICKERS =====
-        emojiBtn.addEventListener('click', () => {
-            emojiPicker.classList.toggle('show');
-            giftPicker.classList.remove('show');
-        });
-        
-        giftBtn.addEventListener('click', () => {
-            giftPicker.classList.toggle('show');
-            emojiPicker.classList.remove('show');
-        });
-        
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.action-btn') && !e.target.closest('.picker')) {
-                emojiPicker.classList.remove('show');
-                giftPicker.classList.remove('show');
-            }
-            // Fermer reaction picker si clic en dehors
-            if (!e.target.closest('.add-reaction-btn') && !e.target.closest('.reaction-picker')) {
-                document.querySelectorAll('.reaction-picker').forEach(p => p.classList.remove('show'));
-            }
-        });
-        
-        clearSelection.addEventListener('click', () => {
-            selectedUser = null;
-            selectedUserBanner.classList.remove('show');
-            document.querySelectorAll('.user-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-        });
-        
-        // ===== UTILITAIRES =====
-        function sanitizeHTML(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-        
-        function formatTime(timestamp) {
-            if (!timestamp) return '';
-            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-            return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-        }
-        
-        // ===== TYPING INDICATORS =====
-        messageInput.addEventListener('input', () => {
-            if (!currentUser) return;
-            setUserTyping(true);
-            clearTimeout(typingTimeout);
-            typingTimeout = setTimeout(() => {
-                setUserTyping(false);
-            }, 1000);
-        });
-        
-        async function setUserTyping(isTyping) {
-            if (!currentUser) return;
-            try {
-                if (isTyping) {
-                    await typingRef.doc(currentUser.uid).set({
-                        userId: currentUser.uid,
-                        username: currentUser.displayName,
-                        isTyping: true,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                        channel: 'ramadan'
-                    });
-                } else {
-                    await typingRef.doc(currentUser.uid).delete();
-                }
-            } catch (error) {
-                console.error('Erreur typing indicator:', error);
-            }
-        }
-        
-        function listenToTyping() {
-            if (typingUnsubscribe) typingUnsubscribe();
-            
-            typingUnsubscribe = typingRef
-                .where('channel', '==', 'ramadan')
-                .onSnapshot((snapshot) => {
-                    const typingUsers = [];
-                    snapshot.forEach(doc => {
-                        const data = doc.data();
-                        if (data.userId !== currentUser.uid && data.isTyping) {
-                            typingUsers.push(data);
-                        }
-                    });
-                    
-                    updateTypingIndicator(typingUsers);
-                });
-        }
-        
-        function updateTypingIndicator(typingUsers) {
-            if (typingUsers.length === 0) {
-                typingIndicator.classList.remove('show');
-            } else {
-                if (typingUsers.length === 1) {
-                    typingText.textContent = `${typingUsers[0].username} est en train d'écrire...`;
-                } else if (typingUsers.length === 2) {
-                    typingText.textContent = `${typingUsers[0].username} et ${typingUsers[1].username} écrivent...`;
-                } else {
-                    typingText.textContent = `${typingUsers.length} personnes sont en train d'écrire...`;
-                }
-                typingIndicator.classList.add('show');
-            }
-        }
-        
-        // ===== READ STATUS =====
-        function markMessageAsRead(messageId) {
-            if (!currentUser) return;
-            const messageRef = messagesRef.doc(messageId);
-            messageRef.update({
-                [`readBy.${currentUser.uid}`]: true,
-                readCount: firebase.firestore.FieldValue.increment(1)
-            }).catch(() => {});
-        }
-        
-        // ===== AUTH =====
-        googleSignInBtn.addEventListener('click', async () => {
-            if (!termsAccepted) {
-                disclaimerModal.classList.remove('hidden');
-                return;
-            }
-            try {
-                await auth.signInWithPopup(googleProvider);
-                console.log('✅ Connexion réussie');
-            } catch (error) {
-                console.error('❌ Erreur:', error);
-                alert('Erreur: ' + error.message);
-            }
-        });
-        
-        logoutBtn.addEventListener('click', async () => {
-            if (!confirm('Déconnexion ?')) return;
-            
-            if (currentUser) {
-                try {
-                    await Promise.all([
-                        usersRef.doc(currentUser.uid).delete().catch(e => console.warn('User delete:', e)),
-                        typingRef.doc(currentUser.uid).delete().catch(e => console.warn('Typing delete:', e))
-                    ]);
-                    console.log('✅ Nettoyage docs réussi');
-                } catch (error) {
-                    console.warn('⚠️ Erreur nettoyage:', error.code);
-                }
-            }
-            
-            await auth.signOut();
-        });
-        
-        window.addEventListener('beforeunload', async () => {
-            if (currentUser) {
-                try {
-                    const batch = db.batch();
-                    batch.delete(usersRef.doc(currentUser.uid));
-                    batch.delete(typingRef.doc(currentUser.uid));
-                    await batch.commit();
-                } catch (error) {
-                    usersRef.doc(currentUser.uid).update({
-                        online: false,
-                        lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-                    }).catch(() => {});
-                }
-            }
-        });
-        
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                console.log('✅ User:', user.displayName);
-                currentUser = user;
-                
-                loginScreen.style.display = 'none';
-                chatActive.classList.add('show');
-                
-                headerName.textContent = user.displayName;
-                headerAvatar.src = user.photoURL;
-                
-                await usersRef.doc(user.uid).set({
-                    uid: user.uid,
-                    name: user.displayName,
-                    photoURL: user.photoURL,
-                    online: true,
-                    lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                heartbeatInterval = setInterval(() => {
-                    if (currentUser) {
-                        usersRef.doc(currentUser.uid).update({
-                            lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-                        }).catch(() => {});
-                    }
-                }, 30000);
-                
-                await messagesRef.add({
-                    type: 'system',
-                    content: `${user.displayName} a rejoint le chat 🌙`,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    userId: user.uid
-                });
-                
-                listenToMessages();
-                listenToUsers();
-                listenToTyping();
-                updateRateCounter(RATE_LIMIT.maxMessages);
-                
-            } else {
-                console.log('❌ Déconnecté');
-                currentUser = null;
-                selectedUser = null;
-                
-                if (heartbeatInterval) clearInterval(heartbeatInterval);
-                if (typingTimeout) clearTimeout(typingTimeout);
-                
-                loginScreen.style.display = 'flex';
-                chatActive.classList.remove('show');
-                
-                if (messagesUnsubscribe) messagesUnsubscribe();
-                if (usersUnsubscribe) usersUnsubscribe();
-                if (typingUnsubscribe) typingUnsubscribe();
-                
-                chatMessages.innerHTML = '';
-                usersList.innerHTML = '';
-                selectedUserBanner.classList.remove('show');
-                typingIndicator.classList.remove('show');
-                messageTimestamps = [];
-            }
-        });
-        
-        // ===== ÉCOUTER MESSAGES =====
-        function listenToMessages() {
-            if (messagesUnsubscribe) messagesUnsubscribe();
-            
-            const connectionTime = new Date();
-            
-            console.log('🕐 Connexion à:', connectionTime.toLocaleTimeString());
-            
-            messagesUnsubscribe = messagesRef
-                .where('timestamp', '>', connectionTime)
-                .orderBy('timestamp', 'asc')
-                .onSnapshot((snapshot) => {
-                    snapshot.docChanges().forEach((change) => {
-                        if (change.type === 'added') {
-                            const msg = change.doc.data();
-                            const isOwn = currentUser && msg.userId === currentUser.uid;
-                            addMessage(msg, change.doc.id, isOwn);
-                            
-                            if (!isOwn) {
-                                if (msg.type === 'gift') playGiftSound();
-                                else if (msg.type !== 'system') playMessageSound();
-                            }
-                        }
-                    });
-                });
-            
-            addWelcomeMessage();
-        }
-        
-        function addWelcomeMessage() {
-            const welcomeDiv = document.createElement('div');
-            welcomeDiv.className = 'message system';
-            welcomeDiv.innerHTML = `
-                <div class="message-content">
-                    🌙 Bienvenue dans le chat Ramadan !<br>
-                    <small>Vous voyez uniquement les messages à partir de maintenant.</small>
-                </div>
-            `;
-            chatMessages.appendChild(welcomeDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        
-        // ✅ CORRECTION v1.017 : AFFICHAGE MESSAGE ALIGNÉ
-        function addMessage(msg, msgId, isOwn = false) {
-            if (document.querySelector(`[data-msg-id="${msgId}"]`)) return;
-            
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${msg.type === 'system' ? 'system' : ''} ${msg.type === 'gift' ? 'gift' : ''} ${isOwn ? 'own' : ''}`;
-            messageDiv.dataset.msgId = msgId;
-            
-            if (msg.type === 'system') {
-                messageDiv.innerHTML = `<div class="message-content">${msg.content}</div>`;
-            } else if (msg.type === 'gift') {
-                const recipientText = msg.recipientName ? 
-                    `<div class="gift-recipient">Pour ${msg.recipientName}</div>` : '';
-                
-                messageDiv.innerHTML = `
-                    <div class="message-header">
-                        <img src="${msg.photoURL}" class="message-avatar">
-                        <span class="message-username">${msg.username}</span>
-                        <span class="message-time">${formatTime(msg.timestamp)}</span>
+                        <div class="form-error" id="pseudoError">Le pseudo doit contenir entre 3 et 20 caractères</div>
                     </div>
-                    <div class="message-body">
-                        <div class="message-content">
-                            <div class="gift-icon">${msg.giftIcon}</div>
-                            <div class="gift-text">${msg.username} offre ${msg.giftLabel}</div>
-                            ${recipientText}
-                        </div>
-                        <div class="message-reactions" id="reactions-${msgId}"></div>
-                        <button class="add-reaction-btn" data-msg-id="${msgId}">+</button>
-                        <div class="reaction-picker" id="picker-${msgId}">
-                            ${reactionEmojis.map(e => 
-                                `<button class="reaction-picker-btn" data-msg-id="${msgId}" data-emoji="${e}">${e}</button>`
-                            ).join('')}
-                        </div>
-                    </div>
-                `;
-                
-                listenToReactions(msgId);
-            } else {
-                const readStatus = msg.readBy && Object.keys(msg.readBy).length > 1 ? 
-                    `<div class="read-status">✓✓ ${Object.keys(msg.readBy).length}</div>` : 
-                    (isOwn ? '<div class="read-status">✓</div>' : '');
-                
-                messageDiv.innerHTML = `
-                    <div class="message-header">
-                        <img src="${msg.photoURL}" class="message-avatar">
-                        <span class="message-username">${msg.username}</span>
-                        <span class="message-time">${formatTime(msg.timestamp)}</span>
-                    </div>
-                    <div class="message-body">
-                        <div class="message-content">${msg.content}</div>
-                        <div class="message-reactions" id="reactions-${msgId}"></div>
-                        <button class="add-reaction-btn" data-msg-id="${msgId}">+</button>
-                        ${readStatus}
-                        <div class="reaction-picker" id="picker-${msgId}">
-                            ${reactionEmojis.map(e => 
-                                `<button class="reaction-picker-btn" data-msg-id="${msgId}" data-emoji="${e}">${e}</button>`
-                            ).join('')}
-                        </div>
-                    </div>
-                `;
-                
-                if (!isOwn) {
-                    markMessageAsRead(msgId);
-                }
-                
-                listenToReactions(msgId);
-            }
-            
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        
-        // ✅ CORRECTION v1.017 : RÉACTIONS AVEC EVENT DELEGATION
-        document.addEventListener('click', (e) => {
-            // Bouton ajouter réaction
-            if (e.target.classList.contains('add-reaction-btn')) {
-                const msgId = e.target.dataset.msgId;
-                const picker = document.getElementById(`picker-${msgId}`);
-                if (!picker) return;
-                
-                // Fermer les autres pickers
-                document.querySelectorAll('.reaction-picker').forEach(p => {
-                    if (p.id !== `picker-${msgId}`) p.classList.remove('show');
-                });
-                
-                picker.classList.toggle('show');
-            }
-            
-            // Bouton sélectionner emoji
-            if (e.target.classList.contains('reaction-picker-btn')) {
-                const msgId = e.target.dataset.msgId;
-                const emoji = e.target.dataset.emoji;
-                addReaction(msgId, emoji);
-            }
-        });
-        
-        // ===== RÉACTIONS =====
-        function listenToReactions(msgId) {
-            reactionsRef
-                .where('messageId', '==', msgId)
-                .onSnapshot((snapshot) => {
-                    const reactionsContainer = document.getElementById(`reactions-${msgId}`);
-                    if (!reactionsContainer) return;
                     
-                    const reactions = {};
-                    snapshot.forEach(doc => {
-                        const data = doc.data();
-                        if (!reactions[data.emoji]) {
-                            reactions[data.emoji] = { count: 0, users: [] };
-                        }
-                        reactions[data.emoji].count++;
-                        reactions[data.emoji].users.push(data.userId);
-                    });
-                    
-                    reactionsContainer.innerHTML = '';
-                    Object.entries(reactions).forEach(([emoji, data]) => {
-                        const div = document.createElement('div');
-                        div.className = 'reaction-item';
-                        if (currentUser && data.users.includes(currentUser.uid)) {
-                            div.classList.add('user-reacted');
-                        }
-                        div.innerHTML = `
-                            <span class="reaction-emoji">${emoji}</span>
-                            <span class="reaction-count">${data.count}</span>
-                        `;
-                        div.onclick = () => addReaction(msgId, emoji);
-                        reactionsContainer.appendChild(div);
-                    });
-                });
-        }
-        
-        async function addReaction(msgId, emoji) {
-            if (!currentUser) return;
-            try {
-                const existing = await reactionsRef
-                    .where('messageId', '==', msgId)
-                    .where('userId', '==', currentUser.uid)
-                    .where('emoji', '==', emoji)
-                    .get();
-                
-                if (!existing.empty) {
-                    existing.docs[0].ref.delete();
-                } else {
-                    await reactionsRef.add({
-                        messageId: msgId,
-                        userId: currentUser.uid,
-                        emoji: emoji,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                }
-                
-                const picker = document.getElementById(`picker-${msgId}`);
-                if (picker) picker.classList.remove('show');
-                
-            } catch (error) {
-                console.error('❌ Erreur réaction:', error);
-            }
-        }
-        
-        // ===== ÉCOUTER USERS =====
-        function listenToUsers() {
-            usersUnsubscribe = usersRef
-                .where('online', '==', true)
-                .onSnapshot((snapshot) => {
-                    const users = [];
-                    snapshot.forEach((doc) => {
-                        const user = doc.data();
-                        if (user.uid !== currentUser.uid) {
-                            users.push(user);
-                        }
-                    });
-                    
-                    onlineCount.textContent = `${users.length + 1} connectés`;
-                    usersList.innerHTML = '';
-                    
-                    users.forEach((user) => {
-                        const userDiv = document.createElement('div');
-                        userDiv.className = 'user-item';
-                        
-                        if (selectedUser && selectedUser.uid === user.uid) {
-                            userDiv.classList.add('selected');
-                        }
-                        
-                        userDiv.innerHTML = `
-                            <div style="position: relative;">
-                                <img src="${user.photoURL}" class="user-avatar">
-                                <div class="user-status"></div>
-                            </div>
-                            <div class="user-info">
-                                <div class="user-name">${user.name}</div>
-                                <div class="user-activity">● En ligne</div>
-                            </div>
-                        `;
-                        
-                        userDiv.addEventListener('click', () => {
-                            document.querySelectorAll('.user-item').forEach(item => {
-                                item.classList.remove('selected');
-                            });
-                            
-                            if (selectedUser && selectedUser.uid === user.uid) {
-                                selectedUser = null;
-                                selectedUserBanner.classList.remove('show');
-                            } else {
-                                selectedUser = user;
-                                selectedUserName.textContent = user.name;
-                                selectedUserBanner.classList.add('show');
-                                userDiv.classList.add('selected');
-                            }
-                        });
-                        
-                        usersList.appendChild(userDiv);
-                    });
-                });
-        }
-        
-        // ===== ENVOYER MESSAGE =====
-        messageForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            if (!currentUser || isRateLimited) return;
-            if (!checkRateLimit()) return;
-            
-            let message = messageInput.value.trim();
-            if (!message) return;
-            
-            message = filterBadWords(message);
-            
-            try {
-                await messagesRef.add({
-                    userId: currentUser.uid,
-                    username: currentUser.displayName,
-                    photoURL: currentUser.photoURL,
-                    content: sanitizeHTML(message),
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    readBy: { [currentUser.uid]: true },
-                    readCount: 1
-                });
-                
-                messageTimestamps.push(Date.now());
-                messageInput.value = '';
-                messageInput.focus();
-                checkRateLimit();
-                
-            } catch (error) {
-                console.error('❌ Erreur:', error);
-                alert('Erreur envoi');
-            }
-        });
-        
-        // ===== ENVOYER CADEAU =====
-        async function sendGift(gift) {
-            if (!currentUser || isRateLimited) return;
-            if (!checkRateLimit()) return;
-            
-            try {
-                const giftData = {
-                    type: 'gift',
-                    userId: currentUser.uid,
-                    username: currentUser.displayName,
-                    photoURL: currentUser.photoURL,
-                    giftIcon: gift.icon,
-                    giftLabel: gift.label,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    readBy: { [currentUser.uid]: true },
-                    readCount: 1
-                };
-                
-                if (selectedUser) {
-                    giftData.recipientUid = selectedUser.uid;
-                    giftData.recipientName = selectedUser.name;
-                }
-                
-                await messagesRef.add(giftData);
-                
-                messageTimestamps.push(Date.now());
-                giftPicker.classList.remove('show');
-                checkRateLimit();
-                
-                if (selectedUser) {
-                    selectedUser = null;
-                    selectedUserBanner.classList.remove('show');
-                    document.querySelectorAll('.user-item').forEach(item => {
-                        item.classList.remove('selected');
-                    });
-                }
-                
-            } catch (error) {
-                console.error('❌ Erreur:', error);
-                alert('Erreur envoi cadeau');
-            }
-        }
-        
-        console.log('✅ Chat v1.017 prêt - Alignement + Réactions + Disclaimer OK !');
-    </script>
-    
-</body>
-</html>
-```
-
----
-
-# SÉCURITÉ
-
-✔️ **v1.017 - Corrections** :
-- ✅ Alignement horizontal parfait (message + réactions + bouton sur même ligne)
-- ✅ Réactions fonctionnelles via event delegation
-- ✅ Disclaimer visible par défaut si pas accepté
-- ✅ CSS `flex-wrap: nowrap` pour éviter retour à la ligne
-
----
-
-# TESTS MANUELS
-
-**Test 1 — Alignement**
-```
-1. Envoyer message "test"
-2. Cliquer "+" → Ajouter ❤️
-RÉSULTAT : Message + réaction + bouton "+" alignés horizontalement
-```
-
-**Test 2 — Réactions**
-```
-1. Cliquer "+" sur un message
-2. Sélectionner 👍
-RÉSULTAT : Réaction apparaît ET reste sur la même ligne
-```
-
-**Test 3 — Disclaimer**
-```
-1. Vider localStorage : localStorage.clear()
-2. Recharger page
-RÉSULTAT : Modal disclaimer apparaît immédiatement
+                    <div class="form-group">
+                        <label class="form-label">⚧️ Sexe</label>
+                        <div class="gender-selector">
+                            <label class="gender-option">
+                                <input type="radio" name="gender" value="F" required>
+                                <div class="gender-icon">👩</div>
+                                <div class="gender-label">Femme</div>
+                            </label>

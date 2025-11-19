@@ -9,14 +9,14 @@ console.log("🔧 Config v3.001 - Chargement...");
 // ⚙️ CONFIG FIREBASE
 // ==============================
 
-// ⚠️ Remplace ces valeurs par celles de ta console Firebase
+// ⚙️ Configuration Firebase (valeurs issues de l'ancien projet v2)
 const firebaseConfig = {
-  apiKey: "TA_CLE_API",
-  authDomain: "TON_PROJET.firebaseapp.com",
-  projectId: "TON_PROJET",
-  storageBucket: "TON_PROJET.appspot.com",
-  messagingSenderId: "XXXXXXXXXXXX",
-  appId: "1:XXXXXXXXXXXX:web:XXXXXXXXXXXX"
+  apiKey: "AIzaSyBoF6xTWr4dzgbWFwXavVC2mMshHCTK6fM",
+  authDomain: "ramadan-chat-auth.firebaseapp.com",
+  projectId: "ramadan-chat-auth",
+  storageBucket: "ramadan-chat-auth.firebasestorage.app",
+  messagingSenderId: "785976346844",
+  appId: "1:785976346844:web:62b890dbc32a32596f8c19"
 };
 
 if (!firebase.apps.length) {

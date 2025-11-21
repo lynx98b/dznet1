@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎁 Accepter Tombola Ramadan 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #c1582b 0%, #050505 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+        h1 { color: #c1582b; margin-bottom: 20px; font-size: 2rem; }
+        p { color: #333; line-height: 1.8; margin-bottom: 16px; font-size: 1.05rem; }
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn:hover { background: #218838; transform: translateY(-2px); }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .status { margin-top: 20px; padding: 16px; border-radius: 12px; font-weight: 600; display: none; }
+        .success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
+        .error { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎁 Invitation Tombola Ramadan 2026</h1>
+        <p id="message">Un ami vous a invité à participer ensemble à la tombola quotidienne du Club Ramadan 2026 !</p>
+        <p>En acceptant, vous entrez tous les deux automatiquement dans le tirage au sort avec des chances doublées de gagner des prix exclusifs.</p>
+        <button class="btn" id="acceptBtn" onclick="acceptInvitation()">✅ Accepter et participer</button>
+        <div id="status"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, query, where, getDocs, addDoc, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBoF6xTWr4dzgbWFwXavVC2mMshHCTK6fM",
+            authDomain: "ramadan-chat-auth.firebaseapp.com",
+            projectId: "ramadan-chat-auth",
+            storageBucket: "ramadan-chat-auth.firebasestorage.app",
+            messagingSenderId: "785976346844",
+            appId: "1:785976346844:web:62b890dbc32a32596f8c19"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.acceptInvitation = async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            
+            if (!token) {
+                showStatus('error', '❌ Lien invalide. Utilisez le lien reçu par email.');
+                return;
+            }
+            
+            document.getElementById('acceptBtn').disabled = true;
+            document.getElementById('acceptBtn').textContent = '⏳ Traitement...';
+            
+            try {
+                const q = query(
+                    collection(db, "tombola_entries"), 
+                    where("referral_token", "==", token),
+                    where("status", "==", "pending")
+                );
+                const querySnapshot = await getDocs(q);
+                
+                if (querySnapshot.empty) {
+                    showStatus('error', '❌ Cette invitation a déjà été acceptée ou est expirée.');
+                    return;
+                }
+                
+                const entryDoc = querySnapshot.docs[0];
+                const entryData = entryDoc.data();
+                
+                await addDoc(collection(db, "tombola_confirmed"), {
+                    user_email: entryData.user_email,
+                    friend_email: entryData.friend_email,
+                    confirmed_at: serverTimestamp(),
+                    language: entryData.language,
+                    source: 'email_acceptance'
+                });
+                
+                await updateDoc(entryDoc.ref, {
+                    status: 'accepted',
+                    accepted_at: serverTimestamp()
+                });
+                
+                showStatus('success', '🎉 Félicitations ! Vous et votre ami participez maintenant à la tombola ! Bonne chance ! 🍀');
+            } catch (error) {
+                console.error("Erreur:", error);
+                showStatus('error', '❌ Une erreur est survenue. Veuillez réessayer.');
+            }
+        };
+
+        function showStatus(type, message) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            statusDiv.style.display = 'block';
+            document.getElementById('acceptBtn').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

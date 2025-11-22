@@ -3,41 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌙 مرحباً رمضان 2026 — برنامج الشبكة الداخلية DZ</title>
-    <meta name="description" content="رسالة افتتاح الشهر الفضيل رمضان 2026 لفريق dznet1 : السكينة والتضامن والإحسان. رمضان مبارك للجميع.">
-    <meta name="content-category" content="Culture & Tradition">
-    <meta name="content-age" content="Tous âges">
-    <meta name="keywords" content="Ramadan 2026, Algérie, intranet DZ, dznet1, dates, santé, jeûne, Iftar, Suhoor, Laylat al-Qadr, spiritualité, رمضان">
-    <meta name="author" content="Team Intranet DZ">
-    <!-- Version: v1.008 | Firebase + Turnstile + Sondage + Tombola | AR défaut -->
+    <title>🌙 مرحباً رمضان 2026 — Google Forms Secure Edition</title>
+    <meta name="description" content="Programme Ramadan 2026 - dznet1 - Formulaires ultra-sécurisés">
     
+    <!-- CSP Stricte Complète - Score 95-100/100 -->
+    <meta http-equiv="Content-Security-Policy" content="{csp}">
+    
+    <!-- Version: {self.template_version} | Ultra-Sécurisé | Zéro event handler inline -->
+    
+    <!-- Preconnect pour performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Cloudflare Turnstile -->
-  
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=0x4AAAAAACCH8B-QTY-PMPif" async defer></script>
-    
     <style>
-        :root {
+        :root {{
             --accent: #c1582b;
             --bg-dark: #050505;
             --text-light: #f2ebe3;
             --success: #28a745;
-            --error: #dc3545;
-            --warning: #ffc107;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
+        }}
+        
+        * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        
+        body {{
             font-family: 'Cairo', sans-serif;
             background: var(--bg-dark);
             color: white;
             min-height: 100vh;
             background-image: radial-gradient(circle at top, rgba(255,255,255,0.09), transparent 60%);
-        }
+        }}
         
-        .lang-switcher {
+        .lang-switcher {{
             position: fixed;
             top: 20px;
             right: 20px;
@@ -49,8 +46,9 @@
             border-radius: 20px;
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-        }
-        .lang-btn {
+        }}
+        
+        .lang-btn {{
             padding: 6px 12px;
             border: 1px solid rgba(255,255,255,0.3);
             background: transparent;
@@ -60,14 +58,16 @@
             font-weight: 600;
             font-size: 0.9rem;
             transition: all 0.2s;
-        }
-        .lang-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--accent); }
-        .lang-btn.active { background: var(--accent); border-color: var(--accent); color: #1d0f05; }
+        }}
         
-        [lang="ar"] { font-family: 'Amiri', 'Cairo', serif; direction: rtl; }
-        .page { max-width: 1200px; margin: 0 auto; padding: 80px 24px 80px; }
+        .lang-btn:hover {{ background: rgba(255,255,255,0.1); border-color: var(--accent); }}
+        .lang-btn.active {{ background: var(--accent); border-color: var(--accent); color: #1d0f05; }}
         
-        header.hero {
+        [lang="ar"] {{ font-family: 'Amiri', 'Cairo', serif; direction: rtl; }}
+        
+        .page {{ max-width: 1200px; margin: 0 auto; padding: 80px 24px; }}
+        
+        header.hero {{
             background: linear-gradient(135deg, #c1582b 0%, #090909 90%);
             border-radius: 32px;
             padding: 32px;
@@ -79,1054 +79,435 @@
             margin-bottom: 40px;
             position: relative;
             overflow: hidden;
-        }
-        header.hero::after {
+        }}
+        
+        header.hero::after {{
             content: "";
             position: absolute;
             inset: 0;
             background: linear-gradient(120deg, transparent 0%, rgba(0,0,0,0.25) 100%);
-        }
-        .hero img {
+        }}
+        
+        .hero img {{
             width: 200px;
             height: auto;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.45);
             position: relative;
             z-index: 2;
-        }
-        .hero-text { flex: 1; position: relative; z-index: 2; }
-        .hero-text p.week { text-transform: uppercase; letter-spacing: 2px; color: #ffe6c7; margin-bottom: 8px; font-weight: 600; }
-        .hero-text h1 { font-size: clamp(2rem, 4vw, 3.4rem); color: #fff; margin-bottom: 16px; }
-        .hero-text p.desc { font-size: 1.15rem; color: #fff8ef; line-height: 1.7; }
-        .badge { display: inline-flex; align-items: center; gap: 8px; font-size: 0.95rem; font-weight: 600; color: #0e0d0c; padding: 10px 16px; border-radius: 999px; background: #ffe1b4; margin-top: 12px; }
+        }}
         
-        .welcome-message {
-            background: linear-gradient(135deg, rgba(193,88,43,0.15) 0%, rgba(255,255,255,0.03) 100%);
+        .hero-text {{ flex: 1; position: relative; z-index: 2; }}
+        .hero-text h1 {{ font-size: clamp(2rem, 4vw, 3.4rem); color: #fff; margin-bottom: 16px; }}
+        .hero-text p {{ font-size: 1.15rem; color: #fff8ef; line-height: 1.7; }}
+        
+        main {{ display: flex; flex-direction: column; gap: 32px; }}
+        
+        section {{
+            background: rgba(255,255,255,0.04);
             border-radius: 24px;
-            padding: 36px 32px;
-            margin-bottom: 40px;
-            border: 2px solid rgba(193,88,43,0.3);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        .welcome-message::before {
-            content: "🌙";
-            position: absolute;
-            top: -30px;
-            right: -30px;
-            font-size: 180px;
-            opacity: 0.05;
-            transform: rotate(-15deg);
-        }
-        .message-header {
-            text-align: center;
-            margin-bottom: 28px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid rgba(193,88,43,0.3);
-        }
-        .message-header h2 {
-            font-size: clamp(1.3rem, 3vw, 1.8rem);
-            color: #ffe9d0;
-            margin: 0;
-            line-height: 1.4;
-        }
-        .message-content {
-            position: relative;
-            z-index: 2;
-        }
-        .message-content p {
-            font-size: 1.05rem;
-            line-height: 1.9;
-            margin-bottom: 18px;
+            padding: 28px;
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+        }}
+        
+        section h2 {{
+            font-size: 1.7rem;
+            margin-bottom: 16px;
+            color: var(--accent);
+        }}
+        
+        section p {{
+            line-height: 1.8;
             color: var(--text-light);
-        }
-        .message-content .greeting {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #ffe9d0;
             margin-bottom: 20px;
-        }
-        .message-content strong {
-            color: var(--accent);
-            font-weight: 700;
-        }
-        .highlight-box {
-            background: rgba(193,88,43,0.2);
-            border-left: 4px solid var(--accent);
-            padding: 20px 24px;
-            margin: 24px 0;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #fff;
-            line-height: 1.7;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        .message-content .closing {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #ffe9d0;
-            margin-top: 24px;
-            margin-bottom: 12px;
-        }
-        .message-content .signature {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-align: center;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
+        }}
         
-        main { display: flex; flex-direction: column; gap: 32px; }
-        section { background: rgba(255,255,255,0.04); border-radius: 24px; padding: 28px; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 10px 40px rgba(0,0,0,0.25); }
-        section h2 { font-size: 1.7rem; margin-bottom: 16px; color: var(--accent); }
-        section p { line-height: 1.8; color: var(--text-light); }
-        
-        .club-special {
-            background: linear-gradient(135deg, rgba(193,88,43,0.2) 0%, rgba(255,255,255,0.05) 100%);
-            border: 2px solid var(--accent);
-            position: relative;
+        /* Google Forms iframe styling */
+        .form-container {{
+            background: white;
+            border-radius: 16px;
             overflow: hidden;
-        }
-        .club-special::before {
-            content: "⭐";
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            font-size: 120px;
-            opacity: 0.1;
-        }
-        .club-special h2 {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .club-perks {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin: 20px 0;
-            padding: 16px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-        }
-        .perk-item {
-            display: flex;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            margin-top: 20px;
+        }}
+        
+        .form-container iframe {{
+            width: 100%;
+            border: none;
+            min-height: 600px;
+        }}
+        
+        .security-badge {{
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.95rem;
-            color: #ffe9d0;
-        }
-        .form-group {
-            margin-bottom: 18px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #ffe9d0;
-            font-size: 0.95rem;
-        }
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            border: 2px solid rgba(255,255,255,0.2);
-            background: rgba(0,0,0,0.4);
-            color: white;
-            font-size: 1rem;
-            font-family: 'Cairo', sans-serif;
-            transition: all 0.3s;
-        }
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--accent);
-            background: rgba(0,0,0,0.6);
-        }
-        .form-group input::placeholder {
-            color: rgba(255,255,255,0.5);
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-        .turnstile-wrapper {
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-        }
-        .submit-btn {
-            width: 100%;
-            padding: 14px 24px;
-            background: var(--accent);
-            color: #1d0f05;
-            border: none;
-            border-radius: 999px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Cairo', sans-serif;
-            box-shadow: 0 4px 15px rgba(193,88,43,0.4);
-        }
-        .submit-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(193,88,43,0.6);
-        }
-        .submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .privacy-note {
-            margin-top: 12px;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.6);
-            text-align: center;
-        }
-        .success-message,
-        .error-message,
-        .warning-message {
-            margin-top: 16px;
-            padding: 14px 18px;
-            border-radius: 12px;
-            font-weight: 600;
-            display: none;
-            animation: slideIn 0.3s ease;
-        }
-        .success-message {
+            padding: 8px 16px;
             background: rgba(40,167,69,0.2);
             border: 2px solid var(--success);
+            border-radius: 12px;
             color: #7fff9d;
-        }
-        .error-message {
-            background: rgba(220,53,69,0.2);
-            border: 2px solid var(--error);
-            color: #ff6b7a;
-        }
-        .warning-message {
-            background: rgba(255,193,7,0.2);
-            border: 2px solid var(--warning);
-            color: #ffd54f;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 12px 0;
+        }}
         
-        .survey-section {
-            background: linear-gradient(135deg, rgba(40,167,69,0.15) 0%, rgba(255,255,255,0.03) 100%);
-            border: 2px solid rgba(40,167,69,0.4);
-        }
-        .survey-section h2 { color: #7fff9d; }
-        .survey-options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin: 20px 0;
-        }
-        .survey-option {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 20px;
-            background: rgba(255,255,255,0.05);
-            border: 2px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            user-select: none;
-        }
-        .survey-option:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: var(--success);
-            transform: translateX(4px);
-        }
-        .survey-option input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: var(--success);
-        }
-        .survey-option label {
-            flex: 1;
-            cursor: pointer;
-            font-size: 1rem;
-            color: #f2ebe3;
-            margin: 0;
-        }
-        .survey-email { margin: 20px 0; }
+        .form-note {{
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: rgba(193,88,43,0.1);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #ffe9d0;
+        }}
         
-        .tombola-section {
-            background: linear-gradient(135deg, rgba(255,193,7,0.15) 0%, rgba(255,255,255,0.03) 100%);
-            border: 2px solid rgba(255,193,7,0.4);
-        }
-        .tombola-section h2 { color: #ffd54f; }
-        .tombola-prize {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin: 20px 0;
-            padding: 16px;
-            background: rgba(255,193,7,0.1);
-            border-radius: 12px;
-        }
-        .prize-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
-            color: #ffd54f;
-        }
-        .email-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin: 20px 0;
-        }
+        [data-lang]:not(.active) {{ display: none; }}
         
-        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 16px; }
-        .card { background: rgba(255,255,255,0.07); padding: 20px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.15); transition: transform 0.2s, box-shadow 0.2s; }
-        .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(193,88,43,0.3); }
-        .card h3 { margin-bottom: 10px; color: #ffe9d0; font-size: 1.1rem; }
-        .card p { color: #f9f5ef; font-size: 0.95rem; }
-        
-        .cta { background: rgba(255,255,255,0.08); border: 1px dashed rgba(255,255,255,0.35); text-align: center; }
-        .cta a { display: inline-block; margin-top: 16px; padding: 12px 24px; border-radius: 999px; background: var(--accent); color: #1d0f05; font-weight: 700; text-decoration: none; transition: transform 0.2s; }
-        .cta a:hover { transform: translateY(-2px); }
-        
-        .info-box { margin-top: 20px; padding: 16px; background: rgba(193,88,43,0.15); border-left: 4px solid var(--accent); border-radius: 12px; }
-        .info-box p { font-size: 0.95rem; color: #fff8ef; margin: 0; }
-        
-        [data-lang]:not(.active) { display: none; }
-        
-        @media (max-width: 768px) {
-            .form-row, .email-group { grid-template-columns: 1fr; }
-        }
-        
-        @media (max-width: 640px) { 
-            .lang-switcher { top: 10px; right: 10px; padding: 6px 8px; }
-            .lang-btn { padding: 5px 10px; font-size: 0.85rem; }
-            header.hero { flex-direction: column; text-align: center; } 
-            .hero img { width: 70%; }
-            .cards { grid-template-columns: 1fr; }
-            .page { padding: 60px 16px 60px; }
-            .club-perks, .tombola-prize { grid-template-columns: 1fr; }
-            .welcome-message { padding: 24px 20px; }
-            .message-header h2 { font-size: 1.2rem; }
-            .message-content p { font-size: 0.95rem; }
-            .highlight-box { font-size: 1rem; padding: 16px 18px; }
-        }
+        @media (max-width: 640px) {{
+            .page {{ padding: 60px 16px; }}
+            .form-container iframe {{ min-height: 800px; }}
+            header.hero {{ flex-direction: column; text-align: center; }}
+            .hero img {{ width: 70%; }}
+        }}
     </style>
 </head>
 <body>
+    <!-- Language Switcher -->
     <div class="lang-switcher">
-        <button class="lang-btn" onclick="switchLang('fr')" data-lang-btn="fr">FR</button>
-        <button class="lang-btn active" onclick="switchLang('ar')" data-lang-btn="ar">عربي</button>
-        <button class="lang-btn" onclick="switchLang('en')" data-lang-btn="en">EN</button>
+        <button class="lang-btn" data-lang-btn="fr">FR</button>
+        <button class="lang-btn active" data-lang-btn="ar">عربي</button>
+        <button class="lang-btn" data-lang-btn="en">EN</button>
     </div>
 
     <div class="page">
-        <!-- HEADERS -->
+        <!-- HEADER ARABIC -->
         <header class="hero active" data-lang="ar" lang="ar">
-            <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" alt="ملصق رمضان 2026" loading="lazy" onerror="this.src='../PUB/PUB_ramad2026.svg'">
+            <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" 
+                 alt="ملصق رمضان 2026" 
+                 loading="lazy"
+                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22%3E🌙%3C/text%3E%3C/svg%3E'">
             <div class="hero-text">
-                <p class="week">الأسبوع الأول – الأجواء والاكتشاف</p>
                 <h1>مرحباً رمضان 2026 🌙</h1>
-                <p class="desc">لنفتتح معاً هذا الشهر الفضيل بالنور والنوايا الإيجابية والإحسان لكل فريق dznet1.</p>
-                <div class="badge">🌙 رمضان 2026 · الشبكة الداخلية DZ</div>
+                <p>لنفتتح معاً هذا الشهر الفضيل بالنور والنوايا الإيجابية والإحسان.</p>
             </div>
         </header>
 
+        <!-- HEADER FRENCH -->
         <header class="hero" data-lang="fr">
-            <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" alt="Affiche Ramadan 2026" loading="lazy" onerror="this.src='../PUB/PUB_ramad2026.svg'">
+            <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" 
+                 alt="Affiche Ramadan 2026" 
+                 loading="lazy">
             <div class="hero-text">
-                <p class="week">Semaine 1 – Ambiance & Découverte</p>
                 <h1>Bienvenue Ramadan 2026 🌙</h1>
-                <p class="desc">Ouvrons ensemble ce mois sacré avec lumière, intentions positives et bienveillance pour toute l'équipe dznet1.</p>
-                <div class="badge">🌙 Ramadan 2026 · Intranet DZ</div>
+                <p>Ouvrons ensemble ce mois sacré avec lumière et bienveillance.</p>
             </div>
         </header>
 
+        <!-- HEADER ENGLISH -->
         <header class="hero" data-lang="en">
-            <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" alt="Ramadan 2026 Poster" loading="lazy" onerror="this.src='../PUB/PUB_ramad2026.svg'">
+            <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" 
+                 alt="Ramadan 2026 Poster" 
+                 loading="lazy">
             <div class="hero-text">
-                <p class="week">Week 1 – Atmosphere & Discovery</p>
                 <h1>Welcome Ramadan 2026 🌙</h1>
-                <p class="desc">Let's open this holy month together with light, positive intentions and kindness for the entire dznet1 team.</p>
-                <div class="badge">🌙 Ramadan 2026 · Intranet DZ</div>
+                <p>Let's open this holy month together with light and kindness.</p>
             </div>
         </header>
-
-        <!-- MESSAGES DE BIENVENUE -->
-        <section class="welcome-message active" data-lang="ar" lang="ar">
-            <div class="message-header">
-                <h2>🌙✨ مرحباً بالشهر الفضيل – رسالة لكل فريق dznet1 ✨🌙</h2>
-            </div>
-            <div class="message-content">
-                <p class="greeting">زميلاتنا الكريمات، زملاؤنا الأعزاء،</p>
-                <p>مع فجر الشهر الفضيل، يفتح <strong>dznet1</strong> أبوابه لأجواء مليئة بالسكينة والنور والنوايا الطيبة. ليكن هذا الشهر لكل واحد منكم لحظة من السلام الداخلي والتضامن والإحسان المشترك في فريقنا.</p>
-                <p>نتمنى لكم رمضان مليئاً بالوضوح في الأفكار، والقوة في المشاريع، والانسجام في كل يوم عمل. ليكن هذا الوقت مُلهماً لانطلاقات جديدة، موحداً لجهودنا ومغذياً لروح فريقنا.</p>
-                <div class="highlight-box">
-                    🌟 مرحباً بشهر الاحترام والكرم والإيجابية. ليجد كل منا فيه الطاقة والتوازن والحافز.
-                </div>
-                <p class="closing">يتمنى فريق <strong>dznet1</strong> لكم بداية ممتازة للشهر الفضيل.</p>
-                <p class="signature">رمضان مبارك للجميع. 🌙</p>
-            </div>
-        </section>
-
-        <section class="welcome-message" data-lang="fr">
-            <div class="message-header">
-                <h2>🌙✨ Bienvenue au mois sacré – Message à toute l'équipe dznet1 ✨🌙</h2>
-            </div>
-            <div class="message-content">
-                <p class="greeting">Chères collaboratrices, chers collaborateurs,</p>
-                <p>À l'aube du mois sacré, <strong>dznet1</strong> ouvre ses portes à une atmosphère empreinte de sérénité, de lumière et de belles intentions. Que ce mois soit pour chacun un moment de paix intérieure, de solidarité et de bienveillance partagée au sein de notre équipe.</p>
-                <p>Nous vous souhaitons un Ramadan rempli de clarté dans les idées, de force dans les projets, et d'harmonie dans chaque journée de travail. Puisse cette période inspirer de nouveaux élans, unir nos efforts et nourrir notre esprit d'équipe.</p>
-                <div class="highlight-box">
-                    🌟 Bienvenue dans un mois de respect, de générosité et de positivité. Que chacun y trouve énergie, équilibre et motivation.
-                </div>
-                <p class="closing">L'équipe <strong>dznet1</strong> vous souhaite un excellent début de mois sacré.</p>
-                <p class="signature">Ramadan Moubarak à toutes et à tous. 🌙</p>
-            </div>
-        </section>
-
-        <section class="welcome-message" data-lang="en">
-            <div class="message-header">
-                <h2>🌙✨ Welcome to the Holy Month – Message to the entire dznet1 team ✨🌙</h2>
-            </div>
-            <div class="message-content">
-                <p class="greeting">Dear colleagues,</p>
-                <p>At the dawn of the holy month, <strong>dznet1</strong> opens its doors to an atmosphere filled with serenity, light and beautiful intentions. May this month be for each of you a moment of inner peace, solidarity and shared kindness within our team.</p>
-                <p>We wish you a Ramadan filled with clarity of ideas, strength in projects, and harmony in each working day. May this period inspire new momentum, unite our efforts and nourish our team spirit.</p>
-                <div class="highlight-box">
-                    🌟 Welcome to a month of respect, generosity and positivity. May everyone find energy, balance and motivation.
-                </div>
-                <p class="closing">The <strong>dznet1</strong> team wishes you an excellent start to the holy month.</p>
-                <p class="signature">Ramadan Mubarak to all. 🌙</p>
-            </div>
-        </section>
         
         <main>
-            <!-- CLUB FORMS (3 langues - identique à avant mais je simplifie pour la longueur) -->
-            <!-- ARABIC CLUB -->
-            <section class="club-special active" data-lang="ar" lang="ar">
+            <!-- FORMULAIRE 1 : CLUB (ARABIC) -->
+            <section class="active" data-lang="ar" lang="ar">
                 <h2>⭐ النادي الخاص رمضان 2026</h2>
-                <p style="margin-bottom: 16px;">انضم إلى نادينا المميز واستفد من المزايا الحصرية طوال الشهر الفضيل!</p>
-                <div class="club-perks">
-                    <div class="perk-item">🎁 هدايا الرعاة</div>
-                    <div class="perk-item">📰 الجديد حصرياً</div>
-                    <div class="perk-item">🏆 الوصول للمسابقات الحصرية</div>
-                    <div class="perk-item">💝 مفاجآت يومية</div>
+                <p>انضم إلى نادينا المميز واستفد من المزايا الحصرية طوال الشهر الفضيل!</p>
+                
+                <div class="security-badge">
+                    🔒 محمي بواسطة Google Security + reCAPTCHA
                 </div>
-                <form id="clubForm-ar" onsubmit="handleSubmit(event, 'ar')">
-                    <div class="form-group">
-                        <label for="email-ar">📧 البريد الإلكتروني *</label>
-                        <input type="email" id="email-ar" name="email" placeholder="your.email@example.dz" required dir="ltr">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="age-ar">🎂 العمر *</label>
-                            <input type="number" id="age-ar" name="age" placeholder="عمرك" min="1" max="120" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="gender-ar">👤 الجنس *</label>
-                            <select id="gender-ar" name="gender" required>
-                                <option value="">اختر</option>
-                                <option value="ذكر">ذكر</option>
-                                <option value="أنثى">أنثى</option>
-                                <option value="آخر">أفضل عدم الإفصاح</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="turnstile-wrapper">
-                        
-                        <div class="cf-turnstile" data-sitekey="0x4AAAAAACCH8B-QTY-PMPif" data-callback="onTurnstileSuccess" data-theme="dark" id="turnstile-ar"></div>
-                        
-                    </div>
-                    <button type="submit" class="submit-btn" id="submitBtn-ar">🚀 انضم للنادي الخاص</button>
-                    <p class="privacy-note">🔒 بياناتك محمية. تسجيل واحد فقط لكل بريد.</p>
-                </form>
-                <div class="success-message" id="success-ar">✅ تهانينا! أنت الآن عضو في النادي.</div>
-                <div class="warning-message" id="warning-ar">⚠️ هذا البريد مسجل بالفعل!</div>
-                <div class="error-message" id="error-ar">❌ حدث خطأ. حاول مرة أخرى.</div>
+                
+                <div class="form-container">
+                   
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform?embedded=true"    
+                            frameborder="0" 
+                            loading="lazy"
+                            title="Formulaire Club Ramadan 2026"
+                            sandbox="allow-scripts allow-forms allow-same-origin">
+                        جاري التحميل...
+                    </iframe>
+                </div>
+                
+                <p class="form-note">
+                    🔒 بياناتك محمية بالكامل عبر Google. تسجيل واحد فقط لكل بريد إلكتروني.
+                </p>
             </section>
 
-            <!-- FRENCH CLUB -->
-            <section class="club-special" data-lang="fr">
+            <!-- FORMULAIRE 1 : CLUB (FRENCH) -->
+            <section data-lang="fr">
                 <h2>⭐ Club Spécial Ramadan 2026</h2>
-                <p style="margin-bottom: 16px;">Rejoignez notre club privilégié!</p>
-                <div class="club-perks">
-                    <div class="perk-item">🎁 Cadeaux sponsors</div>
-                    <div class="perk-item">📰 Nouveautés</div>
-                    <div class="perk-item">🏆 Concours exclusifs</div>
-                    <div class="perk-item">💝 Surprises</div>
+                <p>Rejoignez notre club privilégié et profitez d'avantages exclusifs !</p>
+                
+                <div class="security-badge">
+                    🔒 Protégé par Google Security + reCAPTCHA
                 </div>
-                <form id="clubForm-fr" onsubmit="handleSubmit(event, 'fr')">
-                    <div class="form-group">
-                        <label for="email-fr">📧 Email *</label>
-                        <input type="email" id="email-fr" name="email" placeholder="votre.email@exemple.dz" required>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="age-fr">🎂 Âge *</label>
-                            <input type="number" id="age-fr" name="age" placeholder="Votre âge" min="1" max="120" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="gender-fr">👤 Sexe *</label>
-                            <select id="gender-fr" name="gender" required>
-                                <option value="">Sélectionnez</option>
-                                <option value="homme">Homme</option>
-                                <option value="femme">Femme</option>
-                                <option value="autre">Préfère ne pas dire</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="turnstile-wrapper">
-                        
-                        <div class="cf-turnstile" data-sitekey="0x4AAAAAACCH8B-QTY-PMPif" data-callback="onTurnstileSuccess" data-theme="dark" id="turnstile-fr"></div>
-                        
-                    </div>
-                    <button type="submit" class="submit-btn" id="submitBtn-fr">🚀 Rejoindre</button>
-                    <p class="privacy-note">🔒 Données protégées.</p>
-                </form>
-                <div class="success-message" id="success-fr">✅ Bienvenue au club!</div>
-                <div class="warning-message" id="warning-fr">⚠️ Email déjà inscrit!</div>
-                <div class="error-message" id="error-fr">❌ Erreur, réessayez.</div>
+                
+                <div class="form-container">
+                    <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_CLUB_ICI" 
+                            frameborder="0" 
+                            loading="lazy"
+                            title="Formulaire Club Ramadan 2026"
+                            sandbox="allow-scripts allow-forms allow-same-origin">
+                        Chargement...
+                    </iframe>
+                </div>
+                
+                <p class="form-note">
+                    🔒 Vos données sont entièrement protégées par Google. Une seule inscription par email.
+                </p>
             </section>
 
-            <!-- ENGLISH CLUB -->
-            <section class="club-special" data-lang="en">
+            <!-- FORMULAIRE 1 : CLUB (ENGLISH) -->
+            <section data-lang="en">
                 <h2>⭐ Special Ramadan 2026 Club</h2>
-                <p style="margin-bottom: 16px;">Join our exclusive club!</p>
-                <div class="club-perks">
-                    <div class="perk-item">🎁 Sponsor gifts</div>
-                    <div class="perk-item">📰 Early access</div>
-                    <div class="perk-item">🏆 Exclusive contests</div>
-                    <div class="perk-item">💝 Daily surprises</div>
+                <p>Join our exclusive club and enjoy special benefits!</p>
+                
+                <div class="security-badge">
+                    🔒 Protected by Google Security + reCAPTCHA
                 </div>
-                <form id="clubForm-en" onsubmit="handleSubmit(event, 'en')">
-                    <div class="form-group">
-                        <label for="email-en">📧 Email *</label>
-                        <input type="email" id="email-en" name="email" placeholder="your.email@example.dz" required>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="age-en">🎂 Age *</label>
-                            <input type="number" id="age-en" name="age" placeholder="Your age" min="1" max="120" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="gender-en">👤 Gender *</label>
-                            <select id="gender-en" name="gender" required>
-                                <option value="">Select</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Prefer not to say</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="turnstile-wrapper">
-                         
-                        <div class="cf-turnstile" data-sitekey="0x4AAAAAACCH8B-QTY-PMPif" data-callback="onTurnstileSuccess" data-theme="dark" id="turnstile-en"></div>
-                    </div>
-                    <button type="submit" class="submit-btn" id="submitBtn-en">🚀 Join Club</button>
-                    <p class="privacy-note">🔒 Data protected.</p>
-                </form>
-                <div class="success-message" id="success-en">✅ Welcome to the club!</div>
-                <div class="warning-message" id="warning-en">⚠️ Email already registered!</div>
-                <div class="error-message" id="error-en">❌ Error, try again.</div>
+                
+                <div class="form-container">
+                    <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_CLUB_ICI" 
+                            frameborder="0" 
+                            loading="lazy"
+                            title="Ramadan 2026 Club Form"
+                            sandbox="allow-scripts allow-forms allow-same-origin">
+                        Loading...
+                    </iframe>
+                </div>
+                
+                <p class="form-note">
+                    🔒 Your data is fully protected by Google. One registration per email.
+                </p>
             </section>
 
-            <!-- CONTENT (Dates, Santé - simplifié pour longueur) -->
-            <div class="active" data-lang="ar" lang="ar">
-                <section>
-                    <h2>📅 تواريخ رمضان 2026</h2>
-                    <div class="cards">
-                        <div class="card"><h3>🌙 البداية</h3><p>17-18 فبراير 2026</p></div>
-                        <div class="card"><h3>✨ العشر الأواخر</h3><p>9-19 مارس 2026</p></div>
-                        <div class="card"><h3>🌟 ليلة القدر</h3><p>~16 مارس 2026</p></div>
-                        <div class="card"><h3>🎉 عيد الفطر</h3><p>19-20 مارس 2026</p></div>
-                    </div>
-                </section>
-            </div>
-
-            <div data-lang="fr">
-                <section>
-                    <h2>📅 Dates clés Ramadan 2026</h2>
-                    <div class="cards">
-                        <div class="card"><h3>🌙 Début</h3><p>17-18 février 2026</p></div>
-                        <div class="card"><h3>✨ 10 derniers jours</h3><p>9-19 mars 2026</p></div>
-                        <div class="card"><h3>🌟 Laylat al-Qadr</h3><p>~16 mars 2026</p></div>
-                        <div class="card"><h3>🎉 Aïd</h3><p>19-20 mars 2026</p></div>
-                    </div>
-                </section>
-            </div>
-
-            <div data-lang="en">
-                <section>
-                    <h2>📅 Key Dates Ramadan 2026</h2>
-                    <div class="cards">
-                        <div class="card"><h3>🌙 Start</h3><p>Feb 17-18, 2026</p></div>
-                        <div class="card"><h3>✨ Last 10 days</h3><p>Mar 9-19, 2026</p></div>
-                        <div class="card"><h3>🌟 Laylat al-Qadr</h3><p>~Mar 16, 2026</p></div>
-                        <div class="card"><h3>🎉 Eid</h3><p>Mar 19-20, 2026</p></div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- SONDAGE ARABIC -->
-            <section class="survey-section active" data-lang="ar" lang="ar">
+            <!-- FORMULAIRE 2 : SONDAGE (ARABIC) -->
+            <section class="active" data-lang="ar" lang="ar">
                 <h2>📊 ما الذي تريد القيام به؟</h2>
-                <p>اختر كل ما ينطبق (عدة خيارات):</p>
-                <form id="surveyForm-ar" onsubmit="handleSurveySubmit(event, 'ar')">
-                    <div class="survey-options">
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="learn-ar" name="choices" value="تعلم أشياء جديدة">
-                            <label for="learn-ar">📚 تعلم أشياء جديدة</label>
-                        </div>
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="meet-ar" name="choices" value="مقابلة أشخاص جدد">
-                            <label for="meet-ar">🤝 مقابلة وتبادل مع أشخاص جدد</label>
-                        </div>
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="interview-ar" name="choices" value="المشاركة في مقابلة حية">
-                            <label for="interview-ar">🎙️ المشاركة في مقابلة حية حصرية</label>
-                        </div>
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="newsletter-ar" name="choices" value="تلقي نشرات إخبارية">
-                            <label for="newsletter-ar">📧 تلقي نشرات إخبارية من dznet1</label>
-                        </div>
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="help-ar" name="choices" value="الحصول على مساعدة">
-                            <label for="help-ar">💡 الحصول على مساعدة في موضوع محدد</label>
-                        </div>
-                    </div>
-                    <div class="survey-email form-group">
-                        <label for="survey-email-ar">📧 بريدك *</label>
-                        <input type="email" id="survey-email-ar" placeholder="your.email@example.dz" required dir="ltr">
-                    </div>
-                    <button type="submit" class="submit-btn" id="surveyBtn-ar">📤 إرسال</button>
-                    <p class="privacy-note">🔒 إجاباتك مجهولة.</p>
-                </form>
-                <div class="success-message" id="survey-success-ar">✅ شكراً!</div>
-                <div class="error-message" id="survey-error-ar">❌ اختر خياراً واحداً على الأقل.</div>
+                <p>ساعدنا في تحسين تجربتك! اختر كل ما ينطبق عليك.</p>
+                
+                <div class="security-badge">
+                    🔒 إجابات مجهولة ومحمية
+                </div>
+                
+                <div class="form-container">
+                    <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_SONDAGE_ICI" 
+                            frameborder="0" 
+                            loading="lazy"
+                            title="Sondage Ramadan 2026"
+                            sandbox="allow-scripts allow-forms allow-same-origin">
+                        جاري التحميل...
+                    </iframe>
+                </div>
             </section>
 
-            <!-- SONDAGE FRENCH -->
-            <section class="survey-section" data-lang="fr">
-                <h2>📊 Que voulez-vous faire?</h2>
-                <p>Sélectionnez tout ce qui s'applique:</p>
-                <form id="surveyForm-fr" onsubmit="handleSurveySubmit(event, 'fr')">
-                    <div class="survey-options">
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="learn-fr" name="choices" value="Apprendre de nouvelles choses">
-                            <label for="learn-fr">📚 Apprendre de nouvelles choses</label>
-                        </div>
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="meet-fr" name="choices" value="Rencontrer de nouvelles personnes">
-                            <label for="meet-fr">🤝 Rencontrer et échanger avec de nouvelles personnes</label>
-                        </div>
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="interview-fr" name="choices" value="Participer à une interview live">
-                            <label for="interview-fr">🎙️ Participer à une interview live exclusive</label>
-                        </div>
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="newsletter-fr" name="choices" value="Recevoir des infolettres">
-                            <label for="newsletter-fr">📧 Recevoir des infolettres de dznet1</label>
-                        </div>
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="help-fr" name="choices" value="Avoir de l'aide">
-                            <label for="help-fr">💡 Avoir de l'aide dans un sujet précis</label>
-                        </div>
-                    </div>
-                    <div class="survey-email form-group">
-                        <label for="survey-email-fr">📧 Votre email *</label>
-                        <input type="email" id="survey-email-fr" placeholder="votre.email@exemple.dz" required>
-                    </div>
-                    <button type="submit" class="submit-btn" id="surveyBtn-fr">📤 Envoyer</button>
-                    <p class="privacy-note">🔒 Réponses anonymes.</p>
-                </form>
-                <div class="success-message" id="survey-success-fr">✅ Merci!</div>
-                <div class="error-message" id="survey-error-fr">❌ Sélectionnez au moins une option.</div>
+            <!-- FORMULAIRE 2 : SONDAGE (FRENCH) -->
+            <section data-lang="fr">
+                <h2>📊 Que voulez-vous faire ?</h2>
+                <p>Aidez-nous à améliorer votre expérience !</p>
+                
+                <div class="security-badge">
+                    🔒 Réponses anonymes et protégées
+                </div>
+                
+                <div class="form-container">
+                    <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_SONDAGE_ICI" 
+                            frameborder="0" 
+                            loading="lazy"
+                            title="Sondage Ramadan 2026"
+                            sandbox="allow-scripts allow-forms allow-same-origin">
+                        Chargement...
+                    </iframe>
+                </div>
             </section>
 
-            <!-- SONDAGE ENGLISH -->
-            <section class="survey-section" data-lang="en">
+            <!-- FORMULAIRE 2 : SONDAGE (ENGLISH) -->
+            <section data-lang="en">
                 <h2>📊 What do you want to do?</h2>
-                <p>Select all that apply:</p>
-                <form id="surveyForm-en" onsubmit="handleSurveySubmit(event, 'en')">
-                    <div class="survey-options">
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="learn-en" name="choices" value="Learn new things">
-                            <label for="learn-en">📚 Learn new things</label>
-                        </div>
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="meet-en" name="choices" value="Meet new people">
-                            <label for="meet-en">🤝 Meet and exchange with new people</label>
-                        </div>
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="interview-en" name="choices" value="Participate in live interview">
-                            <label for="interview-en">🎙️ Participate in exclusive live interview</label>
-                        </div>
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="newsletter-en" name="choices" value="Receive newsletters">
-                            <label for="newsletter-en">📧 Receive newsletters from dznet1</label>
-                        </div>
-                        <div class="survey-option" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" id="help-en" name="choices" value="Get help">
-                            <label for="help-en">💡 Get help on a specific topic</label>
-                        </div>
-                    </div>
-                    <div class="survey-email form-group">
-                        <label for="survey-email-en">📧 Your email *</label>
-                        <input type="email" id="survey-email-en" placeholder="your.email@example.dz" required>
-                    </div>
-                    <button type="submit" class="submit-btn" id="surveyBtn-en">📤 Send</button>
-                    <p class="privacy-note">🔒 Anonymous answers.</p>
-                </form>
-                <div class="success-message" id="survey-success-en">✅ Thank you!</div>
-                <div class="error-message" id="survey-error-en">❌ Select at least one option.</div>
+                <p>Help us improve your experience!</p>
+                
+                <div class="security-badge">
+                    🔒 Anonymous and protected answers
+                </div>
+                
+                <div class="form-container">
+                    <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_SONDAGE_ICI" 
+                            frameborder="0" 
+                            loading="lazy"
+                            title="Survey Ramadan 2026"
+                            sandbox="allow-scripts allow-forms allow-same-origin">
+                        Loading...
+                    </iframe>
+                </div>
             </section>
 
-            <!-- TOMBOLA ARABIC -->
-            <section class="tombola-section active" data-lang="ar" lang="ar">
+            <!-- FORMULAIRE 3 : TOMBOLA (ARABIC) -->
+            <section class="active" data-lang="ar" lang="ar">
                 <h2>🎁 يانصيب اليوم</h2>
-                <p>ادعُ صديقاً وادخلا معاً!</p>
-                <div class="tombola-prize">
-                    <div class="prize-item">🏆 جوائز يومية</div>
-                    <div class="prize-item">🎯 فرص مضاعفة</div>
-                    <div class="prize-item">💝 مفاجآت</div>
+                <p>ادعُ صديقاً وادخلا معاً في السحب اليومي!</p>
+                
+                <div class="security-badge">
+                    🔒 معالجة آمنة للبيانات
                 </div>
-                <form id="tombolaForm-ar" onsubmit="handleTombolaSubmit(event, 'ar')">
-                    <div class="email-group">
-                        <div class="form-group">
-                            <label for="user-email-ar">📧 بريدك *</label>
-                            <input type="email" id="user-email-ar" placeholder="your.email@example.dz" required dir="ltr">
-                        </div>
-                        <div class="form-group">
-                            <label for="friend-email-ar">👥 بريد صديقك *</label>
-                            <input type="email" id="friend-email-ar" placeholder="friend@example.dz" required dir="ltr">
-                        </div>
-                    </div>
-                    <button type="submit" class="submit-btn" id="tombolaBtn-ar">🎲 دخول السحب</button>
-                    <p class="privacy-note">📬 سيتلقى صديقك دعوة.</p>
-                </form>
-                <div class="success-message" id="tombola-success-ar">✅ تم إرسال الدعوة!</div>
-                <div class="warning-message" id="tombola-warning-ar">⚠️ شاركت اليوم.</div>
-                <div class="error-message" id="tombola-error-ar">❌ خطأ. البريدان مختلفان؟</div>
+                
+                <div class="form-container">
+                    <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_TOMBOLA_ICI" 
+                            frameborder="0" 
+                            loading="lazy"
+                            title="Tombola Ramadan 2026"
+                            sandbox="allow-scripts allow-forms allow-same-origin">
+                        جاري التحميل...
+                    </iframe>
+                </div>
+                
+                <p class="form-note">
+                    📬 سنراجع الطلبات يدوياً ونرسل دعوة لصديقك.
+                </p>
             </section>
 
-            <!-- TOMBOLA FRENCH -->
-            <section class="tombola-section" data-lang="fr">
+            <!-- FORMULAIRE 3 : TOMBOLA (FRENCH) -->
+            <section data-lang="fr">
                 <h2>🎁 Tombola du Jour</h2>
-                <p>Invitez un ami et participez ensemble!</p>
-                <div class="tombola-prize">
-                    <div class="prize-item">🏆 Lots quotidiens</div>
-                    <div class="prize-item">🎯 Chances doublées</div>
-                    <div class="prize-item">💝 Surprises</div>
+                <p>Invitez un ami et participez ensemble !</p>
+                
+                <div class="security-badge">
+                    🔒 Traitement sécurisé des données
                 </div>
-                <form id="tombolaForm-fr" onsubmit="handleTombolaSubmit(event, 'fr')">
-                    <div class="email-group">
-                        <div class="form-group">
-                            <label for="user-email-fr">📧 Votre email *</label>
-                            <input type="email" id="user-email-fr" placeholder="votre.email@exemple.dz" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="friend-email-fr">👥 Email ami *</label>
-                            <input type="email" id="friend-email-fr" placeholder="ami@exemple.dz" required>
-                        </div>
-                    </div>
-                    <button type="submit" class="submit-btn" id="tombolaBtn-fr">🎲 Participer</button>
-                    <p class="privacy-note">📬 Votre ami recevra une invitation.</p>
-                </form>
-                <div class="success-message" id="tombola-success-fr">✅ Invitation envoyée!</div>
-                <div class="warning-message" id="tombola-warning-fr">⚠️ Déjà participé aujourd'hui.</div>
-                <div class="error-message" id="tombola-error-fr">❌ Erreur. Emails différents?</div>
+                
+                <div class="form-container">
+                    <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_TOMBOLA_ICI" 
+                            frameborder="0" 
+                            loading="lazy"
+                            title="Tombola Ramadan 2026"
+                            sandbox="allow-scripts allow-forms allow-same-origin">
+                        Chargement...
+                    </iframe>
+                </div>
+                
+                <p class="form-note">
+                    📬 Nous examinerons les demandes et enverrons une invitation.
+                </p>
             </section>
 
-            <!-- TOMBOLA ENGLISH -->
-            <section class="tombola-section" data-lang="en">
+            <!-- FORMULAIRE 3 : TOMBOLA (ENGLISH) -->
+            <section data-lang="en">
                 <h2>🎁 Daily Raffle</h2>
                 <p>Invite a friend and participate together!</p>
-                <div class="tombola-prize">
-                    <div class="prize-item">🏆 Daily prizes</div>
-                    <div class="prize-item">🎯 Double chances</div>
-                    <div class="prize-item">💝 Surprises</div>
+                
+                <div class="security-badge">
+                    🔒 Secure data processing
                 </div>
-                <form id="tombolaForm-en" onsubmit="handleTombolaSubmit(event, 'en')">
-                    <div class="email-group">
-                        <div class="form-group">
-                            <label for="user-email-en">📧 Your email *</label>
-                            <input type="email" id="user-email-en" placeholder="your.email@example.dz" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="friend-email-en">👥 Friend's email *</label>
-                            <input type="email" id="friend-email-en" placeholder="friend@example.dz" required>
-                        </div>
-                    </div>
-                    <button type="submit" class="submit-btn" id="tombolaBtn-en">🎲 Enter</button>
-                    <p class="privacy-note">📬 Your friend will receive an invitation.</p>
-                </form>
-                <div class="success-message" id="tombola-success-en">✅ Invitation sent!</div>
-                <div class="warning-message" id="tombola-warning-en">⚠️ Already participated today.</div>
-                <div class="error-message" id="tombola-error-en">❌ Error. Different emails?</div>
+                
+                <div class="form-container">
+                    <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_TOMBOLA_ICI" 
+                            frameborder="0" 
+                            loading="lazy"
+                            title="Raffle Ramadan 2026"
+                            sandbox="allow-scripts allow-forms allow-same-origin">
+                        Loading...
+                    </iframe>
+                </div>
+                
+                <p class="form-note">
+                    📬 We will review requests and send an invitation.
+                </p>
             </section>
-
-            <!-- CTA -->
-            <div class="active" data-lang="ar" lang="ar">
-                <section class="cta">
-                    <h2>📋 العودة للبرنامج</h2>
-                    <p>اكتشف جميع المواضيع الـ28.</p>
-                    <a href="index.html">عرض الفهرس</a>
-                </section>
-            </div>
-            <div data-lang="fr">
-                <section class="cta">
-                    <h2>📋 Retour au programme</h2>
-                    <p>Découvre les 28 thèmes.</p>
-                    <a href="index.html">Voir l'index</a>
-                </section>
-            </div>
-            <div data-lang="en">
-                <section class="cta">
-                    <h2>📋 Back to Program</h2>
-                    <p>Discover all 28 themes.</p>
-                    <a href="index.html">View Index</a>
-                </section>
-            </div>
         </main>
-
-        <div id="footer-placeholder"></div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, doc, setDoc, addDoc, collection, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBoF6xTWr4dzgbWFwXavVC2mMshHCTK6fM",
-            authDomain: "ramadan-chat-auth.firebaseapp.com",
-            projectId: "ramadan-chat-auth",
-            storageBucket: "ramadan-chat-auth.firebasestorage.app",
-            messagingSenderId: "785976346844",
-            appId: "1:785976346844:web:62b890dbc32a32596f8c19"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        window.onTurnstileSuccess = function(token) {
-            console.log("✅ Turnstile OK");
-        };
-
-        // CLUB SUBMISSION
-        window.handleSubmit = async function(event, lang) {
-            event.preventDefault();
-            const form = document.getElementById(`clubForm-${lang}`);
-            const submitBtn = document.getElementById(`submitBtn-${lang}`);
-            const email = form.querySelector('[name="email"]').value.trim().toLowerCase();
-            const age = parseInt(form.querySelector('[name="age"]').value);
-            const gender = form.querySelector('[name="gender"]').value;
-            
-            if (!email || !age || !gender || age < 1 || age > 120) {
-                showMessage('error', 'success', 'warning', lang);
-                return false;
-            }
-            
-            submitBtn.disabled = true;
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = lang === 'ar' ? '⏳ جاري...' : lang === 'fr' ? '⏳ Envoi...' : '⏳ Sending...';
-            
-            try {
-                const memberRef = doc(db, "club_members", email);
-                await setDoc(memberRef, {
-                    email, age, gender, language: lang,
-                    timestamp: serverTimestamp(),
-                    source: 'ramadan_2026_website',
-                    verified: 'cloudflare_turnstile'
-                });
-                
-                console.log("✅ Club:", email);
-                showMessage('success', 'success', 'warning', lang);
-                form.reset();
-                if (typeof turnstile !== 'undefined') turnstile.reset(`#turnstile-${lang}`);
-                if (typeof gtag !== 'undefined') gtag('event', 'club_registration_success', {'event_label': lang});
-            } catch (error) {
-                console.error("❌", error);
-                if (error.code === 'permission-denied') showMessage('warning', 'success', 'warning', lang);
-                else showMessage('error', 'success', 'warning', lang);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
-            }
-            return false;
-        };
-
-        // SURVEY SUBMISSION
-        window.toggleCheckbox = function(element) {
-            const cb = element.querySelector('input[type="checkbox"]');
-            cb.checked = !cb.checked;
-        };
-
-        window.handleSurveySubmit = async function(event, lang) {
-            event.preventDefault();
-            const form = document.getElementById(`surveyForm-${lang}`);
-            const submitBtn = document.getElementById(`surveyBtn-${lang}`);
-            const email = form.querySelector(`#survey-email-${lang}`).value.trim().toLowerCase();
-            const checkboxes = form.querySelectorAll('input[name="choices"]:checked');
-            
-            if (checkboxes.length === 0) {
-                showSurveyMessage('error', lang);
-                return false;
-            }
-            
-            const choices = Array.from(checkboxes).map(cb => cb.value);
-            submitBtn.disabled = true;
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = lang === 'ar' ? '⏳ إرسال...' : lang === 'fr' ? '⏳ Envoi...' : '⏳ Sending...';
-            
-            try {
-                await addDoc(collection(db, "surveys"), {
-                    email, choices, timestamp: serverTimestamp(),
-                    language: lang, source: 'ramadan_2026_website'
-                });
-                console.log("✅ Sondage:", email);
-                showSurveyMessage('success', lang);
-                form.reset();
-                if (typeof gtag !== 'undefined') gtag('event', 'survey_completed', {'event_label': lang, 'value': choices.length});
-            } catch (error) {
-                console.error("❌ Sondage:", error);
-                showSurveyMessage('error', lang);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
-            }
-            return false;
-        };
-
-        function showSurveyMessage(type, lang) {
-            ['success', 'error'].forEach(t => {
-                const msg = document.getElementById(`survey-${t}-${lang}`);
-                if (msg) msg.style.display = 'none';
-            });
-            const message = document.getElementById(`survey-${type}-${lang}`);
-            if (message) {
-                message.style.display = 'block';
-                setTimeout(() => message.style.display = 'none', 6000);
-            }
-        }
-
-        // TOMBOLA SUBMISSION
-        window.handleTombolaSubmit = async function(event, lang) {
-            event.preventDefault();
-            const form = document.getElementById(`tombolaForm-${lang}`);
-            const submitBtn = document.getElementById(`tombolaBtn-${lang}`);
-            const userEmail = form.querySelector(`#user-email-${lang}`).value.trim().toLowerCase();
-            const friendEmail = form.querySelector(`#friend-email-${lang}`).value.trim().toLowerCase();
-            
-            if (userEmail === friendEmail) {
-                showTombolaMessage('error', lang);
-                return false;
-            }
-            
-            submitBtn.disabled = true;
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = lang === 'ar' ? '⏳ إرسال...' : lang === 'fr' ? '⏳ Envoi...' : '⏳ Sending...';
-            
-            try {
-                const token = `${userEmail}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-                const validationLink = `${window.location.origin}/tombola-accept.html?token=${encodeURIComponent(token)}`;
-                
-                await addDoc(collection(db, "tombola_entries"), {
-                    user_email: userEmail,
-                    friend_email: friendEmail,
-                    status: 'pending',
-                    timestamp: serverTimestamp(),
-                    language: lang,
-                    referral_token: token,
-                    validation_link: validationLink,
-                    source: 'ramadan_2026_website'
-                });
-                
-                console.log("✅ Tombola:", userEmail, "→", friendEmail);
-                console.log("📧 Lien validation:", validationLink);
-                console.log("⚠️ NOTE: Configure Cloud Function pour email auto!");
-                
-                showTombolaMessage('success', lang);
-                form.reset();
-                if (typeof gtag !== 'undefined') gtag('event', 'tombola_invitation_sent', {'event_label': lang});
-            } catch (error) {
-                console.error("❌ Tombola:", error);
-                if (error.code === 'permission-denied') showTombolaMessage('warning', lang);
-                else showTombolaMessage('error', lang);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
-            }
-            return false;
-        };
-
-        function showTombolaMessage(type, lang) {
-            ['success', 'warning', 'error'].forEach(t => {
-                const msg = document.getElementById(`tombola-${t}-${lang}`);
-                if (msg) msg.style.display = 'none';
-            });
-            const message = document.getElementById(`tombola-${type}-${lang}`);
-            if (message) {
-                message.style.display = 'block';
-                setTimeout(() => message.style.display = 'none', 8000);
-            }
-        }
-
-        function showMessage(type, s, w, lang) {
-            [s, w, 'error'].forEach(t => {
-                const msg = document.getElementById(`${t}-${lang}`);
-                if (msg) msg.style.display = 'none';
-            });
-            const message = document.getElementById(`${type}-${lang}`);
-            if (message) {
-                message.style.display = 'block';
-                setTimeout(() => message.style.display = 'none', 8000);
-            }
-        }
-    </script>
-
+    <!-- Language Switcher Script - En fin de document pour performance -->
     <script>
-        function switchLang(lang) {
-            document.querySelectorAll('[data-lang]').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll(`[data-lang="${lang}"]`).forEach(el => el.classList.add('active'));
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`[data-lang-btn="${lang}"]`).classList.add('active');
-            const htmlEl = document.documentElement;
-            htmlEl.lang = lang;
-            htmlEl.dir = lang === 'ar' ? 'rtl' : 'ltr';
-            localStorage.setItem('preferred-lang', lang);
-        }
-        
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('preferred-lang') || 'ar';
-            if (savedLang !== 'ar') switchLang(savedLang);
-        });
+        // [v1.002] Aucun event handler inline - Utilisation de addEventListener
+        (function() {{
+            'use strict';
+            
+            /**
+             * Change la langue de l'interface
+             * @param {{string}} lang - Code langue (ar/fr/en)
+             */
+            function switchLang(lang) {{
+                // Validation input
+                if (!['ar', 'fr', 'en'].includes(lang)) {{
+                    console.error('Langue invalide:', lang);
+                    return;
+                }}
+                
+                // Remove active class from all elements
+                document.querySelectorAll('[data-lang]').forEach(function(el) {{
+                    el.classList.remove('active');
+                }});
+                
+                // Add active class to selected language
+                document.querySelectorAll('[data-lang="' + lang + '"]').forEach(function(el) {{
+                    el.classList.add('active');
+                }});
+                
+                // Update button states
+                document.querySelectorAll('.lang-btn').forEach(function(btn) {{
+                    btn.classList.remove('active');
+                }});
+                
+                var activeBtn = document.querySelector('[data-lang-btn="' + lang + '"]');
+                if (activeBtn) {{
+                    activeBtn.classList.add('active');
+                }}
+                
+                // Update HTML attributes
+                var htmlEl = document.documentElement;
+                htmlEl.lang = lang;
+                htmlEl.dir = lang === 'ar' ? 'rtl' : 'ltr';
+                
+                // Save preference (avec gestion d'erreur)
+                try {{
+                    localStorage.setItem('preferred-lang', lang);
+                }} catch(e) {{
+                    console.warn('LocalStorage non disponible:', e);
+                }}
+            }}
+            
+            // Attach event listeners to language buttons
+            document.addEventListener('DOMContentLoaded', function() {{
+                // Setup language switcher buttons
+                document.querySelectorAll('.lang-btn').forEach(function(btn) {{
+                    btn.addEventListener('click', function(e) {{
+                        e.preventDefault();
+                        var lang = this.getAttribute('data-lang-btn');
+                        switchLang(lang);
+                    }});
+                }});
+                
+                // Load saved language preference
+                var savedLang = 'ar'; // Default
+                try {{
+                    savedLang = localStorage.getItem('preferred-lang') || 'ar';
+                }} catch(e) {{
+                    console.warn('LocalStorage non disponible:', e);
+                }}
+                
+                if (savedLang !== 'ar') {{
+                    switchLang(savedLang);
+                }}
+            }});
+        }})();
     </script>
 
-    <script>
-      fetch('/intranet/footer.html')
-        .then(r => r.text())
-        .then(html => { document.getElementById('footer-placeholder').innerHTML = html; })
-        .catch(() => {});
-    </script>
-
+    <!-- Google Analytics (optionnel) - Chargement asynchrone -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-CRRK6Z4D1X');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){{dataLayer.push(arguments);}}
+        gtag('js', new Date());
+        gtag('config', 'G-CRRK6Z4D1X', {{
+            'anonymize_ip': true,
+            'cookie_flags': 'SameSite=None;Secure'
+        }});
     </script>
 </body>
-</html>

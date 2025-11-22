@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>🌙 Bienvenue Ramadan 2026</title>
     
-    <!-- CSP Simplifiée -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://docs.google.com; connect-src 'self' https:;">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +17,6 @@
             --bg-dark: #050505;
             --text-light: #f2ebe3;
             --success: #28a745;
-            --error: #dc3545;
         }
         
         * { 
@@ -34,80 +32,6 @@
             color: white;
             min-height: 100vh;
             background-image: radial-gradient(circle at top, rgba(255,255,255,0.09), transparent 60%);
-        }
-        
-        /* AVERTISSEMENT COOKIES */
-        .cookie-warning {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-            color: white;
-            padding: 16px 20px;
-            z-index: 10000;
-            box-shadow: 0 4px 20px rgba(220,53,69,0.5);
-            animation: slideDown 0.5s ease;
-        }
-        
-        .cookie-warning.show {
-            display: block;
-        }
-        
-        @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
-        }
-        
-        .cookie-warning-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .cookie-warning h3 {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .cookie-warning p {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 12px;
-        }
-        
-        .cookie-warning ul {
-            list-style: none;
-            padding: 0;
-            margin: 12px 0;
-        }
-        
-        .cookie-warning li {
-            padding: 6px 0;
-            padding-left: 24px;
-            position: relative;
-        }
-        
-        .cookie-warning li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-            color: #fff;
-        }
-        
-        .cookie-close-btn {
-            background: white;
-            color: #dc3545;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 8px;
         }
         
         .lang-switcher {
@@ -246,6 +170,42 @@
             color: var(--accent);
         }
         
+        section p {
+            line-height: 1.7;
+            color: var(--text-light);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+        
+        /* BOUTON OUVRIR FORMULAIRE (MOBILE) */
+        .open-form-btn {
+            display: block;
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, var(--accent) 0%, #d4662f 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(193,88,43,0.4);
+            transition: all 0.3s;
+            margin: 20px 0;
+        }
+        
+        .open-form-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 3px 10px rgba(193,88,43,0.3);
+        }
+        
+        .open-form-btn .icon {
+            font-size: 1.3rem;
+            margin-right: 8px;
+        }
+        
+        /* IFRAME (DESKTOP UNIQUEMENT) */
         .form-container {
             margin: 20px 0;
             position: relative;
@@ -253,6 +213,7 @@
             border-radius: 8px;
             overflow: hidden;
             background: rgba(0,0,0,0.2);
+            display: none; /* Caché par défaut */
         }
         
         .form-container iframe {
@@ -289,47 +250,41 @@
             line-height: 1.5;
         }
         
+        .mobile-note {
+            background: rgba(193,88,43,0.15);
+            border: 2px solid var(--accent);
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin: 16px 0;
+            font-size: 0.9rem;
+            color: #ffe9d0;
+            line-height: 1.6;
+        }
+        
+        .mobile-note strong {
+            color: white;
+            display: block;
+            margin-bottom: 6px;
+        }
+        
         [data-lang]:not(.active) { display: none; }
         
         /* MEDIA QUERIES */
-        @media (max-width: 360px) {
-            .form-container iframe {
-                height: 3500px !important;
-                min-height: 3500px !important;
-            }
-        }
         
-        @media (min-width: 361px) and (max-width: 480px) {
-            .form-container iframe {
-                height: 3200px !important;
-                min-height: 3200px !important;
-            }
-        }
-        
-        @media (min-width: 481px) and (max-width: 640px) {
-            .form-container iframe {
-                height: 3000px !important;
-                min-height: 3000px !important;
-            }
-        }
-        
-        @media (min-width: 641px) and (max-width: 768px) {
-            .page { padding: 80px 24px; }
-            
-            .form-container iframe {
-                height: 2800px !important;
-                min-height: 2800px !important;
-            }
-            
-            .hero {
-                flex-direction: row;
-                text-align: left;
-            }
-            
-            .hero img { width: 150px; }
-        }
-        
+        /* Desktop : Afficher iframe */
         @media (min-width: 1025px) {
+            .open-form-btn {
+                display: none; /* Cacher bouton sur desktop */
+            }
+            
+            .form-container {
+                display: block; /* Afficher iframe sur desktop */
+            }
+            
+            .mobile-note {
+                display: none;
+            }
+            
             header.hero {
                 flex-direction: row;
                 text-align: left;
@@ -349,25 +304,47 @@
                 font-size: 0.9rem;
             }
         }
+        
+        /* Tablette : Afficher iframe */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .open-form-btn {
+                display: none;
+            }
+            
+            .form-container {
+                display: block;
+            }
+            
+            .form-container iframe {
+                height: 2600px !important;
+                min-height: 2600px !important;
+            }
+            
+            .mobile-note {
+                display: none;
+            }
+            
+            header.hero {
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            .hero img { width: 180px; }
+        }
+        
+        /* Mobile : Afficher bouton uniquement */
+        @media (max-width: 768px) {
+            .open-form-btn {
+                display: block; /* Afficher bouton sur mobile */
+            }
+            
+            .form-container {
+                display: none !important; /* Cacher iframe sur mobile */
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- AVERTISSEMENT COOKIES -->
-    <div class="cookie-warning" id="cookieWarning">
-        <div class="cookie-warning-content">
-            <h3>⚠️ Cookies requis pour Google Forms</h3>
-            <p><strong>Les formulaires ne peuvent pas se charger car les cookies sont bloqués.</strong></p>
-            <p>Pour activer les cookies sur <strong>Chrome Android</strong> :</p>
-            <ul>
-                <li>Menu (⋮) → Paramètres</li>
-                <li>Paramètres des sites → Cookies</li>
-                <li>Sélectionner "Autoriser tous les cookies"</li>
-            </ul>
-            <p><strong>Alternative :</strong> Utilisez Firefox Android (cookies activés par défaut)</p>
-            <button class="cookie-close-btn" onclick="document.getElementById('cookieWarning').classList.remove('show')">Compris</button>
-        </div>
-    </div>
-
     <div class="lang-switcher">
         <button class="lang-btn active" data-lang-btn="fr" type="button">FR</button>
         <button class="lang-btn" data-lang-btn="ar" type="button">عربي</button>
@@ -375,51 +352,69 @@
     </div>
 
     <div class="page">
+        <!-- HEADER FRENCH -->
         <header class="hero active" data-lang="fr">
             <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" 
                  alt="Ramadan 2026" 
                  onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-size=%2780%27 text-anchor=%27middle%27 dy=%27.3em%27%3E🌙%3C/text%3E%3C/svg%3E'">
             <div class="hero-text">
-                <p class="week">Semaine 1</p>
+                <p class="week">Semaine 1 – Ambiance</p>
                 <h1>Bienvenue Ramadan 2026 🌙</h1>
                 <p class="desc">Ouvrons ensemble ce mois sacré.</p>
                 <div class="badge">🌙 Ramadan 2026</div>
             </div>
         </header>
 
+        <!-- HEADER ARABIC -->
         <header class="hero" data-lang="ar" lang="ar">
             <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" 
                  alt="رمضان 2026"
                  onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-size=%2780%27 text-anchor=%27middle%27 dy=%27.3em%27%3E🌙%3C/text%3E%3C/svg%3E'">
             <div class="hero-text">
-                <p class="week">الأسبوع الأول</p>
+                <p class="week">الأسبوع الأول – الأجواء</p>
                 <h1>مرحباً رمضان 2026 🌙</h1>
                 <p class="desc">لنفتتح معاً هذا الشهر الفضيل.</p>
                 <div class="badge">🌙 رمضان 2026</div>
             </div>
         </header>
 
+        <!-- HEADER ENGLISH -->
         <header class="hero" data-lang="en">
             <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" 
                  alt="Ramadan 2026"
                  onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-size=%2780%27 text-anchor=%27middle%27 dy=%27.3em%27%3E🌙%3C/text%3E%3C/svg%3E'">
             <div class="hero-text">
-                <p class="week">Week 1</p>
+                <p class="week">Week 1 – Atmosphere</p>
                 <h1>Welcome Ramadan 2026 🌙</h1>
-                <p class="desc">Let's open this holy month together.</p>
+                <p class="desc">Let's open this holy month.</p>
                 <div class="badge">🌙 Ramadan 2026</div>
             </div>
         </header>
         
         <main>
+            <!-- CLUB FRENCH -->
             <section class="active" data-lang="fr">
                 <h2>⭐ Club Spécial Ramadan 2026</h2>
-                <p>Rejoignez notre club !</p>
+                <p>Rejoignez notre club privilégié et profitez d'avantages exclusifs !</p>
                 
                 <div class="security-badge">
                     🔒 Protégé par Google
                 </div>
                 
+                <!-- BOUTON MOBILE -->
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="open-form-btn">
+                    <span class="icon">📝</span> Remplir le formulaire
+                </a>
+                
+                <div class="mobile-note">
+                    <strong>📱 Sur mobile :</strong>
+                    Le formulaire s'ouvre dans un nouvel onglet pour une meilleure expérience (pas de problème de cookies).
+                </div>
+                
+                <!-- IFRAME DESKTOP -->
                 <div class="form-container">
                     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform?embedded=true" 
                             title="Club Ramadan 2026"
@@ -429,49 +424,79 @@
                 </div>
                 
                 <p class="form-note">
-                    🔒 Vos données sont protégées.
+                    🔒 Vos données sont entièrement protégées par Google. Une seule inscription par email.
                 </p>
             </section>
 
+            <!-- CLUB ARABIC -->
             <section data-lang="ar" lang="ar">
                 <h2>⭐ النادي الخاص رمضان 2026</h2>
-                <p>انضم إلى نادينا!</p>
+                <p>انضم إلى نادينا المميز واستفد من المزايا الحصرية!</p>
                 
                 <div class="security-badge">
                     🔒 محمي بواسطة Google
                 </div>
                 
+                <!-- BOUTON MOBILE -->
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="open-form-btn">
+                    <span class="icon">📝</span> املأ النموذج
+                </a>
+                
+                <div class="mobile-note">
+                    <strong>📱 على الهاتف المحمول:</strong>
+                    يفتح النموذج في علامة تبويب جديدة لتجربة أفضل (بدون مشاكل ملفات تعريف الارتباط).
+                </div>
+                
+                <!-- IFRAME DESKTOP -->
                 <div class="form-container">
                     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform?embedded=true" 
-                            title="النادي الخاص"
+                            title="النادي الخاص رمضان 2026"
                             allowfullscreen>
                         جاري التحميل...
                     </iframe>
                 </div>
                 
                 <p class="form-note">
-                    🔒 بياناتك محمية.
+                    🔒 بياناتك محمية بالكامل عبر Google. تسجيل واحد فقط لكل بريد إلكتروني.
                 </p>
             </section>
 
+            <!-- CLUB ENGLISH -->
             <section data-lang="en">
-                <h2>⭐ Special Club 2026</h2>
-                <p>Join our club!</p>
+                <h2>⭐ Special Ramadan 2026 Club</h2>
+                <p>Join our exclusive club and enjoy special benefits!</p>
                 
                 <div class="security-badge">
                     🔒 Protected by Google
                 </div>
                 
+                <!-- BOUTON MOBILE -->
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="open-form-btn">
+                    <span class="icon">📝</span> Fill the form
+                </a>
+                
+                <div class="mobile-note">
+                    <strong>📱 On mobile:</strong>
+                    The form opens in a new tab for a better experience (no cookie issues).
+                </div>
+                
+                <!-- IFRAME DESKTOP -->
                 <div class="form-container">
                     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform?embedded=true" 
-                            title="Special Club"
+                            title="Special Ramadan 2026 Club"
                             allowfullscreen>
                         Loading...
                     </iframe>
                 </div>
                 
                 <p class="form-note">
-                    🔒 Your data is protected.
+                    🔒 Your data is fully protected by Google. One registration per email.
                 </p>
             </section>
         </main>
@@ -481,30 +506,9 @@
         (function() {
             'use strict';
             
-            // DÉTECTION COOKIES
-            function checkCookies() {
-                try {
-                    // Test si cookies activés
-                    document.cookie = "testcookie=1; SameSite=None; Secure";
-                    var cookiesEnabled = document.cookie.indexOf("testcookie") !== -1;
-                    document.cookie = "testcookie=1; expires=Thu, 01-Jan-1970 00:00:01 GMT";
-                    
-                    if (!cookiesEnabled) {
-                        // Afficher avertissement
-                        setTimeout(function() {
-                            document.getElementById('cookieWarning').classList.add('show');
-                        }, 2000);
-                        console.warn('⚠️ Cookies bloqués - Google Forms ne fonctionnera pas');
-                        return false;
-                    }
-                    
-                    console.log('✅ Cookies activés');
-                    return true;
-                } catch(e) {
-                    console.warn('Erreur test cookies:', e);
-                    return false;
-                }
-            }
+            console.log('🌙 Ramadan 2026 - Chargement...');
+            console.log('User Agent:', navigator.userAgent);
+            console.log('Screen:', window.innerWidth + 'x' + window.innerHeight);
             
             function switchLang(lang) {
                 if (!lang || !['ar', 'fr', 'en'].includes(lang)) return;
@@ -539,8 +543,7 @@
             }
             
             function init() {
-                // Check cookies
-                checkCookies();
+                console.log('✅ DOM chargé');
                 
                 document.querySelectorAll('.lang-btn').forEach(function(btn) {
                     btn.addEventListener('click', function(e) {
@@ -557,6 +560,8 @@
                 if (savedLang && savedLang !== 'fr') {
                     switchLang(savedLang);
                 }
+                
+                console.log('✅ Initialisation terminée');
             }
             
             window.switchLang = switchLang;
@@ -568,7 +573,7 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-CRRK6Z4D1X');
+      gtag('config', 'G-CRRK6Z4D1X', {'anonymize_ip': true});
     </script>
 </body>
-</html>
+</html> 

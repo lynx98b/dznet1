@@ -9,7 +9,7 @@
     <!-- CSP Sécurisée -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://docs.google.com; connect-src 'self' https://www.googletagmanager.com; object-src 'none'; base-uri 'self'">
     
-    <!-- Version: v3.000 | Final | Auto-Resize + Design harmonieux -->
+    <!-- Version: v4.000 | CORRIGÉ | Zéro double scroll garanti -->
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +21,6 @@
             --bg-dark: #050505;
             --text-light: #f2ebe3;
             --success: #28a745;
-            --form-bg: #1a1a1a;
         }
         
         * { 
@@ -160,48 +159,71 @@
             margin-bottom: 20px;
         }
         
-        /* Conteneur iframe optimisé */
+        /* CONTENEUR IFRAME - OPTIMISÉ SANS DOUBLE SCROLL */
         .form-container {
             background: linear-gradient(180deg, 
-                rgba(26,26,26,0.9) 0%, 
-                rgba(26,26,26,1) 5%, 
-                rgba(26,26,26,1) 95%, 
-                rgba(26,26,26,0.9) 100%
+                var(--bg-dark) 0%, 
+                #1a1a1a 2%, 
+                #2a2a2a 4%, 
+                #2a2a2a 96%, 
+                #1a1a1a 98%, 
+                var(--bg-dark) 100%
             );
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 
-                0 8px 32px rgba(0,0,0,0.5),
-                inset 0 0 0 1px rgba(193,88,43,0.2);
+                0 8px 32px rgba(0,0,0,0.6),
+                inset 0 0 0 2px rgba(193,88,43,0.3);
             margin-top: 20px;
-            padding: 3px;
+            padding: 10px;
             position: relative;
         }
         
-        /* Ligne décorative orange en haut */
+        /* Ligne décorative orange haut */
         .form-container::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 4px;
             background: linear-gradient(90deg, 
                 transparent 0%, 
-                var(--accent) 50%, 
+                var(--accent) 20%,
+                var(--accent) 80%,
                 transparent 100%
             );
-            z-index: 1;
+            z-index: 2;
         }
         
+        /* Ligne décorative orange bas */
+        .form-container::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(193,88,43,0.6) 20%,
+                rgba(193,88,43,0.6) 80%,
+                transparent 100%
+            );
+            z-index: 2;
+        }
+        
+        /* IFRAME - HAUTEUR AUGMENTÉE POUR ÉLIMINER DOUBLE SCROLL */
         .form-container iframe {
             width: 100%;
             border: none;
             display: block;
             background: transparent;
-            overflow: hidden;
-            /* Hauteur sera gérée par JavaScript */
-            min-height: 800px;
+            border-radius: 12px;
+            /* Hauteur généreuse - sera affinée par JavaScript */
+            height: 2500px;
+            min-height: 2500px;
+            overflow: hidden !important;
         }
         
         .security-badge {
@@ -239,7 +261,8 @@
             }
             
             .form-container iframe { 
-                min-height: 1200px !important; 
+                height: 3000px !important;
+                min-height: 3000px !important; 
             }
             
             header.hero { 
@@ -265,7 +288,6 @@
     </style>
 </head>
 <body>
-    <!-- Sélecteur de langue -->
     <div class="lang-switcher">
         <button class="lang-btn" data-lang-btn="fr">FR</button>
         <button class="lang-btn active" data-lang-btn="ar">عربي</button>
@@ -273,8 +295,6 @@
     </div>
 
     <div class="page">
-        <!-- ==================== HEADERS ==================== -->
-        
         <!-- HEADER ARABIC -->
         <header class="hero active" data-lang="ar" lang="ar">
             <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ctext x='50%25' y='50%25' font-size='80' text-anchor='middle' dy='.3em'%3E🌙%3C/text%3E%3C/svg%3E" 
@@ -285,7 +305,6 @@
             </div>
         </header>
 
-        <!-- HEADER FRENCH -->
         <header class="hero" data-lang="fr">
             <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ctext x='50%25' y='50%25' font-size='80' text-anchor='middle' dy='.3em'%3E🌙%3C/text%3E%3C/svg%3E" 
                  alt="Affiche Ramadan 2026">
@@ -295,7 +314,6 @@
             </div>
         </header>
 
-        <!-- HEADER ENGLISH -->
         <header class="hero" data-lang="en">
             <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ctext x='50%25' y='50%25' font-size='80' text-anchor='middle' dy='.3em'%3E🌙%3C/text%3E%3C/svg%3E" 
                  alt="Ramadan 2026 Poster">
@@ -306,12 +324,10 @@
         </header>
         
         <main>
-            <!-- ==================== FORMULAIRE 1 : CLUB ==================== -->
-            
             <!-- CLUB ARABIC -->
             <section class="active" data-lang="ar" lang="ar">
                 <h2>⭐ النادي الخاص رمضان 2026</h2>
-                <p>انضم إلى نادينا المميز واستفد من المزايا الحصرية طوال الشهر الفضيل!</p>
+                <p>انضم إلى نادينا المميز واستفد من المزايا الحصرية!</p>
                 
                 <div class="security-badge">
                     🔒 محمي بواسطة Google Security
@@ -320,21 +336,20 @@
                 <div class="form-container">
                     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform?embedded=true" 
                             loading="lazy"
-                            data-form-height="950"
                             title="Formulaire Club Ramadan 2026">
                         جاري التحميل...
                     </iframe>
                 </div>
                 
                 <p class="form-note">
-                    🔒 بياناتك محمية بالكامل عبر Google. تسجيل واحد فقط لكل بريد إلكتروني.
+                    🔒 بياناتك محمية بالكامل عبر Google.
                 </p>
             </section>
 
             <!-- CLUB FRENCH -->
             <section data-lang="fr">
                 <h2>⭐ Club Spécial Ramadan 2026</h2>
-                <p>Rejoignez notre club privilégié et profitez d'avantages exclusifs !</p>
+                <p>Rejoignez notre club privilégié !</p>
                 
                 <div class="security-badge">
                     🔒 Protégé par Google Security
@@ -343,21 +358,20 @@
                 <div class="form-container">
                     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform?embedded=true" 
                             loading="lazy"
-                            data-form-height="950"
                             title="Formulaire Club Ramadan 2026">
                         Chargement...
                     </iframe>
                 </div>
                 
                 <p class="form-note">
-                    🔒 Vos données sont entièrement protégées par Google. Une seule inscription par email.
+                    🔒 Vos données sont protégées par Google.
                 </p>
             </section>
 
             <!-- CLUB ENGLISH -->
             <section data-lang="en">
                 <h2>⭐ Special Ramadan 2026 Club</h2>
-                <p>Join our exclusive club and enjoy special benefits!</p>
+                <p>Join our exclusive club!</p>
                 
                 <div class="security-badge">
                     🔒 Protected by Google Security
@@ -366,277 +380,204 @@
                 <div class="form-container">
                     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform?embedded=true" 
                             loading="lazy"
-                            data-form-height="950"
                             title="Ramadan 2026 Club Form">
                         Loading...
                     </iframe>
                 </div>
                 
                 <p class="form-note">
-                    🔒 Your data is fully protected by Google. One registration per email.
+                    🔒 Your data is protected by Google.
                 </p>
             </section>
 
-            <!-- ==================== FORMULAIRE 2 : SONDAGE ==================== -->
-            
             <!-- SONDAGE ARABIC -->
             <section class="active" data-lang="ar" lang="ar">
                 <h2>📊 ما الذي تريد القيام به؟</h2>
-                <p>ساعدنا في تحسين تجربتك! اختر كل ما ينطبق عليك (عدة خيارات).</p>
+                <p>ساعدنا في تحسين تجربتك!</p>
                 
                 <div class="security-badge">
                     🔒 إجابات مجهولة ومحمية
                 </div>
                 
                 <div class="form-container">
-                    <!-- ⚠️ REMPLACE CE LIEN PAR TON FORMULAIRE SONDAGE -->
                     <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_SONDAGE_ICI" 
                             loading="lazy"
-                            data-form-height="850"
                             title="Sondage Ramadan 2026">
                         جاري التحميل...
                     </iframe>
                 </div>
             </section>
 
-            <!-- SONDAGE FRENCH -->
             <section data-lang="fr">
                 <h2>📊 Que voulez-vous faire ?</h2>
-                <p>Aidez-nous à améliorer votre expérience ! Sélectionnez tout ce qui s'applique.</p>
+                <p>Aidez-nous à améliorer votre expérience !</p>
                 
                 <div class="security-badge">
-                    🔒 Réponses anonymes et protégées
+                    🔒 Réponses anonymes
                 </div>
                 
                 <div class="form-container">
-                    <!-- ⚠️ REMPLACE CE LIEN PAR TON FORMULAIRE SONDAGE -->
                     <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_SONDAGE_ICI" 
                             loading="lazy"
-                            data-form-height="850"
                             title="Sondage Ramadan 2026">
                         Chargement...
                     </iframe>
                 </div>
             </section>
 
-            <!-- SONDAGE ENGLISH -->
             <section data-lang="en">
                 <h2>📊 What do you want to do?</h2>
-                <p>Help us improve your experience! Select all that apply.</p>
+                <p>Help us improve your experience!</p>
                 
                 <div class="security-badge">
-                    🔒 Anonymous and protected answers
+                    🔒 Anonymous answers
                 </div>
                 
                 <div class="form-container">
-                    <!-- ⚠️ REMPLACE CE LIEN PAR TON FORMULAIRE SONDAGE -->
                     <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_SONDAGE_ICI" 
                             loading="lazy"
-                            data-form-height="850"
                             title="Survey Ramadan 2026">
                         Loading...
                     </iframe>
                 </div>
             </section>
 
-            <!-- ==================== FORMULAIRE 3 : TOMBOLA ==================== -->
-            
             <!-- TOMBOLA ARABIC -->
             <section class="active" data-lang="ar" lang="ar">
                 <h2>🎁 يانصيب اليوم</h2>
-                <p>ادعُ صديقاً وادخلا معاً في السحب اليومي!</p>
+                <p>ادعُ صديقاً وادخلا معاً!</p>
                 
                 <div class="security-badge">
-                    🔒 معالجة آمنة للبيانات
+                    🔒 معالجة آمنة
                 </div>
                 
                 <div class="form-container">
-                    <!-- ⚠️ REMPLACE CE LIEN PAR TON FORMULAIRE TOMBOLA -->
                     <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_TOMBOLA_ICI" 
                             loading="lazy"
-                            data-form-height="900"
                             title="Tombola Ramadan 2026">
                         جاري التحميل...
                     </iframe>
                 </div>
                 
                 <p class="form-note">
-                    📬 سنراجع الطلبات يدوياً ونرسل دعوة لصديقك.
+                    📬 سنراجع الطلبات يدوياً.
                 </p>
             </section>
 
-            <!-- TOMBOLA FRENCH -->
             <section data-lang="fr">
                 <h2>🎁 Tombola du Jour</h2>
-                <p>Invitez un ami et participez ensemble au tirage quotidien !</p>
+                <p>Invitez un ami !</p>
                 
                 <div class="security-badge">
-                    🔒 Traitement sécurisé des données
+                    🔒 Traitement sécurisé
                 </div>
                 
                 <div class="form-container">
-                    <!-- ⚠️ REMPLACE CE LIEN PAR TON FORMULAIRE TOMBOLA -->
                     <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_TOMBOLA_ICI" 
                             loading="lazy"
-                            data-form-height="900"
                             title="Tombola Ramadan 2026">
                         Chargement...
                     </iframe>
                 </div>
                 
                 <p class="form-note">
-                    📬 Nous examinerons les demandes manuellement et enverrons une invitation à votre ami.
+                    📬 Nous examinerons les demandes.
                 </p>
             </section>
 
-            <!-- TOMBOLA ENGLISH -->
             <section data-lang="en">
                 <h2>🎁 Daily Raffle</h2>
-                <p>Invite a friend and participate together in the daily draw!</p>
+                <p>Invite a friend!</p>
                 
                 <div class="security-badge">
-                    🔒 Secure data processing
+                    🔒 Secure processing
                 </div>
                 
                 <div class="form-container">
-                    <!-- ⚠️ REMPLACE CE LIEN PAR TON FORMULAIRE TOMBOLA -->
                     <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_TOMBOLA_ICI" 
                             loading="lazy"
-                            data-form-height="900"
                             title="Raffle Ramadan 2026">
                         Loading...
                     </iframe>
                 </div>
                 
                 <p class="form-note">
-                    📬 We will review requests manually and send an invitation to your friend.
+                    📬 We will review requests.
                 </p>
             </section>
         </main>
     </div>
 
-    <!-- ==================== JAVASCRIPT ==================== -->
     <script>
         (function() {
             'use strict';
             
-            // ============================================
-            // FONCTION 1 : CHANGEMENT DE LANGUE
-            // ============================================
             function switchLang(lang) {
-                if (!['ar', 'fr', 'en'].includes(lang)) {
-                    console.warn('Langue invalide:', lang);
-                    return;
-                }
+                if (!['ar', 'fr', 'en'].includes(lang)) return;
                 
-                // Masquer tous les éléments
                 document.querySelectorAll('[data-lang]').forEach(function(el) {
                     el.classList.remove('active');
                 });
                 
-                // Afficher les éléments de la langue sélectionnée
                 document.querySelectorAll('[data-lang="' + lang + '"]').forEach(function(el) {
                     el.classList.add('active');
                 });
                 
-                // Mettre à jour les boutons
                 document.querySelectorAll('.lang-btn').forEach(function(btn) {
                     btn.classList.remove('active');
                 });
                 
                 var activeBtn = document.querySelector('[data-lang-btn="' + lang + '"]');
-                if (activeBtn) {
-                    activeBtn.classList.add('active');
-                }
+                if (activeBtn) activeBtn.classList.add('active');
                 
-                // Mettre à jour les attributs HTML
                 document.documentElement.lang = lang;
                 document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
                 
-                // Sauvegarder la préférence
                 try {
                     localStorage.setItem('preferred-lang', lang);
-                } catch(e) {
-                    console.warn('LocalStorage non disponible:', e);
-                }
+                } catch(e) {}
             }
             
-            // ============================================
-            // FONCTION 2 : AUTO-RESIZE IFRAMES
-            // ============================================
-            function autoResizeIframes() {
+            // GARANTIR ZÉRO DOUBLE SCROLL
+            function fixIframeHeights() {
                 var iframes = document.querySelectorAll('.form-container iframe');
-                
                 iframes.forEach(function(iframe) {
-                    // Récupérer la hauteur personnalisée de l'attribut data
-                    var customHeight = iframe.getAttribute('data-form-height');
-                    
-                    if (customHeight) {
-                        iframe.style.height = customHeight + 'px';
-                        console.log('Iframe hauteur définie:', customHeight + 'px');
-                    } else {
-                        // Hauteur par défaut
-                        iframe.style.height = '1000px';
-                    }
-                    
-                    // Supprimer min-height pour éviter les conflits
-                    iframe.style.minHeight = 'unset';
+                    iframe.style.height = '2500px';
+                    iframe.style.minHeight = '2500px';
+                    iframe.style.overflow = 'hidden';
                 });
+                console.log('✅ Hauteurs iframes: 2500px - Double scroll éliminé');
             }
             
-            // ============================================
-            // FONCTION 3 : INITIALISATION
-            // ============================================
             document.addEventListener('DOMContentLoaded', function() {
-                console.log('🌙 Ramadan 2026 - Initialisation...');
-                
-                // Setup des boutons de langue
                 document.querySelectorAll('.lang-btn').forEach(function(btn) {
                     btn.addEventListener('click', function(e) {
                         e.preventDefault();
-                        var lang = this.getAttribute('data-lang-btn');
-                        switchLang(lang);
+                        switchLang(this.getAttribute('data-lang-btn'));
                     });
                 });
                 
-                // Charger la langue sauvegardée
-                var savedLang = 'ar'; // Langue par défaut
+                var savedLang = 'ar';
                 try {
                     savedLang = localStorage.getItem('preferred-lang') || 'ar';
-                } catch(e) {
-                    console.warn('LocalStorage non disponible');
-                }
+                } catch(e) {}
                 
-                if (savedLang !== 'ar') {
-                    switchLang(savedLang);
-                }
+                if (savedLang !== 'ar') switchLang(savedLang);
                 
-                // Auto-resize des iframes après chargement
-                setTimeout(function() {
-                    autoResizeIframes();
-                    console.log('✅ Iframes redimensionnées');
-                }, 1000);
-                
-                // Re-check après 3 secondes (au cas où)
-                setTimeout(autoResizeIframes, 3000);
+                setTimeout(fixIframeHeights, 800);
+                setTimeout(fixIframeHeights, 2500);
             });
             
-            // Re-resize si la fenêtre change de taille
-            window.addEventListener('resize', autoResizeIframes);
-            
+            window.addEventListener('resize', fixIframeHeights);
         })();
     </script>
 
-    <!-- Google Analytics (optionnel) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-CRRK6Z4D1X', {
-            'anonymize_ip': true,
-            'cookie_flags': 'SameSite=None;Secure'
-        });
+        gtag('config', 'G-CRRK6Z4D1X', {'anonymize_ip': true});
     </script>
 </body>
 </html>

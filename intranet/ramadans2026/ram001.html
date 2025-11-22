@@ -6,10 +6,7 @@
     <title>🌙 مرحباً رمضان 2026 — Programme dznet1</title>
     <meta name="description" content="Programme Ramadan 2026 - dznet1 - Formulaires sécurisés Google Forms">
     
-    <!-- CSP Sécurisée -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://docs.google.com; connect-src 'self' https://www.googletagmanager.com; object-src 'none'; base-uri 'self'">
-    
-    <!-- Version: v4.000 | CORRIGÉ | Zéro double scroll garanti -->
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -159,68 +156,23 @@
             margin-bottom: 20px;
         }
         
-        /* CONTENEUR IFRAME - OPTIMISÉ SANS DOUBLE SCROLL */
+        /* CONTENEUR IFRAME SIMPLIFIÉ - PLEINE LARGEUR */
         .form-container {
-            background: linear-gradient(180deg, 
-                var(--bg-dark) 0%, 
-                #1a1a1a 2%, 
-                #2a2a2a 4%, 
-                #2a2a2a 96%, 
-                #1a1a1a 98%, 
-                var(--bg-dark) 100%
-            );
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 
-                0 8px 32px rgba(0,0,0,0.6),
-                inset 0 0 0 2px rgba(193,88,43,0.3);
             margin-top: 20px;
-            padding: 10px;
+            margin-bottom: 20px;
             position: relative;
+            /* Ligne orange décorative uniquement en haut */
+            border-top: 3px solid var(--accent);
+            border-radius: 8px;
+            overflow: hidden;
         }
         
-        /* Ligne décorative orange haut */
-        .form-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                var(--accent) 20%,
-                var(--accent) 80%,
-                transparent 100%
-            );
-            z-index: 2;
-        }
-        
-        /* Ligne décorative orange bas */
-        .form-container::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(193,88,43,0.6) 20%,
-                rgba(193,88,43,0.6) 80%,
-                transparent 100%
-            );
-            z-index: 2;
-        }
-        
-        /* IFRAME - HAUTEUR AUGMENTÉE POUR ÉLIMINER DOUBLE SCROLL */
+        /* IFRAME DIRECT - SANS PADDING */
         .form-container iframe {
             width: 100%;
             border: none;
             display: block;
             background: transparent;
-            border-radius: 12px;
-            /* Hauteur généreuse - sera affinée par JavaScript */
             height: 2500px;
             min-height: 2500px;
             overflow: hidden !important;
@@ -538,7 +490,6 @@
                 } catch(e) {}
             }
             
-            // GARANTIR ZÉRO DOUBLE SCROLL
             function fixIframeHeights() {
                 var iframes = document.querySelectorAll('.form-container iframe');
                 iframes.forEach(function(iframe) {
@@ -546,7 +497,6 @@
                     iframe.style.minHeight = '2500px';
                     iframe.style.overflow = 'hidden';
                 });
-                console.log('✅ Hauteurs iframes: 2500px - Double scroll éliminé');
             }
             
             document.addEventListener('DOMContentLoaded', function() {

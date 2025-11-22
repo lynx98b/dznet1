@@ -24,7 +24,48 @@
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        .form-container {
+            /* Fond dégradé pour transition douce */
+            background: linear-gradient(180deg, 
+                rgba(26,26,26,0.95) 0%, 
+                rgba(26,26,26,1) 10%, 
+                rgba(26,26,26,1) 90%, 
+                rgba(26,26,26,0.95) 100%
+            );
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 
+                0 8px 32px rgba(0,0,0,0.5),
+                inset 0 0 0 1px rgba(193,88,43,0.3);
+            margin-top: 20px;
+            padding: 2px; /* Bordure subtile */
+        }
         
+        .form-container iframe {
+            width: 100%;
+            border: none;
+            min-height: 600px;
+            background: transparent;
+            /* Filtre pour adoucir le blanc si le thème Google n'est pas appliqué */
+            filter: brightness(0.95) contrast(1.05);
+        }
+        
+        /* Overlay décoratif au-dessus de l'iframe */
+        .form-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--accent) 50%, 
+                transparent 100%
+            );
+            z-index: 1;
+            pointer-events: none;
+        }
         body {
             font-family: 'Cairo', sans-serif;
             background: var(--bg-dark);

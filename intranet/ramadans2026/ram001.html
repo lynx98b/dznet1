@@ -3,38 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌙 مرحباً رمضان 2026 — Google Forms Secure Edition</title>
-    <meta name="description" content="Programme Ramadan 2026 - dznet1 - Formulaires ultra-sécurisés">
+    <title>🌙 مرحباً رمضان 2026 — Google Forms Edition</title>
+    <meta name="description" content="Programme Ramadan 2026 - dznet1 - Formulaires sécurisés">
     
-    <!-- CSP Stricte Complète - Score 95-100/100 -->
-    <meta http-equiv="Content-Security-Policy" content="{csp}">
+    <!-- CSP Stricte CORRIGÉE -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://docs.google.com; connect-src 'self' https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'">
     
-    <!-- Version: {self.template_version} | Ultra-Sécurisé | Zéro event handler inline -->
+    <!-- Version: v2.002 | Corrigée | Ultra-Sécurisée -->
     
-    <!-- Preconnect pour performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        :root {{
+        :root {
             --accent: #c1582b;
             --bg-dark: #050505;
             --text-light: #f2ebe3;
             --success: #28a745;
-        }}
+        }
         
-        * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        body {{
+        body {
             font-family: 'Cairo', sans-serif;
             background: var(--bg-dark);
             color: white;
             min-height: 100vh;
             background-image: radial-gradient(circle at top, rgba(255,255,255,0.09), transparent 60%);
-        }}
+        }
         
-        .lang-switcher {{
+        .lang-switcher {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -46,9 +45,9 @@
             border-radius: 20px;
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-        }}
+        }
         
-        .lang-btn {{
+        .lang-btn {
             padding: 6px 12px;
             border: 1px solid rgba(255,255,255,0.3);
             background: transparent;
@@ -58,16 +57,16 @@
             font-weight: 600;
             font-size: 0.9rem;
             transition: all 0.2s;
-        }}
+        }
         
-        .lang-btn:hover {{ background: rgba(255,255,255,0.1); border-color: var(--accent); }}
-        .lang-btn.active {{ background: var(--accent); border-color: var(--accent); color: #1d0f05; }}
+        .lang-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--accent); }
+        .lang-btn.active { background: var(--accent); border-color: var(--accent); color: #1d0f05; }
         
-        [lang="ar"] {{ font-family: 'Amiri', 'Cairo', serif; direction: rtl; }}
+        [lang="ar"] { font-family: 'Amiri', 'Cairo', serif; direction: rtl; }
         
-        .page {{ max-width: 1200px; margin: 0 auto; padding: 80px 24px; }}
+        .page { max-width: 1200px; margin: 0 auto; padding: 80px 24px; }
         
-        header.hero {{
+        header.hero {
             background: linear-gradient(135deg, #c1582b 0%, #090909 90%);
             border-radius: 32px;
             padding: 32px;
@@ -79,66 +78,65 @@
             margin-bottom: 40px;
             position: relative;
             overflow: hidden;
-        }}
+        }
         
-        header.hero::after {{
+        header.hero::after {
             content: "";
             position: absolute;
             inset: 0;
             background: linear-gradient(120deg, transparent 0%, rgba(0,0,0,0.25) 100%);
-        }}
+        }
         
-        .hero img {{
+        .hero img {
             width: 200px;
             height: auto;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.45);
             position: relative;
             z-index: 2;
-        }}
+        }
         
-        .hero-text {{ flex: 1; position: relative; z-index: 2; }}
-        .hero-text h1 {{ font-size: clamp(2rem, 4vw, 3.4rem); color: #fff; margin-bottom: 16px; }}
-        .hero-text p {{ font-size: 1.15rem; color: #fff8ef; line-height: 1.7; }}
+        .hero-text { flex: 1; position: relative; z-index: 2; }
+        .hero-text h1 { font-size: clamp(2rem, 4vw, 3.4rem); color: #fff; margin-bottom: 16px; }
+        .hero-text p { font-size: 1.15rem; color: #fff8ef; line-height: 1.7; }
         
-        main {{ display: flex; flex-direction: column; gap: 32px; }}
+        main { display: flex; flex-direction: column; gap: 32px; }
         
-        section {{
+        section {
             background: rgba(255,255,255,0.04);
             border-radius: 24px;
             padding: 28px;
             border: 1px solid rgba(255,255,255,0.12);
             box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-        }}
+        }
         
-        section h2 {{
+        section h2 {
             font-size: 1.7rem;
             margin-bottom: 16px;
             color: var(--accent);
-        }}
+        }
         
-        section p {{
+        section p {
             line-height: 1.8;
             color: var(--text-light);
             margin-bottom: 20px;
-        }}
+        }
         
-        /* Google Forms iframe styling */
-        .form-container {{
+        .form-container {
             background: white;
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             margin-top: 20px;
-        }}
+        }
         
-        .form-container iframe {{
+        .form-container iframe {
             width: 100%;
             border: none;
             min-height: 600px;
-        }}
+        }
         
-        .security-badge {{
+        .security-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -150,9 +148,9 @@
             font-weight: 600;
             font-size: 0.9rem;
             margin: 12px 0;
-        }}
+        }
         
-        .form-note {{
+        .form-note {
             margin-top: 16px;
             padding: 12px 16px;
             background: rgba(193,88,43,0.1);
@@ -160,20 +158,19 @@
             border-radius: 8px;
             font-size: 0.9rem;
             color: #ffe9d0;
-        }}
+        }
         
-        [data-lang]:not(.active) {{ display: none; }}
+        [data-lang]:not(.active) { display: none; }
         
-        @media (max-width: 640px) {{
-            .page {{ padding: 60px 16px; }}
-            .form-container iframe {{ min-height: 800px; }}
-            header.hero {{ flex-direction: column; text-align: center; }}
-            .hero img {{ width: 70%; }}
-        }}
+        @media (max-width: 640px) {
+            .page { padding: 60px 16px; }
+            .form-container iframe { min-height: 800px; }
+            header.hero { flex-direction: column; text-align: center; }
+            .hero img { width: 70%; }
+        }
     </style>
 </head>
 <body>
-    <!-- Language Switcher -->
     <div class="lang-switcher">
         <button class="lang-btn" data-lang-btn="fr">FR</button>
         <button class="lang-btn active" data-lang-btn="ar">عربي</button>
@@ -183,10 +180,8 @@
     <div class="page">
         <!-- HEADER ARABIC -->
         <header class="hero active" data-lang="ar" lang="ar">
-            <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" 
-                 alt="ملصق رمضان 2026" 
-                 loading="lazy"
-                 onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22%3E🌙%3C/text%3E%3C/svg%3E'">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ctext x='50%25' y='50%25' font-size='80' text-anchor='middle' dy='.3em'%3E🌙%3C/text%3E%3C/svg%3E" 
+                 alt="ملصق رمضان 2026">
             <div class="hero-text">
                 <h1>مرحباً رمضان 2026 🌙</h1>
                 <p>لنفتتح معاً هذا الشهر الفضيل بالنور والنوايا الإيجابية والإحسان.</p>
@@ -195,9 +190,8 @@
 
         <!-- HEADER FRENCH -->
         <header class="hero" data-lang="fr">
-            <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" 
-                 alt="Affiche Ramadan 2026" 
-                 loading="lazy">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ctext x='50%25' y='50%25' font-size='80' text-anchor='middle' dy='.3em'%3E🌙%3C/text%3E%3C/svg%3E" 
+                 alt="Affiche Ramadan 2026">
             <div class="hero-text">
                 <h1>Bienvenue Ramadan 2026 🌙</h1>
                 <p>Ouvrons ensemble ce mois sacré avec lumière et bienveillance.</p>
@@ -206,9 +200,8 @@
 
         <!-- HEADER ENGLISH -->
         <header class="hero" data-lang="en">
-            <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" 
-                 alt="Ramadan 2026 Poster" 
-                 loading="lazy">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Ctext x='50%25' y='50%25' font-size='80' text-anchor='middle' dy='.3em'%3E🌙%3C/text%3E%3C/svg%3E" 
+                 alt="Ramadan 2026 Poster">
             <div class="hero-text">
                 <h1>Welcome Ramadan 2026 🌙</h1>
                 <p>Let's open this holy month together with light and kindness.</p>
@@ -222,16 +215,13 @@
                 <p>انضم إلى نادينا المميز واستفد من المزايا الحصرية طوال الشهر الفضيل!</p>
                 
                 <div class="security-badge">
-                    🔒 محمي بواسطة Google Security + reCAPTCHA
+                    🔒 محمي بواسطة Google Security
                 </div>
                 
                 <div class="form-container">
-                   
-                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform?embedded=true"    
-                            frameborder="0" 
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform?embedded=true" 
                             loading="lazy"
-                            title="Formulaire Club Ramadan 2026"
-                            sandbox="allow-scripts allow-forms allow-same-origin">
+                            title="Formulaire Club Ramadan 2026">
                         جاري التحميل...
                     </iframe>
                 </div>
@@ -247,15 +237,13 @@
                 <p>Rejoignez notre club privilégié et profitez d'avantages exclusifs !</p>
                 
                 <div class="security-badge">
-                    🔒 Protégé par Google Security + reCAPTCHA
+                    🔒 Protégé par Google Security
                 </div>
                 
                 <div class="form-container">
-                    <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_CLUB_ICI" 
-                            frameborder="0" 
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform?embedded=true" 
                             loading="lazy"
-                            title="Formulaire Club Ramadan 2026"
-                            sandbox="allow-scripts allow-forms allow-same-origin">
+                            title="Formulaire Club Ramadan 2026">
                         Chargement...
                     </iframe>
                 </div>
@@ -271,15 +259,13 @@
                 <p>Join our exclusive club and enjoy special benefits!</p>
                 
                 <div class="security-badge">
-                    🔒 Protected by Google Security + reCAPTCHA
+                    🔒 Protected by Google Security
                 </div>
                 
                 <div class="form-container">
-                    <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_CLUB_ICI" 
-                            frameborder="0" 
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScyRhTc1HozJb_WUWpTG5UlDFiFf7pPzmP6PdcL-smp0euvxw/viewform?embedded=true" 
                             loading="lazy"
-                            title="Ramadan 2026 Club Form"
-                            sandbox="allow-scripts allow-forms allow-same-origin">
+                            title="Ramadan 2026 Club Form">
                         Loading...
                     </iframe>
                 </div>
@@ -300,10 +286,8 @@
                 
                 <div class="form-container">
                     <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_SONDAGE_ICI" 
-                            frameborder="0" 
                             loading="lazy"
-                            title="Sondage Ramadan 2026"
-                            sandbox="allow-scripts allow-forms allow-same-origin">
+                            title="Sondage Ramadan 2026">
                         جاري التحميل...
                     </iframe>
                 </div>
@@ -320,10 +304,8 @@
                 
                 <div class="form-container">
                     <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_SONDAGE_ICI" 
-                            frameborder="0" 
                             loading="lazy"
-                            title="Sondage Ramadan 2026"
-                            sandbox="allow-scripts allow-forms allow-same-origin">
+                            title="Sondage Ramadan 2026">
                         Chargement...
                     </iframe>
                 </div>
@@ -340,10 +322,8 @@
                 
                 <div class="form-container">
                     <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_SONDAGE_ICI" 
-                            frameborder="0" 
                             loading="lazy"
-                            title="Survey Ramadan 2026"
-                            sandbox="allow-scripts allow-forms allow-same-origin">
+                            title="Survey Ramadan 2026">
                         Loading...
                     </iframe>
                 </div>
@@ -360,10 +340,8 @@
                 
                 <div class="form-container">
                     <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_TOMBOLA_ICI" 
-                            frameborder="0" 
                             loading="lazy"
-                            title="Tombola Ramadan 2026"
-                            sandbox="allow-scripts allow-forms allow-same-origin">
+                            title="Tombola Ramadan 2026">
                         جاري التحميل...
                     </iframe>
                 </div>
@@ -384,10 +362,8 @@
                 
                 <div class="form-container">
                     <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_TOMBOLA_ICI" 
-                            frameborder="0" 
                             loading="lazy"
-                            title="Tombola Ramadan 2026"
-                            sandbox="allow-scripts allow-forms allow-same-origin">
+                            title="Tombola Ramadan 2026">
                         Chargement...
                     </iframe>
                 </div>
@@ -408,10 +384,8 @@
                 
                 <div class="form-container">
                     <iframe src="COLLE_TON_LIEN_GOOGLE_FORM_TOMBOLA_ICI" 
-                            frameborder="0" 
                             loading="lazy"
-                            title="Raffle Ramadan 2026"
-                            sandbox="allow-scripts allow-forms allow-same-origin">
+                            title="Raffle Ramadan 2026">
                         Loading...
                     </iframe>
                 </div>
@@ -423,91 +397,62 @@
         </main>
     </div>
 
-    <!-- Language Switcher Script - En fin de document pour performance -->
     <script>
-        // [v1.002] Aucun event handler inline - Utilisation de addEventListener
-        (function() {{
+        (function() {
             'use strict';
             
-            /**
-             * Change la langue de l'interface
-             * @param {{string}} lang - Code langue (ar/fr/en)
-             */
-            function switchLang(lang) {{
-                // Validation input
-                if (!['ar', 'fr', 'en'].includes(lang)) {{
-                    console.error('Langue invalide:', lang);
-                    return;
-                }}
+            function switchLang(lang) {
+                if (!['ar', 'fr', 'en'].includes(lang)) return;
                 
-                // Remove active class from all elements
-                document.querySelectorAll('[data-lang]').forEach(function(el) {{
+                document.querySelectorAll('[data-lang]').forEach(function(el) {
                     el.classList.remove('active');
-                }});
+                });
                 
-                // Add active class to selected language
-                document.querySelectorAll('[data-lang="' + lang + '"]').forEach(function(el) {{
+                document.querySelectorAll('[data-lang="' + lang + '"]').forEach(function(el) {
                     el.classList.add('active');
-                }});
+                });
                 
-                // Update button states
-                document.querySelectorAll('.lang-btn').forEach(function(btn) {{
+                document.querySelectorAll('.lang-btn').forEach(function(btn) {
                     btn.classList.remove('active');
-                }});
+                });
                 
                 var activeBtn = document.querySelector('[data-lang-btn="' + lang + '"]');
-                if (activeBtn) {{
-                    activeBtn.classList.add('active');
-                }}
+                if (activeBtn) activeBtn.classList.add('active');
                 
-                // Update HTML attributes
-                var htmlEl = document.documentElement;
-                htmlEl.lang = lang;
-                htmlEl.dir = lang === 'ar' ? 'rtl' : 'ltr';
+                document.documentElement.lang = lang;
+                document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
                 
-                // Save preference (avec gestion d'erreur)
-                try {{
+                try {
                     localStorage.setItem('preferred-lang', lang);
-                }} catch(e) {{
-                    console.warn('LocalStorage non disponible:', e);
-                }}
-            }}
+                } catch(e) {}
+            }
             
-            // Attach event listeners to language buttons
-            document.addEventListener('DOMContentLoaded', function() {{
-                // Setup language switcher buttons
-                document.querySelectorAll('.lang-btn').forEach(function(btn) {{
-                    btn.addEventListener('click', function(e) {{
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.lang-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
                         e.preventDefault();
-                        var lang = this.getAttribute('data-lang-btn');
-                        switchLang(lang);
-                    }});
-                }});
+                        switchLang(this.getAttribute('data-lang-btn'));
+                    });
+                });
                 
-                // Load saved language preference
-                var savedLang = 'ar'; // Default
-                try {{
+                var savedLang = 'ar';
+                try {
                     savedLang = localStorage.getItem('preferred-lang') || 'ar';
-                }} catch(e) {{
-                    console.warn('LocalStorage non disponible:', e);
-                }}
+                } catch(e) {}
                 
-                if (savedLang !== 'ar') {{
-                    switchLang(savedLang);
-                }}
-            }});
-        }})();
+                if (savedLang !== 'ar') switchLang(savedLang);
+            });
+        })();
     </script>
 
-    <!-- Google Analytics (optionnel) - Chargement asynchrone -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){{dataLayer.push(arguments);}}
+        function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-CRRK6Z4D1X', {{
-            'anonymize_ip': true,
-            'cookie_flags': 'SameSite=None;Secure'
-        }});
+        gtag('config', 'G-CRRK6Z4D1X', {
+            'anonymize_ip': true
+        });
     </script>
 </body>
+</html>

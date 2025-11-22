@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>🌙 Bienvenue Ramadan 2026</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>🌙 Bienvenue Ramadan 2026 — Programme Intranet DZ</title>
+    <meta name="description" content="Message d'ouverture du mois sacré Ramadan 2026 pour l'équipe dznet1">
+    <meta name="keywords" content="Ramadan 2026, Algérie, dznet1, dates, santé, jeûne">
+    <meta name="author" content="Team Intranet DZ">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="🌙 Bienvenue Ramadan 2026 — dznet1">
+    <meta property="og:description" content="Message d'ouverture du mois sacré pour toute l'équipe dznet1">
+    <meta property="og:type" content="website">
     
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://docs.google.com; connect-src 'self' https:;">
     
@@ -27,11 +37,12 @@
         }
         
         body {
-            font-family: 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg-dark);
             color: white;
             min-height: 100vh;
             background-image: radial-gradient(circle at top, rgba(255,255,255,0.09), transparent 60%);
+            -webkit-font-smoothing: antialiased;
         }
         
         .lang-switcher {
@@ -58,6 +69,7 @@
             font-weight: 600;
             font-size: 0.85rem;
             transition: all 0.2s;
+            -webkit-appearance: none;
         }
         
         .lang-btn:active { transform: scale(0.95); }
@@ -150,6 +162,96 @@
             margin-top: 12px;
         }
         
+        /* MESSAGE DE BIENVENUE */
+        .welcome-message {
+            background: linear-gradient(135deg, rgba(193,88,43,0.15) 0%, rgba(255,255,255,0.03) 100%);
+            border-radius: 16px;
+            padding: 24px 20px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(193,88,43,0.3);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-message::before {
+            content: "🌙";
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            font-size: 150px;
+            opacity: 0.05;
+            transform: rotate(-15deg);
+        }
+        
+        .message-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid rgba(193,88,43,0.3);
+        }
+        
+        .message-header h2 {
+            font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+            color: #ffe9d0;
+            line-height: 1.4;
+        }
+        
+        .message-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .message-content p {
+            font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+            line-height: 1.8;
+            margin-bottom: 16px;
+            color: var(--text-light);
+        }
+        
+        .message-content .greeting {
+            font-size: clamp(0.95rem, 3vw, 1.1rem);
+            font-weight: 600;
+            color: #ffe9d0;
+            margin-bottom: 18px;
+        }
+        
+        .message-content strong {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        
+        .highlight-box {
+            background: rgba(193,88,43,0.2);
+            border-left: 4px solid var(--accent);
+            padding: 16px 18px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.6;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .message-content .closing {
+            font-size: clamp(0.95rem, 3vw, 1.1rem);
+            font-weight: 600;
+            color: #ffe9d0;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .message-content .signature {
+            font-size: clamp(1rem, 3.2vw, 1.2rem);
+            font-weight: 700;
+            color: var(--accent);
+            text-align: center;
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
         main { 
             display: flex; 
             flex-direction: column; 
@@ -174,9 +276,45 @@
             line-height: 1.7;
             color: var(--text-light);
             font-size: clamp(0.9rem, 2.5vw, 1rem);
+            margin-bottom: 16px;
         }
         
-        /* BOUTON OUVRIR FORMULAIRE (MOBILE) */
+        /* CLUB SPECIAL */
+        .club-special {
+            background: linear-gradient(135deg, rgba(193,88,43,0.2) 0%, rgba(255,255,255,0.05) 100%);
+            border: 2px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .club-special::before {
+            content: "⭐";
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 100px;
+            opacity: 0.1;
+        }
+        
+        .club-perks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 16px 0;
+            padding: 14px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+        }
+        
+        .perk-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: #ffe9d0;
+        }
+        
+        /* BOUTON MOBILE */
         .open-form-btn {
             display: block;
             width: 100%;
@@ -193,6 +331,7 @@
             box-shadow: 0 6px 20px rgba(193,88,43,0.4);
             transition: all 0.3s;
             margin: 20px 0;
+            font-family: 'Cairo', sans-serif;
         }
         
         .open-form-btn:active {
@@ -205,7 +344,7 @@
             margin-right: 8px;
         }
         
-        /* IFRAME (DESKTOP UNIQUEMENT) */
+        /* IFRAME DESKTOP */
         .form-container {
             margin: 20px 0;
             position: relative;
@@ -213,7 +352,7 @@
             border-radius: 8px;
             overflow: hidden;
             background: rgba(0,0,0,0.2);
-            display: none; /* Caché par défaut */
+            display: none;
         }
         
         .form-container iframe {
@@ -267,23 +406,90 @@
             margin-bottom: 6px;
         }
         
+        /* CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.07);
+            padding: 18px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(193,88,43,0.3);
+        }
+        
+        .card h3 {
+            margin-bottom: 10px;
+            color: #ffe9d0;
+            font-size: clamp(1rem, 2.8vw, 1.1rem);
+        }
+        
+        .card p {
+            color: #f9f5ef;
+            font-size: clamp(0.85rem, 2.3vw, 0.95rem);
+            margin: 0;
+        }
+        
+        .cta {
+            background: rgba(255,255,255,0.08);
+            border: 1px dashed rgba(255,255,255,0.35);
+            text-align: center;
+        }
+        
+        .cta a {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 12px 24px;
+            border-radius: 999px;
+            background: var(--accent);
+            color: #1d0f05;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        
+        .cta a:hover {
+            transform: translateY(-2px);
+        }
+        
         [data-lang]:not(.active) { display: none; }
         
         /* MEDIA QUERIES */
+        @media (max-width: 768px) {
+            .open-form-btn { display: block; }
+            .form-container { display: none !important; }
+            .cards { grid-template-columns: 1fr; }
+        }
         
-        /* Desktop : Afficher iframe */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .open-form-btn { display: none; }
+            .form-container { display: block; }
+            .form-container iframe {
+                height: 2600px !important;
+                min-height: 2600px !important;
+            }
+            .mobile-note { display: none; }
+            header.hero {
+                flex-direction: row;
+                text-align: left;
+            }
+            .hero img { width: 180px; }
+        }
+        
         @media (min-width: 1025px) {
-            .open-form-btn {
-                display: none; /* Cacher bouton sur desktop */
-            }
-            
-            .form-container {
-                display: block; /* Afficher iframe sur desktop */
-            }
-            
-            .mobile-note {
-                display: none;
-            }
+            .page { padding: 80px 24px; }
+            .open-form-btn { display: none; }
+            .form-container { display: block; }
+            .mobile-note { display: none; }
             
             header.hero {
                 flex-direction: row;
@@ -304,44 +510,6 @@
                 font-size: 0.9rem;
             }
         }
-        
-        /* Tablette : Afficher iframe */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .open-form-btn {
-                display: none;
-            }
-            
-            .form-container {
-                display: block;
-            }
-            
-            .form-container iframe {
-                height: 2600px !important;
-                min-height: 2600px !important;
-            }
-            
-            .mobile-note {
-                display: none;
-            }
-            
-            header.hero {
-                flex-direction: row;
-                text-align: left;
-            }
-            
-            .hero img { width: 180px; }
-        }
-        
-        /* Mobile : Afficher bouton uniquement */
-        @media (max-width: 768px) {
-            .open-form-btn {
-                display: block; /* Afficher bouton sur mobile */
-            }
-            
-            .form-container {
-                display: none !important; /* Cacher iframe sur mobile */
-            }
-        }
     </style>
 </head>
 <body>
@@ -352,50 +520,120 @@
     </div>
 
     <div class="page">
-        <!-- HEADER FRENCH -->
+        <!-- ========== HEADER FRENCH ========== -->
         <header class="hero active" data-lang="fr">
             <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" 
                  alt="Ramadan 2026" 
                  onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-size=%2780%27 text-anchor=%27middle%27 dy=%27.3em%27%3E🌙%3C/text%3E%3C/svg%3E'">
             <div class="hero-text">
-                <p class="week">Semaine 1 – Ambiance</p>
+                <p class="week">Semaine 1 – Ambiance & Découverte</p>
                 <h1>Bienvenue Ramadan 2026 🌙</h1>
-                <p class="desc">Ouvrons ensemble ce mois sacré.</p>
-                <div class="badge">🌙 Ramadan 2026</div>
+                <p class="desc">Ouvrons ensemble ce mois sacré avec lumière, intentions positives et bienveillance pour toute l'équipe dznet1.</p>
+                <div class="badge">🌙 Ramadan 2026 · Intranet DZ</div>
             </div>
         </header>
 
-        <!-- HEADER ARABIC -->
+        <!-- ========== HEADER ARABIC ========== -->
         <header class="hero" data-lang="ar" lang="ar">
             <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" 
                  alt="رمضان 2026"
                  onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-size=%2780%27 text-anchor=%27middle%27 dy=%27.3em%27%3E🌙%3C/text%3E%3C/svg%3E'">
             <div class="hero-text">
-                <p class="week">الأسبوع الأول – الأجواء</p>
+                <p class="week">الأسبوع الأول – الأجواء والاكتشاف</p>
                 <h1>مرحباً رمضان 2026 🌙</h1>
-                <p class="desc">لنفتتح معاً هذا الشهر الفضيل.</p>
-                <div class="badge">🌙 رمضان 2026</div>
+                <p class="desc">لنفتتح معاً هذا الشهر الفضيل بالنور والنوايا الإيجابية والإحسان لكل فريق dznet1.</p>
+                <div class="badge">🌙 رمضان 2026 · الشبكة الداخلية DZ</div>
             </div>
         </header>
 
-        <!-- HEADER ENGLISH -->
+        <!-- ========== HEADER ENGLISH ========== -->
         <header class="hero" data-lang="en">
             <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/ramadan2026.svg" 
                  alt="Ramadan 2026"
                  onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Ctext x=%2750%25%27 y=%2750%25%27 font-size=%2780%27 text-anchor=%27middle%27 dy=%27.3em%27%3E🌙%3C/text%3E%3C/svg%3E'">
             <div class="hero-text">
-                <p class="week">Week 1 – Atmosphere</p>
+                <p class="week">Week 1 – Atmosphere & Discovery</p>
                 <h1>Welcome Ramadan 2026 🌙</h1>
-                <p class="desc">Let's open this holy month.</p>
-                <div class="badge">🌙 Ramadan 2026</div>
+                <p class="desc">Let's open this holy month together with light, positive intentions and kindness for the entire dznet1 team.</p>
+                <div class="badge">🌙 Ramadan 2026 · Intranet DZ</div>
             </div>
         </header>
+
+        <!-- ========== MESSAGE DE BIENVENUE FRENCH ========== -->
+        <section class="welcome-message active" data-lang="fr">
+            <div class="message-header">
+                <h2>🌙✨ Bienvenue au mois sacré – Message à toute l'équipe dznet1 ✨🌙</h2>
+            </div>
+            <div class="message-content">
+                <p class="greeting">Chères collaboratrices, chers collaborateurs,</p>
+                
+                <p>À l'aube du mois sacré, <strong>dznet1</strong> ouvre ses portes à une atmosphère empreinte de sérénité, de lumière et de belles intentions. Que ce mois soit pour chacun un moment de paix intérieure, de solidarité et de bienveillance partagée au sein de notre équipe.</p>
+                
+                <p>Nous vous souhaitons un Ramadan rempli de clarté dans les idées, de force dans les projets, et d'harmonie dans chaque journée de travail. Puisse cette période inspirer de nouveaux élans, unir nos efforts et nourrir notre esprit d'équipe.</p>
+                
+                <div class="highlight-box">
+                    🌟 Bienvenue dans un mois de respect, de générosité et de positivité. Que chacun y trouve énergie, équilibre et motivation.
+                </div>
+                
+                <p class="closing">L'équipe <strong>dznet1</strong> vous souhaite un excellent début de mois sacré.</p>
+                <p class="signature">Ramadan Moubarak à toutes et à tous. 🌙</p>
+            </div>
+        </section>
+
+        <!-- ========== MESSAGE DE BIENVENUE ARABIC ========== -->
+        <section class="welcome-message" data-lang="ar" lang="ar">
+            <div class="message-header">
+                <h2>🌙✨ مرحباً بالشهر الفضيل – رسالة لكل فريق dznet1 ✨🌙</h2>
+            </div>
+            <div class="message-content">
+                <p class="greeting">زميلاتنا الكريمات، زملاؤنا الأعزاء،</p>
+                
+                <p>مع فجر الشهر الفضيل، يفتح <strong>dznet1</strong> أبوابه لأجواء مليئة بالسكينة والنور والنوايا الطيبة. ليكن هذا الشهر لكل واحد منكم لحظة من السلام الداخلي والتضامن والإحسان المشترك في فريقنا.</p>
+                
+                <p>نتمنى لكم رمضان مليئاً بالوضوح في الأفكار، والقوة في المشاريع، والانسجام في كل يوم عمل. ليكن هذا الوقت مُلهماً لانطلاقات جديدة، موحداً لجهودنا ومغذياً لروح فريقنا.</p>
+                
+                <div class="highlight-box">
+                    🌟 مرحباً بشهر الاحترام والكرم والإيجابية. ليجد كل منا فيه الطاقة والتوازن والحافز.
+                </div>
+                
+                <p class="closing">يتمنى فريق <strong>dznet1</strong> لكم بداية ممتازة للشهر الفضيل.</p>
+                <p class="signature">رمضان مبارك للجميع. 🌙</p>
+            </div>
+        </section>
+
+        <!-- ========== MESSAGE DE BIENVENUE ENGLISH ========== -->
+        <section class="welcome-message" data-lang="en">
+            <div class="message-header">
+                <h2>🌙✨ Welcome to the Holy Month – Message to the entire dznet1 team ✨🌙</h2>
+            </div>
+            <div class="message-content">
+                <p class="greeting">Dear colleagues,</p>
+                
+                <p>At the dawn of the holy month, <strong>dznet1</strong> opens its doors to an atmosphere filled with serenity, light and beautiful intentions. May this month be for each of you a moment of inner peace, solidarity and shared kindness within our team.</p>
+                
+                <p>We wish you a Ramadan filled with clarity of ideas, strength in projects, and harmony in each working day. May this period inspire new momentum, unite our efforts and nourish our team spirit.</p>
+                
+                <div class="highlight-box">
+                    🌟 Welcome to a month of respect, generosity and positivity. May everyone find energy, balance and motivation.
+                </div>
+                
+                <p class="closing">The <strong>dznet1</strong> team wishes you an excellent start to the holy month.</p>
+                <p class="signature">Ramadan Mubarak to all. 🌙</p>
+            </div>
+        </section>
         
         <main>
-            <!-- CLUB FRENCH -->
-            <section class="active" data-lang="fr">
+            <!-- ========== CLUB SPECIAL FRENCH ========== -->
+            <section class="club-special active" data-lang="fr">
                 <h2>⭐ Club Spécial Ramadan 2026</h2>
-                <p>Rejoignez notre club privilégié et profitez d'avantages exclusifs !</p>
+                <p>Rejoignez notre club privilégié et profitez d'avantages exclusifs tout au long du mois sacré !</p>
+                
+                <div class="club-perks">
+                    <div class="perk-item">🎁 Cadeaux des sponsors</div>
+                    <div class="perk-item">📰 Nouveautés en avant-première</div>
+                    <div class="perk-item">🏆 Accès aux concours exclusifs</div>
+                    <div class="perk-item">💝 Surprises quotidiennes</div>
+                </div>
                 
                 <div class="security-badge">
                     🔒 Protégé par Google
@@ -428,10 +666,17 @@
                 </p>
             </section>
 
-            <!-- CLUB ARABIC -->
-            <section data-lang="ar" lang="ar">
+            <!-- ========== CLUB SPECIAL ARABIC ========== -->
+            <section class="club-special" data-lang="ar" lang="ar">
                 <h2>⭐ النادي الخاص رمضان 2026</h2>
-                <p>انضم إلى نادينا المميز واستفد من المزايا الحصرية!</p>
+                <p>انضم إلى نادينا المميز واستفد من المزايا الحصرية طوال الشهر الفضيل!</p>
+                
+                <div class="club-perks">
+                    <div class="perk-item">🎁 هدايا الرعاة</div>
+                    <div class="perk-item">📰 الجديد حصرياً</div>
+                    <div class="perk-item">🏆 الوصول للمسابقات الحصرية</div>
+                    <div class="perk-item">💝 مفاجآت يومية</div>
+                </div>
                 
                 <div class="security-badge">
                     🔒 محمي بواسطة Google
@@ -464,10 +709,17 @@
                 </p>
             </section>
 
-            <!-- CLUB ENGLISH -->
-            <section data-lang="en">
+            <!-- ========== CLUB SPECIAL ENGLISH ========== -->
+            <section class="club-special" data-lang="en">
                 <h2>⭐ Special Ramadan 2026 Club</h2>
-                <p>Join our exclusive club and enjoy special benefits!</p>
+                <p>Join our exclusive club and enjoy special benefits throughout the holy month!</p>
+                
+                <div class="club-perks">
+                    <div class="perk-item">🎁 Sponsor gifts</div>
+                    <div class="perk-item">📰 Early access to news</div>
+                    <div class="perk-item">🏆 Exclusive contests</div>
+                    <div class="perk-item">💝 Daily surprises</div>
+                </div>
                 
                 <div class="security-badge">
                     🔒 Protected by Google
@@ -499,7 +751,243 @@
                     🔒 Your data is fully protected by Google. One registration per email.
                 </p>
             </section>
+
+            <!-- ========== FRENCH CONTENT ========== -->
+            <div data-lang="fr" class="active">
+                <section>
+                    <h2>💡 Idées clés</h2>
+                    <p>Découvrez les moments forts pour créer une ambiance chaleureuse durant le mois sacré.</p>
+                    <div class="cards">
+                        <div class='card'>
+                            <h3>✨ Ambiance lumineuse</h3>
+                            <p>Créer une ambiance lumineuse au bureau et à la maison pour marquer l'arrivée du mois sacré.</p>
+                        </div>
+                        <div class='card'>
+                            <h3>📖 Moments à partager</h3>
+                            <p>Partager des récits historiques et scientifiques sur l'observation du croissant lunaire.</p>
+                        </div>
+                        <div class='card'>
+                            <h3>🤝 Inspiration du jour</h3>
+                            <p>Mettre en avant les valeurs de patience, de générosité et d'écoute mutuelle entre collègues.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>📅 Dates clés Ramadan 2026</h2>
+                    <p>Les dates importantes à retenir pour vivre pleinement ce mois béni.</p>
+                    <div class="cards">
+                        <div class="card">
+                            <h3>🌙 Début du Ramadan</h3>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 8px 0;">17-18 février 2026</p>
+                            <p>Le mois sacré commence après l'observation du croissant lunaire.</p>
+                        </div>
+                        <div class="card">
+                            <h3>✨ Les 10 derniers jours</h3>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 8px 0;">9-19 mars 2026</p>
+                            <p>Période d'adoration intense avec prières nocturnes.</p>
+                        </div>
+                        <div class="card">
+                            <h3>🌟 Laylat al-Qadr</h3>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 8px 0;">~16 mars 2026</p>
+                            <p>La Nuit du Destin, moment de pardon et de miséricorde.</p>
+                        </div>
+                        <div class="card">
+                            <h3>🎉 Aïd al-Fitr</h3>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 8px 0;">19-20 mars 2026</p>
+                            <p>Célébration de fin du jeûne avec prières et partage.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>💚 Santé & Bien-être</h2>
+                    <p>Conseils pour rester en forme durant le jeûne.</p>
+                    <div class="cards">
+                        <div class="card">
+                            <h3>💧 Hydratation</h3>
+                            <p>Buvez 1,5-2L d'eau entre Iftar et Suhoor.</p>
+                        </div>
+                        <div class="card">
+                            <h3>🌅 Suhoor équilibré</h3>
+                            <p>Glucides complexes et protéines pour l'énergie.</p>
+                        </div>
+                        <div class="card">
+                            <h3>🍽️ Iftar progressif</h3>
+                            <p>Commencez par dattes et eau, puis repas léger.</p>
+                        </div>
+                        <div class="card">
+                            <h3>⚕️ Précautions</h3>
+                            <p>Consultez votre médecin si nécessaire.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="cta">
+                    <h2>📋 Retour au programme</h2>
+                    <p>Découvre l'ensemble des 28 thèmes du mois.</p>
+                    <a href="index.html">Voir l'index Ramadan 2026</a>
+                </section>
+            </div>
+
+            <!-- ========== ARABIC CONTENT ========== -->
+            <div data-lang="ar" lang="ar">
+                <section>
+                    <h2>💡 الأفكار الرئيسية</h2>
+                    <p>اكتشف اللحظات المميزة لخلق أجواء دافئة خلال الشهر الفضيل.</p>
+                    <div class="cards">
+                        <div class='card'>
+                            <h3>✨ أجواء مضيئة</h3>
+                            <p>خلق أجواء مضيئة في المكتب والمنزل للاحتفال بقدوم الشهر الفضيل.</p>
+                        </div>
+                        <div class='card'>
+                            <h3>📖 لحظات للمشاركة</h3>
+                            <p>مشاركة القصص التاريخية والعلمية حول رؤية هلال رمضان.</p>
+                        </div>
+                        <div class='card'>
+                            <h3>🤝 إلهام اليوم</h3>
+                            <p>إبراز قيم الصبر والكرم والاستماع المتبادل بين الزملاء.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>📅 تواريخ رمضان 2026</h2>
+                    <p>التواريخ المهمة للعيش الكامل لهذا الشهر المبارك.</p>
+                    <div class="cards">
+                        <div class="card">
+                            <h3>🌙 بداية رمضان</h3>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 8px 0;">17-18 فبراير 2026</p>
+                            <p>يبدأ الشهر بعد رؤية الهلال.</p>
+                        </div>
+                        <div class="card">
+                            <h3>✨ العشر الأواخر</h3>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 8px 0;">9-19 مارس 2026</p>
+                            <p>فترة عبادة مكثفة مع الصلوات الليلية.</p>
+                        </div>
+                        <div class="card">
+                            <h3>🌟 ليلة القدر</h3>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 8px 0;">~16 مارس 2026</p>
+                            <p>ليلة القدر، وقت المغفرة والرحمة.</p>
+                        </div>
+                        <div class="card">
+                            <h3>🎉 عيد الفطر</h3>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 8px 0;">19-20 مارس 2026</p>
+                            <p>احتفال نهاية الصيام مع الصلوات والمشاركة.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>💚 الصحة والعافية</h2>
+                    <p>نصائح للبقاء بصحة جيدة أثناء الصيام.</p>
+                    <div class="cards">
+                        <div class="card">
+                            <h3>💧 الترطيب</h3>
+                            <p>اشرب 1.5-2 لتر من الماء بين الإفطار والسحور.</p>
+                        </div>
+                        <div class="card">
+                            <h3>🌅 سحور متوازن</h3>
+                            <p>كربوهيدرات معقدة وبروتينات للطاقة.</p>
+                        </div>
+                        <div class="card">
+                            <h3>🍽️ إفطار تدريجي</h3>
+                            <p>ابدأ بالتمر والماء، ثم وجبة خفيفة.</p>
+                        </div>
+                        <div class="card">
+                            <h3>⚕️ احتياطات</h3>
+                            <p>استشر طبيبك إذا لزم الأمر.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="cta">
+                    <h2>📋 العودة للبرنامج</h2>
+                    <p>اكتشف جميع المواضيع الـ28 للشهر.</p>
+                    <a href="index.html">عرض فهرس رمضان 2026</a>
+                </section>
+            </div>
+
+            <!-- ========== ENGLISH CONTENT ========== -->
+            <div data-lang="en">
+                <section>
+                    <h2>💡 Key Ideas</h2>
+                    <p>Discover highlights to create a warm atmosphere during the holy month.</p>
+                    <div class="cards">
+                        <div class='card'>
+                            <h3>✨ Bright Atmosphere</h3>
+                            <p>Create a bright atmosphere at office and home to mark the holy month's arrival.</p>
+                        </div>
+                        <div class='card'>
+                            <h3>📖 Moments to Share</h3>
+                            <p>Share historical and scientific stories about lunar crescent observation.</p>
+                        </div>
+                        <div class='card'>
+                            <h3>🤝 Daily Inspiration</h3>
+                            <p>Highlight values of patience, generosity and mutual listening among colleagues.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>📅 Key Dates Ramadan 2026</h2>
+                    <p>Important dates to fully live this blessed month.</p>
+                    <div class="cards">
+                        <div class="card">
+                            <h3>🌙 Start of Ramadan</h3>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 8px 0;">February 17-18, 2026</p>
+                            <p>The holy month begins after crescent observation.</p>
+                        </div>
+                        <div class="card">
+                            <h3>✨ Last 10 Days</h3>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 8px 0;">March 9-19, 2026</p>
+                            <p>Intense worship period with night prayers.</p>
+                        </div>
+                        <div class="card">
+                            <h3>🌟 Laylat al-Qadr</h3>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 8px 0;">~March 16, 2026</p>
+                            <p>Night of Power, moment of forgiveness and mercy.</p>
+                        </div>
+                        <div class="card">
+                            <h3>🎉 Eid al-Fitr</h3>
+                            <p style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin: 8px 0;">March 19-20, 2026</p>
+                            <p>End of fasting celebration with prayers and sharing.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>💚 Health & Wellness</h2>
+                    <p>Tips to stay healthy during fasting.</p>
+                    <div class="cards">
+                        <div class="card">
+                            <h3>💧 Hydration</h3>
+                            <p>Drink 1.5-2L water between Iftar and Suhoor.</p>
+                        </div>
+                        <div class="card">
+                            <h3>🌅 Balanced Suhoor</h3>
+                            <p>Complex carbs and proteins for energy.</p>
+                        </div>
+                        <div class="card">
+                            <h3>🍽️ Progressive Iftar</h3>
+                            <p>Start with dates and water, then light meal.</p>
+                        </div>
+                        <div class="card">
+                            <h3>⚕️ Precautions</h3>
+                            <p>Consult your doctor if needed.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="cta">
+                    <h2>📋 Back to Program</h2>
+                    <p>Discover all 28 themes of the month.</p>
+                    <a href="index.html">View Ramadan 2026 Index</a>
+                </section>
+            </div>
         </main>
+
+        <div id="footer-placeholder"></div>
     </div>
 
     <script>
@@ -511,7 +999,12 @@
             console.log('Screen:', window.innerWidth + 'x' + window.innerHeight);
             
             function switchLang(lang) {
-                if (!lang || !['ar', 'fr', 'en'].includes(lang)) return;
+                if (!lang || !['ar', 'fr', 'en'].includes(lang)) {
+                    console.warn('Langue invalide:', lang);
+                    return;
+                }
+                
+                console.log('Changement langue:', lang);
                 
                 document.querySelectorAll('[data-lang]').forEach(function(el) {
                     el.classList.remove('active');
@@ -533,7 +1026,10 @@
                 
                 try {
                     localStorage.setItem('preferred-lang', lang);
-                } catch(e) {}
+                    console.log('Langue sauvegardée:', lang);
+                } catch(e) {
+                    console.warn('LocalStorage indisponible');
+                }
             }
             
             if (document.readyState === 'loading') {
@@ -555,7 +1051,9 @@
                 var savedLang = 'fr';
                 try {
                     savedLang = localStorage.getItem('preferred-lang') || 'fr';
-                } catch(e) {}
+                } catch(e) {
+                    console.warn('Pas de localStorage');
+                }
                 
                 if (savedLang && savedLang !== 'fr') {
                     switchLang(savedLang);
@@ -568,6 +1066,15 @@
         })();
     </script>
 
+    <!-- Footer Script -->
+    <script>
+      fetch('/intranet/footer.html')
+        .then(r => r.text())
+        .then(html => { document.getElementById('footer-placeholder').innerHTML = html; })
+        .catch(() => {});
+    </script>
+
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -576,4 +1083,4 @@
       gtag('config', 'G-CRRK6Z4D1X', {'anonymize_ip': true});
     </script>
 </body>
-</html> 
+</html>

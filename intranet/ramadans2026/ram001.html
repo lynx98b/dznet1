@@ -8,16 +8,326 @@
     <title>🌙 Ramadan 2026 Algérie — Programme Exclusif dznet1</title>
     <meta name="description" content="Vivez le Ramadan 2026 avec dznet1: Sondages en direct, forum communautaire, horaires de prière, recettes traditionnelles et tombola quotidienne">
     
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <!-- Firebase SDK v9 -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, push, set, onValue, serverTimestamp, increment, onChildAdded } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        
+        // Configuration Firebase (vos vraies clés)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBoF6xTWr4dzgbWFwXavVC2mMshHCTK6fM",
+            authDomain: "ramadan-chat-auth.firebaseapp.com",
+            databaseURL: "https://ramadan-chat-auth-default-rtdb.firebaseio.com",
+            projectId: "ramadan-chat-auth",
+            storageBucket: "ramadan-chat-auth.firebasestorage.app",
+            messagingSenderId: "785976346844",
+            appId: "1:785976346844:web:62b890dbc32a32596f8c19"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+        
+        // Variables globales
+        window.currentUser = null;
+        window.hasVoted = false;
+        
+        // Authentification anonyme
+        signInAnonymously(auth).catch((error) => {
+            console.error('Erreur auth:', error);
+        });
+        
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                window.currentUser = user;
+                console.log('✅ Connecté:', user.uid);
+                initializeUserData(user.uid);
+                loadMessages();
+                loadPollResults();
+                loadUserAchievements(user.uid);
+            }
+        });
+        
+        // Initialiser les données utilisateur
+        function initializeUserData(uid) {
+            const userRef = ref(database, `users/${uid}`);
+            set(userRef, {
+                lastLogin: serverTimestamp(),
+                points: 0,
+                badges: [],
+                city: localStorage.getItem('userCity') || 'Alger'
+            });
+        }
+        
+        // Système de sondage temps réel
+        window.votePoll = function(option) {
+            if (window.hasVoted) {
+                window.showNotification('⚠️ Déjà voté', 'Vous avez déjà participé à ce sondage');
+                return;
+            }
+            
+            const pollRef = ref(database, `polls/daily/votes/${option}`);
+            set(pollRef, increment(1));
+            
+            // Sauvegarder le vote de l'utilisateur
+            const userVoteRef = ref(database, `users/${window.currentUser.uid}/votes/daily`);
+            set(userVoteRef, option);
+            
+            window.hasVoted = true;
+            localStorage.setItem('hasVotedToday', 'true');
+            
+            // Ajouter des points
+            addPoints(10);
+            
+            window.showNotification('✅ Vote enregistré', 'Merci pour votre participation! +10 points');
+        };
+        
+        // Charger les résultats du sondage
+        function loadPollResults() {
+            const pollRef = ref(database, 'polls/daily/votes');
+            onValue(pollRef, (snapshot) => {
+                const votes = snapshot.val() || {};
+                updatePollDisplay(votes);
+            });
+        }
+        
+        // Mettre à jour l'affichage du sondage
+        function updatePollDisplay(votes) {
+            const total = Object.values(votes).reduce((sum, v) => sum + v, 0) || 1;
+            
+            Object.keys(votes).forEach(option => {
+                const percentage = Math.round((votes[option] / total) * 100);
+                const element = document.querySelector(`[data-option="${option}"]`);
+                if (element) {
+                    element.querySelector('.poll-bar').style.width = `${percentage}%`;
+                    element.querySelector('.poll-percentage').textContent = `${percentage}%`;
+                    element.querySelector('.poll-votes').textContent = `(${votes[option]} votes)`;
+                }
+            });
+            
+            document.getElementById('totalVotes').textContent = total;
+        }
+        
+        // Système de messages communautaires
+        window.sendMessage = function() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            if (!window.currentUser) {
+                window.showNotification('⚠️ Connexion requise', 'Veuillez patienter...');
+                return;
+            }
+            
+            const city = localStorage.getItem('userCity') || 'Algérie';
+            const name = localStorage.getItem('userName') || 'Anonyme';
+            
+            const messageData = {
+                text: message,
+                author: name,
+                city: city,
+                uid: window.currentUser.uid,
+                timestamp: serverTimestamp(),
+                likes: 0,
+                comments: 0
+            };
+            
+            push(ref(database, 'messages'), messageData);
+            input.value = '';
+            
+            // Ajouter des points
+            addPoints(5);
+            
+            window.showNotification('✅ Message publié', '+5 points de participation');
+        };
+        
+        // Charger les messages
+        function loadMessages() {
+            const messagesRef = ref(database, 'messages');
+            const messagesContainer = document.getElementById('messagesContainer');
+            
+            onChildAdded(messagesRef, (snapshot) => {
+                const message = snapshot.val();
+                const messageId = snapshot.key;
+                
+                if (!message) return;
+                
+                const messageElement = createMessageElement(message, messageId);
+                messagesContainer.insertBefore(messageElement, messagesContainer.firstChild);
+                
+                // Limiter à 20 messages
+                while (messagesContainer.children.length > 20) {
+                    messagesContainer.removeChild(messagesContainer.lastChild);
+                }
+            });
+        }
+        
+        // Créer élément message
+        function createMessageElement(message, messageId) {
+            const div = document.createElement('div');
+            div.className = 'message';
+            div.dataset.messageId = messageId;
+            
+            const timeAgo = getTimeAgo(message.timestamp);
+            
+            div.innerHTML = `
+                <div class="message-header">
+                    <span class="message-author">🌙 ${message.author} - ${message.city}</span>
+                    <span class="message-time">${timeAgo}</span>
+                </div>
+                <div class="message-content">${escapeHtml(message.text)}</div>
+                <div class="message-actions">
+                    <span class="message-action" onclick="likeMessage('${messageId}')">❤️ ${message.likes || 0}</span>
+                    <span class="message-action">💬 ${message.comments || 0}</span>
+                    <span class="message-action" onclick="shareMessage('${messageId}')">↗️ Partager</span>
+                </div>
+            `;
+            
+            return div;
+        }
+        
+        // Like un message
+        window.likeMessage = function(messageId) {
+            const likeRef = ref(database, `messages/${messageId}/likes`);
+            set(likeRef, increment(1));
+            
+            // Animation visuelle
+            const element = document.querySelector(`[data-message-id="${messageId}"] .message-action`);
+            element.classList.add('liked');
+            
+            addPoints(1);
+        };
+        
+        // Partager un message
+        window.shareMessage = function(messageId) {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Ramadan 2026 - dznet1',
+                    text: 'Message de la communauté',
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                window.showNotification('📋 Copié', 'Lien copié dans le presse-papier');
+            }
+        };
+        
+        // Système de points et badges
+        function addPoints(points) {
+            if (!window.currentUser) return;
+            
+            const pointsRef = ref(database, `users/${window.currentUser.uid}/points`);
+            set(pointsRef, increment(points));
+            
+            // Vérifier les nouveaux badges
+            checkBadges();
+        }
+        
+        // Vérifier et débloquer les badges
+        function checkBadges() {
+            const userRef = ref(database, `users/${window.currentUser.uid}`);
+            onValue(userRef, (snapshot) => {
+                const userData = snapshot.val();
+                if (!userData) return;
+                
+                const points = userData.points || 0;
+                
+                // Débloquer badges selon points
+                if (points >= 10) unlockBadge('first-steps', '👣 Premiers Pas');
+                if (points >= 50) unlockBadge('active', '⭐ Actif');
+                if (points >= 100) unlockBadge('devoted', '🌙 Dévoué');
+                if (points >= 500) unlockBadge('champion', '🏆 Champion');
+                
+                // Mettre à jour l'affichage des points
+                document.getElementById('userPoints').textContent = points;
+            });
+        }
+        
+        // Débloquer un badge
+        function unlockBadge(badgeId, badgeName) {
+            const badgeElement = document.querySelector(`[data-badge="${badgeId}"]`);
+            if (badgeElement && !badgeElement.classList.contains('unlocked')) {
+                badgeElement.classList.add('unlocked');
+                window.showNotification('🏆 Badge débloqué!', badgeName);
+                
+                // Sauvegarder dans Firebase
+                const badgeRef = ref(database, `users/${window.currentUser.uid}/badges/${badgeId}`);
+                set(badgeRef, true);
+            }
+        }
+        
+        // Charger les achievements utilisateur
+        function loadUserAchievements(uid) {
+            const badgesRef = ref(database, `users/${uid}/badges`);
+            onValue(badgesRef, (snapshot) => {
+                const badges = snapshot.val() || {};
+                Object.keys(badges).forEach(badgeId => {
+                    const element = document.querySelector(`[data-badge="${badgeId}"]`);
+                    if (element) element.classList.add('unlocked');
+                });
+            });
+        }
+        
+        // Système de quiz
+        window.submitQuiz = function(answer) {
+            const correctAnswer = 'A'; // Alger
+            
+            if (answer === correctAnswer) {
+                addPoints(100);
+                window.showNotification('🎉 Correct!', 'Vous avez gagné 100 points!');
+                
+                // Marquer comme réussi
+                document.querySelector(`[data-answer="${answer}"]`).style.background = 'var(--success)';
+            } else {
+                window.showNotification('❌ Dommage', 'La réponse était Alger');
+                document.querySelector(`[data-answer="${answer}"]`).style.background = 'var(--danger)';
+            }
+            
+            // Désactiver le quiz
+            document.querySelectorAll('[data-answer]').forEach(btn => {
+                btn.disabled = true;
+            });
+        };
+        
+        // Utilitaires
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function getTimeAgo(timestamp) {
+            if (!timestamp) return 'À l\'instant';
+            
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diff = Math.floor((now - date) / 1000);
+            
+            if (diff < 60) return 'À l\'instant';
+            if (diff < 3600) return `Il y a ${Math.floor(diff / 60)} min`;
+            if (diff < 86400) return `Il y a ${Math.floor(diff / 3600)}h`;
+            return `Il y a ${Math.floor(diff / 86400)}j`;
+        }
+        
+        // Exporter les fonctions globales
+        window.database = database;
+        window.ref = ref;
+        window.push = push;
+        window.set = set;
+        window.onValue = onValue;
+        window.serverTimestamp = serverTimestamp;
+        window.increment = increment;
+    </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
+        /* [STYLES IDENTIQUES AU BLOC #1 - Je ne les répète pas pour économiser de l'espace] */
         :root {
             --primary: #c1582b;
             --primary-dark: #a04520;
@@ -51,7 +361,6 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* Animated Background */
         body::before {
             content: '';
             position: fixed;
@@ -72,7 +381,6 @@
             50% { transform: translateY(-20px) scale(1.05); }
         }
         
-        /* Floating Stars */
         .stars {
             position: fixed;
             top: 0;
@@ -97,7 +405,24 @@
             66% { transform: translateY(10px) rotate(240deg); }
         }
         
-        /* Language Switcher */
+        .user-info {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.9);
+            padding: 10px 15px;
+            border-radius: 15px;
+            backdrop-filter: blur(15px);
+            border: 2px solid var(--gold);
+            z-index: 1000;
+        }
+        
+        .user-points {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
         .lang-switcher {
             position: fixed;
             top: 15px;
@@ -137,7 +462,6 @@
             transform: scale(1.05);
         }
         
-        /* Main Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -146,7 +470,6 @@
             z-index: 2;
         }
         
-        /* Hero Section */
         .hero {
             background: linear-gradient(135deg, rgba(193,88,43,0.3) 0%, rgba(0,0,0,0.5) 100%);
             border-radius: 30px;
@@ -220,7 +543,6 @@
             line-height: 1.6;
         }
         
-        /* Live Countdown */
         .countdown {
             display: flex;
             justify-content: center;
@@ -252,7 +574,6 @@
             letter-spacing: 1px;
         }
         
-        /* Grid Layout */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -260,7 +581,6 @@
             margin-bottom: 40px;
         }
         
-        /* Cards */
         .card {
             background: var(--bg-card);
             border-radius: 20px;
@@ -324,7 +644,6 @@
             color: var(--text-secondary);
         }
         
-        /* Live Poll */
         .poll-container {
             margin-top: 20px;
         }
@@ -389,7 +708,6 @@
             margin-left: 10px;
         }
         
-        /* Messages Section */
         .messages-container {
             max-height: 500px;
             overflow-y: auto;
@@ -476,7 +794,6 @@
             color: var(--danger);
         }
         
-        /* Message Input */
         .message-input-container {
             display: flex;
             gap: 10px;
@@ -505,7 +822,6 @@
             color: var(--text-secondary);
         }
         
-        /* Buttons */
         .btn {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
@@ -548,6 +864,11 @@
             transform: translateY(0);
         }
         
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
         .btn-secondary {
             background: transparent;
             border: 2px solid var(--primary);
@@ -559,7 +880,6 @@
             color: white;
         }
         
-        /* Article Section */
         .article {
             background: linear-gradient(135deg, rgba(244,162,97,0.1) 0%, rgba(0,0,0,0.3) 100%);
             border-radius: 25px;
@@ -605,7 +925,6 @@
             color: var(--text-primary);
         }
         
-        /* Prayer Times */
         .prayer-times {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -649,7 +968,6 @@
             color: white;
         }
         
-        /* Achievements */
         .achievements {
             display: flex;
             gap: 20px;
@@ -703,7 +1021,6 @@
             color: var(--text-secondary);
         }
         
-        /* Notification */
         .notification {
             position: fixed;
             bottom: 30px;
@@ -733,7 +1050,6 @@
             opacity: 0.9;
         }
         
-        /* Loading Spinner */
         .loading {
             display: inline-block;
             width: 20px;
@@ -748,7 +1064,6 @@
             to { transform: rotate(360deg); }
         }
         
-        /* Footer */
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -779,7 +1094,6 @@
             color: var(--secondary);
         }
         
-        /* Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: 80px 15px 30px;
@@ -816,9 +1130,13 @@
                 left: 15px;
                 max-width: none;
             }
+            
+            .user-info {
+                top: 60px;
+                left: 15px;
+            }
         }
         
-        /* Arabic Support */
         [lang="ar"] {
             font-family: 'Amiri', 'Cairo', serif;
             direction: rtl;
@@ -829,7 +1147,11 @@
             right: auto;
         }
         
-        /* Accessibility */
+        [lang="ar"] .user-info {
+            right: 15px;
+            left: auto;
+        }
+        
         .sr-only {
             position: absolute;
             width: 1px;
@@ -842,7 +1164,6 @@
             border: 0;
         }
         
-        /* Print */
         @media print {
             body {
                 background: white;
@@ -850,6 +1171,7 @@
             }
             
             .lang-switcher,
+            .user-info,
             .message-input-container,
             .btn,
             .notification {
@@ -859,6 +1181,13 @@
     </style>
 </head>
 <body>
+    <!-- User Info Display -->
+    <div class="user-info">
+        <div class="user-points">
+            🏆 Points: <span id="userPoints">0</span>
+        </div>
+    </div>
+
     <!-- Floating Stars Background -->
     <div class="stars">
         <span class="star" style="top: 10%; left: 20%; font-size: 20px; animation-delay: 0s;">✨</span>
@@ -996,52 +1325,52 @@
                 <div class="card-content">
                     <p><strong>Quel est votre plat préféré pour le Ftour ?</strong></p>
                     <div class="poll-container" id="pollContainer">
-                        <div class="poll-option" data-option="chorba">
-                            <div class="poll-bar" style="width: 45%;"></div>
+                        <div class="poll-option" data-option="chorba" onclick="votePoll('chorba')">
+                            <div class="poll-bar" style="width: 0%;"></div>
                             <div class="poll-content">
                                 <span class="poll-label">🍲 Chorba Frik</span>
                                 <span>
-                                    <span class="poll-percentage">45%</span>
-                                    <span class="poll-votes">(1,234 votes)</span>
+                                    <span class="poll-percentage">0%</span>
+                                    <span class="poll-votes">(0 votes)</span>
                                 </span>
                             </div>
                         </div>
                         
-                        <div class="poll-option" data-option="harira">
-                            <div class="poll-bar" style="width: 28%;"></div>
+                        <div class="poll-option" data-option="harira" onclick="votePoll('harira')">
+                            <div class="poll-bar" style="width: 0%;"></div>
                             <div class="poll-content">
                                 <span class="poll-label">🥣 Harira</span>
                                 <span>
-                                    <span class="poll-percentage">28%</span>
-                                    <span class="poll-votes">(768 votes)</span>
+                                    <span class="poll-percentage">0%</span>
+                                    <span class="poll-votes">(0 votes)</span>
                                 </span>
                             </div>
                         </div>
                         
-                        <div class="poll-option" data-option="bourek">
-                            <div class="poll-bar" style="width: 20%;"></div>
+                        <div class="poll-option" data-option="bourek" onclick="votePoll('bourek')">
+                            <div class="poll-bar" style="width: 0%;"></div>
                             <div class="poll-content">
                                 <span class="poll-label">🥟 Bourek</span>
                                 <span>
-                                    <span class="poll-percentage">20%</span>
-                                    <span class="poll-votes">(548 votes)</span>
+                                    <span class="poll-percentage">0%</span>
+                                    <span class="poll-votes">(0 votes)</span>
                                 </span>
                             </div>
                         </div>
                         
-                        <div class="poll-option" data-option="autre">
-                            <div class="poll-bar" style="width: 7%;"></div>
+                        <div class="poll-option" data-option="autre" onclick="votePoll('autre')">
+                            <div class="poll-bar" style="width: 0%;"></div>
                             <div class="poll-content">
                                 <span class="poll-label">🍽️ Autre</span>
                                 <span>
-                                    <span class="poll-percentage">7%</span>
-                                    <span class="poll-votes">(192 votes)</span>
+                                    <span class="poll-percentage">0%</span>
+                                    <span class="poll-votes">(0 votes)</span>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <p style="margin-top: 15px; text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
-                        👥 Total: 2,742 participants • Actualisation temps réel
+                        👥 Total: <span id="totalVotes">0</span> participants • Actualisation temps réel
                     </p>
                 </div>
             </section>
@@ -1053,53 +1382,7 @@
                     <h2 class="card-title">Messages de la Communauté</h2>
                 </div>
                 <div class="messages-container" id="messagesContainer">
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="message-author">🌙 Amina - Oran</span>
-                            <span class="message-time">Il y a 2 min</span>
-                        </div>
-                        <div class="message-content">
-                            Ramadan Moubarak à tous ! Cette année, j'ai décidé de partager mes recettes 
-                            traditionnelles oranaises avec vous. Que la paix soit avec vous 💚
-                        </div>
-                        <div class="message-actions">
-                            <span class="message-action liked">❤️ 43</span>
-                            <span class="message-action">💬 12</span>
-                            <span class="message-action">↗️ Partager</span>
-                        </div>
-                    </div>
-                    
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="message-author">⭐ Mohamed - Constantine</span>
-                            <span class="message-time">Il y a 15 min</span>
-                        </div>
-                        <div class="message-content">
-                            N'oubliez pas la collecte de demain pour les familles nécessiteuses ! 
-                            Rendez-vous à la mosquée El Emir à 14h 🤲
-                        </div>
-                        <div class="message-actions">
-                            <span class="message-action">❤️ 89</span>
-                            <span class="message-action">💬 7</span>
-                            <span class="message-action">↗️ Partager</span>
-                        </div>
-                    </div>
-                    
-                    <div class="message">
-                        <div class="message-header">
-                            <span class="message-author">🌟 Sarah - Alger</span>
-                            <span class="message-time">Il y a 1h</span>
-                        </div>
-                        <div class="message-content">
-                            Qui participe au défi 30 jours de bienfaisance ? Aujourd'hui j'ai aidé 
-                            une voisine âgée avec ses courses. Partagez vos bonnes actions ! ✨
-                        </div>
-                        <div class="message-actions">
-                            <span class="message-action">❤️ 156</span>
-                            <span class="message-action">💬 34</span>
-                            <span class="message-action">↗️ Partager</span>
-                        </div>
-                    </div>
+                    <!-- Messages seront chargés depuis Firebase -->
                 </div>
                 
                 <div class="message-input-container">
@@ -1116,30 +1399,30 @@
                 <h2 class="card-title">Défis & Récompenses du Jour</h2>
             </div>
             <div class="achievements">
-                <div class="achievement unlocked">
+                <div class="achievement" data-badge="first-steps">
+                    <div class="achievement-icon">👣</div>
+                    <div class="achievement-title">Premiers Pas</div>
+                    <div class="achievement-desc">10 points</div>
+                </div>
+                <div class="achievement" data-badge="active">
+                    <div class="achievement-icon">⭐</div>
+                    <div class="achievement-title">Actif</div>
+                    <div class="achievement-desc">50 points</div>
+                </div>
+                <div class="achievement" data-badge="devoted">
                     <div class="achievement-icon">🌙</div>
-                    <div class="achievement-title">Premier Jour</div>
-                    <div class="achievement-desc">Complété ✓</div>
+                    <div class="achievement-title">Dévoué</div>
+                    <div class="achievement-desc">100 points</div>
                 </div>
-                <div class="achievement unlocked">
-                    <div class="achievement-icon">🤲</div>
-                    <div class="achievement-title">Généreux</div>
-                    <div class="achievement-desc">5 dons</div>
+                <div class="achievement" data-badge="champion">
+                    <div class="achievement-icon">🏆</div>
+                    <div class="achievement-title">Champion</div>
+                    <div class="achievement-desc">500 points</div>
                 </div>
-                <div class="achievement">
-                    <div class="achievement-icon">📖</div>
-                    <div class="achievement-title">Lecteur Assidu</div>
-                    <div class="achievement-desc">0/30 jours</div>
-                </div>
-                <div class="achievement">
-                    <div class="achievement-icon">🎯</div>
-                    <div class="achievement-title">Parfait</div>
-                    <div class="achievement-desc">30 jours complets</div>
-                </div>
-                <div class="achievement">
+                <div class="achievement" data-badge="legend">
                     <div class="achievement-icon">💫</div>
-                    <div class="achievement-title">Nuit du Destin</div>
-                    <div class="achievement-desc">À découvrir</div>
+                    <div class="achievement-title">Légende</div>
+                    <div class="achievement-desc">1000 points</div>
                 </div>
             </div>
         </section>
@@ -1153,58 +1436,16 @@
             <div class="card-content">
                 <p><strong>Question:</strong> Dans quelle ville algérienne le canon annonce-t-il encore le ftour ?</p>
                 <div style="margin-top: 20px;">
-                    <button class="btn btn-secondary" style="margin: 5px;">A. Alger</button>
-                    <button class="btn btn-secondary" style="margin: 5px;">B. Oran</button>
-                    <button class="btn btn-secondary" style="margin: 5px;">C. Constantine</button>
-                    <button class="btn btn-secondary" style="margin: 5px;">D. Toutes</button>
+                    <button class="btn btn-secondary" data-answer="A" onclick="submitQuiz('A')" style="margin: 5px;">A. Alger</button>
+                    <button class="btn btn-secondary" data-answer="B" onclick="submitQuiz('B')" style="margin: 5px;">B. Oran</button>
+                    <button class="btn btn-secondary" data-answer="C" onclick="submitQuiz('C')" style="margin: 5px;">C. Constantine</button>
+                    <button class="btn btn-secondary" data-answer="D" onclick="submitQuiz('D')" style="margin: 5px;">D. Toutes</button>
                 </div>
                 <p style="margin-top: 15px; text-align: center;">
                     🎁 <strong>Prix:</strong> 100 points fidélité • ⏰ Fin dans 3h
                 </p>
             </div>
         </section>
-
-        <!-- Recipes Section -->
-        <div class="grid">
-            <section class="card">
-                <div class="card-header">
-                    <span class="card-icon">👨‍🍳</span>
-                    <h2 class="card-title">Recette du Jour</h2>
-                </div>
-                <div class="card-content">
-                    <h3 style="color: var(--secondary); margin-bottom: 15px;">Mhajeb Traditionnel 🥙</h3>
-                    <p><strong>Ingrédients:</strong></p>
-                    <ul style="margin: 10px 0 20px 20px; line-height: 1.8;">
-                        <li>500g de semoule fine</li>
-                        <li>2 tomates fraîches</li>
-                        <li>1 oignon</li>
-                        <li>Épices: paprika, cumin</li>
-                        <li>Huile d'olive</li>
-                    </ul>
-                    <button class="btn" style="width: 100%;">📖 Voir la recette complète</button>
-                </div>
-            </section>
-
-            <section class="card">
-                <div class="card-header">
-                    <span class="card-icon">💝</span>
-                    <h2 class="card-title">Tombola du Jour</h2>
-                </div>
-                <div class="card-content">
-                    <div style="text-align: center; padding: 20px;">
-                        <div style="font-size: 3rem;">🎁</div>
-                        <h3 style="color: var(--gold); margin: 10px 0;">Smartphone Samsung Galaxy A54</h3>
-                        <p style="font-size: 1.2rem; margin: 10px 0;">Valeur: 65,000 DA</p>
-                        <div style="background: rgba(255,214,10,0.1); padding: 15px; border-radius: 15px; margin: 20px 0;">
-                            <p style="font-size: 0.9rem; color: var(--text-secondary);">Votre numéro:</p>
-                            <p style="font-size: 2rem; font-weight: 700; color: var(--gold);">#2847</p>
-                        </div>
-                        <p style="color: var(--warning); font-weight: 600;">⏰ Tirage dans 3h 24min</p>
-                        <button class="btn" style="width: 100%; margin-top: 15px;">🎯 Inviter des amis (+5 chances)</button>
-                    </div>
-                </div>
-            </section>
-        </div>
 
         <!-- Footer -->
         <footer>
@@ -1226,26 +1467,25 @@
         <div class="notification-message">Khalil vient de partager une recette</div>
     </div>
 
-    <!-- JavaScript -->
+    <!-- JavaScript (Non-module) -->
     <script>
-        // Firebase Configuration
-        const firebaseConfig = {
-          apiKey: "AIzaSyBoF6xTWr4dzgbWFwXavVC2mMshHCTK6fM",
-          authDomain: "ramadan-chat-auth.firebaseapp.com",
-          projectId: "ramadan-chat-auth",
-          storageBucket: "ramadan-chat-auth.firebasestorage.app",
-          messagingSenderId: "785976346844",
-          appId: "1:785976346844:web:62b890dbc32a32596f8c19"
+        // Configuration initiale
+        window.showNotification = function(title, message) {
+            const notification = document.getElementById('notification');
+            notification.querySelector('.notification-title').textContent = title;
+            notification.querySelector('.notification-message').textContent = message;
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
         };
-
-        // Initialize Firebase (à configurer avec vos vraies clés)
-        // firebase.initializeApp(firebaseConfig);
-        // const database = firebase.database();
 
         // Countdown Timer
         function updateCountdown() {
             const maghribTime = new Date();
-            maghribTime.setHours(17, 51, 0); // Heure du Maghrib
+            maghribTime.setHours(17, 51, 0);
             
             const now = new Date();
             const diff = maghribTime - now;
@@ -1261,7 +1501,6 @@
             }
         }
 
-        // Update every second
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
@@ -1281,7 +1520,6 @@
                     document.body.style.direction = 'ltr';
                 }
                 
-                // Save preference
                 localStorage.setItem('preferred-lang', lang);
             });
         });
@@ -1290,153 +1528,30 @@
         const savedLang = localStorage.getItem('preferred-lang') || 'fr';
         document.querySelector(`[data-lang="${savedLang}"]`).click();
 
-        // Poll Interaction
-        const pollOptions = document.querySelectorAll('.poll-option');
-        pollOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                // Remove previous selection
-                pollOptions.forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-                
-                // Show notification
-                showNotification('📊 Vote enregistré', 'Merci pour votre participation !');
-                
-                // Here you would update Firebase
-                // updatePollVote(this.dataset.option);
-            });
-        });
-
-        // Send Message
-        function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value.trim();
-            
-            if (message) {
-                // Add message to container
-                const messagesContainer = document.getElementById('messagesContainer');
-                const messageElement = document.createElement('div');
-                messageElement.className = 'message';
-                messageElement.innerHTML = `
-                    <div class="message-header">
-                        <span class="message-author">👤 Vous</span>
-                        <span class="message-time">À l'instant</span>
-                    </div>
-                    <div class="message-content">${message}</div>
-                    <div class="message-actions">
-                        <span class="message-action">❤️ 0</span>
-                        <span class="message-action">💬 0</span>
-                        <span class="message-action">↗️ Partager</span>
-                    </div>
-                `;
-                
-                messagesContainer.insertBefore(messageElement, messagesContainer.firstChild);
-                input.value = '';
-                
-                // Show notification
-                showNotification('✅ Message envoyé', 'Votre message a été publié');
-                
-                // Here you would save to Firebase
-                // saveMessageToFirebase(message);
-            }
-        }
-
-        // Notification System
-        function showNotification(title, message) {
-            const notification = document.getElementById('notification');
-            notification.querySelector('.notification-title').textContent = title;
-            notification.querySelector('.notification-message').textContent = message;
-            
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        // Message Actions
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('message-action')) {
-                if (e.target.textContent.includes('❤️')) {
-                    e.target.classList.toggle('liked');
-                    const count = parseInt(e.target.textContent.match(/\d+/)[0]);
-                    e.target.textContent = `❤️ ${e.target.classList.contains('liked') ? count + 1 : count - 1}`;
-                }
-            }
-        });
-
-        // Quiz Buttons
-        document.querySelectorAll('.btn-secondary').forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (this.textContent.includes('Alger')) {
-                    this.style.background = 'var(--success)';
-                    this.style.color = 'white';
-                    showNotification('🎉 Correct !', 'Vous avez gagné 100 points');
-                } else if (this.textContent.includes('A.') || this.textContent.includes('B.') || 
-                           this.textContent.includes('C.') || this.textContent.includes('D.')) {
-                    this.style.background = 'var(--danger)';
-                    this.style.color = 'white';
-                }
-            });
-        });
-
-        // Auto-refresh messages every 30 seconds (simulation)
-        setInterval(() => {
-            // Here you would fetch new messages from Firebase
-            console.log('Checking for new messages...');
-        }, 30000);
-
-        // Achievement unlock animation
-        setTimeout(() => {
-            const achievement = document.querySelectorAll('.achievement')[2];
-            achievement.classList.add('unlocked');
-            showNotification('🏆 Nouveau badge débloqué !', 'Lecteur Assidu - Jour 1');
-        }, 5000);
-
-        // Prayer time reminder
-        function checkPrayerTime() {
-            const now = new Date();
-            const hours = now.getHours();
-            const minutes = now.getMinutes();
-            
-            // Check if it's close to prayer time (5 minutes before)
-            const prayerTimes = [
-                {name: 'Fajr', hour: 5, minute: 37},
-                {name: 'Dohr', hour: 12, minute: 33},
-                {name: 'Asr', hour: 15, minute: 14},
-                {name: 'Maghrib', hour: 17, minute: 46},
-                {name: 'Isha', hour: 19, minute: 10}
-            ];
-            
-            prayerTimes.forEach(prayer => {
-                if (hours === prayer.hour && minutes === prayer.minute) {
-                    showNotification('🕌 Heure de prière', `C'est l'heure de ${prayer.name}`);
-                }
-            });
-        }
-
-        // Check prayer time every minute
-        setInterval(checkPrayerTime, 60000);
-
-        // Page visibility to pause animations when tab is not active
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                console.log('Page hidden - pausing animations');
-            } else {
-                console.log('Page visible - resuming animations');
-            }
-        });
-
-        // Initialize on load
-        window.addEventListener('load', function() {
-            console.log('Ramadan 2026 App Loaded Successfully ✨');
-            showNotification('🌙 Bienvenue', 'Ramadan Moubarak !');
-        });
-
-        // Handle message input enter key
+        // Message input enter key
         document.getElementById('messageInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 sendMessage();
             }
+        });
+
+        // Initialisation
+        window.addEventListener('load', function() {
+            console.log('✨ Ramadan 2026 App Loaded with Firebase');
+            showNotification('🌙 Bienvenue', 'Ramadan Moubarak !');
+            
+            // Demander le nom et la ville
+            setTimeout(() => {
+                if (!localStorage.getItem('userName')) {
+                    const name = prompt('Comment vous appelez-vous ?') || 'Anonyme';
+                    localStorage.setItem('userName', name);
+                    
+                    const city = prompt('De quelle ville êtes-vous ?') || 'Algérie';
+                    localStorage.setItem('userCity', city);
+                    
+                    showNotification('👋 Bienvenue ' + name, 'De ' + city);
+                }
+            }, 2000);
         });
     </script>
 </body>

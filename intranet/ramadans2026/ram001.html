@@ -14,7 +14,7 @@
         import { getDatabase, ref, push, set, onValue, serverTimestamp, increment, onChildAdded } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
         import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
         
-        // Configuration Firebase (vos vraies clés)
+        // Configuration Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBoF6xTWr4dzgbWFwXavVC2mMshHCTK6fM",
             authDomain: "ramadan-chat-auth.firebaseapp.com",
@@ -311,15 +311,6 @@
             if (diff < 86400) return `Il y a ${Math.floor(diff / 3600)}h`;
             return `Il y a ${Math.floor(diff / 86400)}j`;
         }
-        
-        // Exporter les fonctions globales
-        window.database = database;
-        window.ref = ref;
-        window.push = push;
-        window.set = set;
-        window.onValue = onValue;
-        window.serverTimestamp = serverTimestamp;
-        window.increment = increment;
     </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -327,7 +318,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* [STYLES IDENTIQUES AU BLOC #1 - Je ne les répète pas pour économiser de l'espace] */
         :root {
             --primary: #c1582b;
             --primary-dark: #a04520;

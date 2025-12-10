@@ -1,0 +1,1393 @@
+<!-- NetMonit Pro - Landing Page v1.000 -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>NetMonit Pro - Smart Network & Service Monitoring</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="NetMonit Pro - Supervision intelligente des réseaux et services critiques : latence, pertes, dépendances, cartes, alertes et supervision externe."
+  />
+  <style>
+    :root {
+      --bg-main: #050910;
+      --bg-card: #0b111d;
+      --bg-highlight: #071723;
+      --accent: #06d6a0;
+      --accent-soft: rgba(6, 214, 160, 0.12);
+      --accent-alt: #00c2ff;
+      --danger: #ff3366;
+      --text-main: #f5f7ff;
+      --text-soft: #a6b3d1;
+      --border-soft: #141c2b;
+      --radius-lg: 14px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.6);
+      --transition-fast: 0.18s ease-out;
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #101b33 0, #050910 55%);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    body.rtl {
+      direction: rtl;
+      text-align: right;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* Header / Lang Switcher */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to bottom,
+        rgba(5, 9, 16, 0.95),
+        rgba(5, 9, 16, 0.75)
+      );
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      gap: 1rem;
+    }
+
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: radial-gradient(circle at 30% 20%, #39ffb6 0, #00b894 40%, #073441 100%);
+      box-shadow: 0 0 18px rgba(0, 255, 190, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #01110b;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.05rem;
+    }
+
+    .logo-title {
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      font-size: 1rem;
+    }
+
+    .logo-subtitle {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .lang-switcher {
+      display: inline-flex;
+      padding: 0.15rem;
+      border-radius: var(--radius-pill);
+      background: #050910;
+      border: 1px solid var(--border-soft);
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-soft);
+      padding: 0.3rem 0.65rem;
+      font-size: 0.75rem;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .lang-btn.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .btn-demo-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-radius: var(--radius-pill);
+      padding: 0.35rem 0.85rem;
+      font-size: 0.75rem;
+      border: 1px solid rgba(0, 194, 255, 0.35);
+      background: radial-gradient(circle at top, rgba(0, 194, 255, 0.18), transparent 65%);
+      color: var(--accent-alt);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .btn-demo-header:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(0, 194, 255, 0.25);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 3.5rem 0 2.5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.18rem 0.65rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(6, 214, 160, 0.35);
+      background: radial-gradient(circle at left, #0b2b24 0, rgba(5, 9, 16, 0.4) 55%);
+      color: var(--accent);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 3vw, 2.7rem);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      margin-bottom: 1.5rem;
+      max-width: 32rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-pill);
+      background: rgba(11, 17, 29, 0.85);
+      border: 1px solid var(--border-soft);
+      color: var(--text-soft);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.4rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+      color: #02060a;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition-fast);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 20px 40px rgba(0, 255, 200, 0.3);
+    }
+
+    .btn-ghost {
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius-pill);
+      background: transparent;
+      border: 1px solid var(--border-soft);
+      color: var(--text-soft);
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: var(--transition-fast);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(0, 194, 255, 0.5);
+      color: var(--accent-alt);
+      background: rgba(11, 17, 29, 0.9);
+    }
+
+    .hero-note {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      opacity: 0.9;
+    }
+
+    .hero-note span {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-card {
+      border-radius: 20px;
+      background: radial-gradient(circle at top, #17243d, #050910 70%);
+      padding: 0.85rem;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-tag {
+      position: absolute;
+      top: 0.8rem;
+      right: 1rem;
+      font-size: 0.7rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: var(--radius-pill);
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(6, 214, 160, 0.4);
+      color: var(--accent);
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-stats {
+      position: absolute;
+      left: 1rem;
+      bottom: 0.85rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .stat-pill {
+      padding: 0.3rem 0.55rem;
+      border-radius: var(--radius-pill);
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(0, 194, 255, 0.4);
+      font-size: 0.68rem;
+      color: var(--text-soft);
+    }
+
+    .floating-badge {
+      position: absolute;
+      top: -0.6rem;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--radius-pill);
+      background: #050910;
+      color: var(--accent-alt);
+      border: 1px solid var(--border-soft);
+      font-size: 0.7rem;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Sections */
+    section {
+      padding: 2.75rem 0;
+    }
+
+    .section-header {
+      margin-bottom: 1.75rem;
+      text-align: left;
+    }
+
+    body.rtl .section-header {
+      text-align: right;
+    }
+
+    .section-kicker {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-alt);
+      margin-bottom: 0.45rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      max-width: 32rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: rgba(7, 13, 25, 0.9);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(0, 194, 255, 0.14), transparent 60%);
+      opacity: 0;
+      transition: var(--transition-fast);
+      pointer-events: none;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      background: rgba(6, 214, 160, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      margin-bottom: 0.55rem;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-text {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.7rem;
+      color: var(--accent);
+      background: rgba(6, 214, 160, 0.06);
+      border-radius: var(--radius-pill);
+      padding: 0.18rem 0.5rem;
+    }
+
+    .pill-metric {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    /* Use Cases */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-pill);
+      background: #050910;
+      border: 1px solid var(--border-soft);
+      color: var(--text-soft);
+    }
+
+    /* Demo form */
+    .demo-section {
+      background: radial-gradient(circle at top, #111f39 0, #050910 60%);
+      border-top: 1px solid var(--border-soft);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 1.75rem;
+      align-items: center;
+    }
+
+    .demo-note {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-top: 0.75rem;
+    }
+
+    form {
+      background: rgba(7, 13, 25, 0.95);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      padding: 1.1rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .field {
+      flex: 1 1 180px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-bottom: 0.7rem;
+    }
+
+    label {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    input,
+    textarea {
+      border-radius: 9px;
+      border: 1px solid #1a2437;
+      background: #050910;
+      color: var(--text-main);
+      padding: 0.55rem 0.65rem;
+      font-size: 0.8rem;
+      outline: none;
+      transition: var(--transition-fast);
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(0, 194, 255, 0.7);
+      box-shadow: 0 0 0 1px rgba(0, 194, 255, 0.25);
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .form-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-top: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .form-status {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .form-status span {
+      color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+      padding: 1.6rem 0 1.4rem;
+      border-top: 1px solid var(--border-soft);
+      margin-top: 2rem;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      opacity: 0.85;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: var(--accent-alt);
+    }
+
+    /* Responsive */
+    @media (max-width: 880px) {
+      .hero-grid,
+      .grid-3,
+      .grid-2,
+      .demo-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero {
+        padding-top: 2.5rem;
+      }
+
+      .hero-visual {
+        order: -1;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .hero-title {
+        font-size: 1.8rem;
+      }
+
+      .hero-meta {
+        flex-direction: column;
+      }
+
+      .form-footer {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-primary,
+      .btn-ghost,
+      .btn-demo-header {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page" id="page">
+    <!-- HEADER -->
+    <header>
+      <div class="wrapper">
+        <div class="nav">
+          <div class="logo-block">
+            <div class="logo-icon">N</div>
+            <div class="logo-text">
+              <div class="logo-title">NetMonit Pro</div>
+              <div class="logo-subtitle" data-i18n="logo_subtitle">
+                Smart Network & Service Monitoring
+              </div>
+            </div>
+          </div>
+          <div class="nav-actions">
+            <div class="lang-switcher" aria-label="Language selector">
+              <button class="lang-btn active" data-lang="fr">FR</button>
+              <button class="lang-btn" data-lang="en">EN</button>
+              <button class="lang-btn" data-lang="ar">ع</button>
+            </div>
+            <button class="btn-demo-header" data-scroll-target="#demo">
+              <span data-i18n="btn_demo">Demander une démo</span> →
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="wrapper hero-grid">
+          <div>
+            <div class="chip">
+              <span>●</span>
+              <span data-i18n="chip_live">Supervision temps réel</span>
+            </div>
+            <h1 class="hero-title" data-i18n="hero_title">
+              Supervision intelligente des réseaux & services critiques
+            </h1>
+            <p class="hero-subtitle" data-i18n="hero_subtitle">
+              Visualisez vos hôtes, services, dépendances et incidents en temps
+              réel. NetMonit Pro combine métriques, cartes réseau et alertes
+              intelligentes pour sécuriser vos infrastructures.
+            </p>
+
+            <div class="hero-meta">
+              <div class="hero-meta-item">
+                ⚡ <span data-i18n="meta_latency">Latence, pertes & jitter en 1 coup d’œil</span>
+              </div>
+              <div class="hero-meta-item">
+                🧠 <span data-i18n="meta_ai">Cartes & dépendances pensées pour l’ops</span>
+              </div>
+              <div class="hero-meta-item">
+                🌐 <span data-i18n="meta_external">Supervision interne & externe</span>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <button class="btn-primary" data-scroll-target="#demo">
+                <span data-i18n="btn_demo">Demander une démo</span> →
+              </button>
+              <button class="btn-ghost" data-scroll-target="#features">
+                <span data-i18n="btn_explore">Voir les fonctionnalités</span>
+              </button>
+            </div>
+
+            <p class="hero-note" data-i18n="hero_note">
+              Conçu par des administrateurs réseaux pour les équipes <span>IT, NOC &amp; SOC</span>.
+            </p>
+          </div>
+
+          <div class="hero-visual" aria-label="NetMonit Pro dashboard preview">
+            <div class="floating-badge" data-i18n="badge_uptime">
+              99.99% uptime tracking · Multi-sites
+            </div>
+            <div class="hero-card">
+              <div class="hero-tag" data-i18n="hero_tag">
+                LIVE · Debug Console &amp; Service Map
+              </div>
+              <!-- Hero screenshot -->
+              <img
+                src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_hero.png"
+                alt="NetMonit Pro dashboard"
+              />
+              <div class="hero-stats">
+                <div class="stat-pill" data-i18n="stat_hosts">
+                  34 hosts · 0 erreurs
+                </div>
+                <div class="stat-pill" data-i18n="stat_services">
+                  27 services · 1 offline
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VALUE / PROBLEM-SOLUTION -->
+      <section id="value">
+        <div class="wrapper">
+          <div class="section-header">
+            <div class="section-kicker" data-i18n="value_kicker">
+              Pourquoi NetMonit Pro ?
+            </div>
+            <h2 class="section-title" data-i18n="value_title">
+              De la simple surveillance au pilotage de vos services.
+            </h2>
+            <p class="section-subtitle" data-i18n="value_subtitle">
+              NetMonit Pro rassemble en une seule interface la vision réseau,
+              service et impact. Vous passez moins de temps à chercher l’origine
+              des incidents, et plus de temps à les résoudre.
+            </p>
+          </div>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-icon">👁️</div>
+              <h3 class="card-title" data-i18n="value_card1_title">
+                Visibilité temps réel
+              </h3>
+              <p class="card-text" data-i18n="value_card1_text">
+                Latence, perte, jitter, uptime, carte des services : vos
+                métriques clés sont visibles en quelques secondes pour chaque
+                hôte et chaque service.
+              </p>
+              <div class="card-tag" data-i18n="value_card1_tag">
+                &bull; Vue NOC prête à l’emploi
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-icon">🧠</div>
+              <h3 class="card-title" data-i18n="value_card2_title">
+                Dépendances & impacts
+              </h3>
+              <p class="card-text" data-i18n="value_card2_text">
+                Une panne DNS, DHCP ou firewall ? Visualisez instantanément les
+                services touchés grâce à la carte des dépendances.
+              </p>
+              <div class="card-tag" data-i18n="value_card2_tag">
+                &bull; Réduction du MTTR
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-icon">🔔</div>
+              <h3 class="card-title" data-i18n="value_card3_title">
+                Alertes utiles, pas bavardes
+              </h3>
+              <p class="card-text" data-i18n="value_card3_text">
+                Configurez des alertes ciblées par service, cluster ou site.
+                Les incidents critiques ressortent immédiatement.
+              </p>
+              <div class="card-tag" data-i18n="value_card3_tag">
+                &bull; Mode supervision externe inclus
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURES -->
+      <section id="features">
+        <div class="wrapper">
+          <div class="section-header">
+            <div class="section-kicker" data-i18n="features_kicker">
+              Fonctionnalités
+            </div>
+            <h2 class="section-title" data-i18n="features_title">
+              Une console moderne pour vos réseaux & services.
+            </h2>
+            <p class="section-subtitle" data-i18n="features_subtitle">
+              NetMonit Pro combine mesures fines, graphes détaillés et vues
+              métiers pour accompagner les équipes d’exploitation, d’astreinte
+              ou de support.
+            </p>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <h3 class="card-title" data-i18n="features_card1_title">
+                Supervision avancée des hôtes
+              </h3>
+              <p class="card-text" data-i18n="features_card1_text">
+                Suivez latence, pertes, jitter et disponibilité sur 24h ou 7j
+                avec des graphes clairs. Identifiez les périodes dégradées en
+                un coup d’œil.
+              </p>
+              <p class="pill-metric" data-i18n="features_card1_metric">
+                Exemples : routeurs, switches, serveurs, appliances de sécurité…
+              </p>
+              <img
+                src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_latency.png"
+                alt="Graphes de latence et de pertes NetMonit Pro"
+              />
+            </div>
+
+            <div class="card">
+              <h3 class="card-title" data-i18n="features_card2_title">
+                Debug console & logs centralisés
+              </h3>
+              <p class="card-text" data-i18n="features_card2_text">
+                Visualisez l’état des modules, les appels API et les journaux en
+                temps réel. La console de debug vous aide à comprendre ce que
+                fait le moteur de supervision.
+              </p>
+              <p class="pill-metric" data-i18n="features_card2_metric">
+                Jobs, alertes, monitoring, métriques &amp; health check
+              </p>
+              <img
+                src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_debug.png"
+                alt="Console de debug NetMonit Pro"
+              />
+            </div>
+          </div>
+
+          <div class="grid-2" style="margin-top: 1.5rem;">
+            <div class="card">
+              <h3 class="card-title" data-i18n="features_card3_title">
+                Carte des services & dépendances
+              </h3>
+              <p class="card-text" data-i18n="features_card3_text">
+                Visualisez vos services AD, DNS, DHCP, VPN, DB, Web, etc., ainsi
+                que leurs liens avec les hôtes et les clusters. Le mode “Service
+                Map &amp; Dependencies” met en évidence les services critiques.
+              </p>
+              <img
+                src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_services.png"
+                alt="Carte des services NetMonit Pro"
+              />
+            </div>
+
+            <div class="card">
+              <h3 class="card-title" data-i18n="features_card4_title">
+                Découverte enrichie & scan de ports
+              </h3>
+              <p class="card-text" data-i18n="features_card4_text">
+                Historique des scans, rôles de services, profils SNMP,
+                supervision externe… NetMonit Pro vous aide à documenter votre
+                réseau au fil des découvertes.
+              </p>
+              <img
+                src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_discovery.png"
+                alt="Propriétés d'hôte et découverte enrichie NetMonit Pro"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- USE CASES -->
+      <section id="usecases">
+        <div class="wrapper">
+          <div class="section-header">
+            <div class="section-kicker" data-i18n="usecases_kicker">
+              Cas d’usage
+            </div>
+            <h2 class="section-title" data-i18n="usecases_title">
+              Pensé pour les équipes réseau, infra & sécurité.
+            </h2>
+            <p class="section-subtitle" data-i18n="usecases_subtitle">
+              Que vous gériez un site unique, un datacenter ou un parc
+              multi-sites, NetMonit Pro vous aide à garder une vue claire et
+              exploitable de vos environnements.
+            </p>
+          </div>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title" data-i18n="usecases_card1_title">
+                PME & infrastructures critiques
+              </div>
+              <p class="card-text" data-i18n="usecases_card1_text">
+                Garantissez la disponibilité des services métier (ERP, CRM,
+                messagerie, accès distants) avec une supervision simple à
+                déployer.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title" data-i18n="usecases_card2_title">
+                Équipes NOC / SOC
+              </div>
+              <p class="card-text" data-i18n="usecases_card2_text">
+                Utilisez les vues temps réel, la carte des dépendances et les
+                alertes pour prioriser les incidents et réduire le temps moyen
+                de résolution.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title" data-i18n="usecases_card3_title">
+                Sites distants & clouds hybrides
+              </div>
+              <p class="card-text" data-i18n="usecases_card3_text">
+                Surveillez vos liens WAN, VPN, firewalls et services critiques
+                où qu’ils se trouvent, avec supervision interne ou externe.
+              </p>
+            </div>
+          </div>
+
+          <div class="badge-row">
+            <span class="badge" data-i18n="badge_item1">Admin réseau</span>
+            <span class="badge" data-i18n="badge_item2">Responsable infra</span>
+            <span class="badge" data-i18n="badge_item3">Ingénieur sécurité</span>
+            <span class="badge" data-i18n="badge_item4">MSP & intégrateurs</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- DEMO FORM -->
+      <section class="demo-section" id="demo">
+        <div class="wrapper demo-grid">
+          <div>
+            <div class="section-header">
+              <div class="section-kicker" data-i18n="demo_kicker">
+                Demander une démo
+              </div>
+              <h2 class="section-title" data-i18n="demo_title">
+                Essayez NetMonit Pro sur votre propre environnement.
+              </h2>
+              <p class="section-subtitle" data-i18n="demo_subtitle">
+                Expliquez-nous votre contexte (taille du réseau, environnements,
+                contraintes) et recevez une proposition de démo adaptée.
+              </p>
+            </div>
+            <p class="demo-note" data-i18n="demo_note">
+              Les champs marqués d’une astérisque (*) sont obligatoires. Nous ne
+              partageons pas vos informations avec des tiers.
+            </p>
+          </div>
+
+          <div>
+            <form id="demo-form">
+              <div class="form-row">
+                <div class="field">
+                  <label for="name" data-i18n="label_name">Nom complet *</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    autocomplete="name"
+                  />
+                </div>
+                <div class="field">
+                  <label for="email" data-i18n="label_email">Email *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    autocomplete="email"
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <label for="message" data-i18n="label_message">
+                  Message (contexte, taille réseau, objectifs) *
+                </label>
+                <textarea id="message" name="message" required></textarea>
+              </div>
+
+              <div class="form-footer">
+                <p class="form-status" id="form-status" data-i18n="form_status">
+                  Les données seront envoyées à votre backend / API. <span>Démo
+                  technique à connecter.</span>
+                </p>
+                <button type="submit" class="btn-primary">
+                  <span data-i18n="btn_demo">Demander une démo</span> →
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="wrapper footer-row">
+        <div>
+          © <span id="year"></span> NetMonit Pro ·
+          <span data-i18n="footer_rights">Tous droits réservés.</span>
+        </div>
+        <div class="footer-links">
+          <a href="#features" data-i18n="footer_features">Fonctionnalités</a>
+          <a href="#usecases" data-i18n="footer_usecases">Cas d’usage</a>
+          <a href="#demo" data-i18n="footer_demo">Demander une démo</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // --- i18n dictionary -----------------------------------------------------
+    const i18n = {
+      fr: {
+        logo_subtitle: "Supervision réseaux & services",
+        chip_live: "Supervision temps réel",
+        hero_title: "Supervision intelligente des réseaux & services critiques",
+        hero_subtitle:
+          "Visualisez vos hôtes, services, dépendances et incidents en temps réel. NetMonit Pro combine métriques, cartes réseau et alertes intelligentes pour sécuriser vos infrastructures.",
+        meta_latency: "Latence, pertes & jitter en 1 coup d’œil",
+        meta_ai: "Cartes & dépendances pensées pour l’ops",
+        meta_external: "Supervision interne & externe",
+        btn_demo: "Demander une démo",
+        btn_explore: "Voir les fonctionnalités",
+        hero_note:
+          "Conçu par des administrateurs réseaux pour les équipes <span>IT, NOC &amp; SOC</span>.",
+        hero_tag: "LIVE · Console de debug & carte des services",
+        badge_uptime: "Suivi d’uptime 99,99% · Multi-sites",
+        stat_hosts: "34 hôtes · 0 erreur",
+        stat_services: "27 services · 1 offline",
+        value_kicker: "Pourquoi NetMonit Pro ?",
+        value_title:
+          "De la simple surveillance au pilotage de vos services.",
+        value_subtitle:
+          "NetMonit Pro rassemble en une seule interface la vision réseau, service et impact. Vous passez moins de temps à chercher l’origine des incidents, et plus de temps à les résoudre.",
+        value_card1_title: "Visibilité temps réel",
+        value_card1_text:
+          "Latence, perte, jitter, uptime, carte des services : vos métriques clés sont visibles en quelques secondes pour chaque hôte et chaque service.",
+        value_card1_tag: "• Vue NOC prête à l’emploi",
+        value_card2_title: "Dépendances & impacts",
+        value_card2_text:
+          "Une panne DNS, DHCP ou firewall ? Visualisez instantanément les services touchés grâce à la carte des dépendances.",
+        value_card2_tag: "• Réduction du MTTR",
+        value_card3_title: "Alertes utiles, pas bavardes",
+        value_card3_text:
+          "Configurez des alertes ciblées par service, cluster ou site. Les incidents critiques ressortent immédiatement.",
+        value_card3_tag: "• Mode supervision externe inclus",
+        features_kicker: "Fonctionnalités",
+        features_title: "Une console moderne pour vos réseaux & services.",
+        features_subtitle:
+          "NetMonit Pro combine mesures fines, graphes détaillés et vues métiers pour accompagner les équipes d’exploitation, d’astreinte ou de support.",
+        features_card1_title: "Supervision avancée des hôtes",
+        features_card1_text:
+          "Suivez latence, pertes, jitter et disponibilité sur 24h ou 7j avec des graphes clairs. Identifiez les périodes dégradées en un coup d’œil.",
+        features_card1_metric:
+          "Exemples : routeurs, switches, serveurs, appliances de sécurité…",
+        features_card2_title: "Debug console & logs centralisés",
+        features_card2_text:
+          "Visualisez l’état des modules, les appels API et les journaux en temps réel. La console de debug vous aide à comprendre ce que fait le moteur de supervision.",
+        features_card2_metric:
+          "Jobs, alertes, monitoring, métriques & health check",
+        features_card3_title: "Carte des services & dépendances",
+        features_card3_text:
+          "Visualisez vos services AD, DNS, DHCP, VPN, DB, Web, etc., ainsi que leurs liens avec les hôtes et les clusters. Le mode “Service Map & Dependencies” met en évidence les services critiques.",
+        features_card4_title: "Découverte enrichie & scan de ports",
+        features_card4_text:
+          "Historique des scans, rôles de services, profils SNMP, supervision externe… NetMonit Pro vous aide à documenter votre réseau au fil des découvertes.",
+        usecases_kicker: "Cas d’usage",
+        usecases_title: "Pensé pour les équipes réseau, infra & sécurité.",
+        usecases_subtitle:
+          "Que vous gériez un site unique, un datacenter ou un parc multi-sites, NetMonit Pro vous aide à garder une vue claire et exploitable de vos environnements.",
+        usecases_card1_title: "PME & infrastructures critiques",
+        usecases_card1_text:
+          "Garantissez la disponibilité des services métier (ERP, CRM, messagerie, accès distants) avec une supervision simple à déployer.",
+        usecases_card2_title: "Équipes NOC / SOC",
+        usecases_card2_text:
+          "Utilisez les vues temps réel, la carte des dépendances et les alertes pour prioriser les incidents et réduire le temps moyen de résolution.",
+        usecases_card3_title: "Sites distants & clouds hybrides",
+        usecases_card3_text:
+          "Surveillez vos liens WAN, VPN, firewalls et services critiques où qu’ils se trouvent, avec supervision interne ou externe.",
+        badge_item1: "Admin réseau",
+        badge_item2: "Responsable infra",
+        badge_item3: "Ingénieur sécurité",
+        badge_item4: "MSP & intégrateurs",
+        demo_kicker: "Demander une démo",
+        demo_title: "Essayez NetMonit Pro sur votre propre environnement.",
+        demo_subtitle:
+          "Expliquez-nous votre contexte (taille du réseau, environnements, contraintes) et recevez une proposition de démo adaptée.",
+        demo_note:
+          "Les champs marqués d’une astérisque (*) sont obligatoires. Nous ne partageons pas vos informations avec des tiers.",
+        label_name: "Nom complet *",
+        label_email: "Email *",
+        label_message:
+          "Message (contexte, taille réseau, objectifs) *",
+        form_status:
+          "Les données seront envoyées à votre backend / API. <span>Démo technique à connecter.</span>",
+        footer_rights: "Tous droits réservés.",
+        footer_features: "Fonctionnalités",
+        footer_usecases: "Cas d’usage",
+        footer_demo: "Demander une démo"
+      },
+      en: {
+        logo_subtitle: "Network & service monitoring",
+        chip_live: "Real-time monitoring",
+        hero_title: "Smart monitoring for critical networks & services",
+        hero_subtitle:
+          "Get real-time visibility on hosts, services, dependencies and incidents. NetMonit Pro combines metrics, maps and smart alerts to secure your infrastructure.",
+        meta_latency: "Latency, loss & jitter at a glance",
+        meta_ai: "Service maps designed for ops teams",
+        meta_external: "Internal & external supervision",
+        btn_demo: "Request a demo",
+        btn_explore: "Explore features",
+        hero_note:
+          "Designed by network engineers for <span>IT, NOC &amp; SOC</span> teams.",
+        hero_tag: "LIVE · Debug console & service map",
+        badge_uptime: "99.99% uptime tracking · Multi-site",
+        stat_hosts: "34 hosts · 0 errors",
+        stat_services: "27 services · 1 offline",
+        value_kicker: "Why NetMonit Pro?",
+        value_title: "From simple monitoring to service steering.",
+        value_subtitle:
+          "NetMonit Pro brings network, service and impact views into a single console, so you spend less time guessing and more time fixing.",
+        value_card1_title: "Real-time visibility",
+        value_card1_text:
+          "Latency, loss, jitter, uptime, service map: your key metrics are visible in seconds for every host and service.",
+        value_card1_tag: "• NOC-ready wallboard",
+        value_card2_title: "Dependencies & impact",
+        value_card2_text:
+          "DNS, DHCP or firewall outage? Instantly see which services are impacted thanks to the dependency map.",
+        value_card2_tag: "• Reduced MTTR",
+        value_card3_title: "Useful alerts, not noisy ones",
+        value_card3_text:
+          "Configure focused alerts per service, cluster or site. Critical incidents stand out immediately.",
+        value_card3_tag: "• External monitoring mode included",
+        features_kicker: "Features",
+        features_title: "A modern console for networks & services.",
+        features_subtitle:
+          "NetMonit Pro combines detailed metrics, rich graphs and business views to support ops, on-call and support teams.",
+        features_card1_title: "Advanced host supervision",
+        features_card1_text:
+          "Track latency, loss, jitter and availability over 24h or 7d. Identify degraded periods at a glance.",
+        features_card1_metric:
+          "Routers, switches, servers, security appliances…",
+        features_card2_title: "Debug console & centralized logs",
+        features_card2_text:
+          "Monitor module status, API calls and logs in real time. The debug console shows exactly what the engine is doing.",
+        features_card2_metric:
+          "Jobs, alerts, monitoring, metrics & health checks",
+        features_card3_title: "Service map & dependencies",
+        features_card3_text:
+          "Display AD, DNS, DHCP, VPN, DB, Web and more, along with their links to hosts and clusters. Critical services are highlighted.",
+        features_card4_title: "Enriched discovery & port scan",
+        features_card4_text:
+          "Scan history, service roles, SNMP profiles, external monitoring… NetMonit Pro helps you document your network over time.",
+        usecases_kicker: "Use cases",
+        usecases_title: "Built for network, infra & security teams.",
+        usecases_subtitle:
+          "From single-site to multi-site or hybrid cloud, NetMonit Pro keeps your environments visible and understandable.",
+        usecases_card1_title: "SMB & critical infrastructures",
+        usecases_card1_text:
+          "Ensure availability for business services (ERP, CRM, email, remote access) with easy-to-deploy monitoring.",
+        usecases_card2_title: "NOC / SOC teams",
+        usecases_card2_text:
+          "Use live views, dependency maps and alerts to prioritize incidents and reduce mean time to resolution.",
+        usecases_card3_title: "Remote sites & hybrid clouds",
+        usecases_card3_text:
+          "Monitor WAN links, VPNs, firewalls and critical services wherever they are, with internal or external supervision.",
+        badge_item1: "Network admin",
+        badge_item2: "Infra manager",
+        badge_item3: "Security engineer",
+        badge_item4: "MSP & integrators",
+        demo_kicker: "Request a demo",
+        demo_title: "Try NetMonit Pro on your own environment.",
+        demo_subtitle:
+          "Describe your context (network size, environments, constraints) and we’ll propose a tailored demo.",
+        demo_note:
+          "Fields marked with an asterisk (*) are required. We do not share your data with third parties.",
+        label_name: "Full name *",
+        label_email: "Email *",
+        label_message:
+          "Message (context, network size, objectives) *",
+        form_status:
+          "Data will be sent to your backend / API. <span>Technical demo to connect.</span>",
+        footer_rights: "All rights reserved.",
+        footer_features: "Features",
+        footer_usecases: "Use cases",
+        footer_demo: "Request a demo"
+      },
+      ar: {
+        logo_subtitle: "مراقبة الشبكات والخدمات",
+        chip_live: "مراقبة في الزمن الحقيقي",
+        hero_title: "مراقبة ذكية للشبكات والخدمات الحرجة",
+        hero_subtitle:
+          "رؤية فورية للمضيفين والخدمات والاعتمادات والحوادث. يجمع NetMonit Pro بين المقاييس والخرائط والتنبيهات الذكية لحماية البنية التحتية لديك.",
+        meta_latency: "زمن الاستجابة، الفقد والتقلب في لمحة",
+        meta_ai: "خرائط خدمات مصممة لفرق التشغيل",
+        meta_external: "مراقبة داخلية وخارجية",
+        btn_demo: "اطلب عرضًا تجريبيًا",
+        btn_explore: "استكشف المزايا",
+        hero_note:
+          "مصمم من طرف مهندسي شبكات لفرق <span>تقنية المعلومات و NOC و SOC</span>.",
+        hero_tag: "حي · وحدة تصحيح و خريطة الخدمات",
+        badge_uptime: "متابعة توفر 99.99٪ · مواقع متعددة",
+        stat_hosts: "‎34 مضيفًا · 0 أخطاء",
+        stat_services: "‎27 خدمة · خدمة واحدة متوقفة",
+        value_kicker: "لماذا NetMonit Pro؟",
+        value_title: "من المراقبة البسيطة إلى قيادة الخدمات.",
+        value_subtitle:
+          "يجمع NetMonit Pro رؤية الشبكة والخدمات والأثر في واجهة واحدة، حتى تقضي وقتًا أقل في التخمين ووقتًا أكثر في الحل.",
+        value_card1_title: "رؤية في الزمن الحقيقي",
+        value_card1_text:
+          "زمن استجابة، فقد، تقلب، توفر وخريطة خدمات: كل المقاييس الأساسية متاحة خلال ثوان لكل مضيف وخدمة.",
+        value_card1_tag: "• لوحة تحكم جاهزة لغرف العمليات",
+        value_card2_title: "الاعتمادات والأثر",
+        value_card2_text:
+          "انقطاع DNS أو DHCP أو الجدار الناري؟ تظهر الخدمات المتأثرة فورًا بفضل خريطة الاعتمادات.",
+        value_card2_tag: "• تقليل زمن حل الحوادث",
+        value_card3_title: "تنبيهات مفيدة وليست مزعجة",
+        value_card3_text:
+          "اضبط التنبيهات حسب الخدمة أو المجموعة أو الموقع. تظهر الحوادث الحرجة فورًا.",
+        value_card3_tag: "• وضع مراقبة خارجية مضمن",
+        features_kicker: "الميزات",
+        features_title: "وحدة تحكم حديثة للشبكات والخدمات.",
+        features_subtitle:
+          "يجمع NetMonit Pro بين المقاييس المفصلة والرسوم البيانية الغنية والرؤى العملية لدعم فرق التشغيل والدعم.",
+        features_card1_title: "مراقبة متقدمة للمضيفين",
+        features_card1_text:
+          "تابع زمن الاستجابة والفقد والتقلب والتوفر على مدى 24 ساعة أو 7 أيام مع رسوم بيانية واضحة.",
+        features_card1_metric:
+          "أجهزة التوجيه والمبدلات والخوادم وأجهزة الأمان…",
+        features_card2_title: "وحدة تصحيح وسجلات مركزية",
+        features_card2_text:
+          "راقب حالة الوحدات واستدعاءات API والسجلات في الزمن الحقيقي. تريك وحدة التصحيح ما يفعله المحرك بالضبط.",
+        features_card2_metric:
+          "مهام وتنبيهات ومراقبة ومقاييس وفحوصات الحالة",
+        features_card3_title: "خريطة الخدمات والاعتمادات",
+        features_card3_text:
+          "أظهر خدمات AD و DNS و DHCP و VPN وقواعد البيانات والويب وغيرها مع الروابط إلى المضيفين والمجموعات.",
+        features_card4_title: "اكتشاف محسّن و فحص المنافذ",
+        features_card4_text:
+          "سجل الفحوصات وأدوار الخدمات وبروفيلات SNMP والمراقبة الخارجية… يساعدك NetMonit Pro على توثيق شبكتك.",
+        usecases_kicker: "حالات الاستخدام",
+        usecases_title: "مصمم لفرق الشبكات والبنية التحتية والأمن.",
+        usecases_subtitle:
+          "سواء كانت لديك بيئة واحدة أو مراكز بيانات متعددة أو سحابة هجينة، يبقيك NetMonit Pro على رؤية واضحة.",
+        usecases_card1_title: "الشركات المتوسطة والبنى الحرجة",
+        usecases_card1_text:
+          "ضمن توفر الخدمات الحيوية مثل ERP و CRM والبريد والولوج عن بعد عبر مراقبة سهلة النشر.",
+        usecases_card2_title: "فرق NOC / SOC",
+        usecases_card2_text:
+          "استخدم العروض الحية وخرائط الاعتمادات والتنبيهات لتحديد الأولويات وتقليل زمن الحل.",
+        usecases_card3_title: "المواقع البعيدة والسحب الهجينة",
+        usecases_card3_text:
+          "راقب روابط WAN و VPN والجدران النارية والخدمات الحرجة أينما كانت، بمراقبة داخلية أو خارجية.",
+        badge_item1: "مسؤول شبكات",
+        badge_item2: "مسؤول البنية التحتية",
+        badge_item3: "مهندس أمن",
+        badge_item4: "مزود خدمة مُدار",
+        demo_kicker: "اطلب عرضًا تجريبيًا",
+        demo_title: "جرّب NetMonit Pro على بيئتك.",
+        demo_subtitle:
+          "اشرح لنا السياق (حجم الشبكة والبيئات والقيود) لتحصل على عرض تجريبي مناسب.",
+        demo_note:
+          "الحقول المشار إليها بعلامة (*) إلزامية. لا نشارك بياناتك مع أي طرف آخر.",
+        label_name: "الاسم الكامل *",
+        label_email: "البريد الإلكتروني *",
+        label_message:
+          "الرسالة (السياق، حجم الشبكة، الأهداف) *",
+        form_status:
+          "سيتم إرسال البيانات إلى واجهة البرمجة / الخادم لديك. <span>يجب ربط العرض التقني لاحقًا.</span>",
+        footer_rights: "جميع الحقوق محفوظة.",
+        footer_features: "الميزات",
+        footer_usecases: "حالات الاستخدام",
+        footer_demo: "اطلب عرضًا تجريبيًا"
+      }
+    };
+
+    // --- helper to set language ---------------------------------------------
+    function setLanguage(lang) {
+      const dict = i18n[lang] || i18n.fr;
+      const page = document.getElementById("page");
+
+      document.body.classList.toggle("rtl", lang === "ar");
+
+      document
+        .querySelectorAll("[data-i18n]")
+        .forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          const value = dict[key];
+          if (value !== undefined) {
+            if (value.includes("<span") || value.includes("<br")) {
+              el.innerHTML = value;
+            } else {
+              el.textContent = value;
+            }
+          }
+        });
+
+      document
+        .querySelectorAll(".lang-btn")
+        .forEach((btn) => {
+          btn.classList.toggle(
+            "active",
+            btn.getAttribute("data-lang") === lang
+          );
+        });
+
+      localStorage.setItem("netmonit_lang", lang);
+      page.setAttribute("lang", lang);
+    }
+
+    // --- smooth scroll for buttons ------------------------------------------
+    function setupScrollButtons() {
+      document
+        .querySelectorAll("[data-scroll-target]")
+        .forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const target = btn.getAttribute("data-scroll-target");
+            const el = document.querySelector(target);
+            if (el) {
+              el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          });
+        });
+    }
+
+    // --- fake submit handler -------------------------------------------------
+    function setupForm() {
+      const form = document.getElementById("demo-form");
+      const statusEl = document.getElementById("form-status");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        statusEl.innerHTML =
+          "✅ Données prêtes à être envoyées à votre backend / API.";
+        setTimeout(() => setLanguage(localStorage.getItem("netmonit_lang") || "fr"), 50);
+      });
+    }
+
+    // --- init ---------------------------------------------------------------
+    document.addEventListener("DOMContentLoaded", () => {
+      // Year
+      document.getElementById("year").textContent =
+        new Date().getFullYear();
+
+      // Lang selector
+      document.querySelectorAll(".lang-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          setLanguage(btn.getAttribute("data-lang"));
+        });
+      });
+
+      const savedLang = localStorage.getItem("netmonit_lang") || "fr";
+      setLanguage(savedLang);
+      setupScrollButtons();
+      setupForm();
+    });
+  </script>
+</body>
+</html>

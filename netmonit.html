@@ -63,6 +63,54 @@
   --gradient-accent: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
 }
 
+/* ========== ANNONCE GRATUITE ========== */
+.annonce-gratuite {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  padding: 1.5rem 0;
+  text-align: center;
+  position: relative;
+  z-index: 100;
+  border-bottom: 3px solid var(--accent-gold);
+}
+
+.annonce-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.annonce-highlight {
+  background: rgba(255, 255, 255, 0.9);
+  color: #c0392b;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+  font-weight: 900;
+}
+
+.annonce-conditions {
+  font-size: 0.9rem;
+  opacity: 0.95;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.annonce-conditions strong {
+  color: #ffeb3b;
+}
+
+@media (max-width: 768px) {
+  .annonce-title {
+    font-size: 1.3rem;
+  }
+  
+  .annonce-conditions {
+    font-size: 0.8rem;
+  }
+}
+
 /* ========== RESET & BASE ========== */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -2156,6 +2204,16 @@ body.rtl .hero-float-card.card-2 {
   </div>
 </header>
 
+<!-- ========== ANNONCE GRATUITE ========== -->
+<div class="annonce-gratuite">
+  <div class="wrapper">
+    <h2 class="annonce-title">On développe gratuitement votre 1er <span class="annonce-highlight">Application / Logiciel</span> pour les Startups uniquement et les PME/PMI</h2>
+    <p class="annonce-conditions">
+      <strong>Des conditions s'appliquent :</strong> Être ponctuel, savoir ses besoins, répondre aux questions de nos développeurs, accepter de nous faire la publicité sur votre site web si possible.
+    </p>
+  </div>
+</div>
+
 <!-- ========== HERO ========== -->
 <section class="hero">
   <div class="wrapper">
@@ -2916,47 +2974,13 @@ body.rtl .hero-float-card.card-2 {
       </div>
 
       <div class="contact-form-wrapper">
-        <form class="contact-form" id="contactForm" action="https://formspree.io/f/placeholder" method="POST">
-          <div class="form-group">
-            <label for="name" data-i18n="form_name">Nom complet *</label>
-            <input type="text" id="name" name="name" required placeholder="Votre nom">
-          </div>
-          
-          <div class="form-group">
-            <label for="email" data-i18n="form_email">Email *</label>
-            <input type="email" id="email" name="email" required placeholder="votre@email.com">
-          </div>
-          
-          <div class="form-group">
-            <label for="company" data-i18n="form_company">Entreprise</label>
-            <input type="text" id="company" name="company" placeholder="Nom de votre entreprise">
-          </div>
-          
-          <div class="form-group">
-            <label for="subject" data-i18n="form_subject">Sujet *</label>
-            <select id="subject" name="subject" required>
-              <option value="" data-i18n="form_subject_select">Sélectionnez un sujet</option>
-              <option value="demo" data-i18n="form_subject_demo">Demande de démonstration</option>
-              <option value="quote" data-i18n="form_subject_quote">Demande de devis</option>
-              <option value="partnership" data-i18n="form_subject_partnership">Partenariat</option>
-              <option value="career" data-i18n="form_subject_career">Candidature / Emploi</option>
-              <option value="other" data-i18n="form_subject_other">Autre</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label for="message" data-i18n="form_message">Message *</label>
-            <textarea id="message" name="message" rows="5" required placeholder="Votre message..."></textarea>
-          </div>
-          
-          <button type="submit" class="form-submit" data-i18n="form_submit">
-            🚀 Envoyer le message
-          </button>
-          
-          <p class="form-note" data-i18n="form_note">
-            * Champs obligatoires. Vos données restent en Algérie et ne sont jamais partagées.
-          </p>
-        </form>
+        <div class="contact-message">
+          <h3>📞 Contact Direct</h3>
+          <p>Pour toute demande concernant notre offre de développement gratuit pour startups et PME/PMI, ou pour toute autre information :</p>
+          <p>📧 Email : <strong>contact@dznet1.com</strong></p>
+          <p>📱 WhatsApp : <strong>+213 XXX XXX XXX</strong></p>
+          <p>Nous répondons sous 24h ouvrées.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -3799,5 +3823,6 @@ document.getElementById('menuToggle').addEventListener('click', () => {
 setLanguage(localStorage.getItem('dznet1_lang') || 'fr');
 </script>
 
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"cf89ad275539459598e882a51804daf3","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>

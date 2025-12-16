@@ -70,7 +70,7 @@
     .cell {
       width: var(--tile);
       height: var(--tile);
-      background: #bcd6e8 url("https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/water.png") center/cover;
+      background: url("https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/water.png") center/cover;
       border-radius: 4px;
       position: relative;
       cursor: pointer;
@@ -266,53 +266,31 @@
     }
 
     // Simulation WebSocket : BroadcastChannel pour un fonctionnement local multi-onglets
-      class LocalChannel {
-        constructor(roomId, onMessage) {
-          this.roomId = roomId;
-          this.onMessage = onMessage;
-          this.instanceId = Math.random().toString(16).slice(2);
-          this.storageKey = `naval-room-${roomId}`;
-          if ('BroadcastChannel' in window) {
-            this.channel = new BroadcastChannel(`naval-${roomId}`);
-            this.channel.onmessage = (ev) => this.onMessage(ev.data);
-          } else {
-            LocalChannel.map ||= new Map();
-            if (!LocalChannel.map.has(roomId)) LocalChannel.map.set(roomId, []);
-            LocalChannel.map.get(roomId).push(this);
-          }
-          window.addEventListener('storage', this.handleStorage);
-        }
-        handleStorage = (ev) => {
-          if (ev.key !== this.storageKey || !ev.newValue) return;
-          try {
-            const { origin, payload } = JSON.parse(ev.newValue);
-            if (origin === this.instanceId) return;
-            this.onMessage(payload);
-          } catch (e) {
-            if (debug) console.warn('Storage parse failed', e);
-          }
-        }
-        post(data) {
-          const payload = { ...data };
-          if (this.channel) {
-            this.channel.postMessage(payload);
-          } else {
-            const peers = LocalChannel.map.get(this.roomId) || [];
-            peers.forEach((p) => p !== this && p.onMessage(payload));
-          }
-          try {
-            localStorage.setItem(this.storageKey, JSON.stringify({ origin: this.instanceId, payload, ts: Date.now() }));
-            // force storage event fire by removing key afterwards
-            localStorage.removeItem(this.storageKey);
-          } catch (e) {
-            if (debug) console.warn('Storage broadcast failed', e);
-          }
-        }
-        close() {
-          if (this.channel) this.channel.close();
-          window.removeEventListener('storage', this.handleStorage);
+    class LocalChannel {
+      constructor(roomId, onMessage) {
+        this.roomId = roomId;
+        this.onMessage = onMessage;
+        if ('BroadcastChannel' in window) {
+          this.channel = new BroadcastChannel(`naval-${roomId}`);
+          this.channel.onmessage = (ev) => this.onMessage(ev.data);
+        } else {
+          LocalChannel.map ||= new Map();
+          if (!LocalChannel.map.has(roomId)) LocalChannel.map.set(roomId, []);
+          LocalChannel.map.get(roomId).push(this);
         }
       }
+      post(data) {
+        if (this.channel) {
+          this.channel.postMessage(data);
+        } else {
+          const peers = LocalChannel.map.get(this.roomId) || [];
+          peers.forEach((p) => p !== this && p.onMessage(data));
+        }
+      }
+      close() {
+        if (this.channel) this.channel.close();
+      }
+    }
 
     class FakeSocket {
       constructor(roomId, playerId, onMessage) {
@@ -521,17 +499,6 @@
           state.opponentId = from;
           updateStatus('Adversaire connecté : ' + from);
           document.getElementById('turnLabel').textContent = 'Placement des bateaux';
-          // Confirme notre présence et notre état prêt si applicable
-          state.socket?.send('ack', { playerId: state.playerId, ready: state.ready, ships: state.ready ? state.shipsPlaced : null });
-          break;
-        case 'ack':
-          state.opponentId = from;
-          updateStatus('Adversaire prêt à jouer : ' + from);
-          if (payload.ready) {
-            state.opponentReady = true;
-            state.opponentShips = payload.ships || {};
-          }
-          checkStart();
           break;
         case 'ready':
           state.opponentReady = true;

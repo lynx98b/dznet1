@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bataille Navale Multijoueur | v2.100 BETA</title>
+  <style>
+    :root {
+      --primary: #0a4d68;
+      --accent: #00b8d4;
+      --text: #0f172a;
+      --muted: #6b7280;
+      --bg: #f8fafc;
+      --danger: #ef4444;
+      --success: #22c55e;
+      --tile: 32px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header {
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      text-align: center;
+    }
+
+    main {
+      padding: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .grid-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(10, var(--tile));
+      grid-template-rows: repeat(10, var(--tile));
+      gap: 2px;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 6px;
+      border-radius: 8px;
+      touch-action: manipulation;
+    }
+
+    .cell {
+      width: var(--tile);
+      height: var(--tile);
+      background: url("https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/water.png") center/cover;
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .cell.own { cursor: crosshair; }
+    .cell.disabled { opacity: 0.5; pointer-events: none; }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(10, 77, 104, 0.1);
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    button, input { font: inherit; }
+
+    input[type="text"] {
+      padding: 10px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      min-width: 180px;
+    }
+
+    button {
+      padding: 10px 14px;
+      border: none;
+      border-radius: 8px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
+    }
+
+    button.secondary { background: var(--accent); }
+    button.ghost { background: #e2e8f0; color: var(--text); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(0,0,0,0.12); }
+
+    .ships { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .ship-chip {
+      border: 1px solid #e2e8f0;
+      padding: 8px 10px;
+      border-radius: 10px;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      cursor: pointer;
+      background: #f8fafc;
+      transition: border-color 0.2s ease, transform 0.15s ease;
+    }
+
+    .ship-chip.selected { border-color: var(--primary); box-shadow: 0 6px 16px rgba(0,0,0,0.08); transform: translateY(-1px); }
+    .ship-chip img { height: 28px; }
+
+    .status {
+      display: grid;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .game-state { font-weight: 700; color: var(--primary); }
+
+    footer { text-align: center; padding: 12px; color: var(--muted); font-size: 0.9rem; }
+
+    @media (min-width: 768px) {
+      main { gap: 20px; }
+      .grid { --tile: 36px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bataille Navale Multijoueur</h1>
+    <p>HTML5 pur · Synchronisation temps réel simulée · v2.100 BETA</p>
+  </header>
+  <main>
+    <section class="card" aria-label="Salon">
+      <div class="controls">
+        <input id="roomId" type="text" placeholder="ID du salon" aria-label="ID du salon" />
+        <button id="joinBtn">Créer / Rejoindre</button>
+        <span class="badge" id="connectionStatus">Déconnecté</span>
+      </div>
+      <div class="status" id="statusMessages">
+        <span>1. Rejoignez un salon pour commencer.</span>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Placement des bateaux">
+      <div class="controls">
+        <strong>Bateaux à placer</strong>
+        <div class="ships" id="shipList"></div>
+        <button class="ghost" id="rotateBtn">Orientation : <span id="orientationLabel">Horizontal</span></button>
+        <button class="secondary" id="readyBtn" disabled>Prêt</button>
+      </div>
+    </section>
+
+    <section class="card" aria-label="Jeu">
+      <div class="controls" style="justify-content: space-between; align-items: flex-start;">
+        <div class="status">
+          <span class="game-state" id="phaseLabel">Salon</span>
+          <span id="turnLabel">En attente du salon.</span>
+        </div>
+      </div>
+      <div class="grid-wrapper">
+        <div>
+          <h3>Votre grille</h3>
+          <div id="ownGrid" class="grid" aria-label="Grille personnelle"></div>
+        </div>
+        <div>
+          <h3>Grille adverse</h3>
+          <div id="enemyGrid" class="grid" aria-label="Grille adverse"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>Mode debug disponible · Prêt pour un backend WebSocket réel</footer>
+
+  <script>
+    // Configuration générale
+    const debug = true; // Active les logs détaillés
+    const GRID_SIZE = 10;
+    const SHIPS_TO_PLACE = [
+      { id: 'ship4', size: 4, count: 1 },
+      { id: 'ship3a', size: 3, count: 1 },
+      { id: 'ship3b', size: 3, count: 1 },
+      { id: 'ship2a', size: 2, count: 1 },
+      { id: 'ship2b', size: 2, count: 1 },
+      { id: 'ship2c', size: 2, count: 1 },
+      { id: 'ship1a', size: 1, count: 1 },
+      { id: 'ship1b', size: 1, count: 1 },
+      { id: 'ship1c', size: 1, count: 1 },
+      { id: 'ship1d', size: 1, count: 1 },
+    ];
+    const TOTAL_SHIP_CELLS = SHIPS_TO_PLACE.reduce((total, ship) => total + ship.size * (ship.count || 1), 0);
+
+    const shipSprites = {
+      1: 'ship_1.png',
+      2: 'ship_2.png',
+      3: 'ship_3.png',
+      4: 'ship_4.png',
+      hit: 'hit.png',
+      miss: 'miss.png',
+      water: 'water.png'
+    };
+
+    // État du jeu
+    const state = {
+      playerId: 'P-' + Math.random().toString(16).slice(2, 8),
+      roomId: null,
+      socket: null,
+      ownGrid: [],
+      enemyGrid: [],
+      shipsPlaced: {},
+      orientation: 'H',
+      selectedShip: null,
+      ready: false,
+      opponentReady: false,
+      opponentId: null,
+      opponentShips: [],
+      myTurn: false,
+      phase: 'lobby',
+      selectedSize: SHIPS_TO_PLACE[0].size,
+    };
+
+    // Utilitaires
+    const log = (...args) => debug && console.log('[DEBUG]', ...args);
+
+    function createMatrix() {
+      return Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(0));
+    }
+
+    function cdn(path) {
+      return `https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/${path}`;
+    }
+
+    // Simulation WebSocket : BroadcastChannel pour un fonctionnement local multi-onglets
+    class LocalChannel {
+      constructor(roomId, onMessage) {
+        this.roomId = roomId;
+        this.onMessage = onMessage;
+        if ('BroadcastChannel' in window) {
+          this.channel = new BroadcastChannel(`naval-${roomId}`);
+          this.channel.onmessage = (ev) => this.onMessage(ev.data);
+        } else {
+          LocalChannel.map ||= new Map();
+          if (!LocalChannel.map.has(roomId)) LocalChannel.map.set(roomId, []);
+          LocalChannel.map.get(roomId).push(this);
+        }
+      }
+      post(data) {
+        if (this.channel) {
+          this.channel.postMessage(data);
+        } else {
+          const peers = LocalChannel.map.get(this.roomId) || [];
+          peers.forEach((p) => p !== this && p.onMessage(data));
+        }
+      }
+      close() {
+        if (this.channel) this.channel.close();
+      }
+    }
+
+    class FakeSocket {
+      constructor(roomId, playerId, onMessage) {
+        this.playerId = playerId;
+        this.channel = new LocalChannel(roomId, (payload) => {
+          if (payload?.from === this.playerId) return; // ignore own echo
+          onMessage(payload);
+        });
+      }
+      send(type, payload = {}) {
+        this.channel.post({ type, payload, from: this.playerId, ts: Date.now() });
+      }
+      close() { this.channel.close(); }
+    }
+
+    // Rendu des grilles
+    function createGrid(containerId, clickHandler, isOwn = false) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      for (let r = 0; r < GRID_SIZE; r++) {
+        for (let c = 0; c < GRID_SIZE; c++) {
+          const cell = document.createElement('div');
+          cell.className = `cell ${isOwn ? 'own' : ''}`;
+          cell.dataset.row = r;
+          cell.dataset.col = c;
+          cell.addEventListener('click', () => clickHandler(r, c));
+          container.appendChild(cell);
+        }
+      }
+    }
+
+    function renderOwnGrid() {
+      const container = document.getElementById('ownGrid');
+      [...container.children].forEach((cell, idx) => {
+        const r = Math.floor(idx / GRID_SIZE);
+        const c = idx % GRID_SIZE;
+        cell.innerHTML = '';
+        const val = state.ownGrid[r][c];
+        // Bateau
+        if (val === 1) {
+          const overlay = document.createElement('div');
+          overlay.className = 'overlay';
+          overlay.style.backgroundImage = `url(${cdn(shipSprites[getShipSizeAt(r, c)])})`;
+          cell.appendChild(overlay);
+        }
+        if (val === 2) { // raté
+          const miss = document.createElement('div');
+          miss.className = 'overlay';
+          miss.style.backgroundImage = `url(${cdn(shipSprites.miss)})`;
+          cell.appendChild(miss);
+        }
+        if (val === 3) { // touché
+          const hit = document.createElement('div');
+          hit.className = 'overlay';
+          hit.style.backgroundImage = `url(${cdn(shipSprites.hit)})`;
+          cell.appendChild(hit);
+        }
+      });
+    }
+
+    function renderEnemyGrid() {
+      const container = document.getElementById('enemyGrid');
+      [...container.children].forEach((cell, idx) => {
+        const r = Math.floor(idx / GRID_SIZE);
+        const c = idx % GRID_SIZE;
+        cell.innerHTML = '';
+        const val = state.enemyGrid[r][c];
+        if (val === 2) {
+          const miss = document.createElement('div');
+          miss.className = 'overlay';
+          miss.style.backgroundImage = `url(${cdn(shipSprites.miss)})`;
+          cell.appendChild(miss);
+        }
+        if (val === 3) {
+          const hit = document.createElement('div');
+          hit.className = 'overlay';
+          hit.style.backgroundImage = `url(${cdn(shipSprites.hit)})`;
+          cell.appendChild(hit);
+        }
+        cell.classList.toggle('disabled', !state.myTurn || !state.ready || !state.opponentReady);
+      });
+    }
+
+    function getShipSizeAt(row, col) {
+      for (const shipId in state.shipsPlaced) {
+        const coords = state.shipsPlaced[shipId];
+        if (!coords) continue;
+        if (coords.some(([r, c]) => r === row && c === col)) {
+          return coords.length;
+        }
+      }
+      return 1;
+    }
+
+    // Gestion des bateaux
+    function buildShipList() {
+      const wrapper = document.getElementById('shipList');
+      wrapper.innerHTML = '';
+      SHIPS_TO_PLACE.forEach((ship, index) => {
+        const placed = Boolean(state.shipsPlaced[ship.id]);
+        const chip = document.createElement('div');
+        chip.className = `ship-chip ${state.selectedShip === ship.id ? 'selected' : ''}`;
+        chip.tabIndex = 0;
+        chip.innerHTML = `<img src="${cdn(shipSprites[ship.size])}" alt="Bateau taille ${ship.size}" />` +
+          `<div><strong>Taille ${ship.size}</strong><br><small>${placed ? 'Placé' : 'Disponible'}</small></div>`;
+        chip.addEventListener('click', () => selectShip(ship.id, ship.size));
+        chip.addEventListener('keypress', (e) => { if (e.key === 'Enter') selectShip(ship.id, ship.size); });
+        if (placed) chip.style.opacity = 0.5;
+        wrapper.appendChild(chip);
+        if (index === 0 && !state.selectedShip && !placed) {
+          state.selectedShip = ship.id;
+          state.selectedSize = ship.size;
+        }
+      });
+    }
+
+    function selectShip(shipId, size) {
+      if (state.ready) return;
+      state.selectedShip = shipId;
+      state.selectedSize = size;
+      buildShipList();
+      updateStatus('Sélection du bateau taille ' + size);
+    }
+
+    function rotateShip() {
+      state.orientation = state.orientation === 'H' ? 'V' : 'H';
+      document.getElementById('orientationLabel').textContent = state.orientation === 'H' ? 'Horizontal' : 'Vertical';
+    }
+
+    function placeShip(row, col) {
+      if (!state.selectedShip || state.ready) return;
+      const size = state.selectedSize;
+      const coords = [];
+      for (let i = 0; i < size; i++) {
+        const r = row + (state.orientation === 'V' ? i : 0);
+        const c = col + (state.orientation === 'H' ? i : 0);
+        if (r >= GRID_SIZE || c >= GRID_SIZE) {
+          updateStatus('Placement impossible : hors grille');
+          return;
+        }
+        coords.push([r, c]);
+      }
+      // collision
+      if (coords.some(([r, c]) => state.ownGrid[r][c] === 1)) {
+        updateStatus('Placement impossible : chevauchement');
+        return;
+      }
+      coords.forEach(([r, c]) => state.ownGrid[r][c] = 1);
+      state.shipsPlaced[state.selectedShip] = coords;
+      renderOwnGrid();
+      buildShipList();
+      updateReadyButton();
+    }
+
+    function updateReadyButton() {
+      const placedCount = Object.keys(state.shipsPlaced).length;
+      document.getElementById('readyBtn').disabled = placedCount !== SHIPS_TO_PLACE.length;
+    }
+
+    function setReady() {
+      if (state.ready) return;
+      state.ready = true;
+      document.getElementById('readyBtn').disabled = true;
+      updateStatus('Vous êtes prêt. En attente de l’adversaire...');
+      state.socket?.send('ready', { ships: state.shipsPlaced });
+      checkStart();
+    }
+
+    function checkStart() {
+      if (state.ready && state.opponentReady) {
+        state.phase = 'battle';
+        state.myTurn = chooseFirstPlayer();
+        updatePhaseLabels();
+        renderEnemyGrid();
+      }
+    }
+
+    function chooseFirstPlayer() {
+      const ids = [state.playerId, state.opponentId].sort();
+      const first = ids[0] === state.playerId;
+      updateStatus(first ? 'À vous de jouer !' : 'L’adversaire commence.');
+      document.getElementById('turnLabel').textContent = first ? 'Votre tour' : 'Tour adverse';
+      return first;
+    }
+
+    // Lobby & réseau
+    function joinRoom(roomId) {
+      if (!roomId) return alert('Merci de saisir un ID de salon');
+      initGame();
+      if (state.socket) state.socket.close();
+      state.roomId = roomId;
+      state.socket = new FakeSocket(roomId, state.playerId, handleIncoming);
+      document.getElementById('connectionStatus').textContent = 'Salon ' + roomId;
+      updateStatus('Connecté au salon. En attente d’un joueur...');
+      state.socket.send('join', { playerId: state.playerId });
+      state.phase = 'placement';
+      updatePhaseLabels();
+    }
+
+    function handleIncoming(message) {
+      log('Message reçu', message);
+      if (!message) return;
+      const { type, payload, from } = message;
+      switch (type) {
+        case 'join':
+          state.opponentId = from;
+          updateStatus('Adversaire connecté : ' + from);
+          document.getElementById('turnLabel').textContent = 'Placement des bateaux';
+          // Confirme notre présence et notre état prêt si applicable
+          state.socket?.send('ack', { playerId: state.playerId, ready: state.ready, ships: state.ready ? state.shipsPlaced : null });
+          break;
+        case 'ack':
+          state.opponentId = from;
+          updateStatus('Adversaire prêt à jouer : ' + from);
+          if (payload.ready) {
+            state.opponentReady = true;
+            state.opponentShips = payload.ships || {};
+          }
+          checkStart();
+          break;
+        case 'ready':
+          state.opponentReady = true;
+          state.opponentId = state.opponentId || from;
+          state.opponentShips = payload.ships;
+          updateStatus('Votre adversaire est prêt !');
+          checkStart();
+          break;
+        case 'shoot':
+          receiveMove(payload.row, payload.col, from);
+          break;
+        case 'result':
+          applyShotResult(payload.row, payload.col, payload.hit);
+          if (payload.victory) announceVictory(true);
+          break;
+        case 'victory':
+          announceVictory(false);
+          break;
+      }
+    }
+
+    function updateStatus(text) {
+      const status = document.getElementById('statusMessages');
+      const line = document.createElement('div');
+      line.textContent = text;
+      status.prepend(line);
+      if (status.children.length > 5) status.removeChild(status.lastChild);
+    }
+
+    function updatePhaseLabels() {
+      document.getElementById('phaseLabel').textContent = state.phase === 'battle' ? 'Combat' : 'Placement';
+      document.getElementById('turnLabel').textContent = state.phase === 'placement' ? 'Placez vos bateaux' : (state.myTurn ? 'Votre tour' : 'Tour adverse');
+    }
+
+    // Tir
+    function shoot(row, col) {
+      if (!state.myTurn || !state.ready || !state.opponentReady) return;
+      if (state.enemyGrid[row][col] !== 0) return updateStatus('Vous avez déjà tiré ici.');
+      state.myTurn = false;
+      document.getElementById('turnLabel').textContent = 'Tour adverse';
+      state.socket?.send('shoot', { row, col });
+      sendMove(row, col);
+    }
+
+    function sendMove(row, col) {
+      log('Tir envoyé', row, col);
+    }
+
+    function receiveMove(row, col, from) {
+      log('Tir reçu', row, col, 'de', from);
+      const hit = state.ownGrid[row][col] === 1;
+      state.ownGrid[row][col] = hit ? 3 : 2;
+      renderOwnGrid();
+      const victory = checkVictory(state.ownGrid);
+      state.socket?.send('result', { row, col, hit, victory });
+      if (victory) {
+        state.socket?.send('victory', {});
+        announceVictory(false);
+        return;
+      }
+      state.myTurn = true;
+      document.getElementById('turnLabel').textContent = 'Votre tour';
+      renderEnemyGrid();
+    }
+
+    function applyShotResult(row, col, hit) {
+      state.enemyGrid[row][col] = hit ? 3 : 2;
+      renderEnemyGrid();
+      if (checkVictory(state.enemyGrid, true)) {
+        announceVictory(true);
+      }
+    }
+
+    function checkVictory(grid, isEnemy = false) {
+      // Victoire si tous les bateaux sont touchés
+      if (isEnemy) {
+        let hits = 0;
+        for (let r = 0; r < GRID_SIZE; r++) {
+          for (let c = 0; c < GRID_SIZE; c++) {
+            if (grid[r][c] === 3) hits++;
+          }
+        }
+        return hits >= TOTAL_SHIP_CELLS;
+      }
+      for (let r = 0; r < GRID_SIZE; r++) {
+        for (let c = 0; c < GRID_SIZE; c++) {
+          if (grid[r][c] === 1) return false;
+        }
+      }
+      return true;
+    }
+
+    function announceVictory(isWinner) {
+      state.phase = 'finished';
+      const message = isWinner ? '🎉 Victoire !' : '💥 Défaite';
+      updateStatus(message);
+      document.getElementById('turnLabel').textContent = message;
+      state.myTurn = false;
+      renderEnemyGrid();
+    }
+
+    // Initialisation
+    function initGame() {
+      state.ownGrid = createMatrix();
+      state.enemyGrid = createMatrix();
+      state.shipsPlaced = {};
+      state.selectedShip = SHIPS_TO_PLACE[0].id;
+      state.selectedSize = SHIPS_TO_PLACE[0].size;
+      state.orientation = 'H';
+      state.ready = false;
+      state.opponentReady = false;
+      state.phase = 'lobby';
+      createGrid('ownGrid', placeShip, true);
+      createGrid('enemyGrid', shoot, false);
+      renderOwnGrid();
+      renderEnemyGrid();
+      buildShipList();
+      updatePhaseLabels();
+      updateReadyButton();
+      document.getElementById('orientationLabel').textContent = 'Horizontal';
+    }
+
+    // Gestion du DOM
+    document.getElementById('joinBtn').addEventListener('click', () => joinRoom(document.getElementById('roomId').value.trim()));
+    document.getElementById('rotateBtn').addEventListener('click', rotateShip);
+    document.getElementById('readyBtn').addEventListener('click', setReady);
+
+    window.addEventListener('load', initGame);
+  </script>
+</body>
+</html>

@@ -499,17 +499,6 @@
           state.opponentId = from;
           updateStatus('Adversaire connecté : ' + from);
           document.getElementById('turnLabel').textContent = 'Placement des bateaux';
-          // Confirme notre présence et notre état prêt si applicable
-          state.socket?.send('ack', { playerId: state.playerId, ready: state.ready, ships: state.ready ? state.shipsPlaced : null });
-          break;
-        case 'ack':
-          state.opponentId = from;
-          updateStatus('Adversaire prêt à jouer : ' + from);
-          if (payload.ready) {
-            state.opponentReady = true;
-            state.opponentShips = payload.ships || {};
-          }
-          checkStart();
           break;
         case 'ready':
           state.opponentReady = true;

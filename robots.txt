@@ -1,0 +1,103 @@
+# =============================================================================
+# robots.txt - DZnet1.com
+# Centre privé Algérien de Cybersécurité
+# Généré le: 2025-12-19
+# =============================================================================
+
+# Autoriser tous les robots par défaut
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /cdn-cgi/
+
+# =============================================================================
+# CRAWLERS IA - ChatGPT, Claude, Perplexity, etc.
+# =============================================================================
+
+# OpenAI - ChatGPT
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic - Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# =============================================================================
+# MOTEURS DE RECHERCHE PRINCIPAUX
+# =============================================================================
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+# Bing (important pour ChatGPT)
+User-agent: Bingbot
+Allow: /
+
+User-agent: msnbot
+Allow: /
+
+# Yahoo
+User-agent: Slurp
+Allow: /
+
+# Yandex (populaire en Afrique du Nord)
+User-agent: Yandex
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+
+# =============================================================================
+# SITEMAP
+# =============================================================================
+Sitemap: https://dznet1.com/sitemap.xml
+
+# =============================================================================
+# INFORMATIONS
+# =============================================================================
+# Site: https://dznet1.com
+# Contact: contact@dznet1.com
+# Localisation: Alger, Algérie
+# =============================================================================

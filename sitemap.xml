@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Page d'accueil principale -->
+  <url>
+    <loc>https://dznet1.com/</loc>
+    <lastmod>2025-12-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_map.png</image:loc>
+      <image:title>DZnet1 - Centre Algérien de Cybersécurité</image:title>
+    </image:image>
+  </url>
+
+  <!-- Section Enjeux -->
+  <url>
+    <loc>https://dznet1.com/#enjeux</loc>
+    <lastmod>2025-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Section Solutions SOC -->
+  <url>
+    <loc>https://dznet1.com/#solutions</loc>
+    <lastmod>2025-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Section Produits 2026 -->
+  <url>
+    <loc>https://dznet1.com/#produits</loc>
+    <lastmod>2025-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Section Écosystème -->
+  <url>
+    <loc>https://dznet1.com/#ecosysteme</loc>
+    <lastmod>2025-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Section Contact -->
+  <url>
+    <loc>https://dznet1.com/#contact</loc>
+    <lastmod>2025-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Page NetMonit (si elle existe séparément) -->
+  <url>
+    <loc>https://dznet1.com/netmonit.html</loc>
+    <lastmod>2025-12-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_map.png</image:loc>
+      <image:title>NetMonit Pro - Supervision réseau Algérie</image:title>
+    </image:image>
+  </url>
+
+</urlset>

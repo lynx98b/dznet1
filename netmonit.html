@@ -1,13 +1,7 @@
 <!-- ======================================================
- DZNET1 - Centre privé  ALGÉRIEN DE CYBERSÉCURITÉ
- Version : v1.006 (FINAL - CSP + GA FIX)
+ DZNET1 - CENTRE ALGÉRIEN DE CYBERSÉCURITÉ
+ Version : v2.0 (Professional Redesign)
  Made in Algeria 🇩🇿 - 100% Ressources Algériennes
- [v1.001] Initial: Header + Hero + Structure responsive
- [v1.002] Ajout: Section Enjeux avec données réelles
- [v1.003] Ajout: Section Solutions SOC + Pricing
- [v1.004] Ajout: Section Produits 2026 (NetMonit, WiFi, MediWatch)
- [v1.005] Ajout: Section Écosystème + Contact + Footer complet
- [v1.006] FIX: CSP compatible GA4 + anonymisation IP
 ====================================================== -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -15,121 +9,109 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>DZnet1 | Centre privé  Algérien de Cybersécurité - Souveraineté Numérique 🇩🇿</title>
+<title>DZnet1 | Centre Algérien de Cybersécurité - Protection & Souveraineté Numérique</title>
 
-<meta name="description" content="DZnet1 - Premier Centre privé  Algérien de Cybersécurité. Protection des entreprises, PME et startups. 100% ressources algériennes, données souveraines, expertise locale.">
-<meta name="keywords" content="cybersécurité Algérie, SOC Algérie, sécurité informatique, DZnet1, NetMonit Pro, souveraineté numérique">
+<!-- SEO Meta Tags -->
+<meta name="description" content="DZnet1 - Premier Centre Algérien de Cybersécurité. SOC mutualisé, supervision réseau NetMonit Pro, protection des PME et startups. 100% ressources algériennes, données souveraines.">
+<meta name="keywords" content="cybersécurité Algérie, SOC Algérie, sécurité informatique, DZnet1, NetMonit Pro, souveraineté numérique, pentest algérie">
+<meta name="author" content="DZnet1">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://dznet1.com/">
+
+<!-- Geo Tags -->
+<meta name="geo.region" content="DZ">
+<meta name="geo.placename" content="Alger, Algérie">
 
 <!-- Open Graph -->
-<meta property="og:title" content="DZnet1 - Centre privé  Algérien de Cybersécurité">
-<meta property="og:description" content="Premier bouclier privé  de cybersécurité 100% algérien pour les entreprises.">
-<meta property="og:image" content="https://dznet1.com/cdn-cgi/image/width=1200,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_map.png">
+<meta property="og:title" content="DZnet1 - Centre Algérien de Cybersécurité">
+<meta property="og:description" content="Premier bouclier de cybersécurité 100% algérien pour les entreprises.">
+<meta property="og:image" content="https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_map.png">
 <meta property="og:url" content="https://dznet1.com">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="fr_DZ">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="DZnet1 - Centre privé  Algérien de Cybersécurité">
-<meta name="twitter:description" content="Premier bouclier privé  de cybersécurité 100% algérien.">
+<meta name="twitter:title" content="DZnet1 - Centre Algérien de Cybersécurité">
+<meta name="twitter:description" content="Premier bouclier de cybersécurité 100% algérien.">
 
-<!-- ================== CONTENT SECURITY POLICY (FIXED) ================== -->
-<meta http-equiv="Content-Security-Policy"
-      content="
-        default-src 'self';
-        img-src 'self' data: https://raw.githubusercontent.com https://dznet1.com;
-        style-src 'self' 'unsafe-inline';
-        script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com;
-        connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com;
-        base-uri 'none';
-        form-action 'self';
-      ">
-
-<!-- ================== GOOGLE ANALYTICS GA4 ================== -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CRRK6Z4D1X"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-
-  gtag('js', new Date());
-
-  // GA4 – anonymisation IP (bonne pratique légale)
-  gtag('config', 'G-CRRK6Z4D1X', {
-    anonymize_ip: true
-  });
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "DZnet1",
+  "alternateName": "Centre Algérien de Cybersécurité",
+  "url": "https://dznet1.com",
+  "description": "Premier Centre de Cybersécurité 100% Algérien",
+  "email": "contact@dznet1.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Alger",
+    "addressCountry": "DZ"
+  },
+  "areaServed": "DZ",
+  "sameAs": [
+    "https://www.facebook.com/share/g/1HEJPJzddd/"
+  ]
+}
 </script>
 
+<!-- Google Fonts - Professional -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-/* ========== VARIABLES CSS ========== */
+/* ========== CSS VARIABLES ========== */
 :root {
-  --bg-dark: #050910;
-  --bg-card: #0b111d;
-  --accent-primary: #0fb9b1;
-  --accent-secondary: #00c2ff;
-  --accent-gold: #f5a623;
-  --accent-red: #e74c3c;
-  --accent-green: #27ae60;
-  --text-light: #f5f7ff;
-  --text-soft: #a6b3d1;
-  --border-color: #141c2b;
-  --radius: 16px;
-  --radius-sm: 8px;
-  --max-width: 1280px;
-  --transition: all 0.3s ease;
-  --shadow: 0 10px 40px rgba(0,0,0,0.3);
-  --gradient-hero: linear-gradient(135deg, #0b1635 0%, #050910 50%, #0a0f1a 100%);
-  --gradient-accent: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-}
-
-/* ========== ANNONCE GRATUITE ========== */
-.annonce-gratuite {
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-  color: white;
-  padding: 1.5rem 0;
-  text-align: center;
-  position: relative;
-  z-index: 100;
-  border-bottom: 3px solid var(--accent-gold);
-}
-
-.annonce-title {
-  font-size: 1.8rem;
-  font-weight: 800;
-  margin-bottom: 0.5rem;
-  line-height: 1.3;
-}
-
-.annonce-highlight {
-  background: rgba(255, 255, 255, 0.9);
-  color: #c0392b;
-  padding: 0.2rem 0.5rem;
-  border-radius: 8px;
-  font-weight: 900;
-}
-
-.annonce-conditions {
-  font-size: 0.9rem;
-  opacity: 0.95;
-  max-width: 800px;
-  margin: 0 auto;
-  line-height: 1.5;
-}
-
-.annonce-conditions strong {
-  color: #ffeb3b;
-}
-
-@media (max-width: 768px) {
-  .annonce-title {
-    font-size: 1.3rem;
-  }
+  /* Colors - Professional Dark Theme */
+  --bg-primary: #0a0e17;
+  --bg-secondary: #111827;
+  --bg-card: #1a1f2e;
+  --bg-elevated: #232a3b;
   
-  .annonce-conditions {
-    font-size: 0.8rem;
-  }
+  /* Accent Colors */
+  --accent-cyan: #06b6d4;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-red: #ef4444;
+  --accent-violet: #8b5cf6;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+  --gradient-dark: linear-gradient(180deg, #0a0e17 0%, #111827 100%);
+  --gradient-glow: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+  
+  /* Text */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-light: rgba(255, 255, 255, 0.1);
+  
+  /* Spacing */
+  --section-padding: 100px;
+  --container-max: 1200px;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 40px rgba(6, 182, 212, 0.3);
+  
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
 }
 
 /* ========== RESET & BASE ========== */
@@ -145,191 +127,186 @@ html {
 }
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: var(--bg-dark);
-  color: var(--text-light);
-  line-height: 1.7;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
   overflow-x: hidden;
-}
-
-body.rtl {
-  direction: rtl;
-  text-align: right;
+  -webkit-font-smoothing: antialiased;
 }
 
 img {
   max-width: 100%;
   height: auto;
-  border-radius: var(--radius-sm);
+  display: block;
 }
 
 a {
-  color: var(--accent-secondary);
+  color: inherit;
   text-decoration: none;
-  transition: var(--transition);
 }
 
-a:hover {
-  color: var(--accent-primary);
-}
-
-/* ========== LAYOUT ========== */
-.wrapper {
-  max-width: var(--max-width);
+/* ========== UTILITY CLASSES ========== */
+.container {
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 24px;
 }
 
-section {
-  padding: 5rem 0;
+.section {
+  padding: var(--section-padding) 0;
+  position: relative;
 }
 
-/* ========== HEADER ========== */
-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: rgba(5, 9, 16, 0.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-  gap: 1rem;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--text-light);
-}
-
-.logo .flag {
-  font-size: 1.6rem;
-}
-
-.logo span {
-  background: var(--gradient-accent);
+.text-gradient {
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ========== NAVIGATION ========== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 16px 0;
+  transition: var(--transition-base);
+}
+
+.nav.scrolled {
+  background: rgba(10, 14, 23, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
 .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: 32px;
   list-style: none;
 }
 
 .nav-links a {
-  color: var(--text-soft);
   font-size: 0.9rem;
   font-weight: 500;
-  padding: 0.5rem 0;
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
   position: relative;
+}
+
+.nav-links a:hover {
+  color: var(--text-primary);
 }
 
 .nav-links a::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: -4px;
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--gradient-accent);
-  transition: var(--transition);
-}
-
-.nav-links a:hover {
-  color: var(--text-light);
+  background: var(--gradient-primary);
+  transition: var(--transition-base);
 }
 
 .nav-links a:hover::after {
   width: 100%;
 }
 
-.nav-right {
+.nav-cta {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 16px;
 }
 
-.lang-switch {
-  display: flex;
-  gap: 0.3rem;
-  background: rgba(255,255,255,0.05);
-  padding: 0.3rem;
-  border-radius: 999px;
-}
-
-.lang-switch button {
-  border: none;
-  background: transparent;
-  color: var(--text-soft);
-  padding: 0.4rem 0.8rem;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 0.75rem;
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 0.9rem;
   font-weight: 600;
-  transition: var(--transition);
-}
-
-.lang-switch button.active {
-  background: var(--gradient-accent);
-  color: var(--bg-dark);
-}
-
-.lang-switch button:hover:not(.active) {
-  background: rgba(255,255,255,0.1);
-}
-
-.btn-contact {
-  background: var(--gradient-accent);
-  color: var(--bg-dark);
-  padding: 0.6rem 1.2rem;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.85rem;
+  border-radius: var(--radius-full);
   border: none;
   cursor: pointer;
-  transition: var(--transition);
+  transition: var(--transition-base);
 }
 
-.btn-contact:hover {
+.btn-primary {
+  background: var(--gradient-primary);
+  color: var(--bg-primary);
+}
+
+.btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(15, 185, 177, 0.4);
+  box-shadow: var(--shadow-glow);
 }
 
-/* Mobile menu toggle */
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent-cyan);
+}
+
 .menu-toggle {
   display: none;
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 8px;
 }
 
 .menu-toggle span {
-  width: 25px;
+  width: 24px;
   height: 2px;
-  background: var(--text-light);
-  transition: var(--transition);
+  background: var(--text-primary);
+  transition: var(--transition-base);
 }
 
 /* ========== HERO SECTION ========== */
 .hero {
-  min-height: 90vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  background: var(--gradient-hero);
   position: relative;
+  padding-top: 80px;
   overflow: hidden;
 }
 
@@ -337,848 +314,326 @@ header {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(15, 185, 177, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(0, 194, 255, 0.1) 0%, transparent 50%);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150%;
+  height: 100%;
+  background: var(--gradient-glow);
   pointer-events: none;
 }
 
-.hero-grid {
+/* Grid Pattern Background */
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+}
+
+.hero-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  gap: 60px;
   align-items: center;
   position: relative;
   z-index: 1;
 }
 
-.hero-content {
-  max-width: 600px;
+.hero-text {
+  max-width: 560px;
 }
 
 .hero-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(15, 185, 177, 0.1);
-  border: 1px solid rgba(15, 185, 177, 0.3);
-  border-radius: 999px;
-  font-size: 0.8rem;
-  color: var(--accent-primary);
-  margin-bottom: 1.5rem;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent-cyan);
+  margin-bottom: 24px;
+}
+
+.hero-badge .pulse {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-emerald);
+  border-radius: 50%;
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(15, 185, 177, 0.4); }
-  50% { box-shadow: 0 0 0 10px rgba(15, 185, 177, 0); }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
 }
 
 .hero-title {
-  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 800;
-  line-height: 1.2;
-  margin-bottom: 1.5rem;
-}
-
-.hero-title .highlight {
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
 }
 
 .hero-subtitle {
-  font-size: 1.15rem;
-  color: var(--text-soft);
-  margin-bottom: 2rem;
-  line-height: 1.8;
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 32px;
 }
 
 .hero-stats {
   display: flex;
-  gap: 2rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 40px;
+  padding: 24px 0;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.stat-item {
-  text-align: center;
+.stat {
+  text-align: left;
 }
 
-.stat-number {
-  font-size: 2.5rem;
+.stat-value {
+  font-size: 2rem;
   font-weight: 800;
-  background: var(--gradient-accent);
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .stat-label {
-  font-size: 0.8rem;
-  color: var(--text-soft);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 4px;
 }
 
 .hero-cta {
   display: flex;
-  gap: 1rem;
+  gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 2rem;
 }
-
-.btn-primary {
-  background: var(--gradient-accent);
-  color: var(--bg-dark);
-  padding: 1rem 2rem;
-  border-radius: 999px;
-  font-weight: 700;
-  font-size: 1rem;
-  border: none;
-  cursor: pointer;
-  transition: var(--transition);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(15, 185, 177, 0.4);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--text-light);
-  padding: 1rem 2rem;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 1rem;
-  border: 2px solid var(--border-color);
-  cursor: pointer;
-  transition: var(--transition);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.btn-secondary:hover {
-  border-color: var(--accent-primary);
-  background: rgba(15, 185, 177, 0.1);
-}
-
-/* Social Share */
-.social-share {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.social-share span {
-  font-size: 0.85rem;
-  color: var(--text-soft);
-}
-
-.share-buttons {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.share-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border-color);
-  color: var(--text-soft);
-  font-size: 1rem;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.share-btn:hover {
-  background: var(--gradient-accent);
-  color: var(--bg-dark);
-  border-color: transparent;
-  transform: translateY(-3px);
-}
-
-.share-btn.facebook:hover { background: #1877f2; }
-.share-btn.twitter:hover { background: #1da1f2; }
-.share-btn.linkedin:hover { background: #0077b5; }
-.share-btn.whatsapp:hover { background: #25d366; }
 
 .hero-visual {
   position: relative;
 }
 
-.hero-image {
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border-color);
+.hero-image-wrapper {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
 }
 
-.hero-float-card {
+.hero-image-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-image {
+  width: 100%;
+  border-radius: var(--radius-lg);
+}
+
+/* Floating Cards */
+.float-card {
   position: absolute;
   background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 1rem;
-  box-shadow: var(--shadow);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  box-shadow: var(--shadow-lg);
+  animation: float 4s ease-in-out infinite;
 }
 
-.hero-float-card.card-1 {
+.float-card.card-1 {
   top: -20px;
   right: -20px;
-  animation: float 3s ease-in-out infinite;
+  animation-delay: 0s;
 }
 
-.hero-float-card.card-2 {
+.float-card.card-2 {
   bottom: 40px;
   left: -30px;
-  animation: float 3s ease-in-out infinite 0.5s;
+  animation-delay: 1s;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-12px); }
 }
 
-.card-icon {
-  font-size: 1.5rem;
-  margin-bottom: 0.3rem;
+.float-card-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
 }
 
-.card-value {
-  font-size: 1.2rem;
+.float-card-value {
+  font-size: 1.25rem;
   font-weight: 700;
-  color: var(--accent-primary);
+  color: var(--accent-cyan);
 }
 
-.card-label {
-  font-size: 0.7rem;
-  color: var(--text-soft);
+/* ========== ANNOUNCEMENT BAR ========== */
+.announcement {
+  background: linear-gradient(90deg, var(--accent-emerald), var(--accent-cyan));
+  padding: 12px 0;
+  text-align: center;
 }
 
-/* ========== RESPONSIVE ========== */
-@media (max-width: 1024px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  
-  .hero-content {
-    max-width: 100%;
-  }
-  
-  .hero-stats {
-    justify-content: center;
-  }
-  
-  .hero-cta {
-    justify-content: center;
-  }
-  
-  .social-share {
-    justify-content: center;
-  }
-  
-  .hero-visual {
-    order: -1;
-    max-width: 500px;
-    margin: 0 auto;
-  }
-  
-  .hero-float-card {
-    display: none;
-  }
+.announcement-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--bg-primary);
 }
 
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--bg-dark);
-    flex-direction: column;
-    padding: 1rem;
-    gap: 0;
-    border-bottom: 1px solid var(--border-color);
-  }
-  
-  .nav-links.active {
-    display: flex;
-  }
-  
-  .nav-links a {
-    padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
-  }
-  
-  .menu-toggle {
-    display: flex;
-  }
-  
-  .btn-contact {
-    display: none;
-  }
-  
-  section {
-    padding: 3rem 0;
-  }
-  
-  .hero {
-    min-height: auto;
-    padding: 4rem 0;
-  }
-  
-  .hero-stats {
-    gap: 1.5rem;
-  }
-  
-  .stat-number {
-    font-size: 1.8rem;
-  }
+.announcement-text strong {
+  text-decoration: underline;
 }
 
-@media (max-width: 480px) {
-  html {
-    font-size: 14px;
-  }
-  
-  .hero-badge {
-    font-size: 0.7rem;
-  }
-  
-  .hero-cta {
-    flex-direction: column;
-  }
-  
-  .btn-primary, .btn-secondary {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .share-buttons {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+/* ========== CLIENTS/TRUST SECTION ========== */
+.trust-bar {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-/* ========== RTL ADJUSTMENTS ========== */
-body.rtl .nav-links a::after {
-  left: auto;
-  right: 0;
+.trust-content {
+  text-align: center;
 }
 
-body.rtl .hero-float-card.card-1 {
-  right: auto;
-  left: -20px;
+.trust-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 32px;
 }
 
-body.rtl .hero-float-card.card-2 {
-  left: auto;
-  right: -30px;
+.trust-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  flex-wrap: wrap;
+  opacity: 0.6;
 }
 
-/* ========== SECTION ENJEUX ========== */
-.enjeux {
-  background: linear-gradient(180deg, var(--bg-dark) 0%, #0a1628 100%);
-  position: relative;
+.trust-logo {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* ========== SERVICES SECTION ========== */
+.services {
+  background: var(--bg-secondary);
 }
 
 .section-header {
   text-align: center;
-  max-width: 800px;
-  margin: 0 auto 3rem;
+  max-width: 700px;
+  margin: 0 auto 64px;
 }
 
-.section-badge {
+.section-label {
   display: inline-block;
-  padding: 0.5rem 1.2rem;
-  background: rgba(245, 166, 35, 0.15);
-  border: 1px solid rgba(245, 166, 35, 0.3);
-  border-radius: 999px;
-  font-size: 0.85rem;
-  color: var(--accent-gold);
-  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent-cyan);
+  margin-bottom: 16px;
 }
 
 .section-title {
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-size: clamp(2rem, 4vw, 2.75rem);
   font-weight: 800;
-  margin-bottom: 1rem;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
 }
 
-.section-title .highlight {
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.section-subtitle {
+.section-desc {
   font-size: 1.1rem;
-  color: var(--text-soft);
-  line-height: 1.8;
+  color: var(--text-secondary);
+  line-height: 1.7;
 }
 
-/* Stats Alarme Grid */
-.stats-alarme {
+.services-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 3rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 }
 
-.stat-alarme-card {
+.service-card {
   background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  text-align: center;
-  transition: var(--transition);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  transition: var(--transition-base);
   position: relative;
   overflow: hidden;
 }
 
-.stat-alarme-card::before {
+.service-card::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 3px;
-}
-
-.stat-alarme-card.danger::before { background: var(--accent-red); }
-.stat-alarme-card.warning::before { background: var(--accent-gold); }
-.stat-alarme-card.info::before { background: var(--accent-secondary); }
-.stat-alarme-card.success::before { background: var(--accent-green); }
-
-.stat-alarme-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow);
-}
-
-.stat-alarme-icon {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.stat-alarme-number {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: var(--text-light);
-}
-
-.stat-alarme-card.danger .stat-alarme-number { color: var(--accent-red); }
-.stat-alarme-card.warning .stat-alarme-number { color: var(--accent-gold); }
-.stat-alarme-card.info .stat-alarme-number { color: var(--accent-secondary); }
-.stat-alarme-card.success .stat-alarme-number { color: var(--accent-green); }
-
-.stat-alarme-label {
-  font-size: 0.9rem;
-  color: var(--text-soft);
-  margin-bottom: 0.3rem;
-}
-
-.stat-alarme-source {
-  font-size: 0.7rem;
-  color: rgba(166, 179, 209, 0.5);
-  font-style: italic;
-}
-
-/* Enjeux Grid */
-.enjeux-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin-bottom: 3rem;
-}
-
-.enjeu-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 2rem;
-  transition: var(--transition);
-}
-
-.enjeu-card:hover {
-  border-color: var(--accent-primary);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 40px rgba(15, 185, 177, 0.1);
-}
-
-.enjeu-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.enjeu-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  color: var(--text-light);
-}
-
-.enjeu-list {
-  list-style: none;
-}
-
-.enjeu-list li {
-  padding: 0.6rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  color: var(--text-soft);
-  font-size: 0.9rem;
-}
-
-.enjeu-list li:last-child {
-  border-bottom: none;
-}
-
-.enjeu-list strong {
-  color: var(--accent-primary);
-}
-
-/* Message Clé */
-.message-cle {
-  background: linear-gradient(135deg, rgba(15, 185, 177, 0.1), rgba(0, 194, 255, 0.1));
-  border: 1px solid rgba(15, 185, 177, 0.3);
-  border-radius: var(--radius);
-  padding: 2rem;
-  margin-bottom: 3rem;
-}
-
-.message-cle-content {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
-}
-
-.message-cle-icon {
-  font-size: 3rem;
-  flex-shrink: 0;
-}
-
-.message-cle-text h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.8rem;
-  color: var(--accent-primary);
-}
-
-.message-cle-text p {
-  color: var(--text-soft);
-  line-height: 1.8;
-}
-
-.message-cle-text strong {
-  color: var(--text-light);
-}
-
-/* Timeline */
-.timeline-section {
-  padding-top: 2rem;
-}
-
-.timeline-title {
-  text-align: center;
-  font-size: 1.4rem;
-  margin-bottom: 2rem;
-  color: var(--text-light);
-}
-
-.timeline {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  padding: 2rem 0;
-}
-
-.timeline::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--border-color);
-  transform: translateY(-50%);
-}
-
-.timeline-item {
-  position: relative;
-  text-align: center;
-  flex: 1;
-  padding: 0 1rem;
-}
-
-.timeline-date {
-  background: var(--gradient-accent);
-  color: var(--bg-dark);
-  font-weight: 700;
-  padding: 0.5rem 1rem;
-  border-radius: 999px;
-  display: inline-block;
-  margin-bottom: 1rem;
-  position: relative;
-  z-index: 1;
-}
-
-.timeline-item.future .timeline-date {
-  background: var(--border-color);
-  color: var(--text-soft);
-}
-
-.timeline-content {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 1rem;
-}
-
-.timeline-content strong {
-  display: block;
-  color: var(--text-light);
-  margin-bottom: 0.3rem;
-}
-
-.timeline-content p {
-  font-size: 0.8rem;
-  color: var(--text-soft);
-  margin: 0;
-}
-
-/* Responsive Enjeux */
-@media (max-width: 1024px) {
-  .stats-alarme {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .enjeux-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .timeline {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  
-  .timeline::before {
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    right: auto;
-    width: 3px;
-    height: 100%;
-    transform: translateX(-50%);
-  }
-  
-  .timeline-item {
-    padding: 0;
-  }
-}
-
-@media (max-width: 600px) {
-  .stats-alarme {
-    grid-template-columns: 1fr;
-  }
-  
-  .message-cle-content {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .stat-alarme-number {
-    font-size: 1.8rem;
-  }
-}
-
-/* ========== SECTION SOLUTIONS ========== */
-.solutions {
-  background: var(--bg-dark);
-  position: relative;
-}
-
-.solutions-badge {
-  background: rgba(15, 185, 177, 0.15);
-  border-color: rgba(15, 185, 177, 0.3);
-  color: var(--accent-primary);
-}
-
-/* Comparatif */
-.comparatif-section {
-  margin-bottom: 4rem;
-}
-
-.comparatif-title {
-  text-align: center;
-  font-size: 1.4rem;
-  margin-bottom: 2rem;
-  color: var(--text-light);
-}
-
-.comparatif-grid {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.comparatif-card {
-  background: var(--bg-card);
-  border: 2px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 2rem;
-  flex: 1;
-  max-width: 350px;
-  min-width: 280px;
-}
-
-.comparatif-card.bad {
-  border-color: rgba(231, 76, 60, 0.3);
-  background: linear-gradient(135deg, rgba(231, 76, 60, 0.05), transparent);
-}
-
-.comparatif-card.good {
-  border-color: rgba(39, 174, 96, 0.5);
-  background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), transparent);
-  transform: scale(1.02);
-}
-
-.comparatif-header {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  margin-bottom: 1.5rem;
-}
-
-.comparatif-icon {
-  font-size: 1.5rem;
-}
-
-.comparatif-header h4 {
-  font-size: 1.1rem;
-  color: var(--text-light);
-}
-
-.comparatif-list {
-  list-style: none;
-  margin-bottom: 1.5rem;
-}
-
-.comparatif-list li {
-  padding: 0.6rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.comparatif-list .price {
-  font-weight: 700;
-  color: var(--text-light);
-}
-
-.comparatif-list .highlight-price {
-  color: var(--accent-green);
-  font-size: 1.1rem;
-}
-
-.comparatif-list small {
-  color: var(--text-soft);
-  font-size: 0.85rem;
-}
-
-.comparatif-total {
-  padding: 1rem;
-  background: rgba(231, 76, 60, 0.1);
-  border-radius: var(--radius-sm);
-  text-align: center;
-  color: var(--text-soft);
-}
-
-.comparatif-total strong {
-  color: var(--accent-red);
-  font-size: 1.2rem;
-}
-
-.comparatif-total.good-total {
-  background: rgba(39, 174, 96, 0.15);
-}
-
-.comparatif-total.good-total strong {
-  color: var(--accent-green);
-}
-
-.comparatif-vs {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--accent-gold);
-  padding: 0 1rem;
-}
-
-/* Services Grid */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin-bottom: 4rem;
-}
-
-.service-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  transition: var(--transition);
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: var(--transition-base);
 }
 
 .service-card:hover {
-  border-color: var(--accent-primary);
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(15, 185, 177, 0.15);
+  transform: translateY(-4px);
+  border-color: var(--border-light);
+  box-shadow: var(--shadow-lg);
+}
+
+.service-card:hover::before {
+  opacity: 1;
 }
 
 .service-icon {
-  margin-bottom: 1rem;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-}
-
-.service-icon img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
+  width: 56px;
+  height: 56px;
+  background: rgba(6, 182, 212, 0.1);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 24px;
 }
 
 .service-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.8rem;
-  color: var(--text-light);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
 }
 
-.service-card > p {
-  color: var(--text-soft);
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
+.service-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
   line-height: 1.6;
+  margin-bottom: 20px;
 }
 
 .service-features {
@@ -1186,894 +641,441 @@ body.rtl .hero-float-card.card-2 {
 }
 
 .service-features li {
-  padding: 0.4rem 0;
-  font-size: 0.85rem;
-  color: var(--text-soft);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  padding: 8px 0;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* Pricing */
-.pricing-section {
-  margin-bottom: 3rem;
+.service-features li::before {
+  content: '→';
+  color: var(--accent-cyan);
 }
 
-.pricing-title {
-  text-align: center;
-  font-size: 1.4rem;
-  margin-bottom: 2rem;
-  color: var(--text-light);
+/* ========== PRICING SECTION ========== */
+.pricing {
+  background: var(--bg-primary);
 }
 
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 24px;
   align-items: stretch;
 }
 
 .pricing-card {
   background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 2rem;
-  text-align: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px;
   position: relative;
-  transition: var(--transition);
+  transition: var(--transition-base);
   display: flex;
   flex-direction: column;
 }
 
-.pricing-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow);
+.pricing-card.featured {
+  border-color: var(--accent-cyan);
+  transform: scale(1.02);
 }
 
-.pricing-card.popular {
-  border: 2px solid var(--accent-primary);
-  transform: scale(1.05);
-  z-index: 1;
+.pricing-card.featured::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-lg);
+  z-index: -1;
+  opacity: 0.2;
 }
 
-.pricing-card.popular:hover {
-  transform: scale(1.05) translateY(-5px);
-}
-
-.pricing-popular-tag {
+.pricing-badge {
   position: absolute;
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--gradient-accent);
-  color: var(--bg-dark);
-  padding: 0.3rem 1rem;
-  border-radius: 999px;
+  background: var(--gradient-primary);
+  color: var(--bg-primary);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
   font-size: 0.75rem;
   font-weight: 700;
-  white-space: nowrap;
+  text-transform: uppercase;
 }
 
-.pricing-badge {
-  display: inline-block;
-  padding: 0.3rem 0.8rem;
-  background: rgba(255,255,255,0.05);
-  border-radius: 999px;
-  font-size: 0.75rem;
-  color: var(--text-soft);
-  margin-bottom: 0.5rem;
+.pricing-tier {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
 }
 
 .pricing-name {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-light);
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
 }
 
 .pricing-price {
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 }
 
 .price-amount {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 800;
-  background: var(--gradient-accent);
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.price-currency {
-  font-size: 1rem;
-  color: var(--text-soft);
-}
-
 .price-period {
-  font-size: 0.9rem;
-  color: var(--text-soft);
+  font-size: 1rem;
+  color: var(--text-muted);
 }
 
 .pricing-features {
   list-style: none;
-  text-align: left;
-  margin-bottom: 1.5rem;
+  margin-bottom: 32px;
   flex-grow: 1;
 }
 
 .pricing-features li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  color: var(--text-soft);
-  font-size: 0.9rem;
+  padding: 12px 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pricing-features li::before {
+  content: '✓';
+  color: var(--accent-emerald);
+  font-weight: 700;
 }
 
 .pricing-cta {
-  display: block;
-  padding: 0.8rem 1.5rem;
-  background: transparent;
-  border: 2px solid var(--accent-primary);
-  color: var(--accent-primary);
-  border-radius: 999px;
-  font-weight: 600;
-  transition: var(--transition);
-  text-decoration: none;
+  width: 100%;
+  padding: 16px;
 }
 
-.pricing-cta:hover {
-  background: var(--gradient-accent);
-  color: var(--bg-dark);
+/* ========== PRODUCTS SECTION ========== */
+.products {
+  background: var(--bg-secondary);
 }
 
-.pricing-card.popular .pricing-cta {
-  background: var(--gradient-accent);
-  color: var(--bg-dark);
-  border-color: transparent;
-}
-
-.pricing-card.popular .pricing-cta:hover {
-  box-shadow: 0 5px 20px rgba(15, 185, 177, 0.4);
-}
-
-/* Garanties Bar */
-.garanties-bar {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2rem;
-  padding: 2rem;
-  background: rgba(15, 185, 177, 0.05);
-  border: 1px solid rgba(15, 185, 177, 0.2);
-  border-radius: var(--radius);
-}
-
-.garantie-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--text-soft);
-  font-size: 0.9rem;
-}
-
-.garantie-icon {
-  font-size: 1.3rem;
-}
-
-/* Responsive Solutions */
-@media (max-width: 1024px) {
-  .services-grid,
-  .pricing-grid {
-    grid-template-columns: 1fr;
-    max-width: 450px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .pricing-card.popular {
-    transform: none;
-  }
-  
-  .pricing-card.popular:hover {
-    transform: translateY(-5px);
-  }
-}
-
-@media (max-width: 768px) {
-  .comparatif-grid {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .comparatif-vs {
-    padding: 1rem 0;
-  }
-  
-  .comparatif-card {
-    max-width: 100%;
-  }
-  
-  .comparatif-card.good {
-    transform: none;
-  }
-  
-  .garanties-bar {
-    gap: 1rem;
-  }
-  
-  .garantie-item {
-    flex: 1 1 45%;
-    justify-content: center;
-    font-size: 0.8rem;
-  }
-}
-
-/* ========== SECTION PRODUITS 2026 ========== */
-.produits {
-  background: linear-gradient(180deg, #0a1628 0%, var(--bg-dark) 100%);
-}
-
-.produits-badge {
-  background: rgba(245, 166, 35, 0.15);
-  border-color: rgba(245, 166, 35, 0.3);
-  color: var(--accent-gold);
-}
-
-.produit-showcase {
+.product-showcase {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: 60px;
   align-items: center;
-  margin-bottom: 5rem;
-  padding: 2rem;
+  margin-bottom: 80px;
+  padding: 48px;
   background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
 }
 
-.produit-showcase.reverse {
+.product-showcase:nth-child(even) {
   direction: rtl;
 }
 
-.produit-showcase.reverse > * {
+.product-showcase:nth-child(even) > * {
   direction: ltr;
 }
 
-.produit-badge {
-  display: inline-block;
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
+.product-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: var(--radius-full);
   font-size: 0.8rem;
   font-weight: 600;
-  margin-bottom: 1rem;
+  color: var(--accent-amber);
+  margin-bottom: 16px;
 }
 
-.produit-badge.flagship {
-  background: linear-gradient(135deg, #f5a623, #f7931e);
-  color: var(--bg-dark);
-}
-
-.produit-badge.new {
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  color: var(--bg-dark);
-}
-
-.produit-badge.health {
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-  color: white;
-}
-
-.produit-name {
+.product-name {
   font-size: 2rem;
   font-weight: 800;
-  margin-bottom: 0.5rem;
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  margin-bottom: 8px;
 }
 
-.produit-tagline {
+.product-tagline {
   font-size: 1.1rem;
-  color: var(--text-light);
-  margin-bottom: 1rem;
-  font-weight: 500;
+  color: var(--accent-cyan);
+  margin-bottom: 16px;
 }
 
-.produit-desc {
-  color: var(--text-soft);
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
+.product-desc {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 24px;
 }
 
-.produit-features {
+.product-features {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
-.produit-feature {
+.product-feature {
   display: flex;
-  gap: 0.8rem;
+  gap: 12px;
   align-items: flex-start;
 }
 
 .feature-icon {
-  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  background: rgba(6, 182, 212, 0.1);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
   flex-shrink: 0;
 }
 
-.produit-feature strong {
+.product-feature strong {
   display: block;
-  color: var(--text-light);
   font-size: 0.95rem;
-  margin-bottom: 0.2rem;
+  margin-bottom: 2px;
 }
 
-.produit-feature small {
-  color: var(--text-soft);
+.product-feature small {
   font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
-.produit-stats {
+.product-stats {
   display: flex;
-  gap: 2rem;
-  padding: 1rem 0;
-  border-top: 1px solid var(--border-color);
+  gap: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
 }
 
-.produit-stat {
-  text-align: center;
-}
-
-.produit-stat-value {
-  display: block;
-  font-size: 1.8rem;
+.product-stat-value {
+  font-size: 1.75rem;
   font-weight: 800;
-  color: var(--accent-primary);
+  color: var(--accent-cyan);
 }
 
-.produit-stat-label {
-  font-size: 0.75rem;
-  color: var(--text-soft);
-  text-transform: uppercase;
-}
-
-.produit-usecases {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.usecase {
-  padding: 0.4rem 0.8rem;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
+.product-stat-label {
   font-size: 0.8rem;
-  color: var(--text-soft);
+  color: var(--text-muted);
 }
 
-.produit-impact {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  margin-top: 1rem;
-  padding: 1rem;
-  background: rgba(39, 174, 96, 0.1);
-  border-radius: var(--radius-sm);
+.product-image {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-lg);
 }
 
-.impact-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--text-soft);
-}
-
-.impact-icon {
-  font-size: 1.2rem;
-}
-
-.produit-visuals {
-  position: relative;
-}
-
-.produit-img.main {
-  width: 100%;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border-color);
-}
-
-.produit-gallery {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.produit-gallery img {
-  width: 100%;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  transition: var(--transition);
-}
-
-.produit-gallery img:hover {
-  transform: scale(1.05);
-  box-shadow: var(--shadow);
-}
-
-.produits-cta {
-  text-align: center;
-  padding: 3rem;
-  background: linear-gradient(135deg, rgba(15, 185, 177, 0.1), rgba(0, 194, 255, 0.1));
-  border: 1px solid rgba(15, 185, 177, 0.3);
-  border-radius: var(--radius);
-}
-
-.produits-cta h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.8rem;
-  color: var(--text-light);
-}
-
-.produits-cta p {
-  color: var(--text-soft);
-  margin-bottom: 1.5rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Responsive Produits */
-@media (max-width: 1024px) {
-  .produit-showcase {
-    grid-template-columns: 1fr;
-  }
-  
-  .produit-showcase.reverse {
-    direction: ltr;
-  }
-  
-  .produit-visuals {
-    order: -1;
-  }
-  
-  .produit-features {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  .produit-showcase {
-    padding: 1.5rem;
-  }
-  
-  .produit-name {
-    font-size: 1.5rem;
-  }
-  
-  .produit-stats {
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-  
-  .produit-stat {
-    flex: 1 1 30%;
-  }
-  
-  .produits-cta {
-    padding: 2rem 1rem;
-  }
-}
-
-/* ========== SECTION ÉCOSYSTÈME ========== */
-.ecosysteme {
-  background: var(--bg-dark);
-}
-
-.ecosysteme-badge {
-  background: rgba(39, 174, 96, 0.15);
-  border-color: rgba(39, 174, 96, 0.3);
-  color: var(--accent-green);
-}
-
-.participation-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin-bottom: 3rem;
-}
-
-.participation-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 2rem;
-  text-align: center;
-  transition: var(--transition);
+/* ========== CTA SECTION ========== */
+.cta-section {
+  background: var(--bg-primary);
   position: relative;
   overflow: hidden;
 }
 
-.participation-card::before {
+.cta-section::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-glow);
+  pointer-events: none;
 }
 
-.participation-card.talents::before { background: var(--gradient-accent); }
-.participation-card.partners::before { background: linear-gradient(90deg, var(--accent-gold), #f7931e); }
-.participation-card.institutions::before { background: linear-gradient(90deg, #9b59b6, #8e44ad); }
-
-.participation-card:hover {
-  transform: translateY(-10px);
-  box-shadow: var(--shadow);
-}
-
-.participation-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.participation-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-  color: var(--text-light);
-}
-
-.participation-card > p {
-  color: var(--text-soft);
-  font-size: 0.9rem;
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
-}
-
-.participation-list {
-  list-style: none;
-  text-align: left;
-  margin-bottom: 1.5rem;
-}
-
-.participation-list li {
-  padding: 0.5rem 0;
-  font-size: 0.85rem;
-  color: var(--text-soft);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-.participation-cta {
-  display: inline-block;
-  padding: 0.7rem 1.5rem;
-  background: transparent;
-  border: 2px solid var(--accent-primary);
-  color: var(--accent-primary);
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: var(--transition);
-  text-decoration: none;
-}
-
-.participation-cta:hover {
-  background: var(--gradient-accent);
-  color: var(--bg-dark);
-}
-
-.mobilisation-box {
-  background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(15, 185, 177, 0.1));
-  border: 2px solid rgba(39, 174, 96, 0.3);
-  border-radius: var(--radius);
-  padding: 2.5rem;
-  margin-bottom: 3rem;
-}
-
-.mobilisation-content {
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-}
-
-.mobilisation-icon {
-  font-size: 4rem;
-  flex-shrink: 0;
-}
-
-.mobilisation-text h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: var(--accent-green);
-}
-
-.mobilisation-text p {
-  color: var(--text-soft);
-  line-height: 1.9;
-  font-size: 1.05rem;
-}
-
-.mobilisation-text strong {
-  color: var(--text-light);
-}
-
-.ecosysteme-stats {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 2rem;
-  padding: 2rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-}
-
-.eco-stat {
+.cta-content {
   text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-.eco-stat-value {
-  display: block;
-  font-size: 2.5rem;
+.cta-title {
+  font-size: clamp(2rem, 4vw, 2.5rem);
   font-weight: 800;
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  margin-bottom: 20px;
 }
 
-.eco-stat-label {
-  font-size: 0.85rem;
-  color: var(--text-soft);
+.cta-desc {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
 }
 
-/* ========== SECTION CONTACT ========== */
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ========== CONTACT SECTION ========== */
 .contact {
-  background: linear-gradient(180deg, var(--bg-dark) 0%, #0a1628 100%);
-  padding: 5rem 0;
+  background: var(--bg-secondary);
 }
 
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 4rem;
-  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
 }
 
 .contact-info h2 {
   font-size: 2rem;
-  margin-bottom: 1rem;
-  color: var(--text-light);
+  font-weight: 800;
+  margin-bottom: 16px;
 }
 
 .contact-info > p {
-  color: var(--text-soft);
-  line-height: 1.8;
-  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 32px;
 }
 
 .contact-methods {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  gap: 16px;
 }
 
 .contact-method {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 16px;
+  padding: 20px;
   background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  text-decoration: none;
-  transition: var(--transition);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  transition: var(--transition-base);
 }
 
 .contact-method:hover {
-  border-color: var(--accent-primary);
+  border-color: var(--accent-cyan);
 }
 
 .contact-method-icon {
-  font-size: 1.5rem;
+  width: 48px;
+  height: 48px;
+  background: rgba(6, 182, 212, 0.1);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
 }
 
 .contact-method strong {
   display: block;
-  color: var(--text-light);
   font-size: 0.9rem;
+  margin-bottom: 4px;
 }
 
 .contact-method span {
-  color: var(--text-soft);
   font-size: 0.85rem;
+  color: var(--text-muted);
 }
 
 .contact-social {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.contact-social > span {
-  color: var(--text-soft);
-  font-size: 0.9rem;
-}
-
-.social-links {
-  display: flex;
-  gap: 0.5rem;
+  gap: 12px;
+  margin-top: 32px;
 }
 
 .social-link {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  color: var(--text-soft);
-  font-size: 1rem;
-  text-decoration: none;
-  transition: var(--transition);
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  transition: var(--transition-base);
 }
 
 .social-link:hover {
-  background: var(--gradient-accent);
-  color: var(--bg-dark);
-  border-color: transparent;
+  background: var(--accent-cyan);
+  color: var(--bg-primary);
+  border-color: var(--accent-cyan);
 }
 
-.contact-form-wrapper {
+.contact-form-box {
   background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 2rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 40px;
 }
 
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-group label {
-  font-size: 0.9rem;
-  color: var(--text-light);
-  font-weight: 500;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-  padding: 0.8rem 1rem;
-  background: var(--bg-dark);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  color: var(--text-light);
-  font-size: 0.95rem;
-  transition: var(--transition);
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(15, 185, 177, 0.1);
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: var(--text-soft);
-  opacity: 0.6;
-}
-
-.form-group select {
-  cursor: pointer;
-}
-
-.form-submit {
-  padding: 1rem 2rem;
-  background: var(--gradient-accent);
-  color: var(--bg-dark);
-  border: none;
-  border-radius: 999px;
-  font-size: 1rem;
+.contact-form-box h3 {
+  font-size: 1.25rem;
   font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition);
+  margin-bottom: 24px;
 }
 
-.form-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(15, 185, 177, 0.4);
+.contact-message p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 16px;
 }
 
-.form-note {
-  font-size: 0.75rem;
-  color: var(--text-soft);
-  text-align: center;
+.contact-message strong {
+  color: var(--accent-cyan);
 }
 
 /* ========== FOOTER ========== */
 .footer {
-  background: #030508;
-  padding: 4rem 0 2rem;
-  border-top: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  padding: 80px 0 40px;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .footer-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 3rem;
-  margin-bottom: 3rem;
+  gap: 48px;
+  margin-bottom: 60px;
 }
 
-.footer-logo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-light);
-  margin-bottom: 1rem;
-}
-
-.footer-logo .flag {
-  font-size: 1.8rem;
-}
-
-.footer-logo span:last-child {
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.footer-brand .logo {
+  margin-bottom: 20px;
 }
 
 .footer-brand > p {
-  color: var(--text-soft);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-}
-
-.footer-share {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-.footer-share > span {
-  font-size: 0.85rem;
-  color: var(--text-soft);
-}
-
-.share-buttons.small {
-  gap: 0.4rem;
-}
-
-.share-buttons.small .share-btn {
-  width: 35px;
-  height: 35px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 24px;
 }
 
 .footer-links h4 {
-  font-size: 1rem;
-  color: var(--text-light);
-  margin-bottom: 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
 }
 
 .footer-links ul {
@@ -2081,77 +1083,139 @@ body.rtl .hero-float-card.card-2 {
 }
 
 .footer-links li {
-  margin-bottom: 0.8rem;
+  margin-bottom: 12px;
 }
 
 .footer-links a {
-  color: var(--text-soft);
   font-size: 0.9rem;
-  text-decoration: none;
-  transition: var(--transition);
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
 }
 
 .footer-links a:hover {
-  color: var(--accent-primary);
+  color: var(--accent-cyan);
 }
 
 .footer-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border-color);
+  padding-top: 40px;
+  border-top: 1px solid var(--border-subtle);
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 20px;
 }
 
 .footer-copyright {
   font-size: 0.85rem;
-  color: var(--text-soft);
+  color: var(--text-muted);
 }
 
-.footer-certifications {
+.footer-badges {
   display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
+  gap: 16px;
 }
 
-.certification {
+.footer-badge {
   font-size: 0.8rem;
-  color: var(--text-soft);
-  padding: 0.4rem 0.8rem;
-  background: rgba(255,255,255,0.03);
-  border-radius: 999px;
+  color: var(--text-muted);
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border-radius: var(--radius-full);
 }
 
-/* ========== RESPONSIVE FINAL ========== */
+/* ========== RESPONSIVE ========== */
 @media (max-width: 1024px) {
-  .participation-grid {
-    grid-template-columns: 1fr;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
+  .hero-content,
+  .product-showcase,
   .contact-grid {
     grid-template-columns: 1fr;
   }
   
+  .hero-visual {
+    order: -1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .product-showcase:nth-child(even) {
+    direction: ltr;
+  }
+  
+  .services-grid,
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .pricing-card.featured {
+    transform: none;
+  }
+  
   .footer-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+  }
+  
+  .float-card {
+    display: none;
   }
 }
 
 @media (max-width: 768px) {
-  .mobilisation-content {
-    flex-direction: column;
-    text-align: center;
+  :root {
+    --section-padding: 60px;
   }
   
-  .ecosysteme-stats {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-secondary);
     flex-direction: column;
-    gap: 1.5rem;
+    padding: 24px;
+    gap: 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .nav-links a {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  
+  .menu-toggle {
+    display: flex;
+  }
+  
+  .nav-cta .btn {
+    display: none;
+  }
+  
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  
+  .stat {
+    flex: 1 1 40%;
+  }
+  
+  .hero-cta {
+    flex-direction: column;
+  }
+  
+  .product-features {
+    grid-template-columns: 1fr;
+  }
+  
+  .product-showcase {
+    padding: 24px;
   }
   
   .footer-grid {
@@ -2165,842 +1229,545 @@ body.rtl .hero-float-card.card-2 {
     align-items: center;
   }
   
-  .footer-share {
-    align-items: center;
-  }
-  
   .footer-bottom {
     flex-direction: column;
     text-align: center;
   }
-  
-  .footer-certifications {
-    justify-content: center;
-  }
 }
 
 @media (max-width: 480px) {
-  .contact-social {
-    flex-direction: column;
-    align-items: flex-start;
+  html {
+    font-size: 14px;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .section-title {
+    font-size: 1.75rem;
+  }
+  
+  .pricing-card {
+    padding: 24px;
+  }
+  
+  .price-amount {
+    font-size: 2.5rem;
   }
 }
 </style>
 </head>
 
 <body>
-<div id="app">
 
-<!-- ========== HEADER ========== -->
-<header>
-  <div class="wrapper">
-    <nav class="nav">
-      <div class="logo">
-        <span class="flag">🇩🇿</span>
+<!-- ========== ANNOUNCEMENT BAR ========== -->
+<div class="announcement">
+  <div class="container">
+    <p class="announcement-text">
+      🚀 <strong>Offre Spéciale Startups</strong> : Développement gratuit de votre 1ère application — 
+      <a href="#contact" style="text-decoration: underline;">Contactez-nous →</a>
+    </p>
+  </div>
+</div>
+
+<!-- ========== NAVIGATION ========== -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">🛡️</div>
         <span>DZnet1</span>
-      </div>
+      </a>
       
       <ul class="nav-links" id="navLinks">
-        <li><a href="#enjeux" data-i18n="nav_challenges">Enjeux</a></li>
-        <li><a href="#solutions" data-i18n="nav_solutions">Solutions</a></li>
-        <li><a href="#produits" data-i18n="nav_products">Produits 2026</a></li>
-        <li><a href="#ecosysteme" data-i18n="nav_ecosystem">Écosystème</a></li>
-        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#pricing">Tarifs</a></li>
+        <li><a href="#products">Produits</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
       
-      <div class="nav-right">
-        <div class="lang-switch">
-          <button class="active" data-lang="fr">FR</button>
-          <button data-lang="en">EN</button>
-          <button data-lang="ar">ع</button>
-        </div>
-        <a href="#contact" class="btn-contact" data-i18n="nav_join">Rejoindre</a>
+      <div class="nav-cta">
+        <a href="#contact" class="btn btn-primary">Demander un devis</a>
         <div class="menu-toggle" id="menuToggle">
           <span></span>
           <span></span>
           <span></span>
         </div>
       </div>
-    </nav>
+    </div>
   </div>
-</header>
+</nav>
 
-<!-- ========== ANNONCE GRATUITE ========== -->
-<div class="annonce-gratuite">
-  <div class="wrapper">
-    <h2 class="annonce-title">On développe gratuitement votre 1er <span class="annonce-highlight">Application / Logiciel</span> pour les Startups uniquement (Promo Limité a nos disponibilités actuel)  profitez pour etre avec les 1er </h2>
-    <p class="annonce-conditions">
-      <strong>Des conditions s'appliquent :</strong> Savoir ses besoins, répondre aux questions de nos développeurs,etre ponctuel,accepter de nous faire la publicité sur votre site web si possible,suivre nos recomandations technique,ne pas re-vendre le produit,autres conditions...
-    </p>
-  </div>
-</div>
-
-<!-- ========== HERO ========== -->
+<!-- ========== HERO SECTION ========== -->
 <section class="hero">
-  <div class="wrapper">
-    <div class="hero-grid">
-      <div class="hero-content">
+  <div class="hero-grid-bg"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
         <div class="hero-badge">
-          <span>🛡️</span>
-          <span data-i18n="hero_badge">Centre privé  privé Algérien de Cybersécurité — Initiative 2026</span>
+          <span class="pulse"></span>
+          <span>Centre Algérien de Cybersécurité</span>
         </div>
         
-        <h1 class="hero-title" data-i18n="hero_title">
-          Le Premier <span class="highlight">bouclier privé  privéNumérique</span> 100% Algérien pour vos Entreprises
+        <h1 class="hero-title">
+          Protection <span class="text-gradient">souveraine</span> pour vos infrastructures numériques
         </h1>
         
-        <p class="hero-subtitle" data-i18n="hero_subtitle">
-          DZnet1 est le premier Centre privé  privé de cybersécurité entièrement conçu par des <strong>ingénieurs algériens</strong>, 
-          avec des <strong>données hébergées en Algérie</strong>. Protégez votre entreprise, rejoignez la souveraineté numérique nationale.
+        <p class="hero-subtitle">
+          DZnet1 est le premier centre de cybersécurité 100% algérien. 
+          SOC mutualisé, supervision réseau, audit de sécurité — une protection 
+          de niveau entreprise accessible aux PME et startups.
         </p>
         
         <div class="hero-stats">
-          <div class="stat-item">
-            <div class="stat-number">54M+</div>
-            <div class="stat-label" data-i18n="stat_citizens">Citoyens à protéger</div>
+          <div class="stat">
+            <div class="stat-value">99.9%</div>
+            <div class="stat-label">Disponibilité garantie</div>
           </div>
-          <div class="stat-item">
-            <div class="stat-number">1.2M</div>
-            <div class="stat-label" data-i18n="stat_enterprises">PME & Startups</div>
+          <div class="stat">
+            <div class="stat-value">&lt;15min</div>
+            <div class="stat-label">Temps de réponse</div>
           </div>
-          <div class="stat-item">
-            <div class="stat-number">100%</div>
-            <div class="stat-label" data-i18n="stat_algerian">Ressources DZ</div>
+          <div class="stat">
+            <div class="stat-value">100%</div>
+            <div class="stat-label">Données en Algérie</div>
           </div>
         </div>
         
         <div class="hero-cta">
-          <a href="#contact" class="btn-primary">
-            <span data-i18n="cta_join">🚀 Rejoindre l'Initiative</span>
-          </a>
-          <a href="#solutions" class="btn-secondary">
-            <span data-i18n="cta_discover">📖 Découvrir nos Solutions</span>
-          </a>
-        </div>
-        
-        <div class="social-share">
-          <span data-i18n="share_label">Partager :</span>
-          <div class="share-buttons">
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://dznet1.com" target="_blank" class="share-btn facebook" title="Facebook">f</a>
-            <a href="https://twitter.com/intent/tweet?url=https://dznet1.com&text=DZnet1%20-%20Centre privé  privé%20Alg%C3%A9rien%20de%20Cybers%C3%A9curit%C3%A9" target="_blank" class="share-btn twitter" title="Twitter">𝕏</a>
-            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://dznet1.com" target="_blank" class="share-btn linkedin" title="LinkedIn">in</a>
-            <a href="https://wa.me/?text=DZnet1%20-%20Centre privé  privé%20Alg%C3%A9rien%20de%20Cybers%C3%A9curit%C3%A9%20https://dznet1.com" target="_blank" class="share-btn whatsapp" title="WhatsApp">W</a>
-          </div>
+          <a href="#contact" class="btn btn-primary">Demander une démo →</a>
+          <a href="#services" class="btn btn-outline">Découvrir nos services</a>
         </div>
       </div>
       
       <div class="hero-visual">
-        <img src="https://dznet1.com/cdn-cgi/image/width=600,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_map.png" 
-             alt="Carte nationale de supervision DZnet1" 
-             class="hero-image">
-        
-        <div class="hero-float-card card-1">
-          <div class="card-icon">🛡️</div>
-          <div class="card-value">99.9%</div>
-          <div class="card-label" data-i18n="card_uptime">Disponibilité</div>
+        <div class="hero-image-wrapper">
+          <img src="https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_map.png" 
+               alt="NetMonit Pro - Supervision réseau Algérie" 
+               class="hero-image">
         </div>
         
-        <div class="hero-float-card card-2">
-          <div class="card-icon">⚡</div>
-          <div class="card-value">&lt;50ms</div>
-          <div class="card-label" data-i18n="card_response">Temps réponse</div>
+        <div class="float-card card-1">
+          <div class="float-card-label">Uptime</div>
+          <div class="float-card-value">99.9%</div>
+        </div>
+        
+        <div class="float-card card-2">
+          <div class="float-card-label">Latence</div>
+          <div class="float-card-value">&lt;50ms</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== SECTION ENJEUX & CONTEXTE ========== -->
-<section class="enjeux" id="enjeux">
-  <div class="wrapper">
-    <div class="section-header">
-      <span class="section-badge" data-i18n="enjeux_badge">📊 Contexte National</span>
-      <h2 class="section-title" data-i18n="enjeux_title">L'Algérie face au Défi du Siècle : <span class="highlight">La Souveraineté Numérique</span></h2>
-      <p class="section-subtitle" data-i18n="enjeux_subtitle">
-        Avec 70 millions de cyberattaques en 2024 et une économie en pleine digitalisation, 
-        l'Algérie a besoin d'un bouclier privé  privéde protection conçu par des Algériens, pour les Algériens.
-      </p>
-    </div>
-
-    <!-- Stats Grid Alarme -->
-    <div class="stats-alarme">
-      <div class="stat-alarme-card danger">
-        <div class="stat-alarme-icon">⚠️</div>
-        <div class="stat-alarme-number">70M+</div>
-        <div class="stat-alarme-label" data-i18n="stat_attacks">Cyberattaques en 2024</div>
-        <div class="stat-alarme-source">Source: Kaspersky 2024</div>
-      </div>
-      
-      <div class="stat-alarme-card warning">
-        <div class="stat-alarme-icon">📈</div>
-        <div class="stat-alarme-number">+15%</div>
-        <div class="stat-alarme-label" data-i18n="stat_increase">Hausse cybercriminalité</div>
-        <div class="stat-alarme-source">Gendarmerie Nationale</div>
-      </div>
-      
-      <div class="stat-alarme-card info">
-        <div class="stat-alarme-icon">🎯</div>
-        <div class="stat-alarme-number">19ᵉ</div>
-        <div class="stat-alarme-label" data-i18n="stat_rank">Rang mondial des cibles</div>
-        <div class="stat-alarme-source">Classement Kaspersky</div>
-      </div>
-      
-      <div class="stat-alarme-card success">
-        <div class="stat-alarme-icon">🇩🇿</div>
-        <div class="stat-alarme-number">74ᵉ</div>
-        <div class="stat-alarme-label" data-i18n="stat_tic">Rang TIC mondial (+15 places)</div>
-        <div class="stat-alarme-source">UIT 2025</div>
+<!-- ========== TRUST BAR ========== -->
+<div class="trust-bar">
+  <div class="container">
+    <div class="trust-content">
+      <div class="trust-label">Aligné avec les standards nationaux</div>
+      <div class="trust-logos">
+        <span class="trust-logo">🏛️ Conforme ANPDP</span>
+        <span class="trust-logo">🛡️ ISO 27001</span>
+        <span class="trust-logo">🇩🇿 Algérie Numérique 2030</span>
+        <span class="trust-logo">🔒 Données Souveraines</span>
       </div>
     </div>
-
-    <!-- Enjeux Grid -->
-    <div class="enjeux-grid">
-      <!-- Enjeu Économique -->
-      <div class="enjeu-card">
-        <div class="enjeu-icon">💰</div>
-        <h3 data-i18n="enjeu_eco_title">Enjeu Économique</h3>
-        <ul class="enjeu-list">
-          <li data-i18n="enjeu_eco_1"><strong>500+ projets numériques</strong> lancés d'ici 2026</li>
-          <li data-i18n="enjeu_eco_2">Objectif : <strong>20% du PIB</strong> par le numérique d'ici 2030</li>
-          <li data-i18n="enjeu_eco_3">Secteur télécoms : <strong>4 milliards USD</strong> de CA combiné</li>
-          <li data-i18n="enjeu_eco_4"><strong>1.2 million</strong> de PME à protéger</li>
-        </ul>
-      </div>
-
-      <!-- Enjeu Social -->
-      <div class="enjeu-card">
-        <div class="enjeu-icon">👥</div>
-        <h3 data-i18n="enjeu_social_title">Enjeu Social</h3>
-        <ul class="enjeu-list">
-          <li data-i18n="enjeu_social_1"><strong>36.2 millions</strong> d'internautes algériens</li>
-          <li data-i18n="enjeu_social_2"><strong>70%</strong> de la population a moins de 35 ans</li>
-          <li data-i18n="enjeu_social_3"><strong>77%</strong> de taux de pénétration Internet</li>
-          <li data-i18n="enjeu_social_4"><strong>55 millions</strong> de connexions mobiles</li>
-        </ul>
-      </div>
-
-      <!-- Enjeu Politique -->
-      <div class="enjeu-card">
-        <div class="enjeu-icon">🏛️</div>
-        <h3 data-i18n="enjeu_politique_title">Enjeu Politique & Stratégique</h3>
-        <ul class="enjeu-list">
-          <li data-i18n="enjeu_politique_1">Stratégie <strong>Algérie Numérique 2030</strong></li>
-          <li data-i18n="enjeu_politique_2">Stratégie nationale <strong>cybersécurité 2025-2029</strong></li>
-          <li data-i18n="enjeu_politique_3"><strong>2 Data Centers nationaux</strong> en construction</li>
-          <li data-i18n="enjeu_politique_4">Loi sur l'<strong>identité numérique</strong> adoptée Nov. 2025</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Message Clé -->
-    <div class="message-cle">
-      <div class="message-cle-content">
-        <div class="message-cle-icon">🛡️</div>
-        <div class="message-cle-text">
-          <h3 data-i18n="message_cle_title">Pourquoi un Centre privé  privé Algérien de Cybersécurité ?</h3>
-          <p data-i18n="message_cle_text">
-            Face à l'intensification des menaces, les PME et startups algériennes n'ont pas les moyens 
-            de se doter d'équipes de sécurité dédiées. <strong>DZnet1</strong> mutualise l'expertise 
-            de <strong>talents algériens 100% locaux</strong> pour offrir une protection de niveau 
-            entreprise à un coût accessible. <strong>Souveraineté des données garantie : 
-            aucune donnée ne quitte le territoire national.</strong>
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Timeline Avancement -->
-    <div class="timeline-section">
-      <h3 class="timeline-title" data-i18n="timeline_title">🚀 Avancées Concrètes de la Digitalisation en Algérie</h3>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-date">2024</div>
-          <div class="timeline-content">
-            <strong data-i18n="timeline_2024_title">Fondations</strong>
-            <p data-i18n="timeline_2024_text">Stratégie IA nationale, École de cybersécurité, Programme Chabab Tech lancés</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2025</div>
-          <div class="timeline-content">
-            <strong data-i18n="timeline_2025_title">Accélération</strong>
-            <p data-i18n="timeline_2025_text">+15 places au classement TIC, Data Center Mohammadia 80%, Loi identité numérique</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2026</div>
-          <div class="timeline-content">
-            <strong data-i18n="timeline_2026_title">Déploiement</strong>
-            <p data-i18n="timeline_2026_text">500+ projets numériques opérationnels, Cloud souverain, DZnet1 référence nationale</p>
-          </div>
-        </div>
-        <div class="timeline-item future">
-          <div class="timeline-date">2030</div>
-          <div class="timeline-content">
-            <strong data-i18n="timeline_2030_title">Vision</strong>
-            <p data-i18n="timeline_2030_text">20% du PIB numérique, Souveraineté technologique complète, Leader régional</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
-</section>
+</div>
 
-<!-- ========== SECTION SOLUTIONS SOC ========== -->
-<section class="solutions" id="solutions">
-  <div class="wrapper">
+<!-- ========== SERVICES SECTION ========== -->
+<section class="section services" id="services">
+  <div class="container">
     <div class="section-header">
-      <span class="section-badge solutions-badge" data-i18n="solutions_badge">🛡️ Notre Offre</span>
-      <h2 class="section-title" data-i18n="solutions_title">Le <span class="highlight">bouclier privé  privéSOC Algérien</span> : Protection Mutualisée</h2>
-      <p class="section-subtitle" data-i18n="solutions_subtitle">
-        Un Security Operations Center (SOC) 100% algérien qui mutualise l'expertise pour offrir 
-        aux PME et startups une protection de niveau entreprise internationale — à une fraction du coût.
+      <span class="section-label">Nos Services</span>
+      <h2 class="section-title">Protection complète pour votre entreprise</h2>
+      <p class="section-desc">
+        Un SOC algérien qui mutualise l'expertise pour offrir aux PME 
+        une protection de niveau international à un coût accessible.
       </p>
     </div>
-
-    <!-- Comparatif Coûts -->
-    <div class="comparatif-section">
-      <h3 class="comparatif-title" data-i18n="comparatif_title">💰 Pourquoi Mutualiser ? Le Calcul est Simple</h3>
-      <div class="comparatif-grid">
-        <div class="comparatif-card bad">
-          <div class="comparatif-header">
-            <span class="comparatif-icon">❌</span>
-            <h4 data-i18n="comparatif_interne">Équipe Sécurité Interne</h4>
-          </div>
-          <ul class="comparatif-list">
-            <li><span class="price">15-25M DZD</span>/an <small data-i18n="comparatif_interne_1">Salaires (2-3 experts)</small></li>
-            <li><span class="price">5-10M DZD</span> <small data-i18n="comparatif_interne_2">Outils & licences</small></li>
-            <li><span class="price">3-5M DZD</span> <small data-i18n="comparatif_interne_3">Formation continue</small></li>
-            <li><span class="price">24/7 ?</span> <small data-i18n="comparatif_interne_4">Impossible à assurer</small></li>
-          </ul>
-          <div class="comparatif-total">
-            <span data-i18n="comparatif_total">Total :</span> <strong>25-40M DZD/an</strong>
-          </div>
-        </div>
-
-        <div class="comparatif-vs">VS</div>
-
-        <div class="comparatif-card good">
-          <div class="comparatif-header">
-            <span class="comparatif-icon">✅</span>
-            <h4 data-i18n="comparatif_dznet1">SOC DZnet1 Mutualisé</h4>
-          </div>
-          <ul class="comparatif-list">
-            <li><span class="price highlight-price">À partir de 50K DZD</span>/mois</li>
-            <li>✓ <small data-i18n="comparatif_dznet1_1">Surveillance 24/7/365</small></li>
-            <li>✓ <small data-i18n="comparatif_dznet1_2">Équipe de 10+ experts algériens</small></li>
-            <li>✓ <small data-i18n="comparatif_dznet1_3">Outils professionnels inclus</small></li>
-            <li>✓ <small data-i18n="comparatif_dznet1_4">Réponse incidents < 15 min</small></li>
-          </ul>
-          <div class="comparatif-total good-total">
-            <span data-i18n="comparatif_economie">Économie :</span> <strong>Jusqu'à 90%</strong>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Services Grid -->
+    
     <div class="services-grid">
       <div class="service-card">
-        <div class="service-icon">
-          <img src="https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_events.png" alt="Monitoring">
-        </div>
-        <h3 data-i18n="service_monitoring_title">Monitoring 24/7</h3>
-        <p data-i18n="service_monitoring_text">
-          Surveillance continue de vos systèmes par nos analystes algériens. 
+        <div class="service-icon">📡</div>
+        <h3>Monitoring 24/7</h3>
+        <p>
+          Surveillance continue de vos systèmes par nos analystes. 
           Détection proactive des menaces avant qu'elles ne deviennent des incidents.
         </p>
         <ul class="service-features">
-          <li data-i18n="service_monitoring_f1">🔍 Analyse en temps réel</li>
-          <li data-i18n="service_monitoring_f2">🚨 Alertes intelligentes</li>
-          <li data-i18n="service_monitoring_f3">📊 Tableaux de bord personnalisés</li>
+          <li>Analyse en temps réel</li>
+          <li>Alertes intelligentes</li>
+          <li>Tableaux de bord personnalisés</li>
         </ul>
       </div>
-
+      
       <div class="service-card">
-        <div class="service-icon">
-          <img src="https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/scan_port_delta.png" alt="Detection">
-        </div>
-        <h3 data-i18n="service_detection_title">Détection & Réponse</h3>
-        <p data-i18n="service_detection_text">
-          Identification automatique des comportements suspects et réponse rapide 
-          aux incidents. Notre équipe intervient en moins de 15 minutes.
+        <div class="service-icon">⚡</div>
+        <h3>Détection & Réponse</h3>
+        <p>
+          Identification automatique des comportements suspects et réponse 
+          rapide aux incidents. Notre équipe intervient en moins de 15 minutes.
         </p>
         <ul class="service-features">
-          <li data-i18n="service_detection_f1">⚡ Réponse < 15 min</li>
-          <li data-i18n="service_detection_f2">🛡️ Blocage automatique</li>
-          <li data-i18n="service_detection_f3">📝 Rapports d'incidents détaillés</li>
+          <li>Réponse incidents &lt; 15 min</li>
+          <li>Blocage automatique</li>
+          <li>Rapports détaillés</li>
         </ul>
       </div>
-
+      
       <div class="service-card">
-        <div class="service-icon">
-          <img src="https://dznet1.com/cdn-cgi/image/width=400,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_host_details.png" alt="Audit">
-        </div>
-        <h3 data-i18n="service_audit_title">Audit & Conformité</h3>
-        <p data-i18n="service_audit_text">
+        <div class="service-icon">🔐</div>
+        <h3>Audit & Conformité</h3>
+        <p>
           Évaluation complète de votre posture sécurité. Tests de pénétration, 
-          analyse de vulnérabilités et mise en conformité réglementaire.
+          analyse de vulnérabilités et mise en conformité ANPDP.
         </p>
         <ul class="service-features">
-          <li data-i18n="service_audit_f1">🔐 Pentests réguliers</li>
-          <li data-i18n="service_audit_f2">📋 Conformité ANPDP</li>
-          <li data-i18n="service_audit_f3">🎯 Plan de remédiation</li>
+          <li>Pentests réguliers</li>
+          <li>Conformité ANPDP</li>
+          <li>Plan de remédiation</li>
         </ul>
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- Offres Pricing -->
-    <div class="pricing-section">
-      <h3 class="pricing-title" data-i18n="pricing_title">📦 Nos Formules — Adaptées à Votre Taille</h3>
-      <div class="pricing-grid">
+<!-- ========== PRICING SECTION ========== -->
+<section class="section pricing" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Tarification</span>
+      <h2 class="section-title">Des formules adaptées à votre taille</h2>
+      <p class="section-desc">
+        Économisez jusqu'à 90% par rapport à une équipe sécurité interne 
+        tout en bénéficiant d'une protection 24/7.
+      </p>
+    </div>
+    
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-tier">Startup</div>
+        <div class="pricing-name">Starter</div>
+        <div class="pricing-price">
+          <span class="price-amount">50K</span>
+          <span class="price-period">DZD/mois</span>
+        </div>
+        <ul class="pricing-features">
+          <li>Jusqu'à 10 endpoints</li>
+          <li>Monitoring 8h/5j</li>
+          <li>Alertes email</li>
+          <li>Rapport mensuel</li>
+          <li>Support par ticket</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline pricing-cta">Choisir Starter</a>
+      </div>
+      
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Recommandé</div>
+        <div class="pricing-tier">PME</div>
+        <div class="pricing-name">Business</div>
+        <div class="pricing-price">
+          <span class="price-amount">150K</span>
+          <span class="price-period">DZD/mois</span>
+        </div>
+        <ul class="pricing-features">
+          <li>Jusqu'à 50 endpoints</li>
+          <li>Monitoring 24/7</li>
+          <li>Détection & Réponse</li>
+          <li>Rapports hebdomadaires</li>
+          <li>Support téléphonique</li>
+          <li>1 Pentest/an inclus</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary pricing-cta">Choisir Business</a>
+      </div>
+      
+      <div class="pricing-card">
+        <div class="pricing-tier">Entreprise</div>
+        <div class="pricing-name">Enterprise</div>
+        <div class="pricing-price">
+          <span class="price-amount">Sur mesure</span>
+        </div>
+        <ul class="pricing-features">
+          <li>Endpoints illimités</li>
+          <li>SOC dédié</li>
+          <li>Threat Intelligence</li>
+          <li>Conformité avancée</li>
+          <li>Account Manager dédié</li>
+          <li>SLA personnalisé</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline pricing-cta">Nous contacter</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRODUCTS SECTION ========== -->
+<section class="section products" id="products">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Nos Produits</span>
+      <h2 class="section-title">Solutions 100% Made in Algeria</h2>
+      <p class="section-desc">
+        Logiciels développés par des ingénieurs algériens pour répondre 
+        aux besoins spécifiques de nos entreprises et institutions.
+      </p>
+    </div>
+    
+    <!-- NetMonit Pro -->
+    <div class="product-showcase">
+      <div class="product-content">
+        <div class="product-badge">🏆 Produit Phare</div>
+        <h3 class="product-name">NetMonit Pro</h3>
+        <p class="product-tagline">Supervision des Infrastructures Critiques</p>
+        <p class="product-desc">
+          Le système nerveux numérique de votre entreprise. NetMonit Pro surveille 
+          en temps réel vos réseaux, serveurs et services critiques. Une vision 
+          unifiée pour une résilience totale.
+        </p>
         
-        <div class="pricing-card">
-          <div class="pricing-badge" data-i18n="pricing_startup_badge">Startup</div>
-          <div class="pricing-name" data-i18n="pricing_startup_name">bouclier privé  privéStarter</div>
-          <div class="pricing-price">
-            <span class="price-amount">50K</span>
-            <span class="price-currency">DZD</span>
-            <span class="price-period" data-i18n="pricing_month">/mois</span>
+        <div class="product-features">
+          <div class="product-feature">
+            <div class="feature-icon">🗺️</div>
+            <div>
+              <strong>Cartographie Réseau</strong>
+              <small>Visualisation de tous les équipements</small>
+            </div>
           </div>
-          <ul class="pricing-features">
-            <li data-i18n="pricing_startup_f1">✓ Jusqu'à 10 endpoints</li>
-            <li data-i18n="pricing_startup_f2">✓ Monitoring 8h/5j</li>
-            <li data-i18n="pricing_startup_f3">✓ Alertes email</li>
-            <li data-i18n="pricing_startup_f4">✓ Rapport mensuel</li>
-            <li data-i18n="pricing_startup_f5">✓ Support par ticket</li>
-          </ul>
-          <a href="#contact" class="pricing-cta" data-i18n="pricing_cta">Demander un devis</a>
-        </div>
-
-        <div class="pricing-card popular">
-          <div class="pricing-popular-tag" data-i18n="pricing_popular">⭐ Plus populaire</div>
-          <div class="pricing-badge" data-i18n="pricing_pme_badge">PME</div>
-          <div class="pricing-name" data-i18n="pricing_pme_name">bouclier privé  privéBusiness</div>
-          <div class="pricing-price">
-            <span class="price-amount">150K</span>
-            <span class="price-currency">DZD</span>
-            <span class="price-period" data-i18n="pricing_month">/mois</span>
+          <div class="product-feature">
+            <div class="feature-icon">⚡</div>
+            <div>
+              <strong>Alertes Temps Réel</strong>
+              <small>Notification instantanée des incidents</small>
+            </div>
           </div>
-          <ul class="pricing-features">
-            <li data-i18n="pricing_pme_f1">✓ Jusqu'à 50 endpoints</li>
-            <li data-i18n="pricing_pme_f2">✓ Monitoring 24/7</li>
-            <li data-i18n="pricing_pme_f3">✓ Détection & Réponse</li>
-            <li data-i18n="pricing_pme_f4">✓ Rapports hebdomadaires</li>
-            <li data-i18n="pricing_pme_f5">✓ Support téléphonique</li>
-            <li data-i18n="pricing_pme_f6">✓ 1 Pentest/an inclus</li>
-          </ul>
-          <a href="#contact" class="pricing-cta" data-i18n="pricing_cta">Demander un devis</a>
-        </div>
-
-        <div class="pricing-card">
-          <div class="pricing-badge" data-i18n="pricing_enterprise_badge">Entreprise</div>
-          <div class="pricing-name" data-i18n="pricing_enterprise_name">bouclier privé  privéEnterprise</div>
-          <div class="pricing-price">
-            <span class="price-amount" data-i18n="pricing_custom">Sur mesure</span>
+          <div class="product-feature">
+            <div class="feature-icon">📊</div>
+            <div>
+              <strong>Analyse Performance</strong>
+              <small>Latence, disponibilité, historique</small>
+            </div>
           </div>
-          <ul class="pricing-features">
-            <li data-i18n="pricing_enterprise_f1">✓ Endpoints illimités</li>
-            <li data-i18n="pricing_enterprise_f2">✓ SOC dédié</li>
-            <li data-i18n="pricing_enterprise_f3">✓ Threat Intelligence</li>
-            <li data-i18n="pricing_enterprise_f4">✓ Conformité avancée</li>
-            <li data-i18n="pricing_enterprise_f5">✓ Account Manager dédié</li>
-            <li data-i18n="pricing_enterprise_f6">✓ SLA personnalisé</li>
-          </ul>
-          <a href="#contact" class="pricing-cta" data-i18n="pricing_contact">Nous contacter</a>
+          <div class="product-feature">
+            <div class="feature-icon">🔗</div>
+            <div>
+              <strong>Dépendances</strong>
+              <small>Impact des pannes sur les services</small>
+            </div>
+          </div>
         </div>
-
+        
+        <div class="product-stats">
+          <div class="product-stat">
+            <div class="product-stat-value">99.9%</div>
+            <div class="product-stat-label">Disponibilité</div>
+          </div>
+          <div class="product-stat">
+            <div class="product-stat-value">&lt;1s</div>
+            <div class="product-stat-label">Détection</div>
+          </div>
+          <div class="product-stat">
+            <div class="product-stat-value">∞</div>
+            <div class="product-stat-label">Équipements</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="product-visual">
+        <img src="https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_map.png" 
+             alt="NetMonit Pro Dashboard" 
+             class="product-image">
       </div>
     </div>
-
-    <!-- Garanties -->
-    <div class="garanties-bar">
-      <div class="garantie-item">
-        <span class="garantie-icon">🇩🇿</span>
-        <span data-i18n="garantie_1">100% Équipe Algérienne</span>
+    
+    <!-- DZ-WiFi Smart -->
+    <div class="product-showcase">
+      <div class="product-content">
+        <div class="product-badge">✨ Nouveau 2026</div>
+        <h3 class="product-name">DZ-WiFi Smart</h3>
+        <p class="product-tagline">WiFi Intelligent pour Entreprises</p>
+        <p class="product-desc">
+          Transformez votre réseau WiFi en forteresse intelligente. Contrôle parental, 
+          segmentation IoT, détection d'intrusions et optimisation de bande passante — 
+          piloté par une IA développée en Algérie.
+        </p>
+        
+        <div class="product-features">
+          <div class="product-feature">
+            <div class="feature-icon">🏠</div>
+            <div>
+              <strong>Mode Maison</strong>
+              <small>Contrôle parental, filtrage, horaires</small>
+            </div>
+          </div>
+          <div class="product-feature">
+            <div class="feature-icon">🏢</div>
+            <div>
+              <strong>Mode Entreprise</strong>
+              <small>VLAN automatique, portail captif, QoS</small>
+            </div>
+          </div>
+          <div class="product-feature">
+            <div class="feature-icon">🤖</div>
+            <div>
+              <strong>IA Locale</strong>
+              <small>Détection anomalies sans cloud étranger</small>
+            </div>
+          </div>
+          <div class="product-feature">
+            <div class="feature-icon">📱</div>
+            <div>
+              <strong>App Mobile</strong>
+              <small>Contrôle depuis votre smartphone</small>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="garantie-item">
-        <span class="garantie-icon">🔒</span>
-        <span data-i18n="garantie_2">Données en Algérie</span>
-      </div>
-      <div class="garantie-item">
-        <span class="garantie-icon">⚡</span>
-        <span data-i18n="garantie_3">Réponse < 15 min</span>
-      </div>
-      <div class="garantie-item">
-        <span class="garantie-icon">📞</span>
-        <span data-i18n="garantie_4">Support en Arabe/Français</span>
+      
+      <div class="product-visual">
+        <img src="https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/wifi_int.png" 
+             alt="DZ-WiFi Smart Interface" 
+             class="product-image">
       </div>
     </div>
-
+    
+    <!-- MediWatch DZ -->
+    <div class="product-showcase">
+      <div class="product-content">
+        <div class="product-badge">🏥 Santé Publique</div>
+        <h3 class="product-name">MediWatch DZ</h3>
+        <p class="product-tagline">Surveillance Hospitalière en Temps Réel</p>
+        <p class="product-desc">
+          La vie de nos patients mérite une technologie de pointe algérienne. 
+          MediWatch DZ offre une surveillance continue des signes vitaux, 
+          gestion intelligente des lits et alertes critiques instantanées.
+        </p>
+        
+        <div class="product-features">
+          <div class="product-feature">
+            <div class="feature-icon">❤️</div>
+            <div>
+              <strong>Signes Vitaux</strong>
+              <small>ECG, SpO2, température en continu</small>
+            </div>
+          </div>
+          <div class="product-feature">
+            <div class="feature-icon">🛏️</div>
+            <div>
+              <strong>Gestion des Lits</strong>
+              <small>Occupation, disponibilité, rotation</small>
+            </div>
+          </div>
+          <div class="product-feature">
+            <div class="feature-icon">🚨</div>
+            <div>
+              <strong>Alertes Critiques</strong>
+              <small>Notification immédiate équipe médicale</small>
+            </div>
+          </div>
+          <div class="product-feature">
+            <div class="feature-icon">📈</div>
+            <div>
+              <strong>Analytique</strong>
+              <small>Tendances, prédictions, aide décision</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="product-visual">
+        <img src="https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/hopital.png" 
+             alt="MediWatch DZ Dashboard" 
+             class="product-image">
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ========== SECTION PRODUITS 2026 ========== -->
-<section class="produits" id="produits">
-  <div class="wrapper">
-    <div class="section-header">
-      <span class="section-badge produits-badge" data-i18n="produits_badge">🚀 Innovation 2026</span>
-      <h2 class="section-title" data-i18n="produits_title">Nos Solutions <span class="highlight">100% Made in Algeria</span></h2>
-      <p class="section-subtitle" data-i18n="produits_subtitle">
-        Trois logiciels développés par des ingénieurs algériens pour répondre aux besoins spécifiques 
-        de nos entreprises, institutions et citoyens. Souveraineté totale, innovation locale.
+<!-- ========== CTA SECTION ========== -->
+<section class="section cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title">Prêt à sécuriser votre entreprise ?</h2>
+      <p class="cta-desc">
+        Rejoignez les entreprises algériennes qui font confiance à DZnet1 
+        pour protéger leurs infrastructures numériques.
       </p>
-    </div>
-
-    <!-- Produit 1: NetMonit Pro -->
-    <div class="produit-showcase">
-      <div class="produit-content">
-        <div class="produit-badge flagship" data-i18n="produit_flagship">🏆 Produit Phare</div>
-        <h3 class="produit-name">NetMonit Pro</h3>
-        <p class="produit-tagline" data-i18n="netmonit_tagline">Plateforme Nationale de Supervision des Infrastructures Critiques</p>
-        <p class="produit-desc" data-i18n="netmonit_desc">
-          Le système nerveux numérique de l'Algérie. NetMonit Pro surveille en temps réel les réseaux, 
-          serveurs et services critiques des entreprises et institutions publiques. Une vision unifiée 
-          pour une résilience nationale.
-        </p>
-        <div class="produit-features">
-          <div class="produit-feature">
-            <span class="feature-icon">🗺️</span>
-            <div>
-              <strong data-i18n="netmonit_f1_title">Cartographie Nationale</strong>
-              <small data-i18n="netmonit_f1_text">Visualisation géographique de tous les équipements</small>
-            </div>
-          </div>
-          <div class="produit-feature">
-            <span class="feature-icon">⚡</span>
-            <div>
-              <strong data-i18n="netmonit_f2_title">Alertes Temps Réel</strong>
-              <small data-i18n="netmonit_f2_text">Notification instantanée des incidents critiques</small>
-            </div>
-          </div>
-          <div class="produit-feature">
-            <span class="feature-icon">📊</span>
-            <div>
-              <strong data-i18n="netmonit_f3_title">Analyse Performance</strong>
-              <small data-i18n="netmonit_f3_text">Latence, disponibilité, tendances historiques</small>
-            </div>
-          </div>
-          <div class="produit-feature">
-            <span class="feature-icon">🔗</span>
-            <div>
-              <strong data-i18n="netmonit_f4_title">Dépendances Services</strong>
-              <small data-i18n="netmonit_f4_text">Impact réel d'une panne sur les services publics</small>
-            </div>
-          </div>
-        </div>
-        <div class="produit-stats">
-          <div class="produit-stat">
-            <span class="produit-stat-value">99.9%</span>
-            <span class="produit-stat-label" data-i18n="netmonit_stat1">Disponibilité</span>
-          </div>
-          <div class="produit-stat">
-            <span class="produit-stat-value">&lt;1s</span>
-            <span class="produit-stat-label" data-i18n="netmonit_stat2">Détection</span>
-          </div>
-          <div class="produit-stat">
-            <span class="produit-stat-value">∞</span>
-            <span class="produit-stat-label" data-i18n="netmonit_stat3">Équipements</span>
-          </div>
-        </div>
-      </div>
-      <div class="produit-visuals">
-        <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_map.png" alt="NetMonit Pro Map" class="produit-img main">
-        <div class="produit-gallery">
-          <img src="https://dznet1.com/cdn-cgi/image/width=250,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_latency.png" alt="Latency Dashboard">
-          <img src="https://dznet1.com/cdn-cgi/image/width=250,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/netmonit_service_map.png" alt="Service Map">
-        </div>
+      <div class="cta-buttons">
+        <a href="#contact" class="btn btn-primary">Demander une démo gratuite →</a>
+        <a href="https://www.facebook.com/share/g/1HEJPJzddd/" target="_blank" class="btn btn-outline">
+          Rejoindre notre communauté
+        </a>
       </div>
     </div>
-
-    <!-- Produit 2: WiFi Intelligent -->
-    <div class="produit-showcase reverse">
-      <div class="produit-content">
-        <div class="produit-badge new" data-i18n="produit_new">✨ Nouveau 2026</div>
-        <h3 class="produit-name">DZ-WiFi Smart</h3>
-        <p class="produit-tagline" data-i18n="wifi_tagline">WiFi Intelligent pour Maisons & Entreprises Algériennes</p>
-        <p class="produit-desc" data-i18n="wifi_desc">
-          Transformez votre réseau WiFi en forteresse intelligente. Contrôle parental, segmentation 
-          automatique des appareils IoT, détection d'intrusions et optimisation de bande passante — 
-          le tout piloté par une IA développée en Algérie.
-        </p>
-        <div class="produit-features">
-          <div class="produit-feature">
-            <span class="feature-icon">🏠</span>
-            <div>
-              <strong data-i18n="wifi_f1_title">Mode Maison</strong>
-              <small data-i18n="wifi_f1_text">Contrôle parental, filtrage contenu, horaires</small>
-            </div>
-          </div>
-          <div class="produit-feature">
-            <span class="feature-icon">🏢</span>
-            <div>
-              <strong data-i18n="wifi_f2_title">Mode Entreprise</strong>
-              <small data-i18n="wifi_f2_text">VLAN automatique, portail captif, QoS</small>
-            </div>
-          </div>
-          <div class="produit-feature">
-            <span class="feature-icon">🤖</span>
-            <div>
-              <strong data-i18n="wifi_f3_title">IA Locale</strong>
-              <small data-i18n="wifi_f3_text">Détection anomalies sans cloud étranger</small>
-            </div>
-          </div>
-          <div class="produit-feature">
-            <span class="feature-icon">📱</span>
-            <div>
-              <strong data-i18n="wifi_f4_title">App Mobile</strong>
-              <small data-i18n="wifi_f4_text">Contrôle total depuis votre smartphone</small>
-            </div>
-          </div>
-        </div>
-        <div class="produit-usecases">
-          <span class="usecase" data-i18n="wifi_use1">🏠 Familles</span>
-          <span class="usecase" data-i18n="wifi_use2">🏨 Hôtels</span>
-          <span class="usecase" data-i18n="wifi_use3">☕ Cafés</span>
-          <span class="usecase" data-i18n="wifi_use4">🏢 Bureaux</span>
-          <span class="usecase" data-i18n="wifi_use5">🏫 Écoles</span>
-        </div>
-      </div>
-      <div class="produit-visuals">
-        <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/wifi_int.png" alt="DZ-WiFi Smart Interface" class="produit-img main">
-      </div>
-    </div>
-
-    <!-- Produit 3: Surveillance Hospitalière -->
-    <div class="produit-showcase">
-      <div class="produit-content">
-        <div class="produit-badge health" data-i18n="produit_health">🏥 Santé Publique</div>
-        <h3 class="produit-name">MediWatch DZ</h3>
-        <p class="produit-tagline" data-i18n="hospital_tagline">Surveillance Hospitalière en Temps Réel</p>
-        <p class="produit-desc" data-i18n="hospital_desc">
-          La vie de nos patients mérite une technologie de pointe algérienne. MediWatch DZ offre 
-          une surveillance continue des signes vitaux, une gestion intelligente des lits et des 
-          alertes critiques instantanées pour le personnel soignant.
-        </p>
-        <div class="produit-features">
-          <div class="produit-feature">
-            <span class="feature-icon">❤️</span>
-            <div>
-              <strong data-i18n="hospital_f1_title">Signes Vitaux</strong>
-              <small data-i18n="hospital_f1_text">Monitoring continu ECG, SpO2, température</small>
-            </div>
-          </div>
-          <div class="produit-feature">
-            <span class="feature-icon">🛏️</span>
-            <div>
-              <strong data-i18n="hospital_f2_title">Gestion des Lits</strong>
-              <small data-i18n="hospital_f2_text">Occupation, disponibilité, rotation optimisée</small>
-            </div>
-          </div>
-          <div class="produit-feature">
-            <span class="feature-icon">🚨</span>
-            <div>
-              <strong data-i18n="hospital_f3_title">Alertes Critiques</strong>
-              <small data-i18n="hospital_f3_text">Notification immédiate équipe médicale</small>
-            </div>
-          </div>
-          <div class="produit-feature">
-            <span class="feature-icon">📈</span>
-            <div>
-              <strong data-i18n="hospital_f4_title">Analytique Santé</strong>
-              <small data-i18n="hospital_f4_text">Tendances, prédictions, aide à la décision</small>
-            </div>
-          </div>
-        </div>
-        <div class="produit-impact">
-          <div class="impact-item">
-            <span class="impact-icon">⏱️</span>
-            <span data-i18n="hospital_impact1">Réduction temps de réponse urgence</span>
-          </div>
-          <div class="impact-item">
-            <span class="impact-icon">💚</span>
-            <span data-i18n="hospital_impact2">Amélioration qualité des soins</span>
-          </div>
-          <div class="impact-item">
-            <span class="impact-icon">🇩🇿</span>
-            <span data-i18n="hospital_impact3">Données patients 100% en Algérie</span>
-          </div>
-        </div>
-      </div>
-      <div class="produit-visuals">
-        <img src="https://dznet1.com/cdn-cgi/image/width=500,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/hopital.png" alt="MediWatch Dashboard" class="produit-img main">
-        <div class="produit-gallery">
-          <img src="https://dznet1.com/cdn-cgi/image/width=250,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/hopital2.png" alt="Patient Monitoring">
-          <img src="https://dznet1.com/cdn-cgi/image/width=250,quality=85,format=auto/https://raw.githubusercontent.com/lynx98b/dznet1/main/intranet/img/hopital3.png" alt="Bed Management">
-        </div>
-      </div>
-    </div>
-
-    <!-- CTA Produits -->
-    <div class="produits-cta">
-      <h3 data-i18n="produits_cta_title">🎯 Intéressé par nos solutions ?</h3>
-      <p data-i18n="produits_cta_text">Demandez une démonstration gratuite et découvrez comment nos produits peuvent transformer votre organisation.</p>
-      <a href="#contact" class="btn-primary" data-i18n="produits_cta_btn">📞 Demander une Démo</a>
-    </div>
-
   </div>
 </section>
 
-<!-- ========== SECTION ÉCOSYSTÈME ========== -->
-<section class="ecosysteme" id="ecosysteme">
-  <div class="wrapper">
-    <div class="section-header">
-      <span class="section-badge ecosysteme-badge" data-i18n="ecosysteme_badge">🤝 Rejoignez-nous</span>
-      <h2 class="section-title" data-i18n="ecosysteme_title">Construisons Ensemble la <span class="highlight">Souveraineté Numérique</span></h2>
-      <p class="section-subtitle" data-i18n="ecosysteme_subtitle">
-        L'Algérie regorge de talents exceptionnels. DZnet1 est une initiative ouverte : ingénieurs, 
-        chercheurs, entrepreneurs, institutions — tous sont invités à participer à ce projet historique.
-      </p>
-    </div>
-
-    <!-- Appel à participation -->
-    <div class="participation-grid">
-      <div class="participation-card talents">
-        <div class="participation-icon">👨‍💻</div>
-        <h3 data-i18n="participation_talents_title">Talents Algériens</h3>
-        <p data-i18n="participation_talents_text">
-          Ingénieurs, développeurs, analystes cybersécurité — rejoignez une équipe 100% algérienne 
-          qui construit l'avenir numérique du pays. Formation continue, projets stimulants, impact national.
-        </p>
-        <ul class="participation-list">
-          <li data-i18n="participation_talents_1">🎓 Jeunes diplômés bienvenus</li>
-          <li data-i18n="participation_talents_2">📚 Formation & certification incluses</li>
-          <li data-i18n="participation_talents_3">🚀 Évolution de carrière rapide</li>
-        </ul>
-        <a href="#contact" class="participation-cta" data-i18n="participation_talents_cta">Postuler maintenant</a>
-      </div>
-
-      <div class="participation-card partners">
-        <div class="participation-icon">🏢</div>
-        <h3 data-i18n="participation_partners_title">Partenaires & Entreprises</h3>
-        <p data-i18n="participation_partners_text">
-          Intégrateurs, revendeurs, consultants IT — devenez partenaire officiel DZnet1. 
-          Proposez nos solutions à vos clients et participez à la croissance de l'écosystème national.
-        </p>
-        <ul class="participation-list">
-          <li data-i18n="participation_partners_1">💼 Programme partenaires structuré</li>
-          <li data-i18n="participation_partners_2">📈 Commissions attractives</li>
-          <li data-i18n="participation_partners_3">🛠️ Support technique dédié</li>
-        </ul>
-        <a href="#contact" class="participation-cta" data-i18n="participation_partners_cta">Devenir partenaire</a>
-      </div>
-
-      <div class="participation-card institutions">
-        <div class="participation-icon">🏛️</div>
-        <h3 data-i18n="participation_institutions_title">Institutions & Recherche</h3>
-        <p data-i18n="participation_institutions_text">
-          Universités, Centre privé  privés de recherche, administrations — collaborons pour développer 
-          les compétences et les technologies de demain. R&D, stages, projets conjoints.
-        </p>
-        <ul class="participation-list">
-          <li data-i18n="participation_institutions_1">🔬 Partenariats R&D</li>
-          <li data-i18n="participation_institutions_2">🎓 Stages & alternances</li>
-          <li data-i18n="participation_institutions_3">📋 Projets pilotes gouvernementaux</li>
-        </ul>
-        <a href="#contact" class="participation-cta" data-i18n="participation_institutions_cta">Collaborer</a>
-      </div>
-    </div>
-
-    <!-- Message Mobilisation -->
-    <div class="mobilisation-box">
-      <div class="mobilisation-content">
-        <div class="mobilisation-icon">🇩🇿</div>
-        <div class="mobilisation-text">
-          <h3 data-i18n="mobilisation_title">Le Moment est Maintenant</h3>
-          <p data-i18n="mobilisation_text">
-            L'Algérie dispose de <strong>70% de sa population ayant moins de 35 ans</strong>, d'une 
-            <strong>stratégie nationale de transformation numérique</strong> ambitieuse, et d'une 
-            <strong>volonté politique forte</strong> pour la souveraineté technologique. 
-            C'est une opportunité unique de bâtir ensemble un écosystème de cybersécurité 
-            <strong>100% algérien</strong>, par des Algériens, pour les Algériens.
-            <br><br>
-            <strong>Ne ratons pas ce rendez-vous avec l'Histoire.</strong>
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Chiffres Écosystème -->
-    <div class="ecosysteme-stats">
-      <div class="eco-stat">
-        <span class="eco-stat-value" data-i18n="eco_stat1_value">500+</span>
-        <span class="eco-stat-label" data-i18n="eco_stat1_label">Projets numériques 2026</span>
-      </div>
-      <div class="eco-stat">
-        <span class="eco-stat-value" data-i18n="eco_stat2_value">12,000</span>
-        <span class="eco-stat-label" data-i18n="eco_stat2_label">Fonctionnaires formés</span>
-      </div>
-      <div class="eco-stat">
-        <span class="eco-stat-value" data-i18n="eco_stat3_value">2</span>
-        <span class="eco-stat-label" data-i18n="eco_stat3_label">Data Centers nationaux</span>
-      </div>
-      <div class="eco-stat">
-        <span class="eco-stat-value" data-i18n="eco_stat4_value">2030</span>
-        <span class="eco-stat-label" data-i18n="eco_stat4_label">Vision souveraineté</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ========== SECTION CONTACT ========== -->
-<section class="contact" id="contact">
-  <div class="wrapper">
+<!-- ========== CONTACT SECTION ========== -->
+<section class="section contact" id="contact">
+  <div class="container">
     <div class="contact-grid">
       <div class="contact-info">
-        <h2 data-i18n="contact_title">Contactez-nous</h2>
-        <p data-i18n="contact_subtitle">
-          Une question ? Un projet ? Une envie de rejoindre l'aventure ? 
-          Notre équipe 100% algérienne est à votre écoute.
+        <h2>Parlons de votre projet</h2>
+        <p>
+          Une question ? Un projet de sécurisation ? Notre équipe 100% algérienne 
+          est à votre écoute pour vous accompagner.
         </p>
         
         <div class="contact-methods">
-          <a href="mailto:contact@dznet1.com" class="contact-method">
-            <span class="contact-method-icon">📧</span>
+          <div class="contact-method">
+            <div class="contact-method-icon">📧</div>
             <div>
               <strong>Email</strong>
               <span>contact@dznet1.com</span>
             </div>
-          </a>
+          </div>
           
           <div class="contact-method">
-            <span class="contact-method-icon">📍</span>
+            <div class="contact-method-icon">📍</div>
             <div>
-              <strong data-i18n="contact_location">Localisation</strong>
-              <span data-i18n="contact_address">Alger, Algérie 🇩🇿</span>
+              <strong>Localisation</strong>
+              <span>Alger, Algérie 🇩🇿</span>
             </div>
           </div>
           
           <div class="contact-method">
-            <span class="contact-method-icon">🕐</span>
+            <div class="contact-method-icon">🕐</div>
             <div>
-              <strong data-i18n="contact_hours">Horaires</strong>
-              <span data-i18n="contact_hours_text">Dim - Jeu : 8h - 17h</span>
+              <strong>Horaires</strong>
+              <span>Dim - Jeu : 8h - 17h</span>
             </div>
           </div>
         </div>
-
-        <!-- Social Links -->
+        
         <div class="contact-social">
-          <span data-i18n="contact_follow">Suivez-nous :</span>
-          <div class="social-links">
-            <a href="https://www.facebook.com/dznet1" target="_blank" class="social-link" title="Facebook">f</a>
-            <a href="https://twitter.com/dznet1" target="_blank" class="social-link" title="Twitter">𝕏</a>
-            <a href="https://www.linkedin.com/company/dznet1" target="_blank" class="social-link" title="LinkedIn">in</a>
-            <a href="https://www.youtube.com/@dznet1" target="_blank" class="social-link" title="YouTube">▶</a>
-          </div>
+          <a href="https://www.facebook.com/share/g/1HEJPJzddd/" target="_blank" class="social-link" title="Facebook">f</a>
+          <a href="#" class="social-link" title="LinkedIn">in</a>
+          <a href="#" class="social-link" title="Twitter">𝕏</a>
+          <a href="#" class="social-link" title="YouTube">▶</a>
         </div>
       </div>
-
-      <div class="contact-form-wrapper">
+      
+      <div class="contact-form-box">
+        <h3>📞 Contact Direct</h3>
         <div class="contact-message">
-          <h3>📞 Contact Direct</h3>
-          <p>Pour toute demande concernant notre offre de développement gratuit pour startups et PME/PMI, ou pour toute autre information :</p>
+          <p>
+            Pour toute demande concernant notre <strong>offre de développement gratuit 
+            pour startups</strong>, nos services SOC, ou toute autre information :
+          </p>
           <p>📧 Email : <strong>contact@dznet1.com</strong></p>
           <p>📱 WhatsApp : <strong>+213 XXX XXX XXX</strong></p>
-          <p>Nous répondons sous 24h ouvrées.</p>
+          <p style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-subtle);">
+            <strong style="color: var(--accent-emerald);">Conditions offre startup :</strong><br>
+            Savoir définir ses besoins, répondre à nos questions techniques, 
+            être ponctuel, accepter de nous faire de la publicité sur votre site, 
+            suivre nos recommandations techniques, ne pas revendre le produit.
+          </p>
+          <p style="margin-top: 16px;">
+            Nous répondons sous <strong>24h ouvrées</strong>.
+          </p>
         </div>
       </div>
     </div>
@@ -3009,830 +1776,72 @@ body.rtl .hero-float-card.card-2 {
 
 <!-- ========== FOOTER ========== -->
 <footer class="footer">
-  <div class="wrapper">
+  <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <div class="footer-logo">
-          <span class="flag">🇩🇿</span>
+        <a href="#" class="logo">
+          <div class="logo-icon">🛡️</div>
           <span>DZnet1</span>
-        </div>
-        <p data-i18n="footer_tagline">
-          Centre privé  privé Algérien de Cybersécurité<br>
+        </a>
+        <p>
+          Centre Algérien de Cybersécurité<br>
           100% Ressources Algériennes
         </p>
-        <div class="footer-share">
-          <span data-i18n="footer_share">Partagez notre mission :</span>
-          <div class="share-buttons small">
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://dznet1.com" target="_blank" class="share-btn facebook" title="Facebook">f</a>
-            <a href="https://twitter.com/intent/tweet?url=https://dznet1.com&text=DZnet1%20-%20Centre privé  privé%20Alg%C3%A9rien%20de%20Cybers%C3%A9curit%C3%A9%20🇩🇿" target="_blank" class="share-btn twitter" title="Twitter">𝕏</a>
-            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://dznet1.com" target="_blank" class="share-btn linkedin" title="LinkedIn">in</a>
-            <a href="https://wa.me/?text=DZnet1%20-%20Centre privé  privé%20Alg%C3%A9rien%20de%20Cybers%C3%A9curit%C3%A9%20https://dznet1.com" target="_blank" class="share-btn whatsapp" title="WhatsApp">W</a>
-          </div>
+        <div class="contact-social" style="margin-top: 16px;">
+          <a href="https://www.facebook.com/share/g/1HEJPJzddd/" target="_blank" class="social-link" title="Facebook">f</a>
+          <a href="#" class="social-link" title="LinkedIn">in</a>
+          <a href="#" class="social-link" title="Twitter">𝕏</a>
         </div>
       </div>
-
+      
       <div class="footer-links">
-        <h4 data-i18n="footer_solutions">Solutions</h4>
+        <h4>Services</h4>
         <ul>
-          <li><a href="#solutions" data-i18n="footer_soc">SOC Mutualisé</a></li>
-          <li><a href="#produits">NetMonit Pro</a></li>
-          <li><a href="#produits">DZ-WiFi Smart</a></li>
-          <li><a href="#produits">MediWatch DZ</a></li>
+          <li><a href="#services">SOC Mutualisé</a></li>
+          <li><a href="#services">Monitoring 24/7</a></li>
+          <li><a href="#services">Audit Sécurité</a></li>
+          <li><a href="#services">Pentest</a></li>
         </ul>
       </div>
-
+      
       <div class="footer-links">
-        <h4 data-i18n="footer_company">Entreprise</h4>
+        <h4>Produits</h4>
         <ul>
-          <li><a href="#enjeux" data-i18n="footer_about">À propos</a></li>
-          <li><a href="#ecosysteme" data-i18n="footer_careers">Carrières</a></li>
-          <li><a href="#ecosysteme" data-i18n="footer_partners">Partenaires</a></li>
-          <li><a href="#contact" data-i18n="footer_contact">Contact</a></li>
+          <li><a href="#products">NetMonit Pro</a></li>
+          <li><a href="#products">DZ-WiFi Smart</a></li>
+          <li><a href="#products">MediWatch DZ</a></li>
         </ul>
       </div>
-
+      
       <div class="footer-links">
-        <h4 data-i18n="footer_resources">Ressources</h4>
+        <h4>Ressources</h4>
         <ul>
-          <li><a href="#" data-i18n="footer_blog">Blog Cybersécurité</a></li>
-          <li><a href="#" data-i18n="footer_docs">Documentation</a></li>
-          <li><a href="#" data-i18n="footer_status">État des services</a></li>
-          <li><a href="#" data-i18n="footer_privacy">Politique de confidentialité</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">État des services</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
         </ul>
       </div>
     </div>
-
+    
     <div class="footer-bottom">
       <div class="footer-copyright">
-        © 2026 DZnet1 — <span data-i18n="footer_made">Technologie 100% Algérienne</span> 🇩🇿
+        © 2026 DZnet1 — Technologie 100% Algérienne 🇩🇿
       </div>
-      <div class="footer-certifications">
-        <span class="certification" data-i18n="footer_cert1">🔒 Données Souveraines</span>
-        <span class="certification" data-i18n="footer_cert2">🛡️ Conforme ANPDP</span>
-        <span class="certification" data-i18n="footer_cert3">🇩🇿 Made in Algeria</span>
+      <div class="footer-badges">
+        <span class="footer-badge">🔒 Données Souveraines</span>
+        <span class="footer-badge">🛡️ Conforme ANPDP</span>
+        <span class="footer-badge">🇩🇿 Made in Algeria</span>
       </div>
     </div>
   </div>
 </footer>
 
-</div>
-
 <script>
-// ========== TRADUCTIONS i18n ==========
-const i18n = {
-  fr: {
-    // Nav
-    nav_challenges: "Enjeux",
-    nav_solutions: "Solutions",
-    nav_products: "Produits 2026",
-    nav_ecosystem: "Écosystème",
-    nav_contact: "Contact",
-    nav_join: "Rejoindre",
-    // Hero
-    hero_badge: "Centre privé  privé Algérien de Cybersécurité — Initiative 2026",
-    hero_title: "Le Premier <span class='highlight'>bouclier privé  privéNumérique</span> 100% Algérien pour vos Entreprises",
-    hero_subtitle: "DZnet1 est le premier Centre privé  privé de cybersécurité entièrement conçu par des <strong>ingénieurs algériens</strong>, avec des <strong>données hébergées en Algérie</strong>. Protégez votre entreprise, rejoignez la souveraineté numérique nationale.",
-    stat_citizens: "Citoyens à protéger",
-    stat_enterprises: "PME & Startups",
-    stat_algerian: "Ressources DZ",
-    cta_join: "🚀 Rejoindre l'Initiative",
-    cta_discover: "📖 Découvrir nos Solutions",
-    share_label: "Partager :",
-    card_uptime: "Disponibilité",
-    card_response: "Temps réponse",
-    // Section Enjeux
-    enjeux_badge: "📊 Contexte National",
-    enjeux_title: "L'Algérie face au Défi du Siècle : <span class='highlight'>La Souveraineté Numérique</span>",
-    enjeux_subtitle: "Avec 70 millions de cyberattaques en 2024 et une économie en pleine digitalisation, l'Algérie a besoin d'un bouclier privé  privéde protection conçu par des Algériens, pour les Algériens.",
-    stat_attacks: "Cyberattaques en 2024",
-    stat_increase: "Hausse cybercriminalité",
-    stat_rank: "Rang mondial des cibles",
-    stat_tic: "Rang TIC mondial (+15 places)",
-    enjeu_eco_title: "Enjeu Économique",
-    enjeu_eco_1: "<strong>500+ projets numériques</strong> lancés d'ici 2026",
-    enjeu_eco_2: "Objectif : <strong>20% du PIB</strong> par le numérique d'ici 2030",
-    enjeu_eco_3: "Secteur télécoms : <strong>4 milliards USD</strong> de CA combiné",
-    enjeu_eco_4: "<strong>1.2 million</strong> de PME à protéger",
-    enjeu_social_title: "Enjeu Social",
-    enjeu_social_1: "<strong>36.2 millions</strong> d'internautes algériens",
-    enjeu_social_2: "<strong>70%</strong> de la population a moins de 35 ans",
-    enjeu_social_3: "<strong>77%</strong> de taux de pénétration Internet",
-    enjeu_social_4: "<strong>55 millions</strong> de connexions mobiles",
-    enjeu_politique_title: "Enjeu Politique & Stratégique",
-    enjeu_politique_1: "Stratégie <strong>Algérie Numérique 2030</strong>",
-    enjeu_politique_2: "Stratégie nationale <strong>cybersécurité 2025-2029</strong>",
-    enjeu_politique_3: "<strong>2 Data Centers nationaux</strong> en construction",
-    enjeu_politique_4: "Loi sur l'<strong>identité numérique</strong> adoptée Nov. 2025",
-    message_cle_title: "Pourquoi un Centre privé  privé Algérien de Cybersécurité ?",
-    message_cle_text: "Face à l'intensification des menaces, les PME et startups algériennes n'ont pas les moyens de se doter d'équipes de sécurité dédiées. <strong>DZnet1</strong> mutualise l'expertise de <strong>talents algériens 100% locaux</strong> pour offrir une protection de niveau entreprise à un coût accessible. <strong>Souveraineté des données garantie : aucune donnée ne quitte le territoire national.</strong>",
-    timeline_title: "🚀 Avancées Concrètes de la Digitalisation en Algérie",
-    timeline_2024_title: "Fondations",
-    timeline_2024_text: "Stratégie IA nationale, École de cybersécurité, Programme Chabab Tech lancés",
-    timeline_2025_title: "Accélération",
-    timeline_2025_text: "+15 places au classement TIC, Data Center Mohammadia 80%, Loi identité numérique",
-    timeline_2026_title: "Déploiement",
-    timeline_2026_text: "500+ projets numériques opérationnels, Cloud souverain, DZnet1 référence nationale",
-    timeline_2030_title: "Vision",
-    timeline_2030_text: "20% du PIB numérique, Souveraineté technologique complète, Leader régional",
-    // Section Solutions
-    solutions_badge: "🛡️ Notre Offre",
-    solutions_title: "Le <span class='highlight'>bouclier privé  privéSOC Algérien</span> : Protection Mutualisée",
-    solutions_subtitle: "Un Security Operations Center (SOC) 100% algérien qui mutualise l'expertise pour offrir aux PME et startups une protection de niveau entreprise internationale — à une fraction du coût.",
-    comparatif_title: "💰 Pourquoi Mutualiser ? Le Calcul est Simple",
-    comparatif_interne: "Équipe Sécurité Interne",
-    comparatif_interne_1: "Salaires (2-3 experts)",
-    comparatif_interne_2: "Outils & licences",
-    comparatif_interne_3: "Formation continue",
-    comparatif_interne_4: "Impossible à assurer",
-    comparatif_total: "Total :",
-    comparatif_dznet1: "SOC DZnet1 Mutualisé",
-    comparatif_dznet1_1: "Surveillance 24/7/365",
-    comparatif_dznet1_2: "Équipe de 10+ experts algériens",
-    comparatif_dznet1_3: "Outils professionnels inclus",
-    comparatif_dznet1_4: "Réponse incidents < 15 min",
-    comparatif_economie: "Économie :",
-    service_monitoring_title: "Monitoring 24/7",
-    service_monitoring_text: "Surveillance continue de vos systèmes par nos analystes algériens. Détection proactive des menaces avant qu'elles ne deviennent des incidents.",
-    service_monitoring_f1: "🔍 Analyse en temps réel",
-    service_monitoring_f2: "🚨 Alertes intelligentes",
-    service_monitoring_f3: "📊 Tableaux de bord personnalisés",
-    service_detection_title: "Détection & Réponse",
-    service_detection_text: "Identification automatique des comportements suspects et réponse rapide aux incidents. Notre équipe intervient en moins de 15 minutes.",
-    service_detection_f1: "⚡ Réponse < 15 min",
-    service_detection_f2: "🛡️ Blocage automatique",
-    service_detection_f3: "📝 Rapports d'incidents détaillés",
-    service_audit_title: "Audit & Conformité",
-    service_audit_text: "Évaluation complète de votre posture sécurité. Tests de pénétration, analyse de vulnérabilités et mise en conformité réglementaire.",
-    service_audit_f1: "🔐 Pentests réguliers",
-    service_audit_f2: "📋 Conformité ANPDP",
-    service_audit_f3: "🎯 Plan de remédiation",
-    pricing_title: "📦 Nos Formules — Adaptées à Votre Taille",
-    pricing_startup_badge: "Startup",
-    pricing_startup_name: "bouclier privé  privéStarter",
-    pricing_month: "/mois",
-    pricing_startup_f1: "✓ Jusqu'à 10 endpoints",
-    pricing_startup_f2: "✓ Monitoring 8h/5j",
-    pricing_startup_f3: "✓ Alertes email",
-    pricing_startup_f4: "✓ Rapport mensuel",
-    pricing_startup_f5: "✓ Support par ticket",
-    pricing_cta: "Demander un devis",
-    pricing_popular: "⭐ Plus populaire",
-    pricing_pme_badge: "PME",
-    pricing_pme_name: "bouclier privé  privéBusiness",
-    pricing_pme_f1: "✓ Jusqu'à 50 endpoints",
-    pricing_pme_f2: "✓ Monitoring 24/7",
-    pricing_pme_f3: "✓ Détection & Réponse",
-    pricing_pme_f4: "✓ Rapports hebdomadaires",
-    pricing_pme_f5: "✓ Support téléphonique",
-    pricing_pme_f6: "✓ 1 Pentest/an inclus",
-    pricing_enterprise_badge: "Entreprise",
-    pricing_enterprise_name: "bouclier privé  privéEnterprise",
-    pricing_custom: "Sur mesure",
-    pricing_enterprise_f1: "✓ Endpoints illimités",
-    pricing_enterprise_f2: "✓ SOC dédié",
-    pricing_enterprise_f3: "✓ Threat Intelligence",
-    pricing_enterprise_f4: "✓ Conformité avancée",
-    pricing_enterprise_f5: "✓ Account Manager dédié",
-    pricing_enterprise_f6: "✓ SLA personnalisé",
-    pricing_contact: "Nous contacter",
-    garantie_1: "100% Équipe Algérienne",
-    garantie_2: "Données en Algérie",
-    garantie_3: "Réponse < 15 min",
-    garantie_4: "Support en Arabe/Français",
-    // Section Produits
-    produits_badge: "🚀 Innovation 2026",
-    produits_title: "Nos Solutions <span class='highlight'>100% Made in Algeria</span>",
-    produits_subtitle: "Trois logiciels développés par des ingénieurs algériens pour répondre aux besoins spécifiques de nos entreprises, institutions et citoyens. Souveraineté totale, innovation locale.",
-    produit_flagship: "🏆 Produit Phare",
-    produit_new: "✨ Nouveau 2026",
-    produit_health: "🏥 Santé Publique",
-    netmonit_tagline: "Plateforme Nationale de Supervision des Infrastructures Critiques",
-    netmonit_desc: "Le système nerveux numérique de l'Algérie. NetMonit Pro surveille en temps réel les réseaux, serveurs et services critiques des entreprises et institutions publiques. Une vision unifiée pour une résilience nationale.",
-    netmonit_f1_title: "Cartographie Nationale",
-    netmonit_f1_text: "Visualisation géographique de tous les équipements",
-    netmonit_f2_title: "Alertes Temps Réel",
-    netmonit_f2_text: "Notification instantanée des incidents critiques",
-    netmonit_f3_title: "Analyse Performance",
-    netmonit_f3_text: "Latence, disponibilité, tendances historiques",
-    netmonit_f4_title: "Dépendances Services",
-    netmonit_f4_text: "Impact réel d'une panne sur les services publics",
-    netmonit_stat1: "Disponibilité",
-    netmonit_stat2: "Détection",
-    netmonit_stat3: "Équipements",
-    wifi_tagline: "WiFi Intelligent pour Maisons & Entreprises Algériennes",
-    wifi_desc: "Transformez votre réseau WiFi en forteresse intelligente. Contrôle parental, segmentation automatique des appareils IoT, détection d'intrusions et optimisation de bande passante — le tout piloté par une IA développée en Algérie.",
-    wifi_f1_title: "Mode Maison",
-    wifi_f1_text: "Contrôle parental, filtrage contenu, horaires",
-    wifi_f2_title: "Mode Entreprise",
-    wifi_f2_text: "VLAN automatique, portail captif, QoS",
-    wifi_f3_title: "IA Locale",
-    wifi_f3_text: "Détection anomalies sans cloud étranger",
-    wifi_f4_title: "App Mobile",
-    wifi_f4_text: "Contrôle total depuis votre smartphone",
-    wifi_use1: "🏠 Familles",
-    wifi_use2: "🏨 Hôtels",
-    wifi_use3: "☕ Cafés",
-    wifi_use4: "🏢 Bureaux",
-    wifi_use5: "🏫 Écoles",
-    hospital_tagline: "Surveillance Hospitalière en Temps Réel",
-    hospital_desc: "La vie de nos patients mérite une technologie de pointe algérienne. MediWatch DZ offre une surveillance continue des signes vitaux, une gestion intelligente des lits et des alertes critiques instantanées pour le personnel soignant.",
-    hospital_f1_title: "Signes Vitaux",
-    hospital_f1_text: "Monitoring continu ECG, SpO2, température",
-    hospital_f2_title: "Gestion des Lits",
-    hospital_f2_text: "Occupation, disponibilité, rotation optimisée",
-    hospital_f3_title: "Alertes Critiques",
-    hospital_f3_text: "Notification immédiate équipe médicale",
-    hospital_f4_title: "Analytique Santé",
-    hospital_f4_text: "Tendances, prédictions, aide à la décision",
-    hospital_impact1: "Réduction temps de réponse urgence",
-    hospital_impact2: "Amélioration qualité des soins",
-    hospital_impact3: "Données patients 100% en Algérie",
-    produits_cta_title: "🎯 Intéressé par nos solutions ?",
-    produits_cta_text: "Demandez une démonstration gratuite et découvrez comment nos produits peuvent transformer votre organisation.",
-    produits_cta_btn: "📞 Demander une Démo",
-    // Section Écosystème
-    ecosysteme_badge: "🤝 Rejoignez-nous",
-    ecosysteme_title: "Construisons Ensemble la <span class='highlight'>Souveraineté Numérique</span>",
-    ecosysteme_subtitle: "L'Algérie regorge de talents exceptionnels. DZnet1 est une initiative ouverte : ingénieurs, chercheurs, entrepreneurs, institutions — tous sont invités à participer à ce projet historique.",
-    participation_talents_title: "Talents Algériens",
-    participation_talents_text: "Ingénieurs, développeurs, analystes cybersécurité — rejoignez une équipe 100% algérienne qui construit l'avenir numérique du pays. Formation continue, projets stimulants, impact national.",
-    participation_talents_1: "🎓 Jeunes diplômés bienvenus",
-    participation_talents_2: "📚 Formation & certification incluses",
-    participation_talents_3: "🚀 Évolution de carrière rapide",
-    participation_talents_cta: "Postuler maintenant",
-    participation_partners_title: "Partenaires & Entreprises",
-    participation_partners_text: "Intégrateurs, revendeurs, consultants IT — devenez partenaire officiel DZnet1. Proposez nos solutions à vos clients et participez à la croissance de l'écosystème national.",
-    participation_partners_1: "💼 Programme partenaires structuré",
-    participation_partners_2: "📈 Commissions attractives",
-    participation_partners_3: "🛠️ Support technique dédié",
-    participation_partners_cta: "Devenir partenaire",
-    participation_institutions_title: "Institutions & Recherche",
-    participation_institutions_text: "Universités, Centre privé  privés de recherche, administrations — collaborons pour développer les compétences et les technologies de demain. R&D, stages, projets conjoints.",
-    participation_institutions_1: "🔬 Partenariats R&D",
-    participation_institutions_2: "🎓 Stages & alternances",
-    participation_institutions_3: "📋 Projets pilotes gouvernementaux",
-    participation_institutions_cta: "Collaborer",
-    mobilisation_title: "Le Moment est Maintenant",
-    mobilisation_text: "L'Algérie dispose de <strong>70% de sa population ayant moins de 35 ans</strong>, d'une <strong>stratégie nationale de transformation numérique</strong> ambitieuse, et d'une <strong>volonté politique forte</strong> pour la souveraineté technologique. C'est une opportunité unique de bâtir ensemble un écosystème de cybersécurité <strong>100% algérien</strong>, par des Algériens, pour les Algériens.<br><br><strong>Ne ratons pas ce rendez-vous avec l'Histoire.</strong>",
-    eco_stat1_value: "500+",
-    eco_stat1_label: "Projets numériques 2026",
-    eco_stat2_value: "12,000",
-    eco_stat2_label: "Fonctionnaires formés",
-    eco_stat3_value: "2",
-    eco_stat3_label: "Data Centers nationaux",
-    eco_stat4_value: "2030",
-    eco_stat4_label: "Vision souveraineté",
-    // Section Contact
-    contact_title: "Contactez-nous",
-    contact_subtitle: "Une question ? Un projet ? Une envie de rejoindre l'aventure ? Notre équipe 100% algérienne est à votre écoute.",
-    contact_location: "Localisation",
-    contact_address: "Alger, Algérie 🇩🇿",
-    contact_hours: "Horaires",
-    contact_hours_text: "Dim - Jeu : 8h - 17h",
-    contact_follow: "Suivez-nous :",
-    form_name: "Nom complet *",
-    form_email: "Email *",
-    form_company: "Entreprise",
-    form_subject: "Sujet *",
-    form_subject_select: "Sélectionnez un sujet",
-    form_subject_demo: "Demande de démonstration",
-    form_subject_quote: "Demande de devis",
-    form_subject_partnership: "Partenariat",
-    form_subject_career: "Candidature / Emploi",
-    form_subject_other: "Autre",
-    form_message: "Message *",
-    form_submit: "🚀 Envoyer le message",
-    form_note: "* Champs obligatoires. Vos données restent en Algérie et ne sont jamais partagées.",
-    // Footer
-    footer_tagline: "Centre privé  privé Algérien de Cybersécurité<br>100% Ressources Algériennes",
-    footer_share: "Partagez notre mission :",
-    footer_solutions: "Solutions",
-    footer_soc: "SOC Mutualisé",
-    footer_company: "Entreprise",
-    footer_about: "À propos",
-    footer_careers: "Carrières",
-    footer_partners: "Partenaires",
-    footer_contact: "Contact",
-    footer_resources: "Ressources",
-    footer_blog: "Blog Cybersécurité",
-    footer_docs: "Documentation",
-    footer_status: "État des services",
-    footer_privacy: "Politique de confidentialité",
-    footer_made: "Technologie 100% Algérienne",
-    footer_cert1: "🔒 Données Souveraines",
-    footer_cert2: "🛡️ Conforme ANPDP",
-    footer_cert3: "🇩🇿 Made in Algeria"
-  },
-  en: {
-    nav_challenges: "Challenges",
-    nav_solutions: "Solutions",
-    nav_products: "Products 2026",
-    nav_ecosystem: "Ecosystem",
-    nav_contact: "Contact",
-    nav_join: "Join Us",
-    hero_badge: "Algerian Cybersecurity Center — Initiative 2026",
-    hero_title: "The First <span class='highlight'>Digital Shield</span> 100% Algerian for Your Business",
-    hero_subtitle: "DZnet1 is the first cybersecurity center entirely designed by <strong>Algerian engineers</strong>, with <strong>data hosted in Algeria</strong>. Protect your business, join the national digital sovereignty.",
-    stat_citizens: "Citizens to protect",
-    stat_enterprises: "SMEs & Startups",
-    stat_algerian: "DZ Resources",
-    cta_join: "🚀 Join the Initiative",
-    cta_discover: "📖 Discover our Solutions",
-    share_label: "Share:",
-    card_uptime: "Uptime",
-    card_response: "Response time",
-    // Section Enjeux EN
-    enjeux_badge: "📊 National Context",
-    enjeux_title: "Algeria Facing the Challenge of the Century: <span class='highlight'>Digital Sovereignty</span>",
-    enjeux_subtitle: "With 70 million cyberattacks in 2024 and a rapidly digitalizing economy, Algeria needs a protection shield designed by Algerians, for Algerians.",
-    stat_attacks: "Cyberattacks in 2024",
-    stat_increase: "Cybercrime increase",
-    stat_rank: "World target ranking",
-    stat_tic: "ICT World Rank (+15 places)",
-    enjeu_eco_title: "Economic Challenge",
-    enjeu_eco_1: "<strong>500+ digital projects</strong> launched by 2026",
-    enjeu_eco_2: "Goal: <strong>20% of GDP</strong> from digital by 2030",
-    enjeu_eco_3: "Telecom sector: <strong>$4 billion USD</strong> combined revenue",
-    enjeu_eco_4: "<strong>1.2 million</strong> SMEs to protect",
-    enjeu_social_title: "Social Challenge",
-    enjeu_social_1: "<strong>36.2 million</strong> Algerian internet users",
-    enjeu_social_2: "<strong>70%</strong> of population under 35",
-    enjeu_social_3: "<strong>77%</strong> internet penetration rate",
-    enjeu_social_4: "<strong>55 million</strong> mobile connections",
-    enjeu_politique_title: "Political & Strategic Challenge",
-    enjeu_politique_1: "<strong>Digital Algeria 2030</strong> Strategy",
-    enjeu_politique_2: "National <strong>cybersecurity 2025-2029</strong> strategy",
-    enjeu_politique_3: "<strong>2 National Data Centers</strong> under construction",
-    enjeu_politique_4: "<strong>Digital identity</strong> law adopted Nov. 2025",
-    message_cle_title: "Why an Algerian Cybersecurity Center?",
-    message_cle_text: "Facing intensifying threats, Algerian SMEs and startups cannot afford dedicated security teams. <strong>DZnet1</strong> pools the expertise of <strong>100% local Algerian talent</strong> to offer enterprise-level protection at an accessible cost. <strong>Data sovereignty guaranteed: no data leaves national territory.</strong>",
-    timeline_title: "🚀 Concrete Advances in Algeria's Digitalization",
-    timeline_2024_title: "Foundations",
-    timeline_2024_text: "National AI Strategy, Cybersecurity School, Chabab Tech Program launched",
-    timeline_2025_title: "Acceleration",
-    timeline_2025_text: "+15 places in ICT ranking, Mohammadia Data Center 80%, Digital identity law",
-    timeline_2026_title: "Deployment",
-    timeline_2026_text: "500+ operational digital projects, Sovereign cloud, DZnet1 national reference",
-    timeline_2030_title: "Vision",
-    timeline_2030_text: "20% digital GDP, Complete technological sovereignty, Regional leader",
-    // Section Solutions EN
-    solutions_badge: "🛡️ Our Offer",
-    solutions_title: "The <span class='highlight'>Algerian SOC Shield</span>: Shared Protection",
-    solutions_subtitle: "A 100% Algerian Security Operations Center (SOC) that pools expertise to offer SMEs and startups enterprise-level protection — at a fraction of the cost.",
-    comparatif_title: "💰 Why Share? The Math is Simple",
-    comparatif_interne: "Internal Security Team",
-    comparatif_interne_1: "Salaries (2-3 experts)",
-    comparatif_interne_2: "Tools & licenses",
-    comparatif_interne_3: "Ongoing training",
-    comparatif_interne_4: "Impossible to ensure",
-    comparatif_total: "Total:",
-    comparatif_dznet1: "DZnet1 Shared SOC",
-    comparatif_dznet1_1: "24/7/365 monitoring",
-    comparatif_dznet1_2: "Team of 10+ Algerian experts",
-    comparatif_dznet1_3: "Professional tools included",
-    comparatif_dznet1_4: "Incident response < 15 min",
-    comparatif_economie: "Savings:",
-    service_monitoring_title: "24/7 Monitoring",
-    service_monitoring_text: "Continuous monitoring of your systems by our Algerian analysts. Proactive threat detection before they become incidents.",
-    service_monitoring_f1: "🔍 Real-time analysis",
-    service_monitoring_f2: "🚨 Smart alerts",
-    service_monitoring_f3: "📊 Custom dashboards",
-    service_detection_title: "Detection & Response",
-    service_detection_text: "Automatic identification of suspicious behavior and rapid incident response. Our team intervenes in less than 15 minutes.",
-    service_detection_f1: "⚡ Response < 15 min",
-    service_detection_f2: "🛡️ Automatic blocking",
-    service_detection_f3: "📝 Detailed incident reports",
-    service_audit_title: "Audit & Compliance",
-    service_audit_text: "Complete assessment of your security posture. Penetration testing, vulnerability analysis and regulatory compliance.",
-    service_audit_f1: "🔐 Regular pentests",
-    service_audit_f2: "📋 ANPDP compliance",
-    service_audit_f3: "🎯 Remediation plan",
-    pricing_title: "📦 Our Plans — Adapted to Your Size",
-    pricing_startup_badge: "Startup",
-    pricing_startup_name: "Starter Shield",
-    pricing_month: "/month",
-    pricing_startup_f1: "✓ Up to 10 endpoints",
-    pricing_startup_f2: "✓ 8h/5d monitoring",
-    pricing_startup_f3: "✓ Email alerts",
-    pricing_startup_f4: "✓ Monthly report",
-    pricing_startup_f5: "✓ Ticket support",
-    pricing_cta: "Request a quote",
-    pricing_popular: "⭐ Most popular",
-    pricing_pme_badge: "SME",
-    pricing_pme_name: "Business Shield",
-    pricing_pme_f1: "✓ Up to 50 endpoints",
-    pricing_pme_f2: "✓ 24/7 monitoring",
-    pricing_pme_f3: "✓ Detection & Response",
-    pricing_pme_f4: "✓ Weekly reports",
-    pricing_pme_f5: "✓ Phone support",
-    pricing_pme_f6: "✓ 1 Pentest/year included",
-    pricing_enterprise_badge: "Enterprise",
-    pricing_enterprise_name: "Enterprise Shield",
-    pricing_custom: "Custom",
-    pricing_enterprise_f1: "✓ Unlimited endpoints",
-    pricing_enterprise_f2: "✓ Dedicated SOC",
-    pricing_enterprise_f3: "✓ Threat Intelligence",
-    pricing_enterprise_f4: "✓ Advanced compliance",
-    pricing_enterprise_f5: "✓ Dedicated Account Manager",
-    pricing_enterprise_f6: "✓ Custom SLA",
-    pricing_contact: "Contact us",
-    garantie_1: "100% Algerian Team",
-    garantie_2: "Data in Algeria",
-    garantie_3: "Response < 15 min",
-    garantie_4: "Arabic/French Support",
-    // Section Produits EN
-    produits_badge: "🚀 Innovation 2026",
-    produits_title: "Our Solutions <span class='highlight'>100% Made in Algeria</span>",
-    produits_subtitle: "Three software solutions developed by Algerian engineers to meet the specific needs of our businesses, institutions and citizens. Total sovereignty, local innovation.",
-    produit_flagship: "🏆 Flagship Product",
-    produit_new: "✨ New 2026",
-    produit_health: "🏥 Public Health",
-    netmonit_tagline: "National Critical Infrastructure Supervision Platform",
-    netmonit_desc: "Algeria's digital nervous system. NetMonit Pro monitors networks, servers and critical services of businesses and public institutions in real time. A unified vision for national resilience.",
-    netmonit_f1_title: "National Mapping",
-    netmonit_f1_text: "Geographic visualization of all equipment",
-    netmonit_f2_title: "Real-Time Alerts",
-    netmonit_f2_text: "Instant notification of critical incidents",
-    netmonit_f3_title: "Performance Analysis",
-    netmonit_f3_text: "Latency, availability, historical trends",
-    netmonit_f4_title: "Service Dependencies",
-    netmonit_f4_text: "Real impact of outages on public services",
-    netmonit_stat1: "Availability",
-    netmonit_stat2: "Detection",
-    netmonit_stat3: "Devices",
-    wifi_tagline: "Smart WiFi for Algerian Homes & Businesses",
-    wifi_desc: "Transform your WiFi network into an intelligent fortress. Parental controls, automatic IoT device segmentation, intrusion detection and bandwidth optimization — all powered by AI developed in Algeria.",
-    wifi_f1_title: "Home Mode",
-    wifi_f1_text: "Parental control, content filtering, schedules",
-    wifi_f2_title: "Business Mode",
-    wifi_f2_text: "Automatic VLAN, captive portal, QoS",
-    wifi_f3_title: "Local AI",
-    wifi_f3_text: "Anomaly detection without foreign cloud",
-    wifi_f4_title: "Mobile App",
-    wifi_f4_text: "Total control from your smartphone",
-    wifi_use1: "🏠 Families",
-    wifi_use2: "🏨 Hotels",
-    wifi_use3: "☕ Cafés",
-    wifi_use4: "🏢 Offices",
-    wifi_use5: "🏫 Schools",
-    hospital_tagline: "Real-Time Hospital Surveillance",
-    hospital_desc: "Our patients' lives deserve cutting-edge Algerian technology. MediWatch DZ offers continuous vital signs monitoring, intelligent bed management and instant critical alerts for medical staff.",
-    hospital_f1_title: "Vital Signs",
-    hospital_f1_text: "Continuous ECG, SpO2, temperature monitoring",
-    hospital_f2_title: "Bed Management",
-    hospital_f2_text: "Occupancy, availability, optimized rotation",
-    hospital_f3_title: "Critical Alerts",
-    hospital_f3_text: "Immediate medical team notification",
-    hospital_f4_title: "Health Analytics",
-    hospital_f4_text: "Trends, predictions, decision support",
-    hospital_impact1: "Reduced emergency response time",
-    hospital_impact2: "Improved quality of care",
-    hospital_impact3: "Patient data 100% in Algeria",
-    produits_cta_title: "🎯 Interested in our solutions?",
-    produits_cta_text: "Request a free demo and discover how our products can transform your organization.",
-    produits_cta_btn: "📞 Request a Demo",
-    // Section Écosystème EN
-    ecosysteme_badge: "🤝 Join Us",
-    ecosysteme_title: "Let's Build <span class='highlight'>Digital Sovereignty</span> Together",
-    ecosysteme_subtitle: "Algeria is full of exceptional talent. DZnet1 is an open initiative: engineers, researchers, entrepreneurs, institutions — everyone is invited to participate in this historic project.",
-    participation_talents_title: "Algerian Talent",
-    participation_talents_text: "Engineers, developers, cybersecurity analysts — join a 100% Algerian team building the country's digital future. Continuous training, exciting projects, national impact.",
-    participation_talents_1: "🎓 Recent graduates welcome",
-    participation_talents_2: "📚 Training & certification included",
-    participation_talents_3: "🚀 Fast career growth",
-    participation_talents_cta: "Apply now",
-    participation_partners_title: "Partners & Businesses",
-    participation_partners_text: "Integrators, resellers, IT consultants — become an official DZnet1 partner. Offer our solutions to your clients and participate in the growth of the national ecosystem.",
-    participation_partners_1: "💼 Structured partner program",
-    participation_partners_2: "📈 Attractive commissions",
-    participation_partners_3: "🛠️ Dedicated technical support",
-    participation_partners_cta: "Become a partner",
-    participation_institutions_title: "Institutions & Research",
-    participation_institutions_text: "Universities, research centers, administrations — let's collaborate to develop tomorrow's skills and technologies. R&D, internships, joint projects.",
-    participation_institutions_1: "🔬 R&D partnerships",
-    participation_institutions_2: "🎓 Internships & apprenticeships",
-    participation_institutions_3: "📋 Government pilot projects",
-    participation_institutions_cta: "Collaborate",
-    mobilisation_title: "The Time is Now",
-    mobilisation_text: "Algeria has <strong>70% of its population under 35</strong>, an ambitious <strong>national digital transformation strategy</strong>, and a <strong>strong political will</strong> for technological sovereignty. This is a unique opportunity to build together a <strong>100% Algerian</strong> cybersecurity ecosystem, by Algerians, for Algerians.<br><br><strong>Let's not miss this date with History.</strong>",
-    eco_stat1_value: "500+",
-    eco_stat1_label: "Digital projects 2026",
-    eco_stat2_value: "12,000",
-    eco_stat2_label: "Trained civil servants",
-    eco_stat3_value: "2",
-    eco_stat3_label: "National Data Centers",
-    eco_stat4_value: "2030",
-    eco_stat4_label: "Sovereignty vision",
-    // Section Contact EN
-    contact_title: "Contact Us",
-    contact_subtitle: "A question? A project? Want to join the adventure? Our 100% Algerian team is listening.",
-    contact_location: "Location",
-    contact_address: "Algiers, Algeria 🇩🇿",
-    contact_hours: "Hours",
-    contact_hours_text: "Sun - Thu: 8am - 5pm",
-    contact_follow: "Follow us:",
-    form_name: "Full name *",
-    form_email: "Email *",
-    form_company: "Company",
-    form_subject: "Subject *",
-    form_subject_select: "Select a subject",
-    form_subject_demo: "Demo request",
-    form_subject_quote: "Quote request",
-    form_subject_partnership: "Partnership",
-    form_subject_career: "Career / Employment",
-    form_subject_other: "Other",
-    form_message: "Message *",
-    form_submit: "🚀 Send message",
-    form_note: "* Required fields. Your data stays in Algeria and is never shared.",
-    // Footer EN
-    footer_tagline: "Algerian Cybersecurity Center<br>100% Algerian Resources",
-    footer_share: "Share our mission:",
-    footer_solutions: "Solutions",
-    footer_soc: "Shared SOC",
-    footer_company: "Company",
-    footer_about: "About",
-    footer_careers: "Careers",
-    footer_partners: "Partners",
-    footer_contact: "Contact",
-    footer_resources: "Resources",
-    footer_blog: "Cybersecurity Blog",
-    footer_docs: "Documentation",
-    footer_status: "Service Status",
-    footer_privacy: "Privacy Policy",
-    footer_made: "100% Algerian Technology",
-    footer_cert1: "🔒 Sovereign Data",
-    footer_cert2: "🛡️ ANPDP Compliant",
-    footer_cert3: "🇩🇿 Made in Algeria"
-  },
-  ar: {
-    nav_challenges: "التحديات",
-    nav_solutions: "الحلول",
-    nav_products: "منتجات 2026",
-    nav_ecosystem: "المنظومة",
-    nav_contact: "اتصل بنا",
-    nav_join: "انضم إلينا",
-    hero_badge: "المركز الجزائري للأمن السيبراني — مبادرة 2026",
-    hero_title: "أول <span class='highlight'>درع رقمي</span> جزائري 100% لحماية مؤسستك",
-    hero_subtitle: "DZnet1 هو أول مركز للأمن السيبراني صُمم بالكامل من طرف <strong>مهندسين جزائريين</strong>، مع <strong>بيانات مستضافة في الجزائر</strong>. احمِ مؤسستك، انضم إلى السيادة الرقمية الوطنية.",
-    stat_citizens: "مواطن للحماية",
-    stat_enterprises: "مؤسسات صغيرة وناشئة",
-    stat_algerian: "موارد جزائرية",
-    cta_join: "🚀 انضم للمبادرة",
-    cta_discover: "📖 اكتشف حلولنا",
-    share_label: "شارك:",
-    card_uptime: "التوفر",
-    card_response: "وقت الاستجابة",
-    // Section Enjeux AR
-    enjeux_badge: "📊 السياق الوطني",
-    enjeux_title: "الجزائر أمام تحدي القرن: <span class='highlight'>السيادة الرقمية</span>",
-    enjeux_subtitle: "مع 70 مليون هجوم سيبراني في 2024 واقتصاد في طور الرقمنة، تحتاج الجزائر إلى درع حماية صممه جزائريون للجزائريين.",
-    stat_attacks: "هجوم سيبراني في 2024",
-    stat_increase: "ارتفاع الجرائم الإلكترونية",
-    stat_rank: "الترتيب العالمي للأهداف",
-    stat_tic: "الترتيب العالمي TIC (+15 مركز)",
-    enjeu_eco_title: "التحدي الاقتصادي",
-    enjeu_eco_1: "<strong>+500 مشروع رقمي</strong> بحلول 2026",
-    enjeu_eco_2: "الهدف: <strong>20% من الناتج المحلي</strong> من الرقمنة بحلول 2030",
-    enjeu_eco_3: "قطاع الاتصالات: <strong>4 مليار دولار</strong> إيرادات مجمعة",
-    enjeu_eco_4: "<strong>1.2 مليون</strong> مؤسسة صغيرة للحماية",
-    enjeu_social_title: "التحدي الاجتماعي",
-    enjeu_social_1: "<strong>36.2 مليون</strong> مستخدم إنترنت جزائري",
-    enjeu_social_2: "<strong>70%</strong> من السكان أقل من 35 سنة",
-    enjeu_social_3: "<strong>77%</strong> نسبة اختراق الإنترنت",
-    enjeu_social_4: "<strong>55 مليون</strong> اتصال محمول",
-    enjeu_politique_title: "التحدي السياسي والاستراتيجي",
-    enjeu_politique_1: "استراتيجية <strong>الجزائر الرقمية 2030</strong>",
-    enjeu_politique_2: "استراتيجية وطنية <strong>للأمن السيبراني 2025-2029</strong>",
-    enjeu_politique_3: "<strong>مركزا بيانات وطنيان</strong> قيد الإنشاء",
-    enjeu_politique_4: "قانون <strong>الهوية الرقمية</strong> صادق عليه نوفمبر 2025",
-    message_cle_title: "لماذا مركز جزائري للأمن السيبراني؟",
-    message_cle_text: "في مواجهة تصاعد التهديدات، لا تملك المؤسسات الصغيرة والناشئة الجزائرية وسائل تشكيل فرق أمن مخصصة. <strong>DZnet1</strong> يجمع خبرة <strong>كفاءات جزائرية 100% محلية</strong> لتوفير حماية على مستوى المؤسسات بتكلفة معقولة. <strong>سيادة البيانات مضمونة: لا تغادر أي بيانات التراب الوطني.</strong>",
-    timeline_title: "🚀 التقدم الملموس في رقمنة الجزائر",
-    timeline_2024_title: "الأسس",
-    timeline_2024_text: "استراتيجية الذكاء الاصطناعي الوطنية، مدرسة الأمن السيبراني، برنامج شباب تك",
-    timeline_2025_title: "التسارع",
-    timeline_2025_text: "+15 مركز في تصنيف TIC، مركز بيانات المحمدية 80%، قانون الهوية الرقمية",
-    timeline_2026_title: "النشر",
-    timeline_2026_text: "+500 مشروع رقمي تشغيلي، سحابة سيادية، DZnet1 مرجع وطني",
-    timeline_2030_title: "الرؤية",
-    timeline_2030_text: "20% ناتج محلي رقمي، سيادة تكنولوجية كاملة، رائد إقليمي",
-    // Section Solutions AR
-    solutions_badge: "🛡️ عرضنا",
-    solutions_title: "<span class='highlight'>درع SOC الجزائري</span>: حماية مشتركة",
-    solutions_subtitle: "مركز عمليات أمنية (SOC) جزائري 100% يجمع الخبرات لتوفير حماية بمستوى المؤسسات الكبرى للشركات الصغيرة والناشئة — بجزء من التكلفة.",
-    comparatif_title: "💰 لماذا المشاركة؟ الحساب بسيط",
-    comparatif_interne: "فريق أمن داخلي",
-    comparatif_interne_1: "رواتب (2-3 خبراء)",
-    comparatif_interne_2: "أدوات وتراخيص",
-    comparatif_interne_3: "تدريب مستمر",
-    comparatif_interne_4: "مستحيل ضمانه",
-    comparatif_total: "المجموع:",
-    comparatif_dznet1: "SOC DZnet1 المشترك",
-    comparatif_dznet1_1: "مراقبة 24/7/365",
-    comparatif_dznet1_2: "فريق من +10 خبراء جزائريين",
-    comparatif_dznet1_3: "أدوات احترافية مضمنة",
-    comparatif_dznet1_4: "استجابة للحوادث < 15 دقيقة",
-    comparatif_economie: "التوفير:",
-    service_monitoring_title: "مراقبة 24/7",
-    service_monitoring_text: "مراقبة مستمرة لأنظمتك من قبل محللينا الجزائريين. كشف استباقي للتهديدات قبل أن تصبح حوادث.",
-    service_monitoring_f1: "🔍 تحليل في الوقت الفعلي",
-    service_monitoring_f2: "🚨 تنبيهات ذكية",
-    service_monitoring_f3: "📊 لوحات تحكم مخصصة",
-    service_detection_title: "الكشف والاستجابة",
-    service_detection_text: "تحديد تلقائي للسلوكيات المشبوهة واستجابة سريعة للحوادث. فريقنا يتدخل في أقل من 15 دقيقة.",
-    service_detection_f1: "⚡ استجابة < 15 دقيقة",
-    service_detection_f2: "🛡️ حظر تلقائي",
-    service_detection_f3: "📝 تقارير حوادث مفصلة",
-    service_audit_title: "تدقيق وامتثال",
-    service_audit_text: "تقييم شامل لوضعك الأمني. اختبارات اختراق، تحليل الثغرات والامتثال التنظيمي.",
-    service_audit_f1: "🔐 اختبارات اختراق منتظمة",
-    service_audit_f2: "📋 امتثال ANPDP",
-    service_audit_f3: "🎯 خطة معالجة",
-    pricing_title: "📦 باقاتنا — مناسبة لحجمك",
-    pricing_startup_badge: "شركة ناشئة",
-    pricing_startup_name: "درع المبتدئ",
-    pricing_month: "/شهر",
-    pricing_startup_f1: "✓ حتى 10 نقاط نهاية",
-    pricing_startup_f2: "✓ مراقبة 8س/5أ",
-    pricing_startup_f3: "✓ تنبيهات بريد إلكتروني",
-    pricing_startup_f4: "✓ تقرير شهري",
-    pricing_startup_f5: "✓ دعم بالتذاكر",
-    pricing_cta: "طلب عرض سعر",
-    pricing_popular: "⭐ الأكثر شعبية",
-    pricing_pme_badge: "مؤسسة صغيرة",
-    pricing_pme_name: "درع الأعمال",
-    pricing_pme_f1: "✓ حتى 50 نقطة نهاية",
-    pricing_pme_f2: "✓ مراقبة 24/7",
-    pricing_pme_f3: "✓ كشف واستجابة",
-    pricing_pme_f4: "✓ تقارير أسبوعية",
-    pricing_pme_f5: "✓ دعم هاتفي",
-    pricing_pme_f6: "✓ 1 اختبار اختراق/سنة مضمن",
-    pricing_enterprise_badge: "مؤسسة كبيرة",
-    pricing_enterprise_name: "درع المؤسسات",
-    pricing_custom: "حسب الطلب",
-    pricing_enterprise_f1: "✓ نقاط نهاية غير محدودة",
-    pricing_enterprise_f2: "✓ SOC مخصص",
-    pricing_enterprise_f3: "✓ استخبارات التهديدات",
-    pricing_enterprise_f4: "✓ امتثال متقدم",
-    pricing_enterprise_f5: "✓ مدير حساب مخصص",
-    pricing_enterprise_f6: "✓ SLA مخصص",
-    pricing_contact: "اتصل بنا",
-    garantie_1: "فريق جزائري 100%",
-    garantie_2: "بيانات في الجزائر",
-    garantie_3: "استجابة < 15 دقيقة",
-    garantie_4: "دعم بالعربية/الفرنسية",
-    // Section Produits AR
-    produits_badge: "🚀 ابتكار 2026",
-    produits_title: "حلولنا <span class='highlight'>100% صنع في الجزائر</span>",
-    produits_subtitle: "ثلاثة برامج طورها مهندسون جزائريون لتلبية الاحتياجات الخاصة لمؤسساتنا ومواطنينا. سيادة كاملة، ابتكار محلي.",
-    produit_flagship: "🏆 المنتج الرئيسي",
-    produit_new: "✨ جديد 2026",
-    produit_health: "🏥 الصحة العمومية",
-    netmonit_tagline: "المنصة الوطنية لمراقبة البنية التحتية الحيوية",
-    netmonit_desc: "الجهاز العصبي الرقمي للجزائر. NetMonit Pro يراقب الشبكات والخوادم والخدمات الحيوية للمؤسسات العامة والخاصة في الوقت الفعلي. رؤية موحدة للصمود الوطني.",
-    netmonit_f1_title: "خريطة وطنية",
-    netmonit_f1_text: "تصور جغرافي لجميع المعدات",
-    netmonit_f2_title: "تنبيهات فورية",
-    netmonit_f2_text: "إشعار فوري بالحوادث الحرجة",
-    netmonit_f3_title: "تحليل الأداء",
-    netmonit_f3_text: "زمن الاستجابة، التوفر، الاتجاهات التاريخية",
-    netmonit_f4_title: "تبعيات الخدمات",
-    netmonit_f4_text: "التأثير الفعلي للأعطال على الخدمات العامة",
-    netmonit_stat1: "التوفر",
-    netmonit_stat2: "الكشف",
-    netmonit_stat3: "الأجهزة",
-    wifi_tagline: "واي فاي ذكي للمنازل والمؤسسات الجزائرية",
-    wifi_desc: "حول شبكة الواي فاي الخاصة بك إلى قلعة ذكية. رقابة أبوية، فصل تلقائي لأجهزة IoT، كشف التسلل وتحسين عرض النطاق — كل ذلك بذكاء اصطناعي مطور في الجزائر.",
-    wifi_f1_title: "وضع المنزل",
-    wifi_f1_text: "رقابة أبوية، تصفية المحتوى، جداول زمنية",
-    wifi_f2_title: "وضع المؤسسة",
-    wifi_f2_text: "VLAN تلقائي، بوابة أسر، QoS",
-    wifi_f3_title: "ذكاء اصطناعي محلي",
-    wifi_f3_text: "كشف الشذوذ بدون سحابة أجنبية",
-    wifi_f4_title: "تطبيق موبايل",
-    wifi_f4_text: "تحكم كامل من هاتفك الذكي",
-    wifi_use1: "🏠 العائلات",
-    wifi_use2: "🏨 الفنادق",
-    wifi_use3: "☕ المقاهي",
-    wifi_use4: "🏢 المكاتب",
-    wifi_use5: "🏫 المدارس",
-    hospital_tagline: "مراقبة مستشفيات في الوقت الفعلي",
-    hospital_desc: "حياة مرضانا تستحق تكنولوجيا جزائرية متطورة. MediWatch DZ يوفر مراقبة مستمرة للعلامات الحيوية، إدارة ذكية للأسرة وتنبيهات حرجة فورية للطاقم الطبي.",
-    hospital_f1_title: "العلامات الحيوية",
-    hospital_f1_text: "مراقبة مستمرة ECG، SpO2، الحرارة",
-    hospital_f2_title: "إدارة الأسرة",
-    hospital_f2_text: "الإشغال، التوفر، دوران محسن",
-    hospital_f3_title: "تنبيهات حرجة",
-    hospital_f3_text: "إشعار فوري للفريق الطبي",
-    hospital_f4_title: "تحليلات صحية",
-    hospital_f4_text: "اتجاهات، توقعات، دعم القرار",
-    hospital_impact1: "تقليل وقت استجابة الطوارئ",
-    hospital_impact2: "تحسين جودة الرعاية",
-    hospital_impact3: "بيانات المرضى 100% في الجزائر",
-    produits_cta_title: "🎯 مهتم بحلولنا؟",
-    produits_cta_text: "اطلب عرضاً تجريبياً مجانياً واكتشف كيف يمكن لمنتجاتنا تحويل مؤسستك.",
-    produits_cta_btn: "📞 طلب عرض تجريبي",
-    // Section Écosystème AR
-    ecosysteme_badge: "🤝 انضم إلينا",
-    ecosysteme_title: "لنبني معاً <span class='highlight'>السيادة الرقمية</span>",
-    ecosysteme_subtitle: "الجزائر مليئة بالمواهب الاستثنائية. DZnet1 مبادرة مفتوحة: مهندسون، باحثون، رواد أعمال، مؤسسات — الجميع مدعو للمشاركة في هذا المشروع التاريخي.",
-    participation_talents_title: "المواهب الجزائرية",
-    participation_talents_text: "مهندسون، مطورون، محللو أمن سيبراني — انضم لفريق جزائري 100% يبني مستقبل البلاد الرقمي. تدريب مستمر، مشاريع محفزة، تأثير وطني.",
-    participation_talents_1: "🎓 الخريجون الجدد مرحب بهم",
-    participation_talents_2: "📚 تدريب وشهادات مضمنة",
-    participation_talents_3: "🚀 نمو وظيفي سريع",
-    participation_talents_cta: "قدم الآن",
-    participation_partners_title: "الشركاء والمؤسسات",
-    participation_partners_text: "المدمجون، الموزعون، مستشارو تكنولوجيا المعلومات — كن شريكاً رسمياً لـ DZnet1. قدم حلولنا لعملائك وشارك في نمو المنظومة الوطنية.",
-    participation_partners_1: "💼 برنامج شركاء منظم",
-    participation_partners_2: "📈 عمولات جذابة",
-    participation_partners_3: "🛠️ دعم تقني مخصص",
-    participation_partners_cta: "كن شريكاً",
-    participation_institutions_title: "المؤسسات والبحث",
-    participation_institutions_text: "الجامعات، مراكز البحث، الإدارات — لنتعاون لتطوير مهارات وتقنيات الغد. البحث والتطوير، التدريب، المشاريع المشتركة.",
-    participation_institutions_1: "🔬 شراكات البحث والتطوير",
-    participation_institutions_2: "🎓 تدريب وتناوب",
-    participation_institutions_3: "📋 مشاريع حكومية تجريبية",
-    participation_institutions_cta: "تعاون",
-    mobilisation_title: "الوقت هو الآن",
-    mobilisation_text: "الجزائر لديها <strong>70% من سكانها أقل من 35 سنة</strong>، و<strong>استراتيجية وطنية طموحة للتحول الرقمي</strong>، و<strong>إرادة سياسية قوية</strong> للسيادة التكنولوجية. هذه فرصة فريدة لبناء معاً منظومة أمن سيبراني <strong>جزائرية 100%</strong>، من الجزائريين، للجزائريين.<br><br><strong>لا نضيع هذا الموعد مع التاريخ.</strong>",
-    eco_stat1_value: "+500",
-    eco_stat1_label: "مشروع رقمي 2026",
-    eco_stat2_value: "12,000",
-    eco_stat2_label: "موظف مدرب",
-    eco_stat3_value: "2",
-    eco_stat3_label: "مركز بيانات وطني",
-    eco_stat4_value: "2030",
-    eco_stat4_label: "رؤية السيادة",
-    // Section Contact AR
-    contact_title: "اتصل بنا",
-    contact_subtitle: "سؤال؟ مشروع؟ رغبة في الانضمام للمغامرة؟ فريقنا الجزائري 100% في خدمتك.",
-    contact_location: "الموقع",
-    contact_address: "الجزائر العاصمة، الجزائر 🇩🇿",
-    contact_hours: "أوقات العمل",
-    contact_hours_text: "الأحد - الخميس: 8ص - 5م",
-    contact_follow: "تابعنا:",
-    form_name: "الاسم الكامل *",
-    form_email: "البريد الإلكتروني *",
-    form_company: "المؤسسة",
-    form_subject: "الموضوع *",
-    form_subject_select: "اختر موضوعاً",
-    form_subject_demo: "طلب عرض تجريبي",
-    form_subject_quote: "طلب عرض سعر",
-    form_subject_partnership: "شراكة",
-    form_subject_career: "توظيف / وظيفة",
-    form_subject_other: "آخر",
-    form_message: "الرسالة *",
-    form_submit: "🚀 إرسال الرسالة",
-    form_note: "* حقول إلزامية. بياناتك تبقى في الجزائر ولا تُشارك أبداً.",
-    // Footer AR
-    footer_tagline: "المركز الجزائري للأمن السيبراني<br>موارد جزائرية 100%",
-    footer_share: "شارك مهمتنا:",
-    footer_solutions: "الحلول",
-    footer_soc: "SOC مشترك",
-    footer_company: "المؤسسة",
-    footer_about: "عن المؤسسة",
-    footer_careers: "الوظائف",
-    footer_partners: "الشركاء",
-    footer_contact: "اتصل بنا",
-    footer_resources: "الموارد",
-    footer_blog: "مدونة الأمن السيبراني",
-    footer_docs: "الوثائق",
-    footer_status: "حالة الخدمات",
-    footer_privacy: "سياسة الخصوصية",
-    footer_made: "تكنولوجيا جزائرية 100%",
-    footer_cert1: "🔒 بيانات سيادية",
-    footer_cert2: "🛡️ متوافق مع ANPDP",
-    footer_cert3: "🇩🇿 صنع في الجزائر"
-  }
-};
-
-// ========== LANGUAGE SWITCHER ==========
-function setLanguage(lang) {
-  // RTL for Arabic
-  document.body.classList.toggle('rtl', lang === 'ar');
-  document.documentElement.lang = lang;
-  
-  // Update all i18n elements
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (i18n[lang] && i18n[lang][key]) {
-      el.innerHTML = i18n[lang][key];
-    }
-  });
-  
-  // Update active button
-  document.querySelectorAll('.lang-switch button').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
-  });
-  
-  // Save preference
-  localStorage.setItem('dznet1_lang', lang);
-}
-
-// Language button listeners
-document.querySelectorAll('.lang-switch button').forEach(btn => {
-  btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+// Navigation scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
 });
 
 // Mobile menu toggle
@@ -3840,10 +1849,18 @@ document.getElementById('menuToggle').addEventListener('click', () => {
   document.getElementById('navLinks').classList.toggle('active');
 });
 
-// Init language
-setLanguage(localStorage.getItem('dznet1_lang') || 'fr');
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('navLinks').classList.remove('active');
+    }
+  });
+});
 </script>
 
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"cf89ad275539459598e882a51804daf3","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>

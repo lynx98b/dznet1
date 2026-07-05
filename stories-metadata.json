@@ -1,12 +1,181 @@
 {
-  "generatedAt": "2026-07-05T02:40:08.969Z",
-  "totalStories": 105,
+  "generatedAt": "2026-07-05T02:40:37.554Z",
+  "totalStories": 118,
   "scanSummary": {
-    "totalFiles": 105,
-    "successful": 105,
+    "totalFiles": 118,
+    "successful": 118,
     "failed": 0
   },
   "stories": [
+    {
+      "filename": "amanbox/Accueil-ar.dc.html",
+      "title": "Accueil Ar.Dc",
+      "description": "تحكّم في وقت الشاشة، وصفِّ المحتوى، وشجّع التعلّم. أمان بوكس هي حاجز الحماية لبيتك الرقمي....",
+      "url": "amanbox/Accueil-ar.dc.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "amanbox",
+      "lastModified": "2026-07-05T02:40:32.413Z"
+    },
+    {
+      "filename": "amanbox/Accueil.dc.html",
+      "title": "Accueil.Dc",
+      "description": "Contrôlez le temps d'écran, filtrez les contenus et encouragez l'apprentissage. AmanBox est la barrière de protection de...",
+      "url": "amanbox/Accueil.dc.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "amanbox",
+      "lastModified": "2026-07-05T02:40:32.414Z"
+    },
+    {
+      "filename": "amanbox/AmanBox Directions.dc.html",
+      "title": "Aman Box Directions.Dc",
+      "description": "Compare-les côte à côte. Chacune couvre le hero, les 3 promesses clés et un aperçu du \"pourquoi\". Dis-moi laquelle te pa...",
+      "url": "amanbox/AmanBox Directions.dc.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "amanbox",
+      "lastModified": "2026-07-05T02:40:32.414Z"
+    },
+    {
+      "filename": "amanbox/Contact-ar.dc.html",
+      "title": "Contact Ar.Dc",
+      "description": "سؤال، حجز مسبق، أو عرض سعر لمؤسستك؟ فريقنا يردّ عليك بسرعة....",
+      "url": "amanbox/Contact-ar.dc.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "amanbox",
+      "lastModified": "2026-07-05T02:40:32.414Z"
+    },
+    {
+      "filename": "amanbox/Contact.dc.html",
+      "title": "Contact.Dc",
+      "description": "Une question, une précommande ou un devis pour votre établissement ? Notre équipe vous répond rapidement....",
+      "url": "amanbox/Contact.dc.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "amanbox",
+      "lastModified": "2026-07-05T02:40:32.414Z"
+    },
+    {
+      "filename": "amanbox/Entreprises-ar.dc.html",
+      "title": "Entreprises Ar.Dc",
+      "description": "قدّم لزوّارك اتصالًا نظيفًا ومخصّصًا، وحوّله إلى مصدر دخل عبر مساحات إعلانية موجّهة محليًا....",
+      "url": "amanbox/Entreprises-ar.dc.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "amanbox",
+      "lastModified": "2026-07-05T02:40:32.414Z"
+    },
+    {
+      "filename": "amanbox/Entreprises.dc.html",
+      "title": "Entreprises.Dc",
+      "description": "Offrez à vos visiteurs un accès Internet propre et personnalisé, et transformez-le en source de revenus grâce à des espa...",
+      "url": "amanbox/Entreprises.dc.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "amanbox",
+      "lastModified": "2026-07-05T02:40:32.414Z"
+    },
+    {
+      "filename": "amanbox/FAQ-ar.dc.html",
+      "title": "FAQ Ar.Dc",
+      "description": "كل ما تحتاج معرفته عن أمان بوكس. لديك سؤال آخر؟ راس...",
+      "url": "amanbox/FAQ-ar.dc.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "amanbox",
+      "lastModified": "2026-07-05T02:40:32.414Z"
+    },
+    {
+      "filename": "amanbox/FAQ.dc.html",
+      "title": "FAQ.Dc",
+      "description": "Tout ce qu'il faut savoir sur AmanBox. Une autre question ? <a href=\"Contact.dc.html\" style=\"color:#1250d4; font-weight:...",
+      "url": "amanbox/FAQ.dc.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "amanbox",
+      "lastModified": "2026-07-05T02:40:32.414Z"
+    },
+    {
+      "filename": "amanbox/Fonctionnalites-ar.dc.html",
+      "title": "Fonctionnalites Ar.Dc",
+      "description": "ثماني مميزات صُمّمت لحماية أطفالك، وتعليمهم، واحترام قيمكم — تُدار ببساطة من هاتفك....",
+      "url": "amanbox/Fonctionnalites-ar.dc.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "amanbox",
+      "lastModified": "2026-07-05T02:40:32.414Z"
+    },
+    {
+      "filename": "amanbox/Fonctionnalites.dc.html",
+      "title": "Fonctionnalites.Dc",
+      "description": "Huit fonctionnalités pensées pour protéger, éduquer et respecter vos valeurs — pilotées simplement depuis votre mobile....",
+      "url": "amanbox/Fonctionnalites.dc.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "amanbox",
+      "lastModified": "2026-07-05T02:40:32.414Z"
+    },
+    {
+      "filename": "amanbox/Tarifs-ar.dc.html",
+      "title": "Tarifs Ar.Dc",
+      "description": "الجهاز بشراء لمرة واحدة، ثم اشتراك شهري يغطّي كل المميزات والتحديثات....",
+      "url": "amanbox/Tarifs-ar.dc.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "amanbox",
+      "lastModified": "2026-07-05T02:40:32.414Z"
+    },
+    {
+      "filename": "amanbox/Tarifs.dc.html",
+      "title": "Tarifs.Dc",
+      "description": "Le boîtier en achat unique, puis un abonnement mensuel qui couvre toutes les fonctionnalités et les mises à jour....",
+      "url": "amanbox/Tarifs.dc.html",
+      "logoUrl": null,
+      "age": "3-5",
+      "categorie": "contes",
+      "type": "histoire",
+      "decouverte": "non",
+      "directory": "amanbox",
+      "lastModified": "2026-07-05T02:40:32.414Z"
+    },
     {
       "filename": "categorisation.html",
       "title": "DzNet1 - أداة التصنيف",
@@ -18,7 +187,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.240Z"
+      "lastModified": "2026-07-05T02:40:32.416Z"
     },
     {
       "filename": "contact.html",
@@ -31,7 +200,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.240Z"
+      "lastModified": "2026-07-05T02:40:32.416Z"
     },
     {
       "filename": "demo.html",
@@ -44,7 +213,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.240Z"
+      "lastModified": "2026-07-05T02:40:32.416Z"
     },
     {
       "filename": "demo2.html",
@@ -57,7 +226,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.240Z"
+      "lastModified": "2026-07-05T02:40:32.416Z"
     },
     {
       "filename": "e.html",
@@ -70,7 +239,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.240Z"
+      "lastModified": "2026-07-05T02:40:32.416Z"
     },
     {
       "filename": "enfants.html",
@@ -83,7 +252,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.241Z"
+      "lastModified": "2026-07-05T02:40:32.416Z"
     },
     {
       "filename": "faq.html",
@@ -96,7 +265,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.241Z"
+      "lastModified": "2026-07-05T02:40:32.416Z"
     },
     {
       "filename": "filtres.html",
@@ -109,7 +278,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.241Z"
+      "lastModified": "2026-07-05T02:40:32.416Z"
     },
     {
       "filename": "IA/ai.html",
@@ -122,7 +291,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "IA",
-      "lastModified": "2026-07-05T02:40:04.239Z"
+      "lastModified": "2026-07-05T02:40:32.413Z"
     },
     {
       "filename": "IA/myia.html",
@@ -135,7 +304,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "IA",
-      "lastModified": "2026-07-05T02:40:04.240Z"
+      "lastModified": "2026-07-05T02:40:32.413Z"
     },
     {
       "filename": "intranet/apprendre/appr001.html",
@@ -148,7 +317,7 @@
       "type": "histoire",
       "decouverte": "semaine",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.245Z"
+      "lastModified": "2026-07-05T02:40:32.420Z"
     },
     {
       "filename": "intranet/apprendre/appr002.html",
@@ -161,7 +330,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.245Z"
+      "lastModified": "2026-07-05T02:40:32.421Z"
     },
     {
       "filename": "intranet/apprendre/appr003.html",
@@ -174,7 +343,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.245Z"
+      "lastModified": "2026-07-05T02:40:32.421Z"
     },
     {
       "filename": "intranet/apprendre/appr004.html",
@@ -187,7 +356,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.245Z"
+      "lastModified": "2026-07-05T02:40:32.421Z"
     },
     {
       "filename": "intranet/apprendre/appr005.html",
@@ -200,7 +369,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.245Z"
+      "lastModified": "2026-07-05T02:40:32.421Z"
     },
     {
       "filename": "intranet/apprendre/appr006.html",
@@ -213,7 +382,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.245Z"
+      "lastModified": "2026-07-05T02:40:32.421Z"
     },
     {
       "filename": "intranet/apprendre/appr007.html",
@@ -226,7 +395,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.246Z"
+      "lastModified": "2026-07-05T02:40:32.421Z"
     },
     {
       "filename": "intranet/apprendre/appr008.html",
@@ -239,7 +408,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.246Z"
+      "lastModified": "2026-07-05T02:40:32.421Z"
     },
     {
       "filename": "intranet/apprendre/appr009.html",
@@ -252,7 +421,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.246Z"
+      "lastModified": "2026-07-05T02:40:32.421Z"
     },
     {
       "filename": "intranet/apprendre/appr010.html",
@@ -265,7 +434,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.246Z"
+      "lastModified": "2026-07-05T02:40:32.421Z"
     },
     {
       "filename": "intranet/apprendre/appr011.html",
@@ -278,7 +447,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.246Z"
+      "lastModified": "2026-07-05T02:40:32.421Z"
     },
     {
       "filename": "intranet/apprendre/appr012.html",
@@ -291,7 +460,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.246Z"
+      "lastModified": "2026-07-05T02:40:32.421Z"
     },
     {
       "filename": "intranet/apprendre/appr013.html",
@@ -304,7 +473,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.247Z"
+      "lastModified": "2026-07-05T02:40:32.422Z"
     },
     {
       "filename": "intranet/apprendre/appr014.html",
@@ -317,7 +486,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/apprendre",
-      "lastModified": "2026-07-05T02:40:04.247Z"
+      "lastModified": "2026-07-05T02:40:32.422Z"
     },
     {
       "filename": "intranet/concours/concour0.html",
@@ -330,7 +499,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/concours",
-      "lastModified": "2026-07-05T02:40:04.247Z"
+      "lastModified": "2026-07-05T02:40:32.422Z"
     },
     {
       "filename": "intranet/concours/concour1.html",
@@ -343,7 +512,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/concours",
-      "lastModified": "2026-07-05T02:40:04.248Z"
+      "lastModified": "2026-07-05T02:40:32.423Z"
     },
     {
       "filename": "intranet/concours/concour2.html",
@@ -356,7 +525,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/concours",
-      "lastModified": "2026-07-05T02:40:04.248Z"
+      "lastModified": "2026-07-05T02:40:32.423Z"
     },
     {
       "filename": "intranet/concours/concour3.html",
@@ -369,7 +538,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/concours",
-      "lastModified": "2026-07-05T02:40:04.248Z"
+      "lastModified": "2026-07-05T02:40:32.423Z"
     },
     {
       "filename": "intranet/encyclopedie/ency1.html",
@@ -382,7 +551,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/encyclopedie",
-      "lastModified": "2026-07-05T02:40:04.248Z"
+      "lastModified": "2026-07-05T02:40:32.423Z"
     },
     {
       "filename": "intranet/encyclopedie/ency2.html",
@@ -395,7 +564,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/encyclopedie",
-      "lastModified": "2026-07-05T02:40:04.249Z"
+      "lastModified": "2026-07-05T02:40:32.424Z"
     },
     {
       "filename": "intranet/encyclopedie/ency3.html",
@@ -408,7 +577,7 @@
       "type": "histoire",
       "decouverte": "semaine",
       "directory": "intranet/encyclopedie",
-      "lastModified": "2026-07-05T02:40:04.249Z"
+      "lastModified": "2026-07-05T02:40:32.424Z"
     },
     {
       "filename": "intranet/encyclopedie/ency5.html",
@@ -421,7 +590,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/encyclopedie",
-      "lastModified": "2026-07-05T02:40:04.249Z"
+      "lastModified": "2026-07-05T02:40:32.424Z"
     },
     {
       "filename": "intranet/footer.html",
@@ -434,7 +603,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet",
-      "lastModified": "2026-07-05T02:40:04.249Z"
+      "lastModified": "2026-07-05T02:40:32.424Z"
     },
     {
       "filename": "intranet/games/jeux.html",
@@ -447,7 +616,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.249Z"
+      "lastModified": "2026-07-05T02:40:32.424Z"
     },
     {
       "filename": "intranet/games/jeux0.html",
@@ -460,7 +629,7 @@
       "type": "classique",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.249Z"
+      "lastModified": "2026-07-05T02:40:32.424Z"
     },
     {
       "filename": "intranet/games/jeux1.html",
@@ -473,7 +642,7 @@
       "type": "educatif",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.250Z"
+      "lastModified": "2026-07-05T02:40:32.424Z"
     },
     {
       "filename": "intranet/games/jeux10.html",
@@ -486,7 +655,7 @@
       "type": "interactif",
       "decouverte": "semaine",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.250Z"
+      "lastModified": "2026-07-05T02:40:32.425Z"
     },
     {
       "filename": "intranet/games/jeux11.html",
@@ -499,7 +668,7 @@
       "type": "educatif",
       "decouverte": "semaine",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.250Z"
+      "lastModified": "2026-07-05T02:40:32.425Z"
     },
     {
       "filename": "intranet/games/jeux12.html",
@@ -512,7 +681,7 @@
       "type": "narrative",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.251Z"
+      "lastModified": "2026-07-05T02:40:32.425Z"
     },
     {
       "filename": "intranet/games/jeux13.html",
@@ -525,7 +694,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.251Z"
+      "lastModified": "2026-07-05T02:40:32.425Z"
     },
     {
       "filename": "intranet/games/jeux2.html",
@@ -538,7 +707,7 @@
       "type": "interactif",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.251Z"
+      "lastModified": "2026-07-05T02:40:32.426Z"
     },
     {
       "filename": "intranet/games/jeux3.html",
@@ -551,7 +720,7 @@
       "type": "narrative",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.251Z"
+      "lastModified": "2026-07-05T02:40:32.426Z"
     },
     {
       "filename": "intranet/games/jeux4.html",
@@ -564,7 +733,7 @@
       "type": "aventure",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.252Z"
+      "lastModified": "2026-07-05T02:40:32.426Z"
     },
     {
       "filename": "intranet/games/jeux5.html",
@@ -577,7 +746,7 @@
       "type": "classique",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.252Z"
+      "lastModified": "2026-07-05T02:40:32.427Z"
     },
     {
       "filename": "intranet/games/jeux6.html",
@@ -590,7 +759,7 @@
       "type": "quiz",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.253Z"
+      "lastModified": "2026-07-05T02:40:32.427Z"
     },
     {
       "filename": "intranet/games/jeux7.html",
@@ -603,7 +772,7 @@
       "type": "arcade",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.253Z"
+      "lastModified": "2026-07-05T02:40:32.428Z"
     },
     {
       "filename": "intranet/games/jeux8.html",
@@ -616,7 +785,7 @@
       "type": "quiz",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.253Z"
+      "lastModified": "2026-07-05T02:40:32.428Z"
     },
     {
       "filename": "intranet/games/jeux9.html",
@@ -629,7 +798,7 @@
       "type": "classique",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.254Z"
+      "lastModified": "2026-07-05T02:40:32.428Z"
     },
     {
       "filename": "intranet/games/test.html",
@@ -642,7 +811,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/games",
-      "lastModified": "2026-07-05T02:40:04.254Z"
+      "lastModified": "2026-07-05T02:40:32.429Z"
     },
     {
       "filename": "intranet/gestes/gest1.html",
@@ -655,7 +824,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/gestes",
-      "lastModified": "2026-07-05T02:40:04.254Z"
+      "lastModified": "2026-07-05T02:40:32.429Z"
     },
     {
       "filename": "intranet/gestes/gest2.html",
@@ -668,7 +837,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/gestes",
-      "lastModified": "2026-07-05T02:40:04.255Z"
+      "lastModified": "2026-07-05T02:40:32.430Z"
     },
     {
       "filename": "intranet/gestes/gest3.html",
@@ -681,7 +850,7 @@
       "type": "histoire",
       "decouverte": "semaine",
       "directory": "intranet/gestes",
-      "lastModified": "2026-07-05T02:40:04.255Z"
+      "lastModified": "2026-07-05T02:40:32.430Z"
     },
     {
       "filename": "intranet/gestes/gest4.html",
@@ -694,7 +863,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/gestes",
-      "lastModified": "2026-07-05T02:40:04.255Z"
+      "lastModified": "2026-07-05T02:40:32.430Z"
     },
     {
       "filename": "intranet/histoirs/hist1.html",
@@ -707,7 +876,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2026-07-05T02:40:04.255Z"
+      "lastModified": "2026-07-05T02:40:32.430Z"
     },
     {
       "filename": "intranet/histoirs/hist10.html",
@@ -720,7 +889,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2026-07-05T02:40:04.256Z"
+      "lastModified": "2026-07-05T02:40:32.431Z"
     },
     {
       "filename": "intranet/histoirs/hist11.html",
@@ -733,7 +902,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2026-07-05T02:40:04.256Z"
+      "lastModified": "2026-07-05T02:40:32.431Z"
     },
     {
       "filename": "intranet/histoirs/hist12.html",
@@ -746,7 +915,7 @@
       "type": "html",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2026-07-05T02:40:04.256Z"
+      "lastModified": "2026-07-05T02:40:32.431Z"
     },
     {
       "filename": "intranet/histoirs/hist13.html",
@@ -759,7 +928,7 @@
       "type": "audio",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2026-07-05T02:40:04.256Z"
+      "lastModified": "2026-07-05T02:40:32.431Z"
     },
     {
       "filename": "intranet/histoirs/hist2.html",
@@ -772,7 +941,7 @@
       "type": "histoire",
       "decouverte": "semaine",
       "directory": "intranet/histoirs",
-      "lastModified": "2026-07-05T02:40:04.256Z"
+      "lastModified": "2026-07-05T02:40:32.431Z"
     },
     {
       "filename": "intranet/histoirs/hist3.html",
@@ -785,7 +954,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2026-07-05T02:40:04.256Z"
+      "lastModified": "2026-07-05T02:40:32.431Z"
     },
     {
       "filename": "intranet/histoirs/hist4.html",
@@ -798,7 +967,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2026-07-05T02:40:04.256Z"
+      "lastModified": "2026-07-05T02:40:32.431Z"
     },
     {
       "filename": "intranet/histoirs/hist5.html",
@@ -811,7 +980,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2026-07-05T02:40:04.256Z"
+      "lastModified": "2026-07-05T02:40:32.431Z"
     },
     {
       "filename": "intranet/histoirs/hist6.html",
@@ -824,7 +993,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2026-07-05T02:40:04.256Z"
+      "lastModified": "2026-07-05T02:40:32.431Z"
     },
     {
       "filename": "intranet/histoirs/hist7.html",
@@ -837,7 +1006,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2026-07-05T02:40:04.256Z"
+      "lastModified": "2026-07-05T02:40:32.431Z"
     },
     {
       "filename": "intranet/histoirs/hist8.html",
@@ -850,7 +1019,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2026-07-05T02:40:04.256Z"
+      "lastModified": "2026-07-05T02:40:32.431Z"
     },
     {
       "filename": "intranet/histoirs/hist9.html",
@@ -863,7 +1032,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/histoirs",
-      "lastModified": "2026-07-05T02:40:04.256Z"
+      "lastModified": "2026-07-05T02:40:32.431Z"
     },
     {
       "filename": "intranet/music/mus001.html",
@@ -876,7 +1045,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/music",
-      "lastModified": "2026-07-05T02:40:04.327Z"
+      "lastModified": "2026-07-05T02:40:32.502Z"
     },
     {
       "filename": "intranet/navigator.html",
@@ -889,7 +1058,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet",
-      "lastModified": "2026-07-05T02:40:04.327Z"
+      "lastModified": "2026-07-05T02:40:32.502Z"
     },
     {
       "filename": "intranet/ramadans2026/demo.html",
@@ -902,7 +1071,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.504Z"
     },
     {
       "filename": "intranet/ramadans2026/ram001.html",
@@ -915,7 +1084,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.504Z"
     },
     {
       "filename": "intranet/ramadans2026/ram002.html",
@@ -928,7 +1097,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.504Z"
     },
     {
       "filename": "intranet/ramadans2026/ram003.html",
@@ -941,7 +1110,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.504Z"
     },
     {
       "filename": "intranet/ramadans2026/ram004.html",
@@ -954,7 +1123,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.504Z"
     },
     {
       "filename": "intranet/ramadans2026/ram005.html",
@@ -967,7 +1136,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.504Z"
     },
     {
       "filename": "intranet/ramadans2026/ram006.html",
@@ -980,7 +1149,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.504Z"
     },
     {
       "filename": "intranet/ramadans2026/ram007.html",
@@ -993,7 +1162,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.504Z"
     },
     {
       "filename": "intranet/ramadans2026/ram008.html",
@@ -1006,7 +1175,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.504Z"
     },
     {
       "filename": "intranet/ramadans2026/ram009.html",
@@ -1019,7 +1188,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram010.html",
@@ -1032,7 +1201,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram011.html",
@@ -1045,7 +1214,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram012.html",
@@ -1058,7 +1227,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram013.html",
@@ -1071,7 +1240,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram014.html",
@@ -1084,7 +1253,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram015.html",
@@ -1097,7 +1266,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram016.html",
@@ -1110,7 +1279,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram017.html",
@@ -1123,7 +1292,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram018.html",
@@ -1136,7 +1305,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram019.html",
@@ -1149,7 +1318,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram020.html",
@@ -1162,7 +1331,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram021.html",
@@ -1175,7 +1344,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram022.html",
@@ -1188,7 +1357,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram023.html",
@@ -1201,7 +1370,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram024.html",
@@ -1214,7 +1383,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram025.html",
@@ -1227,7 +1396,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram026.html",
@@ -1240,7 +1409,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram027.html",
@@ -1253,7 +1422,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.330Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/ram028.html",
@@ -1266,7 +1435,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.331Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "intranet/ramadans2026/tombola-accept.html",
@@ -1279,7 +1448,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": "intranet/ramadans2026",
-      "lastModified": "2026-07-05T02:40:04.331Z"
+      "lastModified": "2026-07-05T02:40:32.505Z"
     },
     {
       "filename": "kamelSolution.html",
@@ -1292,7 +1461,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.391Z"
+      "lastModified": "2026-07-05T02:40:32.565Z"
     },
     {
       "filename": "kamle-solution_services.html",
@@ -1305,7 +1474,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.391Z"
+      "lastModified": "2026-07-05T02:40:32.565Z"
     },
     {
       "filename": "naval.html",
@@ -1318,7 +1487,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.391Z"
+      "lastModified": "2026-07-05T02:40:32.566Z"
     },
     {
       "filename": "netmonit.html",
@@ -1331,7 +1500,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.391Z"
+      "lastModified": "2026-07-05T02:40:32.566Z"
     },
     {
       "filename": "recrutement.html",
@@ -1344,7 +1513,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.392Z"
+      "lastModified": "2026-07-05T02:40:32.567Z"
     },
     {
       "filename": "test.html",
@@ -1357,7 +1526,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.392Z"
+      "lastModified": "2026-07-05T02:40:32.567Z"
     },
     {
       "filename": "zoho-domain-verification.html",
@@ -1370,7 +1539,7 @@
       "type": "histoire",
       "decouverte": "non",
       "directory": ".",
-      "lastModified": "2026-07-05T02:40:04.392Z"
+      "lastModified": "2026-07-05T02:40:32.567Z"
     }
   ]
 }

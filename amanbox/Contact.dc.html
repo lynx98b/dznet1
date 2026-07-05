@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#ffffff; font-family:'IBM Plex Sans',sans-serif; -webkit-font-smoothing:antialiased; }
+  * { box-sizing:border-box; }
+  a { text-decoration:none; color:inherit; }
+  input, textarea, select { font-family:inherit; }
+  input:focus, textarea:focus, select:focus { outline:none; border-color:#1250d4 !important; }
+</style>
+</helmet>
+
+<div style="color:#0b1f45;">
+
+  <nav style="position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px 48px; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); border-bottom:1px solid #eef1f6;">
+    <a href="Accueil.dc.html" style="display:flex; flex-direction:column; align-items:center; gap:3px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; letter-spacing:0.01em; color:#0b2a6b; line-height:1;"><img src="assets/amanbox-icon.png" alt="AmanBox" style="height:34px; width:auto; display:block;">AmanBox</a>
+    <div style="display:flex; gap:30px; align-items:center; font-size:15px; color:#3a4658; font-weight:500;">
+      <a href="Accueil.dc.html">Accueil</a>
+      <a href="Fonctionnalites.dc.html">Fonctionnalités</a>
+      <a href="Tarifs.dc.html">Tarifs</a>
+      <a href="Entreprises.dc.html">Entreprises</a>
+      <a href="FAQ.dc.html">FAQ</a>
+      <a href="Contact.dc.html" style="color:#1250d4; font-weight:600;">Contact</a>
+      <a href="Contact-ar.dc.html" style="border:1px solid #dbe3f0; padding:9px 15px; border-radius:999px; font-size:14px; color:#0b2a6b; font-weight:600;">العربية</a><a href="Tarifs.dc.html" style="background:#ff8a3d; color:#2a1200; padding:11px 22px; border-radius:999px; font-weight:700;">Précommander</a>
+    </div>
+  </nav>
+
+  <section style="max-width:1200px; margin:0 auto; padding:72px 48px 88px; display:grid; grid-template-columns:1fr 1.1fr; gap:64px;">
+    <!-- LEFT: info -->
+    <div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:#1250d4; margin-bottom:14px; font-weight:600;">Contact</div>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:44px; line-height:1.08; margin:0 0 18px; color:#0b1f45; font-weight:700;">Parlons de votre projet</h1>
+      <p style="font-size:18px; line-height:1.65; color:#4a586e; margin:0 0 40px;">Une question, une précommande ou un devis pour votre établissement ? Notre équipe vous répond rapidement.</p>
+
+      <div style="display:flex; flex-direction:column; gap:22px;">
+        <div style="display:flex; gap:16px; align-items:flex-start;"><span style="flex:none; width:46px; height:46px; border-radius:12px; background:#eaf1ff; color:#1250d4; display:flex; align-items:center; justify-content:center; font-size:22px;">✉️</span><div><div style="font-weight:600; color:#0b1f45; font-size:16px;">Email</div><div style="color:#5a6880; font-size:15px;">support@amanbox.dz</div></div></div>
+        <div style="display:flex; gap:16px; align-items:flex-start;"><span style="flex:none; width:46px; height:46px; border-radius:12px; background:#e6f6ee; color:#12885a; display:flex; align-items:center; justify-content:center; font-size:22px;">💬</span><div><div style="font-weight:600; color:#0b1f45; font-size:16px;">Chat &amp; réseaux</div><div style="color:#5a6880; font-size:15px;">Facebook · Instagram · YouTube</div></div></div>
+        <div style="display:flex; gap:16px; align-items:flex-start;"><span style="flex:none; width:46px; height:46px; border-radius:12px; background:#fff0e4; color:#c46a26; display:flex; align-items:center; justify-content:center; font-size:22px;">📍</span><div><div style="font-weight:600; color:#0b1f45; font-size:16px;">Algérie</div><div style="color:#5a6880; font-size:15px;">Conçu et assemblé localement</div></div></div>
+      </div>
+
+      <div style="margin-top:40px; background:#f6f9ff; border:1px solid #e6ebf3; border-radius:16px; padding:24px 26px;">
+        <div style="display:flex; gap:12px; align-items:center;"><span style="font-size:22px;">📄</span><div><div style="font-weight:600; color:#0b1f45; font-size:16px;">Téléchargez la brochure</div><a href="#" style="color:#1250d4; font-size:15px; font-weight:600;">Brochure grand public (PDF) →</a></div></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: form -->
+    <div style="border:1.5px solid #e6ebf3; border-radius:24px; padding:36px; box-shadow:0 24px 60px -30px rgba(18,80,212,0.35);">
+      <!-- tabs -->
+      <div style="display:flex; gap:8px; background:#f4f6fa; padding:6px; border-radius:12px; margin-bottom:28px;">
+        <div onClick="{{ selectParticulier }}" style="{{ tabParticulierStyle }}">Particulier</div>
+        <div onClick="{{ selectEntreprise }}" style="{{ tabEntrepriseStyle }}">Entreprise</div>
+      </div>
+
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center; padding:40px 20px;">
+          <div style="width:64px; height:64px; border-radius:50%; background:#e6f6ee; color:#12885a; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 20px;">✓</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-size:24px; margin:0 0 10px; color:#0b1f45;">Message envoyé !</h3>
+          <p style="color:#5a6880; font-size:16px; line-height:1.6; margin:0 0 24px;">Merci, notre équipe vous répondra très vite.</p>
+          <div onClick="{{ reset }}" style="display:inline-block; cursor:pointer; color:#1250d4; font-weight:600; font-size:15px;">Envoyer un autre message</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+            <div><label style="display:block; font-size:14px; font-weight:600; color:#334159; margin-bottom:8px;">Nom complet</label><input type="text" placeholder="Votre nom" style="width:100%; padding:13px 15px; border:1.5px solid #dbe3f0; border-radius:10px; font-size:15px; color:#0b1f45;"></input></div>
+            <div><label style="display:block; font-size:14px; font-weight:600; color:#334159; margin-bottom:8px;">Email</label><input type="email" placeholder="vous@exemple.dz" style="width:100%; padding:13px 15px; border:1.5px solid #dbe3f0; border-radius:10px; font-size:15px; color:#0b1f45;"></input></div>
+          </div>
+
+          <sc-if value="{{ isEntreprise }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+              <div><label style="display:block; font-size:14px; font-weight:600; color:#334159; margin-bottom:8px;">Établissement</label><input type="text" placeholder="Nom de l'entreprise" style="width:100%; padding:13px 15px; border:1.5px solid #dbe3f0; border-radius:10px; font-size:15px; color:#0b1f45;"></input></div>
+              <div><label style="display:block; font-size:14px; font-weight:600; color:#334159; margin-bottom:8px;">Nombre de sites / boîtiers</label><input type="text" placeholder="ex. 10" style="width:100%; padding:13px 15px; border:1.5px solid #dbe3f0; border-radius:10px; font-size:15px; color:#0b1f45;"></input></div>
+            </div>
+          </sc-if>
+
+          <div style="margin-bottom:16px;"><label style="display:block; font-size:14px; font-weight:600; color:#334159; margin-bottom:8px;">Sujet</label>
+            <select style="width:100%; padding:13px 15px; border:1.5px solid #dbe3f0; border-radius:10px; font-size:15px; color:#0b1f45; background:#fff;">
+              <option>{{ subjectDefault }}</option>
+              <option>Précommander AmanBox</option>
+              <option>Question sur les fonctionnalités</option>
+              <option>Support technique</option>
+              <option>Devis entreprise</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom:24px;"><label style="display:block; font-size:14px; font-weight:600; color:#334159; margin-bottom:8px;">Message</label><textarea rows="4" placeholder="Comment pouvons-nous vous aider ?" style="width:100%; padding:13px 15px; border:1.5px solid #dbe3f0; border-radius:10px; font-size:15px; color:#0b1f45; resize:vertical;"></textarea></div>
+
+          <div onClick="{{ send }}" style="cursor:pointer; text-align:center; background:#ff8a3d; color:#2a1200; padding:16px; border-radius:12px; font-weight:700; font-size:16px;">{{ submitLabel }}</div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <footer style="background:#081533; color:#c3d0e8; padding:56px 48px 36px;">
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px;">
+      <div><div style="display:flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; color:#fff; margin-bottom:14px;"><span style="width:40px; height:40px; border-radius:9px; background:#fff; display:inline-flex; align-items:center; justify-content:center; flex:none;"><img src="assets/amanbox-icon.png" alt="AmanBox" style="height:30px; width:auto; display:block;"></span>AmanBox</div><p style="font-size:14px; line-height:1.6; color:#8fa2c4; margin:0; max-width:280px;">L'Internet sûr, éducatif et respectueux pour toute la famille. Fièrement conçu en Algérie.</p></div>
+      <div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-weight:600; margin-bottom:14px; font-size:15px;">Produit</div><div style="display:flex; flex-direction:column; gap:10px; font-size:14px;"><a href="Fonctionnalites.dc.html">Fonctionnalités</a><a href="Tarifs.dc.html">Tarifs</a><a href="FAQ.dc.html">FAQ</a></div></div>
+      <div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-weight:600; margin-bottom:14px; font-size:15px;">Entreprise</div><div style="display:flex; flex-direction:column; gap:10px; font-size:14px;"><a href="Entreprises.dc.html">Pour les entreprises</a><a href="Contact.dc.html">Contact</a><a href="Contact.dc.html">Devis corporate</a></div></div>
+      <div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-weight:600; margin-bottom:14px; font-size:15px;">Contact</div><div style="display:flex; flex-direction:column; gap:10px; font-size:14px;"><span>support@amanbox.dz</span><span>Facebook · Instagram · YouTube</span></div></div>
+    </div>
+    <div style="max-width:1200px; margin:40px auto 0; padding-top:24px; border-top:1px solid #1c2c52; display:flex; justify-content:space-between; font-size:13px; color:#7788ab; flex-wrap:wrap; gap:10px;"><span>© 2026 AmanBox. Tous droits réservés.</span><span>Mentions légales · Confidentialité</span></div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 'particulier', sent: false };
+  renderVals() {
+    const isEnt = this.state.tab === 'entreprise';
+    const activeTab = "flex:1; text-align:center; padding:11px; border-radius:9px; cursor:pointer; font-weight:600; font-size:15px; background:#fff; color:#1250d4; box-shadow:0 2px 8px rgba(11,31,69,0.08);";
+    const idleTab = "flex:1; text-align:center; padding:11px; border-radius:9px; cursor:pointer; font-weight:600; font-size:15px; background:transparent; color:#7a869c;";
+    return {
+      isEntreprise: isEnt,
+      sent: this.state.sent,
+      notSent: !this.state.sent,
+      tabParticulierStyle: isEnt ? idleTab : activeTab,
+      tabEntrepriseStyle: isEnt ? activeTab : idleTab,
+      subjectDefault: isEnt ? "Devis entreprise" : "Choisir un sujet…",
+      submitLabel: isEnt ? "Demander un devis" : "Envoyer le message",
+      selectParticulier: () => this.setState({ tab: 'particulier' }),
+      selectEntreprise: () => this.setState({ tab: 'entreprise' }),
+      send: () => this.setState({ sent: true }),
+      reset: () => this.setState({ sent: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#ffffff; font-family:'IBM Plex Sans',sans-serif; -webkit-font-smoothing:antialiased; }
+  * { box-sizing:border-box; }
+  a { text-decoration:none; color:inherit; }
+</style>
+</helmet>
+
+<div style="color:#0b1f45;">
+
+  <nav style="position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px 48px; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); border-bottom:1px solid #eef1f6;">
+    <a href="Accueil.dc.html" style="display:flex; flex-direction:column; align-items:center; gap:3px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; letter-spacing:0.01em; color:#0b2a6b; line-height:1;"><img src="assets/amanbox-icon.png" alt="AmanBox" style="height:34px; width:auto; display:block;">AmanBox</a>
+    <div style="display:flex; gap:30px; align-items:center; font-size:15px; color:#3a4658; font-weight:500;">
+      <a href="Accueil.dc.html">Accueil</a>
+      <a href="Fonctionnalites.dc.html">Fonctionnalités</a>
+      <a href="Tarifs.dc.html">Tarifs</a>
+      <a href="Entreprises.dc.html" style="color:#1250d4; font-weight:600;">Entreprises</a>
+      <a href="FAQ.dc.html">FAQ</a>
+      <a href="Contact.dc.html">Contact</a>
+      <a href="Entreprises-ar.dc.html" style="border:1px solid #dbe3f0; padding:9px 15px; border-radius:999px; font-size:14px; color:#0b2a6b; font-weight:600;">العربية</a><a href="Contact.dc.html" style="background:#ff8a3d; color:#2a1200; padding:11px 22px; border-radius:999px; font-weight:700;">Devis</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section style="position:relative; overflow:hidden; background:linear-gradient(135deg,#0b1f45,#0d6e48); padding:80px 48px;">
+    <div style="position:absolute; top:-70px; right:8%; width:320px; height:320px; border-radius:50%; background:rgba(255,138,61,0.22);"></div>
+    <div style="position:relative; max-width:900px; margin:0 auto; text-align:center;">
+      <div style="display:inline-flex; background:rgba(255,255,255,0.14); color:#fff; padding:8px 18px; border-radius:999px; font-size:13px; font-weight:600; margin-bottom:20px; font-family:'Space Grotesk',sans-serif; letter-spacing:0.02em;">AMANBOX POUR LES ENTREPRISES</div>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:52px; line-height:1.05; margin:0 0 20px; color:#fff; font-weight:700;">Un Wi-Fi public sécurisé qui vous rapporte</h1>
+      <p style="font-size:20px; line-height:1.6; color:#dcf5e9; margin:0 auto 32px; max-width:640px;">Offrez à vos visiteurs un accès Internet propre et personnalisé, et transformez-le en source de revenus grâce à des espaces publicitaires ciblés localement.</p>
+      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+        <a href="Contact.dc.html" style="background:#ff8a3d; color:#2a1200; padding:16px 30px; border-radius:999px; font-weight:700; font-size:17px;">Demander un devis</a>
+        <a href="#pub" style="background:rgba(255,255,255,0.14); color:#fff; padding:16px 28px; border-radius:999px; font-weight:600; font-size:17px; border:1.5px solid rgba(255,255,255,0.4);">Voir les options pub</a>
+      </div>
+      <div style="margin-top:22px; font-size:14px; color:#bfe6d3;">Condition requise : une ligne fibre optique installée sur le site.</div>
+    </div>
+  </section>
+
+  <!-- PUBLIC CIBLE -->
+  <section style="max-width:1200px; margin:0 auto; padding:80px 48px 40px;">
+    <div style="text-align:center; max-width:620px; margin:0 auto 44px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:#12885a; margin-bottom:12px; font-weight:600;">Pour qui ?</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-size:36px; line-height:1.12; margin:0; color:#0b1f45; font-weight:700;">Partout où il y a une audience captive</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
+      <div style="border:1px solid #e6ebf3; border-radius:16px; padding:26px; text-align:center;"><div style="font-size:30px; margin-bottom:12px;">🏬</div><div style="font-weight:600; color:#0b1f45; font-size:16px;">Centres commerciaux</div></div>
+      <div style="border:1px solid #e6ebf3; border-radius:16px; padding:26px; text-align:center;"><div style="font-size:30px; margin-bottom:12px;">☕</div><div style="font-weight:600; color:#0b1f45; font-size:16px;">Cafés &amp; restaurants</div></div>
+      <div style="border:1px solid #e6ebf3; border-radius:16px; padding:26px; text-align:center;"><div style="font-size:30px; margin-bottom:12px;">🚉</div><div style="font-weight:600; color:#0b1f45; font-size:16px;">Gares &amp; aéroports</div></div>
+      <div style="border:1px solid #e6ebf3; border-radius:16px; padding:26px; text-align:center;"><div style="font-size:30px; margin-bottom:12px;">🏨</div><div style="font-weight:600; color:#0b1f45; font-size:16px;">Hôtels &amp; événements</div></div>
+    </div>
+  </section>
+
+  <!-- MODÈLE ÉCONOMIQUE -->
+  <section style="background:#f6f9ff; padding:80px 48px;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="text-align:center; max-width:620px; margin:0 auto 44px;">
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:#1250d4; margin-bottom:12px; font-weight:600;">Modèle économique</div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:36px; line-height:1.12; margin:0; color:#0b1f45; font-weight:700;">Flexible, à votre échelle</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:20px;">
+        <div style="background:#fff; border:1px solid #e6ebf3; border-radius:18px; padding:30px;"><div style="font-family:'Space Grotesk',sans-serif; color:#12885a; font-weight:600; font-size:14px; margin-bottom:8px;">Prix du boîtier</div><div style="font-size:20px; color:#0b1f45; font-weight:600; line-height:1.4;">Négociable selon le volume</div><div style="color:#5a6880; font-size:15px; margin-top:8px;">Ex. 5 000 DA/unité au-delà de 100 boîtiers.</div></div>
+        <div style="background:#fff; border:1px solid #e6ebf3; border-radius:18px; padding:30px;"><div style="font-family:'Space Grotesk',sans-serif; color:#12885a; font-weight:600; font-size:14px; margin-bottom:8px;">Abonnement mensuel</div><div style="font-size:20px; color:#0b1f45; font-weight:600; line-height:1.4;">À partir de 2 000 DA/mois/boîtier</div><div style="color:#5a6880; font-size:15px; margin-top:8px;">Selon les options activées.</div></div>
+        <div style="background:#fff; border:1px solid #e6ebf3; border-radius:18px; padding:30px;"><div style="font-family:'Space Grotesk',sans-serif; color:#12885a; font-weight:600; font-size:14px; margin-bottom:8px;">Personnalisation</div><div style="font-size:20px; color:#0b1f45; font-weight:600; line-height:1.4;">Votre marque, partout</div><div style="color:#5a6880; font-size:15px; margin-top:8px;">Logo sur le boîtier + page de connexion aux couleurs de la marque.</div></div>
+        <div style="background:#fff; border:1px solid #e6ebf3; border-radius:18px; padding:30px;"><div style="font-family:'Space Grotesk',sans-serif; color:#12885a; font-weight:600; font-size:14px; margin-bottom:8px;">Revenus publicitaires</div><div style="font-size:20px; color:#0b1f45; font-weight:600; line-height:1.4;">Monétisez votre Wi-Fi</div><div style="color:#5a6880; font-size:15px; margin-top:8px;">Vendez des espaces publicitaires sur le réseau.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPTIONS PUBLICITAIRES (table) -->
+  <section id="pub" style="max-width:1200px; margin:0 auto; padding:80px 48px;">
+    <div style="text-align:center; max-width:640px; margin:0 auto 44px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:#ff8a3d; margin-bottom:12px; font-weight:600;">Options publicitaires</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-size:36px; line-height:1.12; margin:0; color:#0b1f45; font-weight:700;">Des formats pour chaque objectif</h2>
+    </div>
+    <div style="border:1px solid #e6ebf3; border-radius:18px; overflow:hidden;">
+      <div style="display:grid; grid-template-columns:1.2fr 2fr 1fr 1.4fr; background:#0b1f45; color:#fff; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px;">
+        <div style="padding:18px 22px;">Format</div><div style="padding:18px 22px;">Description</div><div style="padding:18px 22px;">Prix indicatif</div><div style="padding:18px 22px;">Avantages</div>
+      </div>
+      <div style="display:grid; grid-template-columns:1.2fr 2fr 1fr 1.4fr; border-bottom:1px solid #eef1f6; font-size:15px; color:#334159;"><div style="padding:20px 22px; font-weight:600; color:#0b1f45;">Pop-ups</div><div style="padding:20px 22px; color:#5a6880;">Affichage toutes les 10 min, taille personnalisable</div><div style="padding:20px 22px; font-weight:600;">50 000 DA</div><div style="padding:20px 22px; color:#5a6880;">Visibilité élevée, ciblage local</div></div>
+      <div style="display:grid; grid-template-columns:1.2fr 2fr 1fr 1.4fr; border-bottom:1px solid #eef1f6; background:#fafbfe; font-size:15px; color:#334159;"><div style="padding:20px 22px; font-weight:600; color:#0b1f45;">Vidéos pré-connexion</div><div style="padding:20px 22px; color:#5a6880;">Vidéo de 15-30s avant l'accès au Wi-Fi</div><div style="padding:20px 22px; font-weight:600;">80 000 DA</div><div style="padding:20px 22px; color:#5a6880;">Impact fort, mémorable</div></div>
+      <div style="display:grid; grid-template-columns:1.2fr 2fr 1fr 1.4fr; border-bottom:1px solid #eef1f6; font-size:15px; color:#334159;"><div style="padding:20px 22px; font-weight:600; color:#0b1f45;">Bannières statiques</div><div style="padding:20px 22px; color:#5a6880;">En haut/bas de la page de connexion</div><div style="padding:20px 22px; font-weight:600;">30 000 DA</div><div style="padding:20px 22px; color:#5a6880;">Discrètes, non intrusives</div></div>
+      <div style="display:grid; grid-template-columns:1.2fr 2fr 1fr 1.4fr; border-bottom:1px solid #eef1f6; background:#fafbfe; font-size:15px; color:#334159;"><div style="padding:20px 22px; font-weight:600; color:#0b1f45;">Brochures numériques</div><div style="padding:20px 22px; color:#5a6880;">Lien vers un PDF promo (menu, offre…)</div><div style="padding:20px 22px; font-weight:600;">20 000 DA</div><div style="padding:20px 22px; color:#5a6880;">Idéal promotions locales</div></div>
+      <div style="display:grid; grid-template-columns:1.2fr 2fr 1fr 1.4fr; font-size:15px; color:#334159;"><div style="padding:20px 22px; font-weight:600; color:#0b1f45;">Réseau multi-sites</div><div style="padding:20px 22px; color:#5a6880;">Gestion centralisée pour 10+ boîtiers</div><div style="padding:20px 22px; font-weight:600;">Sur devis</div><div style="padding:20px 22px; color:#5a6880;">Économies d'échelle, reporting global</div></div>
+    </div>
+    <div style="text-align:center; color:#7a869c; font-size:13px; margin-top:14px;">Prix indicatifs par site et par mois. Devis personnalisé selon vos volumes.</div>
+  </section>
+
+  <!-- EXEMPLES CONCRETS -->
+  <section style="background:#0b1f45; padding:80px 48px;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="text-align:center; max-width:620px; margin:0 auto 44px;">
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:#7fb4ff; margin-bottom:12px; font-weight:600;">Exemples concrets</div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:36px; line-height:1.12; margin:0; color:#fff; font-weight:700;">Ce que ça peut rapporter</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+        <div style="background:#122a5c; border-radius:18px; padding:30px;"><div style="font-size:28px; margin-bottom:14px;">🏬</div><h3 style="font-family:'Space Grotesk',sans-serif; color:#fff; font-size:19px; margin:0 0 10px;">Centre commercial</h3><p style="color:#9fb6de; font-size:15px; line-height:1.6; margin:0 0 18px;">10 boîtiers dans les zones communes, pop-ups pour les magasins du centre.</p><div style="background:#0b1f45; border-radius:12px; padding:16px;"><div style="color:#57e0a3; font-family:'Space Grotesk',sans-serif; font-size:24px; font-weight:700;">~500 000 DA</div><div style="color:#9fb6de; font-size:13px;">de revenu estimé / mois</div></div></div>
+        <div style="background:#122a5c; border-radius:18px; padding:30px;"><div style="font-size:28px; margin-bottom:14px;">☕</div><h3 style="font-family:'Space Grotesk',sans-serif; color:#fff; font-size:19px; margin:0 0 10px;">Réseau de cafés</h3><p style="color:#9fb6de; font-size:15px; line-height:1.6; margin:0 0 18px;">1 boîtier par café avec vidéos pré-connexion et promotions.</p><div style="background:#0b1f45; border-radius:12px; padding:16px;"><div style="color:#57e0a3; font-family:'Space Grotesk',sans-serif; font-size:24px; font-weight:700;">~52 000 DA</div><div style="color:#9fb6de; font-size:13px;">abonnement + pubs / mois / boîtier</div></div></div>
+        <div style="background:#122a5c; border-radius:18px; padding:30px;"><div style="font-size:28px; margin-bottom:14px;">🚉</div><h3 style="font-family:'Space Grotesk',sans-serif; color:#fff; font-size:19px; margin:0 0 10px;">Gare routière</h3><p style="color:#9fb6de; font-size:15px; line-height:1.6; margin:0 0 18px;">Bannières avec horaires + pop-ups pour taxis et hôtels.</p><div style="background:#0b1f45; border-radius:12px; padding:16px;"><div style="color:#57e0a3; font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:700;">Partenariats locaux</div><div style="color:#9fb6de; font-size:13px;">transporteurs &amp; commerces</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARGUMENTS DE VENTE -->
+  <section style="max-width:1200px; margin:0 auto; padding:80px 48px;">
+    <div style="text-align:center; max-width:620px; margin:0 auto 44px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:#12885a; margin-bottom:12px; font-weight:600;">Pourquoi ça marche</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-size:36px; line-height:1.12; margin:0; color:#0b1f45; font-weight:700;">Cinq arguments imparables</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;">
+      <div style="background:#f6f9ff; border-radius:16px; padding:26px;"><div style="font-weight:600; color:#0b1f45; font-size:17px; margin-bottom:8px;">👀 Audience captive</div><div style="color:#5a6880; font-size:15px; line-height:1.55;">Les utilisateurs voient les pubs pour accéder au Wi-Fi.</div></div>
+      <div style="background:#f6f9ff; border-radius:16px; padding:26px;"><div style="font-weight:600; color:#0b1f45; font-size:17px; margin-bottom:8px;">📍 Ciblage local</div><div style="color:#5a6880; font-size:15px; line-height:1.55;">Des promotions géolocalisées, au bon endroit.</div></div>
+      <div style="background:#f6f9ff; border-radius:16px; padding:26px;"><div style="font-weight:600; color:#0b1f45; font-size:17px; margin-bottom:8px;">⚡ Flexibilité</div><div style="color:#5a6880; font-size:15px; line-height:1.55;">Changez les publicités en temps réel.</div></div>
+      <div style="background:#f6f9ff; border-radius:16px; padding:26px;"><div style="font-weight:600; color:#0b1f45; font-size:17px; margin-bottom:8px;">✨ Image moderne</div><div style="color:#5a6880; font-size:15px; line-height:1.55;">Un Wi-Fi sécurisé et personnalisé à votre marque.</div></div>
+      <div style="background:#f6f9ff; border-radius:16px; padding:26px;"><div style="font-weight:600; color:#0b1f45; font-size:17px; margin-bottom:8px;">💰 Revenus en plus</div><div style="color:#5a6880; font-size:15px; line-height:1.55;">Monétisez un service jusqu'ici gratuit.</div></div>
+      <div style="background:linear-gradient(135deg,#1250d4,#18a06b); border-radius:16px; padding:26px; color:#fff; display:flex; flex-direction:column; justify-content:center;"><div style="font-weight:700; font-size:17px; margin-bottom:6px; font-family:'Space Grotesk',sans-serif;">1 mois offert</div><div style="font-size:15px; line-height:1.5; color:#eaf3ff;">Testez l'impact sans engagement.</div></div>
+    </div>
+  </section>
+
+  <!-- FAQ CORPORATE -->
+  <section style="background:#f6f9ff; padding:80px 48px;">
+    <div style="max-width:820px; margin:0 auto;">
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-size:34px; margin:0 0 32px; color:#0b1f45; font-weight:700; text-align:center;">FAQ entreprises</h2>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div style="background:#fff; border:1px solid #e6ebf3; border-radius:14px; padding:24px 28px;"><div style="font-weight:600; color:#0b1f45; font-size:17px; margin-bottom:8px;">Combien coûte l'installation pour 50 boîtiers ?</div><div style="color:#5a6880; font-size:15px; line-height:1.6;">Le tarif est dégressif selon le volume. Contactez-nous pour un devis précis, incluant boîtiers, abonnement et installation.</div></div>
+        <div style="background:#fff; border:1px solid #e6ebf3; border-radius:14px; padding:24px 28px;"><div style="font-weight:600; color:#0b1f45; font-size:17px; margin-bottom:8px;">Pouvons-nous choisir où s'affichent les pubs ?</div><div style="color:#5a6880; font-size:15px; line-height:1.6;">Oui, vous contrôlez les formats, les emplacements et les campagnes depuis une interface d'administration.</div></div>
+        <div style="background:#fff; border:1px solid #e6ebf3; border-radius:14px; padding:24px 28px;"><div style="font-weight:600; color:#0b1f45; font-size:17px; margin-bottom:8px;">Comment mesurer l'efficacité des campagnes ?</div><div style="color:#5a6880; font-size:15px; line-height:1.6;">Des statistiques détaillées (impressions, connexions, portée) sont fournies pour chaque site et globalement.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="max-width:1000px; margin:0 auto; padding:88px 48px; text-align:center;">
+    <h2 style="font-family:'Space Grotesk',sans-serif; font-size:42px; line-height:1.08; margin:0 0 18px; color:#0b1f45; font-weight:700;">Parlons de votre projet</h2>
+    <p style="font-size:19px; line-height:1.6; color:#4a586e; margin:0 auto 34px; max-width:560px;">Recevez un devis personnalisé et profitez d'un mois d'essai gratuit pour mesurer l'impact sur vos revenus.</p>
+    <a href="Contact.dc.html" style="background:#ff8a3d; color:#2a1200; padding:16px 34px; border-radius:999px; font-weight:700; font-size:17px;">Demander un devis corporate →</a>
+  </section>
+
+  <footer style="background:#081533; color:#c3d0e8; padding:56px 48px 36px;">
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px;">
+      <div><div style="display:flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; color:#fff; margin-bottom:14px;"><span style="width:40px; height:40px; border-radius:9px; background:#fff; display:inline-flex; align-items:center; justify-content:center; flex:none;"><img src="assets/amanbox-icon.png" alt="AmanBox" style="height:30px; width:auto; display:block;"></span>AmanBox</div><p style="font-size:14px; line-height:1.6; color:#8fa2c4; margin:0; max-width:280px;">L'Internet sûr, éducatif et respectueux pour toute la famille. Fièrement conçu en Algérie.</p></div>
+      <div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-weight:600; margin-bottom:14px; font-size:15px;">Produit</div><div style="display:flex; flex-direction:column; gap:10px; font-size:14px;"><a href="Fonctionnalites.dc.html">Fonctionnalités</a><a href="Tarifs.dc.html">Tarifs</a><a href="FAQ.dc.html">FAQ</a></div></div>
+      <div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-weight:600; margin-bottom:14px; font-size:15px;">Entreprise</div><div style="display:flex; flex-direction:column; gap:10px; font-size:14px;"><a href="Entreprises.dc.html">Pour les entreprises</a><a href="Contact.dc.html">Contact</a><a href="Contact.dc.html">Devis corporate</a></div></div>
+      <div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-weight:600; margin-bottom:14px; font-size:15px;">Contact</div><div style="display:flex; flex-direction:column; gap:10px; font-size:14px;"><span>support@amanbox.dz</span><span>Facebook · Instagram · YouTube</span></div></div>
+    </div>
+    <div style="max-width:1200px; margin:40px auto 0; padding-top:24px; border-top:1px solid #1c2c52; display:flex; justify-content:space-between; font-size:13px; color:#7788ab; flex-wrap:wrap; gap:10px;"><span>© 2026 AmanBox. Tous droits réservés.</span><span>Mentions légales · Confidentialité</span></div>
+  </footer>
+
+</div>
+</x-dc>
+</body>
+</html>

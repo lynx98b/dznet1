@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Cairo:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#ffffff; font-family:'Cairo',sans-serif; -webkit-font-smoothing:antialiased; }
+  * { box-sizing:border-box; }
+  a { text-decoration:none; color:inherit; }
+</style>
+</helmet>
+
+<div dir="rtl" style="color:#0b1f45;">
+
+  <!-- NAV -->
+  <nav style="position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px 48px; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); border-bottom:1px solid #eef1f6;">
+    <a href="Accueil-ar.dc.html" style="display:flex; flex-direction:column; align-items:center; gap:3px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; color:#0b2a6b; line-height:1;">
+      <img src="assets/amanbox-icon.png" alt="AmanBox" style="height:34px; width:auto; display:block;">
+      AmanBox
+    </a>
+    <div style="display:flex; gap:28px; align-items:center; font-size:16px; color:#3a4658; font-weight:500;">
+      <a href="Accueil-ar.dc.html" style="color:#1250d4; font-weight:700;">الرئيسية</a>
+      <a href="Fonctionnalites-ar.dc.html">المميزات</a>
+      <a href="Tarifs-ar.dc.html">الأسعار</a>
+      <a href="Entreprises-ar.dc.html">للشركات</a>
+      <a href="FAQ-ar.dc.html">الأسئلة الشائعة</a>
+      <a href="Contact-ar.dc.html">اتصل بنا</a>
+      <a href="Accueil.dc.html" style="border:1px solid #dbe3f0; padding:9px 15px; border-radius:999px; font-size:14px; color:#0b2a6b; font-weight:600; font-family:'Space Grotesk',sans-serif;">Français</a>
+      <a href="Tarifs-ar.dc.html" style="background:#ff8a3d; color:#2a1200; padding:11px 22px; border-radius:999px; font-weight:700;">احجز الآن</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section style="position:relative; overflow:hidden; background:linear-gradient(135deg,#1250d4 0%,#1568c9 45%,#18a06b 100%); padding:80px 48px 96px;">
+    <div style="position:absolute; top:-80px; left:-60px; width:380px; height:380px; border-radius:50%; background:rgba(255,138,61,0.30);"></div>
+    <div style="position:absolute; bottom:-120px; right:35%; width:300px; height:300px; border-radius:50%; background:rgba(255,255,255,0.10);"></div>
+    <div style="position:relative; max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:center;">
+      <div>
+        <div style="display:inline-flex; align-items:center; gap:8px; background:#ff8a3d; color:#3a1600; padding:9px 18px; border-radius:999px; font-size:15px; font-weight:700; margin-bottom:26px;">🔥 عرض الإطلاق — 6 990 دج</div>
+        <h1 style="font-family:'Tajawal',sans-serif; font-size:56px; line-height:1.15; margin:0 0 22px; color:#fff; font-weight:800;">إنترنت آمن وتعليمي وهادئ لكل أفراد العائلة</h1>
+        <p style="font-size:20px; line-height:1.7; color:#eaf3ff; margin:0 0 34px; max-width:540px;">تحكّم في وقت الشاشة، وصفِّ المحتوى، وشجّع التعلّم. أمان بوكس هي حاجز الحماية لبيتك الرقمي.</p>
+        <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+          <a href="#produit" style="background:#ff8a3d; color:#2a1200; padding:16px 30px; border-radius:999px; font-weight:700; font-size:17px;">اكتشف أمان بوكس</a>
+          <a href="Tarifs-ar.dc.html" style="background:rgba(255,255,255,0.14); color:#fff; padding:16px 28px; border-radius:999px; font-weight:600; font-size:17px; border:1.5px solid rgba(255,255,255,0.4);">احجز الآن ←</a>
+        </div>
+        <div style="display:flex; gap:32px; margin-top:40px;">
+          <div><div style="font-family:'Tajawal',sans-serif; font-size:26px; font-weight:700; color:#fff;">6 990<span style="font-size:15px; opacity:0.8;"> دج</span></div><div style="font-size:14px; color:#d3e6ff;">الجهاز، شراء لمرة واحدة</div></div>
+          <div style="width:1px; background:rgba(255,255,255,0.3);"></div>
+          <div><div style="font-family:'Tajawal',sans-serif; font-size:26px; font-weight:700; color:#fff;">500<span style="font-size:15px; opacity:0.8;"> دج/شهر</span></div><div style="font-size:14px; color:#d3e6ff;">الاشتراك</div></div>
+        </div>
+      </div>
+      <div style="border-radius:22px; background:repeating-linear-gradient(45deg,rgba(255,255,255,0.16),rgba(255,255,255,0.16) 12px,rgba(255,255,255,0.06) 12px,rgba(255,255,255,0.06) 24px); height:400px; display:flex; align-items:center; justify-content:center; border:1.5px solid rgba(255,255,255,0.32);">
+        <span style="font-family:'Cairo',sans-serif; font-size:14px; color:#fff; background:rgba(0,0,0,0.28); padding:8px 14px; border-radius:8px;">[ صورة · عائلة مطمئنة مع أمان بوكس ]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EN BREF -->
+  <section style="max-width:1200px; margin:0 auto; padding:72px 48px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+    <div style="background:#eaf1ff; border-radius:20px; padding:32px; border-bottom:5px solid #1250d4;">
+      <div style="font-size:34px; margin-bottom:14px;">✅</div>
+      <div style="font-family:'Tajawal',sans-serif; font-size:22px; font-weight:700; color:#0f2f6b; margin-bottom:8px;">رقابة أبوية كاملة</div>
+      <div style="color:#4a5878; font-size:16px; line-height:1.7;">حدّد وقت الشاشة والمواقع المتاحة، لكل ملفٍّ على حدة.</div>
+    </div>
+    <div style="background:#e6f6ee; border-radius:20px; padding:32px; border-bottom:5px solid #18a06b;">
+      <div style="font-size:34px; margin-bottom:14px;">📚</div>
+      <div style="font-family:'Tajawal',sans-serif; font-size:22px; font-weight:700; color:#0f5a3a; margin-bottom:8px;">مكتبة تعليمية</div>
+      <div style="color:#456b58; font-size:16px; line-height:1.7;">كتب من الملكية العامة، مجانية ومتاحة دون إنترنت.</div>
+    </div>
+    <div style="background:#fff0e4; border-radius:20px; padding:32px; border-bottom:5px solid #ff8a3d;">
+      <div style="font-size:34px; margin-bottom:14px;">🕋</div>
+      <div style="font-family:'Tajawal',sans-serif; font-size:22px; font-weight:700; color:#8a3d0f; margin-bottom:8px;">احترام أوقات الصلاة</div>
+      <div style="color:#7a5238; font-size:16px; line-height:1.7;">قطع تلقائي للإنترنت 20 دقيقة قبل كل صلاة.</div>
+    </div>
+  </section>
+
+  <!-- QU'EST-CE -->
+  <section id="produit" style="background:#f6f9ff; padding:88px 48px;">
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;">
+      <div style="border-radius:18px; background:repeating-linear-gradient(45deg,#dce7fb,#dce7fb 12px,#e8f0fd 12px,#e8f0fd 24px); height:360px; display:flex; align-items:center; justify-content:center; border:1px solid #cfdcf6;">
+        <span style="font-family:'Cairo',sans-serif; font-size:14px; color:#5f77aa; background:#fff; padding:8px 14px; border-radius:6px;">[ رسم · الموجّه ← أمان بوكس ← الأجهزة ]</span>
+      </div>
+      <div>
+        <div style="font-family:'Tajawal',sans-serif; font-size:15px; color:#1250d4; margin-bottom:12px; font-weight:700;">ما هي أمان بوكس؟</div>
+        <h2 style="font-family:'Tajawal',sans-serif; font-size:38px; line-height:1.25; margin:0 0 18px; color:#0b1f45; font-weight:800;">جهاز ذكي يحمي البيت بأكمله</h2>
+        <p style="font-size:18px; line-height:1.8; color:#4a586e; margin:0 0 24px;">تتّصل أمان بوكس بموجّه الإنترنت وتنشئ شبكات واي-فاي مخصّصة لكل فرد من العائلة. تصفّي المحتوى، وتحدّد وقت الشاشة، وتشجّع التعلّم — وكل ذلك يُدار من تطبيق على الهاتف.</p>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div style="display:flex; gap:12px; align-items:center;"><span style="width:26px;height:26px;border-radius:7px;background:#e3f5ec;color:#12885a;display:flex;align-items:center;justify-content:center;font-size:14px;">✓</span><span style="color:#334159; font-size:16px;">شبكة واي-فاي لكل ملف، مناسبة للعمر</span></div>
+          <div style="display:flex; gap:12px; align-items:center;"><span style="width:26px;height:26px;border-radius:7px;background:#e3f5ec;color:#12885a;display:flex;align-items:center;justify-content:center;font-size:14px;">✓</span><span style="color:#334159; font-size:16px;">تصفية ذكية يحدّثها المجتمع باستمرار</span></div>
+          <div style="display:flex; gap:12px; align-items:center;"><span style="width:26px;height:26px;border-radius:7px;background:#e3f5ec;color:#12885a;display:flex;align-items:center;justify-content:center;font-size:14px;">✓</span><span style="color:#334159; font-size:16px;">تركيب بسيط بين الموجّه والأجهزة</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POURQUOI -->
+  <section style="max-width:1200px; margin:0 auto; padding:88px 48px;">
+    <div style="text-align:center; max-width:640px; margin:0 auto 48px;">
+      <div style="font-family:'Tajawal',sans-serif; font-size:15px; color:#1250d4; margin-bottom:12px; font-weight:700;">لماذا أمان بوكس</div>
+      <h2 style="font-family:'Tajawal',sans-serif; font-size:38px; line-height:1.25; margin:0; color:#0b1f45; font-weight:800;">مشاكل حقيقية، حلول ملموسة</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:20px;">
+      <div style="display:flex; gap:18px; align-items:flex-start; background:#fff; padding:26px; border-radius:16px; border:1px solid #e6ebf3;"><span style="flex:none; width:40px;height:40px;border-radius:10px;background:#fdecec;color:#d24b4b;display:flex;align-items:center;justify-content:center;font-size:18px;">✕</span><div><b style="color:#0b1f45; font-size:18px;">الإدمان الرقمي</b><div style="color:#5a6880; font-size:16px; margin-top:6px; line-height:1.7;">← إدارة فردية حسب الملف والعمر والحاجة.</div></div></div>
+      <div style="display:flex; gap:18px; align-items:flex-start; background:#fff; padding:26px; border-radius:16px; border:1px solid #e6ebf3;"><span style="flex:none; width:40px;height:40px;border-radius:10px;background:#fdecec;color:#d24b4b;display:flex;align-items:center;justify-content:center;font-size:18px;">✕</span><div><b style="color:#0b1f45; font-size:18px;">محتوى غير لائق</b><div style="color:#5a6880; font-size:16px; margin-top:6px; line-height:1.7;">← تصفية ذكية + قاعدة مجتمعية للإبلاغ.</div></div></div>
+      <div style="display:flex; gap:18px; align-items:flex-start; background:#fff; padding:26px; border-radius:16px; border:1px solid #e6ebf3;"><span style="flex:none; width:40px;height:40px;border-radius:10px;background:#fdecec;color:#d24b4b;display:flex;align-items:center;justify-content:center;font-size:18px;">✕</span><div><b style="color:#0b1f45; font-size:18px;">ضعف التركيز</b><div style="color:#5a6880; font-size:16px; margin-top:6px; line-height:1.7;">← وضع الدراسة وفترات زمنية مخصّصة.</div></div></div>
+      <div style="display:flex; gap:18px; align-items:flex-start; background:#fff; padding:26px; border-radius:16px; border:1px solid #e6ebf3;"><span style="flex:none; width:40px;height:40px;border-radius:10px;background:#fdecec;color:#d24b4b;display:flex;align-items:center;justify-content:center;font-size:18px;">✕</span><div><b style="color:#0b1f45; font-size:18px;">احترام الصلاة</b><div style="color:#5a6880; font-size:16px; margin-top:6px; line-height:1.7;">← قطع تلقائي + نافذة تأكيد.</div></div></div>
+    </div>
+  </section>
+
+  <!-- FONCTIONNALITÉS -->
+  <section style="background:#0b1f45; padding:88px 48px;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:44px; flex-wrap:wrap; gap:20px;">
+        <div>
+          <div style="font-family:'Tajawal',sans-serif; font-size:15px; color:#7fb4ff; margin-bottom:12px; font-weight:700;">المميزات الرئيسية</div>
+          <h2 style="font-family:'Tajawal',sans-serif; font-size:38px; line-height:1.25; margin:0; color:#fff; font-weight:800; max-width:540px;">كل ما يلزم لبيتٍ متّصل ومطمئن</h2>
+        </div>
+        <a href="Fonctionnalites-ar.dc.html" style="background:#ff8a3d; color:#2a1200; padding:14px 26px; border-radius:999px; font-weight:700; font-size:16px;">عرض كل المميزات ←</a>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+        <div style="background:#122a5c; border-radius:16px; padding:28px;"><div style="font-size:26px; margin-bottom:14px;">📶</div><div style="font-family:'Tajawal',sans-serif; color:#fff; font-size:19px; font-weight:700; margin-bottom:8px;">شبكات واي-فاي مخصّصة</div><div style="color:#9fb6de; font-size:15px; line-height:1.7;">شبكة لكل فرد مع قيود مناسبة للعمر.</div></div>
+        <div style="background:#122a5c; border-radius:16px; padding:28px;"><div style="font-size:26px; margin-bottom:14px;">⏱️</div><div style="font-family:'Tajawal',sans-serif; color:#fff; font-size:19px; font-weight:700; margin-bottom:8px;">وقت الشاشة</div><div style="color:#9fb6de; font-size:15px; line-height:1.7;">حصة يومية، وتمديد عبر اختبار تعليمي (3 كحد أقصى/يوم).</div></div>
+        <div style="background:#122a5c; border-radius:16px; padding:28px;"><div style="font-size:26px; margin-bottom:14px;">📅</div><div style="font-family:'Tajawal',sans-serif; color:#fff; font-size:19px; font-weight:700; margin-bottom:8px;">الفترات الزمنية</div><div style="color:#9fb6de; font-size:15px; line-height:1.7;">ساعات الدراسة، قطع ليلي، ووضع العطلة.</div></div>
+        <div style="background:#122a5c; border-radius:16px; padding:28px;"><div style="font-size:26px; margin-bottom:14px;">🛡️</div><div style="font-family:'Tajawal',sans-serif; color:#fff; font-size:19px; font-weight:700; margin-bottom:8px;">تصفية ذكية</div><div style="color:#9fb6de; font-size:15px; line-height:1.7;">حجب المحتوى الصادم + قائمة بيضاء للدراسة.</div></div>
+        <div style="background:#122a5c; border-radius:16px; padding:28px;"><div style="font-size:26px; margin-bottom:14px;">📖</div><div style="font-family:'Tajawal',sans-serif; color:#fff; font-size:19px; font-weight:700; margin-bottom:8px;">مكتبة داخلية</div><div style="color:#9fb6de; font-size:15px; line-height:1.7;">كتب الملكية العامة، متاحة دون إنترنت.</div></div>
+        <div style="background:#122a5c; border-radius:16px; padding:28px;"><div style="font-size:26px; margin-bottom:14px;">📱</div><div style="font-family:'Tajawal',sans-serif; color:#fff; font-size:19px; font-weight:700; margin-bottom:8px;">تطبيق الآباء</div><div style="color:#9fb6de; font-size:15px; line-height:1.7;">لوحة تحكم، إشعارات وإعدادات فورية.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TARIFS -->
+  <section style="max-width:1200px; margin:0 auto; padding:88px 48px;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;">
+      <div>
+        <div style="font-family:'Tajawal',sans-serif; font-size:15px; color:#1250d4; margin-bottom:12px; font-weight:700;">العرض الكلاسيكي</div>
+        <h2 style="font-family:'Tajawal',sans-serif; font-size:38px; line-height:1.25; margin:0 0 18px; color:#0b1f45; font-weight:800;">سعرٌ بسيط، كل شيء مشمول</h2>
+        <p style="font-size:18px; line-height:1.8; color:#4a586e; margin:0 0 24px;">مثالي للأفراد والمدارس. الجهاز بشراء لمرة واحدة، ثم اشتراك شهري يغطّي كل المميزات والتحديثات.</p>
+        <a href="Tarifs-ar.dc.html" style="display:inline-block; background:#1250d4; color:#fff; padding:15px 28px; border-radius:999px; font-weight:600; font-size:16px;">عرض الأسعار بالتفصيل ←</a>
+      </div>
+      <div style="border:1.5px solid #e6ebf3; border-radius:22px; padding:36px; box-shadow:0 20px 50px -24px rgba(18,80,212,0.35);">
+        <div style="display:inline-flex; background:#fff0e4; color:#8a3d0f; padding:6px 14px; border-radius:999px; font-size:14px; font-weight:700; margin-bottom:20px;">عرض الإطلاق</div>
+        <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:6px;"><span style="font-family:'Tajawal',sans-serif; font-size:44px; font-weight:800; color:#0b1f45;">6 990 دج</span><span style="color:#7a869c; font-size:16px;">/ للجهاز</span></div>
+        <div style="color:#4a586e; font-size:16px; margin-bottom:24px;">ثم <b style="color:#0b1f45;">500 دج/شهريًا</b> اشتراك</div>
+        <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:28px;">
+          <div style="display:flex; gap:10px; align-items:center; color:#334159; font-size:15px;"><span style="color:#12885a;">✓</span> شبكات مخصّصة + تحديد وقت الشاشة</div>
+          <div style="display:flex; gap:10px; align-items:center; color:#334159; font-size:15px;"><span style="color:#12885a;">✓</span> قطع الصلاة ووضع العطلة</div>
+          <div style="display:flex; gap:10px; align-items:center; color:#334159; font-size:15px;"><span style="color:#12885a;">✓</span> تصفية + مكتبة داخلية</div>
+          <div style="display:flex; gap:10px; align-items:center; color:#334159; font-size:15px;"><span style="color:#12885a;">✓</span> تطبيق الهاتف + تحديثات (سنة واحدة)</div>
+        </div>
+        <a href="Tarifs-ar.dc.html" style="display:block; text-align:center; background:#ff8a3d; color:#2a1200; padding:15px; border-radius:12px; font-weight:700; font-size:16px;">احجز الآن</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORPORATE TEASER -->
+  <section style="background:linear-gradient(135deg,#12885a,#0d6e48); padding:72px 48px;">
+    <div style="max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap;">
+      <div style="max-width:640px;">
+        <div style="font-family:'Tajawal',sans-serif; font-size:15px; color:#bff0d8; margin-bottom:12px; font-weight:700;">أمان بوكس للشركات</div>
+        <h2 style="font-family:'Tajawal',sans-serif; font-size:34px; line-height:1.3; margin:0 0 14px; color:#fff; font-weight:800;">واي-فاي عام آمن + عائدات إعلانية</h2>
+        <p style="font-size:18px; line-height:1.7; color:#dcf5e9; margin:0;">مراكز تجارية، مقاهٍ، محطات، فنادق: قدّم واي-فاي نظيفًا واربح منه عبر مساحات إعلانية موجّهة محليًا.</p>
+      </div>
+      <a href="Entreprises-ar.dc.html" style="flex:none; background:#fff; color:#0d6e48; padding:16px 30px; border-radius:999px; font-weight:700; font-size:17px;">اطلب عرض سعر للشركات ←</a>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section style="max-width:1000px; margin:0 auto; padding:96px 48px; text-align:center;">
+    <h2 style="font-family:'Tajawal',sans-serif; font-size:44px; line-height:1.2; margin:0 0 18px; color:#0b1f45; font-weight:800;">احمِ بيتك من اليوم</h2>
+    <p style="font-size:19px; line-height:1.7; color:#4a586e; margin:0 auto 34px; max-width:580px;">احجز أمان بوكس بسعر الإطلاق وانضم إلى العائلات التي استعادت التحكّم في إنترنتها.</p>
+    <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <a href="Tarifs-ar.dc.html" style="background:#ff8a3d; color:#2a1200; padding:16px 32px; border-radius:999px; font-weight:700; font-size:17px;">احجز بـ 6 990 دج</a>
+      <a href="Contact-ar.dc.html" style="background:#fff; color:#0b2a6b; padding:16px 30px; border-radius:999px; font-weight:600; font-size:17px; border:1.5px solid #cfdcf6;">اتصل بنا</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#081533; color:#c3d0e8; padding:56px 48px 36px;">
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; color:#fff; margin-bottom:14px;"><span style="width:40px; height:40px; border-radius:9px; background:#fff; display:inline-flex; align-items:center; justify-content:center; flex:none;"><img src="assets/amanbox-icon.png" alt="AmanBox" style="height:30px; width:auto; display:block;"></span>AmanBox</div>
+        <p style="font-size:15px; line-height:1.7; color:#8fa2c4; margin:0; max-width:300px;">إنترنت آمن وتعليمي ومحترم لكل العائلة. صُنع بفخر في الجزائر.</p>
+      </div>
+      <div>
+        <div style="font-family:'Tajawal',sans-serif; color:#fff; font-weight:700; margin-bottom:14px; font-size:16px;">المنتج</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:15px;"><a href="Fonctionnalites-ar.dc.html">المميزات</a><a href="Tarifs-ar.dc.html">الأسعار</a><a href="FAQ-ar.dc.html">الأسئلة الشائعة</a></div>
+      </div>
+      <div>
+        <div style="font-family:'Tajawal',sans-serif; color:#fff; font-weight:700; margin-bottom:14px; font-size:16px;">الشركة</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:15px;"><a href="Entreprises-ar.dc.html">للشركات</a><a href="Contact-ar.dc.html">اتصل بنا</a><a href="Contact-ar.dc.html">عرض سعر</a></div>
+      </div>
+      <div>
+        <div style="font-family:'Tajawal',sans-serif; color:#fff; font-weight:700; margin-bottom:14px; font-size:16px;">التواصل</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:15px;"><span dir="ltr" style="text-align:right;">support@amanbox.dz</span><span>فيسبوك · إنستغرام · يوتيوب</span></div>
+      </div>
+    </div>
+    <div style="max-width:1200px; margin:40px auto 0; padding-top:24px; border-top:1px solid #1c2c52; display:flex; justify-content:space-between; font-size:14px; color:#7788ab; flex-wrap:wrap; gap:10px;">
+      <span>© 2026 أمان بوكس. جميع الحقوق محفوظة.</span>
+      <span>الشروط القانونية · الخصوصية</span>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+</body>
+</html>

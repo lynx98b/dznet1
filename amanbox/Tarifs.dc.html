@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#ffffff; font-family:'IBM Plex Sans',sans-serif; -webkit-font-smoothing:antialiased; }
+  * { box-sizing:border-box; }
+  a { text-decoration:none; color:inherit; }
+</style>
+</helmet>
+
+<div style="color:#0b1f45;">
+
+  <nav style="position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px 48px; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); border-bottom:1px solid #eef1f6;">
+    <a href="Accueil.dc.html" style="display:flex; flex-direction:column; align-items:center; gap:3px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; letter-spacing:0.01em; color:#0b2a6b; line-height:1;"><img src="assets/amanbox-icon.png" alt="AmanBox" style="height:34px; width:auto; display:block;">AmanBox</a>
+    <div style="display:flex; gap:30px; align-items:center; font-size:15px; color:#3a4658; font-weight:500;">
+      <a href="Accueil.dc.html">Accueil</a>
+      <a href="Fonctionnalites.dc.html">Fonctionnalités</a>
+      <a href="Tarifs.dc.html" style="color:#1250d4; font-weight:600;">Tarifs</a>
+      <a href="Entreprises.dc.html">Entreprises</a>
+      <a href="FAQ.dc.html">FAQ</a>
+      <a href="Contact.dc.html">Contact</a>
+      <a href="Tarifs-ar.dc.html" style="border:1px solid #dbe3f0; padding:9px 15px; border-radius:999px; font-size:14px; color:#0b2a6b; font-weight:600;">العربية</a><a href="Tarifs.dc.html" style="background:#ff8a3d; color:#2a1200; padding:11px 22px; border-radius:999px; font-weight:700;">Précommander</a>
+    </div>
+  </nav>
+
+  <section style="background:#f6f9ff; padding:72px 48px 64px; border-bottom:1px solid #eef1f6; text-align:center;">
+    <div style="max-width:760px; margin:0 auto;">
+      <div style="display:inline-flex; background:#fff0e4; color:#8a3d0f; padding:7px 16px; border-radius:999px; font-size:13px; font-weight:700; margin-bottom:16px;">🔥 Offre de lancement — durée limitée</div>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-size:48px; line-height:1.06; margin:0 0 16px; color:#0b1f45; font-weight:700;">Un tarif simple, tout inclus</h1>
+      <p style="font-size:19px; line-height:1.6; color:#4a586e; margin:0;">Le boîtier en achat unique, puis un abonnement mensuel qui couvre toutes les fonctionnalités et les mises à jour.</p>
+    </div>
+  </section>
+
+  <!-- PRICING CARDS -->
+  <section style="max-width:1080px; margin:0 auto; padding:72px 48px 40px; display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:stretch;">
+    <!-- Classique -->
+    <div style="border:2px solid #1250d4; border-radius:24px; padding:40px; display:flex; flex-direction:column; box-shadow:0 24px 60px -28px rgba(18,80,212,0.45); position:relative;">
+      <div style="position:absolute; top:-14px; left:40px; background:#1250d4; color:#fff; padding:6px 16px; border-radius:999px; font-size:12px; font-weight:700; font-family:'Space Grotesk',sans-serif;">LE PLUS POPULAIRE</div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:#0b1f45; margin-bottom:6px;">Offre Classique</div>
+      <div style="color:#7a869c; font-size:15px; margin-bottom:24px;">Particuliers &amp; écoles</div>
+      <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:'Space Grotesk',sans-serif; font-size:46px; font-weight:700; color:#0b1f45;">6 990 DA</span><span style="color:#7a869c; font-size:16px;">/ boîtier</span></div>
+      <div style="color:#4a586e; font-size:16px; margin:6px 0 28px;">puis <b style="color:#0b1f45;">500 DA/mois</b> d'abonnement</div>
+      <div style="height:1px; background:#eef1f6; margin-bottom:24px;"></div>
+      <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:32px;">
+        <div style="display:flex; gap:12px; align-items:flex-start; color:#334159; font-size:15px;"><span style="color:#12885a; margin-top:1px;">✓</span> SSID personnalisés par membre</div>
+        <div style="display:flex; gap:12px; align-items:flex-start; color:#334159; font-size:15px;"><span style="color:#12885a; margin-top:1px;">✓</span> Limitation d'écran + rallonges par quiz</div>
+        <div style="display:flex; gap:12px; align-items:flex-start; color:#334159; font-size:15px;"><span style="color:#12885a; margin-top:1px;">✓</span> Coupure prière &amp; mode vacances</div>
+        <div style="display:flex; gap:12px; align-items:flex-start; color:#334159; font-size:15px;"><span style="color:#12885a; margin-top:1px;">✓</span> Filtrage intelligent + base communautaire</div>
+        <div style="display:flex; gap:12px; align-items:flex-start; color:#334159; font-size:15px;"><span style="color:#12885a; margin-top:1px;">✓</span> Bibliothèque intranet gratuite</div>
+        <div style="display:flex; gap:12px; align-items:flex-start; color:#334159; font-size:15px;"><span style="color:#12885a; margin-top:1px;">✓</span> Application mobile parents</div>
+        <div style="display:flex; gap:12px; align-items:flex-start; color:#334159; font-size:15px;"><span style="color:#12885a; margin-top:1px;">✓</span> Mises à jour incluses (1 an)</div>
+      </div>
+      <a href="Contact.dc.html" style="margin-top:auto; display:block; text-align:center; background:#ff8a3d; color:#2a1200; padding:16px; border-radius:12px; font-weight:700; font-size:16px;">Précommander maintenant</a>
+    </div>
+
+    <!-- Corporate -->
+    <div style="border:1.5px solid #e6ebf3; border-radius:24px; padding:40px; display:flex; flex-direction:column; background:#0b1f45; color:#fff;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; color:#fff; margin-bottom:6px;">Offre Entreprises</div>
+      <div style="color:#9fb6de; font-size:15px; margin-bottom:24px;">Centres commerciaux, cafés, gares, hôtels</div>
+      <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:'Space Grotesk',sans-serif; font-size:40px; font-weight:700; color:#fff;">Sur devis</span></div>
+      <div style="color:#9fb6de; font-size:16px; margin:6px 0 28px;">à partir de <b style="color:#fff;">2 000 DA/mois</b> par boîtier</div>
+      <div style="height:1px; background:#1c2c52; margin-bottom:24px;"></div>
+      <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:32px;">
+        <div style="display:flex; gap:12px; align-items:flex-start; color:#dce6f7; font-size:15px;"><span style="color:#57e0a3; margin-top:1px;">✓</span> Boîtier négociable selon volume</div>
+        <div style="display:flex; gap:12px; align-items:flex-start; color:#dce6f7; font-size:15px;"><span style="color:#57e0a3; margin-top:1px;">✓</span> Personnalisation logo &amp; couleurs de marque</div>
+        <div style="display:flex; gap:12px; align-items:flex-start; color:#dce6f7; font-size:15px;"><span style="color:#57e0a3; margin-top:1px;">✓</span> Espaces publicitaires monétisables</div>
+        <div style="display:flex; gap:12px; align-items:flex-start; color:#dce6f7; font-size:15px;"><span style="color:#57e0a3; margin-top:1px;">✓</span> Gestion centralisée multi-sites</div>
+        <div style="display:flex; gap:12px; align-items:flex-start; color:#dce6f7; font-size:15px;"><span style="color:#57e0a3; margin-top:1px;">✓</span> Reporting global &amp; statistiques</div>
+        <div style="display:flex; gap:12px; align-items:flex-start; color:#dce6f7; font-size:15px;"><span style="color:#57e0a3; margin-top:1px;">✓</span> 1 mois d'essai gratuit</div>
+      </div>
+      <a href="Entreprises.dc.html" style="margin-top:auto; display:block; text-align:center; background:#fff; color:#0b1f45; padding:16px; border-radius:12px; font-weight:700; font-size:16px;">Découvrir l'offre corporate →</a>
+    </div>
+  </section>
+
+  <!-- QUANTITY / VOLUME NOTE -->
+  <section style="max-width:1080px; margin:0 auto; padding:20px 48px 72px;">
+    <div style="background:#f6f9ff; border:1px solid #e6ebf3; border-radius:16px; padding:24px 28px; display:flex; gap:16px; align-items:center;">
+      <span style="font-size:24px;">💡</span>
+      <p style="margin:0; color:#4a586e; font-size:15px; line-height:1.6;">Pour les écoles et les achats groupés, des tarifs dégressifs sont disponibles (ex. 5 000 DA le boîtier au-delà de 100 unités). <a href="Contact.dc.html" style="color:#1250d4; font-weight:600;">Contactez-nous pour un devis.</a></p>
+    </div>
+  </section>
+
+  <!-- COMPARATIF INCLUS -->
+  <section style="background:#f6f9ff; padding:80px 48px;">
+    <div style="max-width:900px; margin:0 auto; text-align:center;">
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-size:34px; margin:0 0 12px; color:#0b1f45; font-weight:700;">Ce qui est toujours inclus</h2>
+      <p style="font-size:17px; color:#4a586e; margin:0 0 40px;">Quelle que soit l'offre, la protection et l'éducation restent au cœur d'AmanBox.</p>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
+        <div style="background:#fff; border-radius:14px; padding:24px; border:1px solid #e6ebf3;"><div style="font-size:26px; margin-bottom:10px;">🛡️</div><div style="font-size:14px; color:#334159; font-weight:600;">Filtrage sécurisé</div></div>
+        <div style="background:#fff; border-radius:14px; padding:24px; border:1px solid #e6ebf3;"><div style="font-size:26px; margin-bottom:10px;">📱</div><div style="font-size:14px; color:#334159; font-weight:600;">App de pilotage</div></div>
+        <div style="background:#fff; border-radius:14px; padding:24px; border:1px solid #e6ebf3;"><div style="font-size:26px; margin-bottom:10px;">🔄</div><div style="font-size:14px; color:#334159; font-weight:600;">Mises à jour</div></div>
+        <div style="background:#fff; border-radius:14px; padding:24px; border:1px solid #e6ebf3;"><div style="font-size:26px; margin-bottom:10px;">🎧</div><div style="font-size:14px; color:#334159; font-weight:600;">Support dédié</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#081533; color:#c3d0e8; padding:56px 48px 36px;">
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px;">
+      <div><div style="display:flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; color:#fff; margin-bottom:14px;"><span style="width:40px; height:40px; border-radius:9px; background:#fff; display:inline-flex; align-items:center; justify-content:center; flex:none;"><img src="assets/amanbox-icon.png" alt="AmanBox" style="height:30px; width:auto; display:block;"></span>AmanBox</div><p style="font-size:14px; line-height:1.6; color:#8fa2c4; margin:0; max-width:280px;">L'Internet sûr, éducatif et respectueux pour toute la famille. Fièrement conçu en Algérie.</p></div>
+      <div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-weight:600; margin-bottom:14px; font-size:15px;">Produit</div><div style="display:flex; flex-direction:column; gap:10px; font-size:14px;"><a href="Fonctionnalites.dc.html">Fonctionnalités</a><a href="Tarifs.dc.html">Tarifs</a><a href="FAQ.dc.html">FAQ</a></div></div>
+      <div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-weight:600; margin-bottom:14px; font-size:15px;">Entreprise</div><div style="display:flex; flex-direction:column; gap:10px; font-size:14px;"><a href="Entreprises.dc.html">Pour les entreprises</a><a href="Contact.dc.html">Contact</a><a href="Contact.dc.html">Devis corporate</a></div></div>
+      <div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-weight:600; margin-bottom:14px; font-size:15px;">Contact</div><div style="display:flex; flex-direction:column; gap:10px; font-size:14px;"><span>support@amanbox.dz</span><span>Facebook · Instagram · YouTube</span></div></div>
+    </div>
+    <div style="max-width:1200px; margin:40px auto 0; padding-top:24px; border-top:1px solid #1c2c52; display:flex; justify-content:space-between; font-size:13px; color:#7788ab; flex-wrap:wrap; gap:10px;"><span>© 2026 AmanBox. Tous droits réservés.</span><span>Mentions légales · Confidentialité</span></div>
+  </footer>
+
+</div>
+</x-dc>
+</body>
+</html>

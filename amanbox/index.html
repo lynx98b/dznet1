@@ -1,1 +1,213 @@
-y
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#ffffff; font-family:'IBM Plex Sans',sans-serif; -webkit-font-smoothing:antialiased; }
+  * { box-sizing:border-box; }
+  a { text-decoration:none; color:inherit; }
+</style>
+</helmet>
+
+<div style="color:#0b1f45;">
+
+  <!-- ============ NAV ============ -->
+  <nav style="position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px 48px; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); border-bottom:1px solid #eef1f6;">
+    <a href="Accueil.dc.html" style="display:flex; flex-direction:column; align-items:center; gap:3px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; letter-spacing:0.01em; color:#0b2a6b; line-height:1;">
+      <img src="assets/amanbox-icon.png" alt="AmanBox" style="height:34px; width:auto; display:block;">
+      AmanBox
+    </a>
+    <div style="display:flex; gap:30px; align-items:center; font-size:15px; color:#3a4658; font-weight:500;">
+      <a href="Accueil.dc.html" style="color:#1250d4; font-weight:600;">Accueil</a>
+      <a href="Fonctionnalites.dc.html">Fonctionnalités</a>
+      <a href="Tarifs.dc.html">Tarifs</a>
+      <a href="Entreprises.dc.html">Entreprises</a>
+      <a href="FAQ.dc.html">FAQ</a>
+      <a href="Contact.dc.html">Contact</a>
+      <a href="Accueil-ar.dc.html" style="border:1px solid #dbe3f0; padding:9px 15px; border-radius:999px; font-size:14px; color:#0b2a6b; font-weight:600;">العربية</a><a href="Tarifs.dc.html" style="background:#ff8a3d; color:#2a1200; padding:11px 22px; border-radius:999px; font-weight:700;">Précommander</a>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <section style="position:relative; overflow:hidden; background:linear-gradient(135deg,#1250d4 0%,#1568c9 45%,#18a06b 100%); padding:80px 48px 96px;">
+    <div style="position:absolute; top:-80px; right:-60px; width:380px; height:380px; border-radius:50%; background:rgba(255,138,61,0.30);"></div>
+    <div style="position:absolute; bottom:-120px; left:35%; width:300px; height:300px; border-radius:50%; background:rgba(255,255,255,0.10);"></div>
+    <div style="position:relative; max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:center;">
+      <div>
+        <div style="display:inline-flex; align-items:center; gap:8px; background:#ff8a3d; color:#3a1600; padding:9px 18px; border-radius:999px; font-size:14px; font-weight:700; margin-bottom:26px;">🔥 Offre de lancement — 6 990 DA</div>
+        <h1 style="font-family:'Space Grotesk',sans-serif; font-size:56px; line-height:1.04; margin:0 0 22px; color:#fff; font-weight:700; letter-spacing:-0.02em;">L'Internet sûr, éducatif et serein pour toute la famille</h1>
+        <p style="font-size:20px; line-height:1.6; color:#eaf3ff; margin:0 0 34px; max-width:520px;">Contrôlez le temps d'écran, filtrez les contenus et encouragez l'apprentissage. AmanBox est la barrière de protection de votre foyer numérique.</p>
+        <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+          <a href="#produit" style="background:#ff8a3d; color:#2a1200; padding:16px 30px; border-radius:999px; font-weight:700; font-size:17px;">Découvrir AmanBox</a>
+          <a href="Tarifs.dc.html" style="background:rgba(255,255,255,0.14); color:#fff; padding:16px 28px; border-radius:999px; font-weight:600; font-size:17px; border:1.5px solid rgba(255,255,255,0.4);">Précommander →</a>
+        </div>
+        <div style="display:flex; gap:32px; margin-top:40px;">
+          <div><div style="font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:700; color:#fff;">6 990<span style="font-size:15px; opacity:0.8;"> DA</span></div><div style="font-size:13px; color:#d3e6ff;">boîtier, achat unique</div></div>
+          <div style="width:1px; background:rgba(255,255,255,0.3);"></div>
+          <div><div style="font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:700; color:#fff;">500<span style="font-size:15px; opacity:0.8;"> DA/mois</span></div><div style="font-size:13px; color:#d3e6ff;">abonnement</div></div>
+        </div>
+      </div>
+      <div style="border-radius:22px; background:repeating-linear-gradient(45deg,rgba(255,255,255,0.16),rgba(255,255,255,0.16) 12px,rgba(255,255,255,0.06) 12px,rgba(255,255,255,0.06) 24px); height:400px; display:flex; align-items:center; justify-content:center; border:1.5px solid rgba(255,255,255,0.32);">
+        <span style="font-family:'Space Grotesk',monospace; font-size:14px; color:#fff; background:rgba(0,0,0,0.28); padding:8px 14px; border-radius:8px;">[ photo · famille sereine avec AmanBox ]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EN BREF ============ -->
+  <section style="max-width:1200px; margin:0 auto; padding:72px 48px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+    <div style="background:#eaf1ff; border-radius:20px; padding:32px; border-bottom:5px solid #1250d4;">
+      <div style="font-size:34px; margin-bottom:14px;">✅</div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:600; color:#0f2f6b; margin-bottom:8px;">Contrôle parental total</div>
+      <div style="color:#4a5878; font-size:15px; line-height:1.6;">Limitez le temps d'écran et les sites accessibles, profil par profil.</div>
+    </div>
+    <div style="background:#e6f6ee; border-radius:20px; padding:32px; border-bottom:5px solid #18a06b;">
+      <div style="font-size:34px; margin-bottom:14px;">📚</div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:600; color:#0f5a3a; margin-bottom:8px;">Bibliothèque éducative</div>
+      <div style="color:#456b58; font-size:15px; line-height:1.6;">Des livres du domaine public, gratuits et accessibles hors ligne.</div>
+    </div>
+    <div style="background:#fff0e4; border-radius:20px; padding:32px; border-bottom:5px solid #ff8a3d;">
+      <div style="font-size:34px; margin-bottom:14px;">🕋</div>
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:600; color:#8a3d0f; margin-bottom:8px;">Respect des prières</div>
+      <div style="color:#7a5238; font-size:15px; line-height:1.6;">Coupure automatique 20 min avant chaque prière.</div>
+    </div>
+  </section>
+
+  <!-- ============ QU'EST-CE QU'AMANBOX ============ -->
+  <section id="produit" style="background:#f6f9ff; padding:88px 48px;">
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;">
+      <div style="border-radius:18px; background:repeating-linear-gradient(45deg,#dce7fb,#dce7fb 12px,#e8f0fd 12px,#e8f0fd 24px); height:360px; display:flex; align-items:center; justify-content:center; border:1px solid #cfdcf6;">
+        <span style="font-family:'Space Grotesk',monospace; font-size:14px; color:#5f77aa; background:#fff; padding:8px 14px; border-radius:6px;">[ schéma · Box → AmanBox → tablettes / smartphones / PC ]</span>
+      </div>
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:#1250d4; margin-bottom:12px; font-weight:600;">Qu'est-ce qu'AmanBox ?</div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:38px; line-height:1.12; margin:0 0 18px; color:#0b1f45; font-weight:700;">Une box intelligente qui protège tout le foyer</h2>
+        <p style="font-size:18px; line-height:1.65; color:#4a586e; margin:0 0 24px;">AmanBox se connecte à votre routeur Internet et crée des réseaux Wi-Fi personnalisés pour chaque membre de la famille. Elle filtre les contenus, limite le temps d'écran et encourage l'apprentissage — le tout piloté depuis une application mobile.</p>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div style="display:flex; gap:12px; align-items:center;"><span style="width:26px;height:26px;border-radius:7px;background:#e3f5ec;color:#12885a;display:flex;align-items:center;justify-content:center;font-size:14px;">✓</span><span style="color:#334159; font-size:16px;">Un Wi-Fi dédié par profil, adapté à l'âge</span></div>
+          <div style="display:flex; gap:12px; align-items:center;"><span style="width:26px;height:26px;border-radius:7px;background:#e3f5ec;color:#12885a;display:flex;align-items:center;justify-content:center;font-size:14px;">✓</span><span style="color:#334159; font-size:16px;">Filtrage intelligent mis à jour par la communauté</span></div>
+          <div style="display:flex; gap:12px; align-items:center;"><span style="width:26px;height:26px;border-radius:7px;background:#e3f5ec;color:#12885a;display:flex;align-items:center;justify-content:center;font-size:14px;">✓</span><span style="color:#334159; font-size:16px;">Installation simple, entre votre box et vos appareils</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ POURQUOI (problèmes / solutions) ============ -->
+  <section style="max-width:1200px; margin:0 auto; padding:88px 48px;">
+    <div style="text-align:center; max-width:640px; margin:0 auto 48px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:#1250d4; margin-bottom:12px; font-weight:600;">Pourquoi AmanBox</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-size:38px; line-height:1.12; margin:0; color:#0b1f45; font-weight:700;">Les vrais problèmes, des réponses concrètes</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:20px;">
+      <div style="display:flex; gap:18px; align-items:flex-start; background:#fff; padding:26px; border-radius:16px; border:1px solid #e6ebf3;"><span style="flex:none; width:40px;height:40px;border-radius:10px;background:#fdecec;color:#d24b4b;display:flex;align-items:center;justify-content:center;font-size:18px;">✕</span><div><b style="color:#0b1f45; font-size:17px;">Dépendance numérique</b><div style="color:#5a6880; font-size:15px; margin-top:6px; line-height:1.55;">→ Gestion individualisée par profil, âge et besoins.</div></div></div>
+      <div style="display:flex; gap:18px; align-items:flex-start; background:#fff; padding:26px; border-radius:16px; border:1px solid #e6ebf3;"><span style="flex:none; width:40px;height:40px;border-radius:10px;background:#fdecec;color:#d24b4b;display:flex;align-items:center;justify-content:center;font-size:18px;">✕</span><div><b style="color:#0b1f45; font-size:17px;">Contenus inappropriés</b><div style="color:#5a6880; font-size:15px; margin-top:6px; line-height:1.55;">→ Filtrage intelligent + base communautaire de signalements.</div></div></div>
+      <div style="display:flex; gap:18px; align-items:flex-start; background:#fff; padding:26px; border-radius:16px; border:1px solid #e6ebf3;"><span style="flex:none; width:40px;height:40px;border-radius:10px;background:#fdecec;color:#d24b4b;display:flex;align-items:center;justify-content:center;font-size:18px;">✕</span><div><b style="color:#0b1f45; font-size:17px;">Manque de concentration</b><div style="color:#5a6880; font-size:15px; margin-top:6px; line-height:1.55;">→ Mode études et plages horaires dédiées.</div></div></div>
+      <div style="display:flex; gap:18px; align-items:flex-start; background:#fff; padding:26px; border-radius:16px; border:1px solid #e6ebf3;"><span style="flex:none; width:40px;height:40px;border-radius:10px;background:#fdecec;color:#d24b4b;display:flex;align-items:center;justify-content:center;font-size:18px;">✕</span><div><b style="color:#0b1f45; font-size:17px;">Respect des prières</b><div style="color:#5a6880; font-size:15px; margin-top:6px; line-height:1.55;">→ Coupure automatique + pop-up de confirmation.</div></div></div>
+    </div>
+  </section>
+
+  <!-- ============ FONCTIONNALITÉS APERÇU ============ -->
+  <section style="background:#0b1f45; padding:88px 48px;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:44px; flex-wrap:wrap; gap:20px;">
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:#7fb4ff; margin-bottom:12px; font-weight:600;">Fonctionnalités clés</div>
+          <h2 style="font-family:'Space Grotesk',sans-serif; font-size:38px; line-height:1.1; margin:0; color:#fff; font-weight:700; max-width:520px;">Tout ce qu'il faut pour un foyer connecté et serein</h2>
+        </div>
+        <a href="Fonctionnalites.dc.html" style="background:#ff8a3d; color:#2a1200; padding:14px 26px; border-radius:999px; font-weight:700; font-size:16px;">Voir toutes les fonctions →</a>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+        <div style="background:#122a5c; border-radius:16px; padding:28px;"><div style="font-size:26px; margin-bottom:14px;">📶</div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-size:18px; font-weight:600; margin-bottom:8px;">Wi-Fi personnalisés</div><div style="color:#9fb6de; font-size:14px; line-height:1.55;">Un SSID par membre, avec restrictions adaptées à l'âge.</div></div>
+        <div style="background:#122a5c; border-radius:16px; padding:28px;"><div style="font-size:26px; margin-bottom:14px;">⏱️</div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-size:18px; font-weight:600; margin-bottom:8px;">Temps d'écran</div><div style="color:#9fb6de; font-size:14px; line-height:1.55;">Quota quotidien, rallonge via quiz éducatif (3 max/jour).</div></div>
+        <div style="background:#122a5c; border-radius:16px; padding:28px;"><div style="font-size:26px; margin-bottom:14px;">📅</div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-size:18px; font-weight:600; margin-bottom:8px;">Plages horaires</div><div style="color:#9fb6de; font-size:14px; line-height:1.55;">Heures d'étude, coupure de nuit, mode vacances.</div></div>
+        <div style="background:#122a5c; border-radius:16px; padding:28px;"><div style="font-size:26px; margin-bottom:14px;">🛡️</div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-size:18px; font-weight:600; margin-bottom:8px;">Filtrage intelligent</div><div style="color:#9fb6de; font-size:14px; line-height:1.55;">Blocage des contenus choquants + liste blanche études.</div></div>
+        <div style="background:#122a5c; border-radius:16px; padding:28px;"><div style="font-size:26px; margin-bottom:14px;">📖</div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-size:18px; font-weight:600; margin-bottom:8px;">Bibliothèque intranet</div><div style="color:#9fb6de; font-size:14px; line-height:1.55;">Livres du domaine public, accessibles hors ligne.</div></div>
+        <div style="background:#122a5c; border-radius:16px; padding:28px;"><div style="font-size:26px; margin-bottom:14px;">📱</div><div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-size:18px; font-weight:600; margin-bottom:8px;">Application parents</div><div style="color:#9fb6de; font-size:14px; line-height:1.55;">Tableau de bord, notifications et réglages en temps réel.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TARIFS APERÇU ============ -->
+  <section style="max-width:1200px; margin:0 auto; padding:88px 48px;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;">
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:#1250d4; margin-bottom:12px; font-weight:600;">Offre classique</div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:38px; line-height:1.12; margin:0 0 18px; color:#0b1f45; font-weight:700;">Un prix simple, tout inclus</h2>
+        <p style="font-size:18px; line-height:1.65; color:#4a586e; margin:0 0 24px;">Idéal pour les particuliers et les écoles. Le boîtier en achat unique, puis un abonnement mensuel qui couvre toutes les fonctionnalités et les mises à jour.</p>
+        <a href="Tarifs.dc.html" style="display:inline-block; background:#1250d4; color:#fff; padding:15px 28px; border-radius:999px; font-weight:600; font-size:16px;">Voir les tarifs en détail →</a>
+      </div>
+      <div style="border:1.5px solid #e6ebf3; border-radius:22px; padding:36px; box-shadow:0 20px 50px -24px rgba(18,80,212,0.35);">
+        <div style="display:inline-flex; background:#fff0e4; color:#8a3d0f; padding:6px 14px; border-radius:999px; font-size:13px; font-weight:700; margin-bottom:20px;">Offre de lancement</div>
+        <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:6px;"><span style="font-family:'Space Grotesk',sans-serif; font-size:44px; font-weight:700; color:#0b1f45;">6 990 DA</span><span style="color:#7a869c; font-size:16px;">/ boîtier</span></div>
+        <div style="color:#4a586e; font-size:16px; margin-bottom:24px;">puis <b style="color:#0b1f45;">500 DA/mois</b> d'abonnement</div>
+        <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:28px;">
+          <div style="display:flex; gap:10px; align-items:center; color:#334159; font-size:15px;"><span style="color:#12885a;">✓</span> SSID personnalisés + limitation d'écran</div>
+          <div style="display:flex; gap:10px; align-items:center; color:#334159; font-size:15px;"><span style="color:#12885a;">✓</span> Coupure prière &amp; mode vacances</div>
+          <div style="display:flex; gap:10px; align-items:center; color:#334159; font-size:15px;"><span style="color:#12885a;">✓</span> Filtrage + bibliothèque intranet</div>
+          <div style="display:flex; gap:10px; align-items:center; color:#334159; font-size:15px;"><span style="color:#12885a;">✓</span> Application mobile + mises à jour (1 an)</div>
+        </div>
+        <a href="Tarifs.dc.html" style="display:block; text-align:center; background:#ff8a3d; color:#2a1200; padding:15px; border-radius:12px; font-weight:700; font-size:16px;">Précommander maintenant</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CORPORATE TEASER ============ -->
+  <section style="background:linear-gradient(135deg,#12885a,#0d6e48); padding:72px 48px;">
+    <div style="max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap;">
+      <div style="max-width:620px;">
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:#bff0d8; margin-bottom:12px; font-weight:600;">AmanBox pour les entreprises</div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-size:34px; line-height:1.14; margin:0 0 14px; color:#fff; font-weight:700;">Wi-Fi public sécurisé + revenus publicitaires</h2>
+        <p style="font-size:18px; line-height:1.6; color:#dcf5e9; margin:0;">Centres commerciaux, cafés, gares, hôtels : offrez un Wi-Fi propre et monétisez-le grâce à des espaces publicitaires ciblés localement.</p>
+      </div>
+      <a href="Entreprises.dc.html" style="flex:none; background:#fff; color:#0d6e48; padding:16px 30px; border-radius:999px; font-weight:700; font-size:17px;">Demander un devis corporate →</a>
+    </div>
+  </section>
+
+  <!-- ============ CTA FINAL ============ -->
+  <section style="max-width:1000px; margin:0 auto; padding:96px 48px; text-align:center;">
+    <h2 style="font-family:'Space Grotesk',sans-serif; font-size:44px; line-height:1.08; margin:0 0 18px; color:#0b1f45; font-weight:700;">Protégez votre foyer dès aujourd'hui</h2>
+    <p style="font-size:19px; line-height:1.6; color:#4a586e; margin:0 auto 34px; max-width:560px;">Précommandez AmanBox à prix de lancement et rejoignez les familles qui reprennent le contrôle de leur Internet.</p>
+    <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <a href="Tarifs.dc.html" style="background:#ff8a3d; color:#2a1200; padding:16px 32px; border-radius:999px; font-weight:700; font-size:17px;">Précommander à 6 990 DA</a>
+      <a href="Contact.dc.html" style="background:#fff; color:#0b2a6b; padding:16px 30px; border-radius:999px; font-weight:600; font-size:17px; border:1.5px solid #cfdcf6;">Nous contacter</a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:#081533; color:#c3d0e8; padding:56px 48px 36px;">
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:22px; color:#fff; margin-bottom:14px;"><span style="width:40px; height:40px; border-radius:9px; background:#fff; display:inline-flex; align-items:center; justify-content:center; flex:none;"><img src="assets/amanbox-icon.png" alt="AmanBox" style="height:30px; width:auto; display:block;"></span>AmanBox</div>
+        <p style="font-size:14px; line-height:1.6; color:#8fa2c4; margin:0; max-width:280px;">L'Internet sûr, éducatif et respectueux pour toute la famille. Fièrement conçu en Algérie.</p>
+      </div>
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-weight:600; margin-bottom:14px; font-size:15px;">Produit</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:14px;"><a href="Fonctionnalites.dc.html">Fonctionnalités</a><a href="Tarifs.dc.html">Tarifs</a><a href="FAQ.dc.html">FAQ</a></div>
+      </div>
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-weight:600; margin-bottom:14px; font-size:15px;">Entreprise</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:14px;"><a href="Entreprises.dc.html">Pour les entreprises</a><a href="Contact.dc.html">Contact</a><a href="Contact.dc.html">Devis corporate</a></div>
+      </div>
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif; color:#fff; font-weight:600; margin-bottom:14px; font-size:15px;">Contact</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:14px;"><span>support@amanbox.dz</span><span>Facebook · Instagram · YouTube</span></div>
+      </div>
+    </div>
+    <div style="max-width:1200px; margin:40px auto 0; padding-top:24px; border-top:1px solid #1c2c52; display:flex; justify-content:space-between; font-size:13px; color:#7788ab; flex-wrap:wrap; gap:10px;">
+      <span>© 2026 AmanBox. Tous droits réservés.</span>
+      <span>Mentions légales · Confidentialité</span>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+</body>
+</html>
